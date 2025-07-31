@@ -1,0 +1,291 @@
+import numpy as np
+import jax
+import jax.numpy as jnp
+import exponax as ex
+import torch
+import os
+from tqdm import tqdm
+import jaxlib
+from jax.lib import xla_bridge
+
+def print_memory_stats():
+    try:
+        mem_stats = xla_bridge.get_backend().memory_stats()
+        print(f"\n--- JAX Memory Usage ---")
+        print(f"Used: {mem_stats['bytes_in_use']/1e9:.1f} GB")
+        print(f"Total: {mem_stats['bytes_limit']/1e9:.1f} GB")
+        print(f"Peak: {mem_stats['peak_bytes_in_use']/1e9:.1f} GB")
+    except Exception as e:
+        print(f"\nMemory stats unavailable: {str(e)}")
+
+# 在初始化完成后调用一次
+# print_memory_stats()
+
+def safe_getattr(obj, attr, default="N/A"):
+    return getattr(obj, attr, default)
+
+print("\n--- PyTorch Info ---")
+print("PyTorch version:", torch.__version__)
+print("CUDA version used by PyTorch:", torch.version.cuda)
+print("Is CUDA available:", torch.cuda.is_available())
+
+print("\n--- JAX Info ---")
+print("JAX version:", jax.__version__)
+print("JAXlib version:", jaxlib.__version__)
+print("JAX default backend:", jax.default_backend())
+print("JAX devices:", jax.devices())
+
+if torch.cuda.is_available():
+    num_devices = torch.cuda.device_count()
+    print(f"Number of CUDA devices: {num_devices}")
+    for i in range(num_devices):
+        print(f"\n--- Device {i} ---")
+        print("Device name:", torch.cuda.get_device_name(i))
+        props = torch.cuda.get_device_properties(i)
+        print(f"  Compute Capability: {props.major}.{props.minor}")
+        print(f"  Total memory: {props.total_memory / (1024**3):.2f} GiB")
+        print(f"  Total memory: {props.total_memory / (1000**3):.2f} GB")
+        print(f"  MultiProcessor count: {safe_getattr(props, 'multi_processor_count')}")
+        print(f"  Memory Bus Width: {safe_getattr(props, 'memory_bus_width', 'N/A')} bits")
+        print(f"  Memory Clock Rate: {safe_getattr(props, 'memory_clock_rate', 0) / 1e3:.0f} MHz")
+        print(f"  GPU Clock Rate: {safe_getattr(props, 'clock_rate', 0) / 1e3:.0f} MHz")
+        print(f"  Shared memory per block: {safe_getattr(props, 'shared_memory_per_block', 0) / 1024:.1f} KB")
+        print(f"  Registers per block: {safe_getattr(props, 'regs_per_block', 'N/A')}")
+        
+        if hasattr(props, "max_threads_per_block"):
+            print(f"  Max Threads per block: {props.max_threads_per_block}")
+        if hasattr(props, "max_threads_dim"):
+            print(f"  Max Threads dim: {props.max_threads_dim}")
+        if hasattr(props, "max_grid_size"):
+            print(f"  Max Grid size: {props.max_grid_size}")
+
+    current_device = torch.cuda.current_device()
+    allocated = torch.cuda.memory_allocated(current_device) / (1024 ** 3)
+    reserved = torch.cuda.memory_reserved(current_device) / (1024 ** 3)
+    print(f"\n--- Memory usage on Device {current_device} ---")
+    print(f"Allocated memory: {allocated:.2f} GB")
+    print(f"Reserved memory:  {reserved:.2f} GB")
+else:
+    print("No CUDA device available.")
+
+
+
+# jax.config.update("jax_enable_x64", True)
+jax.config.update("jax_default_prng_impl", "unsafe_rbg")
+jax.config.update("jax_debug_nans", False) 
+
+# Set default device to GPU if available
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+class ExponaxVTSolver2D:
+    def __init__(self, nx, ny, Lx, Ly, nu, forcing=None, bc='periodic'):
+        self.nx = nx
+        self.Lx = Lx
+        self.x = torch.linspace(-Lx/2, Lx/2, nx, device=device)
+        self.dx = 2/nx
+        self.nu = nu
+        self.bc = bc
+
+    def get_closest_solutions(self, sol_dict, t_eval):
+        closest_solutions = {}
+        sorted_keys = sorted(sol_dict.keys())
+
+        for t in t_eval:
+            closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+            closest_solutions[t] = (closest_key, sol_dict[closest_key])
+        
+        return closest_solutions
+
+    def solve(self, u0, t_final, t_eval, step):
+        # Move initial condition to GPU
+        full_ic = jnp.expand_dims(jnp.array(u0, dtype=jnp.float32), axis=0)
+        # full_ic = jnp.expand_dims(jnp.array(u0, dtype=jnp.float64), axis=0)
+
+        # print("\nAfter array creation:")
+        # print_memory_stats()
+        
+        # Initialize solver on GPU
+        slower_NS_stepper = ex.stepper._navier_stokes.NavierStokesVorticityZongyi(
+            2, self.Lx, self.nx, step, 
+            diffusivity=self.nu, order=4,
+            num_circle_points = 16, 
+            dealiasing_fraction = 2/3
+        )
+        
+        # print("\nBefore long rollout:")
+        # print_memory_stats()
+
+        longer_rollout_NS_stepper = ex.rollout(
+            slower_NS_stepper, int(t_final/step), include_init=True
+        )
+
+        # Run simulation on GPU
+        longer_trajectory = longer_rollout_NS_stepper(full_ic)
+
+        # print("\nAfter simulation:")
+        # print_memory_stats()
+        
+        # Convert results back to numpy for compatibility
+        sol_dict = {i*step: np.array(longer_trajectory[i, 0, ...].T.block_until_ready())
+            for i in range(longer_trajectory.shape[0])}
+        sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+        
+        return sol_dict
+
+def generate_vorticity_transport_data(time_list, grf, nu, ntimepoints):
+    # Initialize solver
+    exponaxsolver = ExponaxVTSolver2D(
+        nx=grf.shape[0], ny=grf.shape[1], 
+        Lx=1, Ly=1, nu=nu
+    )
+    
+    # Convert input to numpy (handling both JAX and numpy arrays)
+    if hasattr(grf, '__jax_array__') or isinstance(grf, jnp.ndarray):  # JAX array
+        grf_numpy = np.array(grf)  # Convert JAX to numpy
+    elif isinstance(grf, np.ndarray):  # Already numpy
+        grf_numpy = grf
+    elif isinstance(grf, torch.Tensor):  # PyTorch tensor
+        grf_numpy = grf.cpu().numpy()
+    else:
+        raise TypeError(f"Unsupported input type: {type(grf)}")
+    
+    # Get solutions
+    grf_numpy = np.rot90(np.flipud(grf_numpy),3)
+    exponax_solutions = exponaxsolver.solve(
+        grf_numpy,  # Use converted numpy array
+        t_final=time_list[-1],
+        t_eval=[0] + time_list,
+        step=0.001
+    )
+
+    selected_indices = np.linspace(0, len(time_list)-1, ntimepoints, dtype=int)
+    selected_times = time_list[selected_indices]
+    
+    # Convert results to PyTorch tensors on GPU
+    x = torch.from_numpy(exponax_solutions[0][1]).float().to(device)
+    y_numpy = np.array([exponax_solutions[selected_time][1] for selected_time in selected_times])
+    y = torch.from_numpy(y_numpy).float().to(device)
+    
+    return x, y, selected_times
+
+def spectral_upsample(field, target_size=256):
+    *batch_dims, H, W = field.shape
+    assert target_size >= H and target_size >= W, "目标尺寸必须大于输入尺寸"
+    freq = torch.fft.fft2(field, norm='ortho')
+    freq_shifted = torch.fft.fftshift(freq, dim=(-2, -1))
+    pad_H = (target_size - H) // 2
+    pad_W = (target_size - W) // 2
+    new_freq_shifted = torch.zeros(
+        *batch_dims, target_size, target_size, 
+        dtype=freq_shifted.dtype, device=freq_shifted.device
+    )
+    start_H = pad_H
+    start_W = pad_W
+    new_freq_shifted[..., start_H:start_H+H, start_W:start_W+W] = freq_shifted
+    new_freq = torch.fft.ifftshift(new_freq_shifted, dim=(-2, -1))
+    upsampled = torch.fft.ifft2(new_freq, norm='ortho')
+    return (target_size / H) * upsampled.real
+
+class DatasetGenerator:
+    def __init__(self, base_seed=0):
+        self.global_seed_counter = base_seed
+        self.dataset_counter = 0
+    
+    def _generate_filename(self, params):
+        return (f"dim{params['dim']}d_nx{params['nx']}_N{params['nsamples']}_"
+                f"solver=exponax_"
+                f"nu{params['nu_ns']:.3f}_"
+                f"t{params['tfinal']:.1f}_"
+                # "test_"
+                "train_"
+                f"all_frames.pt")
+    
+    def generate_dataset(self, nu_ns, tfinal, nsamples, save_dir=None):
+        dataset_x = []
+        dataset_y = []
+        start_seed = self.global_seed_counter
+        # zongyi_dataset = torch.load('../2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame.pt', weights_only=False)
+        zongyi_dataset = torch.load('../2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_train_all_frame.pt', weights_only=False)
+
+        # Add tqdm progress bar for sample generation
+        for idx in tqdm(range(nsamples), desc="Generating samples", unit="sample"):
+
+            # if idx % 1 == 0:  # 每10个样本打印一次
+            #     print(f"\nSample {idx} memory status:")
+            #     print_memory_stats()
+            
+            # Generate on GPU
+            grf = zongyi_dataset["x"][idx]
+            size = 256
+            grf = spectral_upsample(grf, size)
+            
+            time_list = np.linspace(0, tfinal, 5001)
+            ntimepoints = tfinal + 1
+            x, y, selected_times = generate_vorticity_transport_data(
+                time_list,
+                grf,
+                nu_ns,
+                ntimepoints
+            )
+            
+            dataset_x.append(x)
+            dataset_y.append(y)
+            self.global_seed_counter += 1
+
+            # if idx % 10 == 0:
+            #     jax.clear_backends()
+        
+        # Stack on GPU with progress indication
+        with tqdm(total=2, desc="Stacking tensors") as pbar:
+            tensor_x = torch.stack(dataset_x).to(device)
+            pbar.update(1)
+            tensor_y = torch.stack(dataset_y).to(device)
+            pbar.update(1)
+        
+        if save_dir:
+            os.makedirs(save_dir, exist_ok=True)
+            file_params = {
+                'dim': 2,
+                'nx': grf.shape[0],
+                'nsamples': nsamples,
+                'nu_ns': nu_ns,
+                'tfinal': tfinal,
+            }
+            
+            filename = self._generate_filename(file_params)
+            save_path = os.path.join(save_dir, filename)
+            
+            # Add progress bar for saving
+            with tqdm(total=1, desc="Saving dataset") as pbar:
+                torch.save({
+                    'x': tensor_x.cpu(),
+                    'y': tensor_y.permute(0,2,3,1).cpu(),
+                    'metadata': {
+                        'nu_ns': nu_ns,
+                        'tfinal': tfinal,
+                        'nsamples': nsamples,
+                        "times": selected_times
+                    }
+                }, save_path)
+                pbar.update(1)
+            
+            print(f"\nDataset saved to {save_path}")
+            return save_path
+        else:
+            return tensor_x, tensor_y
+
+if __name__ == "__main__":
+    # Usage Example
+    generator = DatasetGenerator(base_seed=0)
+
+    print("Generating first dataset:")
+    path1 = generator.generate_dataset(
+        nu_ns=1e-5,
+        tfinal=20,
+        nsamples=1150,
+        save_dir="./datasets"
+    )
+
+
+
+

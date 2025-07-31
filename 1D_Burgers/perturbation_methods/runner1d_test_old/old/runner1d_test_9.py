@@ -1,0 +1,494 @@
+from absl import app
+from absl import flags
+from ml_collections.config_flags import config_flags
+from tqdm import tqdm
+from datetime import datetime
+import time
+import re
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from models.FNO1d import FNO1d
+from GRFs.generateGRFs import GRFGenerator
+from solvers.burgers1d_solvers import *
+import torch
+from tqdm import tqdm
+from pathlib import Path
+import pickle
+import numpy as np
+import jax
+
+from PGD_without_solver_gradient_1d import find_closest_ground_truth
+from PGD_with_solver_gradient_1d_new_2 import JaxPDEWrapper
+
+from torch.autograd import gradcheck, gradgradcheck
+
+import torch.nn.functional as F  # Import for cosine similarity calculation
+from scipy.spatial.distance import cosine  # Alternative cosine distance metric
+
+def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, norm='inf', 
+                          fd_delta=1e-8, enable_fd=False, use_double=True):
+    """
+    Compare gradients between solver and non-solver approaches with adversarial attack capability
+    
+    Args:
+        a: Input tensor to attack
+        G: PyTorch model
+        g: JAX solver function
+        x_dict: Dictionary of input samples
+        y_dict: Dictionary of ground truth outputs
+        epsilon: Attack perturbation bound
+        alpha: Attack step size
+        num_steps: Number of attack iterations
+        norm: Norm type for attack ('inf' or 2)
+        fd_delta: Finite difference step size
+        enable_fd: Enable finite difference check
+        use_double: Use double precision (float64)
+    Returns:
+        grad_records: List of gradient comparison metrics per step
+    """
+    
+    # Store original parameter dtypes for restoration later
+    original_dtypes = {name: param.dtype for name, param in G.named_parameters()}
+    
+    # Convert model and inputs to specified precision
+    if use_double:
+        dtype = torch.float64
+        G = G.to_dtype(torch.float64)  # Convert entire model to float64
+    else:
+        dtype = torch.float32
+        G = G.to_dtype(torch.float32)
+
+    # Convert input tensors
+    a = a.to(dtype)
+    g = g.to(dtype) if isinstance(g, torch.Tensor) else g
+    
+    def convert_data(data):
+        """Recursively convert data to specified dtype"""
+        if isinstance(data, torch.Tensor):
+            return data.to(dtype)
+        elif isinstance(data, dict):
+            return {k: convert_data(v) for k, v in data.items()}
+        return data
+        
+    x_dict = convert_data(x_dict)
+    y_dict = convert_data(y_dict)
+
+    # Initialize perturbation tensors
+    delta_with = torch.zeros_like(a, requires_grad=True, dtype=dtype)
+    delta_without = torch.zeros_like(a, requires_grad=True, dtype=dtype)
+    grad_records = []  # Store metrics for each step
+
+    def wrap_with_solver(input):
+        """Loss function using JAX solver"""
+        return torch.norm(G(input) - JaxPDEWrapper.apply(input, g), p=2)**2
+
+    def wrap_without_solver(input):
+        """Loss function using ground truth"""
+        return torch.norm(G(input) - find_closest_ground_truth(input, x_dict, y_dict), p=2)**2
+
+    def compute_gradient_metrics(grad1, grad2, name1="Grad1", name2="Grad2"):
+        """
+        Compute comprehensive comparison metrics between two gradients
+        
+        Args:
+            grad1: First gradient tensor
+            grad2: Second gradient tensor
+            name1: Name for first gradient
+            name2: Name for second gradient
+        Returns:
+            Dictionary of comparison metrics
+        """
+        grad1_flat = grad1.flatten()
+        grad2_flat = grad2.flatten()
+        
+        # Basic difference calculations
+        diff = grad1_flat - grad2_flat
+        abs_diff = torch.abs(diff)
+        rel_diff = abs_diff / (torch.abs(grad2_flat) + 1e-10)
+        
+        # Compute comprehensive metrics
+        metrics = {
+            # Basic metrics
+            'rmse': torch.sqrt(torch.mean(diff**2)).item(),
+            'cosine_similarity': F.cosine_similarity(grad1_flat.unsqueeze(0), grad2_flat.unsqueeze(0)).item(),
+            'angle_degrees': torch.rad2deg(torch.acos(torch.clamp(
+                torch.tensor(F.cosine_similarity(grad1_flat.unsqueeze(0), grad2_flat.unsqueeze(0))), 
+                -1.0, 1.0))).item(),
+            
+            # Difference metrics
+            'max_abs_diff': torch.max(abs_diff).item(),
+            'mean_abs_diff': torch.mean(abs_diff).item(),
+            'max_rel_diff': torch.max(rel_diff).item(),
+            'median_rel_diff': torch.median(rel_diff).item(),
+            
+            # Vector characteristics
+            'vector_length': len(grad1_flat),
+            'nonzero_count1': (grad1_flat != 0).sum().item(),
+            'nonzero_count2': (grad2_flat != 0).sum().item(),
+            'sparsity1': 1 - (grad1_flat != 0).sum().item() / len(grad1_flat),
+            'sparsity2': 1 - (grad2_flat != 0).sum().item() / len(grad2_flat),
+            
+            # Statistical features
+            'grad1_mean': torch.mean(grad1_flat).item(),
+            'grad1_median': torch.median(grad1_flat).item(),
+            'grad1_std': torch.std(grad1_flat).item(),
+            'grad1_skew': (torch.mean(((grad1_flat - grad1_flat.mean()) / (grad1_flat.std() + 1e-10))**3)).item(),
+            
+            'grad2_mean': torch.mean(grad2_flat).item(),
+            'grad2_median': torch.median(grad2_flat).item(),
+            'grad2_std': torch.std(grad2_flat).item(),
+            'grad2_skew': (torch.mean(((grad2_flat - grad2_flat.mean()) / (grad2_flat.std() + 1e-10))**3)).item(),
+            
+            # Norm metrics
+            'grad1_norm': torch.norm(grad1_flat).item(),
+            'grad2_norm': torch.norm(grad2_flat).item(),
+            'norm_ratio': (torch.norm(grad1_flat)/torch.norm(grad2_flat)).item(),
+            
+            # Extreme values
+            'grad1_max': torch.max(grad1_flat).item(),
+            'grad1_min': torch.min(grad1_flat).item(),
+            'grad2_max': torch.max(grad2_flat).item(),
+            'grad2_min': torch.min(grad2_flat).item(),
+            
+            # Quantiles
+            'grad1_q25': torch.quantile(grad1_flat, 0.25).item(),
+            'grad1_q75': torch.quantile(grad1_flat, 0.75).item(),
+            'grad2_q25': torch.quantile(grad2_flat, 0.25).item(),
+            'grad2_q75': torch.quantile(grad2_flat, 0.75).item()
+        }
+        
+        return metrics
+
+    def print_comparison_table(metrics, title, name1, name2):
+        """Print formatted comparison table for gradient metrics"""
+        print(f"\n{'='*100}")
+        print(f"{title.center(100)}")
+        print(f"{'='*100}")
+        
+        # Table header
+        print(f"{'Metric':<30} | {name1:<20} | {name2:<20} | {'Difference/Analysis':<25}")
+        print(f"{'-'*30}+{'-'*22}+{'-'*22}+{'-'*25}")
+        
+        # Vector characteristics
+        print(f"{'Vector Length':<30} | {metrics['vector_length']:<20} | {metrics['vector_length']:<20} |")
+        print(f"{'Non-zero Count':<30} | {metrics['nonzero_count1']:<20} | {metrics['nonzero_count2']:<20} |")
+        print(f"{'Sparsity':<30} | {metrics['sparsity1']:<20.2%} | {metrics['sparsity2']:<20.2%} |")
+        
+        # Statistical features
+        print(f"\n{'Statistical Features':^100}")
+        print(f"{'-'*100}")
+        print(f"{'Mean':<30} | {metrics['grad1_mean']:<20.6e} | {metrics['grad2_mean']:<20.6e} | diff: {metrics['grad1_mean']-metrics['grad2_mean']:.2e}")
+        print(f"{'Median':<30} | {metrics['grad1_median']:<20.6e} | {metrics['grad2_median']:<20.6e} | diff: {metrics['grad1_median']-metrics['grad2_median']:.2e}")
+        print(f"{'Std Dev':<30} | {metrics['grad1_std']:<20.6e} | {metrics['grad2_std']:<20.6e} | ratio: {metrics['grad1_std']/metrics['grad2_std']:.2f}")
+        print(f"{'Skewness':<30} | {metrics['grad1_skew']:<20.2f} | {metrics['grad2_skew']:<20.2f} |")
+        print(f"{'Q25-Q75 Range':<30} | [{metrics['grad1_q25']:.2e}, {metrics['grad1_q75']:.2e}] | [{metrics['grad2_q25']:.2e}, {metrics['grad2_q75']:.2e}] |")
+        
+        # Norms and extremes
+        print(f"\n{'Norms and Extremes':^100}")
+        print(f"{'-'*100}")
+        print(f"{'L2 Norm':<30} | {metrics['grad1_norm']:<20.6e} | {metrics['grad2_norm']:<20.6e} | ratio: {metrics['norm_ratio']:.2f}")
+        print(f"{'Max Value':<30} | {metrics['grad1_max']:<20.6e} | {metrics['grad2_max']:<20.6e} | diff: {metrics['grad1_max']-metrics['grad2_max']:.2e}")
+        print(f"{'Min Value':<30} | {metrics['grad1_min']:<20.6e} | {metrics['grad2_min']:<20.6e} | diff: {metrics['grad1_min']-metrics['grad2_min']:.2e}")
+        
+        # Difference metrics
+        print(f"\n{'Difference Metrics':^100}")
+        print(f"{'-'*100}")
+        print(f"{'RMSE':<30} | {'-':<20} | {'-':<20} | {metrics['rmse']:.6e}")
+        print(f"{'Max Abs Diff':<30} | {'-':<20} | {'-':<20} | {metrics['max_abs_diff']:.6e}")
+        print(f"{'Mean Abs Diff':<30} | {'-':<20} | {'-':<20} | {metrics['mean_abs_diff']:.6e}")
+        print(f"{'Max Rel Diff':<30} | {'-':<20} | {'-':<20} | {metrics['max_rel_diff']:.6e}")
+        print(f"{'Median Rel Diff':<30} | {'-':<20} | {'-':<20} | {metrics['median_rel_diff']:.6e}")
+        
+        # Directional similarity
+        print(f"\n{'Directional Similarity':^100}")
+        print(f"{'-'*100}")
+        print(f"{'Cosine Similarity':<30} | {'-':<20} | {'-':<20} | {metrics['cosine_similarity']:.6f}")
+        print(f"{'Angle (Degrees)':<30} | {'-':<20} | {'-':<20} | {metrics['angle_degrees']:.2f}°")
+        
+        print(f"{'='*100}\n")
+
+    # Main attack loop
+    for step in range(num_steps):
+        print(f"\n{'#'*80}")
+        print(f"## STEP {step} GRADIENT COMPARISON RESULTS")
+        print(f"{'#'*80}")
+        step_metrics = {}
+        
+        # 1. Compute gradient with solver
+        a_with = a + delta_with
+        loss_with = wrap_with_solver(a_with)
+        loss_with.backward()
+        grad_with = delta_with.grad.clone().detach()
+        delta_with.grad.zero_()
+        
+        # 2. Compute gradient without solver
+        a_without = a + delta_without
+        loss_without = wrap_without_solver(a_without)
+        loss_without.backward()
+        grad_without = delta_without.grad.clone().detach()
+        delta_without.grad.zero_()
+        
+        # 3. Compare solver vs non-solver gradients
+        grad_diff_metrics = compute_gradient_metrics(grad_with, grad_without, "With Solver", "Without Solver")
+        print_comparison_table(grad_diff_metrics, 
+                             f"COMPARISON 1: With Solver vs Without Solver Analytical Gradients (Step {step})",
+                             "With Solver", "Without Solver")
+        step_metrics['with_vs_without'] = grad_diff_metrics
+
+        # 4. Numerical gradient verification
+        def compute_numerical_gradient(func, input_tensor, eps=1e-8):
+            """Compute numerical gradient using central differences"""
+            input_tensor = input_tensor.detach().clone()  # Prevent input modification
+            numerical_grad = torch.zeros_like(input_tensor)
+            flat_input = input_tensor.view(-1)
+            flat_grad = numerical_grad.view(-1)
+            
+            for i in range(len(flat_input)):
+                original = flat_input[i].item()
+                
+                # Forward perturbation
+                flat_input[i] = original + eps
+                f_plus = func(input_tensor)
+                
+                # Backward perturbation
+                flat_input[i] = original - eps
+                f_minus = func(input_tensor)
+                
+                # Restore original value
+                flat_input[i] = original
+                
+                # Central difference
+                flat_grad[i] = (f_plus - f_minus) / (2 * eps)
+            
+            return numerical_grad
+
+        # Verify solver gradients
+        num_grad_with = compute_numerical_gradient(wrap_with_solver, a_with.detach().clone(), eps=fd_delta)
+        with_solver_comp = compute_gradient_metrics(grad_with, num_grad_with, "Analytical", "Numerical")
+        print_comparison_table(with_solver_comp,
+                             f"COMPARISON 2: With Solver - Numerical vs Analytical Gradients (Step {step})",
+                             "Analytical", "Numerical")
+        step_metrics['with_solver_check'] = with_solver_comp                     
+        
+        # Verify non-solver gradients
+        num_grad_without = compute_numerical_gradient(wrap_without_solver, a_without.detach().clone(), eps=fd_delta)
+        without_solver_comp = compute_gradient_metrics(grad_without, num_grad_without, "Analytical", "Numerical")
+        print_comparison_table(without_solver_comp,
+                             f"COMPARISON 3: Without Solver - Numerical vs Analytical Gradients (Step {step})",
+                             "Analytical", "Numerical")
+        step_metrics['without_solver_check'] = without_solver_comp
+
+        # Store current perturbations
+        step_metrics['delta_with'] = delta_with.clone().detach()
+        step_metrics['delta_without'] = delta_without.clone().detach()
+
+        # Record metrics for this step
+        grad_records.append(step_metrics)
+
+        # Update perturbations
+        def update(delta, grad):
+            """Update perturbation based on attack norm"""
+            if norm == 'inf':
+                # L-infinity attack (FGSM-like)
+                delta.data.add_(alpha * torch.sign(grad))
+                delta.data.clamp_(-epsilon, epsilon)
+            elif norm == 2:
+                # L2 attack (PGD-like)
+                delta.data.add_(alpha * grad / (torch.norm(grad, p=2) + 1e-15))
+                l2_norm = torch.norm(delta.data, p=2)
+                if l2_norm > epsilon:
+                    delta.data = delta.data * (epsilon / l2_norm)
+        
+        update(delta_with, grad_with)
+        update(delta_without, grad_without)
+
+    return grad_records
+
+def precompile_components(model, g, example_input):
+    """
+    Pre-compile all critical components for performance optimization
+    
+    Args:
+        model: PyTorch model to compile
+        g: JAX solver function to compile
+        example_input: Example input tensor for shape inference
+    """
+    # 1. Generate dummy input with same specs as real input
+    dummy_input = torch.rand_like(example_input)
+    
+    # 2. Pre-compile JAX solver (forward + backward passes)
+    print("Compiling JAX solver...")
+    with torch.no_grad():
+        _ = JaxPDEWrapper.apply(dummy_input, g)  # Forward pass compilation
+        grad_output = torch.rand_like(dummy_input)
+        _ = JaxPDEWrapper.backward(None, grad_output)  # Backward pass compilation
+    
+    # 3. Pre-compile PyTorch model (3 warmup runs)
+    print("Compiling PyTorch model...")
+    with torch.no_grad():
+        for _ in range(3):
+            _ = model(dummy_input)
+    
+    # 4. Optional cache clearing
+    torch.cuda.empty_cache()
+
+
+FLAGS = flags.FLAGS
+config_flags.DEFINE_config_file("config", None, "Training configuration.", lock_config=True)
+flags.DEFINE_string("workdir", None, "Work directory.")
+flags.mark_flags_as_required(["workdir", "config"])
+
+def main(argv):
+    # print("=== Entered main() ===", flush=True)
+    config = FLAGS.config
+    workdir = FLAGS.workdir
+    # print("=== Flags parsed ===")
+
+    model_path = config.model_path
+    workdir = config.workdir
+    attack_method = config.attack_method
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M") 
+    device = config.device
+    nu = float(re.findall(r'nu([a-zA-Z0-9|.]+)', model_path)[0])
+    num_steps_list = config.num_steps_list
+    epsilon_list = config.epsilon_list
+    num_samples = config.num_samples
+
+    def convert_to_cpu_serializable(data):
+        if isinstance(data, dict):
+            return {k: convert_to_cpu_serializable(v) for k, v in data.items()}
+        elif isinstance(data, list):
+            return [convert_to_cpu_serializable(v) for v in data]
+        elif isinstance(data, torch.Tensor):
+            return data.cpu().detach().numpy()
+        else:
+            return data
+    
+
+    print("===============Experiment===============")
+    
+    print("\n\n\n")
+    print("model_path: ",model_path)
+    print("workdir: ",workdir)
+    print("device: ",device)
+    print("nu: ",nu)
+    print("jax.devices()", jax.devices())
+    print("\n\n\n")
+
+    print("===============Running===============")
+    print("\n\n\n")
+
+    grf_params = {
+        'dim': 1,
+        'nx': 1024,
+        'kernel': 'gaussian',
+        'kernel_params': {'correlation_length': 0.03},
+        'bc': 'periodic',
+        'seed': 3,
+        'zero_mean':False
+    }
+
+    burgers_params = {
+        'nu': nu,
+        'simulation_time': 1.0,
+        "step": 0.001
+    }
+
+    dataset_params = {
+        "num_record": 10
+    }
+
+    params = {
+        "GRF": grf_params,
+        "dataset": dataset_params,
+        "burgers": burgers_params,
+    }
+
+    shape = (grf_params["nx"],)
+
+    s = 1024
+    sub = grf_params["nx"] // s
+
+    solver_name = re.findall(r'solver=([a-zA-Z0-9]+)', model_path)[0]
+
+    model = FNO1d(modes=16, width=64) 
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+    model = model.to(device)
+    for param in model.parameters():
+        param.requires_grad = False
+
+    current_file_path = Path(__file__).resolve().parent.parent
+    # gradient_folder = current_file_path / "gradient_comparison_results" / ('1D' if grf_params['dim'] == 1 else '2D')
+    gradient_folder = current_file_path / "gradient_comparison_results"
+    gradient_folder.mkdir(parents=True, exist_ok=True)
+
+    input_path = config.dict_input_path
+    output_path = config.dict_output_path
+    print("input_path: ",input_path)
+    print("output_path: ",output_path)
+    x_dict = torch.load(input_path)[:,::sub].to(device)
+    y_dict = torch.load(output_path)[:,::sub].to(device)
+
+    norm_list = [2, "inf"]
+    
+    gradient_records = {}
+    for norm in norm_list:
+        for i in tqdm(range(dataset_params['num_record']), desc="adversarial input samples"):
+            # try:
+                a = GRFGenerator.generate_grf(
+                                shape=shape,
+                                kernel=grf_params['kernel'],
+                                kernel_params=grf_params['kernel_params'],
+                                bc=grf_params['bc'],
+                                seed=grf_params['seed'] + i,  # Ensure different GRFs for each sample
+                                zero_mean=grf_params['zero_mean']
+                            )
+                
+                a = a[::sub]
+                for num_steps in num_steps_list:
+                    # epsilon = 0.1
+                    for epsilon in epsilon_list:
+                        start_time = time.time()
+
+                        alpha = epsilon/num_steps
+                        
+                        a_torch = torch.from_numpy(a).float().unsqueeze(0).unsqueeze(-1).to(device)
+
+                        if solver_name == "exponax":
+                            solver = ExponaxBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+                        elif solver_name == "scipy":
+                            solver = SciPyBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+                        elif solver_name == "scipy_spectral":
+                            solver = SciPySpectralBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+                        elif solver_name == "phiflow":
+                            solver = PhiFlowBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+                        else:
+                            raise ValueError("Specified solver not inplemented")
+                        
+                        t_span = (0, burgers_params['simulation_time'])
+
+                        PDE_func = jax.jit(lambda u0: solver.solve(u0, t_final=burgers_params['simulation_time'], t_eval=t_span, step=burgers_params["step"])[1][1])
+                        records = compare_gradient_attack(
+                            a_torch, model, PDE_func, x_dict, y_dict,
+                            epsilon=epsilon,
+                            alpha=epsilon/num_steps,
+                            num_steps=num_steps,
+                            norm=norm,
+                            enable_fd=True,
+                            fd_delta=1e-8
+                        )
+                        gradient_records[(f"norm_{norm}",f"index_{i}",f"numsteps_{num_steps}",f"epsilon_{epsilon}")] = records
+                        print(" \n     index:", i, ",    num_steps:", num_steps, ",    epsilon:", epsilon)
+            # except:
+            #     pass
+
+        gradient_filename = f"gradient_comparison_{solver_name}_nu{nu}_eps{epsilon}_steps{num_steps}_norm{norm}.pkl"
+        with open(gradient_folder / gradient_filename, "wb") as f:
+            pickle.dump(gradient_records, f)
+
+
+
+if __name__ == "__main__":
+    app.run(main)
