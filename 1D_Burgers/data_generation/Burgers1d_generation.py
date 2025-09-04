@@ -13,74 +13,81 @@ def generate_burgers_dataset(params, save_dir="datasets/1D/Burgers", solver_name
     dataset_params = params["dataset"]
     burgers_params = params["burgers"]
     np.random.seed(grf_params['seed'])
-    
-    num_record = dataset_params['num_record'] 
+
+    num_record = dataset_params['num_record']
     nu = burgers_params['nu']
     t_final = burgers_params["simulation_time"]
     step = burgers_params["step"]
-    t_eval = np.linspace(0, t_final, int((t_final/step)/10)+1)
+    t_eval = np.linspace(0, t_final, int((t_final/step)/10) + 1)
     nx = grf_params['nx']
     dim = grf_params['dim']
-    
+
     if dim == 1:
-        shape = (grf_params['nx'],)
+        sample_shape = (nx,)
     else:
         raise ValueError("dim must be 1 ")
-    
-    solver_name = solver_name.lower()
-    if solver_name == "scipy":
+
+    # 设备：尽量用 GPU；没有就回退 CPU（保存格式不变）
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"当前使用的是 {'GPU (CUDA)' if device.type == 'cuda' else 'CPU'} 进行计算")
+    if device.type == 'cuda':
+        print(f"设备名称: {torch.cuda.get_device_name(0)}")
+
+    # 选择求解器（求解器内部是否用 GPU 取决于它自己的实现/配置）
+    sname = solver_name.lower()
+    if sname == "scipy":
         solver = SciPyBurgersSolver1D(nx, nu=nu, bc=grf_params['bc'])
-    elif solver_name == "scipy_spectral":
+    elif sname == "scipy_spectral":
         solver = SciPySpectralBurgersSolver1D(nx, nu=nu, bc=grf_params['bc'])
-    elif solver_name == "exponax":
-        solver = ExponaxBurgersSolver1D(nx, nu=nu, bc=grf_params['bc'], xlim=(0,1))
-    elif solver_name == "phiflow":
+    elif sname == "exponax":
+        # solver = ExponaxBurgersSolver1D(nx, nu=nu, bc=grf_params['bc'], xlim=(0,1))
+        solver = ExponaxBurgersSolver1D(nx, nu=nu, bc=grf_params['bc'])
+    elif sname == "phiflow":
         solver = PhiFlowBurgersSolver1D(nx, nu=nu, bc=grf_params['bc'])
     else:
         raise ValueError("Specified solver not inplemented")
-    
-    input_tensors = []
-    output_tensors = []
-    
+
+    # 预分配 GPU 缓冲（减少反复分配/拷贝）
+    x_buf = torch.empty((num_record, *sample_shape), dtype=torch.float32, device=device)
+    y_buf = torch.empty_like(x_buf)
+
     for i in tqdm(range(num_record), desc="Generating samples"):
-        # try:
-            grf = GRFGenerator.generate_grf(
-                shape=shape,
-                kernel=grf_params['kernel'],
-                kernel_params=grf_params['kernel_params'],
-                bc=grf_params['bc'],
-                seed=grf_params['seed'] + i,  # Ensure different GRFs for each sample
-                zero_mean=grf_params['zero_mean']
-            )
+        # 生成 GRF（NumPy）
+        grf = GRFGenerator.generate_grf(
+            shape=sample_shape,
+            kernel=grf_params['kernel'],
+            kernel_params=grf_params['kernel_params'],
+            bc=grf_params['bc'],
+            seed=grf_params['seed'] + i,
+            zero_mean=grf_params['zero_mean'],
+        )
 
-            # print("GRF generated sucessfully!")
-            # print(f"GRF shape: {grf.shape}, type: {type(grf)}")
-            # print("t_span: ", t_span)
-            # print(grf.copy().shape)
-            solution = solver.solve(grf.copy(), t_final, t_eval, step)
-            final_solution = solution[t_eval[-1]][1]
+        # 求解（返回通常是 NumPy；是否GPU由求解器决定）
+        solution = solver.solve(grf.copy(), t_final, t_eval, step)
+        final_solution = solution[t_eval[-1]][1]
 
-            # print("Burgers solution generated sucessfully!")
-            
-            # Convert to PyTorch tensors and store
-            input_tensors.append(torch.tensor(grf.copy(), dtype=torch.float32))
-            if isinstance(final_solution, np.ndarray):
-                output_tensors.append(torch.tensor(final_solution, dtype=torch.float32))
-            else:
-                output_tensors.append(torch.from_numpy(np.array(final_solution)).float())
+        # 转为 GPU Tensor 并写入预分配缓冲
+        x_tensor = torch.as_tensor(grf, dtype=torch.float32, device=device)
+        if isinstance(final_solution, np.ndarray):
+            y_tensor = torch.as_tensor(final_solution, dtype=torch.float32, device=device)
+        else:
+            y_tensor = torch.as_tensor(np.array(final_solution), dtype=torch.float32, device=device)
 
-        # except Exception as e:
-        #     print(f"Error processing sample {i}: {e}")
-    
-    input_tensor = torch.stack(input_tensors)  # Shape: (N, spatial_dim1, spatial_dim2, ...)
-    output_tensor = torch.stack(output_tensors)  # Shape: (N, spatial_dim1, spatial_dim2, ...)
-    print({"input tensor shape":input_tensor.shape,"output tensor shape":output_tensor.shape})
-    
+        # 拷贝到缓冲（避免重新分配）
+        x_buf[i].copy_(x_tensor)
+        y_buf[i].copy_(y_tensor)
+
+    # 为保持“保存形式不变”，在 CPU 上保存
+    input_tensor = x_buf.detach().cpu()    # Shape: (N, nx)
+    output_tensor = y_buf.detach().cpu()   # Shape: (N, nx)
+    print({"input tensor shape": input_tensor.shape, "output tensor shape": output_tensor.shape})
+
+    # 文件名与保存路径保持不变
     param_names = [
         f"dim{dim}d",
         f"nx{nx}",
         f"N{num_record}",
-        f"solver={solver_name}",
+        f"solver={sname}",
         f"kernel={grf_params['kernel']}",
         *[f"{k}{v}" for k, v in grf_params['kernel_params'].items()],
         f"bc{grf_params['bc']}",
@@ -89,14 +96,11 @@ def generate_burgers_dataset(params, save_dir="datasets/1D/Burgers", solver_name
         f"seed{grf_params['seed']}",
     ]
     filename = "_".join(param_names) + ".pt"
-    
+
     current_file_path = Path(__file__).resolve().parent.parent
-    # folder1 = 'init_all_pos' if grf_params['zero_mean'] == False else 'init_neg_pos'
-    # folder2 = '1d' if dim == 1 else '2d'
-    # save_path = current_file_path / save_dir / folder1 / folder2 / filename
     save_path = current_file_path / save_dir / filename
     save_path.parent.mkdir(parents=True, exist_ok=True)
     print(save_path)
-    torch.save({'x': input_tensor, 'y': output_tensor, "t_final": t_eval[-1]}, save_path)
-    print("x shape: ",input_tensor.shape,"y shape",output_tensor.shape)
 
+    torch.save({'x': input_tensor, 'y': output_tensor, "t_final": t_eval[-1]}, save_path)
+    print("x shape: ", input_tensor.shape, "y shape", output_tensor.shape)

@@ -9,7 +9,7 @@ from perturbation_methods.configs.default1d import get_default_configs
 def get_config():
 
     config = config = get_default_configs()
-
+    """
     config.inputs = [   
         ("inf",0.1,10,0.005),
         ("inf",0.5,10,0.025),
@@ -28,6 +28,7 @@ def get_config():
         (2,10,20,0.2), 
         (2,20,20,0.5), 
         ]
+    """
 
 
     return config

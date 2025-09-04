@@ -25,11 +25,11 @@ for epochs in [500]:
     width = 64
     
     current_file_path = Path(__file__).resolve().parent.parent
-    dataset_name = "dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.005_t1.0_seed45.pt"
-    file_path = current_file_path / "datasets" / "1D" / "Burgers" / dataset_name
+    dataset_name = "dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt"
+    file_path = current_file_path / "datasets" / "1D" / "Burgers" / "pos" / dataset_name
     data = torch.load(file_path, weights_only=False)
 
-    s = 256
+    s = 1024
     sub = data["x"].shape[1] // s
 
     x_data = data['x'][:,::sub]
@@ -65,7 +65,7 @@ for epochs in [500]:
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=iterations)\
 
     file_name = Path(file_path).stem
-    log_save_path = current_file_path / f"saved_models/1D/modes{modes}_width{width}_epochs{epochs}/burgers_1d_FNO_log_trainedby_{file_name}.txt"
+    log_save_path = current_file_path / f"saved_models/1D/modes{modes}_width{width}_epochs{epochs}/normalized/burgers_1d_FNO_log_trainedby_{file_name}.txt"
     log_save_path.parent.mkdir(parents=True, exist_ok=True)
     log_file = open(log_save_path, "w")
     log_file.write("burgers 1d FNO training log\n\n\n\n") 
@@ -86,9 +86,13 @@ for epochs in [500]:
             x, y = x.cuda(), y.cuda()
 
             optimizer.zero_grad()
-            out = model(x)
+            out = model(x).squeeze(-1)
+            # print("out.shape:", out.shape)
+            # print("y.shape:", y.shape)
             out = y_normalizer.decode(out)
             y = y_normalizer.decode(y)
+            # print("out.shape:", out.shape)
+            # print("y.shape:", y.shape)
 
             mse = F.mse_loss(out.view(batch_size, -1), y.view(batch_size, -1), reduction='mean')
             l2 = myloss(out.view(batch_size, -1), y.view(batch_size, -1))
@@ -105,7 +109,7 @@ for epochs in [500]:
             for x, y in test_loader:
                 x, y = x.cuda(), y.cuda()
 
-                out = model(x)
+                out = model(x).squeeze(-1)
                 out = y_normalizer.decode(out)
                 test_l2 += myloss(out.view(batch_size, -1), y.view(batch_size, -1)).item()
 
@@ -121,7 +125,15 @@ for epochs in [500]:
 
     log_file.close()
 
-    model_save_path = current_file_path / f"saved_models/1D/modes{modes}_width{width}_epochs{epochs}/burgers_1d_FNO_model_trainedby_{file_name}.pth"
+    model_save_path = current_file_path / f"saved_models/1D/modes{modes}_width{width}_epochs{epochs}/normalized/burgers_1d_FNO_model_trainedby_{file_name}.pth"
     model_save_path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save(model.state_dict(), model_save_path)
+    torch.save({
+        'model_state_dict': model.state_dict(),
+        'x_normalizer': x_normalizer,
+        'y_normalizer': y_normalizer,
+        'modes': modes,
+        'width': width,
+        'epochs': epochs,
+        'file_name': file_name
+    }, model_save_path)
     print(f"Model saved to {model_save_path}")
