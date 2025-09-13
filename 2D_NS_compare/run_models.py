@@ -1,157 +1,54 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Batch evaluate FNO models across many datasets (train / test / generalizability / expanded)
+
+功能:
+- 递归扫描指定路径下的所有 .pt 数据集文件 (支持文件或文件夹)。
+- 对给定的 models_params 中的每个模型、对每个数据集逐一评估。
+- 支持 FNO2d 初末帧 (initial_to_final)、FNO2d 自回归 (recurrent)、FNO3d (padding / no_padding)。
+- 计算每个 (模型×数据集) 的平均 RMSE / MAE，并**边跑边写**到 CSV（支持断点续跑）。
+- CSV 列包含: 模型族/分组/键名、modes/width/epochs/Tin/T 等超参、数据集组别(train/test/generalizability/expanded)、数据集名/路径、样本数/耗时等。
+- 控制台实时打印: 当前模型、当前数据集、用时、均值指标。
+
+用法示例:
+
+python batch_eval_fno_datasets.py \
+  --train "/path/to/train_or_dir" \
+  --test "/path/to/test_or_dir" \
+  --generalizability "/path/to/gen_dir" \
+  --expanded "/path/to/expanded_dir" \
+  --max-samples 50 \
+  --out-csv "/path/to/results.csv"
+
+注意:
+- 本脚本假设 .pt 数据存成 dict，至少包含键 'x' 和/或 'y'：
+  * initial_to_final: 使用 data['x'][i] 作为输入, data['y'][i] 作为目标。
+  * recurrent / FNO3d: 使用 data['y'][i] 形状 (H, W, T_total)，从中切出 T_in 和 T_out。
+- 若 epochs 未在 models_params 中显式给出，将从 key 或 model_path 中用正则尝试解析。
+"""
+
+import os
+import re
+import time
+import argparse
+import csv  # NEW
+from pathlib import Path
+from typing import Dict, List, Tuple, Optional
+
+import torch
+import pandas as pd
+from tqdm import tqdm
+
+# ============ 你现有的模型类 ============
 from FNO2d import FNO2d, RecurrentPredictor
 from FNO3d import FNO3d
-import torch
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.animation import FuncAnimation
-from PIL import Image
-import os
-from tqdm import tqdm
-import pickle
 
-def create_heatmap_gif(array1, array2, 
-                      title1='Heatmap 1', title2='Heatmap 2', 
-                      cmap='viridis', figsize=(18, 6),
-                      colorbar=True, 
-                      fps=10, dpi=100, text="training", save_path=None):
-    # Create temporary directory for frames
-    base_path = "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare"
-    os.makedirs(f'{base_path}/temp_frames', exist_ok=True)
-    
-    frame_files = []
-    
-    for idx in range(array1.shape[0]):
-        fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=figsize)
-        
-        # Plot first heatmap
-        im1 = ax1.imshow(array1[idx], cmap=cmap, origin='lower')
-        ax1.set_title(title1)
-        ax1.set_xlabel('X')
-        ax1.set_ylabel('Y')
-        if colorbar:
-            fig.colorbar(im1, ax=ax1, label='Value')
-        
-        # Plot second heatmap
-        im2 = ax2.imshow(array2[idx], cmap=cmap, origin='lower')
-        ax2.set_title(title2)
-        ax2.set_xlabel('X')
-        ax2.set_ylabel('Y')
-        if colorbar:
-            fig.colorbar(im2, ax=ax2, label='Value')
-
-        # Plot second heatmap
-        diff = array2[idx]-array1[idx]
-        im3 = ax3.imshow(diff, cmap="coolwarm", origin='lower')
-        ax3.set_title(f"{title2}-{title1} difference \n mean abs={np.mean(np.abs(diff))}")
-        ax3.set_xlabel('X')
-        ax3.set_ylabel('Y')
-        if colorbar:
-            fig.colorbar(im3, ax=ax3, label='Value')
-        
-        plt.suptitle(f"Navier-Stokes Vorticity Transport (frame {idx+10}) ({text})")
-        plt.tight_layout()
-        
-        # Save frame
-        
-        frame_file = f"{base_path}/temp_frames/frame_{idx:04d}.png"
-        plt.savefig(frame_file, dpi=dpi, bbox_inches='tight')
-        frame_files.append(frame_file)
-        plt.close()
-    
-    # Create GIF from frames
-    images = [Image.open(f) for f in frame_files]
-    parent_folder = os.path.dirname(save_path)
-    os.makedirs(parent_folder, exist_ok=True)
-    images[0].save(save_path, 
-                  save_all=True, 
-                  append_images=images[1:], 
-                  duration=1000//fps, 
-                  loop=0)
-    
-    # Clean up temporary files
-    for f in frame_files:
-        os.remove(f)
-    os.rmdir(f'{base_path}/temp_frames')
-    
-    print(f"GIF saved as {text}.gif")
-
-def plot_dual_heatmaps(array1, array2, array3, 
-                      title1='Heatmap 1', title2='Heatmap 2', 
-                      title3='Heatmap 3', title4="Heatmap 4",
-                      cmap='viridis', figsize=(24, 6),
-                      vmin=None, vmax=None,
-                      colorbar=True, idx=0, text="training",
-                      save_path=None, dpi=300):
-    fig, (ax1, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=figsize)
-    array1 = array1.cpu().numpy()
-    array2 = array2.cpu().numpy() 
-    array3 = array3.cpu().numpy()
-
-    # Determine value ranges if not specified
-    if vmin is None:
-        vmin = min(np.nanmin(array2), np.nanmin(array3))
-    if vmax is None:
-        vmax = max(np.nanmax(array2), np.nanmax(array3))
-
-    # Plot 1: Original data
-    im1 = ax1.imshow(array1, cmap=cmap, origin='lower')
-    ax1.set_title(title1)
-    ax1.set_xlabel('X')
-    ax1.set_ylabel('Y')
-    if colorbar:
-        fig.colorbar(im1, ax=ax1, label='Value')
-
-    # Plot 2: Prediction/Comparison data
-    im2 = ax2.imshow(array2, cmap=cmap, vmin=vmin, vmax=vmax, origin='lower')
-    ax2.set_title(title2)
-    ax2.set_xlabel('X')
-    ax2.set_ylabel('Y')
-    if colorbar:
-        fig.colorbar(im2, ax=ax2, label='Value')
-
-    # Calculate RMSE
-    rmse = np.sqrt(np.mean((array2 - array3)**2)).item()
-
-    # Plot 3: Target data with RMSE
-    im3 = ax3.imshow(array3, cmap=cmap, vmin=vmin, vmax=vmax, origin='lower')
-    ax3.set_title(f"{title3}\nRMSE={rmse:.4f}")
-    ax3.set_xlabel('X')
-    ax3.set_ylabel('Y')
-    if colorbar:
-        fig.colorbar(im3, ax=ax3, label='Value')
-
-    # Plot 4: Difference map
-    diff = array2 - array3
-    im4 = ax4.imshow(diff, cmap="coolwarm", origin='lower')
-    ax4.set_title(f"{title4}\nMean Abs Diff={np.mean(np.abs(diff)):.4f}")
-    ax4.set_xlabel('X')
-    ax4.set_ylabel('Y')
-    if colorbar:
-        fig.colorbar(im4, ax=ax4, label='Value')
-    
-    # Main title and layout
-    plt.suptitle(f"Navier-Stokes Vorticity Transport idx={idx} ({text})")
-    plt.tight_layout()
-    
-    # Save the figure if requested
-    if save_path:
-        parent_folder = os.path.dirname(save_path)
-        os.makedirs(parent_folder, exist_ok=True)
-        plt.savefig(save_path, bbox_inches='tight', dpi=dpi)
-        print(f"Plot saved to {save_path}")
-    
-    # plt.show()
-    plt.close()
-
-
+# ============ 你的现有 models_params 原样可粘贴 ============
 
 base_path = "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO"
 
 models_params = {
-
     "FNO2d":{
         "initial_to_final":{
             "modes32_width40_epochs500":{
@@ -229,7 +126,14 @@ models_params = {
                 "Tin":10,
                 "T":10,
                 },
-            
+            "modes48_width80_epochs500_Tin10_T10":{
+                "model_path":f"{base_path}/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth",
+                "data_path":f"{base_path}/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt",
+                "modes":48,
+                "width":80,
+                "Tin":10,
+                "T":10,
+                },
             "modes64_width60_epochs500_Tin1_T19":{
                 "model_path":f"{base_path}/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth",
                 "data_path":f"{base_path}/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt",
@@ -254,11 +158,35 @@ models_params = {
                 "Tin":10,
                 "T":10,
                 },
+            "modes64_width80_epochs500_Tin10_T10":{
+                "model_path":f"{base_path}/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth",
+                "data_path":f"{base_path}/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt",
+                "modes":64,
+                "width":80,
+                "Tin":10,
+                "T":10,
+                },
             "modes96_width40_epochs500_Tin10_T10":{
                 "model_path":f"{base_path}/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth",
                 "data_path":f"{base_path}/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt",
                 "modes":96,
                 "width":40,
+                "Tin":10,
+                "T":10,
+                },
+            "modes96_width80_epochs500_Tin10_T10":{
+                "model_path":f"{base_path}/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth",
+                "data_path":f"{base_path}/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt",
+                "modes":96,
+                "width":80,
+                "Tin":10,
+                "T":10,
+                },
+            "modes96_width80_epochs1500_Tin10_T10":{
+                "model_path":f"{base_path}/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width80_epochs1500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth",
+                "data_path":f"{base_path}/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt",
+                "modes":96,
+                "width":80,
                 "Tin":10,
                 "T":10,
                 },
@@ -327,354 +255,373 @@ models_params = {
                 },
             },
         }, 
-    }
+}
 
-def predict(models_params, device):
-    lower_idx_lim = 0
-    upper_idx_lim = 10
-    result_dict = {}
-    for key1 in models_params.keys():
-        result_dict[key1] = {}
-        if key1 == "FNO2d": 
-            for key2 in models_params["FNO2d"].keys():
-                result_dict[key1][key2] = {}
-                if key2 == "initial_to_final":  
-                    all_models_info_dict = models_params[key1][key2]
-                    for key3 in all_models_info_dict:
-                        print("========================================================")
-                        print(key1,key2,key3)
-                        result_dict[key1][key2][key3] = {}
-                        info_dict = models_params[key1][key2][key3]
-                        print(info_dict)
+# ============ 工具函数 ============
 
-                        data_path = info_dict["data_path"]
-                        modes = info_dict["modes"]
-                        width = info_dict["width"]
-                        model_path = info_dict["model_path"]
+def is_pt_file(p: Path) -> bool:
+    return p.is_file() and p.suffix == ".pt"
 
-                        data_test = torch.load(
-                            data_path, 
-                            weights_only=False,
-                            map_location=device
-                        )
-                        model_instance = FNO2d(
-                            modes1=modes, 
-                            modes2=modes, 
-                            width=width,
-                            in_channels = 1
-                        ).to(device)
-                        state_dict = torch.load(
-                            model_path,
-                            map_location=device
-                        )
-                        model_instance.load_state_dict(state_dict)
-                        model_instance.eval() 
+def list_pt_files(path_or_dir: Optional[str]) -> List[Path]:
+    if not path_or_dir:
+        return []
+    p = Path(path_or_dir)
+    if p.is_file() and p.suffix == ".pt":
+        return [p]
+    if p.is_dir():
+        return sorted([x for x in p.rglob("*.pt") if x.is_file()])
+    return []
 
-                        with torch.no_grad():
-                            for idx in tqdm(range(50)):
-                                input_ = data_test["x"][idx]
-                                PDE_output = data_test["y"][idx]
-                                FNO_output = model_instance(input_.unsqueeze(0).unsqueeze(-1)).squeeze(0).squeeze(-1)
+def base_name_no_ext(p: Path) -> str:
+    return p.stem
 
-                                error = PDE_output - FNO_output
-                                rmse = torch.sqrt(torch.mean(error**2))  # Root Mean Square Error
-                                mae = torch.mean(torch.abs(error))      # Mean Absolute Error
+def parse_hparams_from_text(text: str) -> Dict[str, Optional[int]]:
+    """从字符串中尽量解析出 epochs/modes/width/Tin/T/modes12/modes3 等。"""
+    if not isinstance(text, str):
+        return {}
+    d = {}
+    m = re.search(r"epochs(\d+)", text)
+    if m: d["epochs"] = int(m.group(1))
+    m = re.search(r"modes(\d+)", text)  # FNO2d
+    if m: d.setdefault("modes", int(m.group(1)))
+    m = re.search(r"width(\d+)", text)
+    if m: d["width"] = int(m.group(1))
+    m = re.search(r"Tin(\d+)", text)
+    if m: d["Tin"] = int(m.group(1))
+    m = re.search(r"(?:Tout|T)(\d+)", text)
+    if m: d["T"] = int(m.group(1))
+    m = re.search(r"modes12(\d+)", text)
+    if m: d["modes12"] = int(m.group(1))
+    m = re.search(r"modes3(\d+)", text)
+    if m: d["modes3"] = int(m.group(1))
+    return d
 
-                                # Store results
-                                result_dict[key1][key2][key3][idx] = {
-                                    "RMSE": rmse.item(),       # Convert to Python float
-                                    "MAE": mae.item()     # Convert to Python float
-                                }
-                                """
-                                if idx < upper_idx_lim and idx >= lower_idx_lim:
-                                    input_frame = 0
-                                    output_frame = 19
-                                    plot_dual_heatmaps(input_, PDE_output, FNO_output, 
-                                        title1=f'input (frame {input_frame})', title2=f'PDE output (frame {output_frame})', 
-                                        title3=f'FNO output (frame {output_frame})', title4=f'PDE output - FNO output (frame {output_frame})', 
-                                        idx=idx+1, 
-                                        text=f"input=frame{input_frame} output=frame{output_frame} modes{modes} width{width} test (initial to final)",
-                                        save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.png")
-                                """
-                elif key2 == "recurrent":
-                    all_models_info_dict = models_params[key1][key2]
-                    for key3 in all_models_info_dict:
-                        print("========================================================")
-                        print(key1,key2,key3)
-                        result_dict[key1][key2][key3] = {}
-                        info_dict = models_params[key1][key2][key3]
-                        print(info_dict)
+def to_int(x, default=None):
+    try:
+        return int(x)
+    except Exception:
+        return default
 
-                        data_path = info_dict["data_path"]
-                        modes = info_dict["modes"]
-                        width = info_dict["width"]
-                        model_path = info_dict["model_path"]
-                        Tin = info_dict["Tin"]
-                        T = info_dict["T"]
+# ============ 边跑边写 CSV & 断点续跑 支持 ============
 
-                        data_test = torch.load(
-                            data_path, 
-                            weights_only=False,
-                            map_location=device
-                        )
-                        model_instance = FNO2d(
-                            modes1=modes, 
-                            modes2=modes, 
-                            width=width,
-                            in_channels = Tin
-                        ).to(device)
-                        state_dict = torch.load(
-                            model_path,
-                            map_location=device
-                        )
-                        model_instance.load_state_dict(state_dict)
-                        model_instance.eval() 
-                        recurrent_model = RecurrentPredictor(model_instance, T_out=T, step=1)
+CSV_COLUMNS = [  # NEW: 固定列顺序，便于断点续跑
+    'model_family','model_group','model_key','model_path',
+    'modes','width','epochs','Tin','T','modes12','modes3','padding',
+    'dataset_group','dataset_name','dataset_path',
+    'samples_used','rmse_mean','mae_mean','seconds','ms_per_sample',
+]
 
-                        for idx in tqdm(range(50)):
-                            sample = data_test["y"][idx]  # shape: (x, y, T_total)
-                            sample = sample.to(device)
+def _resume_key(row: dict) -> Tuple[str, str, str, str, str]:
+    """NEW: 用于断点续跑的唯一键"""
+    return (
+        row.get('model_family',''),
+        row.get('model_group',''),
+        row.get('model_key',''),
+        row.get('dataset_group',''),
+        row.get('dataset_name',''),
+    )
 
-                            # 初始输入 (1, x, y, T_in)
-                            current_input = sample[None, ..., :Tin]
+def load_done_keys_from_csv(out_csv: Path) -> set:
+    """NEW: 若 CSV 已存在，加载已完成条目的键集合"""
+    done = set()
+    if out_csv.exists():
+        try:
+            for chunk in pd.read_csv(out_csv, usecols=['model_family','model_group','model_key','dataset_group','dataset_name'], chunksize=10000):
+                for _, r in chunk.iterrows():
+                    done.add((str(r['model_family']), str(r['model_group']), str(r['model_key']),
+                              str(r['dataset_group']), str(r['dataset_name'])))
+        except Exception as e:
+            print(f"[WARN] 读取已有 CSV 失败（忽略继续跑）: {e}")
+    return done
 
-                            # 真实输出 (1, x, y, T)
-                            ground_truth = sample[None, ..., Tin:Tin+T]
+def append_row(out_csv: Path, row: dict, header_written_cache=set()):
+    """NEW: 追加写入一行到 CSV；若文件不存在则写表头"""
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
+    file_exists = out_csv.exists()
+    # 只第一次写表头（或文件不存在时）
+    write_header = (not file_exists) and (out_csv not in header_written_cache)
+    with open(out_csv, 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction='ignore')
+        if write_header:
+            writer.writeheader()
+            header_written_cache.add(out_csv)
+        writer.writerow({k: row.get(k, None) for k in CSV_COLUMNS})
+        f.flush()  # 确保及时落盘
 
-                            # 执行 autoregressive 推理
-                            with torch.no_grad():
-                                pred = recurrent_model(current_input)  # (1, x, y, T)
-                                pred_np = pred.squeeze(0).cpu().numpy().transpose(2, 0, 1)  # (T, x, y)
-                                ground_truth_np = ground_truth.squeeze(0).cpu().numpy().transpose(2, 0, 1)  # (T, x, y)
-                                input_ = data_test["x"][idx]
-                                PDE_output = data_test["y"][idx][...,-2]
-                                FNO_output = pred[...,-1].squeeze()
+# ============ 单模型×单数据集 评估函数 ============
 
-                                error = PDE_output - FNO_output
-                                rmse = torch.sqrt(torch.mean(error**2))  # Root Mean Square Error
-                                mae = torch.mean(torch.abs(error))      # Mean Absolute Error
+def eval_initial_to_final(model: FNO2d, data: dict, device: torch.device, max_samples: int) -> Tuple[float, float, int]:
+    assert 'x' in data and 'y' in data, "initial_to_final 数据需包含 'x' 和 'y'"
+    n = min(max_samples, len(data['y']))
+    rmses, maes = [], []
+    model.eval()
+    with torch.no_grad():
+        for i in range(n):
+            # x = data['x'][i].to(device)  # (H, W)  # 如果你想用 x 做输入，解开上一行并调整 in_channels
+            x = data['y'][i][...,0].to(device)
+            y = data['y'][i][...,-2].to(device)
+            pred = model(x.unsqueeze(0).unsqueeze(-1)).squeeze(0).squeeze(-1)
+            err = y - pred
+            rmses.append(torch.sqrt(torch.mean(err**2)).item())
+            maes.append(torch.mean(torch.abs(err)).item())
+    return float(sum(rmses)/len(rmses)), float(sum(maes)/len(maes)), n
 
-                                # Store results
-                                result_dict[key1][key2][key3][idx] = {
-                                    "RMSE": rmse.item(),       # Convert to Python float
-                                    "MAE": mae.item()     # Convert to Python float
-                                }
-                            """
-                            if idx < upper_idx_lim and idx >= lower_idx_lim:
-                                input_frame = 0
-                                output_frame = 19
-                                plot_dual_heatmaps(input_, PDE_output, FNO_output, 
-                                        title1=f'input (frame {input_frame})', title2=f'PDE output (frame {output_frame})', 
-                                        title3=f'FNO output (frame {output_frame})', title4=f'PDE output - FNO output (frame {output_frame})', 
-                                        idx=idx+1, 
-                                        text=f"input=frame{input_frame} output=frame{output_frame} modes{modes} width{width} test (recurrent)",
-                                        save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.png")
-                                create_heatmap_gif(
-                                    ground_truth_np,  # (T, x, y)
-                                    pred_np,          # (T, x, y)
-                                    title1='PDE Solution',
-                                    title2='FNO Prediction',
-                                    fps=5,
-                                    text=f"modes{model_instance.modes1}-width{model_instance.width} test (Autoregressive T_in={Tin}, T_out={T}) index={idx}",
-                                    save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.gif"
-                                )
-                            """
-                else:
-                    pass
+def eval_recurrent_fno2d(model: FNO2d, Tin: int, T: int, data: dict, device: torch.device, max_samples: int) -> Tuple[float, float, int]:
+    assert 'y' in data, "recurrent 数据需包含 'y'，形状 (H, W, T_total)"
+    rp = RecurrentPredictor(model, T_out=T, step=1)
+    n_total = len(data['y'])
+    n = min(max_samples, n_total)
+    rmses, maes = [], []
+    model.eval()
+    with torch.no_grad():
+        for i in range(n):
+            sample = data['y'][i].to(device)
+            assert sample.ndim == 3 and sample.shape[-1] >= Tin + T, f"样本 {i} 的时间长度不足 Tin+T"
+            current_input = sample[None, ..., :Tin]
+            gt = sample[None, ..., Tin:Tin+T]
+            pred = rp(current_input)
+            err = gt[..., -1] - pred[..., -1]
+            rmses.append(torch.sqrt(torch.mean(err**2)).item())
+            maes.append(torch.mean(torch.abs(err)).item())
+    return float(sum(rmses)/len(rmses)), float(sum(maes)/len(maes)), n
 
-        elif key1 == "FNO3d":
-            for key2 in models_params["FNO3d"].keys():
-                result_dict[key1][key2] = {}
-                if key2 == "padding":
-                    all_models_info_dict = models_params[key1][key2]
-                    for key3 in all_models_info_dict:
-                        print("========================================================")
-                        print(key1,key2,key3)
-                        result_dict[key1][key2][key3] = {}
-                        info_dict = models_params[key1][key2][key3]
-                        print(info_dict)
+def eval_fno3d(model: FNO3d, Tin: int, T: int, data: dict, device: torch.device, max_samples: int) -> Tuple[float, float, int]:
+    assert 'y' in data, "FNO3d 数据需包含 'y'，形状 (H, W, T_total)"
+    n_total = len(data['y'])
+    n = min(max_samples, n_total)
+    rmses, maes = [], []
+    model.eval()
+    with torch.no_grad():
+        for i in range(n):
+            sample = data['y'][i].to(device)
+            assert sample.ndim == 3 and sample.shape[-1] >= Tin + T, f"样本 {i} 的时间长度不足 Tin+T"
+            current_input = sample[None, ..., :Tin]
+            gt = sample[None, ..., Tin:Tin+T]
+            B, H, W, _ = current_input.shape
+            pred = model(current_input.reshape(1, H, W, 1, Tin).repeat(1, 1, 1, T, 1))
+            if pred.shape[-1] == 1:
+                pred_last = pred[..., -1, 0]
+            else:
+                pred_last = pred[..., -1]
+            err = gt[..., -1].squeeze(0) - pred_last.squeeze(0)
+            rmses.append(torch.sqrt(torch.mean(err**2)).item())
+            maes.append(torch.mean(torch.abs(err)).item())
+    return float(sum(rmses)/len(rmses)), float(sum(maes)/len(maes)), n
 
-                        data_path = info_dict["data_path"]
-                        modes12 = info_dict["modes12"]
-                        modes3 = info_dict["modes3"]
-                        width = info_dict["width"]
-                        model_path = info_dict["model_path"]
-                        Tin = info_dict["Tin"]
-                        T = info_dict["T"]
+# ============ 主流程 ============
 
-                        data_test = torch.load(
-                            data_path, 
-                            weights_only=False,
-                            map_location=device
-                        )
-                        model_instance = FNO3d(
-                            modes1=modes12, 
-                            modes2=modes12, 
-                            modes3=modes3, 
-                            width=width, 
-                            in_channels=Tin,
-                            padding=True).to(device)
-                        state_dict = torch.load(
-                            model_path, 
-                            map_location=device
-                        )
+def build_dataset_catalog(args) -> List[Tuple[str, Path]]:
+    """返回 [(group, path_to_pt), ...]"""
+    catalog = []
+    for group, p in [
+        ("train", args.train),
+        ("test", args.test),
+        ("generalizability", args.generalizability),
+        ("expanded", args.expanded),
+    ]:
+        for fp in list_pt_files(p):
+            catalog.append((group, fp))
+    return catalog
 
-                        model_instance.load_state_dict(state_dict)
-                        model_instance.eval() 
+def load_data_pt(path: Path, device: torch.device) -> Optional[dict]:
+    try:
+        data = torch.load(str(path), weights_only=False, map_location=device)
+        if not isinstance(data, dict):
+            print(f"[WARN] {path} 加载结果不是 dict，跳过。")
+            return None
+        return data
+    except Exception as e:
+        print(f"[ERROR] 加载 {path} 失败: {e}")
+        return None
 
-                        for idx in tqdm(range(50)):
-                            # 加载测试数据和模型
-                            sample = data_test["y"][idx]  # shape: (x, y, T_total)
-                            sample = sample.to(device)
+def ensure_device(device_str: str) -> torch.device:
+    if device_str == 'cuda' and not torch.cuda.is_available():
+        print("[WARN] CUDA 不可用，切换到 CPU")
+        return torch.device('cpu')
+    return torch.device(device_str)
 
-                            # 初始输入 (1, x, y, T_in)
-                            current_input = sample[None, ..., :Tin]
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train', type=str, default=None, help='train 数据集文件或文件夹路径')
+    parser.add_argument('--test', type=str, default=None, help='test 数据集文件或文件夹路径')
+    parser.add_argument('--generalizability', type=str, default=None, help='generalizability 文件夹路径')
+    parser.add_argument('--expanded', type=str, default=None, help='expanded 文件夹路径')
+    parser.add_argument('--max-samples', type=int, default=50)
+    parser.add_argument('--out-csv', type=str, default='results_batch_eval.csv')
+    parser.add_argument('--device', type=str, choices=['cpu', 'cuda'], default='cuda' if torch.cuda.is_available() else 'cpu')
+    parser.add_argument('--no-resume', action='store_true', help='禁用断点续跑（不跳过已存在条目）')  # NEW
+    args = parser.parse_args()
 
-                            # 真实输出 (1, x, y, T)
-                            ground_truth = sample[None, ..., Tin:Tin+T]
+    device = ensure_device(args.device)
 
-                            # 执行 autoregressive 推理
-                            with torch.no_grad():
-                                s = 256
-                                pred = model_instance(current_input.reshape(1,s,s,1,Tin).repeat([1,1,1,T,1]))  # (1, x, y, T)
-                                pred_np = pred.squeeze(0).cpu().numpy().transpose(2, 0, 1, 3).squeeze()  # (T, x, y)
-                                ground_truth_np = ground_truth.squeeze(0).cpu().numpy().transpose(2, 0, 1)  # (T, x, y)
-                                input_ = data_test["x"][idx]
-                                PDE_output = data_test["y"][idx][...,-2]
-                                FNO_output = pred[...,-1,0].squeeze()
+    catalog = build_dataset_catalog(args)
+    if not catalog:
+        print('[ERROR] 未找到任何 .pt 数据集文件，请检查路径。')
+        return
 
-                                error = PDE_output - FNO_output
-                                rmse = torch.sqrt(torch.mean(error**2))  # Root Mean Square Error
-                                mae = torch.mean(torch.abs(error))      # Mean Absolute Error
+    out_csv = Path(args.out_csv)
+    done_keys = set()
+    if not args.no_resume:
+        done_keys = load_done_keys_from_csv(out_csv)
+        if done_keys:
+            print(f"[INFO] 断点续跑：已存在 {len(done_keys)} 条记录，将跳过相同键的组合。")
 
-                                # Store results
-                                result_dict[key1][key2][key3][idx] = {
-                                    "RMSE": rmse.item(),       # Convert to Python float
-                                    "MAE": mae.item()     # Convert to Python float
-                                }
-                            """
-                            # 可视化预测和真实值
-                            if idx < upper_idx_lim and idx >= lower_idx_lim:
-                                input_frame = 0
-                                output_frame = 19
-                                plot_dual_heatmaps(input_, PDE_output, FNO_output, 
-                                        title1=f'input (frame {input_frame})', title2=f'PDE output (frame {output_frame})', 
-                                        title3=f'FNO output (frame {output_frame})', title4=f'PDE output - FNO output (frame {output_frame})', 
-                                        idx=idx+1, 
-                                        text=f"input=frame{input_frame} output=frame{output_frame} modes{modes} width{width} test",
-                                        save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.png")
-                                create_heatmap_gif(
-                                        ground_truth_np,  # (T, x, y)
-                                        pred_np,          # (T, x, y)
-                                        title1='PDE Solution',
-                                        title2='FNO Prediction',
-                                        fps=5,
-                                        text=f"modes{model_instance.modes1}-width{model_instance.width} test (Autoregressive T_in={Tin}, T_out={T}) index={idx}",
-                                        save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.gif"
-                                    )
-                            """
-                elif key2 == "no_padding":
-                    all_models_info_dict = models_params[key1][key2]
-                    for key3 in all_models_info_dict:
-                        print("========================================================")
-                        print(key1,key2,key3)
-                        result_dict[key1][key2][key3] = {}
-                        info_dict = models_params[key1][key2][key3]
-                        print(info_dict)
+    n_written = 0  # NEW: 统计本次新写入的条数
 
-                        data_path = info_dict["data_path"]
-                        modes12 = info_dict["modes12"]
-                        modes3 = info_dict["modes3"]
-                        width = info_dict["width"]
-                        model_path = info_dict["model_path"]
-                        Tin = info_dict["Tin"]
-                        T = info_dict["T"]
+    # 遍历模型
+    for family, family_dict in models_params.items():
+        for group, group_dict in family_dict.items():
+            for key, info in group_dict.items():
+                # 解析/准备模型超参
+                model_path = info.get('model_path')
+                hps = {}
+                hps.update(parse_hparams_from_text(key))
+                hps.update(parse_hparams_from_text(model_path or ''))
+                for k in ['modes', 'width', 'epochs', 'Tin', 'T', 'modes12', 'modes3']:
+                    if k in info:
+                        hps[k] = info[k]
 
-                        data_test = torch.load(
-                            data_path, 
-                            weights_only=False,
-                            map_location=device
-                        )
-                        model_instance = FNO3d(
-                            modes1=modes12, 
-                            modes2=modes12, 
-                            modes3=modes3, 
-                            width=width, 
-                            in_channels=Tin,
-                            padding=False).to(device)
-                        state_dict = torch.load(
-                            model_path, 
-                            map_location=device
-                        )
+                t_model_start = time.perf_counter()
 
-                        model_instance.load_state_dict(state_dict)
-                        model_instance.eval() 
+                # 实例化模型
+                try:
+                    if family == 'FNO2d':
+                        if group == 'initial_to_final':
+                            modes = hps.get('modes')
+                            width = hps.get('width')
+                            assert modes and width, f"缺少 modes/width: {key}"
+                            model = FNO2d(modes1=modes, modes2=modes, width=width, in_channels=1).to(device)
+                        elif group == 'recurrent':
+                            modes = hps.get('modes')
+                            width = hps.get('width')
+                            Tin = hps.get('Tin')
+                            T = hps.get('T')
+                            assert modes and width and Tin and T, f"缺少 modes/width/Tin/T: {key}"
+                            model = FNO2d(modes1=modes, modes2=modes, width=width, in_channels=Tin).to(device)
+                        else:
+                            print(f"[WARN] 未知 FNO2d 分组 {group}，跳过。")
+                            continue
+                    elif family == 'FNO3d':
+                        modes12 = hps.get('modes12') or hps.get('modes')
+                        modes3 = hps.get('modes3')
+                        width = hps.get('width')
+                        Tin = hps.get('Tin')
+                        T = hps.get('T')
+                        padding = (group == 'padding')
+                        assert modes12 and modes3 and width and Tin and T, f"缺少 modes12/modes3/width/Tin/T: {key}"
+                        model = FNO3d(modes1=modes12, modes2=modes12, modes3=modes3, width=width, in_channels=Tin, padding=padding).to(device)
+                    else:
+                        print(f"[WARN] 未知模型族 {family}，跳过。")
+                        continue
 
-                        for idx in tqdm(range(50)):
-                            # 加载测试数据和模型
-                            sample = data_test["y"][idx]  # shape: (x, y, T_total)
-                            sample = sample.to(device)
+                    # 加载权重
+                    if model_path:
+                        state = torch.load(model_path, map_location=device)
+                        model.load_state_dict(state)
+                    model.eval()
+                except Exception as e:
+                    print(f"[ERROR] 实例化或加载模型失败: {family} / {group} / {key}: {e}")
+                    continue
 
-                            # 初始输入 (1, x, y, T_in)
-                            current_input = sample[None, ..., :Tin]
+                t_model_ready = time.perf_counter()
+                print("="*70)
+                print(f"Model ready: family={family} group={group} key={key}\n  hparams={hps}\n  load_time={t_model_ready - t_model_start:.2f}s")
 
-                            # 真实输出 (1, x, y, T)
-                            ground_truth = sample[None, ..., Tin:Tin+T]
+                # 遍历所有数据集
+                for ds_group, ds_path in catalog:
+                    # 断点续跑：先构造键看看是否已完成
+                    tentative_row_core = {
+                        'model_family': family,
+                        'model_group': group,
+                        'model_key': key,
+                        'dataset_group': ds_group,
+                        'dataset_name': base_name_no_ext(ds_path),
+                    }
+                    k = (tentative_row_core['model_family'], tentative_row_core['model_group'],
+                         tentative_row_core['model_key'], tentative_row_core['dataset_group'],
+                         tentative_row_core['dataset_name'])
+                    if not args.no_resume and k in done_keys:
+                        print(f"  ▶ {ds_group:<17} | {ds_path.name:<50} | SKIP (已在 CSV 中)")
+                        continue
 
-                            # 执行 autoregressive 推理
-                            with torch.no_grad():
-                                s = 256
-                                pred = model_instance(current_input.reshape(1,s,s,1,Tin).repeat([1,1,1,T,1]))  # (1, x, y, T)
-                                pred_np = pred.squeeze(0).cpu().numpy().transpose(2, 0, 1, 3).squeeze()  # (T, x, y)
-                                ground_truth_np = ground_truth.squeeze(0).cpu().numpy().transpose(2, 0, 1)  # (T, x, y)
-                                input_ = data_test["x"][idx]
-                                PDE_output = data_test["y"][idx][...,-2]
-                                FNO_output = pred[...,-1,0].squeeze()
+                    t_ds_start = time.perf_counter()
+                    ds_data = load_data_pt(ds_path, device)
+                    if ds_data is None:
+                        continue
 
-                                error = PDE_output - FNO_output
-                                rmse = torch.sqrt(torch.mean(error**2))  # Root Mean Square Error
-                                mae = torch.mean(torch.abs(error))      # Mean Absolute Error
+                    # 评估
+                    try:
+                        if family == 'FNO2d' and group == 'initial_to_final':
+                            rmse_mean, mae_mean, n = eval_initial_to_final(model, ds_data, device, args.max_samples)
+                            Tin = None; T = None; modes12=None; modes3=None; padding=None
+                        elif family == 'FNO2d' and group == 'recurrent':
+                            Tin = to_int(hps.get('Tin'))
+                            T = to_int(hps.get('T'))
+                            rmse_mean, mae_mean, n = eval_recurrent_fno2d(model, Tin, T, ds_data, device, args.max_samples)
+                            modes12=None; modes3=None; padding=None
+                        elif family == 'FNO3d':
+                            Tin = to_int(hps.get('Tin'))
+                            T = to_int(hps.get('T'))
+                            rmse_mean, mae_mean, n = eval_fno3d(model, Tin, T, ds_data, device, args.max_samples)
+                            modes12 = to_int(hps.get('modes12') or hps.get('modes'))
+                            modes3 = to_int(hps.get('modes3'))
+                            padding = (group == 'padding')
+                        else:
+                            print(f"[WARN] 未知组合，跳过 {family}/{group}")
+                            continue
+                    except AssertionError as ae:
+                        print(f"[SKIP] {ds_path.name}: {ae}")
+                        continue
+                    except Exception as e:
+                        print(f"[ERROR] 评估失败 {family}/{group}/{key} @ {ds_path}: {e}")
+                        continue
 
-                                # Store results
-                                result_dict[key1][key2][key3][idx] = {
-                                    "RMSE": rmse.item(),       # Convert to Python float
-                                    "MAE": mae.item()     # Convert to Python float
-                                }
-                            """
-                            # 可视化预测和真实值
-                            if idx < upper_idx_lim and idx >= lower_idx_lim:
-                                input_frame = 0
-                                output_frame = 19
-                                plot_dual_heatmaps(input_, PDE_output, FNO_output, 
-                                        title1=f'input (frame {input_frame})', title2=f'PDE output (frame {output_frame})', 
-                                        title3=f'FNO output (frame {output_frame})', title4=f'PDE output - FNO output (frame {output_frame})', 
-                                        idx=idx+1, 
-                                        text=f"input=frame{input_frame} output=frame{output_frame} modes{modes} width{width} test",
-                                        save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.png")
-                                create_heatmap_gif(
-                                        ground_truth_np,  # (T, x, y)
-                                        pred_np,          # (T, x, y)
-                                        title1='PDE Solution',
-                                        title2='FNO Prediction',
-                                        fps=5,
-                                        text=f"modes{model_instance.modes1}-width{model_instance.width} test (Autoregressive T_in={Tin}, T_out={T}) index={idx}",
-                                        save_path=f"{base_path}/2D_NS_compare/plots/{key1} {key2} {key3} idx{idx}.gif"
-                                    )
-                            """
+                    t_ds_end = time.perf_counter()
+                    elapsed = t_ds_end - t_ds_start
+                    ms_per_sample = (elapsed / max(1, n)) * 1000.0
 
-                else:
-                    pass
+                    # 组成一行并立刻写入 CSV（append）
+                    row = {
+                        'model_family': family,
+                        'model_group': group,
+                        'model_key': key,
+                        'model_path': model_path,
+                        'modes': to_int(hps.get('modes')),
+                        'width': to_int(hps.get('width')),
+                        'epochs': to_int(hps.get('epochs')),
+                        'Tin': to_int(Tin),
+                        'T': to_int(T),
+                        'modes12': to_int(modes12),
+                        'modes3': to_int(modes3),
+                        'padding': padding,
+                        'dataset_group': ds_group,
+                        'dataset_name': base_name_no_ext(ds_path),
+                        'dataset_path': str(ds_path),
+                        'samples_used': n,
+                        'rmse_mean': rmse_mean,
+                        'mae_mean': mae_mean,
+                        'seconds': elapsed,
+                        'ms_per_sample': ms_per_sample,
+                    }
+                    append_row(out_csv, row)   # NEW: 立刻追加到 CSV
+                    n_written += 1
+                    if not args.no_resume:
+                        done_keys.add(_resume_key(row))  # 防止同一进程内重复
 
-        else:
+                    print(f"  ▶ {ds_group:<17} | {ds_path.name:<50} | n={n:<3d} | RMSE={rmse_mean:.6f} | MAE={mae_mean:.6f} | time={elapsed:.2f}s ({ms_per_sample:.1f} ms/sample)")
+
+    print("="*70)
+    print(f"[OK] 本次追加写入 {n_written} 条记录 -> {out_csv}")
+    if out_csv.exists():
+        try:
+            total = sum(1 for _ in open(out_csv, 'r', encoding='utf-8', errors='ignore')) - 1
+            print(f"[INFO] 文件当前总记录数（不含表头）: {max(total,0)}")
+        except Exception:
             pass
 
-    return result_dict
+if __name__ == '__main__':
+    main()
 
-if __name__ == "__main__":
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    result_dict = predict(models_params, device)
-    with open(f'{base_path}/2D_NS_compare/results.pkl', 'wb') as f:
-        pickle.dump(result_dict, f)
 
 
 

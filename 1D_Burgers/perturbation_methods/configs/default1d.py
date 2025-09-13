@@ -25,8 +25,22 @@ def get_default_configs():
 
     config.burgers = burgers = ml_collections.ConfigDict()
     burgers.epochs = 0.0005
+
+    config.inputs = [   
+        (2,20,100,0.6), 
+        (2,50,100,0.6),
+        (2,20,100,0.8), 
+        (2,50,100,0.8), 
+        (2,20,100,1), 
+        (2,50,100,1), 
+        (2,40,100,2), 
+        (2,100,100,2), 
+        # (2,20,100,0.5), 
+        # (2,50,100,0.5), 
+        ]
+
     
-    
+    """
     config.inputs = [   
         ("inf",0.1,100,0.001), 
         ("inf",0.1,100,0.005),
@@ -48,6 +62,9 @@ def get_default_configs():
         (2,20,100,0.2), 
         (2,20,100,1), 
         ]
+    """
+
+
     """
     
     config.inputs = [   

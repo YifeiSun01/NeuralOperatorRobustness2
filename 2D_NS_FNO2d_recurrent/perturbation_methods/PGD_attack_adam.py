@@ -145,33 +145,70 @@ class JaxPDEWrapper(torch.autograd.Function):
         return torch.utils.dlpack.from_dlpack(grad_input_dlpack), None
 
 def generate_sequence_every_second(u0, nu, T_seconds, fixed_step=0.005):
-    num_steps = int(T_seconds / fixed_step)
-    u0 = jnp.rot90(jnp.flipud(u0), 3)
-    full_ic = jnp.expand_dims(jnp.array(u0, dtype=jnp.float32), axis=0)
+    """
+    稀疏保存：只保留 0..T 的整数秒帧，形状 (T_seconds+1, H, W)。
+    内部仍走 1/dt 微步，但不保留中间帧；反向时可通过 checkpoint 重算微步以省显存。
+    """
+    # 与原逻辑一致的旋转/翻转（保持坐标系约定）
+    u0_proc = jnp.rot90(jnp.flip(u0, axis=-2), 3, axes=(-2, -1))   # (H, W)
+    H, W = u0_proc.shape
+    assert H == W, "目前只支持正方域网格"
+
+    # Navier-Stokes vorticity stepper（与你原来的相同）
     stepper = ex.stepper._navier_stokes.NavierStokesVorticityZongyi(
-        2, 1, u0.shape[0], fixed_step, diffusivity=nu, order=4
+        2, 1, H, fixed_step, diffusivity=nu, order=4
     )
-    rollout_stepper = ex.rollout(stepper, num_steps, include_init=True)
-    result = rollout_stepper(full_ic)
-    idxs = jnp.array([int(s / fixed_step) for s in range(T_seconds + 1)], dtype=jnp.int32)
-    picked = result[idxs, 0, ...]
-    picked = jnp.swapaxes(picked, -1, -2)
-    return picked
+
+    steps_per_sec = int(round(1.0 / fixed_step))
+    # 单个微步：stepper 期望 (1,H,W)，我们返回去掉 batch 的末状态
+    def step_once(u):
+        return stepper(u[None, ...])[0]
+
+    # 前向不变；反向(grad/vjp)时重算微步中间量以省显存
+    step_once = jax.checkpoint(step_once)
+
+    # 用一个“内层 scan”推进 1 秒的微步，只取该秒末状态
+    def micro(carry, _):
+        u = step_once(carry)
+        return u, None
+
+    def run_one_second(carry, _):
+        u, _ = jax.lax.scan(micro, carry, None, length=steps_per_sec)
+        return u, u  # carry=末状态, ys=末状态（作为该秒的帧）
+
+    # 外层 scan 推进 T_seconds 次，每次产出该秒末状态；最后再把 t=0 初值拼回去
+    _, seconds = jax.lax.scan(run_one_second, u0_proc, None, length=T_seconds)
+    seq = jnp.concatenate([u0_proc[None, ...], seconds], axis=0)  # (T+1, H, W)
+
+    # 与你后续使用保持一致：交换最后两维
+    seq = jnp.swapaxes(seq, -1, -2)
+    return seq
+
 
 class DifferentiablePDESolver:
-    def __init__(self, nu, device="cuda"):
+    def __init__(self, nu, device="cuda", *, fixed_step=0.005):
         self.nu = nu
         self.device = device
         self.perf_records = {}
+        self.fixed_step = fixed_step  # 新增：固定 dt（建议显式传入）
+
     def rollout_seconds(self, x0, T_seconds):
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         start_time = time.perf_counter()
         start_mem = torch.cuda.memory_allocated()
+
         assert isinstance(x0, torch.Tensor) and x0.is_cuda
-        def solver_func(a):
-            return generate_sequence_every_second(a, self.nu, T_seconds)
+
+        # 闭包 + jit：T_seconds / fixed_step / nu 被视作静态常量，减少 Python 开销
+        solver_func = jax.jit(
+            lambda a: generate_sequence_every_second(
+                a, self.nu, T_seconds, fixed_step=self.fixed_step
+            )
+        )
+
         seq_tensor = JaxPDEWrapper.apply(x0.contiguous(), solver_func)
+
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         duration = time.perf_counter() - start_time
@@ -179,10 +216,7 @@ class DifferentiablePDESolver:
         mem_usage = end_mem - start_mem
         self.perf_records[f"rollout_0_{T_seconds}"] = (duration, mem_usage)
         return seq_tensor
-    def get_perf_records(self):
-        records = self.perf_records
-        self.perf_records = {}
-        return records
+
 
 # ====== 近似检索器：仅当 'a' 出现时使用 ======
 class ApproximatePDESolutionFinder:
@@ -629,7 +663,7 @@ class PDEAttackSystem:
                 torch.cuda.reset_peak_memory_stats()
 
         # ---- 保存 ----
-        folder_name = "perturbation_results_1solver"
+        folder_name = "perturbation_results_1solver_1sample"
         os.makedirs(folder_name, exist_ok=True)
         mode_tag = getattr(self, "mode_spec", "undefined")
         save_name = (
@@ -637,8 +671,7 @@ class PDEAttackSystem:
             f"pgd_attack_records_modespec={mode_tag}"
             f"_norm{norm}_alpha{alpha}_epsilon{epsilon}_steps{num_steps}"
             f"_idx{idx}|adam"
-            f"_b1{beta1}_b2{beta2}_ae{adam_eps}"
-            f"_sgn{int(use_sign_for_linf)}_ams{int(amsgrad)}.pkl"
+            f".pkl"
         )
         recorder.save(
             save_name,
@@ -689,29 +722,17 @@ if __name__ == "__main__":
     }
 
     input_list = [
-        {"norm": 2, "epsilon": 0.0002*size**2, "alpha": 0.01*ratio,  "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0006*size**2, "alpha": 0.01*ratio,  "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0012*size**2, "alpha": 0.01*ratio,  "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0002*size**2, "alpha": 0.025*ratio, "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0006*size**2, "alpha": 0.025*ratio, "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0012*size**2, "alpha": 0.025*ratio, "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0002*size**2, "alpha": 0.05*ratio,  "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0006*size**2, "alpha": 0.05*ratio,  "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0012*size**2, "alpha": 0.05*ratio,  "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0002*size**2, "alpha": 0.1*ratio,   "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0006*size**2, "alpha": 0.1*ratio,   "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0012*size**2, "alpha": 0.1*ratio,   "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0002*size**2, "alpha": 0.5*ratio,   "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0006*size**2, "alpha": 0.5*ratio,   "num_steps": 100},
-        {"norm": 2, "epsilon": 0.0012*size**2, "alpha": 0.5*ratio,   "num_steps": 100},
+        {"norm": 2, "epsilon": 0.0072*size**2, "alpha": 0.5*ratio,  "num_steps": 100},
+        {"norm": 2, "epsilon": 0.0072*size**2, "alpha": 1*ratio,  "num_steps": 100},
     ]
+
     print("input_list:", input_list)
 
     # 从环境变量读取 10 位 a/d/w 控制串
     MODE_SPEC = os.environ.get("MODE_SPEC", "wwwwwwwwww")
 
     for cfg in input_list:
-        for idx in [1]:
+        for idx in [5]:
             recurrent_model = RecurrentPredictor(model_instance, T_out=T, step=step).to(device)
             attack_system = PDEAttackSystem(
                 recurrent_model=recurrent_model,
@@ -762,6 +783,7 @@ if __name__ == "__main__":
             gc.collect()
             print("PGD攻击完成！显存已清理")
             print("当前显存占用:", torch.cuda.memory_allocated()/1024**2, "MB")
+
 
 
 

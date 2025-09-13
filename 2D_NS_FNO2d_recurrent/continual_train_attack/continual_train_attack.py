@@ -30,6 +30,14 @@ import argparse
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
 
+# ---- 内存策略（PyTorch + JAX）----
+# 使用 cudaMallocAsync 能显著缓解碎片（PyTorch 1.13+/2.x）
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "backend:cudaMallocAsync")
+# JAX（可选）
+os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
+os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "0.30")
+os.environ.setdefault("XLA_PYTHON_CLIENT_ALLOCATOR", "platform")
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -42,22 +50,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utilities3 import LpLoss, count_params                         # noqa: E402
 from models.FNO2d import FNO2d, RecurrentPredictor                  # noqa: E402
 
-# ---- 内存策略（PyTorch + JAX）----
-# 使用 cudaMallocAsync 能显著缓解碎片（PyTorch 1.13+/2.x）
-os.environ.setdefault(
-    "PYTORCH_CUDA_ALLOC_CONF",
-    "expandable_segments:True,backend:cudaMallocAsync,max_split_size_mb=256,garbage_collection_threshold:0.8"
-)
-os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
-os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "0.30")   # 30% 给 JAX
-os.environ.setdefault("XLA_PYTHON_CLIENT_ALLOCATOR", "platform")
-
 # ------------------ JAX / Exponax ------------------
 import jax
 import jax.numpy as jnp
 import jaxlib
 import exponax as ex
-
 
 import shutil, subprocess
 
@@ -128,7 +125,6 @@ def log_torch_mem(tag: str, device: torch.device | str = "cuda",
           f"alloc={_fmt_bytes(cur)} res={_fmt_bytes(res)} | "
           f"max_alloc={_fmt_bytes(max_alloc)} max_res={_fmt_bytes(max_res)}", flush=True)
 
-    # memory_summary -> 文本
     if summary_to:
         try:
             summary_to.parent.mkdir(parents=True, exist_ok=True)
@@ -137,18 +133,16 @@ def log_torch_mem(tag: str, device: torch.device | str = "cuda",
         except Exception as e:
             print(f"[MemTorch] write memory_summary failed: {e}")
 
-    # memory_snapshot -> gzip json（可能很大）
     if snapshot_to:
         try:
             snapshot_to.parent.mkdir(parents=True, exist_ok=True)
             snap = torch.cuda.memory_snapshot()
             with gzip.open(snapshot_to, "wt", encoding="utf-8") as f:
                 import json
-                json.dump(snap, f, default=str)   # 尽量可序列化
+                json.dump(snap, f, default=str)
         except Exception as e:
             print(f"[MemTorch] write memory_snapshot failed: {e}")
 
-    # 列出还活着的 CUDA 张量（帮助定位“是谁没被释放”）
     if list_tensors_to:
         try:
             seen = []
@@ -173,34 +167,27 @@ def log_torch_mem(tag: str, device: torch.device | str = "cuda",
             print(f"[MemTorch] write live tensor list failed: {e}")
 
 def jax_mem_cleanup():
-    """
-    清 JAX 编译/执行缓存，释放 XLA 常驻内存。
-    """
+    """清 JAX 编译/执行缓存，释放 XLA 常驻内存。"""
     try:
-        # 清掉我们自己的 vjp 缓存
         if hasattr(JaxPDEWrapper, "_vjp_cache"):
             JaxPDEWrapper._vjp_cache.clear()
     except Exception:
         pass
     try:
-        # JAX 的全局编译缓存
-        jax.clear_caches()  # 0.4+ 可用
+        jax.clear_caches()
     except Exception:
         pass
     try:
-        # 让 XLA 完成 pending，再释放
         for d in jax.devices():
             try:
-                jax.block_until_ready(jnp.array(0).device_buffer)  # 兼容性 no-op
+                jax.block_until_ready(jnp.array(0).device_buffer)
             except Exception:
                 pass
     except Exception:
         pass
 
 def hard_cuda_gc(tag: str = ""):
-    """
-    强制 Python/GPU 清理顺序：先 gc，再清 CUDA allocator，再收 IPC 残留，再打印。
-    """
+    """强制 Python/GPU 清理顺序：先 gc，再清 CUDA allocator，再收 IPC 残留，再打印。"""
     gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
@@ -218,13 +205,11 @@ def set_all_seeds(seed: int):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
-
 def torch_load_compat(path: Path, map_location=None):
     try:
         return torch.load(str(path), map_location=map_location, weights_only=False)
     except TypeError:
         return torch.load(str(path), map_location=map_location)
-
 
 def ensure_batched_nhwt(seq: torch.Tensor) -> torch.Tensor:
     if seq.dim() == 3:   # (H,W,T) -> (1,H,W,T)
@@ -233,19 +218,15 @@ def ensure_batched_nhwt(seq: torch.Tensor) -> torch.Tensor:
         return seq
     raise ValueError(f"Expected (H,W,T) or (N,H,W,T), got {tuple(seq.shape)}")
 
-
 def rmse(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.sqrt(np.mean((a - b) ** 2)))
-
 
 def mae(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.mean(np.abs(a - b)))
 
-
 def mape(a: np.ndarray, b: np.ndarray, eps: float = 1e-8) -> float:
     denom = np.where(np.abs(a) < eps, eps, np.abs(a))
     return float(np.mean(np.abs((b - a) / denom)) * 100.0)
-
 
 def parse_dataset_name(stem: str) -> Dict[str, str]:
     info: Dict[str, str] = {}
@@ -270,7 +251,6 @@ def parse_dataset_name(stem: str) -> Dict[str, str]:
     m = re.search(r"solver=([^_]+)", stem)
     if m: info["solver"] = m.group(1)
     return info
-
 
 def make_loaders_from_y(y_all: torch.Tensor, ntrain: int, ntest: int, s: int,
                         T_in: int, T_out: int, batch_size: int, seed: int):
@@ -301,7 +281,7 @@ def make_loaders_from_y(y_all: torch.Tensor, ntrain: int, ntest: int, s: int,
     test_ds  = TensorDataset(x_te, t_te)
 
     train_loader = DataLoader(
-    train_ds, batch_size=batch_size, shuffle=True, drop_last=True, pin_memory=True
+        train_ds, batch_size=batch_size, shuffle=True, drop_last=True, pin_memory=True
     )
     test_loader  = DataLoader(
         test_ds,  batch_size=batch_size, shuffle=False, drop_last=False, pin_memory=True
@@ -309,12 +289,10 @@ def make_loaders_from_y(y_all: torch.Tensor, ntrain: int, ntest: int, s: int,
 
     return train_loader, test_loader, sub
 
-
 def build_model(m1: int, m2: int, width: int, T_out: int, step: int, device: torch.device):
     fno = FNO2d(m1, m2, width).to(device)
     rec = RecurrentPredictor(fno, T_out=T_out, step=step).to(device)
     return fno, rec
-
 
 def train_epochs(fno, rec, train_loader, test_loader, epochs: int, lr: float,
                  iterations: int, log_file: Path, device: torch.device):
@@ -323,8 +301,8 @@ def train_epochs(fno, rec, train_loader, test_loader, epochs: int, lr: float,
     sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(1, iterations))
     with open(log_file, "a") as lf:
         lf.write(f"model parameters: {count_params(fno)}\n")
-    
-    print_cuda_mem("before training", device)   # 新增
+
+    print_cuda_mem("before training", device)
 
     for ep in tqdm(range(epochs), desc="Training"):
         fno.train()
@@ -352,7 +330,7 @@ def train_epochs(fno, rec, train_loader, test_loader, epochs: int, lr: float,
         t2 = time.perf_counter()
         with open(log_file, "a") as lf:
             lf.write(f"epoch:{ep}, time:{t2-t1:.6f}, train l2:{train_l2:.8f}, test l2:{test_l2:.8f}\n")
-        print_cuda_mem(f"after epoch {ep}", device) 
+        print_cuda_mem(f"after epoch {ep}", device)
 
 def eval_dataset_file(pt_path: Path, rec: RecurrentPredictor, device: torch.device,
                       t_in: int, t_out: int) -> Tuple[int, float, float, float, float, float, float]:
@@ -409,7 +387,6 @@ def eval_many_pt_files(dir_path: Path, rec_eval: RecurrentPredictor, device: tor
             print(f"[Round {round_id}] Eval error on {p.name}: {e}")
     print(f"[Round {round_id}] Generalizability eval done. Files processed: {count}")
 
-
 # ------------------ JAX/Exponax 攻击 ------------------
 def spectral_upsample(field: torch.Tensor, target_size=256, device=torch.device("cuda")):
     *batch_dims, H, W = field.shape
@@ -425,7 +402,6 @@ def spectral_upsample(field: torch.Tensor, target_size=256, device=torch.device(
     new_freq = torch.fft.ifftshift(new_freq_shifted, dim=(-2, -1))
     upsampled = torch.fft.ifft2(new_freq, norm='ortho')
     return (target_size / H) * upsampled.real
-
 
 class JaxPDEWrapper(torch.autograd.Function):
     _vjp_cache = {}
@@ -460,7 +436,6 @@ class JaxPDEWrapper(torch.autograd.Function):
         grad_input_dlpack = jax.dlpack.to_dlpack(grad_input_jax)
         return torch.utils.dlpack.from_dlpack(grad_input_dlpack), None
 
-
 def generate_sequence_every_second(u0, nu, T_seconds, fixed_step=0.005):
     num_steps = int(T_seconds / fixed_step)
     u0 = jnp.rot90(jnp.flipud(u0), 3)
@@ -475,7 +450,6 @@ def generate_sequence_every_second(u0, nu, T_seconds, fixed_step=0.005):
     picked = jnp.swapaxes(picked, -1, -2)
     return picked
 
-
 class DifferentiablePDESolver:
     def __init__(self, nu, device="cuda"):
         self.nu = nu
@@ -484,7 +458,6 @@ class DifferentiablePDESolver:
         def solver_func(a):
             return generate_sequence_every_second(a, self.nu, T_seconds)
         return JaxPDEWrapper.apply(x0.contiguous(), solver_func)
-
 
 class PDEAttackSystem:
     def __init__(self, recurrent_model, nu=1e-5, device="cuda", mode_spec="wwwwwwwwww"):
@@ -578,7 +551,6 @@ class PDEAttackSystem:
             y_all_frames = seq_0_to_20.permute(1, 2, 0).contiguous()
         return x_adv.detach(), y_all_frames.detach(), float(final_true_loss.item())
 
-
 # ------------------ CSV/快照/续跑 ------------------
 def write_metrics_row(csv_path: Path, header: List[str], row: List[Any]):
     exists = csv_path.exists()
@@ -587,7 +559,6 @@ def write_metrics_row(csv_path: Path, header: List[str], row: List[Any]):
         if not exists:
             w.writerow(header)
         w.writerow(row)
-
 
 def already_logged(csv_path: Path, round_id: int, dataset_group: str, dataset_path: Path, model_name: str) -> bool:
     if not csv_path.exists():
@@ -604,13 +575,11 @@ def already_logged(csv_path: Path, round_id: int, dataset_group: str, dataset_pa
                 return True
     return False
 
-
 def latest_completed_round(root: Path) -> int:
     snaps = sorted(root.glob("snapshot_round*.json"))
     if not snaps:
         return 0
     return max(int(p.stem.split("round")[-1]) for p in snaps)
-
 
 # ------------------ 主流程 ------------------
 def main():
@@ -637,19 +606,19 @@ def main():
     ap.add_argument("--attack_split", type=str, choices=["train","test"], default="train")
     ap.add_argument("--mode_spec", type=str, default="wwwwwwwwww")
 
-    # 步数保持常数（你传 10 即可）
+    # 步数保持常数
     ap.add_argument("--steps", type=int, default=10, help="PGD steps (常数)")
 
-    # alpha / epsilon 列表（逗号分隔）；若不给就用 base * 递增策略（但仍然每轮步数恒定）
+    # alpha / epsilon 列表
     ap.add_argument("--attack_alpha_list", type=str, default="",
-                    help="例如 '2.5,5,10,20,50'（直接作为 alpha 数值）")
+                    help="例如 '2.5,5,10,20,50'")
     ap.add_argument("--attack_epsilon_list", type=str, default="",
-                    help="例如 '8,15,35,75,105'（直接作为 epsilon 数值）")
+                    help="例如 '8,15,35,75,105'")
 
     # 仅攻一部分
     ap.add_argument("--attack_ratio", type=float, default=1.0, help="每轮只攻击初始池的比例，例如 0.25")
 
-    # “翻倍”池：将上一轮对抗 x 与原始 train x 合并为下一轮攻击的初始池
+    # “翻倍”池：把上一轮对抗 x 并入下一轮攻击的初始池
     ap.add_argument("--reuse_prev_adv", action="store_true", default=True,
                     help="默认开启。把上一轮对抗 x 并入下一轮攻击初始池。")
 
@@ -748,7 +717,7 @@ def main():
         exp_pick  = 0
         exp_pool  = 0
         exp_sources = []
-        counts_by_round = {}   # <--- 新增：记录“每一轮 attack 被采样了多少条”
+        counts_by_round = {}
 
         if expanded_files and mix_ratio > 0:
             exp_tensors = []
@@ -761,19 +730,17 @@ def main():
                     exp_tensors.append(y)
                     exp_sources.append(str(p))
                     exp_pool += y.shape[0]
-                    # 取来源轮次：用父目录名里的 roundXXX；没有就记 -1
                     m = re.search(r"round(\d+)", p.parent.name)
                     rid = int(m.group(1)) if m else -1
                     meta.append({"round": rid, "start": cursor, "end": cursor + y.shape[0]})
                     cursor += y.shape[0]
 
             if exp_tensors:
-                y_exp_all = torch.cat(exp_tensors, dim=0)  # 拼成一个大池
+                y_exp_all = torch.cat(exp_tensors, dim=0)
                 need = int(round(args.ntrain * mix_ratio))
                 g = torch.Generator(device='cpu').manual_seed(args.seed + rd*100)
                 idx = torch.randint(low=0, high=y_exp_all.shape[0], size=(need,), generator=g)
 
-                # 统计每条索引属于哪个文件(哪一轮)
                 counts_by_round = {}
                 for j in idx.tolist():
                     for m in meta:
@@ -781,12 +748,10 @@ def main():
                             counts_by_round[m["round"]] = counts_by_round.get(m["round"], 0) + 1
                             break
 
-                # 选出的 expanded 样本
                 y_pick = y_exp_all[idx]
                 x_exp = y_pick[..., :args.Tin]
                 t_exp = y_pick[..., args.Tin:args.Tin+args.Tout]
 
-                # 只在不是 256x256 时再适配（通常已经是 256）
                 if x_exp.shape[1] != 256 or x_exp.shape[2] != 256:
                     sub_exp = x_exp.shape[1] // 256
                     x_exp = x_exp[:, ::sub_exp, ::sub_exp, :]
@@ -818,8 +783,9 @@ def main():
         with open(log_path, "a") as lf:
             lf.write(msg + "\n")
 
-        # ---------- 模型 ----------
-        
+        # ---------- 模型（新增：默认从上一轮权重热启动） ----------
+        prev_ckpt = models_dir / f"FNO2d_r{rd-1}_m{args.modes1}x{args.modes2}_w{args.width}_Tin{args.Tin}_T{args.Tout}.pth"
+
         if ckpt_path.exists():
             print(f"[Round {rd}] CKPT exists: {ckpt_path} -> 跳过训练，直接加载")
             fno, rec = build_model(args.modes1, args.modes2, args.width, args.Tout, args.step, device)
@@ -827,6 +793,15 @@ def main():
             fno.load_state_dict(sd)
         else:
             fno, rec = build_model(args.modes1, args.modes2, args.width, args.Tout, args.step, device)
+
+            # 关键：若上一轮 ckpt 存在，用其权重热启动本轮
+            if rd > 1 and prev_ckpt.exists():
+                print(f"[Round {rd}] Warm-start from previous round: {prev_ckpt}")
+                sd_prev = torch.load(prev_ckpt, map_location=device)
+                fno.load_state_dict(sd_prev)
+            else:
+                print(f"[Round {rd}] No previous ckpt found -> training from scratch")
+
             iters = args.epochs * max(1, (len(tr_loader.dataset) // args.batch_size))
             with open(log_path, "w") as lf:
                 lf.write("NS 2d FNO continual training log\n")
@@ -861,9 +836,9 @@ def main():
                 print(f"[Round {rd}] Eval generalizability under: {gen_dir}")
                 print_cuda_mem("before generalizability eval", device)
                 eval_many_pt_files(gen_dir, rec_eval, device,
-                                args.Tin, args.Tout,
-                                metrics_csv, header,
-                                rd, ckpt_name, ckpt_path)
+                                   args.Tin, args.Tout,
+                                   metrics_csv, header,
+                                   rd, ckpt_name, ckpt_path)
                 print_cuda_mem("after generalizability eval", device)
             else:
                 print(f"[Round {rd}] Skipped generalizability: dir not found -> {gen_dir}")
@@ -876,7 +851,7 @@ def main():
         # ---------- 攻击（PGD + Exponax） ----------
         split_tag = args.attack_split
 
-        # 选择 alpha/epsilon（保持你的逻辑不变）
+        # 选择 alpha/epsilon
         size = 256
         eps  = eps_list[min(rd-1, len(eps_list)-1)] if eps_list else 0.0002 * (size**2) * (1.15 ** (rd-1))
         alpha= alpha_list[min(rd-1, len(alpha_list)-1)] if alpha_list else 0.01 * 100.0 * (1.10 ** (rd-1))
@@ -902,7 +877,7 @@ def main():
         M = int(math.ceil(X0_cpu.shape[0] * max(0.0, min(1.0, args.attack_ratio))))
         g = torch.Generator(device='cpu').manual_seed(args.seed + rd*999)
         perm = torch.randperm(X0_cpu.shape[0], generator=g)[:M]
-        X0_cpu = X0_cpu[perm]  # 预切片（CPU）
+        X0_cpu = X0_cpu[perm]
         print(f"[Round {rd}] Will attack {M} samples (ratio={args.attack_ratio}) | eps={eps}, alpha={alpha}, steps={steps}")
 
         # 输出文件
@@ -929,8 +904,7 @@ def main():
                 for i in bar:
                     t0 = time.perf_counter()
 
-                    # 只把当前样本搬到 GPU；spectral_upsample 内部会 to(device)
-                    x0_cpu = X0_cpu[i]                               # (H0,W0) on CPU
+                    x0_cpu = X0_cpu[i]
                     x0     = spectral_upsample(x0_cpu, 256, device=device)
 
                     x_final, y_all_frames, final_true_loss = attack_system.pgd_attack_adam(
@@ -938,7 +912,6 @@ def main():
                         norm="2", beta1=0.9, beta2=0.999, adam_eps=1e-8, use_sign_for_linf=True, amsgrad=False
                     )
 
-                    # 回收为 CPU 保存
                     x_out[i]    = x_final.detach().float().cpu()
                     y_out[i]    = y_all_frames.detach().float().cpu()
                     loss_out[i] = float(final_true_loss)
@@ -950,10 +923,8 @@ def main():
                         bar.set_postfix({"avg_s": f"{avg:.2f}", "last": f"{dt:.2f}", "lossμ": f"{loss_out[:i+1].mean().item():.4g}"})
                         print_cuda_mem(f"attack post idx={i}", device)
 
-                    # 小步清理
                     torch.cuda.empty_cache()
 
-            # 始终以 CPU 张量存盘（避免下轮加载时偷搬回 GPU）
             torch.save({"x": x_out, "y": y_out, "loss": loss_out}, exp_path)
             with open(exp_dir / "manifest.json", "w") as mf:
                 json.dump({
@@ -961,8 +932,8 @@ def main():
                     "alpha": alpha, "epsilon": eps, "steps": steps,
                     "attack_ratio": args.attack_ratio,
                     "pool": {"base_train_x": int(X0_base.shape[0]),
-                            "prev_adv_x": int(X0_cpu.shape[0] - min(X0_base.shape[0], X0_cpu.shape[0])) if args.reuse_prev_adv else 0,
-                            "attacked": int(M)}
+                             "prev_adv_x": int(X0_cpu.shape[0] - min(X0_base.shape[0], X0_cpu.shape[0])) if args.reuse_prev_adv else 0,
+                             "attacked": int(M)}
                 }, mf, indent=2)
             print(f"[Round {rd}] Saved expanded -> {exp_path}")
 
@@ -970,7 +941,7 @@ def main():
         if exp_path.exists():
             expanded_files.append(exp_path)
 
-        # 阶段内存清理：释放攻击期大对象 & CUDA 缓存
+        # 阶段内存清理
         del data_raw, X0_base
         if 'X0_prev' in locals(): del X0_prev
         del X0_cpu
@@ -1009,9 +980,7 @@ def main():
     print(f"Metrics  -> {metrics_csv}")
     print(f"Logs     -> {logs_dir}")
 
-
 if __name__ == "__main__":
-    try_nvsmi_once() 
+    try_nvsmi_once()
     jax.config.update("jax_enable_x64", False)
     main()
-

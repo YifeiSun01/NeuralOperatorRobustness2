@@ -23,7 +23,7 @@ export PYTHONPATH=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO:$P
 base_path="/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO"
 nu_val="0.0005"
 # for N in 200 2000 20000; do
-for N in 20000; do
+for N in 20; do
   in_path="${base_path}/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N${N}_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu${nu_val}_t1.0_seed1000045.pt"
   out_path="${base_path}/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N${N}_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu${nu_val}_t1.0_seed1000045.pt"
 

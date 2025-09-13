@@ -479,7 +479,7 @@ def main(argv):
     burgers_params = {
         'nu': nu,
         'simulation_time': 1.0,
-        "step": 0.001
+        "step": 0.0001
     }
 
     dataset_params = {
@@ -568,6 +568,7 @@ def main(argv):
     gradient_filename = f"gradient_test_{solver_name}_nu{nu}_nsamples{num_records}.pkl"
     with open(gradient_folder / gradient_filename, "wb") as f:
         pickle.dump(gradient_records, f)
+    print(f"Pickle file saved to {gradient_folder}/{gradient_filename}")
 
 if __name__ == "__main__":
     app.run(main)
