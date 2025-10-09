@@ -86,9 +86,65 @@ def try_nvsmi_once() -> None:
     except Exception:
         pass
 
+import re
+from typing import Optional
+
+def _extract_round_from_name(name: str) -> Optional[int]:
+    """
+    从模型文件名中提取轮次：匹配 FNO2d_r<NUM>_m...*.pth
+    返回 int 或 None
+    """
+    m = re.search(r"FNO2d_r(\d+)_", name)
+    return int(m.group(1)) if m else None
+
+def latest_model_round(models_dir: Path) -> int:
+    """
+    在 models_dir 下寻找所有 FNO2d_r*_m*.pth，返回最大 r。若无则 0。
+    """
+    if not models_dir.exists():
+        return 0
+    max_r = 0
+    for p in models_dir.glob("FNO2d_r*_m*.pth"):
+        rid = _extract_round_from_name(p.name)
+        if rid is not None:
+            max_r = max(max_r, rid)
+    return max_r
+
+def latest_any_round(out_root: Path) -> int:
+    """
+    综合“模型文件最大 r”和“snapshot_round*.json 最大 r”，取更大者。
+    优先模型（更可靠），snapshot 仅作兜底。
+    """
+    models_dir = out_root / "models"
+    r_models = latest_model_round(models_dir)
+    # snapshot 兜底
+    snaps = sorted(out_root.glob("snapshot_round*.json"))
+    r_snaps = 0
+    if snaps:
+        try:
+            r_snaps = max(int(p.stem.split("round")[-1]) for p in snaps)
+        except Exception:
+            r_snaps = 0
+    return max(r_models, r_snaps)
+
+def find_latest_ckpt_path_for_round(models_dir: Path, r: int) -> Optional[Path]:
+    """
+    给定轮次 r，在 models/ 下找该轮的模型文件（宽/模数等超参若变动，用通配符兜住）。
+    例如：FNO2d_r6_m96x96_w80_Tin10_T10.pth
+    """
+    cands = list(models_dir.glob(f"FNO2d_r{r}_m*x*_w*_Tin*_T*.pth")) + \
+            list(models_dir.glob(f"FNO2d_r{r}_m*.pth"))
+    if not cands:
+        return None
+    # 若有多个，按修改时间取最新
+    return max(cands, key=lambda p: p.stat().st_mtime)
+
+
 # ==== 显存诊断与清理工具 ====
 from datetime import datetime
 import gc, gzip
+
+
 
 def _fmt_bytes(n: int | float) -> str:
     try:
@@ -660,10 +716,48 @@ def main():
     for d in [models_dir, logs_dir, expanded_root]:
         d.mkdir(parents=True, exist_ok=True)
 
-    # 续跑范围：从上次 + 1 开始，连续跑 args.rounds 轮
-    start_round = latest_completed_round(out_root) + 1
+    # === 新增：工具函数（仅在 main 内部使用）===
+    import re
+    from typing import Optional
+
+    def _extract_round_from_name(name: str) -> Optional[int]:
+        m = re.search(r"FNO2d_r(\d+)_", name)
+        return int(m.group(1)) if m else None
+
+    def latest_model_round(models_dir: Path) -> int:
+        if not models_dir.exists():
+            return 0
+        max_r = 0
+        for p in models_dir.glob("FNO2d_r*_m*.pth"):
+            rid = _extract_round_from_name(p.name)
+            if rid is not None:
+                max_r = max(max_r, rid)
+        return max_r
+
+    def latest_any_round(out_root: Path) -> int:
+        # 优先模型；snapshot 兜底
+        r_models = latest_model_round(out_root / "models")
+        snaps = sorted(out_root.glob("snapshot_round*.json"))
+        r_snaps = 0
+        if snaps:
+            try:
+                r_snaps = max(int(p.stem.split("round")[-1]) for p in snaps)
+            except Exception:
+                r_snaps = 0
+        return max(r_models, r_snaps)
+
+    def find_latest_ckpt_path_for_round(models_dir: Path, r: int) -> Optional[Path]:
+        cands = list(models_dir.glob(f"FNO2d_r{r}_m*x*_w*_Tin*_T*.pth")) + \
+                list(models_dir.glob(f"FNO2d_r{r}_m*.pth"))
+        if not cands:
+            return None
+        return max(cands, key=lambda p: p.stat().st_mtime)
+
+    # === 修改1：续跑范围（优先以“现有模型的最新 r”为准；无模型再回退 snapshot）===
+    latest_r = latest_any_round(out_root)
+    start_round = latest_r + 1
     end_round   = start_round + args.rounds - 1
-    print(f"[Resume] start_round={start_round}, end_round={end_round} (out_root={out_root})")
+    print(f"[Resume] detected latest_r={latest_r}  -> start_round={start_round}, end_round={end_round} (out_root={out_root})")
 
     # 读取原始数据
     train_pt = Path(args.train_pt).resolve()
@@ -701,6 +795,7 @@ def main():
 
         print("\n" + "="*24 + f" ROUND {rd}/{end_round} " + "="*24)
 
+        # 计划保存为 r{rd} 的目标 ckpt（即若已有 rK，则当前 rd=K+1）
         ckpt_name = f"FNO2d_r{rd}_m{args.modes1}x{args.modes2}_w{args.width}_Tin{args.Tin}_T{args.Tout}.pth"
         ckpt_path = models_dir / ckpt_name
         log_path  = logs_dir / f"train_r{rd}.txt"
@@ -783,24 +878,26 @@ def main():
         with open(log_path, "a") as lf:
             lf.write(msg + "\n")
 
-        # ---------- 模型（新增：默认从上一轮权重热启动） ----------
-        prev_ckpt = models_dir / f"FNO2d_r{rd-1}_m{args.modes1}x{args.modes2}_w{args.width}_Tin{args.Tin}_T{args.Tout}.pth"
+        # === 修改2：模型加载策略（自动 rK -> 训练保存为 rK+1）===
+        fno, rec = build_model(args.modes1, args.modes2, args.width, args.Tout, args.step, device)
 
         if ckpt_path.exists():
+            # 该轮 r{rd} 已经训练过：直接加载并跳过训练
             print(f"[Round {rd}] CKPT exists: {ckpt_path} -> 跳过训练，直接加载")
-            fno, rec = build_model(args.modes1, args.modes2, args.width, args.Tout, args.step, device)
             sd = torch.load(ckpt_path, map_location=device)
             fno.load_state_dict(sd)
         else:
-            fno, rec = build_model(args.modes1, args.modes2, args.width, args.Tout, args.step, device)
-
-            # 关键：若上一轮 ckpt 存在，用其权重热启动本轮
-            if rd > 1 and prev_ckpt.exists():
-                print(f"[Round {rd}] Warm-start from previous round: {prev_ckpt}")
-                sd_prev = torch.load(prev_ckpt, map_location=device)
-                fno.load_state_dict(sd_prev)
+            # 自动寻找 models/ 下现存的最新 rK，作为热启动
+            latest_r_models = latest_model_round(models_dir)
+            if latest_r_models > 0:
+                prev_path = find_latest_ckpt_path_for_round(models_dir, latest_r_models)
+                if prev_path is not None:
+                    print(f"[Round {rd}] Warm-start from latest model r{latest_r_models}: {prev_path}")
+                    fno.load_state_dict(torch.load(prev_path, map_location=device))
+                else:
+                    print(f"[Round {rd}] No previous ckpt matched in models/, training from scratch")
             else:
-                print(f"[Round {rd}] No previous ckpt found -> training from scratch")
+                print(f"[Round {rd}] No existing model found in models/, training from scratch")
 
             iters = args.epochs * max(1, (len(tr_loader.dataset) // args.batch_size))
             with open(log_path, "w") as lf:
@@ -979,6 +1076,7 @@ def main():
     print(f"Expanded -> {expanded_root}")
     print(f"Metrics  -> {metrics_csv}")
     print(f"Logs     -> {logs_dir}")
+
 
 if __name__ == "__main__":
     try_nvsmi_once()

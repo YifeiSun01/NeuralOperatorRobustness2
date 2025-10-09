@@ -26,7 +26,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string('dataset_pt', None, 'Path to input dataset .pt (must contain keys x,y).')
 flags.DEFINE_string('model_pth',  None, 'Path to FNO2d weights .pth.')
 flags.DEFINE_enum(  'forcing_pattern', None,
-                   ['ringsCos','sBands','isoCircles','petals','ringsL1','ringsLinf'],
+                   ['ringsCos','sBands','isoCircles','petals','ringsL1','ringsLinf','none'],
                    'Forcing pattern string used by the PDE solver.')
 flags.DEFINE_string('save_to',   None, 'Output .pt filepath OR a directory; dir -> auto filename.')
 

@@ -3,8 +3,8 @@
 #SBATCH --partition=hpg-b200
 #SBATCH --gres=gpu:b200:1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=100G                       
-#SBATCH --time=100:00:00         
+#SBATCH --mem=80G                       
+#SBATCH --time=8:00:00         
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=yifeisun@umich.edu
 #SBATCH --output=./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/logs/%x_%j.out
@@ -25,7 +25,8 @@ OUT_DIR="${ROOT}/datasets/expanded_datasets"
 mkdir -p "${OUT_DIR}"
 
 # 6 种 forcing pattern
-patterns=(isoCircles petals ringsCos ringsL1 ringsLinf sBands)
+# patterns=( ringsL1 ringsLinf sBands none)
+patterns=(ringsLinf)
 # 同时跑 train 和 test；只想跑 test 可改为：splits=(test)
 # splits=(train test)
 splits=(train)

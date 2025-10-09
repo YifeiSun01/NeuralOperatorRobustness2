@@ -56,10 +56,11 @@ PATTERN_TO_TRAIN_FILE = {
     # "isoCircles": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternisoCircles.pt",
     # "petals":     "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternpetals.pt",
     # "ringsCos":   "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsCos.pt",
-    "ringsL1":    "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsL1.pt",
+    # "ringsL1":    "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsL1.pt",
     # "ringsLinf":  "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pt",
     # 注意：你给的 sBands 文件名里是 forcingPatternsBands（多了个 s），这里按原样写
     # "sBands":     "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pt",
+    "none":         "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternnone.pt"
 }
 
 # ============== 设备 & 损失 ==============

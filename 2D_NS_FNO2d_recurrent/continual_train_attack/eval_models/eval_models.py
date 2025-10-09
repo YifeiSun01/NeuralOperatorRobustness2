@@ -14,7 +14,7 @@ FNO2d initial_to_final, and FNO3d with/without padding).
 - Evaluate against four dataset groups:
   train(.pt), test(.pt), expanded_dir/*.pt, gen_dir/*.pt
 - Expanded folder models: prefer matched expanded dataset (from manifest_{add|replace}.json)
-- Per-(model,dataset) metrics: RMSE/MAE on the *last* horizon frame
+- Per-(model,dataset) metrics: RMSE/MAE/MAPE(on last frame) + REL L2 (whole-field)
 - Combined CSV + side-car JSON catalog (incremental, resume-safe)
 - NEW: At startup, print grouped & numbered lists of found MODELS and DATASETS.
 """
@@ -118,6 +118,13 @@ def rmse(a: np.ndarray, b: np.ndarray) -> float:
 def mae(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.mean(np.abs(a - b)))
 
+def mape_decimal(a: np.ndarray, b: np.ndarray, eps: float = 1e-8) -> float:
+    """
+    Mean Absolute Percentage Error as a decimal in [0, +inf), not percent.
+    """
+    denom = np.maximum(np.abs(a), eps)
+    return float(np.mean(np.abs((a - b) / denom)))
+
 def pretty_float(x: float) -> str:
     if math.isnan(x) or math.isinf(x):
         return str(x)
@@ -138,6 +145,21 @@ def ensure_batched_nhwt(seq: torch.Tensor) -> torch.Tensor:
     if seq.dim() == 4:
         return seq
     raise ValueError(f"Expected 3D or 4D tensor (H,W,T) or (N,H,W,T), got {tuple(seq.shape)}")
+
+# 新增：整体相对 L2（最后一帧，非逐元素）
+def rel_l2_whole(pred_last: torch.Tensor, gt_last: torch.Tensor, eps: float = 1e-12) -> float:
+    """
+    Relative L2 error over the whole field on the last frame:
+        ||pred - gt||_2 / ||gt||_2
+    pred_last, gt_last: (H, W) or any shape of the last frame.
+    """
+    # flatten then compute vector norm
+    diff = (pred_last - gt_last).reshape(-1).float()
+    gvec = gt_last.reshape(-1).float()
+    diff_norm = torch.norm(diff, p=2)
+    gt_norm = torch.norm(gvec, p=2)
+    denom = torch.clamp(gt_norm, min=eps)
+    return float((diff_norm / denom).item())
 
 # ------------------------ filename parsers ------------------------
 DATASET_KEYS = [
@@ -359,13 +381,28 @@ def _shape_safe_load(model: torch.nn.Module, state_dict: Dict[str, torch.Tensor]
     return loaded_keys, missing, skipped_shape
 
 # --------------------------------------------------------------------------------------
-# Evaluators per family
+# Evaluators per family (return means + sample stds + N)
 # --------------------------------------------------------------------------------------
-def eval_initial_to_final(model: FNO2d, data: dict, device: torch.device, max_samples: int) -> Tuple[float, float, int]:
+def _finalize_err_stats4(r_list: List[float], a_list: List[float], m_list: List[float], rel_list: List[float]) -> Tuple[float,float,float,float,float,float,float,float,int]:
+    n = len(r_list)
+    def _mean_std(x):
+        if n == 0:
+            return float("nan"), 0.0
+        arr = np.array(x, dtype=float)
+        mean = float(arr.mean())
+        std = float(arr.std(ddof=1)) if n >= 2 else 0.0
+        return mean, std
+    rmean, rstd = _mean_std(r_list)
+    amean, astd = _mean_std(a_list)
+    mmean, mstd = _mean_std(m_list)
+    relmean, relstd = _mean_std(rel_list)
+    return rmean, amean, mmean, relmean, rstd, astd, mstd, relstd, n
+
+def eval_initial_to_final(model: FNO2d, data: dict, device: torch.device, max_samples: int) -> Tuple[float,float,float,float,float,float,float,float,int]:
     assert 'y' in data, "initial_to_final 数据需包含 'y'"
     n_total = len(data['y'])
     n = n_total if (max_samples is None or max_samples <= 0) else min(max_samples, n_total)
-    rmses, maes = [], []
+    rmses, maes, mapes, rels = [], [], [], []
     model.eval()
     with torch.no_grad():
         for i in range(n):
@@ -376,14 +413,17 @@ def eval_initial_to_final(model: FNO2d, data: dict, device: torch.device, max_sa
             err = y - pred
             rmses.append(torch.sqrt(torch.mean(err**2)).item())
             maes.append(torch.mean(torch.abs(err)).item())
-    return float(sum(rmses)/len(rmses)), float(sum(maes)/len(maes)), n
+            denom = torch.clamp(torch.abs(y), min=1e-8)
+            mapes.append(torch.mean(torch.abs(err) / denom).item())  # decimal
+            rels.append(rel_l2_whole(pred, y))
+    return _finalize_err_stats4(rmses, maes, mapes, rels)
 
-def eval_recurrent_fno2d(model: FNO2d, Tin: int, T: int, data: dict, device: torch.device, max_samples: int) -> Tuple[float, float, int]:
+def eval_recurrent_fno2d(model: FNO2d, Tin: int, T: int, data: dict, device: torch.device, max_samples: int) -> Tuple[float,float,float,float,float,float,float,float,int]:
     assert 'y' in data, "recurrent 数据需包含 'y'，形状 (H, W, T_total)"
     rp = RecurrentPredictor(model, T_out=T, step=1).to(device)
     n_total = len(data['y'])
     n = n_total if (max_samples is None or max_samples <= 0) else min(max_samples, n_total)
-    rmses, maes = [], []
+    rmses, maes, mapes, rels = [], [], [], []
     model.eval()
     with torch.no_grad():
         for i in range(n):
@@ -392,16 +432,21 @@ def eval_recurrent_fno2d(model: FNO2d, Tin: int, T: int, data: dict, device: tor
             current_input = sample[None, ..., :Tin]           # (1,H,W,Tin)
             gt = sample[None, ..., Tin:Tin+T]                 # (1,H,W,T)
             pred = rp(current_input)                          # (1,H,W,T)
-            err = gt[..., -1] - pred[..., -1]
-            rmses.append(torch.sqrt(torch.mean(err**2)).item())
-            maes.append(torch.mean(torch.abs(err)).item())
-    return float(sum(rmses)/len(rmses)), float(sum(maes)/len(maes)), n
+            gt_last = gt[..., -1].squeeze(0)
+            pred_last = pred[..., -1].squeeze(0)
+            err_last = gt_last - pred_last
+            rmses.append(torch.sqrt(torch.mean(err_last**2)).item())
+            maes.append(torch.mean(torch.abs(err_last)).item())
+            denom = torch.clamp(torch.abs(gt_last), min=1e-8)
+            mapes.append(torch.mean(torch.abs(err_last) / denom).item())  # decimal
+            rels.append(rel_l2_whole(pred_last, gt_last))
+    return _finalize_err_stats4(rmses, maes, mapes, rels)
 
-def eval_fno3d(model: FNO3d, Tin: int, T: int, data: dict, device: torch.device, max_samples: int) -> Tuple[float, float, int]:
+def eval_fno3d(model: FNO3d, Tin: int, T: int, data: dict, device: torch.device, max_samples: int) -> Tuple[float,float,float,float,float,float,float,float,int]:
     assert 'y' in data, "FNO3d 数据需包含 'y'，形状 (H,W,T_total)"
     n_total = len(data['y'])
     n = n_total if (max_samples is None or max_samples <= 0) else min(max_samples, n_total)
-    rmses, maes = [], []
+    rmses, maes, mapes, rels = [], [], [], []
     model.eval()
     with torch.no_grad():
         for i in range(n):
@@ -416,10 +461,15 @@ def eval_fno3d(model: FNO3d, Tin: int, T: int, data: dict, device: torch.device,
                 pred_last = pred[..., -1, 0]
             else:
                 pred_last = pred[..., -1]
-            err = gt[..., -1].squeeze(0) - pred_last.squeeze(0)
-            rmses.append(torch.sqrt(torch.mean(err**2)).item())
-            maes.append(torch.mean(torch.abs(err)).item())
-    return float(sum(rmses)/len(rmses)), float(sum(maes)/len(maes)), n
+            gt_last = gt[..., -1].squeeze(0)
+            pred_last2d = pred_last.squeeze(0)
+            err_last = gt_last - pred_last2d
+            rmses.append(torch.sqrt(torch.mean(err_last**2)).item())
+            maes.append(torch.mean(torch.abs(err_last)).item())
+            denom = torch.clamp(torch.abs(gt_last), min=1e-8)
+            mapes.append(torch.mean(torch.abs(err_last) / denom).item())  # decimal
+            rels.append(rel_l2_whole(pred_last2d, gt_last))
+    return _finalize_err_stats4(rmses, maes, mapes, rels)
 
 # --------------------------------------------------------------------------------------
 # Detection & loaders
@@ -739,10 +789,11 @@ def main():
     for p in gen_files:
         all_datasets_for_catalog.append({"group": "generalizability", "path": str(p), "name": p.stem, "parsed": parse_dataset_name(p.stem)})
 
-    # CSV header
+    # CSV header (means/stds with MAPE as decimal, and REL L2)
     header = [
         "dataset_group","dataset_name","dataset_path","n",
-        "rmse_mean","mae_mean",
+        "rmse_mean","mae_mean","mape_mean","rel_mean",
+        "rmse_std","mae_std","mape_std","rel_std",
         "model_family","model_group","model_name","model_path","model_source_dir",
     ] + DATASET_KEYS + MODEL_KEYS + ["resolved_modes1","resolved_modes2","resolved_modes3","resolved_width","resolved_Tin","resolved_Tout"]
 
@@ -901,11 +952,11 @@ def main():
                 return
             try:
                 if fam == "FNO2d_initial_to_final":
-                    rmean, amean, N = eval_initial_to_final(model, data_obj, device, args.max_samples)
+                    rmean, amean, mmean, relmean, rstd, astd, mstd, relstd, N = eval_initial_to_final(model, data_obj, device, args.max_samples)
                 elif fam == "FNO3d":
-                    rmean, amean, N = eval_fno3d(model, resolved_Tin, resolved_Tout, data_obj, device, args.max_samples)
+                    rmean, amean, mmean, relmean, rstd, astd, mstd, relstd, N = eval_fno3d(model, resolved_Tin, resolved_Tout, data_obj, device, args.max_samples)
                 else:
-                    rmean, amean, N = eval_recurrent_fno2d(model, resolved_Tin, resolved_Tout, data_obj, device, args.max_samples)
+                    rmean, amean, mmean, relmean, rstd, astd, mstd, relstd, N = eval_recurrent_fno2d(model, resolved_Tin, resolved_Tout, data_obj, device, args.max_samples)
             except AssertionError as ae:
                 print(f"      └ [SKIP] {dg}:{p.name} → {ae}")
                 return
@@ -916,7 +967,8 @@ def main():
             parsed_ds = parse_dataset_name(p.stem)
             row = [
                 dg, p.stem, str(p), N,
-                rmean, amean,
+                rmean, amean, mmean, relmean,
+                rstd, astd, mstd, relstd,
                 fam, model_group, model_path.stem, str(model_path), str(model_path.parent),
             ] + [parsed_ds.get(k, "") for k in DATASET_KEYS] + [model_meta.get(k, "") for k in MODEL_KEYS] + [
                 resolved_m1, resolved_m2, (resolved_m3 if resolved_m3 else ""), resolved_w,
@@ -924,7 +976,11 @@ def main():
             ]
             write_eval_row(row)
             completed.add(pair)
-            print(f"      └ done in {elapsed:.2f}s | N={N} | RMSE μ={pretty_float(rmean)} | MAE μ={pretty_float(amean)}")
+            print(f"      └ done in {elapsed:.2f}s | N={N} | "
+                  f"RMSE μ={pretty_float(rmean)} (σ={pretty_float(rstd)}) | "
+                  f"MAE  μ={pretty_float(amean)} (σ={pretty_float(astd)}) | "
+                  f"MAPE μ={pretty_float(mmean)} (σ={pretty_float(mstd)}) | "
+                  f"REL  μ={pretty_float(relmean)} (σ={pretty_float(relstd)})")
 
         for (dg, p) in ordered_cands:
             _eval_and_write(dg, p)
@@ -946,6 +1002,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

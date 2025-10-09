@@ -3,7 +3,7 @@
 #SBATCH --partition=hpg-b200
 #SBATCH --gres=gpu:b200:1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=200G                       
+#SBATCH --mem=100G                       
 #SBATCH --time=120:00:00         
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=yifeisun@umich.edu

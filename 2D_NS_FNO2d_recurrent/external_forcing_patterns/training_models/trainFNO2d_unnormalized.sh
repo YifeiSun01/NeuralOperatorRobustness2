@@ -3,8 +3,8 @@
 #SBATCH --partition=hpg-b200
 #SBATCH --gres=gpu:b200:1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=50G                       
-#SBATCH --time=60:00:00         
+#SBATCH --mem=20G                       
+#SBATCH --time=10:00:00         
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=yifeisun@umich.edu
 #SBATCH --output=./2D_NS_FNO2d_recurrent/external_forcing_patterns/training_models/logs/%x_%j.out

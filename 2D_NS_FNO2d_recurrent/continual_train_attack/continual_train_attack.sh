@@ -3,7 +3,7 @@
 #SBATCH --partition=hpg-b200
 #SBATCH --gres=gpu:b200:1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=150G                       
+#SBATCH --mem=100G                       
 #SBATCH --time=120:00:00         
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=yifeisun@umich.edu
@@ -27,8 +27,8 @@ python -u ./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack.
   --modes1 96 --modes2 96 --width 80 --Tin 10 --Tout 10 --step 1 \
   --attack_split train \
   --steps 10 \
-  --attack_alpha_list 50,100 \
-  --attack_epsilon_list 105,200 \
+  --attack_alpha_list 50,70,100 \
+  --attack_epsilon_list 105,150,200 \
   --attack_ratio 0.25 \
   --mix_ratio 0.25 \
   --seed 1234

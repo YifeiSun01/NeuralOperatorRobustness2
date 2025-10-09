@@ -373,7 +373,9 @@ if __name__ == "__main__":
         nsamples = nsamples  # 保持你原值
 
         # 六个外力图案（与你上面定义的名字一致）
-        patterns = ["ringsCos", "sBands", "isoCircles", "petals", "ringsL1", "ringsLinf"]
+        
+        # patterns = ["ringsCos", "sBands", "isoCircles", "petals", "ringsL1", "ringsLinf"]
+        patterns = ["none"]
 
         # 基础保存目录：<repo_root>/datasets
         base_dir = Path(__file__).parent.parent / "datasets"
