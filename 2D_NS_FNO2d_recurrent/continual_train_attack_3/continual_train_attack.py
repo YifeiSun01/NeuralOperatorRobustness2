@@ -51,7 +51,7 @@ step = 1
 ntrain = 1000
 ntest = 100
 
-batch_size = 20
+batch_size = 2
 learning_rate = 0.001
 
 current_file_path = Path(__file__).resolve()
@@ -343,7 +343,7 @@ for ep in tqdm(range(epochs), desc="Adversarial Continued Training"):
 
     total_time = default_timer() - epoch_t0
 
-    if (ep % 10) == 0:
+    if (ep % 50) == 0:
         xx0, _ = first_train_batch_cache
 
         # 1) 生成对抗序列（PGD 里要反传到 x_adv）
@@ -379,7 +379,7 @@ for ep in tqdm(range(epochs), desc="Adversarial Continued Training"):
             )
 
     # —— 周期性存模型 —— 
-    if (ep % 100) == 0 and ep > 0:
+    if (ep % 50) == 0 and ep > 0:
         model_snap = snap_dir / f"NS_2d_FNO_model_epoch{global_epoch:04d}.pth"
         torch.save({"epoch": global_epoch, "state_dict": model.state_dict()}, model_snap)
 
