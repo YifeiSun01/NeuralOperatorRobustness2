@@ -21,8 +21,7 @@ import subprocess
 
 jax.config.update("jax_enable_x64", True)
 
-# 仅保留可微 SoftDTW
-from tslearn.metrics import SoftDTWLossPyTorch  # 仅可微 SoftDTW
+from tslearn.metrics import dtw, SoftDTWLossPyTorch  # 经典 DTW + 可微 SoftDTW
 
 def get_gpu_info():
     try:
@@ -80,8 +79,7 @@ class JaxPDEWrapper(torch.autograd.Function):
             def jax_vjp(a_jax, grad_jax):
                 _, vjp_fn = jax.vjp(g, a_jax)
                 return vjp_fn(grad_jax)
-            # 修复：缓存正确的 jax_vjp
-            JaxPDEWrapper._vjp_cache[cache_key] = jax.jit(jax_vjp)
+            JaxPDEWrapper._vjp_cache[cache_key] = jax.jit(jax_vvp)
 
         jitted = JaxPDEWrapper._vjp_cache[cache_key]
         try:
@@ -144,34 +142,31 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
             T_out = T_out.to(G_out.device)
         return G_out, T_out
 
-    def compute_losses(G_out, T_out):
-        # flatten to 1D for MSE and SoftDTW seq shape (1, L, 1)
+    def compute_three_losses(G_out, T_out):
         G_flat = G_out.squeeze()
         T_flat = T_out.squeeze()
-
-        # MSE
         mse_loss = F.mse_loss(G_flat, T_flat)
-
-        # SoftDTW (differentiable)
+        dtw_loss = float(dtw(G_flat.detach().cpu().numpy(),
+                             T_flat.detach().cpu().numpy()))
         G_seq = G_flat.unsqueeze(0).unsqueeze(-1).to(a.device, dtype=dtype)
         T_seq = T_flat.unsqueeze(0).unsqueeze(-1).to(a.device, dtype=dtype)
         softdtw_loss = sdtw_loss_fn(G_seq, T_seq).squeeze()
-
-        return mse_loss, softdtw_loss
+        return mse_loss, dtw_loss, softdtw_loss
 
     # record step 0
     inp0 = a.clone().detach().cpu().numpy()
     G0, T0 = get_pair_outputs(a)
     G0_np = G0.clone().detach().cpu().numpy()
     T0_np = T0.clone().detach().cpu().numpy()
-    mse0, sdtw0 = compute_losses(G0, T0)
+    losses0 = compute_three_losses(G0, T0)
     records["step"]["step_0"] = {
         "input": inp0,
         "G_out": G0_np,
         "T_out": T0_np,
         "loss": {
-            "mse": float(mse0.item()),
-            "softdtw": float(sdtw0.item())
+            "mse": float(losses0[0].item()),
+            "dtw": losses0[1],
+            "softdtw": float(losses0[2].item())
         }
     }
 
@@ -179,15 +174,14 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
         # forward, backward, update
         x_pert = a + delta
         G_out, T_out = get_pair_outputs(x_pert)
-        mse_l, sdtw_l = compute_losses(G_out, T_out)
+        mse_l, dtw_l, sdtw_l = compute_three_losses(G_out, T_out)
 
-        # choose which loss to backprop
         if loss_type == "mse":
             loss_to_back = mse_l
         elif loss_type == "softdtw":
             loss_to_back = sdtw_l
         else:
-            raise ValueError("Unsupported loss_type when DTW is disabled")
+            raise ValueError("DTW 不能反传")
 
         if delta.grad is not None:
             delta.grad.zero_()
@@ -207,7 +201,7 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
         else:
             raise ValueError(f"Unsupported norm: {norm}")
 
-        # record after update — both losses
+        # record after update
         inp = (a + delta).clone().detach().cpu().numpy()
         G_np = G_out.clone().detach().cpu().numpy()
         T_np = T_out.clone().detach().cpu().numpy()
@@ -217,6 +211,7 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
             "T_out": T_np,
             "loss": {
                 "mse": float(mse_l.item()),
+                "dtw": dtw_l,
                 "softdtw": float(sdtw_l.item())
             }
         }
@@ -282,8 +277,7 @@ def main(argv):
 
     gradient_records = {}
 
-    # 仅保留这两种优化目标
-    loss_types = ["mse", "softdtw"]
+    loss_types = ["mse", "softdtw"]  # 如果你还要 dtw 反传的话，需要改法，不推荐
     modes = ["with_solver", "without_solver", "approximate"]
 
     for norm, epsilon, num_steps, alpha in inputs:
@@ -353,6 +347,5 @@ def main(argv):
 
 if __name__ == "__main__":
     app.run(main)
-
 
 
