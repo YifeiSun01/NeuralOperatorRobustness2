@@ -1,0 +1,4 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py:76: RuntimeWarning: invalid value encountered in log
+  return np.log(arr)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py:76: RuntimeWarning: divide by zero encountered in log
+  return np.log(arr)

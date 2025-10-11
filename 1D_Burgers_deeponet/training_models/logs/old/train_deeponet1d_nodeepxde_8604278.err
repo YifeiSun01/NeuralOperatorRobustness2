@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./training_models/train_deeponet1d_nodeepxde.py", line 128, in <module>
+    torch.save(model.state_dict(), model_save_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 964, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 828, in _open_zipfile_writer
+    return container(name_or_buffer)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 792, in __init__
+    torch._C.PyTorchFileWriter(
+RuntimeError: Parent directory /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/training_models/../saved_models/no_deepxde/DeepONet_b1024_t1024_h1024_lr0.001_bs100_ep50000_20250728_091145 does not exist.

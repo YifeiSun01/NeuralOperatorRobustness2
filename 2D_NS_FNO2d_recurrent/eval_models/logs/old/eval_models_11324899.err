@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/eval_models.py", line 617, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/eval_models.py", line 426, in main
+    push_file("train", args.train_pt)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/eval_models.py", line 424, in push_file
+    raise FileNotFoundError(f"{label} file not found: {pp}")
+FileNotFoundError: train file not found: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/datasets/exponax_datasets/t20/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt

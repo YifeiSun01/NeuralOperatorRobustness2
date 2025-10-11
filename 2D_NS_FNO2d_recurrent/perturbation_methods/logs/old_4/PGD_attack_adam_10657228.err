@@ -1,0 +1,7 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py:51: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  print(f"JAX Backend: {jax.lib.xla_bridge.get_backend().platform}")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py:92: UserWarning: Could not check cuDNN version compatibility
+  warnings.warn("Could not check cuDNN version compatibility")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py:139: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+slurmstepd: error: *** JOB 10657228 ON c1001a-s15 CANCELLED AT 2025-08-22T17:29:10 ***

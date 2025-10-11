@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent/./training_models/trainingFNO2d_unnormalized.py", line 45, in <module>
+    x_train = x_train.reshape(ntrain,s,s,T_in)
+RuntimeError: shape '[1400, 256, 256, 20]' is invalid for input of size 917504000

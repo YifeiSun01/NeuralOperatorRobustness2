@@ -1,0 +1,30 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_high_mem_short_time.py:51: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  print(f"JAX Backend: {jax.lib.xla_bridge.get_backend().platform}")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_high_mem_short_time.py:92: UserWarning: Could not check cuDNN version compatibility
+  warnings.warn("Could not check cuDNN version compatibility")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_high_mem_short_time.py:139: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_high_mem_short_time.py:143: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_high_mem_short_time.py:167: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_high_mem_short_time.py:170: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+2025-09-07 22:31:16.590369: E external/xla/xla/service/slow_operation_alarm.cc:73] Constant folding an instruction is taking > 1s:
+
+  %negate.35 = s32[] negate(%constant.1834)
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+2025-09-07 22:31:17.320908: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 1.730785589s
+Constant folding an instruction is taking > 1s:
+
+  %negate.35 = s32[] negate(%constant.1834)
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 12057376.0 ON c1000a-s25 CANCELLED AT 2025-09-07T22:35:42 ***
+slurmstepd: error: *** JOB 12057376 ON c1000a-s25 CANCELLED AT 2025-09-07T22:35:42 ***

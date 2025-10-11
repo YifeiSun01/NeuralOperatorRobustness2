@@ -1,0 +1,27 @@
+Adversarial Continued Training:   0%|          | 0/2000 [00:00<?, ?it/s]Adversarial Continued Training:   0%|          | 0/2000 [01:37<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py", line 144, in <module>
+    adv_xx = adversarialize_inputs(xx)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py", line 106, in adversarialize_inputs
+    x_adv_t = attack_batch(x_t, recurrent_model, pde_solver, cfg=attack_cfg)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 108, in attack_batch
+    pred = recurrent_model(input_batch)      # (B,H,W,10)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/FNO2d.py", line 114, in forward
+    y_pred = self.model(x)  # 预测后面1帧，形状(batch, s, s, step)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/FNO2d.py", line 80, in forward
+    x1 = self.conv_layers[i](x)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/FNO2d.py", line 25, in forward
+    x_ft = torch.fft.rfft2(x)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 102.00 MiB. GPU 0 has a total capacity of 178.36 GiB of which 16.62 MiB is free. Including non-PyTorch memory, this process has 178.33 GiB memory in use. Of the allocated memory 41.93 GiB is allocated by PyTorch, and 1.77 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

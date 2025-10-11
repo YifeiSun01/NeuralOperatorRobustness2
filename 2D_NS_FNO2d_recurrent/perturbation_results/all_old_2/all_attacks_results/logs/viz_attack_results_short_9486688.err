@@ -1,0 +1,3 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/viz_attack_results_short.py:114: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap('tab10')  # 取10种不同颜色，或者换成别的调色板
+slurmstepd: error: *** JOB 9486688 ON c0901a-s25 CANCELLED AT 2025-08-06T08:05:41 ***

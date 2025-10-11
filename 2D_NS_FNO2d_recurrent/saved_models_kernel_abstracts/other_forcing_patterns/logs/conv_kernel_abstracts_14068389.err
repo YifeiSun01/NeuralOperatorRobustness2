@@ -1,0 +1,817 @@
+[Models]:   0%|          | 0/3 [00:00<?, ?model/s][Models]:   0%|          | 0/3 [00:00<?, ?model/s, pattern=sBands, subdir=modes64_width60_epochs500_Tin10_T10, out=sBands__modes64_width60_epochs500_Tin10_T10.analysis.pt]
+[Layer 1] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 1] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:18,  5.23s/it, chunk=1/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:18,  5.23s/it, chunk=2/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:12,  5.18s/it, chunk=2/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:12,  5.18s/it, chunk=3/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:07,  5.16s/it, chunk=3/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:07,  5.16s/it, chunk=4/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:01,  5.15s/it, chunk=4/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  25%|██▌       | 4/16 [00:25<01:01,  5.15s/it, chunk=5/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  31%|███▏      | 5/16 [00:25<00:56,  5.14s/it, chunk=5/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  31%|███▏      | 5/16 [00:30<00:56,  5.14s/it, chunk=6/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  38%|███▊      | 6/16 [00:30<00:51,  5.13s/it, chunk=6/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  38%|███▊      | 6/16 [00:35<00:51,  5.13s/it, chunk=7/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  44%|████▍     | 7/16 [00:35<00:46,  5.12s/it, chunk=7/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  44%|████▍     | 7/16 [00:41<00:46,  5.12s/it, chunk=8/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  50%|█████     | 8/16 [00:41<00:40,  5.12s/it, chunk=8/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  50%|█████     | 8/16 [00:46<00:40,  5.12s/it, chunk=9/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  56%|█████▋    | 9/16 [00:46<00:35,  5.12s/it, chunk=9/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  56%|█████▋    | 9/16 [00:51<00:35,  5.12s/it, chunk=10/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  62%|██████▎   | 10/16 [00:51<00:30,  5.12s/it, chunk=10/16, Δt(s)=5.11][A
+[Layer 1] spatial SVDvals:  62%|██████▎   | 10/16 [00:56<00:30,  5.12s/it, chunk=11/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  69%|██████▉   | 11/16 [00:56<00:25,  5.12s/it, chunk=11/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  69%|██████▉   | 11/16 [01:01<00:25,  5.12s/it, chunk=12/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  75%|███████▌  | 12/16 [01:01<00:20,  5.12s/it, chunk=12/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  75%|███████▌  | 12/16 [01:06<00:20,  5.12s/it, chunk=13/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  81%|████████▏ | 13/16 [01:06<00:15,  5.12s/it, chunk=13/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  81%|████████▏ | 13/16 [01:11<00:15,  5.12s/it, chunk=14/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  88%|████████▊ | 14/16 [01:11<00:10,  5.13s/it, chunk=14/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  88%|████████▊ | 14/16 [01:16<00:10,  5.13s/it, chunk=15/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  94%|█████████▍| 15/16 [01:16<00:05,  5.13s/it, chunk=15/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  94%|█████████▍| 15/16 [01:22<00:05,  5.13s/it, chunk=16/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals: 100%|██████████| 16/16 [01:22<00:00,  5.13s/it, chunk=16/16, Δt(s)=5.14][A
+                                                                                                   [A
+[Layer 1] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 1] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.47][A
+[Layer 1] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:22,  5.47s/it, chunk=1/16, Δt(s)=5.47][A
+[Layer 1] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:22,  5.47s/it, chunk=2/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:14,  5.34s/it, chunk=2/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:14,  5.34s/it, chunk=3/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:08,  5.29s/it, chunk=3/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:21<01:08,  5.29s/it, chunk=4/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:21<01:03,  5.27s/it, chunk=4/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:26<01:03,  5.27s/it, chunk=5/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:26<00:57,  5.27s/it, chunk=5/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:31<00:57,  5.27s/it, chunk=6/16, Δt(s)=5.22][A
+[Layer 1] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:31<00:52,  5.25s/it, chunk=6/16, Δt(s)=5.22][A
+[Layer 1] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:36<00:52,  5.25s/it, chunk=7/16, Δt(s)=5.22][A
+[Layer 1] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:36<00:47,  5.24s/it, chunk=7/16, Δt(s)=5.22][A
+[Layer 1] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:42<00:47,  5.24s/it, chunk=8/16, Δt(s)=5.23][A
+[Layer 1] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:42<00:41,  5.24s/it, chunk=8/16, Δt(s)=5.23][A
+[Layer 1] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:47<00:41,  5.24s/it, chunk=9/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:47<00:36,  5.24s/it, chunk=9/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:52<00:36,  5.24s/it, chunk=10/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:52<00:31,  5.24s/it, chunk=10/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:57<00:31,  5.24s/it, chunk=11/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:57<00:26,  5.24s/it, chunk=11/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:03<00:26,  5.24s/it, chunk=12/16, Δt(s)=5.23][A
+[Layer 1] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:03<00:20,  5.24s/it, chunk=12/16, Δt(s)=5.23][A
+[Layer 1] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:08<00:20,  5.24s/it, chunk=13/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:08<00:15,  5.24s/it, chunk=13/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:13<00:15,  5.24s/it, chunk=14/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:13<00:10,  5.24s/it, chunk=14/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:18<00:10,  5.24s/it, chunk=15/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:18<00:05,  5.24s/it, chunk=15/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:24<00:05,  5.24s/it, chunk=16/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:24<00:00,  5.25s/it, chunk=16/16, Δt(s)=5.27][A
+                                                                                                           [A
+[Layer 2] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 2] spatial SVDvals:   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.92][A
+[Layer 2] spatial SVDvals:   6%|▋         | 1/16 [00:04<01:13,  4.92s/it, chunk=1/16, Δt(s)=4.92][A
+[Layer 2] spatial SVDvals:   6%|▋         | 1/16 [00:09<01:13,  4.92s/it, chunk=2/16, Δt(s)=4.98][A
+[Layer 2] spatial SVDvals:  12%|█▎        | 2/16 [00:09<01:09,  4.95s/it, chunk=2/16, Δt(s)=4.98][A
+[Layer 2] spatial SVDvals:  12%|█▎        | 2/16 [00:14<01:09,  4.95s/it, chunk=3/16, Δt(s)=4.97][A
+[Layer 2] spatial SVDvals:  19%|█▉        | 3/16 [00:14<01:04,  4.96s/it, chunk=3/16, Δt(s)=4.97][A
+[Layer 2] spatial SVDvals:  19%|█▉        | 3/16 [00:19<01:04,  4.96s/it, chunk=4/16, Δt(s)=4.95][A
+[Layer 2] spatial SVDvals:  25%|██▌       | 4/16 [00:19<00:59,  4.96s/it, chunk=4/16, Δt(s)=4.95][A
+[Layer 2] spatial SVDvals:  25%|██▌       | 4/16 [00:24<00:59,  4.96s/it, chunk=5/16, Δt(s)=4.95][A
+[Layer 2] spatial SVDvals:  31%|███▏      | 5/16 [00:24<00:54,  4.95s/it, chunk=5/16, Δt(s)=4.95][A
+[Layer 2] spatial SVDvals:  31%|███▏      | 5/16 [00:29<00:54,  4.95s/it, chunk=6/16, Δt(s)=4.92][A
+[Layer 2] spatial SVDvals:  38%|███▊      | 6/16 [00:29<00:49,  4.94s/it, chunk=6/16, Δt(s)=4.92][A
+[Layer 2] spatial SVDvals:  38%|███▊      | 6/16 [00:34<00:49,  4.94s/it, chunk=7/16, Δt(s)=4.93][A
+[Layer 2] spatial SVDvals:  44%|████▍     | 7/16 [00:34<00:44,  4.94s/it, chunk=7/16, Δt(s)=4.93][A
+[Layer 2] spatial SVDvals:  44%|████▍     | 7/16 [00:39<00:44,  4.94s/it, chunk=8/16, Δt(s)=4.82][A
+[Layer 2] spatial SVDvals:  50%|█████     | 8/16 [00:39<00:39,  4.90s/it, chunk=8/16, Δt(s)=4.82][A
+[Layer 2] spatial SVDvals:  50%|█████     | 8/16 [00:44<00:39,  4.90s/it, chunk=9/16, Δt(s)=4.82][A
+[Layer 2] spatial SVDvals:  56%|█████▋    | 9/16 [00:44<00:34,  4.88s/it, chunk=9/16, Δt(s)=4.82][A
+[Layer 2] spatial SVDvals:  56%|█████▋    | 9/16 [00:49<00:34,  4.88s/it, chunk=10/16, Δt(s)=4.82][A
+[Layer 2] spatial SVDvals:  62%|██████▎   | 10/16 [00:49<00:29,  4.86s/it, chunk=10/16, Δt(s)=4.82][A
+[Layer 2] spatial SVDvals:  62%|██████▎   | 10/16 [00:53<00:29,  4.86s/it, chunk=11/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  69%|██████▉   | 11/16 [00:53<00:24,  4.85s/it, chunk=11/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  69%|██████▉   | 11/16 [00:58<00:24,  4.85s/it, chunk=12/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  75%|███████▌  | 12/16 [00:58<00:19,  4.85s/it, chunk=12/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  75%|███████▌  | 12/16 [01:03<00:19,  4.85s/it, chunk=13/16, Δt(s)=4.86][A
+[Layer 2] spatial SVDvals:  81%|████████▏ | 13/16 [01:03<00:14,  4.86s/it, chunk=13/16, Δt(s)=4.86][A
+[Layer 2] spatial SVDvals:  81%|████████▏ | 13/16 [01:08<00:14,  4.86s/it, chunk=14/16, Δt(s)=4.88][A
+[Layer 2] spatial SVDvals:  88%|████████▊ | 14/16 [01:08<00:09,  4.86s/it, chunk=14/16, Δt(s)=4.88][A
+[Layer 2] spatial SVDvals:  88%|████████▊ | 14/16 [01:13<00:09,  4.86s/it, chunk=15/16, Δt(s)=4.90][A
+[Layer 2] spatial SVDvals:  94%|█████████▍| 15/16 [01:13<00:04,  4.87s/it, chunk=15/16, Δt(s)=4.90][A
+[Layer 2] spatial SVDvals:  94%|█████████▍| 15/16 [01:18<00:04,  4.87s/it, chunk=16/16, Δt(s)=4.91][A
+[Layer 2] spatial SVDvals: 100%|██████████| 16/16 [01:18<00:00,  4.88s/it, chunk=16/16, Δt(s)=4.91][A
+                                                                                                   [A
+[Layer 2] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 2] spatial Angles vs (0,0):   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:04<01:14,  4.98s/it, chunk=1/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:09<01:14,  4.98s/it, chunk=2/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:09<01:09,  5.00s/it, chunk=2/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:14<01:09,  5.00s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:14<01:04,  4.99s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:19<01:04,  4.99s/it, chunk=4/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:19<00:59,  4.98s/it, chunk=4/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:24<00:59,  4.98s/it, chunk=5/16, Δt(s)=4.96][A
+[Layer 2] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:24<00:54,  4.98s/it, chunk=5/16, Δt(s)=4.96][A
+[Layer 2] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:29<00:54,  4.98s/it, chunk=6/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:29<00:49,  4.98s/it, chunk=6/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:34<00:49,  4.98s/it, chunk=7/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:34<00:44,  4.98s/it, chunk=7/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:39<00:44,  4.98s/it, chunk=8/16, Δt(s)=4.93][A
+[Layer 2] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:39<00:39,  4.96s/it, chunk=8/16, Δt(s)=4.93][A
+[Layer 2] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:44<00:39,  4.96s/it, chunk=9/16, Δt(s)=4.94][A
+[Layer 2] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:44<00:34,  4.96s/it, chunk=9/16, Δt(s)=4.94][A
+[Layer 2] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:49<00:34,  4.96s/it, chunk=10/16, Δt(s)=4.96][A
+[Layer 2] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:49<00:29,  4.96s/it, chunk=10/16, Δt(s)=4.96][A
+[Layer 2] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:54<00:29,  4.96s/it, chunk=11/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:54<00:24,  4.97s/it, chunk=11/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:59<00:24,  4.97s/it, chunk=12/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [00:59<00:19,  4.97s/it, chunk=12/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:04<00:19,  4.97s/it, chunk=13/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:04<00:14,  4.97s/it, chunk=13/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:09<00:14,  4.97s/it, chunk=14/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:09<00:09,  4.98s/it, chunk=14/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:14<00:09,  4.98s/it, chunk=15/16, Δt(s)=5.02][A
+[Layer 2] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:14<00:04,  4.99s/it, chunk=15/16, Δt(s)=5.02][A
+[Layer 2] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:19<00:04,  4.99s/it, chunk=16/16, Δt(s)=5.06][A
+[Layer 2] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:19<00:00,  5.01s/it, chunk=16/16, Δt(s)=5.06][A
+                                                                                                           [A
+[Layer 3] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 3] spatial SVDvals:   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.91][A
+[Layer 3] spatial SVDvals:   6%|▋         | 1/16 [00:04<01:13,  4.91s/it, chunk=1/16, Δt(s)=4.91][A
+[Layer 3] spatial SVDvals:   6%|▋         | 1/16 [00:09<01:13,  4.91s/it, chunk=2/16, Δt(s)=5.00][A
+[Layer 3] spatial SVDvals:  12%|█▎        | 2/16 [00:09<01:09,  4.96s/it, chunk=2/16, Δt(s)=5.00][A
+[Layer 3] spatial SVDvals:  12%|█▎        | 2/16 [00:14<01:09,  4.96s/it, chunk=3/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:  19%|█▉        | 3/16 [00:14<01:04,  4.96s/it, chunk=3/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:  19%|█▉        | 3/16 [00:19<01:04,  4.96s/it, chunk=4/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:  25%|██▌       | 4/16 [00:19<00:59,  4.96s/it, chunk=4/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:  25%|██▌       | 4/16 [00:24<00:59,  4.96s/it, chunk=5/16, Δt(s)=4.92][A
+[Layer 3] spatial SVDvals:  31%|███▏      | 5/16 [00:24<00:54,  4.94s/it, chunk=5/16, Δt(s)=4.92][A
+[Layer 3] spatial SVDvals:  31%|███▏      | 5/16 [00:29<00:54,  4.94s/it, chunk=6/16, Δt(s)=4.92][A
+[Layer 3] spatial SVDvals:  38%|███▊      | 6/16 [00:29<00:49,  4.94s/it, chunk=6/16, Δt(s)=4.92][A
+[Layer 3] spatial SVDvals:  38%|███▊      | 6/16 [00:34<00:49,  4.94s/it, chunk=7/16, Δt(s)=4.90][A
+[Layer 3] spatial SVDvals:  44%|████▍     | 7/16 [00:34<00:44,  4.92s/it, chunk=7/16, Δt(s)=4.90][A
+[Layer 3] spatial SVDvals:  44%|████▍     | 7/16 [00:39<00:44,  4.92s/it, chunk=8/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  50%|█████     | 8/16 [00:39<00:39,  4.89s/it, chunk=8/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  50%|█████     | 8/16 [00:44<00:39,  4.89s/it, chunk=9/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  56%|█████▋    | 9/16 [00:44<00:34,  4.86s/it, chunk=9/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  56%|█████▋    | 9/16 [00:48<00:34,  4.86s/it, chunk=10/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  62%|██████▎   | 10/16 [00:48<00:29,  4.85s/it, chunk=10/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  62%|██████▎   | 10/16 [00:53<00:29,  4.85s/it, chunk=11/16, Δt(s)=4.82][A
+[Layer 3] spatial SVDvals:  69%|██████▉   | 11/16 [00:53<00:24,  4.84s/it, chunk=11/16, Δt(s)=4.82][A
+[Layer 3] spatial SVDvals:  69%|██████▉   | 11/16 [00:58<00:24,  4.84s/it, chunk=12/16, Δt(s)=4.83][A
+[Layer 3] spatial SVDvals:  75%|███████▌  | 12/16 [00:58<00:19,  4.84s/it, chunk=12/16, Δt(s)=4.83][A
+[Layer 3] spatial SVDvals:  75%|███████▌  | 12/16 [01:03<00:19,  4.84s/it, chunk=13/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  81%|████████▏ | 13/16 [01:03<00:14,  4.84s/it, chunk=13/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  81%|████████▏ | 13/16 [01:08<00:14,  4.84s/it, chunk=14/16, Δt(s)=4.86][A
+[Layer 3] spatial SVDvals:  88%|████████▊ | 14/16 [01:08<00:09,  4.85s/it, chunk=14/16, Δt(s)=4.86][A
+[Layer 3] spatial SVDvals:  88%|████████▊ | 14/16 [01:13<00:09,  4.85s/it, chunk=15/16, Δt(s)=4.88][A
+[Layer 3] spatial SVDvals:  94%|█████████▍| 15/16 [01:13<00:04,  4.86s/it, chunk=15/16, Δt(s)=4.88][A
+[Layer 3] spatial SVDvals:  94%|█████████▍| 15/16 [01:18<00:04,  4.86s/it, chunk=16/16, Δt(s)=4.90][A
+[Layer 3] spatial SVDvals: 100%|██████████| 16/16 [01:18<00:00,  4.87s/it, chunk=16/16, Δt(s)=4.90][A
+                                                                                                   [A
+[Layer 3] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 3] spatial Angles vs (0,0):   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.98][A
+[Layer 3] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:04<01:14,  4.98s/it, chunk=1/16, Δt(s)=4.98][A
+[Layer 3] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:09<01:14,  4.98s/it, chunk=2/16, Δt(s)=5.01][A
+[Layer 3] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:09<01:09,  5.00s/it, chunk=2/16, Δt(s)=5.01][A
+[Layer 3] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:14<01:09,  5.00s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 3] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:14<01:04,  4.99s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 3] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:19<01:04,  4.99s/it, chunk=4/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:19<00:59,  4.98s/it, chunk=4/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:24<00:59,  4.98s/it, chunk=5/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:24<00:54,  4.97s/it, chunk=5/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:29<00:54,  4.97s/it, chunk=6/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:29<00:49,  4.97s/it, chunk=6/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:34<00:49,  4.97s/it, chunk=7/16, Δt(s)=4.96][A
+[Layer 3] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:34<00:44,  4.97s/it, chunk=7/16, Δt(s)=4.96][A
+[Layer 3] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:39<00:44,  4.97s/it, chunk=8/16, Δt(s)=4.92][A
+[Layer 3] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:39<00:39,  4.95s/it, chunk=8/16, Δt(s)=4.92][A
+[Layer 3] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:44<00:39,  4.95s/it, chunk=9/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:44<00:34,  4.95s/it, chunk=9/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:49<00:34,  4.95s/it, chunk=10/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:49<00:29,  4.95s/it, chunk=10/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:54<00:29,  4.95s/it, chunk=11/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:54<00:24,  4.95s/it, chunk=11/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:59<00:24,  4.95s/it, chunk=12/16, Δt(s)=4.95][A
+[Layer 3] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [00:59<00:19,  4.95s/it, chunk=12/16, Δt(s)=4.95][A
+[Layer 3] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:04<00:19,  4.95s/it, chunk=13/16, Δt(s)=4.96][A
+[Layer 3] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:04<00:14,  4.96s/it, chunk=13/16, Δt(s)=4.96][A
+[Layer 3] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:09<00:14,  4.96s/it, chunk=14/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:09<00:09,  4.96s/it, chunk=14/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:14<00:09,  4.96s/it, chunk=15/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:14<00:04,  4.97s/it, chunk=15/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:19<00:04,  4.97s/it, chunk=16/16, Δt(s)=5.05][A
+[Layer 3] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:19<00:00,  5.00s/it, chunk=16/16, Δt(s)=5.05][A
+                                                                                                           [A
+[Layer 4] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 4] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.11][A
+[Layer 4] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:16,  5.11s/it, chunk=1/16, Δt(s)=5.11][A
+[Layer 4] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:16,  5.11s/it, chunk=2/16, Δt(s)=5.16][A
+[Layer 4] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:11,  5.14s/it, chunk=2/16, Δt(s)=5.16][A
+[Layer 4] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:11,  5.14s/it, chunk=3/16, Δt(s)=5.15][A
+[Layer 4] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:06,  5.15s/it, chunk=3/16, Δt(s)=5.15][A
+[Layer 4] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:06,  5.15s/it, chunk=4/16, Δt(s)=5.13][A
+[Layer 4] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:01,  5.14s/it, chunk=4/16, Δt(s)=5.13][A
+[Layer 4] spatial SVDvals:  25%|██▌       | 4/16 [00:25<01:01,  5.14s/it, chunk=5/16, Δt(s)=5.14][A
+[Layer 4] spatial SVDvals:  31%|███▏      | 5/16 [00:25<00:56,  5.14s/it, chunk=5/16, Δt(s)=5.14][A
+[Layer 4] spatial SVDvals:  31%|███▏      | 5/16 [00:30<00:56,  5.14s/it, chunk=6/16, Δt(s)=5.11][A
+[Layer 4] spatial SVDvals:  38%|███▊      | 6/16 [00:30<00:51,  5.13s/it, chunk=6/16, Δt(s)=5.11][A
+[Layer 4] spatial SVDvals:  38%|███▊      | 6/16 [00:35<00:51,  5.13s/it, chunk=7/16, Δt(s)=5.13][A
+[Layer 4] spatial SVDvals:  44%|████▍     | 7/16 [00:35<00:46,  5.13s/it, chunk=7/16, Δt(s)=5.13][A
+[Layer 4] spatial SVDvals:  44%|████▍     | 7/16 [00:40<00:46,  5.13s/it, chunk=8/16, Δt(s)=5.04][A
+[Layer 4] spatial SVDvals:  50%|█████     | 8/16 [00:40<00:40,  5.10s/it, chunk=8/16, Δt(s)=5.04][A
+[Layer 4] spatial SVDvals:  50%|█████     | 8/16 [00:46<00:40,  5.10s/it, chunk=9/16, Δt(s)=5.05][A
+[Layer 4] spatial SVDvals:  56%|█████▋    | 9/16 [00:46<00:35,  5.08s/it, chunk=9/16, Δt(s)=5.05][A
+[Layer 4] spatial SVDvals:  56%|█████▋    | 9/16 [00:51<00:35,  5.08s/it, chunk=10/16, Δt(s)=5.03][A
+[Layer 4] spatial SVDvals:  62%|██████▎   | 10/16 [00:51<00:30,  5.07s/it, chunk=10/16, Δt(s)=5.03][A
+[Layer 4] spatial SVDvals:  62%|██████▎   | 10/16 [00:56<00:30,  5.07s/it, chunk=11/16, Δt(s)=5.03][A
+[Layer 4] spatial SVDvals:  69%|██████▉   | 11/16 [00:56<00:25,  5.06s/it, chunk=11/16, Δt(s)=5.03][A
+[Layer 4] spatial SVDvals:  69%|██████▉   | 11/16 [01:01<00:25,  5.06s/it, chunk=12/16, Δt(s)=5.03][A
+[Layer 4] spatial SVDvals:  75%|███████▌  | 12/16 [01:01<00:20,  5.05s/it, chunk=12/16, Δt(s)=5.03][A
+[Layer 4] spatial SVDvals:  75%|███████▌  | 12/16 [01:06<00:20,  5.05s/it, chunk=13/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  81%|████████▏ | 13/16 [01:06<00:15,  5.06s/it, chunk=13/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  81%|████████▏ | 13/16 [01:11<00:15,  5.06s/it, chunk=14/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  88%|████████▊ | 14/16 [01:11<00:10,  5.06s/it, chunk=14/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  88%|████████▊ | 14/16 [01:16<00:10,  5.06s/it, chunk=15/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  94%|█████████▍| 15/16 [01:16<00:05,  5.07s/it, chunk=15/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  94%|█████████▍| 15/16 [01:21<00:05,  5.07s/it, chunk=16/16, Δt(s)=5.10][A
+[Layer 4] spatial SVDvals: 100%|██████████| 16/16 [01:21<00:00,  5.08s/it, chunk=16/16, Δt(s)=5.10][A
+                                                                                                   [A
+[Layer 4] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 4] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:17,  5.17s/it, chunk=1/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:17,  5.17s/it, chunk=2/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:12,  5.18s/it, chunk=2/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:12,  5.18s/it, chunk=3/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:07,  5.18s/it, chunk=3/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:20<01:07,  5.18s/it, chunk=4/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:20<01:02,  5.17s/it, chunk=4/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:25<01:02,  5.17s/it, chunk=5/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:25<00:56,  5.17s/it, chunk=5/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:31<00:56,  5.17s/it, chunk=6/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:31<00:51,  5.17s/it, chunk=6/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:36<00:51,  5.17s/it, chunk=7/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:36<00:46,  5.17s/it, chunk=7/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:41<00:46,  5.17s/it, chunk=8/16, Δt(s)=5.14][A
+[Layer 4] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:41<00:41,  5.16s/it, chunk=8/16, Δt(s)=5.14][A
+[Layer 4] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:46<00:41,  5.16s/it, chunk=9/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:46<00:36,  5.16s/it, chunk=9/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:51<00:36,  5.16s/it, chunk=10/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:51<00:30,  5.16s/it, chunk=10/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:56<00:30,  5.16s/it, chunk=11/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:56<00:25,  5.16s/it, chunk=11/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:01<00:25,  5.16s/it, chunk=12/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:01<00:20,  5.16s/it, chunk=12/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:07<00:20,  5.16s/it, chunk=13/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:07<00:15,  5.16s/it, chunk=13/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:12<00:15,  5.16s/it, chunk=14/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:12<00:10,  5.16s/it, chunk=14/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:17<00:10,  5.16s/it, chunk=15/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:17<00:05,  5.17s/it, chunk=15/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:22<00:05,  5.17s/it, chunk=16/16, Δt(s)=5.23][A
+[Layer 4] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:22<00:00,  5.19s/it, chunk=16/16, Δt(s)=5.23][A
+                                                                                                           [A[Models]:  33%|███▎      | 1/3 [13:37<27:14, 817.33s/model, pattern=sBands, subdir=modes64_width60_epochs500_Tin10_T10, out=sBands__modes64_width60_epochs500_Tin10_T10.analysis.pt][Models]:  33%|███▎      | 1/3 [13:37<27:14, 817.33s/model, pattern=ringsLinf, subdir=modes64_width60_epochs500_Tin10_T10, out=ringsLinf__modes64_width60_epochs500_Tin10_T10.analysis.pt]
+[Layer 1] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 1] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.16][A
+[Layer 1] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:17,  5.17s/it, chunk=1/16, Δt(s)=5.16][A
+[Layer 1] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:17,  5.17s/it, chunk=2/16, Δt(s)=5.25][A
+[Layer 1] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:13,  5.22s/it, chunk=2/16, Δt(s)=5.25][A
+[Layer 1] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:13,  5.22s/it, chunk=3/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:07,  5.22s/it, chunk=3/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:07,  5.22s/it, chunk=4/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:02,  5.22s/it, chunk=4/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  25%|██▌       | 4/16 [00:26<01:02,  5.22s/it, chunk=5/16, Δt(s)=5.21][A
+[Layer 1] spatial SVDvals:  31%|███▏      | 5/16 [00:26<00:57,  5.22s/it, chunk=5/16, Δt(s)=5.21][A
+[Layer 1] spatial SVDvals:  31%|███▏      | 5/16 [00:31<00:57,  5.22s/it, chunk=6/16, Δt(s)=5.22][A
+[Layer 1] spatial SVDvals:  38%|███▊      | 6/16 [00:31<00:52,  5.22s/it, chunk=6/16, Δt(s)=5.22][A
+[Layer 1] spatial SVDvals:  38%|███▊      | 6/16 [00:36<00:52,  5.22s/it, chunk=7/16, Δt(s)=5.20][A
+[Layer 1] spatial SVDvals:  44%|████▍     | 7/16 [00:36<00:46,  5.21s/it, chunk=7/16, Δt(s)=5.20][A
+[Layer 1] spatial SVDvals:  44%|████▍     | 7/16 [00:41<00:46,  5.21s/it, chunk=8/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  50%|█████     | 8/16 [00:41<00:41,  5.18s/it, chunk=8/16, Δt(s)=5.12][A
+[Layer 1] spatial SVDvals:  50%|█████     | 8/16 [00:46<00:41,  5.18s/it, chunk=9/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  56%|█████▋    | 9/16 [00:46<00:36,  5.17s/it, chunk=9/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  56%|█████▋    | 9/16 [00:51<00:36,  5.17s/it, chunk=10/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  62%|██████▎   | 10/16 [00:51<00:30,  5.15s/it, chunk=10/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  62%|██████▎   | 10/16 [00:57<00:30,  5.15s/it, chunk=11/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  69%|██████▉   | 11/16 [00:57<00:25,  5.15s/it, chunk=11/16, Δt(s)=5.13][A
+[Layer 1] spatial SVDvals:  69%|██████▉   | 11/16 [01:02<00:25,  5.15s/it, chunk=12/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  75%|███████▌  | 12/16 [01:02<00:20,  5.14s/it, chunk=12/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  75%|███████▌  | 12/16 [01:07<00:20,  5.14s/it, chunk=13/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  81%|████████▏ | 13/16 [01:07<00:15,  5.15s/it, chunk=13/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  81%|████████▏ | 13/16 [01:12<00:15,  5.15s/it, chunk=14/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  88%|████████▊ | 14/16 [01:12<00:10,  5.15s/it, chunk=14/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  88%|████████▊ | 14/16 [01:17<00:10,  5.15s/it, chunk=15/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  94%|█████████▍| 15/16 [01:17<00:05,  5.15s/it, chunk=15/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  94%|█████████▍| 15/16 [01:22<00:05,  5.15s/it, chunk=16/16, Δt(s)=5.16][A
+[Layer 1] spatial SVDvals: 100%|██████████| 16/16 [01:22<00:00,  5.15s/it, chunk=16/16, Δt(s)=5.16][A
+                                                                                                   [A
+[Layer 1] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 1] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.23][A
+[Layer 1] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:18,  5.23s/it, chunk=1/16, Δt(s)=5.23][A
+[Layer 1] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:18,  5.23s/it, chunk=2/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:13,  5.25s/it, chunk=2/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:13,  5.25s/it, chunk=3/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:08,  5.26s/it, chunk=3/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:21<01:08,  5.26s/it, chunk=4/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:21<01:03,  5.25s/it, chunk=4/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:26<01:03,  5.25s/it, chunk=5/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:26<00:57,  5.25s/it, chunk=5/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:31<00:57,  5.25s/it, chunk=6/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:31<00:52,  5.25s/it, chunk=6/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:36<00:52,  5.25s/it, chunk=7/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:36<00:47,  5.26s/it, chunk=7/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:41<00:47,  5.26s/it, chunk=8/16, Δt(s)=5.22][A
+[Layer 1] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:41<00:41,  5.25s/it, chunk=8/16, Δt(s)=5.22][A
+[Layer 1] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:47<00:41,  5.25s/it, chunk=9/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:47<00:36,  5.24s/it, chunk=9/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:52<00:36,  5.24s/it, chunk=10/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:52<00:31,  5.25s/it, chunk=10/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:57<00:31,  5.25s/it, chunk=11/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:57<00:26,  5.25s/it, chunk=11/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:02<00:26,  5.25s/it, chunk=12/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:02<00:20,  5.25s/it, chunk=12/16, Δt(s)=5.24][A
+[Layer 1] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:08<00:20,  5.25s/it, chunk=13/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:08<00:15,  5.25s/it, chunk=13/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:13<00:15,  5.25s/it, chunk=14/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:13<00:10,  5.25s/it, chunk=14/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:18<00:10,  5.25s/it, chunk=15/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:18<00:05,  5.25s/it, chunk=15/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:24<00:05,  5.25s/it, chunk=16/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:24<00:00,  5.26s/it, chunk=16/16, Δt(s)=5.29][A
+                                                                                                           [A
+[Layer 2] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 2] spatial SVDvals:   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.91][A
+[Layer 2] spatial SVDvals:   6%|▋         | 1/16 [00:04<01:13,  4.91s/it, chunk=1/16, Δt(s)=4.91][A
+[Layer 2] spatial SVDvals:   6%|▋         | 1/16 [00:09<01:13,  4.91s/it, chunk=2/16, Δt(s)=4.98][A
+[Layer 2] spatial SVDvals:  12%|█▎        | 2/16 [00:09<01:09,  4.95s/it, chunk=2/16, Δt(s)=4.98][A
+[Layer 2] spatial SVDvals:  12%|█▎        | 2/16 [00:14<01:09,  4.95s/it, chunk=3/16, Δt(s)=4.97][A
+[Layer 2] spatial SVDvals:  19%|█▉        | 3/16 [00:14<01:04,  4.96s/it, chunk=3/16, Δt(s)=4.97][A
+[Layer 2] spatial SVDvals:  19%|█▉        | 3/16 [00:19<01:04,  4.96s/it, chunk=4/16, Δt(s)=4.96][A
+[Layer 2] spatial SVDvals:  25%|██▌       | 4/16 [00:19<00:59,  4.96s/it, chunk=4/16, Δt(s)=4.96][A
+[Layer 2] spatial SVDvals:  25%|██▌       | 4/16 [00:24<00:59,  4.96s/it, chunk=5/16, Δt(s)=4.96][A
+[Layer 2] spatial SVDvals:  31%|███▏      | 5/16 [00:24<00:54,  4.96s/it, chunk=5/16, Δt(s)=4.96][A
+[Layer 2] spatial SVDvals:  31%|███▏      | 5/16 [00:29<00:54,  4.96s/it, chunk=6/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  38%|███▊      | 6/16 [00:29<00:49,  4.95s/it, chunk=6/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  38%|███▊      | 6/16 [00:34<00:49,  4.95s/it, chunk=7/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  44%|████▍     | 7/16 [00:34<00:44,  4.95s/it, chunk=7/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  44%|████▍     | 7/16 [00:39<00:44,  4.95s/it, chunk=8/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  50%|█████     | 8/16 [00:39<00:39,  4.92s/it, chunk=8/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  50%|█████     | 8/16 [00:44<00:39,  4.92s/it, chunk=9/16, Δt(s)=4.85][A
+[Layer 2] spatial SVDvals:  56%|█████▋    | 9/16 [00:44<00:34,  4.89s/it, chunk=9/16, Δt(s)=4.85][A
+[Layer 2] spatial SVDvals:  56%|█████▋    | 9/16 [00:49<00:34,  4.89s/it, chunk=10/16, Δt(s)=4.83][A
+[Layer 2] spatial SVDvals:  62%|██████▎   | 10/16 [00:49<00:29,  4.88s/it, chunk=10/16, Δt(s)=4.83][A
+[Layer 2] spatial SVDvals:  62%|██████▎   | 10/16 [00:54<00:29,  4.88s/it, chunk=11/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  69%|██████▉   | 11/16 [00:54<00:24,  4.87s/it, chunk=11/16, Δt(s)=4.84][A
+[Layer 2] spatial SVDvals:  69%|██████▉   | 11/16 [00:58<00:24,  4.87s/it, chunk=12/16, Δt(s)=4.85][A
+[Layer 2] spatial SVDvals:  75%|███████▌  | 12/16 [00:58<00:19,  4.86s/it, chunk=12/16, Δt(s)=4.85][A
+[Layer 2] spatial SVDvals:  75%|███████▌  | 12/16 [01:03<00:19,  4.86s/it, chunk=13/16, Δt(s)=4.87][A
+[Layer 2] spatial SVDvals:  81%|████████▏ | 13/16 [01:03<00:14,  4.87s/it, chunk=13/16, Δt(s)=4.87][A
+[Layer 2] spatial SVDvals:  81%|████████▏ | 13/16 [01:08<00:14,  4.87s/it, chunk=14/16, Δt(s)=4.88][A
+[Layer 2] spatial SVDvals:  88%|████████▊ | 14/16 [01:08<00:09,  4.87s/it, chunk=14/16, Δt(s)=4.88][A
+[Layer 2] spatial SVDvals:  88%|████████▊ | 14/16 [01:13<00:09,  4.87s/it, chunk=15/16, Δt(s)=4.91][A
+[Layer 2] spatial SVDvals:  94%|█████████▍| 15/16 [01:13<00:04,  4.88s/it, chunk=15/16, Δt(s)=4.91][A
+[Layer 2] spatial SVDvals:  94%|█████████▍| 15/16 [01:18<00:04,  4.88s/it, chunk=16/16, Δt(s)=4.89][A
+[Layer 2] spatial SVDvals: 100%|██████████| 16/16 [01:18<00:00,  4.89s/it, chunk=16/16, Δt(s)=4.89][A
+                                                                                                   [A
+[Layer 2] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 2] spatial Angles vs (0,0):   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:04<01:14,  4.98s/it, chunk=1/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:09<01:14,  4.98s/it, chunk=2/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:09<01:09,  4.99s/it, chunk=2/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:14<01:09,  4.99s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:14<01:04,  4.99s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:20<01:04,  4.99s/it, chunk=4/16, Δt(s)=5.88][A
+[Layer 2] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:20<01:04,  5.34s/it, chunk=4/16, Δt(s)=5.88][A
+[Layer 2] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:25<01:04,  5.34s/it, chunk=5/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:25<00:57,  5.22s/it, chunk=5/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:30<00:57,  5.22s/it, chunk=6/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:30<00:51,  5.14s/it, chunk=6/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:35<00:51,  5.14s/it, chunk=7/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:35<00:45,  5.09s/it, chunk=7/16, Δt(s)=4.99][A
+[Layer 2] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:40<00:45,  5.09s/it, chunk=8/16, Δt(s)=4.95][A
+[Layer 2] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:40<00:40,  5.05s/it, chunk=8/16, Δt(s)=4.95][A
+[Layer 2] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:45<00:40,  5.05s/it, chunk=9/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:45<00:35,  5.02s/it, chunk=9/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:50<00:35,  5.02s/it, chunk=10/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:50<00:30,  5.01s/it, chunk=10/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:55<00:30,  5.01s/it, chunk=11/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:55<00:25,  5.00s/it, chunk=11/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:00<00:25,  5.00s/it, chunk=12/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:00<00:19,  4.99s/it, chunk=12/16, Δt(s)=4.97][A
+[Layer 2] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:05<00:19,  4.99s/it, chunk=13/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:05<00:14,  4.99s/it, chunk=13/16, Δt(s)=4.98][A
+[Layer 2] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:10<00:14,  4.99s/it, chunk=14/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:10<00:09,  4.99s/it, chunk=14/16, Δt(s)=5.00][A
+[Layer 2] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:15<00:09,  4.99s/it, chunk=15/16, Δt(s)=5.03][A
+[Layer 2] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:15<00:05,  5.00s/it, chunk=15/16, Δt(s)=5.03][A
+[Layer 2] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:20<00:05,  5.00s/it, chunk=16/16, Δt(s)=5.04][A
+[Layer 2] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:20<00:00,  5.02s/it, chunk=16/16, Δt(s)=5.04][A
+                                                                                                           [A
+[Layer 3] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 3] spatial SVDvals:   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.87][A
+[Layer 3] spatial SVDvals:   6%|▋         | 1/16 [00:04<01:13,  4.87s/it, chunk=1/16, Δt(s)=4.87][A
+[Layer 3] spatial SVDvals:   6%|▋         | 1/16 [00:09<01:13,  4.87s/it, chunk=2/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:  12%|█▎        | 2/16 [00:09<01:08,  4.92s/it, chunk=2/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:  12%|█▎        | 2/16 [00:14<01:08,  4.92s/it, chunk=3/16, Δt(s)=4.94][A
+[Layer 3] spatial SVDvals:  19%|█▉        | 3/16 [00:14<01:04,  4.93s/it, chunk=3/16, Δt(s)=4.94][A
+[Layer 3] spatial SVDvals:  19%|█▉        | 3/16 [00:19<01:04,  4.93s/it, chunk=4/16, Δt(s)=4.94][A
+[Layer 3] spatial SVDvals:  25%|██▌       | 4/16 [00:19<00:59,  4.93s/it, chunk=4/16, Δt(s)=4.94][A
+[Layer 3] spatial SVDvals:  25%|██▌       | 4/16 [00:24<00:59,  4.93s/it, chunk=5/16, Δt(s)=4.91][A
+[Layer 3] spatial SVDvals:  31%|███▏      | 5/16 [00:24<00:54,  4.92s/it, chunk=5/16, Δt(s)=4.91][A
+[Layer 3] spatial SVDvals:  31%|███▏      | 5/16 [00:29<00:54,  4.92s/it, chunk=6/16, Δt(s)=4.89][A
+[Layer 3] spatial SVDvals:  38%|███▊      | 6/16 [00:29<00:49,  4.91s/it, chunk=6/16, Δt(s)=4.89][A
+[Layer 3] spatial SVDvals:  38%|███▊      | 6/16 [00:34<00:49,  4.91s/it, chunk=7/16, Δt(s)=4.87][A
+[Layer 3] spatial SVDvals:  44%|████▍     | 7/16 [00:34<00:44,  4.90s/it, chunk=7/16, Δt(s)=4.87][A
+[Layer 3] spatial SVDvals:  44%|████▍     | 7/16 [00:39<00:44,  4.90s/it, chunk=8/16, Δt(s)=4.78][A
+[Layer 3] spatial SVDvals:  50%|█████     | 8/16 [00:39<00:38,  4.86s/it, chunk=8/16, Δt(s)=4.78][A
+[Layer 3] spatial SVDvals:  50%|█████     | 8/16 [00:43<00:38,  4.86s/it, chunk=9/16, Δt(s)=4.78][A
+[Layer 3] spatial SVDvals:  56%|█████▋    | 9/16 [00:43<00:33,  4.84s/it, chunk=9/16, Δt(s)=4.78][A
+[Layer 3] spatial SVDvals:  56%|█████▋    | 9/16 [00:48<00:33,  4.84s/it, chunk=10/16, Δt(s)=4.79][A
+[Layer 3] spatial SVDvals:  62%|██████▎   | 10/16 [00:48<00:28,  4.82s/it, chunk=10/16, Δt(s)=4.79][A
+[Layer 3] spatial SVDvals:  62%|██████▎   | 10/16 [00:53<00:28,  4.82s/it, chunk=11/16, Δt(s)=4.78][A
+[Layer 3] spatial SVDvals:  69%|██████▉   | 11/16 [00:53<00:24,  4.81s/it, chunk=11/16, Δt(s)=4.78][A
+[Layer 3] spatial SVDvals:  69%|██████▉   | 11/16 [00:58<00:24,  4.81s/it, chunk=12/16, Δt(s)=4.80][A
+[Layer 3] spatial SVDvals:  75%|███████▌  | 12/16 [00:58<00:19,  4.81s/it, chunk=12/16, Δt(s)=4.80][A
+[Layer 3] spatial SVDvals:  75%|███████▌  | 12/16 [01:03<00:19,  4.81s/it, chunk=13/16, Δt(s)=4.80][A
+[Layer 3] spatial SVDvals:  81%|████████▏ | 13/16 [01:03<00:14,  4.81s/it, chunk=13/16, Δt(s)=4.80][A
+[Layer 3] spatial SVDvals:  81%|████████▏ | 13/16 [01:07<00:14,  4.81s/it, chunk=14/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  88%|████████▊ | 14/16 [01:07<00:09,  4.81s/it, chunk=14/16, Δt(s)=4.81][A
+[Layer 3] spatial SVDvals:  88%|████████▊ | 14/16 [01:12<00:09,  4.81s/it, chunk=15/16, Δt(s)=4.82][A
+[Layer 3] spatial SVDvals:  94%|█████████▍| 15/16 [01:12<00:04,  4.81s/it, chunk=15/16, Δt(s)=4.82][A
+[Layer 3] spatial SVDvals:  94%|█████████▍| 15/16 [01:17<00:04,  4.81s/it, chunk=16/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals: 100%|██████████| 16/16 [01:17<00:00,  4.82s/it, chunk=16/16, Δt(s)=4.85][A
+                                                                                                   [A
+[Layer 3] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 3] spatial Angles vs (0,0):   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:04<01:14,  4.94s/it, chunk=1/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:09<01:14,  4.94s/it, chunk=2/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:09<01:09,  4.96s/it, chunk=2/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:14<01:09,  4.96s/it, chunk=3/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:14<01:04,  4.98s/it, chunk=3/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:19<01:04,  4.98s/it, chunk=4/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:19<00:59,  4.97s/it, chunk=4/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:24<00:59,  4.97s/it, chunk=5/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:24<00:54,  4.95s/it, chunk=5/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:29<00:54,  4.95s/it, chunk=6/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:29<00:49,  4.95s/it, chunk=6/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:34<00:49,  4.95s/it, chunk=7/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:34<00:44,  4.94s/it, chunk=7/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:39<00:44,  4.94s/it, chunk=8/16, Δt(s)=4.89][A
+[Layer 3] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:39<00:39,  4.93s/it, chunk=8/16, Δt(s)=4.89][A
+[Layer 3] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:44<00:39,  4.93s/it, chunk=9/16, Δt(s)=4.90][A
+[Layer 3] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:44<00:34,  4.92s/it, chunk=9/16, Δt(s)=4.90][A
+[Layer 3] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:49<00:34,  4.92s/it, chunk=10/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:49<00:29,  4.92s/it, chunk=10/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:54<00:29,  4.92s/it, chunk=11/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:54<00:24,  4.92s/it, chunk=11/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:59<00:24,  4.92s/it, chunk=12/16, Δt(s)=5.11][A
+[Layer 3] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [00:59<00:20,  5.02s/it, chunk=12/16, Δt(s)=5.11][A
+[Layer 3] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:04<00:20,  5.02s/it, chunk=13/16, Δt(s)=4.92][A
+[Layer 3] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:04<00:14,  4.99s/it, chunk=13/16, Δt(s)=4.92][A
+[Layer 3] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:09<00:14,  4.99s/it, chunk=14/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:09<00:09,  4.97s/it, chunk=14/16, Δt(s)=4.93][A
+[Layer 3] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:14<00:09,  4.97s/it, chunk=15/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:14<00:04,  4.96s/it, chunk=15/16, Δt(s)=4.94][A
+[Layer 3] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:19<00:04,  4.96s/it, chunk=16/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:19<00:00,  4.97s/it, chunk=16/16, Δt(s)=5.00][A
+                                                                                                           [A
+[Layer 4] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 4] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.12][A
+[Layer 4] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:16,  5.12s/it, chunk=1/16, Δt(s)=5.12][A
+[Layer 4] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:16,  5.12s/it, chunk=2/16, Δt(s)=5.18][A
+[Layer 4] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:12,  5.16s/it, chunk=2/16, Δt(s)=5.18][A
+[Layer 4] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:12,  5.16s/it, chunk=3/16, Δt(s)=5.17][A
+[Layer 4] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:07,  5.16s/it, chunk=3/16, Δt(s)=5.17][A
+[Layer 4] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:07,  5.16s/it, chunk=4/16, Δt(s)=5.16][A
+[Layer 4] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:01,  5.16s/it, chunk=4/16, Δt(s)=5.16][A
+[Layer 4] spatial SVDvals:  25%|██▌       | 4/16 [00:25<01:01,  5.16s/it, chunk=5/16, Δt(s)=5.16][A
+[Layer 4] spatial SVDvals:  31%|███▏      | 5/16 [00:25<00:56,  5.16s/it, chunk=5/16, Δt(s)=5.16][A
+[Layer 4] spatial SVDvals:  31%|███▏      | 5/16 [00:30<00:56,  5.16s/it, chunk=6/16, Δt(s)=5.15][A
+[Layer 4] spatial SVDvals:  38%|███▊      | 6/16 [00:30<00:51,  5.16s/it, chunk=6/16, Δt(s)=5.15][A
+[Layer 4] spatial SVDvals:  38%|███▊      | 6/16 [00:36<00:51,  5.16s/it, chunk=7/16, Δt(s)=5.15][A
+[Layer 4] spatial SVDvals:  44%|████▍     | 7/16 [00:36<00:46,  5.15s/it, chunk=7/16, Δt(s)=5.15][A
+[Layer 4] spatial SVDvals:  44%|████▍     | 7/16 [00:41<00:46,  5.15s/it, chunk=8/16, Δt(s)=5.05][A
+[Layer 4] spatial SVDvals:  50%|█████     | 8/16 [00:41<00:40,  5.12s/it, chunk=8/16, Δt(s)=5.05][A
+[Layer 4] spatial SVDvals:  50%|█████     | 8/16 [00:46<00:40,  5.12s/it, chunk=9/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  56%|█████▋    | 9/16 [00:46<00:35,  5.10s/it, chunk=9/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  56%|█████▋    | 9/16 [00:51<00:35,  5.10s/it, chunk=10/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  62%|██████▎   | 10/16 [00:51<00:30,  5.09s/it, chunk=10/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  62%|██████▎   | 10/16 [00:56<00:30,  5.09s/it, chunk=11/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  69%|██████▉   | 11/16 [00:56<00:25,  5.08s/it, chunk=11/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:  69%|██████▉   | 11/16 [01:01<00:25,  5.08s/it, chunk=12/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  75%|███████▌  | 12/16 [01:01<00:20,  5.08s/it, chunk=12/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  75%|███████▌  | 12/16 [01:06<00:20,  5.08s/it, chunk=13/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  81%|████████▏ | 13/16 [01:06<00:15,  5.08s/it, chunk=13/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  81%|████████▏ | 13/16 [01:11<00:15,  5.08s/it, chunk=14/16, Δt(s)=5.09][A
+[Layer 4] spatial SVDvals:  88%|████████▊ | 14/16 [01:11<00:10,  5.09s/it, chunk=14/16, Δt(s)=5.09][A
+[Layer 4] spatial SVDvals:  88%|████████▊ | 14/16 [01:16<00:10,  5.09s/it, chunk=15/16, Δt(s)=5.10][A
+[Layer 4] spatial SVDvals:  94%|█████████▍| 15/16 [01:16<00:05,  5.09s/it, chunk=15/16, Δt(s)=5.10][A
+[Layer 4] spatial SVDvals:  94%|█████████▍| 15/16 [01:21<00:05,  5.09s/it, chunk=16/16, Δt(s)=5.11][A
+[Layer 4] spatial SVDvals: 100%|██████████| 16/16 [01:21<00:00,  5.10s/it, chunk=16/16, Δt(s)=5.11][A
+                                                                                                   [A
+[Layer 4] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 4] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:17,  5.19s/it, chunk=1/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:17,  5.19s/it, chunk=2/16, Δt(s)=5.21][A
+[Layer 4] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:12,  5.20s/it, chunk=2/16, Δt(s)=5.21][A
+[Layer 4] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:12,  5.20s/it, chunk=3/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:07,  5.20s/it, chunk=3/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:20<01:07,  5.20s/it, chunk=4/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:20<01:02,  5.20s/it, chunk=4/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:25<01:02,  5.20s/it, chunk=5/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:25<00:57,  5.19s/it, chunk=5/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:31<00:57,  5.19s/it, chunk=6/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:31<00:51,  5.20s/it, chunk=6/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:36<00:51,  5.20s/it, chunk=7/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:36<00:46,  5.20s/it, chunk=7/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:41<00:46,  5.20s/it, chunk=8/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:41<00:41,  5.18s/it, chunk=8/16, Δt(s)=5.16][A
+[Layer 4] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:46<00:41,  5.18s/it, chunk=9/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:46<00:36,  5.18s/it, chunk=9/16, Δt(s)=5.17][A
+[Layer 4] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:51<00:36,  5.18s/it, chunk=10/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:51<00:31,  5.18s/it, chunk=10/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:57<00:31,  5.18s/it, chunk=11/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:57<00:25,  5.19s/it, chunk=11/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:02<00:25,  5.19s/it, chunk=12/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:02<00:20,  5.19s/it, chunk=12/16, Δt(s)=5.19][A
+[Layer 4] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:07<00:20,  5.19s/it, chunk=13/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:07<00:15,  5.18s/it, chunk=13/16, Δt(s)=5.18][A
+[Layer 4] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:12<00:15,  5.18s/it, chunk=14/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it, chunk=14/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:17<00:10,  5.19s/it, chunk=15/16, Δt(s)=5.21][A
+[Layer 4] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:17<00:05,  5.20s/it, chunk=15/16, Δt(s)=5.21][A
+[Layer 4] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:23<00:05,  5.20s/it, chunk=16/16, Δt(s)=5.25][A
+[Layer 4] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:23<00:00,  5.21s/it, chunk=16/16, Δt(s)=5.25][A
+                                                                                                           [A[Models]:  67%|██████▋   | 2/3 [26:49<13:22, 802.59s/model, pattern=ringsLinf, subdir=modes64_width60_epochs500_Tin10_T10, out=ringsLinf__modes64_width60_epochs500_Tin10_T10.analysis.pt][Models]:  67%|██████▋   | 2/3 [26:49<13:22, 802.59s/model, pattern=ringsL1, subdir=modes64_width60_epochs500_Tin10_T10, out=ringsL1__modes64_width60_epochs500_Tin10_T10.analysis.pt]    
+[Layer 1] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 1] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.19][A
+[Layer 1] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:17,  5.19s/it, chunk=1/16, Δt(s)=5.19][A
+[Layer 1] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:17,  5.19s/it, chunk=2/16, Δt(s)=5.26][A
+[Layer 1] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:13,  5.23s/it, chunk=2/16, Δt(s)=5.26][A
+[Layer 1] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:13,  5.23s/it, chunk=3/16, Δt(s)=5.25][A
+[Layer 1] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:08,  5.24s/it, chunk=3/16, Δt(s)=5.25][A
+[Layer 1] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:08,  5.24s/it, chunk=4/16, Δt(s)=5.25][A
+[Layer 1] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:02,  5.25s/it, chunk=4/16, Δt(s)=5.25][A
+[Layer 1] spatial SVDvals:  25%|██▌       | 4/16 [00:26<01:02,  5.25s/it, chunk=5/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  31%|███▏      | 5/16 [00:26<00:57,  5.24s/it, chunk=5/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  31%|███▏      | 5/16 [00:31<00:57,  5.24s/it, chunk=6/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  38%|███▊      | 6/16 [00:31<00:52,  5.24s/it, chunk=6/16, Δt(s)=5.23][A
+[Layer 1] spatial SVDvals:  38%|███▊      | 6/16 [00:36<00:52,  5.24s/it, chunk=7/16, Δt(s)=5.22][A
+[Layer 1] spatial SVDvals:  44%|████▍     | 7/16 [00:36<00:47,  5.23s/it, chunk=7/16, Δt(s)=5.22][A
+[Layer 1] spatial SVDvals:  44%|████▍     | 7/16 [00:41<00:47,  5.23s/it, chunk=8/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  50%|█████     | 8/16 [00:41<00:41,  5.20s/it, chunk=8/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  50%|█████     | 8/16 [00:46<00:41,  5.20s/it, chunk=9/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  56%|█████▋    | 9/16 [00:46<00:36,  5.18s/it, chunk=9/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  56%|█████▋    | 9/16 [00:52<00:36,  5.18s/it, chunk=10/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  62%|██████▎   | 10/16 [00:52<00:31,  5.17s/it, chunk=10/16, Δt(s)=5.14][A
+[Layer 1] spatial SVDvals:  62%|██████▎   | 10/16 [00:57<00:31,  5.17s/it, chunk=11/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  69%|██████▉   | 11/16 [00:57<00:25,  5.17s/it, chunk=11/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  69%|██████▉   | 11/16 [01:02<00:25,  5.17s/it, chunk=12/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  75%|███████▌  | 12/16 [01:02<00:20,  5.16s/it, chunk=12/16, Δt(s)=5.15][A
+[Layer 1] spatial SVDvals:  75%|███████▌  | 12/16 [01:07<00:20,  5.16s/it, chunk=13/16, Δt(s)=5.16][A
+[Layer 1] spatial SVDvals:  81%|████████▏ | 13/16 [01:07<00:15,  5.16s/it, chunk=13/16, Δt(s)=5.16][A
+[Layer 1] spatial SVDvals:  81%|████████▏ | 13/16 [01:12<00:15,  5.16s/it, chunk=14/16, Δt(s)=5.17][A
+[Layer 1] spatial SVDvals:  88%|████████▊ | 14/16 [01:12<00:10,  5.16s/it, chunk=14/16, Δt(s)=5.17][A
+[Layer 1] spatial SVDvals:  88%|████████▊ | 14/16 [01:17<00:10,  5.16s/it, chunk=15/16, Δt(s)=5.18][A
+[Layer 1] spatial SVDvals:  94%|█████████▍| 15/16 [01:17<00:05,  5.17s/it, chunk=15/16, Δt(s)=5.18][A
+[Layer 1] spatial SVDvals:  94%|█████████▍| 15/16 [01:23<00:05,  5.17s/it, chunk=16/16, Δt(s)=5.18][A
+[Layer 1] spatial SVDvals: 100%|██████████| 16/16 [01:23<00:00,  5.17s/it, chunk=16/16, Δt(s)=5.18][A
+                                                                                                   [A
+[Layer 1] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 1] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:18,  5.26s/it, chunk=1/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:18,  5.26s/it, chunk=2/16, Δt(s)=5.28][A
+[Layer 1] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:13,  5.27s/it, chunk=2/16, Δt(s)=5.28][A
+[Layer 1] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:13,  5.27s/it, chunk=3/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:08,  5.28s/it, chunk=3/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:21<01:08,  5.28s/it, chunk=4/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:21<01:03,  5.27s/it, chunk=4/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:26<01:03,  5.27s/it, chunk=5/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:26<00:57,  5.27s/it, chunk=5/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:31<00:57,  5.27s/it, chunk=6/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:31<00:52,  5.27s/it, chunk=6/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:36<00:52,  5.27s/it, chunk=7/16, Δt(s)=5.28][A
+[Layer 1] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:36<00:47,  5.28s/it, chunk=7/16, Δt(s)=5.28][A
+[Layer 1] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:42<00:47,  5.28s/it, chunk=8/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:42<00:42,  5.27s/it, chunk=8/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:47<00:42,  5.27s/it, chunk=9/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:47<00:36,  5.26s/it, chunk=9/16, Δt(s)=5.25][A
+[Layer 1] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:52<00:36,  5.26s/it, chunk=10/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:52<00:31,  5.26s/it, chunk=10/16, Δt(s)=5.27][A
+[Layer 1] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:57<00:31,  5.26s/it, chunk=11/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:57<00:26,  5.27s/it, chunk=11/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:03<00:26,  5.27s/it, chunk=12/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:03<00:21,  5.27s/it, chunk=12/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:08<00:21,  5.27s/it, chunk=13/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:08<00:15,  5.27s/it, chunk=13/16, Δt(s)=5.26][A
+[Layer 1] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:13<00:15,  5.27s/it, chunk=14/16, Δt(s)=5.28][A
+[Layer 1] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:13<00:10,  5.27s/it, chunk=14/16, Δt(s)=5.28][A
+[Layer 1] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:19<00:10,  5.27s/it, chunk=15/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:19<00:05,  5.27s/it, chunk=15/16, Δt(s)=5.29][A
+[Layer 1] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:24<00:05,  5.27s/it, chunk=16/16, Δt(s)=5.32][A
+[Layer 1] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:24<00:00,  5.29s/it, chunk=16/16, Δt(s)=5.32][A
+                                                                                                           [A
+[Layer 2] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 2] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.00][A
+[Layer 2] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:15,  5.00s/it, chunk=1/16, Δt(s)=5.00][A
+[Layer 2] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:15,  5.00s/it, chunk=2/16, Δt(s)=5.08][A
+[Layer 2] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:10,  5.05s/it, chunk=2/16, Δt(s)=5.08][A
+[Layer 2] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:10,  5.05s/it, chunk=3/16, Δt(s)=5.06][A
+[Layer 2] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:05,  5.05s/it, chunk=3/16, Δt(s)=5.06][A
+[Layer 2] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:05,  5.05s/it, chunk=4/16, Δt(s)=5.04][A
+[Layer 2] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:00,  5.05s/it, chunk=4/16, Δt(s)=5.04][A
+[Layer 2] spatial SVDvals:  25%|██▌       | 4/16 [00:25<01:00,  5.05s/it, chunk=5/16, Δt(s)=5.04][A
+[Layer 2] spatial SVDvals:  31%|███▏      | 5/16 [00:25<00:55,  5.04s/it, chunk=5/16, Δt(s)=5.04][A
+[Layer 2] spatial SVDvals:  31%|███▏      | 5/16 [00:30<00:55,  5.04s/it, chunk=6/16, Δt(s)=5.03][A
+[Layer 2] spatial SVDvals:  38%|███▊      | 6/16 [00:30<00:50,  5.04s/it, chunk=6/16, Δt(s)=5.03][A
+[Layer 2] spatial SVDvals:  38%|███▊      | 6/16 [00:35<00:50,  5.04s/it, chunk=7/16, Δt(s)=5.04][A
+[Layer 2] spatial SVDvals:  44%|████▍     | 7/16 [00:35<00:45,  5.04s/it, chunk=7/16, Δt(s)=5.04][A
+[Layer 2] spatial SVDvals:  44%|████▍     | 7/16 [00:40<00:45,  5.04s/it, chunk=8/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  50%|█████     | 8/16 [00:40<00:40,  5.01s/it, chunk=8/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  50%|█████     | 8/16 [00:45<00:40,  5.01s/it, chunk=9/16, Δt(s)=4.92][A
+[Layer 2] spatial SVDvals:  56%|█████▋    | 9/16 [00:45<00:34,  4.98s/it, chunk=9/16, Δt(s)=4.92][A
+[Layer 2] spatial SVDvals:  56%|█████▋    | 9/16 [00:50<00:34,  4.98s/it, chunk=10/16, Δt(s)=4.93][A
+[Layer 2] spatial SVDvals:  62%|██████▎   | 10/16 [00:50<00:29,  4.96s/it, chunk=10/16, Δt(s)=4.93][A
+[Layer 2] spatial SVDvals:  62%|██████▎   | 10/16 [00:55<00:29,  4.96s/it, chunk=11/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  69%|██████▉   | 11/16 [00:55<00:24,  4.96s/it, chunk=11/16, Δt(s)=4.94][A
+[Layer 2] spatial SVDvals:  69%|██████▉   | 11/16 [00:59<00:24,  4.96s/it, chunk=12/16, Δt(s)=4.95][A
+[Layer 2] spatial SVDvals:  75%|███████▌  | 12/16 [00:59<00:19,  4.96s/it, chunk=12/16, Δt(s)=4.95][A
+[Layer 2] spatial SVDvals:  75%|███████▌  | 12/16 [01:04<00:19,  4.96s/it, chunk=13/16, Δt(s)=4.96][A
+[Layer 2] spatial SVDvals:  81%|████████▏ | 13/16 [01:04<00:14,  4.96s/it, chunk=13/16, Δt(s)=4.96][A
+[Layer 2] spatial SVDvals:  81%|████████▏ | 13/16 [01:09<00:14,  4.96s/it, chunk=14/16, Δt(s)=4.97][A
+[Layer 2] spatial SVDvals:  88%|████████▊ | 14/16 [01:09<00:09,  4.96s/it, chunk=14/16, Δt(s)=4.97][A
+[Layer 2] spatial SVDvals:  88%|████████▊ | 14/16 [01:14<00:09,  4.96s/it, chunk=15/16, Δt(s)=4.99][A
+[Layer 2] spatial SVDvals:  94%|█████████▍| 15/16 [01:14<00:04,  4.97s/it, chunk=15/16, Δt(s)=4.99][A
+[Layer 2] spatial SVDvals:  94%|█████████▍| 15/16 [01:19<00:04,  4.97s/it, chunk=16/16, Δt(s)=5.00][A
+[Layer 2] spatial SVDvals: 100%|██████████| 16/16 [01:19<00:00,  4.98s/it, chunk=16/16, Δt(s)=5.00][A
+                                                                                                   [A
+[Layer 2] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 2] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.07][A
+[Layer 2] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:16,  5.07s/it, chunk=1/16, Δt(s)=5.07][A
+[Layer 2] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:16,  5.07s/it, chunk=2/16, Δt(s)=5.10][A
+[Layer 2] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:11,  5.09s/it, chunk=2/16, Δt(s)=5.10][A
+[Layer 2] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:11,  5.09s/it, chunk=3/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:06,  5.08s/it, chunk=3/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:20<01:06,  5.08s/it, chunk=4/16, Δt(s)=5.06][A
+[Layer 2] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:20<01:00,  5.07s/it, chunk=4/16, Δt(s)=5.06][A
+[Layer 2] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:25<01:00,  5.07s/it, chunk=5/16, Δt(s)=5.05][A
+[Layer 2] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:25<00:55,  5.07s/it, chunk=5/16, Δt(s)=5.05][A
+[Layer 2] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:30<00:55,  5.07s/it, chunk=6/16, Δt(s)=5.09][A
+[Layer 2] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:30<00:50,  5.07s/it, chunk=6/16, Δt(s)=5.09][A
+[Layer 2] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:35<00:50,  5.07s/it, chunk=7/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:35<00:45,  5.08s/it, chunk=7/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:40<00:45,  5.08s/it, chunk=8/16, Δt(s)=5.05][A
+[Layer 2] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:40<00:40,  5.07s/it, chunk=8/16, Δt(s)=5.05][A
+[Layer 2] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:45<00:40,  5.07s/it, chunk=9/16, Δt(s)=5.04][A
+[Layer 2] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:45<00:35,  5.06s/it, chunk=9/16, Δt(s)=5.04][A
+[Layer 2] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:50<00:35,  5.06s/it, chunk=10/16, Δt(s)=5.06][A
+[Layer 2] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:50<00:30,  5.06s/it, chunk=10/16, Δt(s)=5.06][A
+[Layer 2] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:55<00:30,  5.06s/it, chunk=11/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:55<00:25,  5.07s/it, chunk=11/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:00<00:25,  5.07s/it, chunk=12/16, Δt(s)=5.07][A
+[Layer 2] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:00<00:20,  5.07s/it, chunk=12/16, Δt(s)=5.07][A
+[Layer 2] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:05<00:20,  5.07s/it, chunk=13/16, Δt(s)=5.07][A
+[Layer 2] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:05<00:15,  5.07s/it, chunk=13/16, Δt(s)=5.07][A
+[Layer 2] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:11<00:15,  5.07s/it, chunk=14/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:11<00:10,  5.07s/it, chunk=14/16, Δt(s)=5.08][A
+[Layer 2] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:16<00:10,  5.07s/it, chunk=15/16, Δt(s)=5.11][A
+[Layer 2] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:16<00:05,  5.08s/it, chunk=15/16, Δt(s)=5.11][A
+[Layer 2] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:21<00:05,  5.08s/it, chunk=16/16, Δt(s)=5.14][A
+[Layer 2] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:21<00:00,  5.10s/it, chunk=16/16, Δt(s)=5.14][A
+                                                                                                           [A
+[Layer 3] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 3] spatial SVDvals:   0%|          | 0/16 [00:04<?, ?it/s, chunk=1/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:   6%|▋         | 1/16 [00:04<01:14,  4.96s/it, chunk=1/16, Δt(s)=4.96][A
+[Layer 3] spatial SVDvals:   6%|▋         | 1/16 [00:09<01:14,  4.96s/it, chunk=2/16, Δt(s)=5.03][A
+[Layer 3] spatial SVDvals:  12%|█▎        | 2/16 [00:09<01:09,  5.00s/it, chunk=2/16, Δt(s)=5.03][A
+[Layer 3] spatial SVDvals:  12%|█▎        | 2/16 [00:14<01:09,  5.00s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 3] spatial SVDvals:  19%|█▉        | 3/16 [00:14<01:04,  5.00s/it, chunk=3/16, Δt(s)=4.99][A
+[Layer 3] spatial SVDvals:  19%|█▉        | 3/16 [00:19<01:04,  5.00s/it, chunk=4/16, Δt(s)=4.99][A
+[Layer 3] spatial SVDvals:  25%|██▌       | 4/16 [00:19<00:59,  4.99s/it, chunk=4/16, Δt(s)=4.99][A
+[Layer 3] spatial SVDvals:  25%|██▌       | 4/16 [00:24<00:59,  4.99s/it, chunk=5/16, Δt(s)=4.95][A
+[Layer 3] spatial SVDvals:  31%|███▏      | 5/16 [00:24<00:54,  4.98s/it, chunk=5/16, Δt(s)=4.95][A
+[Layer 3] spatial SVDvals:  31%|███▏      | 5/16 [00:29<00:54,  4.98s/it, chunk=6/16, Δt(s)=4.97][A
+[Layer 3] spatial SVDvals:  38%|███▊      | 6/16 [00:29<00:49,  4.97s/it, chunk=6/16, Δt(s)=4.97][A
+[Layer 3] spatial SVDvals:  38%|███▊      | 6/16 [00:34<00:49,  4.97s/it, chunk=7/16, Δt(s)=4.95][A
+[Layer 3] spatial SVDvals:  44%|████▍     | 7/16 [00:34<00:44,  4.97s/it, chunk=7/16, Δt(s)=4.95][A
+[Layer 3] spatial SVDvals:  44%|████▍     | 7/16 [00:39<00:44,  4.97s/it, chunk=8/16, Δt(s)=4.86][A
+[Layer 3] spatial SVDvals:  50%|█████     | 8/16 [00:39<00:39,  4.93s/it, chunk=8/16, Δt(s)=4.86][A
+[Layer 3] spatial SVDvals:  50%|█████     | 8/16 [00:44<00:39,  4.93s/it, chunk=9/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  56%|█████▋    | 9/16 [00:44<00:34,  4.91s/it, chunk=9/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  56%|█████▋    | 9/16 [00:49<00:34,  4.91s/it, chunk=10/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  62%|██████▎   | 10/16 [00:49<00:29,  4.89s/it, chunk=10/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  62%|██████▎   | 10/16 [00:54<00:29,  4.89s/it, chunk=11/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  69%|██████▉   | 11/16 [00:54<00:24,  4.88s/it, chunk=11/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  69%|██████▉   | 11/16 [00:59<00:24,  4.88s/it, chunk=12/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  75%|███████▌  | 12/16 [00:59<00:19,  4.87s/it, chunk=12/16, Δt(s)=4.85][A
+[Layer 3] spatial SVDvals:  75%|███████▌  | 12/16 [01:03<00:19,  4.87s/it, chunk=13/16, Δt(s)=4.86][A
+[Layer 3] spatial SVDvals:  81%|████████▏ | 13/16 [01:03<00:14,  4.87s/it, chunk=13/16, Δt(s)=4.86][A
+[Layer 3] spatial SVDvals:  81%|████████▏ | 13/16 [01:08<00:14,  4.87s/it, chunk=14/16, Δt(s)=4.89][A
+[Layer 3] spatial SVDvals:  88%|████████▊ | 14/16 [01:08<00:09,  4.87s/it, chunk=14/16, Δt(s)=4.89][A
+[Layer 3] spatial SVDvals:  88%|████████▊ | 14/16 [01:13<00:09,  4.87s/it, chunk=15/16, Δt(s)=4.92][A
+[Layer 3] spatial SVDvals:  94%|█████████▍| 15/16 [01:13<00:04,  4.89s/it, chunk=15/16, Δt(s)=4.92][A
+[Layer 3] spatial SVDvals:  94%|█████████▍| 15/16 [01:18<00:04,  4.89s/it, chunk=16/16, Δt(s)=4.93][A
+[Layer 3] spatial SVDvals: 100%|██████████| 16/16 [01:18<00:00,  4.90s/it, chunk=16/16, Δt(s)=4.93][A
+                                                                                                   [A
+[Layer 3] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 3] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.05][A
+[Layer 3] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:15,  5.05s/it, chunk=1/16, Δt(s)=5.05][A
+[Layer 3] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:15,  5.05s/it, chunk=2/16, Δt(s)=5.04][A
+[Layer 3] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:10,  5.04s/it, chunk=2/16, Δt(s)=5.04][A
+[Layer 3] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:10,  5.04s/it, chunk=3/16, Δt(s)=5.02][A
+[Layer 3] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:05,  5.03s/it, chunk=3/16, Δt(s)=5.02][A
+[Layer 3] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:20<01:05,  5.03s/it, chunk=4/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:20<01:00,  5.02s/it, chunk=4/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:25<01:00,  5.02s/it, chunk=5/16, Δt(s)=4.98][A
+[Layer 3] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:25<00:55,  5.00s/it, chunk=5/16, Δt(s)=4.98][A
+[Layer 3] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:30<00:55,  5.00s/it, chunk=6/16, Δt(s)=5.01][A
+[Layer 3] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:30<00:50,  5.01s/it, chunk=6/16, Δt(s)=5.01][A
+[Layer 3] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:35<00:50,  5.01s/it, chunk=7/16, Δt(s)=5.01][A
+[Layer 3] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:35<00:45,  5.01s/it, chunk=7/16, Δt(s)=5.01][A
+[Layer 3] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:40<00:45,  5.01s/it, chunk=8/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:40<00:39,  5.00s/it, chunk=8/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:45<00:39,  5.00s/it, chunk=9/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:45<00:34,  4.99s/it, chunk=9/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:50<00:34,  4.99s/it, chunk=10/16, Δt(s)=4.99][A
+[Layer 3] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:50<00:29,  4.99s/it, chunk=10/16, Δt(s)=4.99][A
+[Layer 3] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:55<00:29,  4.99s/it, chunk=11/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:55<00:24,  4.99s/it, chunk=11/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:00<00:24,  4.99s/it, chunk=12/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:00<00:19,  4.98s/it, chunk=12/16, Δt(s)=4.97][A
+[Layer 3] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:04<00:19,  4.98s/it, chunk=13/16, Δt(s)=4.98][A
+[Layer 3] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:04<00:14,  4.98s/it, chunk=13/16, Δt(s)=4.98][A
+[Layer 3] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:09<00:14,  4.98s/it, chunk=14/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:09<00:09,  4.99s/it, chunk=14/16, Δt(s)=5.00][A
+[Layer 3] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:15<00:09,  4.99s/it, chunk=15/16, Δt(s)=5.04][A
+[Layer 3] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:15<00:05,  5.00s/it, chunk=15/16, Δt(s)=5.04][A
+[Layer 3] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:20<00:05,  5.00s/it, chunk=16/16, Δt(s)=5.08][A
+[Layer 3] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:20<00:00,  5.03s/it, chunk=16/16, Δt(s)=5.08][A
+                                                                                                           [A
+[Layer 4] spatial SVDvals:   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 4] spatial SVDvals:   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:   6%|▋         | 1/16 [00:05<01:15,  5.06s/it, chunk=1/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals:   6%|▋         | 1/16 [00:10<01:15,  5.06s/it, chunk=2/16, Δt(s)=5.12][A
+[Layer 4] spatial SVDvals:  12%|█▎        | 2/16 [00:10<01:11,  5.10s/it, chunk=2/16, Δt(s)=5.12][A
+[Layer 4] spatial SVDvals:  12%|█▎        | 2/16 [00:15<01:11,  5.10s/it, chunk=3/16, Δt(s)=5.12][A
+[Layer 4] spatial SVDvals:  19%|█▉        | 3/16 [00:15<01:06,  5.11s/it, chunk=3/16, Δt(s)=5.12][A
+[Layer 4] spatial SVDvals:  19%|█▉        | 3/16 [00:20<01:06,  5.11s/it, chunk=4/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  25%|██▌       | 4/16 [00:20<01:01,  5.10s/it, chunk=4/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  25%|██▌       | 4/16 [00:25<01:01,  5.10s/it, chunk=5/16, Δt(s)=5.10][A
+[Layer 4] spatial SVDvals:  31%|███▏      | 5/16 [00:25<00:56,  5.10s/it, chunk=5/16, Δt(s)=5.10][A
+[Layer 4] spatial SVDvals:  31%|███▏      | 5/16 [00:30<00:56,  5.10s/it, chunk=6/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  38%|███▊      | 6/16 [00:30<00:50,  5.09s/it, chunk=6/16, Δt(s)=5.08][A
+[Layer 4] spatial SVDvals:  38%|███▊      | 6/16 [00:35<00:50,  5.09s/it, chunk=7/16, Δt(s)=5.09][A
+[Layer 4] spatial SVDvals:  44%|████▍     | 7/16 [00:35<00:45,  5.09s/it, chunk=7/16, Δt(s)=5.09][A
+[Layer 4] spatial SVDvals:  44%|████▍     | 7/16 [00:40<00:45,  5.09s/it, chunk=8/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  50%|█████     | 8/16 [00:40<00:40,  5.06s/it, chunk=8/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  50%|█████     | 8/16 [00:45<00:40,  5.06s/it, chunk=9/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  56%|█████▋    | 9/16 [00:45<00:35,  5.03s/it, chunk=9/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  56%|█████▋    | 9/16 [00:50<00:35,  5.03s/it, chunk=10/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  62%|██████▎   | 10/16 [00:50<00:30,  5.02s/it, chunk=10/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  62%|██████▎   | 10/16 [00:55<00:30,  5.02s/it, chunk=11/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  69%|██████▉   | 11/16 [00:55<00:25,  5.01s/it, chunk=11/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  69%|██████▉   | 11/16 [01:00<00:25,  5.01s/it, chunk=12/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  75%|███████▌  | 12/16 [01:00<00:20,  5.00s/it, chunk=12/16, Δt(s)=4.99][A
+[Layer 4] spatial SVDvals:  75%|███████▌  | 12/16 [01:05<00:20,  5.00s/it, chunk=13/16, Δt(s)=5.00][A
+[Layer 4] spatial SVDvals:  81%|████████▏ | 13/16 [01:05<00:15,  5.00s/it, chunk=13/16, Δt(s)=5.00][A
+[Layer 4] spatial SVDvals:  81%|████████▏ | 13/16 [01:10<00:15,  5.00s/it, chunk=14/16, Δt(s)=5.01][A
+[Layer 4] spatial SVDvals:  88%|████████▊ | 14/16 [01:10<00:10,  5.01s/it, chunk=14/16, Δt(s)=5.01][A
+[Layer 4] spatial SVDvals:  88%|████████▊ | 14/16 [01:15<00:10,  5.01s/it, chunk=15/16, Δt(s)=5.04][A
+[Layer 4] spatial SVDvals:  94%|█████████▍| 15/16 [01:15<00:05,  5.02s/it, chunk=15/16, Δt(s)=5.04][A
+[Layer 4] spatial SVDvals:  94%|█████████▍| 15/16 [01:20<00:05,  5.02s/it, chunk=16/16, Δt(s)=5.06][A
+[Layer 4] spatial SVDvals: 100%|██████████| 16/16 [01:20<00:00,  5.03s/it, chunk=16/16, Δt(s)=5.06][A
+                                                                                                   [A
+[Layer 4] spatial Angles vs (0,0):   0%|          | 0/16 [00:00<?, ?it/s][A
+[Layer 4] spatial Angles vs (0,0):   0%|          | 0/16 [00:05<?, ?it/s, chunk=1/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:05<01:16,  5.13s/it, chunk=1/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):   6%|▋         | 1/16 [00:10<01:16,  5.13s/it, chunk=2/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:10<01:11,  5.14s/it, chunk=2/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  12%|█▎        | 2/16 [00:15<01:11,  5.14s/it, chunk=3/16, Δt(s)=5.14][A
+[Layer 4] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:15<01:06,  5.14s/it, chunk=3/16, Δt(s)=5.14][A
+[Layer 4] spatial Angles vs (0,0):  19%|█▉        | 3/16 [00:20<01:06,  5.14s/it, chunk=4/16, Δt(s)=5.12][A
+[Layer 4] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:20<01:01,  5.13s/it, chunk=4/16, Δt(s)=5.12][A
+[Layer 4] spatial Angles vs (0,0):  25%|██▌       | 4/16 [00:25<01:01,  5.13s/it, chunk=5/16, Δt(s)=5.11][A
+[Layer 4] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:25<00:56,  5.12s/it, chunk=5/16, Δt(s)=5.11][A
+[Layer 4] spatial Angles vs (0,0):  31%|███▏      | 5/16 [00:30<00:56,  5.12s/it, chunk=6/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:30<00:51,  5.13s/it, chunk=6/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):  38%|███▊      | 6/16 [00:35<00:51,  5.13s/it, chunk=7/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:35<00:46,  5.13s/it, chunk=7/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):  44%|████▍     | 7/16 [00:40<00:46,  5.13s/it, chunk=8/16, Δt(s)=5.09][A
+[Layer 4] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:40<00:40,  5.12s/it, chunk=8/16, Δt(s)=5.09][A
+[Layer 4] spatial Angles vs (0,0):  50%|█████     | 8/16 [00:46<00:40,  5.12s/it, chunk=9/16, Δt(s)=5.10][A
+[Layer 4] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:46<00:35,  5.11s/it, chunk=9/16, Δt(s)=5.10][A
+[Layer 4] spatial Angles vs (0,0):  56%|█████▋    | 9/16 [00:51<00:35,  5.11s/it, chunk=10/16, Δt(s)=5.12][A
+[Layer 4] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:51<00:30,  5.11s/it, chunk=10/16, Δt(s)=5.12][A
+[Layer 4] spatial Angles vs (0,0):  62%|██████▎   | 10/16 [00:56<00:30,  5.11s/it, chunk=11/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [00:56<00:25,  5.12s/it, chunk=11/16, Δt(s)=5.13][A
+[Layer 4] spatial Angles vs (0,0):  69%|██████▉   | 11/16 [01:01<00:25,  5.12s/it, chunk=12/16, Δt(s)=5.11][A
+[Layer 4] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:01<00:20,  5.12s/it, chunk=12/16, Δt(s)=5.11][A
+[Layer 4] spatial Angles vs (0,0):  75%|███████▌  | 12/16 [01:06<00:20,  5.12s/it, chunk=13/16, Δt(s)=5.11][A
+[Layer 4] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:06<00:15,  5.11s/it, chunk=13/16, Δt(s)=5.11][A
+[Layer 4] spatial Angles vs (0,0):  81%|████████▏ | 13/16 [01:11<00:15,  5.11s/it, chunk=14/16, Δt(s)=5.12][A
+[Layer 4] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:11<00:10,  5.12s/it, chunk=14/16, Δt(s)=5.12][A
+[Layer 4] spatial Angles vs (0,0):  88%|████████▊ | 14/16 [01:16<00:10,  5.12s/it, chunk=15/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:16<00:05,  5.13s/it, chunk=15/16, Δt(s)=5.15][A
+[Layer 4] spatial Angles vs (0,0):  94%|█████████▍| 15/16 [01:22<00:05,  5.13s/it, chunk=16/16, Δt(s)=5.20][A
+[Layer 4] spatial Angles vs (0,0): 100%|██████████| 16/16 [01:22<00:00,  5.15s/it, chunk=16/16, Δt(s)=5.20][A
+                                                                                                           [A[Models]: 100%|██████████| 3/3 [40:10<00:00, 801.63s/model, pattern=ringsL1, subdir=modes64_width60_epochs500_Tin10_T10, out=ringsL1__modes64_width60_epochs500_Tin10_T10.analysis.pt][Models]: 100%|██████████| 3/3 [40:10<00:00, 803.37s/model, pattern=ringsL1, subdir=modes64_width60_epochs500_Tin10_T10, out=ringsL1__modes64_width60_epochs500_Tin10_T10.analysis.pt]

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 621, in <module>
+    adversarial_x0 = attack_system.pgd_attack(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 408, in pgd_attack
+    pred_19, true_19 = self.forward(x_adv)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 318, in forward
+    input_sequence = self.generate_input_sequence(x0)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 305, in generate_input_sequence
+    x_t = self.pde_solver.solve(x0, t)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 203, in solve
+    solution_tensor = JaxPDEWrapper.apply(x0_np, solver_func)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 60, in forward
+    if not a_torch.is_cuda:
+AttributeError: 'numpy.ndarray' object has no attribute 'is_cuda'

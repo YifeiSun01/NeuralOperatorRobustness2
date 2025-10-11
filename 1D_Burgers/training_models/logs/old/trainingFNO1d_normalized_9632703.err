@@ -1,0 +1,11 @@
+Training FNO 1d:   0%|          | 0/500 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/./training_models/trainingFNO1d_normalized.py:95: UserWarning: Using a target size (torch.Size([20, 256])) that is different to the input size (torch.Size([20, 65536])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  mse = F.mse_loss(out.view(batch_size, -1), y.view(batch_size, -1), reduction='mean')
+Training FNO 1d:   0%|          | 0/500 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/./training_models/trainingFNO1d_normalized.py", line 95, in <module>
+    mse = F.mse_loss(out.view(batch_size, -1), y.view(batch_size, -1), reduction='mean')
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/functional.py", line 3884, in mse_loss
+    expanded_input, expanded_target = torch.broadcast_tensors(input, target)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/functional.py", line 77, in broadcast_tensors
+    return _VF.broadcast_tensors(tensors)  # type: ignore[attr-defined]
+RuntimeError: The size of tensor a (65536) must match the size of tensor b (256) at non-singleton dimension 1

@@ -1,0 +1,1 @@
+Training FNO2d [ADD]:   0%|          | 0/500 [00:00<?, ?it/s]Training FNO2d [ADD]:   0%|          | 1/500 [00:58<8:08:46, 58.77s/it]Training FNO2d [ADD]:   0%|          | 2/500 [01:24<5:26:31, 39.34s/it]slurmstepd: error: *** JOB 11289207 ON c0900a-s25 CANCELLED AT 2025-08-29T22:19:01 ***

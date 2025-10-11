@@ -1,0 +1,45 @@
+Using backend: pytorch
+Other supported backends: tensorflow.compat.v1, tensorflow, jax, paddle.
+paddle supports more examples now and is recommended.
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./training_models/train_deeponet1d_2.py", line 104, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./training_models/train_deeponet1d_2.py", line 89, in main
+    train(model, lr, epochs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./training_models/train_deeponet1d_2.py", line 44, in train
+    losshistory, train_state = model.train(epochs=epochs, batch_size=None)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/utils/internal.py", line 22, in wrapper
+    result = f(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/model.py", line 687, in train
+    self._test(verbose=verbose)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/model.py", line 880, in _test
+    ) = self._outputs_losses(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/model.py", line 593, in _outputs_losses
+    outs = outputs_losses(inputs, targets, auxiliary_vars)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/model.py", line 342, in outputs_losses_train
+    return outputs_losses(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/model.py", line 319, in outputs_losses
+    outputs_ = self.net(inputs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/nn/pytorch/deeponet.py", line 262, in forward
+    x = self.multi_output_strategy.call(x_func, x_loc)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/nn/deeponet_strategy.py", line 36, in call
+    x_loc = self.net.activation_trunk(self.net.trunk(x_loc))
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/deepxde/nn/pytorch/fnn.py", line 46, in forward
+    else self.activation(linear(x))
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/utils/_device.py", line 104, in __torch_function__
+    return func(*args, **kwargs)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (1024x4 and 1x128)

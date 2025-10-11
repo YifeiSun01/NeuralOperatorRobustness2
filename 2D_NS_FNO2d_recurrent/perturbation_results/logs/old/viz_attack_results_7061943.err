@@ -1,0 +1,25 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:635: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+  im7 = axs[6].imshow(tiled_hess_xx, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:635: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  im7 = axs[6].imshow(tiled_hess_xx, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:641: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+  im8 = axs[7].imshow(tiled_hess_yy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:641: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  im8 = axs[7].imshow(tiled_hess_yy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:647: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+  im9 = axs[8].imshow(tiled_hess_xy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:647: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  im9 = axs[8].imshow(tiled_hess_xy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:743: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+  im7 = axs[6].imshow(tiled_hess_xx, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:743: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  im7 = axs[6].imshow(tiled_hess_xx, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:749: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+  im8 = axs[7].imshow(tiled_hess_yy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:749: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  im8 = axs[7].imshow(tiled_hess_yy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:755: UserWarning: Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+  im9 = axs[8].imshow(tiled_hess_xy, cmap='viridis')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py:755: UserWarning: Attempting to set identical low and high ylims makes transformation singular; automatically expanding.
+  im9 = axs[8].imshow(tiled_hess_xy, cmap='viridis')
+slurmstepd: error: *** JOB 7061943 ON c0901a-s5 CANCELLED AT 2025-07-11T09:55:56 ***

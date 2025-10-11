@@ -1,0 +1,85 @@
+Adversarial Continued Training:   0%|          | 0/2000 [00:00<?, ?it/s]2025-09-08 14:34:09.217613: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:255] Failed to make cuFFT batched plan: 8
+2025-09-08 14:34:09.226690: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:322] Initialize Params: rank: 2 elem_count: 256 input_embed: 256 input_stride: 1 input_distance: 33024 output_embed: 256 output_stride: 1 output_distance: 65536 batch_count: 2
+2025-09-08 14:34:09.226714: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:331] Failed to initialize batched cufft plan with customized allocator: Failed to make cuFFT batched plan.
+E0908 14:34:09.597715 3885790 status_macros.cc:57] INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyObject_FastCallDictTstate
+	_PyObject_Call_Prepend
+	
+	PyObject_Call
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	PyObject_Call
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	
+	
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	
+	
+	
+	torch::autograd::Engine::evaluate_function(std::shared_ptr<torch::autograd::GraphTask>&, torch::autograd::Node*, torch::autograd::InputBuffer&, std::shared_ptr<torch::autograd::ReadyQueue> const&)
+	torch::autograd::Engine::thread_main(std::shared_ptr<torch::autograd::GraphTask> const&)
+	torch::autograd::Engine::thread_init(int, std::shared_ptr<torch::autograd::ReadyQueue> const&, bool)
+	
+	
+	
+	
+*** End stack trace ***
+
+E0908 14:34:09.624393 3885790 pjrt_stream_executor_client.cc:2839] Execution of replica 0 failed: INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+Adversarial Continued Training:   0%|          | 0/2000 [2:10:46<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py", line 118, in <module>
+    
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 183, in attack_and_rollout_seq
+    x0 = x_seq[..., 0].contiguous()            # (B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 126, in attack_batch
+    x_adv.grad = None
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 307, in apply
+    return user_fn(self, *args)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/solver.py", line 54, in backward
+    # a_dlpack = torch.utils.dlpack.to_dlpack(a_torch)
+jaxlib.xla_extension.XlaRuntimeError: INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator

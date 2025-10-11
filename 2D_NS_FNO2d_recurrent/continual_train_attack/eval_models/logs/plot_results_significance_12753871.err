@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.py", line 842, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.py", line 804, in main
+    pivot_full = build_pivot_multi_metrics(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.py", line 260, in build_pivot_multi_metrics
+    piv = pd.pivot_table(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/reshape/pivot.py", line 102, in pivot_table
+    table = __internal_pivot_table(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/reshape/pivot.py", line 172, in __internal_pivot_table
+    grouped = data.groupby(keys, observed=observed_bool, sort=sort, dropna=dropna)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/frame.py", line 9183, in groupby
+    return DataFrameGroupBy(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/groupby/groupby.py", line 1329, in __init__
+    grouper, exclusions, obj = get_grouper(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/groupby/grouper.py", line 1038, in get_grouper
+    raise ValueError(f"Grouper for '{name}' not 1-dimensional")
+ValueError: Grouper for 'n' not 1-dimensional

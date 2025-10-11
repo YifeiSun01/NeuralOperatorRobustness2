@@ -1,0 +1,26 @@
+2025-07-27 02:10:55.802658: W external/xla/xla/service/platform_util.cc:220] unable to create StreamExecutor for CUDA:0: CUDA error: : CUDA_ERROR_UNKNOWN: unknown error
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/xla_bridge.py", line 857, in backends
+    backend = _init_backend(platform)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/xla_bridge.py", line 943, in _init_backend
+    backend = registration.factory()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/xla_bridge.py", line 633, in factory
+    return xla_client.make_c_api_client(plugin_name, updated_options, None)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jaxlib/xla_client.py", line 159, in make_c_api_client
+    return _xla.get_c_api_client(plugin_name, options, distributed_client)
+jaxlib.xla_extension.XlaRuntimeError: INTERNAL: no supported devices found for platform CUDA
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_constant1to9.py", line 99, in <module>
+    print_versions()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_constant1to9.py", line 53, in print_versions
+    print(f"JAX Backend: {jax.extend.backend.get_backend().platform}")
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/xla_bridge.py", line 991, in get_backend
+    return _get_backend_uncached(platform)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/xla_bridge.py", line 970, in _get_backend_uncached
+    bs = backends()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/xla_bridge.py", line 873, in backends
+    raise RuntimeError(err_msg)
+RuntimeError: Unable to initialize backend 'cuda': INTERNAL: no supported devices found for platform CUDA (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)

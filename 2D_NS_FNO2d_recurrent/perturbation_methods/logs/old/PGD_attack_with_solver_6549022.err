@@ -1,0 +1,55 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:68: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+E0701 21:02:13.884346  366332 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+E0701 21:02:13.935120  366332 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:81: UserWarning: GPU transfer failed, fallback to CPU: local variable 'u0' referenced before assignment
+  warnings.warn(f"GPU transfer failed, fallback to CPU: {str(e)}")
+E0701 21:02:27.085404  366332 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+E0701 21:02:28.287220  366332 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 71, in forward
+    g_output_jax = g(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 189, in solver_func
+    return generate_single_timestep_solution(a, self.nu, target_time)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 138, in generate_single_timestep_solution
+    u0 = jnp.rot90(jnp.flipud(u0), 3)
+UnboundLocalError: local variable 'u0' referenced before assignment
+
+During handling of the above exception, another exception occurred:
+
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 610, in <module>
+    adversarial_x0 = attack_system.pgd_attack(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 397, in pgd_attack
+    pred_19, true_19 = self.forward(x_adv)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 307, in forward
+    input_sequence = self.generate_input_sequence(x0)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 294, in generate_input_sequence
+    x_t = self.pde_solver.solve(x0, t)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 192, in solve
+    solution_tensor = JaxPDEWrapper.apply(x0.contiguous(), solver_func)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 83, in forward
+    g_output_np = g(jnp.array(a_np))
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/lax_numpy.py", line 5548, in array
+    out_array: Array = lax_internal._convert_element_type(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/lax/lax.py", line 1727, in _convert_element_type
+    return convert_element_type_p.bind(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 496, in bind
+    return self._true_bind(*args, **params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 512, in _true_bind
+    return self.bind_with_trace(prev_trace, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/lax/lax.py", line 4875, in _convert_element_type_bind_with_trace
+    operand = core.Primitive.bind_with_trace(convert_element_type_p, trace, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 517, in bind_with_trace
+    return trace.process_primitive(self, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 1017, in process_primitive
+    return primitive.impl(*args, **params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dispatch.py", line 89, in apply_primitive
+    outs = fun(*args)
+jaxlib.xla_extension.XlaRuntimeError: FAILED_PRECONDITION: DNN library initialization failed. Look at the errors above for more details.

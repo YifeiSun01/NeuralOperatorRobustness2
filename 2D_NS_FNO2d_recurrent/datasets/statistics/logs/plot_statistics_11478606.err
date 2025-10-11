@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/datasets/statistics/plot_statistics.py", line 393, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/datasets/statistics/plot_statistics.py", line 361, in main
+    raise FileNotFoundError(f"RAW_TRAIN_H5 not found: {RAW_TRAIN_H5}")
+FileNotFoundError: RAW_TRAIN_H5 not found: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/dataset_raw_train.h5

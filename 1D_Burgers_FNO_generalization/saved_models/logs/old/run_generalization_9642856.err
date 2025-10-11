@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 127, in <module>
+    g_a_tensor = torch.tensor(g_a_np.copy(), dtype=torch.float32).unsqueeze(0)
+TypeError: the read only flag is not supported, should always be False

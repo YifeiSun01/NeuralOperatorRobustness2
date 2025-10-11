@@ -1,0 +1,9 @@
+usage: rmse_frame0diff_scatter.py [-h] --perf-csv PERF_CSV --sim-csv SIM_CSV
+                                  [--expanded EXPANDED]
+                                  [--expanded-like EXPANDED_LIKE] --strategy
+                                  {add,replace} --pct {0.25,0.5,0.75,1.0}
+                                  [--modes MODES] [--width WIDTH]
+                                  [--epochs EPOCHS] --x-metric X_METRIC
+                                  [--agg {mean,median}] [--outdir OUTDIR]
+                                  [--dpi DPI]
+rmse_frame0diff_scatter.py: error: the following arguments are required: --strategy, --pct, --x-metric

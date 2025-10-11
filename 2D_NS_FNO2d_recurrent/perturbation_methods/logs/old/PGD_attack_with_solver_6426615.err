@@ -1,0 +1,28 @@
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 509, in <module>
+    num_steps = 10   # 攻击迭代次数
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 367, in pgd_attack
+    input_sequence = self.generate_input_sequence(x_adv)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 326, in generate_input_sequence
+    return PDEGradientCalculator.apply(x0, self.pde_solver, time_points)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 222, in forward
+    return pde_solver.solve_sequence(x0, time_points)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 214, in solve_sequence
+    solutions.append(self.solve(x0, t))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 192, in solve
+    solution = generate_single_timestep_solution(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 158, in generate_single_timestep_solution
+    final_state = rollout_stepper(full_ic)[-1, 0, ...].T.block_until_ready()
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_utils.py", line 172, in rollout_stepper_fn
+    _, trj = jax.lax.scan(scan_fn, u_0, None, length=n)
+TypeError: scan body function carry input and carry output must have equal types, but they differ:
+
+The input carry u has type float32[1,256,256] but the corresponding output carry component has type float64[1,256,256], so the dtypes do not match.
+
+Revise the function so that all output types match the corresponding input types.

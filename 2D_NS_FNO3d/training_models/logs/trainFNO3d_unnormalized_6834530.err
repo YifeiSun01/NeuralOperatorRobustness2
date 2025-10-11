@@ -1,0 +1,17 @@
+Training FNO 3d Recurrent:   0%|          | 0/500 [00:00<?, ?it/s]Training FNO 3d Recurrent:   0%|          | 0/500 [00:20<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO3d/training_models/trainingFNO3d_unnormalized.py", line 102, in <module>
+    pred = model(xx)  # shape (batch, s, s, 10)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/models/FNO3d.py", line 149, in forward
+    x = self.q(x)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/models/FNO3d.py", line 76, in forward
+    x = F.gelu(x)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 22.27 GiB. GPU 0 has a total capacity of 178.36 GiB of which 7.95 GiB is free. Including non-PyTorch memory, this process has 170.39 GiB memory in use. Of the allocated memory 164.32 GiB is allocated by PyTorch, and 5.29 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

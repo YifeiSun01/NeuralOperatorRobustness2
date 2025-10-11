@@ -1,0 +1,17 @@
+Training:   0%|          | 0/500 [00:00<?, ?it/s]Training:   0%|          | 0/500 [00:02<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack.py", line 1018, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack.py", line 842, in main
+    train_epochs(fno, rec, tr_loader, te_loader, args.epochs, args.lr, iters, log_path, device)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack.py", line 335, in train_epochs
+    for xx, yy in train_loader:
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 733, in __next__
+    data = self._next_data()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 791, in _next_data
+    data = _utils.pin_memory.pin_memory(data, self._pin_memory_device)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 100, in pin_memory
+    clone[i] = pin_memory(item, device)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 66, in pin_memory
+    return data.pin_memory(device)
+RuntimeError: Unrecognized CachingAllocator option: max_split_size_mb=256

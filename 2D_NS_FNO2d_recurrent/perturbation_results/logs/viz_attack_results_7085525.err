@@ -1,0 +1,7 @@
+Processing attack visualizations:   0%|          | 0/6 [00:00<?, ?it/s]Processing attack visualizations:  17%|█▋        | 1/6 [10:38<53:10, 638.16s/it]Processing attack visualizations:  17%|█▋        | 1/6 [10:38<53:13, 638.79s/it]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 806, in <module>
+    create_attack_visualization(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 371, in create_attack_visualization
+    reach_boundary = record['reach_boundary']
+KeyError: 'reach_boundary'

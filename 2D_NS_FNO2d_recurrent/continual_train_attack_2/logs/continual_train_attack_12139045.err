@@ -1,0 +1,15 @@
+Adversarial Continued Training:   0%|          | 0/2000 [00:00<?, ?it/s]Adversarial Continued Training:   0%|          | 0/2000 [1:04:11<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py", line 208, in <module>
+    adv_xx0, yy_adv0 = attack_and_rollout_seq(xx0, recurrent_model, pde_solver, Tout=T, cfg=attack_cfg)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 185, in attack_and_rollout_seq
+    x0_adv = attack_batch(x0, recurrent_model, pde_solver, cfg=cfg)  # (B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 127, in attack_batch
+    loss.backward()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/viz_attack_results_short.py", line 178, in <module>
+    visualize_attack_comparison(key_tuple, grouped, fps=5, dpi=100, approximated_prefix = "surrogate_")
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/viz_attack_results_short.py", line 110, in visualize_attack_comparison
+    axs = axs.flatten()
+AttributeError: 'Axes' object has no attribute 'flatten'

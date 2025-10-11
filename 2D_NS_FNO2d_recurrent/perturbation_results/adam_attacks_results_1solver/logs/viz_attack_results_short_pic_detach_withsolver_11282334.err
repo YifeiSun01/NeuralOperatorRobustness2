@@ -1,0 +1,2 @@
+/var/spool/slurmd/job11282334/slurm_script: line 21: 2795803 Killed                  python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_detach_withsolver.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=11282334.batch. Some of the step tasks have been OOM Killed.

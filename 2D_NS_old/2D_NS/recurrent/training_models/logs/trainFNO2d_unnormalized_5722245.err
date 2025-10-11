@@ -1,0 +1,17 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent/./training_models/trainingFNO2d_unnormalized.py:73: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = GradScaler()
+Training FNO 2d:   0%|          | 0/500 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent/./training_models/trainingFNO2d_unnormalized.py:88: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast():
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent/models/FNO2d.py:27: UserWarning: ComplexHalf support is experimental and many operators don't support it yet. (Triggered internally at /pytorch/aten/src/ATen/EmptyTensor.cpp:56.)
+  x_ft = torch.fft.rfft2(x)
+Training FNO 2d:   0%|          | 0/500 [00:46<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent/./training_models/trainingFNO2d_unnormalized.py", line 107, in <module>
+    scaler.step(optimizer)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 455, in step
+    self.unscale_(optimizer)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 342, in unscale_
+    optimizer_state["found_inf_per_device"] = self._unscale_grads_(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 283, in _unscale_grads_
+    torch._amp_foreach_non_finite_check_and_unscale_(
+RuntimeError: "_amp_foreach_non_finite_check_and_unscale_cuda" not implemented for 'ComplexFloat'

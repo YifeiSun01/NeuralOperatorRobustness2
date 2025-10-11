@@ -1,0 +1,42 @@
+INFO:2025-09-05 01:02:58,038:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 01:02:58.038052 22496227869760 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl = jax.dlpack.to_dlpack(out_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:102: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:104: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 0/1500 [01:09<?, ?it/s, loss=6.963e+01, done=1/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 1/1500 [01:09<28:58:52, 69.60s/it, loss=6.963e+01, done=1/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 1/1500 [01:34<28:58:52, 69.60s/it, loss=6.400e+01, done=2/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 2/1500 [01:34<18:03:37, 43.40s/it, loss=6.400e+01, done=2/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 2/1500 [01:59<18:03:37, 43.40s/it, loss=3.792e+01, done=3/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 3/1500 [01:59<14:34:02, 35.03s/it, loss=3.792e+01, done=3/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 3/1500 [02:24<14:34:02, 35.03s/it, loss=7.922e+01, done=4/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 4/1500 [02:24<12:55:26, 31.10s/it, loss=7.922e+01, done=4/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 4/1500 [02:49<12:55:26, 31.10s/it, loss=7.076e+01, done=5/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 5/1500 [02:49<12:00:44, 28.93s/it, loss=7.076e+01, done=5/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 5/1500 [03:14<12:00:44, 28.93s/it, loss=9.844e+01, done=6/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 6/1500 [03:14<11:27:40, 27.62s/it, loss=9.844e+01, done=6/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 6/1500 [03:40<11:27:40, 27.62s/it, loss=8.341e+01, done=7/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 7/1500 [03:40<11:06:31, 26.79s/it, loss=8.341e+01, done=7/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 7/1500 [04:05<11:06:31, 26.79s/it, loss=1.029e+02, done=8/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 8/1500 [04:05<10:52:25, 26.24s/it, loss=1.029e+02, done=8/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 8/1500 [04:30<10:52:25, 26.24s/it, loss=4.062e+01, done=9/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 9/1500 [04:30<10:42:55, 25.87s/it, loss=4.062e+01, done=9/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 9/1500 [04:55<10:42:55, 25.87s/it, loss=5.453e+01, done=10/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 10/1500 [04:55<10:36:10, 25.62s/it, loss=5.453e+01, done=10/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 10/1500 [05:20<10:36:10, 25.62s/it, loss=9.921e+01, done=11/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 11/1500 [05:20<10:31:36, 25.45s/it, loss=9.921e+01, done=11/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 11/1500 [05:45<10:31:36, 25.45s/it, loss=1.194e+02, done=12/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 12/1500 [05:45<10:28:13, 25.33s/it, loss=1.194e+02, done=12/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 12/1500 [06:10<10:28:13, 25.33s/it, loss=8.261e+01, done=13/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 13/1500 [06:10<10:25:59, 25.26s/it, loss=8.261e+01, done=13/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 13/1500 [06:35<10:25:59, 25.26s/it, loss=5.784e+01, done=14/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   1%|          | 14/1500 [06:35<10:24:15, 25.21s/it, loss=5.784e+01, done=14/1500][Aslurmstepd: error: *** JOB 11885075 ON c0602a-s4 CANCELLED AT 2025-09-05T01:10:06 ***

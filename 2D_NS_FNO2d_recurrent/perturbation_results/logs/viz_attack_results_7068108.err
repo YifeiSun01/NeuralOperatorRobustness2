@@ -1,0 +1,15 @@
+Processing attack visualizations:   0%|          | 0/54 [00:00<?, ?it/s]Processing attack visualizations:   2%|▏         | 1/54 [10:37<9:23:08, 637.51s/it]Processing attack visualizations:   4%|▎         | 2/54 [21:07<9:08:35, 632.99s/it]Processing attack visualizations:   6%|▌         | 3/54 [31:27<8:53:07, 627.20s/it]Processing attack visualizations:   7%|▋         | 4/54 [41:44<8:39:06, 622.93s/it]Processing attack visualizations:   9%|▉         | 5/54 [51:59<8:26:24, 620.10s/it]Processing attack visualizations:  11%|█         | 6/54 [1:02:13<8:14:25, 618.02s/it]/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/numpy/_core/fromnumeric.py:3860: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/numpy/_core/_methods.py:145: RuntimeWarning: invalid value encountered in divide
+  ret = ret.dtype.type(ret / rcount)
+Processing attack visualizations:  11%|█         | 6/54 [1:04:02<8:32:19, 640.41s/it]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 798, in <module>
+    create_compact_attack_visualization(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 436, in create_compact_attack_visualization
+    'x0': periodic_boundary_error(record['x0']),
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 273, in periodic_boundary_error
+    'top_bottom_by_max': safe_divide(diff_hess_xx_top_bottom, max_abs_hess_xx),
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 305, in safe_divide
+    if b == 0 or np.isnan(b) or np.isinf(b):
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()

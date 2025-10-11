@@ -1,0 +1,28 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 20165 (\N{CJK UNIFIED IDEOGRAPH-4EC5}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 32472 (\N{CJK UNIFIED IDEOGRAPH-7ED8}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 21046 (\N{CJK UNIFIED IDEOGRAPH-5236}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 19982 (\N{CJK UNIFIED IDEOGRAPH-4E0E}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 20849 (\N{CJK UNIFIED IDEOGRAPH-5171}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:355: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from font(s) DejaVu Sans.
+  plt.tight_layout()
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 20165 (\N{CJK UNIFIED IDEOGRAPH-4EC5}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 32472 (\N{CJK UNIFIED IDEOGRAPH-7ED8}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 21046 (\N{CJK UNIFIED IDEOGRAPH-5236}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 19982 (\N{CJK UNIFIED IDEOGRAPH-4E0E}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 20849 (\N{CJK UNIFIED IDEOGRAPH-5171}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 26377 (\N{CJK UNIFIED IDEOGRAPH-6709}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_2.py:362: UserWarning: Glyph 30340 (\N{CJK UNIFIED IDEOGRAPH-7684}) missing from font(s) DejaVu Sans.
+  plt.savefig(out_path, dpi=dpi, bbox_inches='tight')

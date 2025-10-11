@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_attack_results_short_pic_detach_withsolver_batch.py", line 176, in <module>
+    best = hits[2]
+IndexError: list index out of range

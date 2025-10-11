@@ -1,0 +1,22 @@
+[ringsCos] B=8:   0%|          | 0/50 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-11 22:19:02,606:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0911 22:19:02.606144 22619159631680 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2025-09-11 22:23:50.352879: E external/xla/xla/service/slow_operation_alarm.cc:73] 
+********************************
+[Compiling module jit__lambda_] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2025-09-11 22:24:52.529393: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 3m2.176657011s
+
+********************************
+[Compiling module jit__lambda_] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:86: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:88: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+[ringsCos] B=8:  16%|█▌        | 8/50 [12:14<1:04:13, 91.75s/it][ringsCos] B=8:  16%|█▌        | 8/50 [12:14<1:04:13, 91.75s/it][ringsCos] B=8:  32%|███▏      | 16/50 [13:48<25:19, 44.70s/it] [ringsCos] B=8:  32%|███▏      | 16/50 [13:48<25:19, 44.70s/it][ringsCos] B=8:  48%|████▊     | 24/50 [15:21<12:50, 29.64s/it][ringsCos] B=8:  48%|████▊     | 24/50 [15:21<12:50, 29.64s/it][ringsCos] B=8:  64%|██████▍   | 32/50 [16:56<06:46, 22.59s/it][ringsCos] B=8:  64%|██████▍   | 32/50 [16:56<06:46, 22.59s/it][ringsCos] B=8:  80%|████████  | 40/50 [18:30<03:06, 18.69s/it][ringsCos] B=8:  80%|████████  | 40/50 [18:30<03:06, 18.69s/it][ringsCos] B=8:  96%|█████████▌| 48/50 [20:04<00:32, 16.33s/it][ringsCos] B=8:  96%|█████████▌| 48/50 [20:04<00:32, 16.33s/it][ringsCos] B=8: 100%|██████████| 50/50 [21:26<00:00, 19.02s/it][ringsCos] B=8: 100%|██████████| 50/50 [21:26<00:00, 19.02s/it][ringsCos] B=8: 100%|██████████| 50/50 [21:27<00:00, 25.75s/it]

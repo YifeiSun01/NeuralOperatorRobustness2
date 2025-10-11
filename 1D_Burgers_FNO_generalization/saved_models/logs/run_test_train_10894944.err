@@ -1,0 +1,2 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_test_train.py:405: DeprecationWarning: __array__ implementation doesn't accept a copy keyword, so passing copy=False failed. __array__ must implement 'dtype' and 'copy' keyword arguments. To learn more, see the migration guide https://numpy.org/devdocs/numpy_2_0_migration_guide.html#adapting-to-changes-in-the-copy-keyword
+  g_a_np = np.array(record["g(a)"], copy=True)

@@ -1,0 +1,2 @@
+/var/spool/slurmd/job11289206/slurm_script: line 81: 1093204 Killed                  python -u ./2D_NS_FNO2d_recurrent/training_models_expanded/trainFNO2d_unnormalized_expanded.py --expanded_file "$f" --percent "$pct" --epochs ${EPOCHS} --batch_size ${BATCH_SIZE} --seed ${SEED}
+slurmstepd: error: Detected 1 oom_kill event in StepId=11289206.batch. Some of the step tasks have been OOM Killed.

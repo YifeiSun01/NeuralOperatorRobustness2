@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/eval_models.py", line 659, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/eval_models.py", line 507, in main
+    discovered_txt = out_root / f"discovered_models__{model_root.name}.txt"
+UnboundLocalError: local variable 'out_root' referenced before assignment

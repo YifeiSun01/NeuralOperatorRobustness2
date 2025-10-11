@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/eval_all_models/eval_all_models.py", line 955, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/eval_all_models/eval_all_models.py", line 721, in main
+    models = apply_model_filters(models, args.only_groups, exclude_res)
+AttributeError: 'Namespace' object has no attribute 'only_groups'

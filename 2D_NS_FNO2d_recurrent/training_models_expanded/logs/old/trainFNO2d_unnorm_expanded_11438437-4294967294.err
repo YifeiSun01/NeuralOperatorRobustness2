@@ -1,0 +1,3 @@
+/var/spool/slurmd/job11438437/slurm_script: line 13: +: command not found
+/var/spool/slurmd/job11438437/slurm_script: line 14: +: command not found
+slurmstepd: error: *** JOB 11438437 ON c0910a-s5 CANCELLED AT 2025-08-31T14:42:06 ***

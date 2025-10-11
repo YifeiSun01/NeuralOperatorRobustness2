@@ -1,0 +1,2 @@
+/var/spool/slurmd/job11480675/slurm_script: line 21: 1910599 Killed                  python -u ./2D_NS_FNO2d_recurrent/datasets/get_expanded_datasets_stats_delta.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=11480675.batch. Some of the step tasks have been OOM Killed.

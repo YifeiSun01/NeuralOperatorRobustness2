@@ -1,0 +1,2 @@
+/var/spool/slurmd/job7912450/slurm_script: line 21: 583108 Killed                  python -u ./2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim_reduct_umap/dim_reduct_umap.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=7912450.batch. Some of the step tasks have been OOM Killed.

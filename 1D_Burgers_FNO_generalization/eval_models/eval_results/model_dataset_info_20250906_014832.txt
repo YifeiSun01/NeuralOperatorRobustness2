@@ -1,0 +1,1391 @@
+MODELS INFORMATION:
+============================================================
+[1/25] (extras) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/old/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+     Name: burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+     Expanded: False
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500}
+
+[2/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:12:07.515061', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha0.1_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[3/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.5_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:20:25.971526', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.5_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha0.5_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[4/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:28:45.561897', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha1_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[5/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.01_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:37:07.027152', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.01_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.01_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[6/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.05_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:45:28.324541', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.05_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.05_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[7/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:53:49.876361', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.1_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[8/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.5_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T17:02:25.555620', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.5_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.5_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[9/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T17:10:47.829194', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha1_steps20', 'mode': 'add100', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[10/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:09:20.898965', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha0.1_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[11/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.5_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:17:39.870097', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.5_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha0.5_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[12/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:25:59.366738', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha1_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[13/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.01_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:34:20.839358', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.01_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.01_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[14/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.05_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:42:42.000476', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.05_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.05_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[15/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:51:02.992304', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.1_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[16/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.5_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:59:38.779111', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.5_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.5_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[17/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T17:08:00.325105', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha1_steps20', 'mode': 'add50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[18/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:06:44.377028', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha0.1_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[19/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.5_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:15:48.072023', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.5_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha0.5_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[20/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:24:07.648144', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps20_alpha1_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[21/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.01_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:32:28.868335', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.01_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.01_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[22/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.05_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:40:50.065698', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.05_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.05_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[23/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:49:10.772586', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.1_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[24/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.5_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T16:57:32.442699', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.5_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha0.5_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+[25/25] (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha1_steps20/model.pth
+     Name: model.pth
+     Expanded: True
+     Normalized: True
+     Config: {'modes': 16, 'width': 64, 'epochs': 500, 'timestamp': '2025-09-05T17:06:06.938062', 'pt_original': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/pos/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt', 'pt_attack': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha1_steps20/N=1500/dataset.pt', 'attack_tag': 'norm2_eps50_alpha1_steps20', 'mode': 'replace50', 'ntrain': 1000, 'ntest': 100, 'batch_size': 20, 'learning_rate': 0.001, 'device': 'cuda', 'n_params': 582849}
+
+
+DATASETS INFORMATION:
+============================================================
+[1/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.01_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 10.0, 'alpha': 0.01, 'steps': 20, 'N': 1500}
+
+[2/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.05_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 10.0, 'alpha': 0.05, 'steps': 20, 'N': 1500}
+
+[3/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.1_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 10.0, 'alpha': 0.1, 'steps': 20, 'N': 1500}
+
+[4/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.5_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 10.0, 'alpha': 0.5, 'steps': 20, 'N': 1500}
+
+[5/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha1_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 10.0, 'alpha': 1.0, 'steps': 20, 'N': 1500}
+
+[6/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.01_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 20.0, 'alpha': 0.01, 'steps': 20, 'N': 1500}
+
+[7/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.05_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 20.0, 'alpha': 0.05, 'steps': 20, 'N': 1500}
+
+[8/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.1_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 20.0, 'alpha': 0.1, 'steps': 20, 'N': 1500}
+
+[9/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha0.5_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 20.0, 'alpha': 0.5, 'steps': 20, 'N': 1500}
+
+[10/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps20_alpha1_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 20.0, 'alpha': 1.0, 'steps': 20, 'N': 1500}
+
+[11/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.01_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 50.0, 'alpha': 0.01, 'steps': 20, 'N': 1500}
+
+[12/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.05_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 50.0, 'alpha': 0.05, 'steps': 20, 'N': 1500}
+
+[13/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.1_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 50.0, 'alpha': 0.1, 'steps': 20, 'N': 1500}
+
+[14/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha0.5_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 50.0, 'alpha': 0.5, 'steps': 20, 'N': 1500}
+
+[15/206] (expanded) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps50_alpha1_steps20/N=1500/dataset.pt
+     Name: dataset.pt
+     Type: expanded_pos
+     Distribution: unknown
+     Parameters: {'t_final': 1.0, 'eps': 50.0, 'alpha': 1.0, 'steps': 20, 'N': 1500}
+
+[16/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[17/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[18/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[19/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[20/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[21/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[22/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[23/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[24/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[25/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[26/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[27/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[28/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[29/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[30/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[31/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[32/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[33/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[34/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[35/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[36/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[37/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[38/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[39/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[40/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[41/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[42/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[43/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[44/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[45/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[46/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[47/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[48/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[49/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[50/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[51/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[52/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: all_pos
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[53/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[54/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[55/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean.pt
+     Type: pos_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[56/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[57/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[58/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[59/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[60/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[61/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[62/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[63/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[64/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[65/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[66/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[67/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[68/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[69/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[70/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: pos_neg
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[71/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[72/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[73/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[74/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[75/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[76/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[77/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[78/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[79/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[80/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[81/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[82/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[83/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[84/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[85/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[86/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[87/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[88/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[89/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_0/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_0
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[90/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[91/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[92/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[93/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[94/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[95/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[96/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[97/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[98/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[99/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[100/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[101/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[102/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[103/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[104/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[105/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[106/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[107/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[108/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-2_2/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-2_2
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[109/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[110/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[111/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[112/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[113/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[114/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[115/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[116/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[117/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[118/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[119/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[120/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[121/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[122/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[123/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[124/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[125/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[126/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[127/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_0/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_0
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[128/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[129/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[130/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[131/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[132/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[133/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[134/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[135/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[136/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[137/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[138/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[139/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[140/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[141/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[142/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[143/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[144/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[145/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[146/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_-3_3/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_-3_3
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[147/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[148/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[149/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[150/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[151/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[152/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[153/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[154/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[155/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[156/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[157/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[158/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[159/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[160/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[161/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[162/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[163/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[164/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[165/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_0.5/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_0.5
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[166/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[167/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[168/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[169/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[170/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[171/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[172/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[173/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[174/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[175/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[176/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[177/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[178/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[179/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[180/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[181/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[182/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[183/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[184/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_2/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_2
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[185/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.005, 'N': 5}
+
+[186/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.01, 'N': 5}
+
+[187/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[188/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[189/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.1, 'N': 5}
+
+[190/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.2, 'N': 5}
+
+[191/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 0.5, 'N': 5}
+
+[192/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 1.5, 'N': 5}
+
+[193/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.005, 'nu': 2.5, 'N': 5}
+
+[194/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 0.5, 'N': 5}
+
+[195/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 1.5, 'N': 5}
+
+[196/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.03, 'nu': 2.5, 'N': 5}
+
+[197/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 0.5, 'N': 5}
+
+[198/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 1.5, 'N': 5}
+
+[199/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: matern
+     Parameters: {'correlation_length': 0.2, 'nu': 2.5, 'N': 5}
+
+[200/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: zigzag
+     Parameters: {'peaks': 100, 'amplitude': 1.0, 'N': 5}
+
+[201/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: zigzag
+     Parameters: {'peaks': 10, 'amplitude': 1.0, 'N': 5}
+
+[202/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: zigzag
+     Parameters: {'peaks': 30, 'amplitude': 1.0, 'N': 5}
+
+[203/206] (generalizability) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/range_0_3/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Name: zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pt
+     Type: range_0_3
+     Distribution: zigzag
+     Parameters: {'peaks': 50, 'amplitude': 1.0, 'N': 5}
+
+[204/206] (train_test) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/test_train_datasets/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+     Name: dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+     Type: unknown
+     Distribution: gaussian
+     Parameters: {}
+
+[205/206] (train_test) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/test_train_datasets/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_test.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_test.pt
+     Type: unknown
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+
+[206/206] (train_test) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/test_train_datasets/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_train.pt
+     Name: gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_train.pt
+     Type: unknown
+     Distribution: gaussian
+     Parameters: {'correlation_length': 0.03, 'N': 5}
+

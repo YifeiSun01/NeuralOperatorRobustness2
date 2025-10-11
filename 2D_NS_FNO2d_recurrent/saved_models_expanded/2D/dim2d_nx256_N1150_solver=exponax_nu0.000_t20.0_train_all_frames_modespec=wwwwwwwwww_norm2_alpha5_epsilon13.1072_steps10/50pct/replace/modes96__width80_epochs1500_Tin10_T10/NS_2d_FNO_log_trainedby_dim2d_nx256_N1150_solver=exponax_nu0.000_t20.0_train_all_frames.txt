@@ -1,0 +1,33 @@
+NS 2d FNO training log (REPLACE)
+
+{
+  "config": {
+    "mode": "REPLACE (\u66ff\u6362)",
+    "expanded_dataset_file": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10.pt",
+    "percent_replaced": "50.00%",
+    "samples_replaced_vs_total": "575 / 1150",
+    "original_dataset_file": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt",
+    "total_samples_after_replace": 1150,
+    "ntrain": 1000,
+    "ntest": 100,
+    "modes": 96,
+    "width": 80,
+    "s": 256,
+    "T_in": 10,
+    "T_out": 10,
+    "step": 1,
+    "batch_size": 20,
+    "epochs": 1500,
+    "iterations": 75000,
+    "subsample_factor": 1,
+    "device": "cuda",
+    "seed": 1234
+  }
+}
+
+model parameters: 943823441
+epoch:0, time:38.106105, train l2:647.09833908, test l2:49.24463654
+epoch:1, time:38.278338, train l2:399.30536509, test l2:36.93436384
+epoch:2, time:38.308763, train l2:333.76238918, test l2:33.72172785
+epoch:3, time:38.329969, train l2:309.58904266, test l2:32.65967083
+epoch:4, time:38.302036, train l2:299.51143789, test l2:31.67256069

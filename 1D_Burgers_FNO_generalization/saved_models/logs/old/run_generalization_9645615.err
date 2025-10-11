@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 161, in <module>
+    rmse_norm = np.sqrt(mean_squared_error(y_true_np, pred_norm_np))
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/sklearn/metrics/_regression.py", line 580, in mean_squared_error
+    _check_reg_targets_with_floating_dtype(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/sklearn/metrics/_regression.py", line 209, in _check_reg_targets_with_floating_dtype
+    y_type, y_true, y_pred, sample_weight, multioutput = _check_reg_targets(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/sklearn/metrics/_regression.py", line 127, in _check_reg_targets
+    raise ValueError(
+ValueError: y_true and y_pred have different number of output (1!=1024)

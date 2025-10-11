@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 743, in <module>
+    for start in range(0, N_total, BATCH_SIZE):
+TypeError: 'tuple' object cannot be interpreted as an integer
+srun: error: c0909a-s15: task 0: Exited with exit code 1

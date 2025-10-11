@@ -1,0 +1,11 @@
+NS 2d FNO training log
+
+
+
+training and testing dataset: dim2d_nx256_N5000_solver=exponax_kernel=matern_correlation_length0.50_bcperiodic_nu0.010_t40.0_seed0
+modes: 128
+width: 128
+model parameters: 4295232513
+
+
+

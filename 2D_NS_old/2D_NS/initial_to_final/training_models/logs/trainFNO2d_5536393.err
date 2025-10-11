@@ -1,0 +1,21 @@
+
+Training FNO 2d:   0%|          | 0/500 [00:00<?, ?it/s]
+Training FNO 2d:   0%|          | 0/500 [00:39<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./training_models/trainingFNO2d_unnormalized.py", line 89, in <module>
+    optimizer.step()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 124, in wrapper
+    return func.__get__(opt, opt.__class__)(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/optimizer.py", line 485, in wrapper
+    out = func(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/optimizer.py", line 79, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/adam.py", line 246, in step
+    adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/optimizer.py", line 147, in maybe_fallback
+    return func(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/adam.py", line 933, in adam
+    func(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/optim/adam.py", line 666, in _multi_tensor_adam
+    device_grads = torch._foreach_add(  # type: ignore[assignment]
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.00 GiB. GPU 0 has a total capacity of 79.25 GiB of which 300.94 MiB is free. Including non-PyTorch memory, this process has 78.95 GiB memory in use. Of the allocated memory 74.04 GiB is allocated by PyTorch, and 4.40 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

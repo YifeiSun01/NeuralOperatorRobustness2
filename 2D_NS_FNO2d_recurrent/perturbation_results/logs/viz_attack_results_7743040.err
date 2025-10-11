@@ -1,0 +1,5 @@
+Processing attack visualizations:   0%|          | 0/9 [00:00<?, ?it/s]Processing attack visualizations:   0%|          | 0/9 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 826, in <module>
+    with open(filename, 'rb') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/pgd_attack_records_norm2_alpha1.0_epsilon65.536_steps100_idx1.pkl'

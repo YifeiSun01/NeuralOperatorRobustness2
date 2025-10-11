@@ -1,0 +1,5 @@
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:1185: UserWarning: Some donated buffers were not usable: ShapedArray(float32[20,5,256,256]).
+See an explanation at https://docs.jax.dev/en/latest/faq.html#buffer-donation.
+  warnings.warn("Some donated buffers were not usable:"
+slurmstepd: error: Detected 1 oom_kill event in StepId=12035983.0. Some of the step tasks have been OOM Killed.
+srun: error: c0910a-s15: task 0: Out Of Memory

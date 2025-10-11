@@ -1,0 +1,306 @@
+[isoCircles] B=10:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 00:48:58,181:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 00:48:58.181074 22510821328704 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2025-09-12 00:52:03.504664: E external/xla/xla/service/slow_operation_alarm.cc:73] Constant folding an instruction is taking > 1s:
+
+  %get-tuple-element.34 = s32[] get-tuple-element(%tuple.4), index=0
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+2025-09-12 00:52:03.504871: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 1.567782525s
+Constant folding an instruction is taking > 1s:
+
+  %get-tuple-element.34 = s32[] get-tuple-element(%tuple.4), index=0
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+2025-09-12 00:54:51.728715: E external/xla/xla/service/slow_operation_alarm.cc:73] 
+********************************
+[Compiling module jit__lambda_] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2025-09-12 00:55:51.040699: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 2m59.312177985s
+
+********************************
+[Compiling module jit__lambda_] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 178, in forward
+    preds  = self.recurrent_model(input_batch)              # (B,H,W,10)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 114, in forward
+    y_pred = self.model(x)  # 预测后面1帧，形状(batch, s, s, step)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 80, in forward
+    x1 = self.conv_layers[i](x)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 35, in forward
+    return torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 152.00 MiB. GPU 0 has a total capacity of 178.36 GiB of which 144.62 MiB is free. Including non-PyTorch memory, this process has 178.21 GiB memory in use. Of the allocated memory 43.19 GiB is allocated by PyTorch, and 387.40 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[isoCircles] B=10:   0%|          | 0/1150 [10:46<?, ?it/s]
+[petals] B=10:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 00:58:07,693:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 00:58:07.693807 22392557934400 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 178, in forward
+    preds  = self.recurrent_model(input_batch)              # (B,H,W,10)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 114, in forward
+    y_pred = self.model(x)  # 预测后面1帧，形状(batch, s, s, step)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 80, in forward
+    x1 = self.conv_layers[i](x)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 35, in forward
+    return torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 152.00 MiB. GPU 0 has a total capacity of 178.36 GiB of which 142.62 MiB is free. Including non-PyTorch memory, this process has 178.21 GiB memory in use. Of the allocated memory 43.19 GiB is allocated by PyTorch, and 387.40 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[petals] B=10:   0%|          | 0/1150 [00:06<?, ?it/s]
+[ringsCos] B=10:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 00:58:45,278:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 00:58:45.278935 22537864165184 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 178, in forward
+    preds  = self.recurrent_model(input_batch)              # (B,H,W,10)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 114, in forward
+    y_pred = self.model(x)  # 预测后面1帧，形状(batch, s, s, step)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 80, in forward
+    x1 = self.conv_layers[i](x)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 35, in forward
+    return torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 152.00 MiB. GPU 0 has a total capacity of 178.36 GiB of which 142.62 MiB is free. Including non-PyTorch memory, this process has 178.21 GiB memory in use. Of the allocated memory 43.19 GiB is allocated by PyTorch, and 387.40 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[ringsCos] B=10:   0%|          | 0/1150 [00:05<?, ?it/s]
+[ringsL1] B=10:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 00:59:24,182:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 00:59:24.182605 22651597317952 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 170, in forward
+    seq = self.pde_solver.rollout_seconds(x0, T_required)   # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 149, in rollout_seconds
+    return JaxPDEWrapper.apply(x0.contiguous(), g)  # (T+1,H,W) or (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 67, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 145, in <lambda>
+    g = jax.jit(lambda A: batched_patterns_rollout(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 129, in batched_patterns_rollout
+    return jax.vmap(fn, in_axes=0, out_axes=1)(u0_batched)     # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 128, in <lambda>
+    fn = lambda a: generate_sequence_every_second_patterns(a, nu, T_seconds, fixed_step, forcing_pattern)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 104, in generate_sequence_every_second_patterns
+    stepper = ex.stepper._navier_stokes.NavierStokesVorticityPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 407, in __init__
+    super().__init__(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_base_stepper.py", line 116, in __init__
+    nonlinear_fun = self._build_nonlinear_fun(derivative_operator)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 431, in _build_nonlinear_fun
+    return VorticityConvection2dPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/nonlin_fun/_vorticity_convection.py", line 241, in __init__
+    self.injection = build_forcing_patterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 621, in build_forcing_patterns
+    f_physical = 0.1 * _PATTERN_MAP[key](X, Y)  # shape = (N, N)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 587, in ringsL1
+    r1 = r_torus_lp(X, Y, p=1.3, x0=x0, y0=y0)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 560, in r_torus_lp
+    return jnp.maximum(ax, ay) if jnp.isinf(p) else (ax + ay if p == 1 else (ax**p + ay**p)**(1.0/p))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function <lambda> at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:145 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:bool[] = pjit[
+  name=isinf
+  jaxpr={ lambda ; a:f32[]. let c:f32[] = abs a; b:bool[] = eq c inf in (b,) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py:560 (r_torus_lp)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+[ringsL1] B=10:   0%|          | 0/1150 [00:01<?, ?it/s]
+[ringsLinf] B=10:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 00:59:59,615:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 00:59:59.615936 22607979759424 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 170, in forward
+    seq = self.pde_solver.rollout_seconds(x0, T_required)   # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 149, in rollout_seconds
+    return JaxPDEWrapper.apply(x0.contiguous(), g)  # (T+1,H,W) or (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 67, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 145, in <lambda>
+    g = jax.jit(lambda A: batched_patterns_rollout(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 129, in batched_patterns_rollout
+    return jax.vmap(fn, in_axes=0, out_axes=1)(u0_batched)     # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 128, in <lambda>
+    fn = lambda a: generate_sequence_every_second_patterns(a, nu, T_seconds, fixed_step, forcing_pattern)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 104, in generate_sequence_every_second_patterns
+    stepper = ex.stepper._navier_stokes.NavierStokesVorticityPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 407, in __init__
+    super().__init__(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_base_stepper.py", line 116, in __init__
+    nonlinear_fun = self._build_nonlinear_fun(derivative_operator)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 431, in _build_nonlinear_fun
+    return VorticityConvection2dPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/nonlin_fun/_vorticity_convection.py", line 241, in __init__
+    self.injection = build_forcing_patterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 621, in build_forcing_patterns
+    f_physical = 0.1 * _PATTERN_MAP[key](X, Y)  # shape = (N, N)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 591, in ringsLinf
+    rinf = r_torus_lp(X, Y, p=5.0, x0=x0, y0=y0)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 560, in r_torus_lp
+    return jnp.maximum(ax, ay) if jnp.isinf(p) else (ax + ay if p == 1 else (ax**p + ay**p)**(1.0/p))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function <lambda> at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:145 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:bool[] = pjit[
+  name=isinf
+  jaxpr={ lambda ; a:f32[]. let c:f32[] = abs a; b:bool[] = eq c inf in (b,) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py:560 (r_torus_lp)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+[ringsLinf] B=10:   0%|          | 0/1150 [00:01<?, ?it/s]
+[sBands] B=10:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 01:00:30,929:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 01:00:30.929942 23226474858304 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 178, in forward
+    preds  = self.recurrent_model(input_batch)              # (B,H,W,10)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 114, in forward
+    y_pred = self.model(x)  # 预测后面1帧，形状(batch, s, s, step)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 80, in forward
+    x1 = self.conv_layers[i](x)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/models/FNO2d.py", line 35, in forward
+    return torch.fft.irfft2(out_ft, s=(x.size(-2), x.size(-1)))
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 152.00 MiB. GPU 0 has a total capacity of 178.36 GiB of which 142.62 MiB is free. Including non-PyTorch memory, this process has 178.21 GiB memory in use. Of the allocated memory 43.19 GiB is allocated by PyTorch, and 387.40 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[sBands] B=10:   0%|          | 0/1150 [00:05<?, ?it/s]

@@ -1,0 +1,8 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_constant1to9.py:53: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  print(f"JAX Backend: {jax.lib.xla_bridge.get_backend().platform}")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_constant1to9.py:94: UserWarning: Could not check cuDNN version compatibility
+  warnings.warn("Could not check cuDNN version compatibility")
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_constant1to9.py", line 101, in <module>
+    print(jnp.ones((1, 10)).addressable_data(0).device())  # 看数据实际在哪个设备上
+TypeError: 'Device' object is not callable

@@ -1,0 +1,13 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver_test.py:51: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  print(f"JAX Backend: {jax.lib.xla_bridge.get_backend().platform}")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver_test.py:92: UserWarning: Could not check cuDNN version compatibility
+  warnings.warn("Could not check cuDNN version compatibility")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver_test.py:139: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver_test.py:143: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver_test.py:167: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver_test.py:170: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+slurmstepd: error: *** JOB 6559341 ON c0900a-s5 CANCELLED AT 2025-07-02T03:28:57 ***

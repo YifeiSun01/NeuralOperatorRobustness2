@@ -1,0 +1,232 @@
+INFO:2025-09-05 01:12:59,615:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 01:12:59.615682 22544045442112 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl = jax.dlpack.to_dlpack(out_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:102: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:104: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 0/1500 [00:07<?, ?it/s, loss=5.535e+01, done=1/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 1/1500 [00:07<3:03:03,  7.33s/it, loss=5.535e+01, done=1/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 1/1500 [00:12<3:03:03,  7.33s/it, loss=5.016e+01, done=2/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 2/1500 [00:12<2:30:26,  6.03s/it, loss=5.016e+01, done=2/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 2/1500 [00:17<2:30:26,  6.03s/it, loss=2.998e+01, done=3/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 3/1500 [00:17<2:20:04,  5.61s/it, loss=2.998e+01, done=3/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 3/1500 [00:22<2:20:04,  5.61s/it, loss=6.166e+01, done=4/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 4/1500 [00:22<2:15:11,  5.42s/it, loss=6.166e+01, done=4/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 4/1500 [00:27<2:15:11,  5.42s/it, loss=5.538e+01, done=5/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 5/1500 [00:27<2:12:26,  5.32s/it, loss=5.538e+01, done=5/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 5/1500 [00:32<2:12:26,  5.32s/it, loss=7.465e+01, done=6/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 6/1500 [00:32<2:10:43,  5.25s/it, loss=7.465e+01, done=6/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 6/1500 [00:38<2:10:43,  5.25s/it, loss=6.783e+01, done=7/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 7/1500 [00:38<2:09:34,  5.21s/it, loss=6.783e+01, done=7/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   0%|          | 7/1500 [00:43<2:09:34,  5.21s/it, loss=8.267e+01, done=8/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 8/1500 [00:43<2:08:48,  5.18s/it, loss=8.267e+01, done=8/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 8/1500 [00:48<2:08:48,  5.18s/it, loss=2.554e+01, done=9/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 9/1500 [00:48<2:08:15,  5.16s/it, loss=2.554e+01, done=9/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 9/1500 [00:53<2:08:15,  5.16s/it, loss=4.101e+01, done=10/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 10/1500 [00:53<2:07:51,  5.15s/it, loss=4.101e+01, done=10/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 10/1500 [00:58<2:07:51,  5.15s/it, loss=8.411e+01, done=11/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 11/1500 [00:58<2:07:33,  5.14s/it, loss=8.411e+01, done=11/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 11/1500 [01:03<2:07:33,  5.14s/it, loss=9.373e+01, done=12/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 12/1500 [01:03<2:07:19,  5.13s/it, loss=9.373e+01, done=12/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 12/1500 [01:08<2:07:19,  5.13s/it, loss=6.944e+01, done=13/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 13/1500 [01:08<2:07:08,  5.13s/it, loss=6.944e+01, done=13/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 13/1500 [01:13<2:07:08,  5.13s/it, loss=4.345e+01, done=14/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 14/1500 [01:13<2:06:56,  5.13s/it, loss=4.345e+01, done=14/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 14/1500 [01:19<2:06:56,  5.13s/it, loss=5.090e+01, done=15/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 15/1500 [01:19<2:06:48,  5.12s/it, loss=5.090e+01, done=15/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 15/1500 [01:24<2:06:48,  5.12s/it, loss=2.822e+01, done=16/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 16/1500 [01:24<2:06:42,  5.12s/it, loss=2.822e+01, done=16/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 16/1500 [01:29<2:06:42,  5.12s/it, loss=5.517e+01, done=17/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 17/1500 [01:29<2:06:35,  5.12s/it, loss=5.517e+01, done=17/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 17/1500 [01:34<2:06:35,  5.12s/it, loss=3.636e+01, done=18/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 18/1500 [01:34<2:06:30,  5.12s/it, loss=3.636e+01, done=18/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|          | 18/1500 [01:39<2:06:30,  5.12s/it, loss=1.775e+01, done=19/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 19/1500 [01:39<2:06:24,  5.12s/it, loss=1.775e+01, done=19/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 19/1500 [01:44<2:06:24,  5.12s/it, loss=6.835e+01, done=20/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 20/1500 [01:44<2:06:19,  5.12s/it, loss=6.835e+01, done=20/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 20/1500 [01:49<2:06:19,  5.12s/it, loss=1.081e+02, done=21/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 21/1500 [01:49<2:06:14,  5.12s/it, loss=1.081e+02, done=21/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 21/1500 [01:54<2:06:14,  5.12s/it, loss=4.931e+01, done=22/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 22/1500 [01:54<2:06:09,  5.12s/it, loss=4.931e+01, done=22/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   1%|▏         | 22/1500 [01:59<2:06:09,  5.12s/it, loss=7.160e+01, done=23/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 23/1500 [01:59<2:06:04,  5.12s/it, loss=7.160e+01, done=23/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 23/1500 [02:05<2:06:04,  5.12s/it, loss=3.866e+01, done=24/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 24/1500 [02:05<2:05:59,  5.12s/it, loss=3.866e+01, done=24/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 24/1500 [02:10<2:05:59,  5.12s/it, loss=7.261e+01, done=25/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 25/1500 [02:10<2:05:53,  5.12s/it, loss=7.261e+01, done=25/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 25/1500 [02:15<2:05:53,  5.12s/it, loss=2.468e+01, done=26/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 26/1500 [02:15<2:05:44,  5.12s/it, loss=2.468e+01, done=26/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 26/1500 [02:20<2:05:44,  5.12s/it, loss=7.540e+01, done=27/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 27/1500 [02:20<2:05:40,  5.12s/it, loss=7.540e+01, done=27/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 27/1500 [02:25<2:05:40,  5.12s/it, loss=3.529e+01, done=28/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 28/1500 [02:25<2:05:35,  5.12s/it, loss=3.529e+01, done=28/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 28/1500 [02:30<2:05:35,  5.12s/it, loss=7.084e+01, done=29/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 29/1500 [02:30<2:05:32,  5.12s/it, loss=7.084e+01, done=29/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 29/1500 [02:35<2:05:32,  5.12s/it, loss=7.050e+01, done=30/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 30/1500 [02:35<2:05:28,  5.12s/it, loss=7.050e+01, done=30/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 30/1500 [02:40<2:05:28,  5.12s/it, loss=1.360e+01, done=31/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 31/1500 [02:40<2:05:24,  5.12s/it, loss=1.360e+01, done=31/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 31/1500 [02:46<2:05:24,  5.12s/it, loss=5.894e+01, done=32/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 32/1500 [02:46<2:05:20,  5.12s/it, loss=5.894e+01, done=32/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 32/1500 [02:51<2:05:20,  5.12s/it, loss=2.311e+01, done=33/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 33/1500 [02:51<2:05:14,  5.12s/it, loss=2.311e+01, done=33/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 33/1500 [02:56<2:05:14,  5.12s/it, loss=7.996e+01, done=34/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 34/1500 [02:56<2:05:08,  5.12s/it, loss=7.996e+01, done=34/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 34/1500 [03:01<2:05:08,  5.12s/it, loss=4.994e+01, done=35/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 35/1500 [03:01<2:05:03,  5.12s/it, loss=4.994e+01, done=35/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 35/1500 [03:06<2:05:03,  5.12s/it, loss=4.883e+01, done=36/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 36/1500 [03:06<2:04:58,  5.12s/it, loss=4.883e+01, done=36/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 36/1500 [03:11<2:04:58,  5.12s/it, loss=6.617e+01, done=37/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 37/1500 [03:11<2:04:53,  5.12s/it, loss=6.617e+01, done=37/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   2%|▏         | 37/1500 [03:16<2:04:53,  5.12s/it, loss=5.982e+01, done=38/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 38/1500 [03:16<2:04:46,  5.12s/it, loss=5.982e+01, done=38/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 38/1500 [03:21<2:04:46,  5.12s/it, loss=4.936e+01, done=39/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 39/1500 [03:21<2:04:40,  5.12s/it, loss=4.936e+01, done=39/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 39/1500 [03:27<2:04:40,  5.12s/it, loss=1.080e+02, done=40/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 40/1500 [03:27<2:04:36,  5.12s/it, loss=1.080e+02, done=40/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 40/1500 [03:32<2:04:36,  5.12s/it, loss=3.027e+01, done=41/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 41/1500 [03:32<2:04:30,  5.12s/it, loss=3.027e+01, done=41/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 41/1500 [03:37<2:04:30,  5.12s/it, loss=7.047e+01, done=42/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 42/1500 [03:37<2:04:25,  5.12s/it, loss=7.047e+01, done=42/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 42/1500 [03:42<2:04:25,  5.12s/it, loss=4.781e+01, done=43/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 43/1500 [03:42<2:04:20,  5.12s/it, loss=4.781e+01, done=43/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 43/1500 [03:47<2:04:20,  5.12s/it, loss=8.943e+01, done=44/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 44/1500 [03:47<2:04:15,  5.12s/it, loss=8.943e+01, done=44/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 44/1500 [03:52<2:04:15,  5.12s/it, loss=6.136e+01, done=45/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 45/1500 [03:52<2:04:10,  5.12s/it, loss=6.136e+01, done=45/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 45/1500 [03:57<2:04:10,  5.12s/it, loss=8.841e+01, done=46/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 46/1500 [03:57<2:04:05,  5.12s/it, loss=8.841e+01, done=46/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 46/1500 [04:02<2:04:05,  5.12s/it, loss=7.363e+01, done=47/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 47/1500 [04:02<2:04:00,  5.12s/it, loss=7.363e+01, done=47/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 47/1500 [04:08<2:04:00,  5.12s/it, loss=2.285e+01, done=48/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 48/1500 [04:08<2:03:55,  5.12s/it, loss=2.285e+01, done=48/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 48/1500 [04:13<2:03:55,  5.12s/it, loss=4.002e+01, done=49/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 49/1500 [04:13<2:03:49,  5.12s/it, loss=4.002e+01, done=49/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 49/1500 [04:18<2:03:49,  5.12s/it, loss=2.655e+01, done=50/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 50/1500 [04:18<2:03:43,  5.12s/it, loss=2.655e+01, done=50/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 50/1500 [04:23<2:03:43,  5.12s/it, loss=2.762e+01, done=51/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 51/1500 [04:23<2:03:38,  5.12s/it, loss=2.762e+01, done=51/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 51/1500 [04:28<2:03:38,  5.12s/it, loss=3.357e+01, done=52/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 52/1500 [04:28<2:03:33,  5.12s/it, loss=3.357e+01, done=52/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   3%|▎         | 52/1500 [04:33<2:03:33,  5.12s/it, loss=6.262e+01, done=53/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 53/1500 [04:33<2:03:29,  5.12s/it, loss=6.262e+01, done=53/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 53/1500 [04:38<2:03:29,  5.12s/it, loss=7.405e+01, done=54/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 54/1500 [04:38<2:03:23,  5.12s/it, loss=7.405e+01, done=54/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 54/1500 [04:43<2:03:23,  5.12s/it, loss=2.057e+01, done=55/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 55/1500 [04:43<2:03:18,  5.12s/it, loss=2.057e+01, done=55/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 55/1500 [04:48<2:03:18,  5.12s/it, loss=6.675e+01, done=56/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 56/1500 [04:48<2:03:14,  5.12s/it, loss=6.675e+01, done=56/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▎         | 56/1500 [04:54<2:03:14,  5.12s/it, loss=4.295e+01, done=57/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 57/1500 [04:54<2:03:09,  5.12s/it, loss=4.295e+01, done=57/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 57/1500 [04:59<2:03:09,  5.12s/it, loss=3.146e+01, done=58/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 58/1500 [04:59<2:03:04,  5.12s/it, loss=3.146e+01, done=58/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 58/1500 [05:04<2:03:04,  5.12s/it, loss=5.523e+01, done=59/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 59/1500 [05:04<2:02:58,  5.12s/it, loss=5.523e+01, done=59/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 59/1500 [05:09<2:02:58,  5.12s/it, loss=2.799e+01, done=60/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 60/1500 [05:09<2:02:53,  5.12s/it, loss=2.799e+01, done=60/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 60/1500 [05:14<2:02:53,  5.12s/it, loss=7.570e+01, done=61/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 61/1500 [05:14<2:02:44,  5.12s/it, loss=7.570e+01, done=61/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 61/1500 [05:19<2:02:44,  5.12s/it, loss=2.296e+01, done=62/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 62/1500 [05:19<2:02:40,  5.12s/it, loss=2.296e+01, done=62/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 62/1500 [05:24<2:02:40,  5.12s/it, loss=3.627e+01, done=63/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 63/1500 [05:24<2:02:36,  5.12s/it, loss=3.627e+01, done=63/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 63/1500 [05:29<2:02:36,  5.12s/it, loss=1.037e+02, done=64/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 64/1500 [05:29<2:02:32,  5.12s/it, loss=1.037e+02, done=64/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 64/1500 [05:35<2:02:32,  5.12s/it, loss=7.943e+01, done=65/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 65/1500 [05:35<2:02:27,  5.12s/it, loss=7.943e+01, done=65/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 65/1500 [05:40<2:02:27,  5.12s/it, loss=4.664e+01, done=66/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 66/1500 [05:40<2:02:22,  5.12s/it, loss=4.664e+01, done=66/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 66/1500 [05:45<2:02:22,  5.12s/it, loss=5.174e+01, done=67/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 67/1500 [05:45<2:02:17,  5.12s/it, loss=5.174e+01, done=67/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   4%|▍         | 67/1500 [05:50<2:02:17,  5.12s/it, loss=2.074e+01, done=68/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 68/1500 [05:50<2:02:12,  5.12s/it, loss=2.074e+01, done=68/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 68/1500 [05:55<2:02:12,  5.12s/it, loss=5.812e+01, done=69/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 69/1500 [05:55<2:02:07,  5.12s/it, loss=5.812e+01, done=69/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 69/1500 [06:00<2:02:07,  5.12s/it, loss=6.304e+01, done=70/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 70/1500 [06:00<2:02:03,  5.12s/it, loss=6.304e+01, done=70/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 70/1500 [06:05<2:02:03,  5.12s/it, loss=1.269e+02, done=71/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 71/1500 [06:05<2:01:58,  5.12s/it, loss=1.269e+02, done=71/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 71/1500 [06:10<2:01:58,  5.12s/it, loss=3.104e+01, done=72/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 72/1500 [06:10<2:01:53,  5.12s/it, loss=3.104e+01, done=72/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 72/1500 [06:16<2:01:53,  5.12s/it, loss=6.600e+01, done=73/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 73/1500 [06:16<2:01:45,  5.12s/it, loss=6.600e+01, done=73/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 73/1500 [06:21<2:01:45,  5.12s/it, loss=5.887e+01, done=74/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 74/1500 [06:21<2:01:40,  5.12s/it, loss=5.887e+01, done=74/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▍         | 74/1500 [06:26<2:01:40,  5.12s/it, loss=4.489e+01, done=75/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 75/1500 [06:26<2:01:36,  5.12s/it, loss=4.489e+01, done=75/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 75/1500 [06:31<2:01:36,  5.12s/it, loss=6.812e+01, done=76/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 76/1500 [06:31<2:01:31,  5.12s/it, loss=6.812e+01, done=76/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 76/1500 [06:36<2:01:31,  5.12s/it, loss=5.618e+01, done=77/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 77/1500 [06:36<2:01:26,  5.12s/it, loss=5.618e+01, done=77/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 77/1500 [06:41<2:01:26,  5.12s/it, loss=3.862e+01, done=78/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 78/1500 [06:41<2:01:22,  5.12s/it, loss=3.862e+01, done=78/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 78/1500 [06:46<2:01:22,  5.12s/it, loss=8.508e+01, done=79/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 79/1500 [06:46<2:01:17,  5.12s/it, loss=8.508e+01, done=79/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 79/1500 [06:51<2:01:17,  5.12s/it, loss=4.907e+01, done=80/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 80/1500 [06:51<2:01:14,  5.12s/it, loss=4.907e+01, done=80/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 80/1500 [06:56<2:01:14,  5.12s/it, loss=4.438e+01, done=81/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 81/1500 [06:56<2:01:08,  5.12s/it, loss=4.438e+01, done=81/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 81/1500 [07:02<2:01:08,  5.12s/it, loss=6.339e+01, done=82/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 82/1500 [07:02<2:01:03,  5.12s/it, loss=6.339e+01, done=82/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   5%|▌         | 82/1500 [07:07<2:01:03,  5.12s/it, loss=3.238e+01, done=83/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 83/1500 [07:07<2:00:57,  5.12s/it, loss=3.238e+01, done=83/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 83/1500 [07:12<2:00:57,  5.12s/it, loss=5.359e+01, done=84/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 84/1500 [07:12<2:00:51,  5.12s/it, loss=5.359e+01, done=84/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 84/1500 [07:17<2:00:51,  5.12s/it, loss=7.045e+01, done=85/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 85/1500 [07:17<2:00:42,  5.12s/it, loss=7.045e+01, done=85/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 85/1500 [07:22<2:00:42,  5.12s/it, loss=4.880e+01, done=86/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 86/1500 [07:22<2:00:38,  5.12s/it, loss=4.880e+01, done=86/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 86/1500 [07:27<2:00:38,  5.12s/it, loss=5.748e+01, done=87/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 87/1500 [07:27<2:00:33,  5.12s/it, loss=5.748e+01, done=87/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 87/1500 [07:32<2:00:33,  5.12s/it, loss=9.251e+01, done=88/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 88/1500 [07:32<2:00:29,  5.12s/it, loss=9.251e+01, done=88/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 88/1500 [07:37<2:00:29,  5.12s/it, loss=2.924e+01, done=89/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 89/1500 [07:37<2:00:24,  5.12s/it, loss=2.924e+01, done=89/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 89/1500 [07:43<2:00:24,  5.12s/it, loss=3.806e+01, done=90/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 90/1500 [07:43<2:00:20,  5.12s/it, loss=3.806e+01, done=90/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 90/1500 [07:48<2:00:20,  5.12s/it, loss=6.421e+01, done=91/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 91/1500 [07:48<2:00:14,  5.12s/it, loss=6.421e+01, done=91/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 91/1500 [07:53<2:00:14,  5.12s/it, loss=3.860e+01, done=92/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 92/1500 [07:53<2:00:09,  5.12s/it, loss=3.860e+01, done=92/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 92/1500 [07:58<2:00:09,  5.12s/it, loss=7.242e+01, done=93/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 93/1500 [07:58<2:00:04,  5.12s/it, loss=7.242e+01, done=93/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▌         | 93/1500 [08:03<2:00:04,  5.12s/it, loss=5.621e+01, done=94/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 94/1500 [08:03<2:00:00,  5.12s/it, loss=5.621e+01, done=94/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 94/1500 [08:08<2:00:00,  5.12s/it, loss=3.899e+01, done=95/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 95/1500 [08:08<1:59:59,  5.12s/it, loss=3.899e+01, done=95/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 95/1500 [08:13<1:59:59,  5.12s/it, loss=6.126e+01, done=96/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 96/1500 [08:13<1:59:52,  5.12s/it, loss=6.126e+01, done=96/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 96/1500 [08:18<1:59:52,  5.12s/it, loss=7.289e+01, done=97/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 97/1500 [08:18<1:59:45,  5.12s/it, loss=7.289e+01, done=97/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   6%|▋         | 97/1500 [08:24<1:59:45,  5.12s/it, loss=3.886e+01, done=98/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 98/1500 [08:24<1:59:39,  5.12s/it, loss=3.886e+01, done=98/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 98/1500 [08:29<1:59:39,  5.12s/it, loss=4.308e+01, done=99/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 99/1500 [08:29<1:59:34,  5.12s/it, loss=4.308e+01, done=99/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 99/1500 [08:34<1:59:34,  5.12s/it, loss=6.680e+01, done=100/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 100/1500 [08:34<1:59:28,  5.12s/it, loss=6.680e+01, done=100/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 100/1500 [08:39<1:59:28,  5.12s/it, loss=4.982e+01, done=101/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 101/1500 [08:39<1:59:24,  5.12s/it, loss=4.982e+01, done=101/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 101/1500 [08:44<1:59:24,  5.12s/it, loss=4.734e+01, done=102/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 102/1500 [08:44<1:59:18,  5.12s/it, loss=4.734e+01, done=102/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 102/1500 [08:49<1:59:18,  5.12s/it, loss=3.657e+01, done=103/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 103/1500 [08:49<1:59:13,  5.12s/it, loss=3.657e+01, done=103/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 103/1500 [08:54<1:59:13,  5.12s/it, loss=3.221e+01, done=104/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 104/1500 [08:54<1:59:09,  5.12s/it, loss=3.221e+01, done=104/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 104/1500 [08:59<1:59:09,  5.12s/it, loss=4.511e+01, done=105/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 105/1500 [08:59<1:59:04,  5.12s/it, loss=4.511e+01, done=105/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 105/1500 [09:05<1:59:04,  5.12s/it, loss=3.147e+01, done=106/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 106/1500 [09:05<1:58:59,  5.12s/it, loss=3.147e+01, done=106/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 106/1500 [09:10<1:58:59,  5.12s/it, loss=4.287e+01, done=107/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 107/1500 [09:10<1:58:54,  5.12s/it, loss=4.287e+01, done=107/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 107/1500 [09:15<1:58:54,  5.12s/it, loss=1.168e+02, done=108/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 108/1500 [09:15<1:58:48,  5.12s/it, loss=1.168e+02, done=108/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 108/1500 [09:20<1:58:48,  5.12s/it, loss=4.125e+01, done=109/1500][A
+Samples (norm=2, eps=10.0, alpha=0.01, steps=20):   7%|▋         | 109/1500 [09:20<1:58:43,  5.12s/it, loss=4.125e+01, done=109/1500][Aslurmstepd: error: *** JOB 11885628 ON c0602a-s4 CANCELLED AT 2025-09-05T01:22:23 ***

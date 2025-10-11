@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_compare/run_models.py", line 675, in <module>
+    result_dict = predict(models_params, device)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_compare/run_models.py", line 355, in predict
+    data_test = torch.load(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 1525, in load
+    return _load(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 2114, in _load
+    result = unpickler.load()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 2078, in persistent_load
+    typed_storage = load_tensor(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 2044, in load_tensor
+    wrap_storage = restore_location(storage, location)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 1859, in restore_location
+    return default_restore_location(storage, str(map_location))
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 698, in default_restore_location
+    result = fn(storage, location)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 637, in _deserialize
+    return obj.to(device=device)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/storage.py", line 287, in to
+    return _to(self, device, non_blocking)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_utils.py", line 101, in _to
+    untyped_storage = torch.UntypedStorage(self.size(), device=device)
+RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

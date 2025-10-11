@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 122, in <module>
+    a_np.setflags(write=1)
+ValueError: cannot set WRITEABLE flag to True of this array

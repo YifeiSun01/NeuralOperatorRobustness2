@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 523, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 509, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 441, in process_one_model
+    plot_freq_pair(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 224, in plot_freq_pair
+    _plot_single_freq_tensor(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 318, in _plot_single_freq_tensor
+    im = _imshow(ax, arr_t, color_log_scale=color_log_scale,
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 70, in _imshow
+    im = ax.imshow(arr, origin="lower", cmap=cmap)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/__init__.py", line 1521, in inner
+    return func(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/axes/_axes.py", line 5976, in imshow
+    im.set_data(X)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/image.py", line 685, in set_data
+    self._A = self._normalize_image_array(A)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/image.py", line 648, in _normalize_image_array
+    raise TypeError(f"Image data of dtype {A.dtype} cannot be "
+TypeError: Image data of dtype complex64 cannot be converted to float
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 523, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 509, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 434, in process_one_model
+    plot_spatial_heatmaps(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 112, in plot_spatial_heatmaps
+    im = _imshow(ax, arr_t, color_log_scale=color_log_scale,
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 64, in _imshow
+    raise ValueError(
+ValueError: color_log_scale=True 但存在非正或非有限值；请改用 --data-log-mode，或提供 --color-log-eps > -min(data)。
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 523, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 509, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 434, in process_one_model
+    plot_spatial_heatmaps(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 146, in plot_spatial_heatmaps
+    im = _imshow(ax, arr_t, color_log_scale=color_log_scale,
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 64, in _imshow
+    raise ValueError(
+ValueError: color_log_scale=True 但存在非正或非有限值；请改用 --data-log-mode，或提供 --color-log-eps > -min(data)。

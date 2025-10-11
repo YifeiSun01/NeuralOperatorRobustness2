@@ -1,0 +1,2 @@
+/var/spool/slurmd/job10763313/slurm_script: line 21: 2919860 Killed                  python -u ./2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/test_generalizability.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=10763313.batch. Some of the step tasks have been OOM Killed.

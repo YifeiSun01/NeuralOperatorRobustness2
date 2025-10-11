@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 785, in <module>
+    adversarial_x0 = attack_system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 576, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 501, in forward
+    seq_0_to_T = self.pde_solver.rollout_seconds(x0, T_required)  # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 259, in rollout_seconds
+    seq_tensor = JaxPDEWrapper.apply(x0.contiguous(), solver_func)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 96, in forward
+    a_jax = jax.dlpack.from_dlpack(a_torch)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dlpack.py", line 276, in from_dlpack
+    return _from_dlpack(external_array, device, copy)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dlpack.py", line 228, in _from_dlpack
+    dlpack = external_array.__dlpack__(stream=stream)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_tensor.py", line 1701, in __dlpack__
+    raise RuntimeError(
+RuntimeError: Can't export tensors that require gradient, use tensor.detach()
+srun: error: c1000a-s15: task 0: Exited with exit code 1

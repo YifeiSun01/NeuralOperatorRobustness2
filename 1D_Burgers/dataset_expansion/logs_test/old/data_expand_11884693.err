@@ -1,0 +1,495 @@
+INFO:2025-09-05 00:50:27,046:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:50:27.046849 22542148629568 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:25<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:51:34,830:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:51:34.830223 23274021856320 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.05, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:51:39,770:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:51:39.770348 22484998984768 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.1, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:51:44,607:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:51:44.607282 22981145605184 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.5, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:51:49,441:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:51:49.441484 22736196953152 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=1.0, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:51:54,201:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:51:54.201200 22759072744512 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:51:58,959:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:51:58.959697 22392277951552 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.05, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:03,724:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:03.724810 22749690876992 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.1, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:08,427:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:08.427537 22747898274880 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.5, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:13,183:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:13.183132 23179091584064 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=1.0, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:17,938:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:17.938973 23058268750912 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:22,674:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:22.674914 22963127018560 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.05, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:27,393:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:27.393607 23316379251776 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.1, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:32,119:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:32.119534 22484829340736 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.5, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'
+INFO:2025-09-05 00:52:36,828:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:52:36.828272 22828487722048 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=1.0, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:82: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 386, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 303, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 143, in pgd
+    true_final = self.forward_true_final(a)   # (X,)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true_final
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 83, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 252, in g_callable
+    if states.ndim == 2:
+AttributeError: 'float' object has no attribute 'ndim'

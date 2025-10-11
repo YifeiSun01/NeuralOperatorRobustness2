@@ -1,0 +1,47 @@
+直方图/分布相关（全局一维分布）
+
+hist_js_bits：Jensen–Shannon divergence（单位：bits，取对数底2）。衡量两分布差异，0 表示完全一致，最大到 1 bit；越小越好。
+
+hist_tv：Total Variation distance = ½∑|p−q|，范围 [0,1]；越小越好。
+
+hist_emd：Earth Mover’s Distance / Wasserstein-1（对共同网格做 CDF 差分积分），数值有原始量纲（≈数据单位）；越小越好。
+
+hist_emd_norm：上面 EMD 除以两分布联合范围长度后的归一化版，[0,1] 量级；越小越好。
+
+hist_overlap_coeff：重合系数 ∑min(p,q)，[0,1]，1 表示完全重合；越大越好。
+
+hist_range_overlap_ratio：仅看“值域”的 IOU（两边的 [vmin,vmax] 交并比），[0,1]；越大越好。
+
+hist_kl_pq_nat：KL(p‖q)（单位：nats，ln），非对称；越小越好。
+
+hist_kl_qp_nat：KL(q‖p)（单位：nats，ln），越小越好。
+
+注：直方图先被重映射到共同区间 [xmin,xmax]、统一 grid_bins（你这列里就是 256）后再归一化成 PMF 来算上述指标；做了极小 eps 平滑，避免 0 概率导致的数值问题。
+
+全局标量差异（来自全体像素的总体统计）
+
+global_mean_absdiff：两数据集第0帧的全局均值之差的绝对值；越小越好。
+
+global_std_absdiff：全局标准差之差的绝对值；越小越好。
+
+global_q50_absdiff：全局中位数之差的绝对值；越小越好。
+
+空间逐像素的“平均/方差”地图相似度（per-cell）
+
+mean_map_pearson_r：第0帧 均值地图（H×W）的皮尔逊相关系数，范围 [-1,1]；越大越好（越接近 1 越像）。
+
+mean_map_norm_mae：均值地图的归一化 MAE（用两地图联合范围归一化），[0,1] 量级；越小越好。
+
+std_map_pearson_r：第0帧 标准差地图的皮尔逊相关，[-1,1]；越大越好。
+
+std_map_norm_mae：标准差地图的归一化 MAE，越小越好。
+
+注：若两张地图尺寸不一致，相关与 MAE 会给 NaN（我们不做插值对齐）。
+
+其它列（非“指标”本身）
+
+H, W：空间尺寸。
+
+grid_bins：共同直方图网格的 bin 数（用于上面所有 histogram 指标）。
+
+target_* / gen_*：左右两边数据集的名称、类型、路径。

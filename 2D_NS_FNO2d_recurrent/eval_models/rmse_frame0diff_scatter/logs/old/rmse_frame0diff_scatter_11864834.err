@@ -1,0 +1,360 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_js_bits/deltaRMSE_vs_hist_js_bits__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185203.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_tv/deltaRMSE_vs_hist_tv__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185206.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_emd/deltaRMSE_vs_hist_emd__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185209.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_emd_norm/deltaRMSE_vs_hist_emd_norm__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185212.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_overlap_coeff/deltaRMSE_vs_hist_overlap_coeff__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185215.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_range_overlap_ratio/deltaRMSE_vs_hist_range_overlap_ratio__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185218.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_kl_pq_nat/deltaRMSE_vs_hist_kl_pq_nat__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185222.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=hist_kl_qp_nat/deltaRMSE_vs_hist_kl_qp_nat__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185225.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=global_mean_absdiff/deltaRMSE_vs_global_mean_absdiff__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185228.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=global_std_absdiff/deltaRMSE_vs_global_std_absdiff__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185231.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=global_q50_absdiff/deltaRMSE_vs_global_q50_absdiff__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185234.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=mean_map_pearson_r/deltaRMSE_vs_mean_map_pearson_r__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185237.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=mean_map_norm_mae/deltaRMSE_vs_mean_map_norm_mae__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185240.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=std_map_pearson_r/deltaRMSE_vs_std_map_pearson_r__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185243.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/auto-auto/any_hparams/x=std_map_norm_mae/deltaRMSE_vs_std_map_norm_mae__model-model_group_folder_strategy_add_pct_tag_25pct_percent_0.25___value_col___col14__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10__auto-auto__20250904_185246.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_js_bits/deltaRMSE_vs_hist_js_bits__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185418.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_tv/deltaRMSE_vs_hist_tv__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185421.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_emd/deltaRMSE_vs_hist_emd__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185424.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_emd_norm/deltaRMSE_vs_hist_emd_norm__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185428.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_overlap_coeff/deltaRMSE_vs_hist_overlap_coeff__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185431.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_range_overlap_ratio/deltaRMSE_vs_hist_range_overlap_ratio__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185434.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_kl_pq_nat/deltaRMSE_vs_hist_kl_pq_nat__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185437.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=hist_kl_qp_nat/deltaRMSE_vs_hist_kl_qp_nat__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185440.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=global_mean_absdiff/deltaRMSE_vs_global_mean_absdiff__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185443.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=global_std_absdiff/deltaRMSE_vs_global_std_absdiff__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185446.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=global_q50_absdiff/deltaRMSE_vs_global_q50_absdiff__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185449.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=mean_map_pearson_r/deltaRMSE_vs_mean_map_pearson_r__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185452.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=mean_map_norm_mae/deltaRMSE_vs_mean_map_norm_mae__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185455.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=std_map_pearson_r/deltaRMSE_vs_std_map_pearson_r__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185459.png'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 616, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 581, in main
+    png_path = _unique_path(png_path)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 247, in _unique_path
+    if not path.exists():
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1290, in exists
+    self.stat()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/pathlib.py", line 1097, in stat
+    return self._accessor.stat(self, follow_symlinks=follow_symlinks)
+OSError: [Errno 36] File name too long: '2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/plots/scatter/exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps1/auto-auto/any_hparams/x=std_map_norm_mae/deltaRMSE_vs_std_map_norm_mae__model-model_group_folder_strategy_add_pct_tag_100pct_percent_1.0___value_col___col13__exp-dim2d_nx256_N1150_solver_exponax_nu0.000_t20.0_train_all_frames_modespec_wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10__auto-auto__20250904_185502.png'

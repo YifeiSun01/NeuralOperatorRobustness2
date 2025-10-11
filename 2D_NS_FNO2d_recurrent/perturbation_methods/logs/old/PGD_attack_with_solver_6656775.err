@@ -1,0 +1,23 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:51: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  print(f"JAX Backend: {jax.lib.xla_bridge.get_backend().platform}")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:92: UserWarning: Could not check cuDNN version compatibility
+  warnings.warn("Could not check cuDNN version compatibility")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:139: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:143: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:167: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:170: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+2025-07-03 12:29:43.092603: E external/xla/xla/service/slow_operation_alarm.cc:73] 
+********************************
+[Compiling module jit_jax_vjp] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2025-07-03 12:31:22.778173: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 3m39.685724748s
+
+********************************
+[Compiling module jit_jax_vjp] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2025-07-03 12:37:24.394540: F external/xla/xla/service/gpu/llvm_gpu_backend/default/load_ir_module.cc:29] /blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/nvidia/cuda_nvcc/nvvm/libdevice/libdevice.10.bc:-1:-1: Could not open input file: Input/output error
+/var/spool/slurmd/job6656775/slurm_script: line 21: 1160381 Aborted                 (core dumped) python -u ./perturbation_methods/PGD_attack_with_solver.py

@@ -1,0 +1,9 @@
+usage: rmse_frame0diff_scatter.py [-h] --perf-csv PERF_CSV --sim-csv SIM_CSV
+                                  [--expanded EXPANDED]
+                                  [--expanded-like EXPANDED_LIKE]
+                                  [--modes MODES] [--width WIDTH]
+                                  [--epochs EPOCHS] [--agg {mean,median}]
+                                  [--outdir OUTDIR] [--dpi DPI]
+                                  [--strategy {add,replace,auto}] [--pct PCT]
+                                  [--x-metric X_METRIC]
+rmse_frame0diff_scatter.py: error: unrecognized arguments: --plot-script ./2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py --x-metrics all --run

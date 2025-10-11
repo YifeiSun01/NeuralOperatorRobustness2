@@ -1,0 +1,44 @@
+NS 2d FNO training log (REPLACE)
+
+{
+  "config": {
+    "mode": "REPLACE (\u66ff\u6362)",
+    "expanded_dataset_file": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10.pt",
+    "percent_replaced": "50.00%",
+    "samples_replaced_vs_total": "575 / 1150",
+    "original_dataset_file": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt",
+    "total_samples_after_replace": 1150,
+    "ntrain": 1000,
+    "ntest": 100,
+    "modes": 96,
+    "width": 80,
+    "s": 256,
+    "T_in": 10,
+    "T_out": 10,
+    "step": 1,
+    "batch_size": 20,
+    "epochs": 1500,
+    "iterations": 75000,
+    "subsample_factor": 1,
+    "device": "cuda",
+    "seed": 1234
+  }
+}
+
+model parameters: 943823441
+epoch:0, time:39.253471, train l2:651.44165134, test l2:50.02925491
+epoch:1, time:38.158086, train l2:411.51083517, test l2:37.95696783
+epoch:2, time:38.148686, train l2:334.33646488, test l2:34.69469213
+epoch:3, time:38.120396, train l2:322.12918425, test l2:32.13152075
+epoch:4, time:38.147296, train l2:299.82286072, test l2:31.99725008
+epoch:5, time:38.122021, train l2:291.50599480, test l2:29.87869835
+epoch:6, time:38.110491, train l2:278.97482491, test l2:29.35566473
+epoch:7, time:38.143100, train l2:279.10646725, test l2:29.39193058
+epoch:8, time:38.169770, train l2:269.74313974, test l2:28.82739544
+epoch:9, time:38.144490, train l2:262.81027460, test l2:28.66344833
+epoch:10, time:38.152688, train l2:260.14045143, test l2:27.78636169
+epoch:11, time:38.142147, train l2:250.08106661, test l2:27.82265520
+epoch:12, time:38.134844, train l2:249.83958197, test l2:26.35636759
+epoch:13, time:38.169425, train l2:246.49581003, test l2:27.59274292
+epoch:14, time:38.173257, train l2:244.15487671, test l2:26.09716082
+epoch:15, time:38.162735, train l2:235.37088871, test l2:25.47019672

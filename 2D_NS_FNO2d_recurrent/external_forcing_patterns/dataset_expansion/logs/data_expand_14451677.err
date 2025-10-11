@@ -1,0 +1,63 @@
+[ringsL1] B=5:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-10-01 21:12:01,657:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I1001 21:12:01.657697 22572237862720 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 198, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 170, in forward
+    seq = self.pde_solver.rollout_seconds(x0, T_required)   # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 149, in rollout_seconds
+    return JaxPDEWrapper.apply(x0.contiguous(), g)  # (T+1,H,W) or (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 67, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 145, in <lambda>
+    g = jax.jit(lambda A: batched_patterns_rollout(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 129, in batched_patterns_rollout
+    return jax.vmap(fn, in_axes=0, out_axes=1)(u0_batched)     # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 128, in <lambda>
+    fn = lambda a: generate_sequence_every_second_patterns(a, nu, T_seconds, fixed_step, forcing_pattern)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 104, in generate_sequence_every_second_patterns
+    stepper = ex.stepper._navier_stokes.NavierStokesVorticityPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 407, in __init__
+    super().__init__(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_base_stepper.py", line 116, in __init__
+    nonlinear_fun = self._build_nonlinear_fun(derivative_operator)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 431, in _build_nonlinear_fun
+    return VorticityConvection2dPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/nonlin_fun/_vorticity_convection.py", line 241, in __init__
+    self.injection = build_forcing_patterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 625, in build_forcing_patterns
+    f_physical = 0.1 * _PATTERN_MAP[key](X, Y)  # shape = (N, N)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 587, in ringsL1
+    r1 = r_torus_lp(X, Y, p=1.3, x0=x0, y0=y0)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py", line 560, in r_torus_lp
+    return jnp.maximum(ax, ay) if jnp.isinf(p) else (ax + ay if p == 1 else (ax**p + ay**p)**(1.0/p))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function <lambda> at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:145 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:bool[] = pjit[
+  name=isinf
+  jaxpr={ lambda ; a:f32[]. let c:f32[] = abs a; b:bool[] = eq c inf in (b,) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_spectral.py:560 (r_torus_lp)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+[ringsL1] B=5:   0%|          | 0/1150 [00:12<?, ?it/s]

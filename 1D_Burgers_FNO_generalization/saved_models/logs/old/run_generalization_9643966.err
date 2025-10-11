@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 154, in <module>
+    pred_norm, pred_unnorm = infer_two_models(a_tensor, model_norm, x_norm, y_norm, model_unnorm, device)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 59, in infer_two_models
+    out_norm = model_norm(x_norm_encoded)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/FNO1d.py", line 79, in forward
+    x = torch.cat((x, grid), dim=-1)
+RuntimeError: Tensors must have same number of dimensions: got 2 and 3

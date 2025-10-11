@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 115, in <module>
+    data_list = torch.load(pkl_file, map_location='cpu', weights_only=False)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 1549, in load
+    return _legacy_load(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 1799, in _legacy_load
+    raise RuntimeError("Invalid magic number; corrupt file?")
+RuntimeError: Invalid magic number; corrupt file?

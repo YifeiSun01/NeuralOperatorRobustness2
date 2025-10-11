@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py", line 722, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py", line 699, in main
+    raise FileNotFoundError(f"在 {in_dir} 下找不到 *.analysis.pt 文件（recursive={args.recursive}）。")
+FileNotFoundError: 在 /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results 下找不到 *.analysis.pt 文件（recursive=False）。
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py", line 722, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py", line 699, in main
+    raise FileNotFoundError(f"在 {in_dir} 下找不到 *.analysis.pt 文件（recursive={args.recursive}）。")
+FileNotFoundError: 在 /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results 下找不到 *.analysis.pt 文件（recursive=False）。
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py", line 722, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py", line 699, in main
+    raise FileNotFoundError(f"在 {in_dir} 下找不到 *.analysis.pt 文件（recursive={args.recursive}）。")
+FileNotFoundError: 在 /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results 下找不到 *.analysis.pt 文件（recursive=False）。

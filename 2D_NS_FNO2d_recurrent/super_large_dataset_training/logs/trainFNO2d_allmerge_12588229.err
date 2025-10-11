@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/super_large_dataset_training/trainFNO2d_unnormalized_expanded.py", line 362, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/super_large_dataset_training/trainFNO2d_unnormalized_expanded.py", line 301, in main
+    with open(base_dir / "train_log.txt", "a") as lf:
+UnboundLocalError: local variable 'base_dir' referenced before assignment

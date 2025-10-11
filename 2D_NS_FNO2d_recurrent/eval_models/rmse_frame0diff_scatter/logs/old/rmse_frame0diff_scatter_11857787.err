@@ -1,0 +1,1265 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 536, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 277, in main
+    rmse_col = _col(raw_perf, [
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.py", line 126, in _col
+    raise KeyError(f"未找到这些列之一: {candidates}")
+KeyError: "未找到这些列之一: ['rmse_mean', 'rmse', 'RMSE', 'rmse_val', 'val_rmse', 'rmse_mean_all', 'rmse_frame0diff', 'frame0diff', 'delta_rmse']"
+slurmstepd: error: *** JOB 11857787 ON c0907a-s5 CANCELLED AT 2025-09-04T17:04:11 ***

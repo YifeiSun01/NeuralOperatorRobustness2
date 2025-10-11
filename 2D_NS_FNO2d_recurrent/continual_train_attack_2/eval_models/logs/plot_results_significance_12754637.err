@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'rmse_std'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.py", line 842, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.py", line 816, in main
+    signed_df, p_df, t_df, df_df = compute_signed_log10p_from_pivot(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.py", line 340, in compute_signed_log10p_from_pivot
+    rmse_std_blk, _             = _extract_metric_block(pivot_full, std_metric)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.py", line 309, in _extract_metric_block
+    block = pivot_full.xs(metric_name, axis=1, level=metric_level, drop_level=False)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/generic.py", line 4274, in xs
+    loc, new_ax = labels.get_loc_level(key, level=level, drop_level=drop_level)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 3150, in get_loc_level
+    loc, mi = self._get_loc_level(key, level=level)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 3290, in _get_loc_level
+    indexer = self._get_level_indexer(key, level=level)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 3391, in _get_level_indexer
+    idx = self._get_loc_single_level_index(level_index, key)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/indexes/multi.py", line 2980, in _get_loc_single_level_index
+    return level_index.get_loc(key)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'rmse_std'

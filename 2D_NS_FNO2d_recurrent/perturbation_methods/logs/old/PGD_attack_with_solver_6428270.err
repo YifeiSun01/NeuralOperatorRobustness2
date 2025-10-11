@@ -1,0 +1,59 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:67: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py:80: UserWarning: GPU transfer failed, fallback to CPU: index is out of bounds for axis 0 with size 0
+  warnings.warn(f"GPU transfer failed, fallback to CPU: {str(e)}")
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 70, in forward
+    g_output_jax = g(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 244, in solve_func
+    return pde_solver.solve(x, t)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 197, in solve
+    solution = generate_single_timestep_solution(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 163, in generate_single_timestep_solution
+    final_state = result[-1, 0, ...].T.block_until_ready()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/array.py", line 383, in __getitem__
+    return indexing.rewriting_take(self, idx)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/indexing.py", line 640, in rewriting_take
+    return _gather(arr, treedef, static_idx, dynamic_idx, indices_are_sorted,
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/indexing.py", line 649, in _gather
+    indexer = index_to_gather(np.shape(arr), idx)  # shared with _scatter_update
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/indexing.py", line 898, in index_to_gather
+    raise IndexError(f"index is out of bounds for axis {x_axis} with size 0")
+IndexError: index is out of bounds for axis 0 with size 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 523, in <module>
+    adversarial_x0 = attack_system.pgd_attack(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 417, in pgd_attack
+    loss.backward()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 307, in apply
+    return user_fn(self, *args)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 247, in backward
+    grad_t = JaxPDEWrapper.apply(grad_output[i].contiguous(), solve_func)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 82, in forward
+    g_output_np = g(jnp.array(a_np))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 244, in solve_func
+    return pde_solver.solve(x, t)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 197, in solve
+    solution = generate_single_timestep_solution(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 163, in generate_single_timestep_solution
+    final_state = result[-1, 0, ...].T.block_until_ready()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/array.py", line 383, in __getitem__
+    return indexing.rewriting_take(self, idx)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/indexing.py", line 640, in rewriting_take
+    return _gather(arr, treedef, static_idx, dynamic_idx, indices_are_sorted,
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/indexing.py", line 649, in _gather
+    indexer = index_to_gather(np.shape(arr), idx)  # shared with _scatter_update
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/indexing.py", line 898, in index_to_gather
+    raise IndexError(f"index is out of bounds for axis {x_axis} with size 0")
+IndexError: index is out of bounds for axis 0 with size 0

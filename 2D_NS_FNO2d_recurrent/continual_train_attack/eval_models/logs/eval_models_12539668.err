@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/eval_models.py", line 48, in <module>
+    from models.FNO2d import FNO2d, RecurrentPredictor  # preferred
+ModuleNotFoundError: No module named 'models'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/eval_models.py", line 50, in <module>
+    from FNO2d import FNO2d, RecurrentPredictor  # fallback
+ModuleNotFoundError: No module named 'FNO2d'

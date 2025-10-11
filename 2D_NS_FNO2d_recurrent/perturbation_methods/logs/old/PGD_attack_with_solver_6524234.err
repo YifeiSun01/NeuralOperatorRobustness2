@@ -1,0 +1,2 @@
+/var/spool/slurmd/job6524234/slurm_script: line 21: 973118 Killed                  python -u ./perturbation_methods/PGD_attack_with_solver.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=6524234.batch. Some of the step tasks have been OOM Killed.

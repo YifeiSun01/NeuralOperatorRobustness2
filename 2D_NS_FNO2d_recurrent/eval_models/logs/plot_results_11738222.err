@@ -1,0 +1,10 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_results.py:838: DtypeWarning: Columns (44) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(csv_path)
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_results.py", line 880, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_results.py", line 859, in main
+    pivot_minus, base_series = subtract_baseline_rmse(pivot_full, metric='rmse_mean')
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_results.py", line 287, in subtract_baseline_rmse
+    raise ValueError("找不到 'metric' 列层级；请使用 build_pivot_multi_metrics 构建。")
+ValueError: 找不到 'metric' 列层级；请使用 build_pivot_multi_metrics 构建。

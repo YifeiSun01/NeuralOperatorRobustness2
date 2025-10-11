@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 629, in <module>
+    adversarial_x0 = attack_system.pgd_attack(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./perturbation_methods/PGD_attack_with_solver.py", line 519, in pgd_attack
+    if need_full_resolution:
+NameError: name 'need_full_resolution' is not defined

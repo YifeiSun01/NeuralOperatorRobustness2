@@ -1,0 +1,34 @@
+NS 2d FNO continual training log
+{
+  "round": 5,
+  "params": {
+    "modes1": 96,
+    "modes2": 96,
+    "width": 80,
+    "Tin": 10,
+    "Tout": 10,
+    "step": 1,
+    "epochs": 500,
+    "batch_size": 20,
+    "lr": 0.001,
+    "subsample_factor": 1,
+    "device": "cuda"
+  }
+}
+
+model parameters: 943823441
+epoch:0, time:49.907024, train l2:816.19618320, test l2:43.33610916
+epoch:1, time:46.880666, train l2:505.58262300, test l2:31.22427893
+epoch:2, time:46.852310, train l2:428.61444044, test l2:30.12528372
+epoch:3, time:46.730582, train l2:402.40556240, test l2:28.57110453
+epoch:4, time:46.742032, train l2:393.97451591, test l2:27.65407038
+epoch:5, time:46.781588, train l2:381.90849113, test l2:27.08419180
+epoch:6, time:46.809707, train l2:371.71158981, test l2:25.95425797
+epoch:7, time:46.912639, train l2:353.54458570, test l2:24.93254089
+epoch:8, time:46.863700, train l2:346.79674006, test l2:23.90994644
+epoch:9, time:46.761901, train l2:334.07574034, test l2:24.12314844
+epoch:10, time:46.746795, train l2:328.55351257, test l2:22.32505751
+epoch:11, time:46.771261, train l2:319.51627207, test l2:24.15612078
+epoch:12, time:46.814104, train l2:326.20874977, test l2:21.78898811
+epoch:13, time:46.751254, train l2:314.54443121, test l2:22.07235622
+epoch:14, time:46.729812, train l2:319.60552740, test l2:21.56792021

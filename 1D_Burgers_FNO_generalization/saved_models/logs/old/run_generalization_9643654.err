@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 99, in <module>
+    model_norm, x_norm, y_norm = load_checkpoint(normalized_path, device)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 31, in load_checkpoint
+    x_norm.eps = x_norm.eps.to(device)
+AttributeError: 'float' object has no attribute 'to'

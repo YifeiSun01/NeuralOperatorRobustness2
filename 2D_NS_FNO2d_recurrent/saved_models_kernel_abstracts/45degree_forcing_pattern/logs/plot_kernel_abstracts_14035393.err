@@ -1,0 +1,60 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py:76: RuntimeWarning: invalid value encountered in log
+  return np.log(arr)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py:76: RuntimeWarning: divide by zero encountered in log
+  return np.log(arr)
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 694, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 680, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 604, in process_one_model
+    plot_spatial(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 151, in plot_spatial
+    plt.colorbar(im, ax=ax, shrink=0.9)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/pyplot.py", line 2526, in colorbar
+    ret = gcf().colorbar(mappable, cax=cax, ax=ax, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/figure.py", line 1308, in colorbar
+    cb = cbar.Colorbar(cax, mappable, **{
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorbar.py", line 387, in __init__
+    self._reset_locator_formatter_scale()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorbar.py", line 1163, in _reset_locator_formatter_scale
+    self._process_values()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorbar.py", line 1099, in _process_values
+    self.norm.vmin, self.norm.vmax = mtransforms.nonsingular(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colors.py", line 2184, in vmin
+    self._changed()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colors.py", line 2212, in _changed
+    self.callbacks.process('changed')
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 366, in process
+    self.exception_handler(exc)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 110, in _exception_printer
+    raise exc
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 361, in process
+    func(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorizer.py", line 286, in changed
+    self.callbacks.process('changed')
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 366, in process
+    self.exception_handler(exc)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 110, in _exception_printer
+    raise exc
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 361, in process
+    func(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/image.py", line 335, in changed
+    super().changed()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorizer.py", line 578, in changed
+    self.callbacks.process('changed', self)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 366, in process
+    self.exception_handler(exc)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 110, in _exception_printer
+    raise exc
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/cbook.py", line 361, in process
+    func(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorbar.py", line 513, in update_normal
+    self._draw_all()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorbar.py", line 540, in _draw_all
+    self._process_values()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colorbar.py", line 1103, in _process_values
+    b = self.norm.inverse(b)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/matplotlib/colors.py", line 2692, in inverse
+    raise ValueError("Invalid vmin or vmax")
+ValueError: Invalid vmin or vmax

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 154, in <module>
+    pred_norm, pred_unnorm = infer_two_models(a_tensor, model_norm, x_norm, y_norm, model_unnorm, device)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/saved_models/run_generalization.py", line 55, in infer_two_models
+    x_norm_encoded = x_norm.encode(input_tensor).to(torch.float32).to(device)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/utilities3.py", line 86, in encode
+    x = (x - self.mean) / (self.std + self.eps)
+RuntimeError: The size of tensor a (256) must match the size of tensor b (1024) at non-singleton dimension 1

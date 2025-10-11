@@ -1,0 +1,2 @@
+/var/spool/slurmd/job9645366/slurm_script: line 21: 1108457 Killed                  python -u ./1D_Burgers_FNO_generalization/saved_models/run_generalization.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=9645366.batch. Some of the step tasks have been OOM Killed.

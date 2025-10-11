@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 795, in <module>
+    pickle_files = [current_dir+"/"+file for file in pickle_files]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py", line 795, in <listcomp>
+    pickle_files = [current_dir+"/"+file for file in pickle_files]
+TypeError: unsupported operand type(s) for +: 'PosixPath' and 'str'

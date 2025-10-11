@@ -1,0 +1,4 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers_FNO_generalization/eval_models/eval_models.py:364: RuntimeWarning: Mean of empty slice
+  def _nanmean(a): return float(np.nanmean(a)) if len(a) else np.nan
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/numpy/lib/_nanfunctions_impl.py:2019: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,

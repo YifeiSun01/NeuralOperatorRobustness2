@@ -1,0 +1,53 @@
+NS 2d FNO training log (REPLACE)
+
+{
+  "config": {
+    "mode": "REPLACE (\u66ff\u6362)",
+    "expanded_dataset_file": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt",
+    "percent_replaced": "50.00%",
+    "samples_replaced_vs_total": "575 / 1150",
+    "original_dataset_file": "dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt",
+    "total_samples_after_replace": 1150,
+    "ntrain": 1000,
+    "ntest": 100,
+    "modes": 96,
+    "width": 80,
+    "s": 256,
+    "T_in": 10,
+    "T_out": 10,
+    "step": 1,
+    "batch_size": 20,
+    "epochs": 1500,
+    "iterations": 75000,
+    "subsample_factor": 1,
+    "device": "cuda",
+    "seed": 1234
+  }
+}
+
+model parameters: 943823441
+epoch:0, time:37.914449, train l2:642.93404293, test l2:47.87207127
+epoch:1, time:38.128120, train l2:390.24272203, test l2:34.95965099
+epoch:2, time:38.111971, train l2:318.08402348, test l2:31.29235506
+epoch:3, time:38.123391, train l2:303.20976734, test l2:30.57909060
+epoch:4, time:38.182209, train l2:282.43950796, test l2:28.84776735
+epoch:5, time:38.107470, train l2:271.47755909, test l2:29.06939507
+epoch:6, time:38.008063, train l2:263.27814245, test l2:27.02532482
+epoch:7, time:38.115851, train l2:256.98575830, test l2:26.30121136
+epoch:8, time:38.083132, train l2:250.28943348, test l2:25.91104984
+epoch:9, time:38.040751, train l2:247.74577475, test l2:25.26123476
+epoch:10, time:38.130044, train l2:247.83707094, test l2:25.38790083
+epoch:11, time:38.146161, train l2:240.90913200, test l2:25.81664133
+epoch:12, time:38.157698, train l2:236.11095142, test l2:26.00599146
+epoch:13, time:38.189055, train l2:233.78385305, test l2:24.75778055
+epoch:14, time:38.100799, train l2:226.50595617, test l2:24.60191441
+epoch:15, time:38.119253, train l2:220.13822508, test l2:23.68552160
+epoch:16, time:38.201444, train l2:214.80014515, test l2:23.85805893
+epoch:17, time:38.139681, train l2:215.25862360, test l2:24.47646809
+epoch:18, time:38.124623, train l2:214.48952937, test l2:23.89183092
+epoch:19, time:38.183648, train l2:213.17239761, test l2:22.44789362
+epoch:20, time:38.098116, train l2:212.51297283, test l2:23.14938545
+epoch:21, time:38.091978, train l2:210.02714753, test l2:22.02082634
+epoch:22, time:38.186929, train l2:203.61786199, test l2:21.99853992
+epoch:23, time:38.183004, train l2:211.12461209, test l2:22.57422304
+epoch:24, time:38.126239, train l2:202.07675290, test l2:22.02488375

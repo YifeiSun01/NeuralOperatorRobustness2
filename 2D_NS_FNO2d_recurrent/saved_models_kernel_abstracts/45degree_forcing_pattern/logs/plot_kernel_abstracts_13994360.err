@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 414, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 399, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 325, in process_one_model
+    plot_spatial_heatmaps(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 126, in plot_spatial_heatmaps
+    im = _imshow(ax, arr_t, color_log_scale=color_log_scale, color_log_eps=color_log_eps, cmap=cmap)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 80, in _imshow
+    raise ValueError(
+ValueError: color_log_scale=True 但存在非正或非有限值；请改用 --data-log-mode，或提供 --color-log-eps > -min(data)。

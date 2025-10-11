@@ -1,0 +1,10 @@
+
+
+=== Adversarial-Continued Training (attack first frame + PDE labels) ===
+[resume_from] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[base_epoch] 0
+
+
+=== Adversarial-Continued Training (attack first frame + PDE labels) ===
+[resume_from] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[base_epoch] 0

@@ -1,0 +1,2 @@
+/var/spool/slurmd/job6812717/slurm_script: line 21: 2954460 Killed                  python -u ./training_models/trainingFNO3d_unnormalized.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=6812717.batch. Some of the step tasks have been OOM Killed.

@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 463, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 449, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 374, in process_one_model
+    plot_spatial_heatmaps(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 114, in plot_spatial_heatmaps
+    arr = _tonp(tensor)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 28, in _tonp
+    return x.detach().cpu().numpy()
+AttributeError: 'dict' object has no attribute 'detach'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 463, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 449, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 374, in process_one_model
+    plot_spatial_heatmaps(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 114, in plot_spatial_heatmaps
+    arr = _tonp(tensor)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 28, in _tonp
+    return x.detach().cpu().numpy()
+AttributeError: 'dict' object has no attribute 'detach'
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 463, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 449, in main
+    process_one_model(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 374, in process_one_model
+    plot_spatial_heatmaps(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 121, in plot_spatial_heatmaps
+    im = _imshow(ax, arr_t, color_log_scale=color_log_scale,
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py", line 73, in _imshow
+    raise ValueError(
+ValueError: color_log_scale=True 但存在非正或非有限值；请改用 --data-log-mode，或提供 --color-log-eps > -min(data)。

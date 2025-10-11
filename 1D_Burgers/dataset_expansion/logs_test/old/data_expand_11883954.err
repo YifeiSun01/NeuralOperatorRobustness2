@@ -1,0 +1,825 @@
+INFO:2025-09-05 00:29:55,386:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:29:55.386582 22537106326592 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:35<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:03,023:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:03.023023 22748133291072 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.05, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:07,838:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:07.838482 23057482032192 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.1, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:12,543:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:12.543687 23080597271616 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=0.5, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:17,175:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:17.175068 22975955100736 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=10.0, alpha=1.0, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:21,844:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:21.844097 23362509583424 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:26,556:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:26.556629 23082869572672 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.05, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:31,251:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:31.251898 23329095963712 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.1, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:35,763:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:35.763213 22751072654400 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=0.5, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:40,430:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:40.430689 22660662838336 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=20.0, alpha=1.0, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:45,135:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:45.135557 23039880197184 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.01, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:49,811:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:49.811763 23267216561216 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.05, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                           [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:54,435:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:54.435217 23143206413376 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.1, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:31:59,148:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:31:59.148366 22898026570816 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=0.5, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError
+INFO:2025-09-05 00:32:03,703:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0905 00:32:03.703872 22969404748864 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+Param combos:   0%|          | 0/1 [00:00<?, ?it/s]
+Samples (norm=2, eps=50.0, alpha=1.0, steps=100):   0%|          | 0/1500 [00:00<?, ?it/s][A/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:122: UserWarning: Explicitly requested dtype <class 'jax.numpy.float64'> requested in astype is not available, and will be truncated to dtype float32. To enable more dtypes, set the jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell environment variable. See https://github.com/jax-ml/jax#current-gotchas for more.
+  return lax_numpy.astype(self, dtype, copy=copy, device=device)
+
+                                                                                          [AParam combos:   0%|          | 0/1 [00:00<?, ?it/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 372, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 286, in main
+    a_adv = system.pgd(a0, epsilon=epsilon, alpha=alpha, steps=steps, norm=norm)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 149, in pgd
+    true = self.forward_true(a)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 132, in forward_true
+    return JaxPDEWrapper.apply(a, self.g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 85, in forward
+    out_jax = g_callable(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py", line 244, in g_callable
+    _, states = solver.solve(u0, t_final=float(FLAGS.t_final), t_eval=t_eval, step=float(FLAGS.dt))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 265, in solve
+    sol_dict = self.get_closest_solutions(sol_dict, t_eval)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py", line 233, in get_closest_solutions
+    closest_key = min(sorted_keys, key=lambda k: abs(k - t))
+jax.errors.TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[].
+The error occurred while tracing the function g_callable at /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/dataset_expansion/data_expand.py:242 for jit. This value became a tracer due to JAX operations on these lines:
+
+  operation b:f32[] c:f32[] = pjit[
+  name=_unstack
+  jaxpr={ lambda ; a:f32[2]. let
+      d:f32[1] e:f32[1] = split[axis=0 sizes=(1, 1)] a
+      b:f32[] = squeeze[dimensions=(0,)] d
+      c:f32[] = squeeze[dimensions=(0,)] e
+    in (b, c) }
+] a
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:232 (get_closest_solutions)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+
+  operation a:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    from line /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/solvers/burgers1d_solvers.py:233 (<lambda>)
+See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerBoolConversionError

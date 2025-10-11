@@ -1,0 +1,33 @@
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py:48: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  print(f"JAX Backend: {jax.lib.xla_bridge.get_backend().platform}")
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py:94: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 677, in <module>
+    adversarial_x0 = attack_system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 474, in pgd_attack_adam
+    pred_19, true_19 = self.forward(x_adv)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 399, in forward
+    seq_0_to_T = self.pde_solver.rollout_seconds(x0, T_required)  # (T+1,B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 160, in rollout_seconds
+    seq_tensor = JaxPDEWrapper.apply(x0.contiguous(), solver_func)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 95, in forward
+    g_output_jax = g(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 159, in solver_func
+    return generate_sequence_every_second(a_jax, self.nu, T_seconds)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py", line 137, in generate_sequence_every_second
+    result = rollout_stepper(u0_proc)               # (T_steps+1, B, H, W)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_utils.py", line 172, in rollout_stepper_fn
+    _, trj = jax.lax.scan(scan_fn, u_0, None, length=n)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_utils.py", line 168, in scan_fn
+    u_next = stepper_fn(u)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_base_stepper.py", line 266, in __call__
+    raise ValueError(
+ValueError: Expected shape (1, 256, 256), got (5, 256, 256). For batched operation use `jax.vmap` on this function.
+srun: error: c0901a-s25: task 0: Exited with exit code 1

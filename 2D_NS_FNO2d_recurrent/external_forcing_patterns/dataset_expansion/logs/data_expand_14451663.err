@@ -1,0 +1,2 @@
+FATAL Flags parsing error: flag --forcing_pattern=none: value should be one of <ringsCos|sBands|isoCircles|petals|ringsL1|ringsLinf>
+Pass --helpshort or --helpfull to see help on flags.

@@ -1,0 +1,4 @@
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/continual_train_attack/continual_train_attack.py", line 528
+    system = PDEAttackSystem1D(model, g_callable, device)_
+                                                         ^
+SyntaxError: invalid syntax

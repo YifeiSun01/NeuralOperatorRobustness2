@@ -1,0 +1,6 @@
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:1185: UserWarning: Some donated buffers were not usable: ShapedArray(float32[20,5,256,256]).
+See an explanation at https://docs.jax.dev/en/latest/faq.html#buffer-donation.
+  warnings.warn("Some donated buffers were not usable:"
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 12038673 ON c0907a-s15 CANCELLED AT 2025-09-07T21:24:59 ***
+slurmstepd: error: *** STEP 12038673.0 ON c0907a-s15 CANCELLED AT 2025-09-07T21:24:59 ***

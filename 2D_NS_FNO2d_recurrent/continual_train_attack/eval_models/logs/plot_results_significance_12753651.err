@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.py", line 842, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.py", line 793, in main
+    raise FileNotFoundError(f"CSV not found: {csv_path}")
+FileNotFoundError: CSV not found: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/performance_results_significance/combined_eval__roots_models.csv

@@ -1,0 +1,533 @@
+
+[isoCircles] B=8:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 08:08:48,465:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 08:08:48.465618 23003259537216 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:86: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:88: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+
+[isoCircles] B=8:   1%|          | 8/1150 [05:22<12:46:50, 40.29s/it]
+[isoCircles] B=8:   1%|          | 8/1150 [05:22<12:46:50, 40.29s/it]
+[isoCircles] B=8:   1%|▏         | 16/1150 [06:56<7:24:30, 23.52s/it]
+[isoCircles] B=8:   1%|▏         | 16/1150 [06:56<7:24:30, 23.52s/it]
+[isoCircles] B=8:   2%|▏         | 24/1150 [08:30<5:40:21, 18.14s/it]
+[isoCircles] B=8:   2%|▏         | 24/1150 [08:30<5:40:21, 18.14s/it]
+[isoCircles] B=8:   3%|▎         | 32/1150 [10:05<4:51:48, 15.66s/it]
+[isoCircles] B=8:   3%|▎         | 32/1150 [10:05<4:51:48, 15.66s/it]
+[isoCircles] B=8:   3%|▎         | 40/1150 [11:40<4:24:31, 14.30s/it]
+[isoCircles] B=8:   3%|▎         | 40/1150 [11:40<4:24:31, 14.30s/it]
+[isoCircles] B=8:   4%|▍         | 48/1150 [13:14<4:06:48, 13.44s/it]
+[isoCircles] B=8:   4%|▍         | 48/1150 [13:14<4:06:48, 13.44s/it]
+[isoCircles] B=8:   5%|▍         | 56/1150 [14:49<3:55:40, 12.93s/it]
+[isoCircles] B=8:   5%|▍         | 56/1150 [14:49<3:55:40, 12.93s/it]
+[isoCircles] B=8:   6%|▌         | 64/1150 [16:24<3:47:39, 12.58s/it]
+[isoCircles] B=8:   6%|▌         | 64/1150 [16:24<3:47:39, 12.58s/it]
+[isoCircles] B=8:   6%|▋         | 72/1150 [17:58<3:41:46, 12.34s/it]
+[isoCircles] B=8:   6%|▋         | 72/1150 [17:58<3:41:46, 12.34s/it]
+[isoCircles] B=8:   7%|▋         | 80/1150 [19:33<3:37:09, 12.18s/it]
+[isoCircles] B=8:   7%|▋         | 80/1150 [19:33<3:37:09, 12.18s/it]
+[isoCircles] B=8:   8%|▊         | 88/1150 [21:07<3:33:41, 12.07s/it]
+[isoCircles] B=8:   8%|▊         | 88/1150 [21:07<3:33:41, 12.07s/it]
+[isoCircles] B=8:   8%|▊         | 96/1150 [22:42<3:30:44, 12.00s/it]
+[isoCircles] B=8:   8%|▊         | 96/1150 [22:42<3:30:44, 12.00s/it]
+[isoCircles] B=8:   9%|▉         | 104/1150 [24:17<3:28:14, 11.95s/it]
+[isoCircles] B=8:   9%|▉         | 104/1150 [24:17<3:28:14, 11.95s/it]
+[isoCircles] B=8:  10%|▉         | 112/1150 [25:51<3:26:11, 11.92s/it]
+[isoCircles] B=8:  10%|▉         | 112/1150 [25:51<3:26:11, 11.92s/it]
+[isoCircles] B=8:  10%|█         | 120/1150 [27:27<3:24:34, 11.92s/it]
+[isoCircles] B=8:  10%|█         | 120/1150 [27:27<3:24:34, 11.92s/it]
+[isoCircles] B=8:  11%|█         | 128/1150 [29:02<3:22:57, 11.92s/it]
+[isoCircles] B=8:  11%|█         | 128/1150 [29:02<3:22:57, 11.92s/it]
+[isoCircles] B=8:  12%|█▏        | 136/1150 [30:37<3:21:19, 11.91s/it]
+[isoCircles] B=8:  12%|█▏        | 136/1150 [30:37<3:21:19, 11.91s/it]
+[isoCircles] B=8:  13%|█▎        | 144/1150 [32:13<3:19:46, 11.92s/it]
+[isoCircles] B=8:  13%|█▎        | 144/1150 [32:13<3:19:46, 11.92s/it]
+[isoCircles] B=8:  13%|█▎        | 152/1150 [33:48<3:18:22, 11.93s/it]
+[isoCircles] B=8:  13%|█▎        | 152/1150 [33:48<3:18:22, 11.93s/it]
+[isoCircles] B=8:  14%|█▍        | 160/1150 [35:24<3:16:55, 11.93s/it]
+[isoCircles] B=8:  14%|█▍        | 160/1150 [35:24<3:16:55, 11.93s/it]
+[isoCircles] B=8:  15%|█▍        | 168/1150 [37:00<3:15:25, 11.94s/it]
+[isoCircles] B=8:  15%|█▍        | 168/1150 [37:00<3:15:25, 11.94s/it]
+[isoCircles] B=8:  15%|█▌        | 176/1150 [38:35<3:13:59, 11.95s/it]
+[isoCircles] B=8:  15%|█▌        | 176/1150 [38:35<3:13:59, 11.95s/it]
+[isoCircles] B=8:  16%|█▌        | 184/1150 [40:12<3:12:47, 11.97s/it]
+[isoCircles] B=8:  16%|█▌        | 184/1150 [40:12<3:12:47, 11.97s/it]
+[isoCircles] B=8:  17%|█▋        | 192/1150 [41:48<3:11:16, 11.98s/it]
+[isoCircles] B=8:  17%|█▋        | 192/1150 [41:48<3:11:16, 11.98s/it]
+[isoCircles] B=8:  17%|█▋        | 200/1150 [43:24<3:09:57, 12.00s/it]
+[isoCircles] B=8:  17%|█▋        | 200/1150 [43:24<3:09:57, 12.00s/it]
+[isoCircles] B=8:  18%|█▊        | 208/1150 [45:01<3:08:45, 12.02s/it]
+[isoCircles] B=8:  18%|█▊        | 208/1150 [45:01<3:08:45, 12.02s/it]
+[isoCircles] B=8:  19%|█▉        | 216/1150 [46:37<3:07:19, 12.03s/it]
+[isoCircles] B=8:  19%|█▉        | 216/1150 [46:37<3:07:19, 12.03s/it]
+[isoCircles] B=8:  19%|█▉        | 224/1150 [48:14<3:06:05, 12.06s/it]
+[isoCircles] B=8:  19%|█▉        | 224/1150 [48:14<3:06:05, 12.06s/it]
+[isoCircles] B=8:  20%|██        | 232/1150 [49:51<3:04:46, 12.08s/it]
+[isoCircles] B=8:  20%|██        | 232/1150 [49:51<3:04:46, 12.08s/it]
+[isoCircles] B=8:  21%|██        | 240/1150 [51:28<3:03:24, 12.09s/it]
+[isoCircles] B=8:  21%|██        | 240/1150 [51:28<3:03:24, 12.09s/it]
+[isoCircles] B=8:  22%|██▏       | 248/1150 [53:05<3:01:54, 12.10s/it]
+[isoCircles] B=8:  22%|██▏       | 248/1150 [53:05<3:01:54, 12.10s/it]
+[isoCircles] B=8:  22%|██▏       | 256/1150 [54:42<3:00:37, 12.12s/it]
+[isoCircles] B=8:  22%|██▏       | 256/1150 [54:42<3:00:37, 12.12s/it]
+[isoCircles] B=8:  23%|██▎       | 264/1150 [56:20<2:59:17, 12.14s/it]
+[isoCircles] B=8:  23%|██▎       | 264/1150 [56:20<2:59:17, 12.14s/it]
+[isoCircles] B=8:  24%|██▎       | 272/1150 [57:57<2:57:43, 12.14s/it]
+[isoCircles] B=8:  24%|██▎       | 272/1150 [57:57<2:57:43, 12.14s/it]
+[isoCircles] B=8:  24%|██▍       | 280/1150 [59:35<2:56:21, 12.16s/it]
+[isoCircles] B=8:  24%|██▍       | 280/1150 [59:35<2:56:21, 12.16s/it]
+[isoCircles] B=8:  25%|██▌       | 288/1150 [1:01:12<2:54:46, 12.16s/it]
+[isoCircles] B=8:  25%|██▌       | 288/1150 [1:01:12<2:54:46, 12.16s/it]
+[isoCircles] B=8:  26%|██▌       | 296/1150 [1:02:58<2:57:49, 12.49s/it]
+[isoCircles] B=8:  26%|██▌       | 296/1150 [1:02:58<2:57:49, 12.49s/it]
+[isoCircles] B=8:  26%|██▋       | 304/1150 [1:04:45<2:58:00, 12.63s/it]
+[isoCircles] B=8:  26%|██▋       | 304/1150 [1:04:45<2:58:00, 12.63s/it]
+[isoCircles] B=8:  27%|██▋       | 312/1150 [1:06:23<2:56:47, 12.66s/it]
+[isoCircles] B=8:  27%|██▋       | 312/1150 [1:06:23<2:56:47, 12.66s/it]
+[isoCircles] B=8:  28%|██▊       | 320/1150 [1:08:02<2:53:31, 12.54s/it]
+[isoCircles] B=8:  28%|██▊       | 320/1150 [1:08:02<2:53:31, 12.54s/it]
+[isoCircles] B=8:  29%|██▊       | 328/1150 [1:09:48<2:55:02, 12.78s/it]
+[isoCircles] B=8:  29%|██▊       | 328/1150 [1:09:48<2:55:02, 12.78s/it]
+[isoCircles] B=8:  29%|██▉       | 336/1150 [1:11:29<2:52:26, 12.71s/it]
+[isoCircles] B=8:  29%|██▉       | 336/1150 [1:11:29<2:52:26, 12.71s/it]
+[isoCircles] B=8:  30%|██▉       | 344/1150 [1:13:07<2:49:05, 12.59s/it]
+[isoCircles] B=8:  30%|██▉       | 344/1150 [1:13:07<2:49:05, 12.59s/it]
+[isoCircles] B=8:  31%|███       | 352/1150 [1:14:45<2:46:14, 12.50s/it]
+[isoCircles] B=8:  31%|███       | 352/1150 [1:14:45<2:46:14, 12.50s/it]
+[isoCircles] B=8:  31%|███▏      | 360/1150 [1:16:24<2:43:59, 12.46s/it]
+[isoCircles] B=8:  31%|███▏      | 360/1150 [1:16:24<2:43:59, 12.46s/it]
+[isoCircles] B=8:  32%|███▏      | 368/1150 [1:18:03<2:41:45, 12.41s/it]
+[isoCircles] B=8:  32%|███▏      | 368/1150 [1:18:03<2:41:45, 12.41s/it]
+[isoCircles] B=8:  33%|███▎      | 376/1150 [1:19:41<2:39:52, 12.39s/it]
+[isoCircles] B=8:  33%|███▎      | 376/1150 [1:19:41<2:39:52, 12.39s/it]
+[isoCircles] B=8:  33%|███▎      | 384/1150 [1:21:20<2:38:08, 12.39s/it]
+[isoCircles] B=8:  33%|███▎      | 384/1150 [1:21:20<2:38:08, 12.39s/it]
+[isoCircles] B=8:  34%|███▍      | 392/1150 [1:23:00<2:36:33, 12.39s/it]
+[isoCircles] B=8:  34%|███▍      | 392/1150 [1:23:00<2:36:33, 12.39s/it]
+[isoCircles] B=8:  35%|███▍      | 400/1150 [1:24:39<2:34:51, 12.39s/it]
+[isoCircles] B=8:  35%|███▍      | 400/1150 [1:24:39<2:34:51, 12.39s/it]
+[isoCircles] B=8:  35%|███▌      | 408/1150 [1:26:17<2:33:02, 12.38s/it]
+[isoCircles] B=8:  35%|███▌      | 408/1150 [1:26:17<2:33:02, 12.38s/it]
+[isoCircles] B=8:  36%|███▌      | 416/1150 [1:27:56<2:31:22, 12.37s/it]
+[isoCircles] B=8:  36%|███▌      | 416/1150 [1:27:56<2:31:22, 12.37s/it]
+[isoCircles] B=8:  37%|███▋      | 424/1150 [1:29:36<2:30:03, 12.40s/it]
+[isoCircles] B=8:  37%|███▋      | 424/1150 [1:29:36<2:30:03, 12.40s/it]
+[isoCircles] B=8:  38%|███▊      | 432/1150 [1:31:16<2:28:36, 12.42s/it]
+[isoCircles] B=8:  38%|███▊      | 432/1150 [1:31:16<2:28:36, 12.42s/it]2025-09-12 09:39:50.951003: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:255] Failed to make cuFFT batched plan: 8
+2025-09-12 09:39:50.951073: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:322] Initialize Params: rank: 2 elem_count: 256 input_embed: 256 input_stride: 1 input_distance: 65536 output_embed: 256 output_stride: 1 output_distance: 33024 batch_count: 8
+2025-09-12 09:39:50.951081: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:331] Failed to initialize batched cufft plan with customized allocator: Failed to make cuFFT batched plan.
+E0912 09:39:51.473035 1774287 status_macros.cc:57] INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyObject_FastCallDictTstate
+	_PyObject_Call_Prepend
+	
+	PyObject_Call
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	PyObject_Call
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	
+	
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	
+	
+	
+	torch::autograd::Engine::evaluate_function(std::shared_ptr<torch::autograd::GraphTask>&, torch::autograd::Node*, torch::autograd::InputBuffer&, std::shared_ptr<torch::autograd::ReadyQueue> const&)
+	torch::autograd::Engine::thread_main(std::shared_ptr<torch::autograd::GraphTask> const&)
+	torch::autograd::Engine::thread_init(int, std::shared_ptr<torch::autograd::ReadyQueue> const&, bool)
+	
+	
+	
+	
+*** End stack trace ***
+
+E0912 09:39:51.473147 1774287 pjrt_stream_executor_client.cc:2839] Execution of replica 0 failed: INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 200, in pgd_attack_adam
+    loss.backward()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 307, in apply
+    return user_fn(self, *args)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 89, in backward
+    grad_in_jax, = vjp_jit(a_jax, grad_jax)
+jaxlib.xla_extension.XlaRuntimeError: INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+
+[isoCircles] B=8:  38%|███▊      | 432/1150 [1:31:50<2:32:37, 12.75s/it]
+
+[petals] B=8:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 09:43:12,805:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 09:43:12.805813 22847457670976 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:86: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:88: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+
+[petals] B=8:   1%|          | 8/1150 [02:18<5:29:50, 17.33s/it]
+[petals] B=8:   1%|          | 8/1150 [02:18<5:29:50, 17.33s/it]
+[petals] B=8:   1%|▏         | 16/1150 [03:53<4:26:34, 14.10s/it]
+[petals] B=8:   1%|▏         | 16/1150 [03:53<4:26:34, 14.10s/it]
+[petals] B=8:   2%|▏         | 24/1150 [05:28<4:05:51, 13.10s/it]
+[petals] B=8:   2%|▏         | 24/1150 [05:28<4:05:51, 13.10s/it]
+[petals] B=8:   3%|▎         | 32/1150 [07:03<3:54:55, 12.61s/it]
+[petals] B=8:   3%|▎         | 32/1150 [07:03<3:54:55, 12.61s/it]
+[petals] B=8:   3%|▎         | 40/1150 [08:39<3:48:56, 12.38s/it]
+[petals] B=8:   3%|▎         | 40/1150 [08:39<3:48:56, 12.38s/it]
+[petals] B=8:   4%|▍         | 48/1150 [10:14<3:44:05, 12.20s/it]
+[petals] B=8:   4%|▍         | 48/1150 [10:14<3:44:05, 12.20s/it]
+[petals] B=8:   5%|▍         | 56/1150 [11:48<3:40:21, 12.09s/it]
+[petals] B=8:   5%|▍         | 56/1150 [11:48<3:40:21, 12.09s/it]
+[petals] B=8:   6%|▌         | 64/1150 [13:23<3:37:37, 12.02s/it]
+[petals] B=8:   6%|▌         | 64/1150 [13:23<3:37:37, 12.02s/it]
+[petals] B=8:   6%|▋         | 72/1150 [14:59<3:35:29, 11.99s/it]
+[petals] B=8:   6%|▋         | 72/1150 [14:59<3:35:29, 11.99s/it]
+[petals] B=8:   7%|▋         | 80/1150 [16:34<3:33:25, 11.97s/it]
+[petals] B=8:   7%|▋         | 80/1150 [16:34<3:33:25, 11.97s/it]
+[petals] B=8:   8%|▊         | 88/1150 [18:09<3:31:30, 11.95s/it]
+[petals] B=8:   8%|▊         | 88/1150 [18:09<3:31:30, 11.95s/it]
+[petals] B=8:   8%|▊         | 96/1150 [19:45<3:29:40, 11.94s/it]
+[petals] B=8:   8%|▊         | 96/1150 [19:45<3:29:40, 11.94s/it]
+[petals] B=8:   9%|▉         | 104/1150 [21:20<3:28:12, 11.94s/it]
+[petals] B=8:   9%|▉         | 104/1150 [21:20<3:28:12, 11.94s/it]
+[petals] B=8:  10%|▉         | 112/1150 [22:56<3:26:38, 11.94s/it]
+[petals] B=8:  10%|▉         | 112/1150 [22:56<3:26:38, 11.94s/it]
+[petals] B=8:  10%|█         | 120/1150 [24:32<3:25:11, 11.95s/it]
+[petals] B=8:  10%|█         | 120/1150 [24:32<3:25:11, 11.95s/it]
+[petals] B=8:  11%|█         | 128/1150 [26:08<3:23:54, 11.97s/it]
+[petals] B=8:  11%|█         | 128/1150 [26:08<3:23:54, 11.97s/it]
+[petals] B=8:  12%|█▏        | 136/1150 [27:44<3:22:28, 11.98s/it]
+[petals] B=8:  12%|█▏        | 136/1150 [27:44<3:22:28, 11.98s/it]
+[petals] B=8:  13%|█▎        | 144/1150 [29:20<3:20:45, 11.97s/it]
+[petals] B=8:  13%|█▎        | 144/1150 [29:20<3:20:45, 11.97s/it]
+[petals] B=8:  13%|█▎        | 152/1150 [30:56<3:19:31, 12.00s/it]
+[petals] B=8:  13%|█▎        | 152/1150 [30:56<3:19:31, 12.00s/it]
+[petals] B=8:  14%|█▍        | 160/1150 [32:32<3:18:16, 12.02s/it]
+[petals] B=8:  14%|█▍        | 160/1150 [32:32<3:18:16, 12.02s/it]
+[petals] B=8:  15%|█▍        | 168/1150 [34:09<3:16:48, 12.03s/it]
+[petals] B=8:  15%|█▍        | 168/1150 [34:09<3:16:48, 12.03s/it]
+[petals] B=8:  15%|█▌        | 176/1150 [35:45<3:15:28, 12.04s/it]
+[petals] B=8:  15%|█▌        | 176/1150 [35:45<3:15:28, 12.04s/it]
+[petals] B=8:  16%|█▌        | 184/1150 [37:22<3:14:05, 12.05s/it]
+[petals] B=8:  16%|█▌        | 184/1150 [37:22<3:14:05, 12.05s/it]
+[petals] B=8:  17%|█▋        | 192/1150 [38:59<3:12:46, 12.07s/it]
+[petals] B=8:  17%|█▋        | 192/1150 [38:59<3:12:46, 12.07s/it]
+[petals] B=8:  17%|█▋        | 200/1150 [40:36<3:11:25, 12.09s/it]
+[petals] B=8:  17%|█▋        | 200/1150 [40:36<3:11:25, 12.09s/it]
+[petals] B=8:  18%|█▊        | 208/1150 [42:13<3:09:58, 12.10s/it]
+[petals] B=8:  18%|█▊        | 208/1150 [42:13<3:09:58, 12.10s/it]
+[petals] B=8:  19%|█▉        | 216/1150 [43:50<3:08:34, 12.11s/it]
+[petals] B=8:  19%|█▉        | 216/1150 [43:50<3:08:34, 12.11s/it]
+[petals] B=8:  19%|█▉        | 224/1150 [45:28<3:07:17, 12.14s/it]
+[petals] B=8:  19%|█▉        | 224/1150 [45:28<3:07:17, 12.14s/it]
+[petals] B=8:  20%|██        | 232/1150 [47:05<3:05:49, 12.15s/it]
+[petals] B=8:  20%|██        | 232/1150 [47:05<3:05:49, 12.15s/it]
+[petals] B=8:  21%|██        | 240/1150 [48:42<3:04:14, 12.15s/it]
+[petals] B=8:  21%|██        | 240/1150 [48:42<3:04:14, 12.15s/it]
+[petals] B=8:  22%|██▏       | 248/1150 [50:20<3:02:51, 12.16s/it]
+[petals] B=8:  22%|██▏       | 248/1150 [50:20<3:02:51, 12.16s/it]
+[petals] B=8:  22%|██▏       | 256/1150 [51:58<3:01:25, 12.18s/it]
+[petals] B=8:  22%|██▏       | 256/1150 [51:58<3:01:25, 12.18s/it]
+[petals] B=8:  23%|██▎       | 264/1150 [53:36<3:00:09, 12.20s/it]
+[petals] B=8:  23%|██▎       | 264/1150 [53:36<3:00:09, 12.20s/it]
+[petals] B=8:  24%|██▎       | 272/1150 [55:13<2:58:32, 12.20s/it]
+[petals] B=8:  24%|██▎       | 272/1150 [55:13<2:58:32, 12.20s/it]
+[petals] B=8:  24%|██▍       | 280/1150 [56:51<2:57:03, 12.21s/it]
+[petals] B=8:  24%|██▍       | 280/1150 [56:51<2:57:03, 12.21s/it]
+[petals] B=8:  25%|██▌       | 288/1150 [58:29<2:55:42, 12.23s/it]
+[petals] B=8:  25%|██▌       | 288/1150 [58:29<2:55:42, 12.23s/it]
+[petals] B=8:  26%|██▌       | 296/1150 [1:00:08<2:54:17, 12.25s/it]
+[petals] B=8:  26%|██▌       | 296/1150 [1:00:08<2:54:17, 12.25s/it]
+[petals] B=8:  26%|██▋       | 304/1150 [1:01:46<2:52:59, 12.27s/it]
+[petals] B=8:  26%|██▋       | 304/1150 [1:01:46<2:52:59, 12.27s/it]
+[petals] B=8:  27%|██▋       | 312/1150 [1:03:55<3:07:16, 13.41s/it]
+[petals] B=8:  27%|██▋       | 312/1150 [1:03:55<3:07:16, 13.41s/it]
+[petals] B=8:  28%|██▊       | 320/1150 [1:09:22<4:57:22, 21.50s/it]
+[petals] B=8:  28%|██▊       | 320/1150 [1:09:22<4:57:22, 21.50s/it]
+[petals] B=8:  29%|██▊       | 328/1150 [1:11:01<4:19:16, 18.93s/it]
+[petals] B=8:  29%|██▊       | 328/1150 [1:11:01<4:19:16, 18.93s/it]
+[petals] B=8:  29%|██▉       | 336/1150 [1:12:40<3:50:04, 16.96s/it]
+[petals] B=8:  29%|██▉       | 336/1150 [1:12:40<3:50:04, 16.96s/it]
+[petals] B=8:  30%|██▉       | 344/1150 [1:14:19<3:29:13, 15.58s/it]
+[petals] B=8:  30%|██▉       | 344/1150 [1:14:19<3:29:13, 15.58s/it]
+[petals] B=8:  31%|███       | 352/1150 [1:15:57<3:14:09, 14.60s/it]
+[petals] B=8:  31%|███       | 352/1150 [1:15:57<3:14:09, 14.60s/it]
+[petals] B=8:  31%|███▏      | 360/1150 [1:17:36<3:03:17, 13.92s/it]
+[petals] B=8:  31%|███▏      | 360/1150 [1:17:36<3:03:17, 13.92s/it]
+[petals] B=8:  32%|███▏      | 368/1150 [1:19:15<2:55:20, 13.45s/it]
+[petals] B=8:  32%|███▏      | 368/1150 [1:19:15<2:55:20, 13.45s/it]
+[petals] B=8:  33%|███▎      | 376/1150 [1:20:54<2:49:22, 13.13s/it]
+[petals] B=8:  33%|███▎      | 376/1150 [1:20:54<2:49:22, 13.13s/it]
+[petals] B=8:  33%|███▎      | 384/1150 [1:22:33<2:44:43, 12.90s/it]
+[petals] B=8:  33%|███▎      | 384/1150 [1:22:33<2:44:43, 12.90s/it]
+[petals] B=8:  34%|███▍      | 392/1150 [1:24:12<2:41:09, 12.76s/it]
+[petals] B=8:  34%|███▍      | 392/1150 [1:24:12<2:41:09, 12.76s/it]
+[petals] B=8:  35%|███▍      | 400/1150 [1:25:52<2:38:09, 12.65s/it]
+[petals] B=8:  35%|███▍      | 400/1150 [1:25:52<2:38:09, 12.65s/it]
+[petals] B=8:  35%|███▌      | 408/1150 [1:27:31<2:35:39, 12.59s/it]
+[petals] B=8:  35%|███▌      | 408/1150 [1:27:31<2:35:39, 12.59s/it]
+[petals] B=8:  36%|███▌      | 416/1150 [1:29:11<2:33:42, 12.56s/it]
+[petals] B=8:  36%|███▌      | 416/1150 [1:29:11<2:33:42, 12.56s/it]
+[petals] B=8:  37%|███▋      | 424/1150 [1:30:51<2:31:52, 12.55s/it]
+[petals] B=8:  37%|███▋      | 424/1150 [1:30:51<2:31:52, 12.55s/it]
+[petals] B=8:  38%|███▊      | 432/1150 [1:32:31<2:30:03, 12.54s/it]
+[petals] B=8:  38%|███▊      | 432/1150 [1:32:31<2:30:03, 12.54s/it]2025-09-12 11:15:56.521777: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:255] Failed to make cuFFT batched plan: 8
+2025-09-12 11:15:56.521876: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:322] Initialize Params: rank: 2 elem_count: 256 input_embed: 256 input_stride: 1 input_distance: 33024 output_embed: 256 output_stride: 1 output_distance: 65536 batch_count: 8
+2025-09-12 11:15:56.521886: E external/xla/xla/stream_executor/cuda/cuda_fft.cc:331] Failed to initialize batched cufft plan with customized allocator: Failed to make cuFFT batched plan.
+E0912 11:15:57.172686 2074270 status_macros.cc:57] INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyObject_FastCallDictTstate
+	_PyObject_Call_Prepend
+	
+	PyObject_Call
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	PyObject_Call
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	
+	
+	_PyEval_EvalFrameDefault
+	_PyFunction_Vectorcall
+	_PyEval_EvalFrameDefault
+	
+	
+	
+	torch::autograd::Engine::evaluate_function(std::shared_ptr<torch::autograd::GraphTask>&, torch::autograd::Node*, torch::autograd::InputBuffer&, std::shared_ptr<torch::autograd::ReadyQueue> const&)
+	torch::autograd::Engine::thread_main(std::shared_ptr<torch::autograd::GraphTask> const&)
+	torch::autograd::Engine::thread_init(int, std::shared_ptr<torch::autograd::ReadyQueue> const&, bool)
+	
+	
+	
+	
+*** End stack trace ***
+
+E0912 11:15:57.250300 2074270 pjrt_stream_executor_client.cc:2839] Execution of replica 0 failed: INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 342, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 298, in main
+    x_adv, y_all = system.pgd_attack_adam(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 200, in pgd_attack_adam
+    loss.backward()
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 307, in apply
+    return user_fn(self, *args)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py", line 89, in backward
+    grad_in_jax, = vjp_jit(a_jax, grad_jax)
+jaxlib.xla_extension.XlaRuntimeError: INTERNAL: RET_CHECK failure (external/xla/xla/backends/gpu/runtime/fft_thunk.cc:176) fft_plan != nullptr Failed to create cuFFT batched plan with scratch allocator
+
+[petals] B=8:  38%|███▊      | 432/1150 [1:33:09<2:34:50, 12.94s/it]
+
+[ringsCos] B=8:   0%|          | 0/1150 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+INFO:2025-09-12 11:23:10,682:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0912 11:23:10.682953 22387065595712 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dl  = jax.dlpack.to_dlpack(out_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:86: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:88: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dl)            # shares memory if possible  :contentReference[oaicite:1]{index=1}
+
+[ringsCos] B=8:   1%|          | 8/1150 [03:51<9:10:14, 28.91s/it]
+[ringsCos] B=8:   1%|          | 8/1150 [03:51<9:10:14, 28.91s/it]
+[ringsCos] B=8:   1%|▏         | 16/1150 [05:25<5:56:10, 18.84s/it]
+[ringsCos] B=8:   1%|▏         | 16/1150 [05:25<5:56:10, 18.84s/it]
+[ringsCos] B=8:   2%|▏         | 24/1150 [06:59<4:52:49, 15.60s/it]
+[ringsCos] B=8:   2%|▏         | 24/1150 [06:59<4:52:49, 15.60s/it]
+[ringsCos] B=8:   3%|▎         | 32/1150 [08:34<4:22:57, 14.11s/it]
+[ringsCos] B=8:   3%|▎         | 32/1150 [08:34<4:22:57, 14.11s/it]
+[ringsCos] B=8:   3%|▎         | 40/1150 [10:09<4:06:32, 13.33s/it]
+[ringsCos] B=8:   3%|▎         | 40/1150 [10:09<4:06:32, 13.33s/it]
+[ringsCos] B=8:   4%|▍         | 48/1150 [11:59<4:06:55, 13.44s/it]
+[ringsCos] B=8:   4%|▍         | 48/1150 [11:59<4:06:55, 13.44s/it]
+[ringsCos] B=8:   5%|▍         | 56/1150 [13:33<3:55:33, 12.92s/it]
+[ringsCos] B=8:   5%|▍         | 56/1150 [13:33<3:55:33, 12.92s/it]
+[ringsCos] B=8:   6%|▌         | 64/1150 [15:08<3:47:20, 12.56s/it]
+[ringsCos] B=8:   6%|▌         | 64/1150 [15:08<3:47:20, 12.56s/it]
+[ringsCos] B=8:   6%|▋         | 72/1150 [16:42<3:41:31, 12.33s/it]
+[ringsCos] B=8:   6%|▋         | 72/1150 [16:42<3:41:31, 12.33s/it]
+[ringsCos] B=8:   7%|▋         | 80/1150 [18:16<3:36:52, 12.16s/it]
+[ringsCos] B=8:   7%|▋         | 80/1150 [18:16<3:36:52, 12.16s/it]
+[ringsCos] B=8:   8%|▊         | 88/1150 [19:51<3:33:28, 12.06s/it]
+[ringsCos] B=8:   8%|▊         | 88/1150 [19:51<3:33:28, 12.06s/it]
+[ringsCos] B=8:   8%|▊         | 96/1150 [21:26<3:30:38, 11.99s/it]
+[ringsCos] B=8:   8%|▊         | 96/1150 [21:26<3:30:38, 11.99s/it]
+[ringsCos] B=8:   9%|▉         | 104/1150 [23:01<3:28:23, 11.95s/it]
+[ringsCos] B=8:   9%|▉         | 104/1150 [23:01<3:28:23, 11.95s/it]
+[ringsCos] B=8:  10%|▉         | 112/1150 [24:35<3:26:10, 11.92s/it]
+[ringsCos] B=8:  10%|▉         | 112/1150 [24:35<3:26:10, 11.92s/it]
+[ringsCos] B=8:  10%|█         | 120/1150 [26:11<3:24:33, 11.92s/it]
+[ringsCos] B=8:  10%|█         | 120/1150 [26:11<3:24:33, 11.92s/it]
+[ringsCos] B=8:  11%|█         | 128/1150 [27:46<3:22:59, 11.92s/it]
+[ringsCos] B=8:  11%|█         | 128/1150 [27:46<3:22:59, 11.92s/it]
+[ringsCos] B=8:  12%|█▏        | 136/1150 [29:21<3:21:21, 11.91s/it]
+[ringsCos] B=8:  12%|█▏        | 136/1150 [29:21<3:21:21, 11.91s/it]
+[ringsCos] B=8:  13%|█▎        | 144/1150 [30:57<3:19:58, 11.93s/it]
+[ringsCos] B=8:  13%|█▎        | 144/1150 [30:57<3:19:58, 11.93s/it]
+[ringsCos] B=8:  13%|█▎        | 152/1150 [32:33<3:18:31, 11.93s/it]
+[ringsCos] B=8:  13%|█▎        | 152/1150 [32:33<3:18:31, 11.93s/it]
+[ringsCos] B=8:  14%|█▍        | 160/1150 [34:08<3:16:59, 11.94s/it]
+[ringsCos] B=8:  14%|█▍        | 160/1150 [34:08<3:16:59, 11.94s/it]
+[ringsCos] B=8:  15%|█▍        | 168/1150 [35:44<3:15:38, 11.95s/it]
+[ringsCos] B=8:  15%|█▍        | 168/1150 [35:44<3:15:38, 11.95s/it]
+[ringsCos] B=8:  15%|█▌        | 176/1150 [37:20<3:14:12, 11.96s/it]
+[ringsCos] B=8:  15%|█▌        | 176/1150 [37:20<3:14:12, 11.96s/it]
+[ringsCos] B=8:  16%|█▌        | 184/1150 [38:56<3:12:37, 11.96s/it]
+[ringsCos] B=8:  16%|█▌        | 184/1150 [38:56<3:12:37, 11.96s/it]
+[ringsCos] B=8:  17%|█▋        | 192/1150 [40:32<3:11:10, 11.97s/it]
+[ringsCos] B=8:  17%|█▋        | 192/1150 [40:32<3:11:10, 11.97s/it]
+[ringsCos] B=8:  17%|█▋        | 200/1150 [42:08<3:09:40, 11.98s/it]
+[ringsCos] B=8:  17%|█▋        | 200/1150 [42:08<3:09:40, 11.98s/it]
+[ringsCos] B=8:  18%|█▊        | 208/1150 [43:44<3:08:22, 12.00s/it]
+[ringsCos] B=8:  18%|█▊        | 208/1150 [43:44<3:08:22, 12.00s/it]
+[ringsCos] B=8:  19%|█▉        | 216/1150 [45:20<3:07:04, 12.02s/it]
+[ringsCos] B=8:  19%|█▉        | 216/1150 [45:20<3:07:04, 12.02s/it]
+[ringsCos] B=8:  19%|█▉        | 224/1150 [46:57<3:05:49, 12.04s/it]
+[ringsCos] B=8:  19%|█▉        | 224/1150 [46:57<3:05:49, 12.04s/it]
+[ringsCos] B=8:  20%|██        | 232/1150 [48:34<3:04:31, 12.06s/it]
+[ringsCos] B=8:  20%|██        | 232/1150 [48:34<3:04:31, 12.06s/it]
+[ringsCos] B=8:  21%|██        | 240/1150 [50:11<3:03:00, 12.07s/it]
+[ringsCos] B=8:  21%|██        | 240/1150 [50:11<3:03:00, 12.07s/it]
+[ringsCos] B=8:  22%|██▏       | 248/1150 [51:48<3:01:38, 12.08s/it]
+[ringsCos] B=8:  22%|██▏       | 248/1150 [51:48<3:01:38, 12.08s/it]
+[ringsCos] B=8:  22%|██▏       | 256/1150 [53:25<3:00:10, 12.09s/it]
+[ringsCos] B=8:  22%|██▏       | 256/1150 [53:25<3:00:10, 12.09s/it]2025-09-12 12:21:07.717703: E external/xla/xla/service/slow_operation_alarm.cc:73] 
+********************************
+[Compiling module jit__lambda_] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+2025-09-12 12:21:34.894700: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 2m27.17720295s
+
+********************************
+[Compiling module jit__lambda_] Very slow compile? If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+********************************
+
+[ringsCos] B=8:  23%|██▎       | 264/1150 [1:01:03<6:18:54, 25.66s/it]
+[ringsCos] B=8:  23%|██▎       | 264/1150 [1:01:03<6:18:54, 25.66s/it]
+[ringsCos] B=8:  24%|██▎       | 272/1150 [1:02:42<5:16:48, 21.65s/it]
+[ringsCos] B=8:  24%|██▎       | 272/1150 [1:02:42<5:16:48, 21.65s/it]
+[ringsCos] B=8:  24%|██▍       | 280/1150 [1:04:26<4:36:17, 19.05s/it]
+[ringsCos] B=8:  24%|██▍       | 280/1150 [1:04:26<4:36:17, 19.05s/it]
+[ringsCos] B=8:  25%|██▌       | 288/1150 [1:06:22<4:14:25, 17.71s/it]
+[ringsCos] B=8:  25%|██▌       | 288/1150 [1:06:22<4:14:25, 17.71s/it]
+[ringsCos] B=8:  26%|██▌       | 296/1150 [1:08:00<3:48:36, 16.06s/it]
+[ringsCos] B=8:  26%|██▌       | 296/1150 [1:08:00<3:48:36, 16.06s/it]
+[ringsCos] B=8:  26%|██▋       | 304/1150 [1:09:38<3:30:27, 14.93s/it]
+[ringsCos] B=8:  26%|██▋       | 304/1150 [1:09:38<3:30:27, 14.93s/it]
+[ringsCos] B=8:  27%|██▋       | 312/1150 [1:11:16<3:17:06, 14.11s/it]
+[ringsCos] B=8:  27%|██▋       | 312/1150 [1:11:16<3:17:06, 14.11s/it]
+[ringsCos] B=8:  28%|██▊       | 320/1150 [1:12:54<3:07:29, 13.55s/it]
+[ringsCos] B=8:  28%|██▊       | 320/1150 [1:12:54<3:07:29, 13.55s/it]
+[ringsCos] B=8:  29%|██▊       | 328/1150 [1:14:32<3:00:17, 13.16s/it]
+[ringsCos] B=8:  29%|██▊       | 328/1150 [1:14:32<3:00:17, 13.16s/it]
+[ringsCos] B=8:  29%|██▉       | 336/1150 [1:16:09<2:54:45, 12.88s/it]
+[ringsCos] B=8:  29%|██▉       | 336/1150 [1:16:10<2:54:45, 12.88s/it]
+[ringsCos] B=8:  30%|██▉       | 344/1150 [1:17:48<2:50:40, 12.71s/it]
+[ringsCos] B=8:  30%|██▉       | 344/1150 [1:17:48<2:50:40, 12.71s/it]
+[ringsCos] B=8:  31%|███       | 352/1150 [1:19:27<2:47:33, 12.60s/it]
+[ringsCos] B=8:  31%|███       | 352/1150 [1:19:27<2:47:33, 12.60s/it]slurmstepd: error: *** JOB 12493601 ON c0901a-s15 CANCELLED AT 2025-09-12T12:43:04 ***

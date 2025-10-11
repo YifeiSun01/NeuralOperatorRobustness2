@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py", line 11, in <module>
+    pde_solver = HighPerformancePDESolver(nu=1e-5, device=device)
+NameError: name 'device' is not defined

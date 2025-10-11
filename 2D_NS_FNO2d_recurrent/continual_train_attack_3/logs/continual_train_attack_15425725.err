@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_3/continual_train_attack.py", line 211, in <module>
+    assert pretrained_path.exists(), f"预训练权重不存在: {pretrained_path}"
+AssertionError: 预训练权重不存在: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/saved_models/modes96_width80_epochs2000_Tin10_T10_batch2_2/NS_2d_FNO_model_epoch0010.pth

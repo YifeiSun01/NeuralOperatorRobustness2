@@ -1,0 +1,21 @@
+Adversarial Continued Training:   0%|          | 0/2000 [00:00<?, ?it/s]Adversarial Continued Training:   0%|          | 0/2000 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py", line 118, in <module>
+    adv_xx, yy_pde = attack_and_rollout_seq(xx, recurrent_model, pde_solver, Tout=T, cfg=attack_cfg)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 183, in attack_and_rollout_seq
+    x0_adv = attack_batch(x0, recurrent_model, pde_solver, cfg=cfg)  # (B,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 119, in attack_batch
+    input_batch, true_19 = _assemble_input_frames_from_pde(x_adv, pde_solver, mode_spec=cfg.mode_spec)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/PGD_attack_batch.py", line 48, in _assemble_input_frames_from_pde
+    seq = pde_solver.rollout_seconds(x0, T_required)         # (T+1,B,H,W) | (T+1,H,W)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/solver.py", line 128, in rollout_seconds
+    seq_tensor = JaxPDEWrapper.apply(x0.contiguous(), g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/solver.py", line 31, in forward
+    a_jax = jax.dlpack.from_dlpack(a_dlpack)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dlpack.py", line 289, in from_dlpack
+    return _legacy_from_dlpack(external_array, device, copy)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dlpack.py", line 203, in _legacy_from_dlpack
+    _arr = jnp.asarray(xla_client._xla.dlpack_managed_tensor_to_buffer(
+jaxlib.xla_extension.XlaRuntimeError: UNIMPLEMENTED: from_dlpack got array with non-default layout with minor-to-major dimensions (2,0,1), expected (2,1,0)
