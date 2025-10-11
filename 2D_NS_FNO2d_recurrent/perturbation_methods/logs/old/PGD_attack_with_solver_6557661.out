@@ -1,0 +1,68 @@
+c0900a-s25.ufhpc
+Wed Jul  2 02:26:31 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+Model device: cuda:0
+Input device: cuda:0
+================================================================
+norm:  2 epsilon:  25.6 ,  alpha:  0.01 ,  num_steps:  100
+x_adv.shape:  torch.Size([256, 256])
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 61.724617s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 32.555663s | 显存: 0.00 B
+  t=2s - 时间: 0.501038s | 显存: 0.00 B
+  t=3s - 时间: 0.572302s | 显存: 0.00 B
+  t=4s - 时间: 0.652929s | 显存: 0.00 B
+  t=5s - 时间: 0.739275s | 显存: 0.00 B
+  t=6s - 时间: 0.804206s | 显存: 0.00 B
+  t=7s - 时间: 0.897228s | 显存: 0.00 B
+  t=8s - 时间: 0.978732s | 显存: 0.00 B
+  t=9s - 时间: 1.045424s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.866143s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.866353s | 显存: 0.00 B
+
+[本步骤总计] 时间: 63.590970s | 显存: 4.12 GB
+orginal_loss:  tensor(2874.2017, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 0] Backward Propagation - Time: 26.4713s, Mem: -4405592064.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(5.5374, device='cuda:0')
+Autograd grad min:  tensor(-6.3897, device='cuda:0')
+Autograd grad mean:  tensor(0.2062, device='cuda:0')

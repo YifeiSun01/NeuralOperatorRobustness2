@@ -1,0 +1,31 @@
+c0909a-s25.ufhpc
+Sat Oct 11 06:10:52 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+初始化PDE求解器: nu=1e-05, device=cuda
+======================================== 参数配置 ========================================
+modes=96, width=80, epochs=500
+T_in=10, T=10, step=1
+ntrain=1000, ntest=100
+batch_size=20, learning_rate=0.001
+
+======================================== 路径配置 ========================================
+current_file_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/continual_train_attack.py
+pretrained_model_name=NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+pretrained_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+dataset_name=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+dataset_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/dataset/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+
+======================================== 设备与PDE solver ========================================
+device=cuda
+pde_solver=<solver.DifferentiablePDESolver object at 0x149af7298e20>
+
+======================================== 攻击配置 ========================================
+PGDAdamConfig(epsilon=524.288, alpha=100.0, num_steps=1, norm=2, beta1=0.9, beta2=0.999, adam_eps=1e-08, amsgrad=False, use_sign_for_linf=True, mode_spec='wwwwwwwwww', use_uniform_shift=True, uniform_shift_range=(-3.0, 3.0))
+
+======================================== 预训练加载状态 ========================================
+Loaded pretrained weights from: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+模型起始（base_epoch）= 0
+判定： 未检测到已训练轮次（可能是全新模型或未知），本次按全新开始（base_epoch=0）。
+（训练期间所有保存将使用 global_epoch = base_epoch + ep 命名）
+
+params: 943823441

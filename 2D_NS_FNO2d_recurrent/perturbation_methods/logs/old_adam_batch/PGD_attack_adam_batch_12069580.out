@@ -1,0 +1,3233 @@
+c0907a-s25.ufhpc
+Mon Sep  8 01:19:55 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+>>> Running SINGLE job with MODE_SPEC=wwwwwwwwww
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+======================================== 诊断结束 ========================================
+
+input_list: [{'norm': 2, 'epsilon': 13.1072, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 39.3216, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 78.6432, 'alpha': 1.0, 'num_steps': 100}]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 1.0, num_steps: 100, mode_spec: wwwwwwwwww, b1: 0.9, b2: 0.999, adam_eps: 1e-08, sign_Linf: True, amsgrad: False
+x_batch.shape: (5, 256, 256) batch start: 0 end: 5
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 91.483431s | 显存: 20.70 GB
+[PDE 部分] 总时间: 56.350874s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  39106.0
+[BWD ] Time: 12.371859s | Mem: -20.65 GB
+[UPDT] Time: 3.920765s | Mem: 10.50 MB
+[STEP] Total: 114.470331s | ΔMem: 42.25 MB | Peak: 33.79 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.622205s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.574890s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  46514.06640625
+[BWD ] Time: 6.221925s | Mem: -20.67 GB
+[UPDT] Time: 0.004249s | Mem: 0.00 B
+[STEP] Total: 9.109702s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.605437s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.558221s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  54545.7734375
+[BWD ] Time: 6.227911s | Mem: -20.67 GB
+[UPDT] Time: 0.004544s | Mem: 0.00 B
+[STEP] Total: 8.839002s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.614638s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.567496s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  62921.96875
+[BWD ] Time: 6.243678s | Mem: -20.67 GB
+[UPDT] Time: 0.004868s | Mem: 0.00 B
+[STEP] Total: 8.864373s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.603910s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.556820s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  71594.53125
+[BWD ] Time: 6.254384s | Mem: -20.67 GB
+[UPDT] Time: 0.005381s | Mem: 0.00 B
+[STEP] Total: 8.864971s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.610915s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.563278s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  80575.21875
+[BWD ] Time: 6.198227s | Mem: -20.67 GB
+[UPDT] Time: 0.004482s | Mem: 0.00 B
+[STEP] Total: 8.815821s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.612151s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.564725s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  89884.46875
+[BWD ] Time: 6.225941s | Mem: -20.67 GB
+[UPDT] Time: 0.004490s | Mem: 0.00 B
+[STEP] Total: 8.844581s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.702640s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.655424s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  99498.484375
+[BWD ] Time: 6.255606s | Mem: -20.67 GB
+[UPDT] Time: 0.005433s | Mem: 0.00 B
+[STEP] Total: 8.965649s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.593092s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.545675s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  109349.0
+[BWD ] Time: 6.195932s | Mem: -20.67 GB
+[UPDT] Time: 0.004709s | Mem: 0.00 B
+[STEP] Total: 8.795517s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.608109s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.560963s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  119350.09375
+[BWD ] Time: 6.221980s | Mem: -20.67 GB
+[UPDT] Time: 0.004239s | Mem: 0.00 B
+[STEP] Total: 8.835911s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.628831s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.581604s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  129445.78125
+[BWD ] Time: 6.348013s | Mem: -20.67 GB
+[UPDT] Time: 0.005044s | Mem: 0.00 B
+[STEP] Total: 8.983484s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.618233s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.571065s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  139596.203125
+[BWD ] Time: 6.171401s | Mem: -20.67 GB
+[UPDT] Time: 0.005050s | Mem: 0.00 B
+[STEP] Total: 8.796415s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.584870s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.537638s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149806.9375
+[BWD ] Time: 6.187553s | Mem: -20.67 GB
+[UPDT] Time: 0.004759s | Mem: 0.00 B
+[STEP] Total: 8.778496s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.598246s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.551035s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  160104.25
+[BWD ] Time: 6.312573s | Mem: -20.67 GB
+[UPDT] Time: 0.005137s | Mem: 0.00 B
+[STEP] Total: 8.917743s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.631935s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584627s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  168973.375
+[BWD ] Time: 6.241135s | Mem: -20.67 GB
+[UPDT] Time: 0.004998s | Mem: 0.00 B
+[STEP] Total: 8.879824s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 15] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.606167s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.559016s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  172860.0
+[BWD ] Time: 6.102997s | Mem: -20.67 GB
+[UPDT] Time: 0.004557s | Mem: 0.00 B
+[STEP] Total: 8.715366s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 16] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.608496s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.561140s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  175580.25
+[BWD ] Time: 6.159447s | Mem: -20.67 GB
+[UPDT] Time: 0.005099s | Mem: 0.00 B
+[STEP] Total: 8.775223s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 17] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.616903s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.569542s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  177944.0
+[BWD ] Time: 6.264289s | Mem: -20.67 GB
+[UPDT] Time: 0.004835s | Mem: 0.00 B
+[STEP] Total: 8.887537s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 18] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.756763s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.709572s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  179959.796875
+[BWD ] Time: 6.204287s | Mem: -20.67 GB
+[UPDT] Time: 0.005007s | Mem: 0.00 B
+[STEP] Total: 8.967870s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 19] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.614546s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.567343s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  181713.84375
+[BWD ] Time: 6.165824s | Mem: -20.67 GB
+[UPDT] Time: 0.005002s | Mem: 0.00 B
+[STEP] Total: 8.787267s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 20] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.605942s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.558632s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  183265.859375
+[BWD ] Time: 6.160575s | Mem: -20.67 GB
+[UPDT] Time: 0.004931s | Mem: 0.00 B
+[STEP] Total: 8.772851s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 21] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.599470s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.552353s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  184692.0625
+[BWD ] Time: 6.200481s | Mem: -20.67 GB
+[UPDT] Time: 0.005189s | Mem: 0.00 B
+[STEP] Total: 8.807047s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 22] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.846293s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.798873s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  186000.375
+[BWD ] Time: 6.249700s | Mem: -20.67 GB
+[UPDT] Time: 0.004961s | Mem: 0.00 B
+[STEP] Total: 9.103094s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 23] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.791408s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.744121s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  187213.59375
+[BWD ] Time: 6.136181s | Mem: -20.67 GB
+[UPDT] Time: 0.004502s | Mem: 0.00 B
+[STEP] Total: 8.934142s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 24] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.597172s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.550051s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  188344.859375
+[BWD ] Time: 6.122596s | Mem: -20.67 GB
+[UPDT] Time: 0.004988s | Mem: 0.00 B
+[STEP] Total: 8.726325s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 25] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.582838s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.535610s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  189380.65625
+[BWD ] Time: 6.153399s | Mem: -20.67 GB
+[UPDT] Time: 0.004728s | Mem: 0.00 B
+[STEP] Total: 8.742221s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 26] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.596146s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.548990s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  190333.5625
+[BWD ] Time: 6.187137s | Mem: -20.67 GB
+[UPDT] Time: 0.005058s | Mem: 0.00 B
+[STEP] Total: 8.790376s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 27] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.615008s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.567790s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  191197.859375
+[BWD ] Time: 6.264730s | Mem: -20.67 GB
+[UPDT] Time: 0.004628s | Mem: 0.00 B
+[STEP] Total: 8.886014s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 28] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.614212s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.566932s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  191973.28125
+[BWD ] Time: 6.218334s | Mem: -20.67 GB
+[UPDT] Time: 0.005191s | Mem: 0.00 B
+[STEP] Total: 8.839367s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 29] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.869177s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.821890s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  192675.90625
+[BWD ] Time: 6.258924s | Mem: -20.67 GB
+[UPDT] Time: 0.005431s | Mem: 0.00 B
+[STEP] Total: 9.135795s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 30] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.641999s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.594505s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  193304.875
+[BWD ] Time: 6.221764s | Mem: -20.67 GB
+[UPDT] Time: 0.005353s | Mem: 0.00 B
+[STEP] Total: 8.870989s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 31] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.613199s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.565827s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  193859.875
+[BWD ] Time: 6.208508s | Mem: -20.67 GB
+[UPDT] Time: 0.005075s | Mem: 0.00 B
+[STEP] Total: 8.828868s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 32] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649647s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602206s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  194353.828125
+[BWD ] Time: 6.276508s | Mem: -20.67 GB
+[UPDT] Time: 0.005537s | Mem: 0.00 B
+[STEP] Total: 8.934018s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 33] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.830828s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.783420s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  194785.375
+[BWD ] Time: 6.248571s | Mem: -20.67 GB
+[UPDT] Time: 0.005052s | Mem: 0.00 B
+[STEP] Total: 9.086281s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 34] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633398s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.586101s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  195168.90625
+[BWD ] Time: 6.256676s | Mem: -20.67 GB
+[UPDT] Time: 0.004903s | Mem: 0.00 B
+[STEP] Total: 8.896922s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 35] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644537s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.597370s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  195516.1875
+[BWD ] Time: 6.252419s | Mem: -20.67 GB
+[UPDT] Time: 0.004694s | Mem: 0.00 B
+[STEP] Total: 8.903999s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 36] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.936280s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.888698s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  195827.453125
+[BWD ] Time: 6.214855s | Mem: -20.67 GB
+[UPDT] Time: 0.005110s | Mem: 0.00 B
+[STEP] Total: 9.158015s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 37] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.618492s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.571147s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  196116.875
+[BWD ] Time: 6.277531s | Mem: -20.67 GB
+[UPDT] Time: 0.005323s | Mem: 0.00 B
+[STEP] Total: 8.903486s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 38] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.646671s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.599313s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  196362.421875
+[BWD ] Time: 6.276245s | Mem: -20.67 GB
+[UPDT] Time: 0.004921s | Mem: 0.00 B
+[STEP] Total: 8.930305s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 39] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.643047s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.595509s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  196587.859375
+[BWD ] Time: 6.263991s | Mem: -20.67 GB
+[UPDT] Time: 0.004962s | Mem: 0.00 B
+[STEP] Total: 8.913761s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 40] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.650470s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603081s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  196791.75
+[BWD ] Time: 6.163362s | Mem: -20.67 GB
+[UPDT] Time: 0.004901s | Mem: 0.00 B
+[STEP] Total: 8.820796s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 41] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.634627s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.587295s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  196972.9375
+[BWD ] Time: 6.241431s | Mem: -20.67 GB
+[UPDT] Time: 0.005012s | Mem: 0.00 B
+[STEP] Total: 8.883473s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 42] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.629959s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.582367s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197132.0625
+[BWD ] Time: 6.230594s | Mem: -20.67 GB
+[UPDT] Time: 0.005168s | Mem: 0.00 B
+[STEP] Total: 8.867599s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 43] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648770s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.601436s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197277.5625
+[BWD ] Time: 6.231988s | Mem: -20.67 GB
+[UPDT] Time: 0.005012s | Mem: 0.00 B
+[STEP] Total: 8.887826s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 44] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.975053s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.927703s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197405.15625
+[BWD ] Time: 6.137792s | Mem: -20.67 GB
+[UPDT] Time: 0.005026s | Mem: 0.00 B
+[STEP] Total: 9.120097s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 45] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653598s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.606270s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197530.125
+[BWD ] Time: 6.237390s | Mem: -20.67 GB
+[UPDT] Time: 0.005339s | Mem: 0.00 B
+[STEP] Total: 8.898177s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 46] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.646483s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.598995s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197637.28125
+[BWD ] Time: 6.168135s | Mem: -20.67 GB
+[UPDT] Time: 0.005012s | Mem: 0.00 B
+[STEP] Total: 8.821649s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 47] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633199s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585872s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197733.6875
+[BWD ] Time: 6.259025s | Mem: -20.67 GB
+[UPDT] Time: 0.005207s | Mem: 0.00 B
+[STEP] Total: 8.899800s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 48] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.608675s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.561361s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197838.046875
+[BWD ] Time: 6.177327s | Mem: -20.67 GB
+[UPDT] Time: 0.005084s | Mem: 0.00 B
+[STEP] Total: 8.792988s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 49] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.625568s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.578039s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197926.140625
+[BWD ] Time: 6.235919s | Mem: -20.67 GB
+[UPDT] Time: 0.004965s | Mem: 0.00 B
+[STEP] Total: 8.868237s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 50] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.629634s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.582312s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198015.1875
+[BWD ] Time: 6.209523s | Mem: -20.67 GB
+[UPDT] Time: 0.005007s | Mem: 0.00 B
+[STEP] Total: 8.846462s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 51] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.637448s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.590114s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198100.78125
+[BWD ] Time: 6.308572s | Mem: -20.67 GB
+[UPDT] Time: 0.005129s | Mem: 0.00 B
+[STEP] Total: 8.953286s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 52] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.619685s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.572340s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198177.421875
+[BWD ] Time: 6.240874s | Mem: -20.67 GB
+[UPDT] Time: 0.004878s | Mem: 0.00 B
+[STEP] Total: 8.867226s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 53] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632179s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584711s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198251.4375
+[BWD ] Time: 6.551817s | Mem: -20.67 GB
+[UPDT] Time: 0.004833s | Mem: 0.00 B
+[STEP] Total: 9.190945s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 54] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.636434s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589134s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198322.15625
+[BWD ] Time: 6.248223s | Mem: -20.67 GB
+[UPDT] Time: 0.005124s | Mem: 0.00 B
+[STEP] Total: 8.892114s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 55] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.654491s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.607118s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198383.03125
+[BWD ] Time: 6.135601s | Mem: -20.67 GB
+[UPDT] Time: 0.004767s | Mem: 0.00 B
+[STEP] Total: 8.796873s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 56] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.615670s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.568153s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198430.484375
+[BWD ] Time: 6.242404s | Mem: -20.67 GB
+[UPDT] Time: 0.005032s | Mem: 0.00 B
+[STEP] Total: 8.864891s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 57] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.622955s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.575642s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198474.15625
+[BWD ] Time: 6.196823s | Mem: -20.67 GB
+[UPDT] Time: 0.005078s | Mem: 0.00 B
+[STEP] Total: 8.826920s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 58] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.645099s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.597740s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198515.28125
+[BWD ] Time: 6.228484s | Mem: -20.67 GB
+[UPDT] Time: 0.005222s | Mem: 0.00 B
+[STEP] Total: 8.881263s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 59] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.630620s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.583199s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198545.984375
+[BWD ] Time: 6.284102s | Mem: -20.67 GB
+[UPDT] Time: 0.004981s | Mem: 0.00 B
+[STEP] Total: 8.921661s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 60] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.646825s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.599354s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198572.890625
+[BWD ] Time: 6.161838s | Mem: -20.67 GB
+[UPDT] Time: 0.005012s | Mem: 0.00 B
+[STEP] Total: 8.815465s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 61] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.636606s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589202s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198598.75
+[BWD ] Time: 6.217812s | Mem: -20.67 GB
+[UPDT] Time: 0.004579s | Mem: 0.00 B
+[STEP] Total: 8.861080s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 62] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.638233s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.590881s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198609.875
+[BWD ] Time: 6.218408s | Mem: -20.67 GB
+[UPDT] Time: 0.005084s | Mem: 0.00 B
+[STEP] Total: 8.864115s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 63] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652592s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605233s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198625.234375
+[BWD ] Time: 6.282450s | Mem: -20.67 GB
+[UPDT] Time: 0.005057s | Mem: 0.00 B
+[STEP] Total: 8.941953s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 64] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.643121s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.595586s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198640.8125
+[BWD ] Time: 6.749076s | Mem: -20.67 GB
+[UPDT] Time: 0.005126s | Mem: 0.00 B
+[STEP] Total: 9.399123s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 65] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660597s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613246s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198640.875
+[BWD ] Time: 6.221936s | Mem: -20.67 GB
+[UPDT] Time: 0.004885s | Mem: 0.00 B
+[STEP] Total: 8.889554s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 66] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.628878s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.581555s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198638.6875
+[BWD ] Time: 6.272504s | Mem: -20.67 GB
+[UPDT] Time: 0.005274s | Mem: 0.00 B
+[STEP] Total: 8.909149s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 67] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644040s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596599s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198637.59375
+[BWD ] Time: 6.175749s | Mem: -20.67 GB
+[UPDT] Time: 0.005128s | Mem: 0.00 B
+[STEP] Total: 8.826858s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 68] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.620394s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.572891s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198633.03125
+[BWD ] Time: 6.182286s | Mem: -20.67 GB
+[UPDT] Time: 0.004797s | Mem: 0.00 B
+[STEP] Total: 8.809287s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 69] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.624656s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.577314s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198619.4375
+[BWD ] Time: 6.301740s | Mem: -20.67 GB
+[UPDT] Time: 0.005131s | Mem: 0.00 B
+[STEP] Total: 8.933992s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 70] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.627511s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.580168s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198618.21875
+[BWD ] Time: 6.234503s | Mem: -20.67 GB
+[UPDT] Time: 0.005226s | Mem: 0.00 B
+[STEP] Total: 8.869431s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 71] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632154s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584729s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198604.015625
+[BWD ] Time: 6.193773s | Mem: -20.67 GB
+[UPDT] Time: 0.005014s | Mem: 0.00 B
+[STEP] Total: 8.832742s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 72] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649764s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602381s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198586.4375
+[BWD ] Time: 6.254578s | Mem: -20.67 GB
+[UPDT] Time: 0.005074s | Mem: 0.00 B
+[STEP] Total: 8.912523s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 73] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659076s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.611704s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198564.84375
+[BWD ] Time: 6.220765s | Mem: -20.67 GB
+[UPDT] Time: 0.004830s | Mem: 0.00 B
+[STEP] Total: 8.886723s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 74] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.592421s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.545076s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198550.453125
+[BWD ] Time: 6.233154s | Mem: -20.67 GB
+[UPDT] Time: 0.005089s | Mem: 0.00 B
+[STEP] Total: 8.832474s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 75] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.618532s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.571093s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198525.3125
+[BWD ] Time: 6.281067s | Mem: -20.67 GB
+[UPDT] Time: 0.005064s | Mem: 0.00 B
+[STEP] Total: 8.906458s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 76] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.662332s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.614986s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198502.78125
+[BWD ] Time: 6.253691s | Mem: -20.67 GB
+[UPDT] Time: 0.004720s | Mem: 0.00 B
+[STEP] Total: 8.922862s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 77] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.658460s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.610935s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198476.40625
+[BWD ] Time: 6.831495s | Mem: -20.67 GB
+[UPDT] Time: 0.005096s | Mem: 0.00 B
+[STEP] Total: 9.497436s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 78] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648202s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.600879s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198450.25
+[BWD ] Time: 6.258369s | Mem: -20.67 GB
+[UPDT] Time: 0.005322s | Mem: 0.00 B
+[STEP] Total: 8.913687s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 79] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644283s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596734s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198421.34375
+[BWD ] Time: 6.184752s | Mem: -20.67 GB
+[UPDT] Time: 0.004907s | Mem: 0.00 B
+[STEP] Total: 8.835745s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 80] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.628532s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.581217s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198383.265625
+[BWD ] Time: 6.254220s | Mem: -20.67 GB
+[UPDT] Time: 0.004835s | Mem: 0.00 B
+[STEP] Total: 8.889719s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 81] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651513s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604124s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198350.765625
+[BWD ] Time: 6.254184s | Mem: -20.67 GB
+[UPDT] Time: 0.005069s | Mem: 0.00 B
+[STEP] Total: 8.913090s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 82] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.629596s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.582189s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198313.21875
+[BWD ] Time: 6.278979s | Mem: -20.67 GB
+[UPDT] Time: 0.005384s | Mem: 0.00 B
+[STEP] Total: 8.915786s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 83] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.626646s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.579234s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198278.375
+[BWD ] Time: 6.277435s | Mem: -20.67 GB
+[UPDT] Time: 0.005092s | Mem: 0.00 B
+[STEP] Total: 8.910939s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 84] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.634653s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.587360s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198238.0
+[BWD ] Time: 6.257824s | Mem: -20.67 GB
+[UPDT] Time: 0.005115s | Mem: 0.00 B
+[STEP] Total: 8.899899s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 85] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.647990s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.600645s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198201.890625
+[BWD ] Time: 6.250748s | Mem: -20.67 GB
+[UPDT] Time: 0.005068s | Mem: 0.00 B
+[STEP] Total: 8.906075s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 86] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.610192s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.562833s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198160.625
+[BWD ] Time: 6.194326s | Mem: -20.67 GB
+[UPDT] Time: 0.005248s | Mem: 0.00 B
+[STEP] Total: 8.811673s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 87] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648692s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.601169s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198114.859375
+[BWD ] Time: 6.284089s | Mem: -20.67 GB
+[UPDT] Time: 0.005077s | Mem: 0.00 B
+[STEP] Total: 8.939643s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 88] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.629894s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.582453s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198078.109375
+[BWD ] Time: 6.259915s | Mem: -20.67 GB
+[UPDT] Time: 0.004769s | Mem: 0.00 B
+[STEP] Total: 8.897715s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 89] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.637247s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589863s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  198024.96875
+[BWD ] Time: 6.253168s | Mem: -20.67 GB
+[UPDT] Time: 0.004719s | Mem: 0.00 B
+[STEP] Total: 8.897153s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 90] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.623950s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.576620s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197980.328125
+[BWD ] Time: 6.220112s | Mem: -20.67 GB
+[UPDT] Time: 0.004991s | Mem: 0.00 B
+[STEP] Total: 8.850912s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 91] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.625091s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.577568s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197936.265625
+[BWD ] Time: 6.280837s | Mem: -20.67 GB
+[UPDT] Time: 0.005023s | Mem: 0.00 B
+[STEP] Total: 8.912747s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 92] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644875s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.597528s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197884.5
+[BWD ] Time: 6.276514s | Mem: -20.67 GB
+[UPDT] Time: 0.005036s | Mem: 0.00 B
+[STEP] Total: 8.928549s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 93] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651671s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604322s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197835.96875
+[BWD ] Time: 6.978884s | Mem: -20.67 GB
+[UPDT] Time: 0.005211s | Mem: 0.00 B
+[STEP] Total: 9.638171s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 94] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.626838s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.579529s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197787.890625
+[BWD ] Time: 6.275354s | Mem: -20.67 GB
+[UPDT] Time: 0.004982s | Mem: 0.00 B
+[STEP] Total: 8.909091s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 95] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640932s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593375s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197735.921875
+[BWD ] Time: 6.276321s | Mem: -20.67 GB
+[UPDT] Time: 0.005322s | Mem: 0.00 B
+[STEP] Total: 8.924356s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 96] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.631632s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584287s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197687.15625
+[BWD ] Time: 6.226474s | Mem: -20.67 GB
+[UPDT] Time: 0.005197s | Mem: 0.00 B
+[STEP] Total: 8.865275s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 97] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.613970s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.566520s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197627.0
+[BWD ] Time: 6.262233s | Mem: -20.67 GB
+[UPDT] Time: 0.004727s | Mem: 0.00 B
+[STEP] Total: 8.883133s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 98] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.620222s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.572820s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197576.8125
+[BWD ] Time: 6.278701s | Mem: -20.67 GB
+[UPDT] Time: 0.004996s | Mem: 0.00 B
+[STEP] Total: 8.905916s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 99] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.634685s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.587372s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  197528.1875
+[BWD ] Time: 6.242036s | Mem: -20.67 GB
+[UPDT] Time: 0.005191s | Mem: 0.00 B
+[STEP] Total: 8.883734s | ΔMem: 0.00 B | Peak: 33.82 GB
+x_batch.shape: (5, 256, 256) batch start: 5 end: 10
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.655814s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602584s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  56862.1875
+[BWD ] Time: 6.203750s | Mem: -20.66 GB
+[UPDT] Time: 0.003544s | Mem: 10.50 MB
+[STEP] Total: 8.864520s | ΔMem: 26.00 MB | Peak: 33.80 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.619796s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.572432s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  64875.1875
+[BWD ] Time: 6.222897s | Mem: -20.66 GB
+[UPDT] Time: 0.004504s | Mem: 0.00 B
+[STEP] Total: 8.849141s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.665814s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.618438s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  73070.203125
+[BWD ] Time: 6.202183s | Mem: -20.67 GB
+[UPDT] Time: 0.004010s | Mem: 0.00 B
+[STEP] Total: 8.874049s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.624222s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.576859s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  81563.28125
+[BWD ] Time: 6.256873s | Mem: -20.67 GB
+[UPDT] Time: 0.004083s | Mem: 0.00 B
+[STEP] Total: 8.886960s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.662069s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.614710s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  90750.671875
+[BWD ] Time: 6.220268s | Mem: -20.67 GB
+[UPDT] Time: 0.004480s | Mem: 0.00 B
+[STEP] Total: 8.888567s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.623849s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.576291s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  100562.484375
+[BWD ] Time: 6.242321s | Mem: -20.67 GB
+[UPDT] Time: 0.004044s | Mem: 0.00 B
+[STEP] Total: 8.872431s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.672803s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.625378s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  110994.984375
+[BWD ] Time: 6.259242s | Mem: -20.67 GB
+[UPDT] Time: 0.003864s | Mem: 0.00 B
+[STEP] Total: 8.938023s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.628793s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.581439s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  122125.9609375
+[BWD ] Time: 6.176223s | Mem: -20.67 GB
+[UPDT] Time: 0.004414s | Mem: 0.00 B
+[STEP] Total: 8.811428s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652054s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604692s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133839.71875
+[BWD ] Time: 6.246241s | Mem: -20.67 GB
+[UPDT] Time: 0.003879s | Mem: 0.00 B
+[STEP] Total: 8.904277s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.650723s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603127s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  146004.28125
+[BWD ] Time: 6.233279s | Mem: -20.67 GB
+[UPDT] Time: 0.004400s | Mem: 0.00 B
+[STEP] Total: 8.890567s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651489s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604055s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  158499.65625
+[BWD ] Time: 6.307897s | Mem: -20.67 GB
+[UPDT] Time: 0.004315s | Mem: 0.00 B
+[STEP] Total: 8.965947s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656406s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609084s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  171235.21875
+[BWD ] Time: 6.231257s | Mem: -20.67 GB
+[UPDT] Time: 0.004175s | Mem: 0.00 B
+[STEP] Total: 8.893615s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681642s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.634278s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  184095.3125
+[BWD ] Time: 6.261434s | Mem: -20.67 GB
+[UPDT] Time: 0.003648s | Mem: 0.00 B
+[STEP] Total: 8.948716s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660366s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612786s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  196961.09375
+[BWD ] Time: 6.226890s | Mem: -20.67 GB
+[UPDT] Time: 0.003989s | Mem: 0.00 B
+[STEP] Total: 8.893438s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.669829s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622465s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  209760.125
+[BWD ] Time: 6.226324s | Mem: -20.67 GB
+[UPDT] Time: 0.004112s | Mem: 0.00 B
+[STEP] Total: 8.902357s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 15] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.687342s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.639990s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  216111.90625
+[BWD ] Time: 6.272453s | Mem: -20.67 GB
+[UPDT] Time: 0.003833s | Mem: 0.00 B
+[STEP] Total: 8.965449s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 16] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.663489s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.616119s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  217951.953125
+[BWD ] Time: 6.211807s | Mem: -20.67 GB
+[UPDT] Time: 0.004124s | Mem: 0.00 B
+[STEP] Total: 8.881446s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 17] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.655263s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.607904s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  219645.65625
+[BWD ] Time: 6.259525s | Mem: -20.67 GB
+[UPDT] Time: 0.004356s | Mem: 0.00 B
+[STEP] Total: 8.921221s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 18] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653689s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.606058s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  221261.15625
+[BWD ] Time: 6.248226s | Mem: -20.67 GB
+[UPDT] Time: 0.003785s | Mem: 0.00 B
+[STEP] Total: 8.907772s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 19] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671694s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624341s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  222753.8125
+[BWD ] Time: 7.231215s | Mem: -20.67 GB
+[UPDT] Time: 0.003910s | Mem: 0.00 B
+[STEP] Total: 9.909036s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 20] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.634008s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.586640s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  224093.46875
+[BWD ] Time: 6.247878s | Mem: -20.67 GB
+[UPDT] Time: 0.003712s | Mem: 0.00 B
+[STEP] Total: 8.887437s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 21] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.631786s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584406s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  225263.25
+[BWD ] Time: 6.238024s | Mem: -20.67 GB
+[UPDT] Time: 0.004177s | Mem: 0.00 B
+[STEP] Total: 8.876124s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 22] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.646949s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.599378s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  226248.859375
+[BWD ] Time: 6.266575s | Mem: -20.67 GB
+[UPDT] Time: 0.004423s | Mem: 0.00 B
+[STEP] Total: 8.919953s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 23] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659759s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612348s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  227101.59375
+[BWD ] Time: 6.191410s | Mem: -20.67 GB
+[UPDT] Time: 0.004027s | Mem: 0.00 B
+[STEP] Total: 8.857806s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 24] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.661287s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613941s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  227850.796875
+[BWD ] Time: 6.255477s | Mem: -20.67 GB
+[UPDT] Time: 0.003661s | Mem: 0.00 B
+[STEP] Total: 8.922336s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 25] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657683s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.610318s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  228512.125
+[BWD ] Time: 6.279693s | Mem: -20.67 GB
+[UPDT] Time: 0.004402s | Mem: 0.00 B
+[STEP] Total: 8.943976s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 26] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.664521s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.616931s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229109.484375
+[BWD ] Time: 6.224511s | Mem: -20.67 GB
+[UPDT] Time: 0.004571s | Mem: 0.00 B
+[STEP] Total: 8.895631s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 27] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632540s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585130s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229659.0
+[BWD ] Time: 6.293202s | Mem: -20.67 GB
+[UPDT] Time: 0.004130s | Mem: 0.00 B
+[STEP] Total: 8.932134s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 28] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.664381s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.617027s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230152.25
+[BWD ] Time: 6.201495s | Mem: -20.67 GB
+[UPDT] Time: 0.003930s | Mem: 0.00 B
+[STEP] Total: 8.871807s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 29] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.629263s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.581791s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230586.171875
+[BWD ] Time: 6.270150s | Mem: -20.67 GB
+[UPDT] Time: 0.003966s | Mem: 0.00 B
+[STEP] Total: 8.905264s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 30] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.668544s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.621199s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230963.875
+[BWD ] Time: 6.232483s | Mem: -20.67 GB
+[UPDT] Time: 0.004429s | Mem: 0.00 B
+[STEP] Total: 8.907617s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 31] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.635850s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.588277s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231290.09375
+[BWD ] Time: 6.165711s | Mem: -20.67 GB
+[UPDT] Time: 0.004224s | Mem: 0.00 B
+[STEP] Total: 8.807817s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 32] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.682709s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.635294s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231578.453125
+[BWD ] Time: 6.238054s | Mem: -20.67 GB
+[UPDT] Time: 0.004086s | Mem: 0.00 B
+[STEP] Total: 8.927687s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 33] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.637927s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.590517s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231830.59375
+[BWD ] Time: 6.246539s | Mem: -20.67 GB
+[UPDT] Time: 0.003840s | Mem: 0.00 B
+[STEP] Total: 8.890245s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 34] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666807s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619499s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232058.875
+[BWD ] Time: 6.220632s | Mem: -20.67 GB
+[UPDT] Time: 0.003900s | Mem: 0.00 B
+[STEP] Total: 8.893114s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 35] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640645s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593253s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232269.953125
+[BWD ] Time: 6.260813s | Mem: -20.67 GB
+[UPDT] Time: 0.004291s | Mem: 0.00 B
+[STEP] Total: 8.907758s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 36] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633151s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585538s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232454.125
+[BWD ] Time: 6.239534s | Mem: -20.67 GB
+[UPDT] Time: 0.004462s | Mem: 0.00 B
+[STEP] Total: 8.879392s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 37] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.642382s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.595004s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232613.3125
+[BWD ] Time: 6.216675s | Mem: -20.67 GB
+[UPDT] Time: 0.004130s | Mem: 0.00 B
+[STEP] Total: 8.865551s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 38] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.637365s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589997s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232750.1875
+[BWD ] Time: 6.297313s | Mem: -20.67 GB
+[UPDT] Time: 0.004280s | Mem: 0.00 B
+[STEP] Total: 8.940913s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 39] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.673054s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.625684s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232866.578125
+[BWD ] Time: 6.259825s | Mem: -20.67 GB
+[UPDT] Time: 0.004709s | Mem: 0.00 B
+[STEP] Total: 8.939813s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 40] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.625288s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.577732s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232971.75
+[BWD ] Time: 6.234072s | Mem: -20.67 GB
+[UPDT] Time: 0.004098s | Mem: 0.00 B
+[STEP] Total: 8.865546s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 41] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.676111s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.628709s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233058.484375
+[BWD ] Time: 7.473771s | Mem: -20.67 GB
+[UPDT] Time: 0.004279s | Mem: 0.00 B
+[STEP] Total: 10.156523s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 42] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651142s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603758s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233135.484375
+[BWD ] Time: 6.310755s | Mem: -20.67 GB
+[UPDT] Time: 0.004276s | Mem: 0.00 B
+[STEP] Total: 8.968193s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 43] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666404s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.618701s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233196.15625
+[BWD ] Time: 6.281567s | Mem: -20.67 GB
+[UPDT] Time: 0.004594s | Mem: 0.00 B
+[STEP] Total: 8.954934s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 44] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670436s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622814s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233247.46875
+[BWD ] Time: 6.212046s | Mem: -20.67 GB
+[UPDT] Time: 0.004257s | Mem: 0.00 B
+[STEP] Total: 8.888595s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 45] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.623729s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.576360s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233284.8125
+[BWD ] Time: 6.281284s | Mem: -20.67 GB
+[UPDT] Time: 0.004533s | Mem: 0.00 B
+[STEP] Total: 8.911783s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 46] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.655464s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.608147s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233310.84375
+[BWD ] Time: 6.215145s | Mem: -20.67 GB
+[UPDT] Time: 0.004729s | Mem: 0.00 B
+[STEP] Total: 8.877519s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 47] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.647729s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.600389s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233323.4375
+[BWD ] Time: 6.224310s | Mem: -20.67 GB
+[UPDT] Time: 0.005268s | Mem: 0.00 B
+[STEP] Total: 8.879521s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 48] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.636482s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589030s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233333.546875
+[BWD ] Time: 6.228600s | Mem: -20.67 GB
+[UPDT] Time: 0.004885s | Mem: 0.00 B
+[STEP] Total: 8.871818s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 49] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660645s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613146s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233324.296875
+[BWD ] Time: 6.186039s | Mem: -20.67 GB
+[UPDT] Time: 0.005077s | Mem: 0.00 B
+[STEP] Total: 8.853682s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 50] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652559s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605103s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233313.703125
+[BWD ] Time: 6.294289s | Mem: -20.67 GB
+[UPDT] Time: 0.004955s | Mem: 0.00 B
+[STEP] Total: 8.954663s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 51] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648551s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.601208s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233293.03125
+[BWD ] Time: 6.254920s | Mem: -20.67 GB
+[UPDT] Time: 0.004862s | Mem: 0.00 B
+[STEP] Total: 8.910285s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 52] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.639274s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591939s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233268.453125
+[BWD ] Time: 6.291290s | Mem: -20.67 GB
+[UPDT] Time: 0.004726s | Mem: 0.00 B
+[STEP] Total: 8.937491s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 53] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648082s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.599657s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233236.75
+[BWD ] Time: 6.301829s | Mem: -20.67 GB
+[UPDT] Time: 0.005353s | Mem: 0.00 B
+[STEP] Total: 8.957208s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 54] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652184s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604783s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233193.75
+[BWD ] Time: 6.304035s | Mem: -20.67 GB
+[UPDT] Time: 0.005135s | Mem: 0.00 B
+[STEP] Total: 8.963473s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 55] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671507s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624172s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233150.6875
+[BWD ] Time: 6.272648s | Mem: -20.67 GB
+[UPDT] Time: 0.005073s | Mem: 0.00 B
+[STEP] Total: 8.951400s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 56] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.684990s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.637565s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233096.09375
+[BWD ] Time: 6.310918s | Mem: -20.67 GB
+[UPDT] Time: 0.005190s | Mem: 0.00 B
+[STEP] Total: 9.003144s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 57] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.663407s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.616014s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  233042.828125
+[BWD ] Time: 6.272235s | Mem: -20.67 GB
+[UPDT] Time: 0.005179s | Mem: 0.00 B
+[STEP] Total: 8.942914s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 58] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674579s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626970s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232976.796875
+[BWD ] Time: 6.246727s | Mem: -20.67 GB
+[UPDT] Time: 0.005208s | Mem: 0.00 B
+[STEP] Total: 8.928382s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 59] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.642635s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.595295s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232911.078125
+[BWD ] Time: 6.237605s | Mem: -20.67 GB
+[UPDT] Time: 0.004734s | Mem: 0.00 B
+[STEP] Total: 8.887067s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 60] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659311s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.611923s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232844.375
+[BWD ] Time: 6.293953s | Mem: -20.67 GB
+[UPDT] Time: 0.004831s | Mem: 0.00 B
+[STEP] Total: 8.960382s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 61] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660365s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612972s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232762.8125
+[BWD ] Time: 6.300240s | Mem: -20.67 GB
+[UPDT] Time: 0.005009s | Mem: 0.00 B
+[STEP] Total: 8.967635s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 62] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.684096s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.636712s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232686.03125
+[BWD ] Time: 6.292881s | Mem: -20.67 GB
+[UPDT] Time: 0.005037s | Mem: 0.00 B
+[STEP] Total: 8.984017s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 63] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651299s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603716s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232608.78125
+[BWD ] Time: 6.210219s | Mem: -20.67 GB
+[UPDT] Time: 0.005026s | Mem: 0.00 B
+[STEP] Total: 8.868440s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 64] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633698s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.586338s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232523.796875
+[BWD ] Time: 6.256612s | Mem: -20.67 GB
+[UPDT] Time: 0.004842s | Mem: 0.00 B
+[STEP] Total: 8.897320s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 65] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.623211s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.575803s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232440.21875
+[BWD ] Time: 6.235830s | Mem: -20.67 GB
+[UPDT] Time: 0.005243s | Mem: 0.00 B
+[STEP] Total: 8.866909s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 66] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.635345s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.587874s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232348.359375
+[BWD ] Time: 6.214891s | Mem: -20.67 GB
+[UPDT] Time: 0.004835s | Mem: 0.00 B
+[STEP] Total: 8.857123s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 67] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.621445s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.573740s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232252.421875
+[BWD ] Time: 6.253314s | Mem: -20.67 GB
+[UPDT] Time: 0.005165s | Mem: 0.00 B
+[STEP] Total: 8.881763s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 68] ============ 详细性能分析 ============
+[模型部分] 总时间: 4.188347s | 显存: 20.69 GB
+[PDE 部分] 总时间: 4.140980s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232162.625
+[BWD ] Time: 6.277023s | Mem: -20.67 GB
+[UPDT] Time: 0.004942s | Mem: 0.00 B
+[STEP] Total: 10.472403s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 69] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.642281s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.594889s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  232060.6875
+[BWD ] Time: 6.256518s | Mem: -20.67 GB
+[UPDT] Time: 0.005016s | Mem: 0.00 B
+[STEP] Total: 8.906088s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 70] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.638246s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.590885s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231960.921875
+[BWD ] Time: 6.242919s | Mem: -20.67 GB
+[UPDT] Time: 0.005179s | Mem: 0.00 B
+[STEP] Total: 8.888222s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 71] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652817s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605444s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231862.28125
+[BWD ] Time: 6.269859s | Mem: -20.67 GB
+[UPDT] Time: 0.005001s | Mem: 0.00 B
+[STEP] Total: 8.929544s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 72] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640619s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593005s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231751.015625
+[BWD ] Time: 6.228406s | Mem: -20.67 GB
+[UPDT] Time: 0.005185s | Mem: 0.00 B
+[STEP] Total: 8.876074s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 73] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.625694s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.578310s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231657.125
+[BWD ] Time: 6.254526s | Mem: -20.67 GB
+[UPDT] Time: 0.005206s | Mem: 0.00 B
+[STEP] Total: 8.887618s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 74] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649985s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602580s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231551.859375
+[BWD ] Time: 6.299362s | Mem: -20.67 GB
+[UPDT] Time: 0.004674s | Mem: 0.00 B
+[STEP] Total: 8.956310s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 75] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651162s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603758s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231448.796875
+[BWD ] Time: 6.297253s | Mem: -20.67 GB
+[UPDT] Time: 0.005007s | Mem: 0.00 B
+[STEP] Total: 8.955406s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 76] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.668535s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.621182s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231343.28125
+[BWD ] Time: 6.304466s | Mem: -20.67 GB
+[UPDT] Time: 0.004980s | Mem: 0.00 B
+[STEP] Total: 8.979855s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 77] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.673072s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.625476s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231224.15625
+[BWD ] Time: 6.281257s | Mem: -20.67 GB
+[UPDT] Time: 0.005120s | Mem: 0.00 B
+[STEP] Total: 8.961331s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 78] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.683515s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.636131s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231117.671875
+[BWD ] Time: 6.300405s | Mem: -20.67 GB
+[UPDT] Time: 0.005141s | Mem: 0.00 B
+[STEP] Total: 8.991450s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 79] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.669232s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.621793s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  231009.046875
+[BWD ] Time: 6.269327s | Mem: -20.67 GB
+[UPDT] Time: 0.004908s | Mem: 0.00 B
+[STEP] Total: 8.945822s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 80] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.655365s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.607900s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230900.640625
+[BWD ] Time: 6.201727s | Mem: -20.67 GB
+[UPDT] Time: 0.005128s | Mem: 0.00 B
+[STEP] Total: 8.864048s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 81] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.618631s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.571246s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230792.125
+[BWD ] Time: 6.178496s | Mem: -20.67 GB
+[UPDT] Time: 0.004812s | Mem: 0.00 B
+[STEP] Total: 8.804255s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 82] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644187s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596793s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230679.484375
+[BWD ] Time: 6.274521s | Mem: -20.67 GB
+[UPDT] Time: 0.004716s | Mem: 0.00 B
+[STEP] Total: 8.925770s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 83] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.680345s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.633012s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230569.046875
+[BWD ] Time: 6.277210s | Mem: -20.67 GB
+[UPDT] Time: 0.005048s | Mem: 0.00 B
+[STEP] Total: 8.964476s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 84] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649670s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602256s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230453.015625
+[BWD ] Time: 6.274794s | Mem: -20.67 GB
+[UPDT] Time: 0.004904s | Mem: 0.00 B
+[STEP] Total: 8.931262s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 85] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.642235s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.594796s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230348.0625
+[BWD ] Time: 6.283083s | Mem: -20.67 GB
+[UPDT] Time: 0.004742s | Mem: 0.00 B
+[STEP] Total: 8.931848s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 86] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.669641s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622277s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230234.84375
+[BWD ] Time: 6.280904s | Mem: -20.67 GB
+[UPDT] Time: 0.005166s | Mem: 0.00 B
+[STEP] Total: 8.957979s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 87] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671337s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.623786s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230122.078125
+[BWD ] Time: 6.250161s | Mem: -20.67 GB
+[UPDT] Time: 0.005196s | Mem: 0.00 B
+[STEP] Total: 8.929006s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 88] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.661321s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613951s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  230014.390625
+[BWD ] Time: 6.286576s | Mem: -20.67 GB
+[UPDT] Time: 0.005061s | Mem: 0.00 B
+[STEP] Total: 8.954901s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 89] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.673632s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626257s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229902.9375
+[BWD ] Time: 6.300926s | Mem: -20.67 GB
+[UPDT] Time: 0.004980s | Mem: 0.00 B
+[STEP] Total: 8.981354s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 90] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671205s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.623725s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229796.796875
+[BWD ] Time: 6.293055s | Mem: -20.67 GB
+[UPDT] Time: 0.005092s | Mem: 0.00 B
+[STEP] Total: 8.971113s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 91] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681310s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.633974s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229677.09375
+[BWD ] Time: 6.269754s | Mem: -20.67 GB
+[UPDT] Time: 0.004820s | Mem: 0.00 B
+[STEP] Total: 8.957983s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 92] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640048s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.592576s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229569.328125
+[BWD ] Time: 6.310360s | Mem: -20.67 GB
+[UPDT] Time: 0.005133s | Mem: 0.00 B
+[STEP] Total: 8.957927s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 93] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659713s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612268s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229458.5
+[BWD ] Time: 6.283055s | Mem: -20.67 GB
+[UPDT] Time: 0.004943s | Mem: 0.00 B
+[STEP] Total: 8.949699s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 94] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.672376s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.625010s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229352.75
+[BWD ] Time: 6.224897s | Mem: -20.67 GB
+[UPDT] Time: 0.005018s | Mem: 0.00 B
+[STEP] Total: 8.904132s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 95] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.675528s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.628089s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229248.46875
+[BWD ] Time: 6.317032s | Mem: -20.67 GB
+[UPDT] Time: 0.005109s | Mem: 0.00 B
+[STEP] Total: 8.999465s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 96] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.678949s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.631543s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229133.984375
+[BWD ] Time: 6.276684s | Mem: -20.67 GB
+[UPDT] Time: 0.004995s | Mem: 0.00 B
+[STEP] Total: 8.962431s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 97] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649524s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602152s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  229025.21875
+[BWD ] Time: 6.203328s | Mem: -20.67 GB
+[UPDT] Time: 0.005268s | Mem: 0.00 B
+[STEP] Total: 8.860667s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 98] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.624810s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.577379s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  228929.15625
+[BWD ] Time: 7.977637s | Mem: -20.67 GB
+[UPDT] Time: 0.005008s | Mem: 0.00 B
+[STEP] Total: 10.610196s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 99] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.650357s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603028s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  228819.90625
+[BWD ] Time: 6.212856s | Mem: -20.67 GB
+[UPDT] Time: 0.005126s | Mem: 0.00 B
+[STEP] Total: 8.870464s | ΔMem: 0.00 B | Peak: 33.82 GB
+x_batch.shape: (5, 256, 256) batch start: 10 end: 15
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 7.641682s | 显存: 20.69 GB
+[PDE 部分] 总时间: 7.539207s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  21784.41796875
+[BWD ] Time: 6.348782s | Mem: -20.66 GB
+[UPDT] Time: 0.328412s | Mem: 10.50 MB
+[STEP] Total: 14.582212s | ΔMem: 26.00 MB | Peak: 33.80 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.616667s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.569012s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  26178.076171875
+[BWD ] Time: 6.217161s | Mem: -20.67 GB
+[UPDT] Time: 0.003709s | Mem: -256.00 KB
+[STEP] Total: 8.839389s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.675355s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.627904s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  31124.32421875
+[BWD ] Time: 6.235342s | Mem: -20.67 GB
+[UPDT] Time: 0.004529s | Mem: 256.00 KB
+[STEP] Total: 8.917234s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.634118s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.586604s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  36792.10546875
+[BWD ] Time: 6.264255s | Mem: -20.67 GB
+[UPDT] Time: 0.004206s | Mem: 0.00 B
+[STEP] Total: 8.905016s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632596s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585156s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  42987.140625
+[BWD ] Time: 6.242977s | Mem: -20.67 GB
+[UPDT] Time: 0.003554s | Mem: -256.00 KB
+[STEP] Total: 8.881073s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.641520s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593993s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  49596.78515625
+[BWD ] Time: 6.252883s | Mem: -20.67 GB
+[UPDT] Time: 0.003936s | Mem: 256.00 KB
+[STEP] Total: 8.900219s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681398s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.633689s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  56534.65625
+[BWD ] Time: 6.311454s | Mem: -20.67 GB
+[UPDT] Time: 0.004335s | Mem: 0.00 B
+[STEP] Total: 8.999070s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674959s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.627513s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  63689.30859375
+[BWD ] Time: 6.224292s | Mem: -20.67 GB
+[UPDT] Time: 0.004211s | Mem: -256.00 KB
+[STEP] Total: 8.906167s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640992s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593554s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  70986.1328125
+[BWD ] Time: 6.282066s | Mem: -20.67 GB
+[UPDT] Time: 0.003730s | Mem: 256.00 KB
+[STEP] Total: 8.928811s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651560s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604146s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  78426.765625
+[BWD ] Time: 6.300832s | Mem: -20.67 GB
+[UPDT] Time: 0.003748s | Mem: 0.00 B
+[STEP] Total: 8.958085s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656509s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609060s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  86092.984375
+[BWD ] Time: 6.280975s | Mem: -20.67 GB
+[UPDT] Time: 0.003720s | Mem: -256.00 KB
+[STEP] Total: 8.943403s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.639082s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591602s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  94043.7734375
+[BWD ] Time: 6.283474s | Mem: -20.67 GB
+[UPDT] Time: 0.004150s | Mem: 256.00 KB
+[STEP] Total: 8.928830s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660950s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613281s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  102321.421875
+[BWD ] Time: 6.275039s | Mem: -20.67 GB
+[UPDT] Time: 0.004294s | Mem: 0.00 B
+[STEP] Total: 8.942556s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.662657s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.615165s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  110899.8203125
+[BWD ] Time: 6.245513s | Mem: -20.67 GB
+[UPDT] Time: 0.004006s | Mem: -256.00 KB
+[STEP] Total: 8.914331s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656746s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609295s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  119515.8125
+[BWD ] Time: 6.308046s | Mem: -20.67 GB
+[UPDT] Time: 0.004079s | Mem: 256.00 KB
+[STEP] Total: 8.970824s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 15] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649552s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602075s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  125130.28125
+[BWD ] Time: 6.301250s | Mem: -20.67 GB
+[UPDT] Time: 0.004123s | Mem: 0.00 B
+[STEP] Total: 8.957140s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 16] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651261s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603787s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  127653.75
+[BWD ] Time: 6.299314s | Mem: -20.67 GB
+[UPDT] Time: 0.004201s | Mem: -256.00 KB
+[STEP] Total: 8.956953s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 17] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.661049s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613380s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  129052.640625
+[BWD ] Time: 6.275413s | Mem: -20.67 GB
+[UPDT] Time: 0.004325s | Mem: 256.00 KB
+[STEP] Total: 8.942681s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 18] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644982s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.597409s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  130044.9140625
+[BWD ] Time: 6.280580s | Mem: -20.67 GB
+[UPDT] Time: 0.003948s | Mem: 0.00 B
+[STEP] Total: 8.932004s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 19] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.678151s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.630680s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  130830.90625
+[BWD ] Time: 6.296701s | Mem: -20.67 GB
+[UPDT] Time: 0.003885s | Mem: -256.00 KB
+[STEP] Total: 8.980758s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 20] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674581s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.627143s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  131568.03125
+[BWD ] Time: 6.293034s | Mem: -20.67 GB
+[UPDT] Time: 0.004231s | Mem: 256.00 KB
+[STEP] Total: 8.974097s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 21] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656638s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609122s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132308.0
+[BWD ] Time: 6.250127s | Mem: -20.67 GB
+[UPDT] Time: 0.004156s | Mem: 0.00 B
+[STEP] Total: 8.913071s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 22] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.603267s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.555750s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133065.1875
+[BWD ] Time: 6.275156s | Mem: -20.67 GB
+[UPDT] Time: 0.004386s | Mem: -256.00 KB
+[STEP] Total: 8.884927s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 23] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.658726s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.611002s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133809.359375
+[BWD ] Time: 6.305118s | Mem: -20.67 GB
+[UPDT] Time: 0.004638s | Mem: 256.00 KB
+[STEP] Total: 8.971349s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 24] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.668027s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.620526s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134502.484375
+[BWD ] Time: 6.314627s | Mem: -20.67 GB
+[UPDT] Time: 0.004207s | Mem: 0.00 B
+[STEP] Total: 8.989866s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 25] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.658616s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.611195s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135100.96875
+[BWD ] Time: 6.247915s | Mem: -20.67 GB
+[UPDT] Time: 0.003797s | Mem: -256.00 KB
+[STEP] Total: 8.912589s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 26] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.643734s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596296s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135581.6875
+[BWD ] Time: 6.257239s | Mem: -20.67 GB
+[UPDT] Time: 0.004020s | Mem: 256.00 KB
+[STEP] Total: 8.906797s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 27] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.631783s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584311s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135953.421875
+[BWD ] Time: 6.174114s | Mem: -20.67 GB
+[UPDT] Time: 0.004229s | Mem: 0.00 B
+[STEP] Total: 8.812407s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 28] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.638505s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591047s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136237.6875
+[BWD ] Time: 6.275144s | Mem: -20.67 GB
+[UPDT] Time: 0.004308s | Mem: -256.00 KB
+[STEP] Total: 8.919812s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 29] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.679684s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.632074s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136458.734375
+[BWD ] Time: 6.310877s | Mem: -20.67 GB
+[UPDT] Time: 0.004442s | Mem: 256.00 KB
+[STEP] Total: 8.996955s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 30] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.646601s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.599125s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136641.734375
+[BWD ] Time: 6.237159s | Mem: -20.67 GB
+[UPDT] Time: 0.004005s | Mem: 0.00 B
+[STEP] Total: 8.889980s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 31] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.702118s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.654686s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136806.9375
+[BWD ] Time: 6.225908s | Mem: -20.67 GB
+[UPDT] Time: 0.003891s | Mem: -256.00 KB
+[STEP] Total: 8.934363s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 32] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.631463s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584027s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136951.703125
+[BWD ] Time: 6.240813s | Mem: -20.67 GB
+[UPDT] Time: 0.003800s | Mem: 256.00 KB
+[STEP] Total: 8.878136s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 33] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.619271s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.571764s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137067.3125
+[BWD ] Time: 6.183833s | Mem: -20.67 GB
+[UPDT] Time: 0.004231s | Mem: 0.00 B
+[STEP] Total: 8.809331s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 34] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640755s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593288s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137164.53125
+[BWD ] Time: 6.294556s | Mem: -20.67 GB
+[UPDT] Time: 0.004564s | Mem: -256.00 KB
+[STEP] Total: 8.941797s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 35] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.628120s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.580511s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137231.15625
+[BWD ] Time: 8.630178s | Mem: -20.67 GB
+[UPDT] Time: 0.003893s | Mem: 256.00 KB
+[STEP] Total: 11.265279s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 36] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.695084s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.647635s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137274.734375
+[BWD ] Time: 6.220907s | Mem: -20.67 GB
+[UPDT] Time: 0.004295s | Mem: 0.00 B
+[STEP] Total: 8.922413s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 37] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633360s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585993s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137293.34375
+[BWD ] Time: 6.236028s | Mem: -20.67 GB
+[UPDT] Time: 0.004296s | Mem: -256.00 KB
+[STEP] Total: 8.875506s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 38] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.672016s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624656s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137291.28125
+[BWD ] Time: 6.233692s | Mem: -20.67 GB
+[UPDT] Time: 0.004366s | Mem: 256.00 KB
+[STEP] Total: 8.911883s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 39] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670513s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.623084s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137277.625
+[BWD ] Time: 6.319820s | Mem: -20.67 GB
+[UPDT] Time: 0.004331s | Mem: 0.00 B
+[STEP] Total: 8.996518s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 40] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.655796s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.608232s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137253.875
+[BWD ] Time: 6.268638s | Mem: -20.67 GB
+[UPDT] Time: 0.004022s | Mem: -256.00 KB
+[STEP] Total: 8.930969s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 41] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.680767s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.633386s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137221.40625
+[BWD ] Time: 6.331753s | Mem: -20.67 GB
+[UPDT] Time: 0.004315s | Mem: 256.00 KB
+[STEP] Total: 9.019589s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 42] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.676672s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.629307s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137178.78125
+[BWD ] Time: 6.278695s | Mem: -20.67 GB
+[UPDT] Time: 0.003985s | Mem: 0.00 B
+[STEP] Total: 8.961548s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 43] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652162s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604822s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137134.3125
+[BWD ] Time: 6.322467s | Mem: -20.67 GB
+[UPDT] Time: 0.004035s | Mem: -256.00 KB
+[STEP] Total: 8.980754s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 44] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648937s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.601584s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137082.96875
+[BWD ] Time: 6.199726s | Mem: -20.67 GB
+[UPDT] Time: 0.004624s | Mem: 256.00 KB
+[STEP] Total: 8.855503s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 45] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681873s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.634224s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137031.046875
+[BWD ] Time: 6.295329s | Mem: -20.67 GB
+[UPDT] Time: 0.004488s | Mem: 0.00 B
+[STEP] Total: 8.983928s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 46] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656250s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.608884s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136961.25
+[BWD ] Time: 6.294779s | Mem: -20.67 GB
+[UPDT] Time: 0.005019s | Mem: -256.00 KB
+[STEP] Total: 8.959182s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 47] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659596s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612229s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136890.0625
+[BWD ] Time: 6.312405s | Mem: -20.67 GB
+[UPDT] Time: 0.004872s | Mem: 256.00 KB
+[STEP] Total: 8.979131s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 48] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.695758s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.648384s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136818.484375
+[BWD ] Time: 6.195916s | Mem: -20.67 GB
+[UPDT] Time: 0.005157s | Mem: 0.00 B
+[STEP] Total: 8.898938s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 49] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.684032s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.636697s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136737.96875
+[BWD ] Time: 6.297685s | Mem: -20.67 GB
+[UPDT] Time: 0.005216s | Mem: -256.00 KB
+[STEP] Total: 8.989390s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 50] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.638137s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.590457s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136650.578125
+[BWD ] Time: 6.269822s | Mem: -20.67 GB
+[UPDT] Time: 0.005537s | Mem: 256.00 KB
+[STEP] Total: 8.915460s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 51] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.621361s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.573967s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136566.09375
+[BWD ] Time: 6.281584s | Mem: -20.67 GB
+[UPDT] Time: 0.004812s | Mem: 0.00 B
+[STEP] Total: 8.910912s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 52] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.679070s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.631696s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136477.25
+[BWD ] Time: 6.302974s | Mem: -20.67 GB
+[UPDT] Time: 0.005177s | Mem: -256.00 KB
+[STEP] Total: 8.989774s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 53] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657406s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.610026s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136387.078125
+[BWD ] Time: 6.250783s | Mem: -20.67 GB
+[UPDT] Time: 0.005255s | Mem: 256.00 KB
+[STEP] Total: 8.915247s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 54] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.677143s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.629713s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136296.0625
+[BWD ] Time: 6.277533s | Mem: -20.67 GB
+[UPDT] Time: 0.004957s | Mem: 0.00 B
+[STEP] Total: 8.961844s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 55] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.651674s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.604227s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136207.3125
+[BWD ] Time: 6.281702s | Mem: -20.67 GB
+[UPDT] Time: 0.005212s | Mem: -256.00 KB
+[STEP] Total: 8.940814s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 56] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.639138s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591515s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136105.984375
+[BWD ] Time: 6.266545s | Mem: -20.67 GB
+[UPDT] Time: 0.005282s | Mem: 256.00 KB
+[STEP] Total: 8.913152s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 57] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659036s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.611634s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136011.765625
+[BWD ] Time: 6.209263s | Mem: -20.67 GB
+[UPDT] Time: 0.005126s | Mem: 0.00 B
+[STEP] Total: 8.876577s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 58] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.672282s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624883s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135914.40625
+[BWD ] Time: 6.234942s | Mem: -20.67 GB
+[UPDT] Time: 0.005033s | Mem: -256.00 KB
+[STEP] Total: 8.914513s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 59] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.683752s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.636400s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135819.921875
+[BWD ] Time: 6.259136s | Mem: -20.67 GB
+[UPDT] Time: 0.004903s | Mem: 256.00 KB
+[STEP] Total: 8.949887s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 60] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660880s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613478s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135727.21875
+[BWD ] Time: 6.244328s | Mem: -20.67 GB
+[UPDT] Time: 0.004940s | Mem: 0.00 B
+[STEP] Total: 8.912425s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 61] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.672105s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624623s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135629.953125
+[BWD ] Time: 6.252807s | Mem: -20.67 GB
+[UPDT] Time: 0.004881s | Mem: -256.00 KB
+[STEP] Total: 8.932039s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 62] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632329s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.584751s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135536.421875
+[BWD ] Time: 6.284023s | Mem: -20.67 GB
+[UPDT] Time: 0.005152s | Mem: 256.00 KB
+[STEP] Total: 8.923755s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 63] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657358s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609899s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135439.0
+[BWD ] Time: 6.260637s | Mem: -20.67 GB
+[UPDT] Time: 0.005156s | Mem: 0.00 B
+[STEP] Total: 8.925836s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 64] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.662100s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.614597s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135345.78125
+[BWD ] Time: 6.224598s | Mem: -20.67 GB
+[UPDT] Time: 0.004903s | Mem: -256.00 KB
+[STEP] Total: 8.894173s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 65] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.654188s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.606588s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135253.359375
+[BWD ] Time: 6.225692s | Mem: -20.67 GB
+[UPDT] Time: 0.005100s | Mem: 256.00 KB
+[STEP] Total: 8.887155s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 66] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657946s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.610417s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135163.921875
+[BWD ] Time: 6.254054s | Mem: -20.67 GB
+[UPDT] Time: 0.005101s | Mem: 0.00 B
+[STEP] Total: 8.919277s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 67] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.673044s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.625585s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135067.125
+[BWD ] Time: 6.242880s | Mem: -20.67 GB
+[UPDT] Time: 0.005043s | Mem: -256.00 KB
+[STEP] Total: 8.924488s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 68] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.618495s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.571086s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134979.53125
+[BWD ] Time: 6.284851s | Mem: -20.67 GB
+[UPDT] Time: 0.005098s | Mem: 256.00 KB
+[STEP] Total: 8.910632s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 69] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.636706s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589230s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134892.65625
+[BWD ] Time: 6.218009s | Mem: -20.67 GB
+[UPDT] Time: 0.004956s | Mem: 0.00 B
+[STEP] Total: 8.861772s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 70] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.661127s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613716s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134801.0625
+[BWD ] Time: 6.234389s | Mem: -20.67 GB
+[UPDT] Time: 0.005078s | Mem: -256.00 KB
+[STEP] Total: 8.902578s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 71] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652641s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605173s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134712.671875
+[BWD ] Time: 6.304586s | Mem: -20.67 GB
+[UPDT] Time: 0.005220s | Mem: 256.00 KB
+[STEP] Total: 8.964616s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 72] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.667327s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619755s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134630.921875
+[BWD ] Time: 6.312046s | Mem: -20.67 GB
+[UPDT] Time: 0.004892s | Mem: 0.00 B
+[STEP] Total: 8.986091s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 73] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666732s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619296s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134545.3125
+[BWD ] Time: 6.335488s | Mem: -20.67 GB
+[UPDT] Time: 0.004869s | Mem: -256.00 KB
+[STEP] Total: 9.009217s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 74] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681623s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.634243s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134461.515625
+[BWD ] Time: 6.299136s | Mem: -20.67 GB
+[UPDT] Time: 0.004838s | Mem: 256.00 KB
+[STEP] Total: 8.988149s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 75] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.679008s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.631682s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134380.8125
+[BWD ] Time: 9.094369s | Mem: -20.67 GB
+[UPDT] Time: 0.004984s | Mem: 0.00 B
+[STEP] Total: 11.780610s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 76] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.672124s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624720s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134293.96875
+[BWD ] Time: 6.307706s | Mem: -20.67 GB
+[UPDT] Time: 0.005268s | Mem: -256.00 KB
+[STEP] Total: 8.987405s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 77] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.665246s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.617700s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134220.421875
+[BWD ] Time: 6.296690s | Mem: -20.67 GB
+[UPDT] Time: 0.004910s | Mem: 256.00 KB
+[STEP] Total: 8.969035s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 78] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.677450s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.630037s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134141.84375
+[BWD ] Time: 6.192337s | Mem: -20.67 GB
+[UPDT] Time: 0.004956s | Mem: 0.00 B
+[STEP] Total: 8.876535s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 79] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644048s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596672s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134060.359375
+[BWD ] Time: 6.249849s | Mem: -20.67 GB
+[UPDT] Time: 0.005129s | Mem: -256.00 KB
+[STEP] Total: 8.901132s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 80] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.692270s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.644870s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133985.5
+[BWD ] Time: 6.354238s | Mem: -20.67 GB
+[UPDT] Time: 0.005178s | Mem: 256.00 KB
+[STEP] Total: 9.053946s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 81] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.677445s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.630076s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133910.078125
+[BWD ] Time: 6.303924s | Mem: -20.67 GB
+[UPDT] Time: 0.005290s | Mem: 0.00 B
+[STEP] Total: 8.988904s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 82] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657186s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609788s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133837.625
+[BWD ] Time: 6.287182s | Mem: -20.67 GB
+[UPDT] Time: 0.005011s | Mem: -256.00 KB
+[STEP] Total: 8.951808s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 83] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674059s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626544s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133759.203125
+[BWD ] Time: 6.290427s | Mem: -20.67 GB
+[UPDT] Time: 0.005136s | Mem: 256.00 KB
+[STEP] Total: 8.971471s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 84] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.639898s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.592515s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133690.296875
+[BWD ] Time: 6.230486s | Mem: -20.67 GB
+[UPDT] Time: 0.004868s | Mem: 0.00 B
+[STEP] Total: 8.877428s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 85] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.635964s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.588623s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133618.3125
+[BWD ] Time: 6.318619s | Mem: -20.67 GB
+[UPDT] Time: 0.005109s | Mem: -256.00 KB
+[STEP] Total: 8.961726s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 86] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.641784s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.594389s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133549.28125
+[BWD ] Time: 6.283769s | Mem: -20.67 GB
+[UPDT] Time: 0.004962s | Mem: 256.00 KB
+[STEP] Total: 8.932791s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 87] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653306s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605949s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133483.078125
+[BWD ] Time: 6.200081s | Mem: -20.67 GB
+[UPDT] Time: 0.005446s | Mem: 0.00 B
+[STEP] Total: 8.860774s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 88] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648635s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.601252s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133418.53125
+[BWD ] Time: 6.181397s | Mem: -20.67 GB
+[UPDT] Time: 0.005001s | Mem: -256.00 KB
+[STEP] Total: 8.837081s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 89] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.676962s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.629561s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133353.234375
+[BWD ] Time: 6.232096s | Mem: -20.67 GB
+[UPDT] Time: 0.005122s | Mem: 256.00 KB
+[STEP] Total: 8.916066s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 90] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.639034s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591585s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133286.40625
+[BWD ] Time: 6.234253s | Mem: -20.67 GB
+[UPDT] Time: 0.005246s | Mem: 0.00 B
+[STEP] Total: 8.880420s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 91] ============ 详细性能分析 ============
+[模型部分] 总时间: 3.490935s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.628082s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133227.3125
+[BWD ] Time: 6.397125s | Mem: -20.67 GB
+[UPDT] Time: 0.005026s | Mem: -256.00 KB
+[STEP] Total: 9.895620s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 92] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652463s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605073s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133165.0625
+[BWD ] Time: 6.307296s | Mem: -20.67 GB
+[UPDT] Time: 0.004937s | Mem: 256.00 KB
+[STEP] Total: 8.966922s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 93] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.642461s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.595099s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133107.171875
+[BWD ] Time: 6.291410s | Mem: -20.67 GB
+[UPDT] Time: 0.005273s | Mem: 0.00 B
+[STEP] Total: 8.941121s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 94] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656060s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.608659s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133048.40625
+[BWD ] Time: 6.289486s | Mem: -20.67 GB
+[UPDT] Time: 0.004920s | Mem: -256.00 KB
+[STEP] Total: 8.952672s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 95] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.663582s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.616153s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132992.5625
+[BWD ] Time: 6.217354s | Mem: -20.67 GB
+[UPDT] Time: 0.004984s | Mem: 256.00 KB
+[STEP] Total: 8.887789s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 96] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657616s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.610139s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132931.6875
+[BWD ] Time: 6.274882s | Mem: -20.67 GB
+[UPDT] Time: 0.005077s | Mem: 0.00 B
+[STEP] Total: 8.939444s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 97] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.637086s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589729s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132876.546875
+[BWD ] Time: 6.246708s | Mem: -20.67 GB
+[UPDT] Time: 0.004844s | Mem: -256.00 KB
+[STEP] Total: 8.890724s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 98] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.626299s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.578897s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132832.34375
+[BWD ] Time: 8.222364s | Mem: -20.67 GB
+[UPDT] Time: 1.753577s | Mem: 256.00 KB
+[STEP] Total: 12.604717s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 99] ============ 详细性能分析 ============
+[模型部分] 总时间: 9.274416s | 显存: 20.69 GB
+[PDE 部分] 总时间: 3.085520s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132778.21875
+[BWD ] Time: 7.691888s | Mem: -20.67 GB
+[UPDT] Time: 0.005321s | Mem: 0.00 B
+[STEP] Total: 17.274477s | ΔMem: 0.00 B | Peak: 33.82 GB
+x_batch.shape: (5, 256, 256) batch start: 15 end: 20
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.702196s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.648972s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  29144.04296875
+[BWD ] Time: 6.248133s | Mem: -20.66 GB
+[UPDT] Time: 0.003099s | Mem: 10.50 MB
+[STEP] Total: 8.954954s | ΔMem: 26.00 MB | Peak: 33.80 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670069s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622525s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  33414.4609375
+[BWD ] Time: 6.305603s | Mem: -20.67 GB
+[UPDT] Time: 0.003652s | Mem: -256.00 KB
+[STEP] Total: 8.981121s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.679170s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.631696s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  38327.33984375
+[BWD ] Time: 6.240955s | Mem: -20.67 GB
+[UPDT] Time: 0.004068s | Mem: 256.00 KB
+[STEP] Total: 8.926204s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.659680s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612256s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  43726.24609375
+[BWD ] Time: 6.297354s | Mem: -20.67 GB
+[UPDT] Time: 0.004067s | Mem: 0.00 B
+[STEP] Total: 8.963489s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644640s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.597230s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  49485.43359375
+[BWD ] Time: 6.322074s | Mem: -20.67 GB
+[UPDT] Time: 0.004365s | Mem: -256.00 KB
+[STEP] Total: 8.973009s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644510s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596921s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  55584.5078125
+[BWD ] Time: 6.270257s | Mem: -20.67 GB
+[UPDT] Time: 0.004479s | Mem: 256.00 KB
+[STEP] Total: 8.921328s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.644142s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.596682s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  62063.0078125
+[BWD ] Time: 6.180645s | Mem: -20.67 GB
+[UPDT] Time: 0.004183s | Mem: 0.00 B
+[STEP] Total: 8.831096s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.655356s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.607893s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  68959.515625
+[BWD ] Time: 6.247333s | Mem: -20.67 GB
+[UPDT] Time: 0.004246s | Mem: -256.00 KB
+[STEP] Total: 8.909391s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.630633s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.583055s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  76267.484375
+[BWD ] Time: 6.247747s | Mem: -20.67 GB
+[UPDT] Time: 0.004380s | Mem: 256.00 KB
+[STEP] Total: 8.884800s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.645504s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.598063s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  83943.75
+[BWD ] Time: 6.261085s | Mem: -20.67 GB
+[UPDT] Time: 0.004287s | Mem: 0.00 B
+[STEP] Total: 8.913082s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.688576s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.641141s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  91890.96875
+[BWD ] Time: 6.242726s | Mem: -20.67 GB
+[UPDT] Time: 0.003731s | Mem: -256.00 KB
+[STEP] Total: 8.937156s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.679349s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.631871s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  100003.53125
+[BWD ] Time: 6.279329s | Mem: -20.67 GB
+[UPDT] Time: 0.003844s | Mem: 256.00 KB
+[STEP] Total: 8.964385s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681156s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.633687s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  108185.453125
+[BWD ] Time: 6.321548s | Mem: -20.67 GB
+[UPDT] Time: 0.004026s | Mem: 0.00 B
+[STEP] Total: 9.008647s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.646289s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.598744s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  116413.5078125
+[BWD ] Time: 6.308730s | Mem: -20.67 GB
+[UPDT] Time: 0.004523s | Mem: -256.00 KB
+[STEP] Total: 8.961501s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.687923s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.640549s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  123597.875
+[BWD ] Time: 6.292978s | Mem: -20.67 GB
+[UPDT] Time: 0.004207s | Mem: 256.00 KB
+[STEP] Total: 8.987432s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 15] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653553s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.606186s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  127532.6171875
+[BWD ] Time: 6.309738s | Mem: -20.67 GB
+[UPDT] Time: 0.004280s | Mem: 0.00 B
+[STEP] Total: 8.969710s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 16] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674924s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.627556s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  130068.2421875
+[BWD ] Time: 6.399477s | Mem: -20.67 GB
+[UPDT] Time: 0.003959s | Mem: -256.00 KB
+[STEP] Total: 9.080196s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 17] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666366s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.618958s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  131290.21875
+[BWD ] Time: 6.226374s | Mem: -20.67 GB
+[UPDT] Time: 0.004201s | Mem: 256.00 KB
+[STEP] Total: 8.899074s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 18] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632720s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585180s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  132395.46875
+[BWD ] Time: 6.263904s | Mem: -20.67 GB
+[UPDT] Time: 0.004243s | Mem: 0.00 B
+[STEP] Total: 8.903101s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 19] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660086s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612769s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  133419.984375
+[BWD ] Time: 6.261480s | Mem: -20.67 GB
+[UPDT] Time: 0.003813s | Mem: -256.00 KB
+[STEP] Total: 8.927561s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 20] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.652496s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605111s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  134369.09375
+[BWD ] Time: 6.235733s | Mem: -20.67 GB
+[UPDT] Time: 0.004057s | Mem: 256.00 KB
+[STEP] Total: 8.894223s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 21] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633361s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585982s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  135233.953125
+[BWD ] Time: 6.348833s | Mem: -20.67 GB
+[UPDT] Time: 0.003923s | Mem: 0.00 B
+[STEP] Total: 8.987988s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 22] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.635815s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.588447s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136039.390625
+[BWD ] Time: 6.322049s | Mem: -20.67 GB
+[UPDT] Time: 0.004086s | Mem: -256.00 KB
+[STEP] Total: 8.964098s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 23] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.681223s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.633815s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  136772.75
+[BWD ] Time: 6.270015s | Mem: -20.67 GB
+[UPDT] Time: 0.004575s | Mem: 256.00 KB
+[STEP] Total: 8.957861s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 24] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671945s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624472s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  137446.15625
+[BWD ] Time: 6.307108s | Mem: -20.67 GB
+[UPDT] Time: 0.003940s | Mem: 0.00 B
+[STEP] Total: 8.985264s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 25] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671941s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624592s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  138084.15625
+[BWD ] Time: 6.320602s | Mem: -20.67 GB
+[UPDT] Time: 0.004231s | Mem: -256.00 KB
+[STEP] Total: 8.999167s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 26] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.676378s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.628994s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  138680.9375
+[BWD ] Time: 6.279850s | Mem: -20.67 GB
+[UPDT] Time: 0.004013s | Mem: 256.00 KB
+[STEP] Total: 8.962117s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 27] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.669363s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622007s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  139253.28125
+[BWD ] Time: 6.318342s | Mem: -20.67 GB
+[UPDT] Time: 0.003804s | Mem: 0.00 B
+[STEP] Total: 8.993337s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 28] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.622075s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.574726s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  139814.1875
+[BWD ] Time: 6.248037s | Mem: -20.67 GB
+[UPDT] Time: 0.004223s | Mem: -256.00 KB
+[STEP] Total: 8.876526s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 29] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.633655s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.586057s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  140356.59375
+[BWD ] Time: 6.244928s | Mem: -20.67 GB
+[UPDT] Time: 0.004274s | Mem: 256.00 KB
+[STEP] Total: 8.884861s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 30] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653840s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.606470s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  140890.8125
+[BWD ] Time: 6.284958s | Mem: -20.67 GB
+[UPDT] Time: 0.004010s | Mem: 0.00 B
+[STEP] Total: 8.945162s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 31] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.632570s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.585186s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  141420.9375
+[BWD ] Time: 6.196595s | Mem: -20.67 GB
+[UPDT] Time: 0.003937s | Mem: -256.00 KB
+[STEP] Total: 8.835363s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 32] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.624378s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.577068s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  141938.609375
+[BWD ] Time: 6.222252s | Mem: -20.67 GB
+[UPDT] Time: 0.004423s | Mem: 256.00 KB
+[STEP] Total: 8.852952s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 33] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.648240s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.600874s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  142445.125
+[BWD ] Time: 6.208887s | Mem: -20.67 GB
+[UPDT] Time: 0.004282s | Mem: 0.00 B
+[STEP] Total: 8.863315s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 34] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660357s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.612967s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  142936.234375
+[BWD ] Time: 6.222873s | Mem: -20.67 GB
+[UPDT] Time: 0.004508s | Mem: -256.00 KB
+[STEP] Total: 8.889977s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 35] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640803s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593272s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  143411.828125
+[BWD ] Time: 6.320798s | Mem: -20.67 GB
+[UPDT] Time: 0.004534s | Mem: 256.00 KB
+[STEP] Total: 8.968069s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 36] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674106s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626752s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  143875.140625
+[BWD ] Time: 6.253858s | Mem: -20.67 GB
+[UPDT] Time: 0.004108s | Mem: 0.00 B
+[STEP] Total: 8.934198s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 37] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666828s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619448s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  144318.25
+[BWD ] Time: 6.259213s | Mem: -20.67 GB
+[UPDT] Time: 0.004449s | Mem: -256.00 KB
+[STEP] Total: 8.932911s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 38] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.665997s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.618673s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  144742.84375
+[BWD ] Time: 6.245770s | Mem: -20.67 GB
+[UPDT] Time: 0.004411s | Mem: 256.00 KB
+[STEP] Total: 8.918075s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 39] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.640726s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593347s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  145151.4375
+[BWD ] Time: 6.276256s | Mem: -20.67 GB
+[UPDT] Time: 0.004064s | Mem: 0.00 B
+[STEP] Total: 8.922897s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 40] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.605995s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.558630s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  145535.96875
+[BWD ] Time: 6.239914s | Mem: -20.67 GB
+[UPDT] Time: 0.004367s | Mem: -256.00 KB
+[STEP] Total: 8.852305s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 41] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670220s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622745s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  145894.796875
+[BWD ] Time: 6.305904s | Mem: -20.67 GB
+[UPDT] Time: 0.004433s | Mem: 256.00 KB
+[STEP] Total: 8.982508s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 42] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657015s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609647s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  146240.890625
+[BWD ] Time: 6.218683s | Mem: -20.67 GB
+[UPDT] Time: 0.004151s | Mem: 0.00 B
+[STEP] Total: 8.882172s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 43] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.608567s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.561193s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  146556.21875
+[BWD ] Time: 6.336706s | Mem: -20.67 GB
+[UPDT] Time: 0.004111s | Mem: -256.00 KB
+[STEP] Total: 8.951880s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 44] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.660589s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.613249s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  146851.125
+[BWD ] Time: 6.304906s | Mem: -20.67 GB
+[UPDT] Time: 0.004116s | Mem: 256.00 KB
+[STEP] Total: 8.971454s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 45] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.664470s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.617136s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  147117.8125
+[BWD ] Time: 6.221065s | Mem: -20.67 GB
+[UPDT] Time: 0.004620s | Mem: 0.00 B
+[STEP] Total: 8.892017s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 46] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.641473s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.594138s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  147368.59375
+[BWD ] Time: 6.277723s | Mem: -20.67 GB
+[UPDT] Time: 0.005284s | Mem: -256.00 KB
+[STEP] Total: 8.926754s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 47] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674102s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626681s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  147593.03125
+[BWD ] Time: 6.269681s | Mem: -20.67 GB
+[UPDT] Time: 0.005112s | Mem: 256.00 KB
+[STEP] Total: 8.950793s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 48] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.688435s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.640869s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  147806.59375
+[BWD ] Time: 6.322247s | Mem: -20.67 GB
+[UPDT] Time: 0.005064s | Mem: 0.00 B
+[STEP] Total: 9.017655s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 49] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.667419s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619996s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  147996.078125
+[BWD ] Time: 6.303325s | Mem: -20.67 GB
+[UPDT] Time: 0.005084s | Mem: -256.00 KB
+[STEP] Total: 8.978721s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 50] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670383s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.623035s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148176.625
+[BWD ] Time: 9.799899s | Mem: -20.67 GB
+[UPDT] Time: 0.004860s | Mem: 256.00 KB
+[STEP] Total: 12.477056s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 51] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.685169s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.637849s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148335.90625
+[BWD ] Time: 6.323412s | Mem: -20.67 GB
+[UPDT] Time: 0.005105s | Mem: 0.00 B
+[STEP] Total: 9.015629s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 52] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.641845s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.594483s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148483.046875
+[BWD ] Time: 6.251445s | Mem: -20.67 GB
+[UPDT] Time: 0.005174s | Mem: -256.00 KB
+[STEP] Total: 8.900263s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 53] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670795s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.623351s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148622.453125
+[BWD ] Time: 6.296408s | Mem: -20.67 GB
+[UPDT] Time: 0.004807s | Mem: 256.00 KB
+[STEP] Total: 8.973778s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 54] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.701187s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.653831s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148746.78125
+[BWD ] Time: 6.242049s | Mem: -20.67 GB
+[UPDT] Time: 0.005205s | Mem: 0.00 B
+[STEP] Total: 8.950604s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 55] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653976s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.606610s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148861.9375
+[BWD ] Time: 6.277649s | Mem: -20.67 GB
+[UPDT] Time: 0.005110s | Mem: -256.00 KB
+[STEP] Total: 8.939098s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 56] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.678307s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.630951s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148964.0625
+[BWD ] Time: 6.308291s | Mem: -20.67 GB
+[UPDT] Time: 0.004744s | Mem: 256.00 KB
+[STEP] Total: 8.993184s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 57] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.653213s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.605888s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149056.734375
+[BWD ] Time: 6.313705s | Mem: -20.67 GB
+[UPDT] Time: 0.005159s | Mem: 0.00 B
+[STEP] Total: 8.974152s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 58] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.678969s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.631564s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149140.8125
+[BWD ] Time: 6.273852s | Mem: -20.67 GB
+[UPDT] Time: 0.004973s | Mem: -256.00 KB
+[STEP] Total: 8.959725s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 59] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.680294s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.632792s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149214.546875
+[BWD ] Time: 6.270226s | Mem: -20.67 GB
+[UPDT] Time: 0.005133s | Mem: 256.00 KB
+[STEP] Total: 8.957527s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 60] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.637367s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.589996s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149279.59375
+[BWD ] Time: 6.286574s | Mem: -20.67 GB
+[UPDT] Time: 0.004976s | Mem: 0.00 B
+[STEP] Total: 8.931085s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 61] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666614s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619225s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149335.359375
+[BWD ] Time: 6.278523s | Mem: -20.67 GB
+[UPDT] Time: 0.004778s | Mem: -256.00 KB
+[STEP] Total: 8.952155s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 62] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.664648s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.617292s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149383.328125
+[BWD ] Time: 6.211799s | Mem: -20.67 GB
+[UPDT] Time: 0.004856s | Mem: 256.00 KB
+[STEP] Total: 8.883092s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 63] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.634866s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.587514s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149428.5625
+[BWD ] Time: 6.195193s | Mem: -20.67 GB
+[UPDT] Time: 0.005074s | Mem: 0.00 B
+[STEP] Total: 8.836978s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 64] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656293s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.608862s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149464.0625
+[BWD ] Time: 6.317389s | Mem: -20.67 GB
+[UPDT] Time: 0.005144s | Mem: -256.00 KB
+[STEP] Total: 8.980868s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 65] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.665482s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.617915s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149492.4375
+[BWD ] Time: 6.296723s | Mem: -20.67 GB
+[UPDT] Time: 0.005150s | Mem: 256.00 KB
+[STEP] Total: 8.969210s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 66] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.658491s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.611101s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149515.078125
+[BWD ] Time: 6.264762s | Mem: -20.67 GB
+[UPDT] Time: 0.005121s | Mem: 0.00 B
+[STEP] Total: 8.930156s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 67] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.668921s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.621443s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149532.59375
+[BWD ] Time: 6.221876s | Mem: -20.67 GB
+[UPDT] Time: 0.005011s | Mem: -256.00 KB
+[STEP] Total: 8.898838s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 68] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.675356s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.627974s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149544.578125
+[BWD ] Time: 6.336545s | Mem: -20.67 GB
+[UPDT] Time: 0.005039s | Mem: 256.00 KB
+[STEP] Total: 9.018803s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 69] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.673705s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626357s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149554.90625
+[BWD ] Time: 6.254011s | Mem: -20.67 GB
+[UPDT] Time: 0.004940s | Mem: 0.00 B
+[STEP] Total: 8.934455s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 70] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.638532s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591198s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149560.140625
+[BWD ] Time: 6.228074s | Mem: -20.67 GB
+[UPDT] Time: 0.005233s | Mem: -256.00 KB
+[STEP] Total: 8.874111s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 71] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.674137s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.626628s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149558.359375
+[BWD ] Time: 6.295249s | Mem: -20.67 GB
+[UPDT] Time: 0.004902s | Mem: 256.00 KB
+[STEP] Total: 8.976210s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 72] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.662335s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.614922s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149555.171875
+[BWD ] Time: 6.265061s | Mem: -20.67 GB
+[UPDT] Time: 0.004738s | Mem: 0.00 B
+[STEP] Total: 8.933935s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 73] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.666559s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.619092s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149545.9375
+[BWD ] Time: 6.282749s | Mem: -20.67 GB
+[UPDT] Time: 0.005124s | Mem: -256.00 KB
+[STEP] Total: 8.957524s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 74] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.641157s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.593780s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149534.40625
+[BWD ] Time: 6.214638s | Mem: -20.67 GB
+[UPDT] Time: 0.005096s | Mem: 256.00 KB
+[STEP] Total: 8.862766s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 75] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.624273s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.576917s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149518.09375
+[BWD ] Time: 6.284907s | Mem: -20.67 GB
+[UPDT] Time: 0.004965s | Mem: 0.00 B
+[STEP] Total: 8.915959s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 76] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.649600s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.602261s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149502.609375
+[BWD ] Time: 6.261686s | Mem: -20.67 GB
+[UPDT] Time: 0.004800s | Mem: -256.00 KB
+[STEP] Total: 8.918310s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 77] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.629327s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.581874s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149484.0
+[BWD ] Time: 6.317941s | Mem: -20.67 GB
+[UPDT] Time: 0.005004s | Mem: 256.00 KB
+[STEP] Total: 8.954201s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 78] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.622391s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.575018s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149461.390625
+[BWD ] Time: 6.249112s | Mem: -20.67 GB
+[UPDT] Time: 0.005134s | Mem: 0.00 B
+[STEP] Total: 8.878522s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 79] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.627860s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.580494s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149435.53125
+[BWD ] Time: 6.527283s | Mem: -20.67 GB
+[UPDT] Time: 0.005180s | Mem: -256.00 KB
+[STEP] Total: 9.162437s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 80] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.713915s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.638479s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149407.140625
+[BWD ] Time: 6.308797s | Mem: -20.67 GB
+[UPDT] Time: 0.005123s | Mem: 256.00 KB
+[STEP] Total: 9.030065s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 81] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.696960s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.649623s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149375.9375
+[BWD ] Time: 6.333031s | Mem: -20.67 GB
+[UPDT] Time: 0.005049s | Mem: 0.00 B
+[STEP] Total: 9.036832s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 82] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671754s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.624415s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149345.8125
+[BWD ] Time: 6.261780s | Mem: -20.67 GB
+[UPDT] Time: 0.005074s | Mem: -256.00 KB
+[STEP] Total: 8.940661s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 83] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656869s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.609374s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149316.703125
+[BWD ] Time: 6.215760s | Mem: -20.67 GB
+[UPDT] Time: 0.005357s | Mem: 256.00 KB
+[STEP] Total: 8.879914s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 84] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.650643s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.603163s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149286.609375
+[BWD ] Time: 6.239782s | Mem: -20.67 GB
+[UPDT] Time: 0.004780s | Mem: 0.00 B
+[STEP] Total: 8.897060s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 85] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.668309s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.620944s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149250.25
+[BWD ] Time: 6.293219s | Mem: -20.67 GB
+[UPDT] Time: 0.004882s | Mem: -256.00 KB
+[STEP] Total: 8.968590s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 86] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.639203s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.591839s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149212.46875
+[BWD ] Time: 6.310464s | Mem: -20.67 GB
+[UPDT] Time: 0.005010s | Mem: 256.00 KB
+[STEP] Total: 8.956996s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 87] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.668897s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.621545s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149172.71875
+[BWD ] Time: 6.285705s | Mem: -20.67 GB
+[UPDT] Time: 0.005061s | Mem: 0.00 B
+[STEP] Total: 8.961719s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 88] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.635958s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.588536s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149134.46875
+[BWD ] Time: 6.200748s | Mem: -20.67 GB
+[UPDT] Time: 0.005122s | Mem: -256.00 KB
+[STEP] Total: 8.843721s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 89] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.657392s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.610013s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149094.28125
+[BWD ] Time: 6.288621s | Mem: -20.67 GB
+[UPDT] Time: 0.004955s | Mem: 256.00 KB
+[STEP] Total: 8.952962s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 90] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.677995s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.630452s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149052.78125
+[BWD ] Time: 6.913559s | Mem: -20.67 GB
+[UPDT] Time: 0.004980s | Mem: 0.00 B
+[STEP] Total: 9.598406s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 91] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.710751s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.638203s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  149014.265625
+[BWD ] Time: 7.882375s | Mem: -20.67 GB
+[UPDT] Time: 0.014851s | Mem: -256.00 KB
+[STEP] Total: 10.609982s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 92] ============ 详细性能分析 ============
+[模型部分] 总时间: 12.000098s | 显存: 20.69 GB
+[PDE 部分] 总时间: 11.936304s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148966.9375
+[BWD ] Time: 6.300734s | Mem: -20.67 GB
+[UPDT] Time: 0.005130s | Mem: 256.00 KB
+[STEP] Total: 18.308585s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 93] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.670165s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.622744s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148922.75
+[BWD ] Time: 6.258392s | Mem: -20.67 GB
+[UPDT] Time: 0.005233s | Mem: 0.00 B
+[STEP] Total: 8.935633s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 94] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.642485s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.595086s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148878.21875
+[BWD ] Time: 6.270264s | Mem: -20.67 GB
+[UPDT] Time: 0.004895s | Mem: -256.00 KB
+[STEP] Total: 8.919483s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 95] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.656401s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.608954s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148832.5625
+[BWD ] Time: 6.313237s | Mem: -20.67 GB
+[UPDT] Time: 0.005135s | Mem: 256.00 KB
+[STEP] Total: 8.976698s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 96] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.645641s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.598044s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148787.140625
+[BWD ] Time: 6.193246s | Mem: -20.67 GB
+[UPDT] Time: 0.005121s | Mem: 0.00 B
+[STEP] Total: 8.845862s | ΔMem: 0.00 B | Peak: 33.82 GB
+
+[Step 97] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.671424s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.623924s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148735.921875
+[BWD ] Time: 6.349702s | Mem: -20.67 GB
+[UPDT] Time: 0.031496s | Mem: -256.00 KB
+[STEP] Total: 9.055209s | ΔMem: -256.00 KB | Peak: 33.82 GB
+
+[Step 98] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.740384s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.692902s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148686.78125
+[BWD ] Time: 6.247089s | Mem: -20.67 GB
+[UPDT] Time: 0.033920s | Mem: 256.00 KB
+[STEP] Total: 9.023822s | ΔMem: 256.00 KB | Peak: 33.82 GB
+
+[Step 99] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.822036s | 显存: 20.69 GB
+[PDE 部分] 总时间: 2.774672s | 显存: 0.00 B
+surrogate_loss (vs forward.true_19):  148642.34375
+[BWD ] Time: 7.199827s | Mem: -20.67 GB
+[UPDT] Time: 0.025367s | Mem: 0.00 B
+[STEP] Total: 10.088808s | ΔMem: 0.00 B | Peak: 33.82 GB

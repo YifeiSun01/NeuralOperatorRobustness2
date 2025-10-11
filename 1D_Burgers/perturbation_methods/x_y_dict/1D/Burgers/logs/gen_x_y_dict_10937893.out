@@ -1,0 +1,724 @@
+c0906a-s25.ufhpc
+Tue Aug 26 07:17:54 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+当前使用的是 GPU (CUDA) 进行计算
+设备名称: NVIDIA B200
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 0    initial condition (GRF): shape=(1024,)
+index: 0    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 1    initial condition (GRF): shape=(1024,)
+index: 1    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 2    initial condition (GRF): shape=(1024,)
+index: 2    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 3    initial condition (GRF): shape=(1024,)
+index: 3    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 4    initial condition (GRF): shape=(1024,)
+index: 4    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 5    initial condition (GRF): shape=(1024,)
+index: 5    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 6    initial condition (GRF): shape=(1024,)
+index: 6    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 7    initial condition (GRF): shape=(1024,)
+index: 7    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 8    initial condition (GRF): shape=(1024,)
+index: 8    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 9    initial condition (GRF): shape=(1024,)
+index: 9    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 10    initial condition (GRF): shape=(1024,)
+index: 10    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 11    initial condition (GRF): shape=(1024,)
+index: 11    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 12    initial condition (GRF): shape=(1024,)
+index: 12    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 13    initial condition (GRF): shape=(1024,)
+index: 13    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 14    initial condition (GRF): shape=(1024,)
+index: 14    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 15    initial condition (GRF): shape=(1024,)
+index: 15    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 16    initial condition (GRF): shape=(1024,)
+index: 16    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 17    initial condition (GRF): shape=(1024,)
+index: 17    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 18    initial condition (GRF): shape=(1024,)
+index: 18    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 19    initial condition (GRF): shape=(1024,)
+index: 19    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 20    initial condition (GRF): shape=(1024,)
+index: 20    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 21    initial condition (GRF): shape=(1024,)
+index: 21    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 22    initial condition (GRF): shape=(1024,)
+index: 22    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 23    initial condition (GRF): shape=(1024,)
+index: 23    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 24    initial condition (GRF): shape=(1024,)
+index: 24    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 25    initial condition (GRF): shape=(1024,)
+index: 25    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 26    initial condition (GRF): shape=(1024,)
+index: 26    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 27    initial condition (GRF): shape=(1024,)
+index: 27    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 28    initial condition (GRF): shape=(1024,)
+index: 28    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 29    initial condition (GRF): shape=(1024,)
+index: 29    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 30    initial condition (GRF): shape=(1024,)
+index: 30    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 31    initial condition (GRF): shape=(1024,)
+index: 31    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 32    initial condition (GRF): shape=(1024,)
+index: 32    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 33    initial condition (GRF): shape=(1024,)
+index: 33    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 34    initial condition (GRF): shape=(1024,)
+index: 34    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 35    initial condition (GRF): shape=(1024,)
+index: 35    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 36    initial condition (GRF): shape=(1024,)
+index: 36    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 37    initial condition (GRF): shape=(1024,)
+index: 37    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 38    initial condition (GRF): shape=(1024,)
+index: 38    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 39    initial condition (GRF): shape=(1024,)
+index: 39    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 40    initial condition (GRF): shape=(1024,)
+index: 40    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 41    initial condition (GRF): shape=(1024,)
+index: 41    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 42    initial condition (GRF): shape=(1024,)
+index: 42    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 43    initial condition (GRF): shape=(1024,)
+index: 43    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 44    initial condition (GRF): shape=(1024,)
+index: 44    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 45    initial condition (GRF): shape=(1024,)
+index: 45    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 46    initial condition (GRF): shape=(1024,)
+index: 46    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 47    initial condition (GRF): shape=(1024,)
+index: 47    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 48    initial condition (GRF): shape=(1024,)
+index: 48    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 49    initial condition (GRF): shape=(1024,)
+index: 49    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 50    initial condition (GRF): shape=(1024,)
+index: 50    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 51    initial condition (GRF): shape=(1024,)
+index: 51    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 52    initial condition (GRF): shape=(1024,)
+index: 52    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 53    initial condition (GRF): shape=(1024,)
+index: 53    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 54    initial condition (GRF): shape=(1024,)
+index: 54    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 55    initial condition (GRF): shape=(1024,)
+index: 55    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 56    initial condition (GRF): shape=(1024,)
+index: 56    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 57    initial condition (GRF): shape=(1024,)
+index: 57    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 58    initial condition (GRF): shape=(1024,)
+index: 58    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 59    initial condition (GRF): shape=(1024,)
+index: 59    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 60    initial condition (GRF): shape=(1024,)
+index: 60    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 61    initial condition (GRF): shape=(1024,)
+index: 61    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 62    initial condition (GRF): shape=(1024,)
+index: 62    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 63    initial condition (GRF): shape=(1024,)
+index: 63    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 64    initial condition (GRF): shape=(1024,)
+index: 64    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 65    initial condition (GRF): shape=(1024,)
+index: 65    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 66    initial condition (GRF): shape=(1024,)
+index: 66    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 67    initial condition (GRF): shape=(1024,)
+index: 67    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 68    initial condition (GRF): shape=(1024,)
+index: 68    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 69    initial condition (GRF): shape=(1024,)
+index: 69    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 70    initial condition (GRF): shape=(1024,)
+index: 70    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 71    initial condition (GRF): shape=(1024,)
+index: 71    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 72    initial condition (GRF): shape=(1024,)
+index: 72    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 73    initial condition (GRF): shape=(1024,)
+index: 73    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 74    initial condition (GRF): shape=(1024,)
+index: 74    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 75    initial condition (GRF): shape=(1024,)
+index: 75    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 76    initial condition (GRF): shape=(1024,)
+index: 76    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 77    initial condition (GRF): shape=(1024,)
+index: 77    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 78    initial condition (GRF): shape=(1024,)
+index: 78    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 79    initial condition (GRF): shape=(1024,)
+index: 79    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 80    initial condition (GRF): shape=(1024,)
+index: 80    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 81    initial condition (GRF): shape=(1024,)
+index: 81    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 82    initial condition (GRF): shape=(1024,)
+index: 82    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 83    initial condition (GRF): shape=(1024,)
+index: 83    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 84    initial condition (GRF): shape=(1024,)
+index: 84    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 85    initial condition (GRF): shape=(1024,)
+index: 85    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 86    initial condition (GRF): shape=(1024,)
+index: 86    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 87    initial condition (GRF): shape=(1024,)
+index: 87    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 88    initial condition (GRF): shape=(1024,)
+index: 88    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 89    initial condition (GRF): shape=(1024,)
+index: 89    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 90    initial condition (GRF): shape=(1024,)
+index: 90    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 91    initial condition (GRF): shape=(1024,)
+index: 91    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 92    initial condition (GRF): shape=(1024,)
+index: 92    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 93    initial condition (GRF): shape=(1024,)
+index: 93    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 94    initial condition (GRF): shape=(1024,)
+index: 94    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 95    initial condition (GRF): shape=(1024,)
+index: 95    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 96    initial condition (GRF): shape=(1024,)
+index: 96    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 97    initial condition (GRF): shape=(1024,)
+index: 97    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 98    initial condition (GRF): shape=(1024,)
+index: 98    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 99    initial condition (GRF): shape=(1024,)
+index: 99    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 100    initial condition (GRF): shape=(1024,)
+index: 100    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 101    initial condition (GRF): shape=(1024,)
+index: 101    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 102    initial condition (GRF): shape=(1024,)
+index: 102    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 103    initial condition (GRF): shape=(1024,)
+index: 103    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 104    initial condition (GRF): shape=(1024,)
+index: 104    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 105    initial condition (GRF): shape=(1024,)
+index: 105    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 106    initial condition (GRF): shape=(1024,)
+index: 106    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 107    initial condition (GRF): shape=(1024,)
+index: 107    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 108    initial condition (GRF): shape=(1024,)
+index: 108    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 109    initial condition (GRF): shape=(1024,)
+index: 109    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 110    initial condition (GRF): shape=(1024,)
+index: 110    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 111    initial condition (GRF): shape=(1024,)
+index: 111    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 112    initial condition (GRF): shape=(1024,)
+index: 112    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 113    initial condition (GRF): shape=(1024,)
+index: 113    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 114    initial condition (GRF): shape=(1024,)
+index: 114    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 115    initial condition (GRF): shape=(1024,)
+index: 115    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 116    initial condition (GRF): shape=(1024,)
+index: 116    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 117    initial condition (GRF): shape=(1024,)
+index: 117    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 118    initial condition (GRF): shape=(1024,)
+index: 118    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 119    initial condition (GRF): shape=(1024,)
+index: 119    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 120    initial condition (GRF): shape=(1024,)
+index: 120    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 121    initial condition (GRF): shape=(1024,)
+index: 121    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 122    initial condition (GRF): shape=(1024,)
+index: 122    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 123    initial condition (GRF): shape=(1024,)
+index: 123    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 124    initial condition (GRF): shape=(1024,)
+index: 124    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 125    initial condition (GRF): shape=(1024,)
+index: 125    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 126    initial condition (GRF): shape=(1024,)
+index: 126    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 127    initial condition (GRF): shape=(1024,)
+index: 127    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 128    initial condition (GRF): shape=(1024,)
+index: 128    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 129    initial condition (GRF): shape=(1024,)
+index: 129    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 130    initial condition (GRF): shape=(1024,)
+index: 130    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 131    initial condition (GRF): shape=(1024,)
+index: 131    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 132    initial condition (GRF): shape=(1024,)
+index: 132    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 133    initial condition (GRF): shape=(1024,)
+index: 133    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 134    initial condition (GRF): shape=(1024,)
+index: 134    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 135    initial condition (GRF): shape=(1024,)
+index: 135    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 136    initial condition (GRF): shape=(1024,)
+index: 136    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 137    initial condition (GRF): shape=(1024,)
+index: 137    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 138    initial condition (GRF): shape=(1024,)
+index: 138    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 139    initial condition (GRF): shape=(1024,)
+index: 139    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 140    initial condition (GRF): shape=(1024,)
+index: 140    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 141    initial condition (GRF): shape=(1024,)
+index: 141    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 142    initial condition (GRF): shape=(1024,)
+index: 142    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 143    initial condition (GRF): shape=(1024,)
+index: 143    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 144    initial condition (GRF): shape=(1024,)
+index: 144    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 145    initial condition (GRF): shape=(1024,)
+index: 145    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 146    initial condition (GRF): shape=(1024,)
+index: 146    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 147    initial condition (GRF): shape=(1024,)
+index: 147    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 148    initial condition (GRF): shape=(1024,)
+index: 148    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 149    initial condition (GRF): shape=(1024,)
+index: 149    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 150    initial condition (GRF): shape=(1024,)
+index: 150    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 151    initial condition (GRF): shape=(1024,)
+index: 151    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 152    initial condition (GRF): shape=(1024,)
+index: 152    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 153    initial condition (GRF): shape=(1024,)
+index: 153    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 154    initial condition (GRF): shape=(1024,)
+index: 154    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 155    initial condition (GRF): shape=(1024,)
+index: 155    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 156    initial condition (GRF): shape=(1024,)
+index: 156    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 157    initial condition (GRF): shape=(1024,)
+index: 157    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 158    initial condition (GRF): shape=(1024,)
+index: 158    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 159    initial condition (GRF): shape=(1024,)
+index: 159    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 160    initial condition (GRF): shape=(1024,)
+index: 160    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 161    initial condition (GRF): shape=(1024,)
+index: 161    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 162    initial condition (GRF): shape=(1024,)
+index: 162    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 163    initial condition (GRF): shape=(1024,)
+index: 163    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 164    initial condition (GRF): shape=(1024,)
+index: 164    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 165    initial condition (GRF): shape=(1024,)
+index: 165    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 166    initial condition (GRF): shape=(1024,)
+index: 166    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 167    initial condition (GRF): shape=(1024,)
+index: 167    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 168    initial condition (GRF): shape=(1024,)
+index: 168    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 169    initial condition (GRF): shape=(1024,)
+index: 169    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 170    initial condition (GRF): shape=(1024,)
+index: 170    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 171    initial condition (GRF): shape=(1024,)
+index: 171    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 172    initial condition (GRF): shape=(1024,)
+index: 172    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 173    initial condition (GRF): shape=(1024,)
+index: 173    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 174    initial condition (GRF): shape=(1024,)
+index: 174    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 175    initial condition (GRF): shape=(1024,)
+index: 175    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 176    initial condition (GRF): shape=(1024,)
+index: 176    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 177    initial condition (GRF): shape=(1024,)
+index: 177    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 178    initial condition (GRF): shape=(1024,)
+index: 178    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 179    initial condition (GRF): shape=(1024,)
+index: 179    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 180    initial condition (GRF): shape=(1024,)
+index: 180    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 181    initial condition (GRF): shape=(1024,)
+index: 181    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 182    initial condition (GRF): shape=(1024,)
+index: 182    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 183    initial condition (GRF): shape=(1024,)
+index: 183    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 184    initial condition (GRF): shape=(1024,)
+index: 184    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 185    initial condition (GRF): shape=(1024,)
+index: 185    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 186    initial condition (GRF): shape=(1024,)
+index: 186    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 187    initial condition (GRF): shape=(1024,)
+index: 187    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 188    initial condition (GRF): shape=(1024,)
+index: 188    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 189    initial condition (GRF): shape=(1024,)
+index: 189    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 190    initial condition (GRF): shape=(1024,)
+index: 190    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 191    initial condition (GRF): shape=(1024,)
+index: 191    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 192    initial condition (GRF): shape=(1024,)
+index: 192    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 193    initial condition (GRF): shape=(1024,)
+index: 193    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 194    initial condition (GRF): shape=(1024,)
+index: 194    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 195    initial condition (GRF): shape=(1024,)
+index: 195    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 196    initial condition (GRF): shape=(1024,)
+index: 196    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 197    initial condition (GRF): shape=(1024,)
+index: 197    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 198    initial condition (GRF): shape=(1024,)
+index: 198    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 199    initial condition (GRF): shape=(1024,)
+index: 199    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 200    initial condition (GRF): shape=(1024,)
+index: 200    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 201    initial condition (GRF): shape=(1024,)
+index: 201    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 202    initial condition (GRF): shape=(1024,)
+index: 202    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 203    initial condition (GRF): shape=(1024,)
+index: 203    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 204    initial condition (GRF): shape=(1024,)
+index: 204    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 205    initial condition (GRF): shape=(1024,)
+index: 205    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 206    initial condition (GRF): shape=(1024,)
+index: 206    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 207    initial condition (GRF): shape=(1024,)
+index: 207    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 208    initial condition (GRF): shape=(1024,)
+index: 208    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 209    initial condition (GRF): shape=(1024,)
+index: 209    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 210    initial condition (GRF): shape=(1024,)
+index: 210    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 211    initial condition (GRF): shape=(1024,)
+index: 211    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 212    initial condition (GRF): shape=(1024,)
+index: 212    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 213    initial condition (GRF): shape=(1024,)
+index: 213    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 214    initial condition (GRF): shape=(1024,)
+index: 214    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 215    initial condition (GRF): shape=(1024,)
+index: 215    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 216    initial condition (GRF): shape=(1024,)
+index: 216    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 217    initial condition (GRF): shape=(1024,)
+index: 217    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 218    initial condition (GRF): shape=(1024,)
+index: 218    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 219    initial condition (GRF): shape=(1024,)
+index: 219    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 220    initial condition (GRF): shape=(1024,)
+index: 220    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 221    initial condition (GRF): shape=(1024,)
+index: 221    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 222    initial condition (GRF): shape=(1024,)
+index: 222    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 223    initial condition (GRF): shape=(1024,)
+index: 223    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 224    initial condition (GRF): shape=(1024,)
+index: 224    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 225    initial condition (GRF): shape=(1024,)
+index: 225    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 226    initial condition (GRF): shape=(1024,)
+index: 226    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 227    initial condition (GRF): shape=(1024,)
+index: 227    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 228    initial condition (GRF): shape=(1024,)
+index: 228    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 229    initial condition (GRF): shape=(1024,)
+index: 229    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 230    initial condition (GRF): shape=(1024,)
+index: 230    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 231    initial condition (GRF): shape=(1024,)
+index: 231    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 232    initial condition (GRF): shape=(1024,)
+index: 232    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 233    initial condition (GRF): shape=(1024,)
+index: 233    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 234    initial condition (GRF): shape=(1024,)
+index: 234    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 235    initial condition (GRF): shape=(1024,)
+index: 235    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 236    initial condition (GRF): shape=(1024,)
+index: 236    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 237    initial condition (GRF): shape=(1024,)
+index: 237    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 238    initial condition (GRF): shape=(1024,)
+index: 238    final_solution: shape=(1024,)    used_step=0.002

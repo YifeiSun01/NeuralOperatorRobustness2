@@ -1,0 +1,39 @@
+c0906a-s5.ufhpc
+Sun Sep  7 06:08:28 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+>>> Running SINGLE job with MODE_SPEC=wwwwwwwwww
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+======================================== 诊断结束 ========================================
+
+input_list: [{'norm': 2, 'epsilon': 13.1072, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 39.3216, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 78.6432, 'alpha': 1.0, 'num_steps': 100}]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 1.0, num_steps: 100, mode_spec: wwwwwwwwww, loss_reduction: sum, b1: 0.9, b2: 0.999, adam_eps: 1e-08, sign_Linf: True, amsgrad: False
+x_batch.shape:  torch.Size([5, 256, 256])
+batch start index:  0 batch end index:  5
+[step 0] loss=9.407364e+05 | peak_mem=34607.1MB
+[step 1] loss=1.161152e+06 | peak_mem=34630.2MB
+[step 2] loss=9.950582e+05 | peak_mem=34630.2MB
+[step 3] loss=1.101419e+06 | peak_mem=34630.2MB
+[step 4] loss=9.465270e+05 | peak_mem=34630.2MB
+[step 5] loss=1.042938e+06 | peak_mem=34630.2MB
+[step 6] loss=1.095767e+06 | peak_mem=34630.2MB
+[step 7] loss=1.013719e+06 | peak_mem=34630.2MB

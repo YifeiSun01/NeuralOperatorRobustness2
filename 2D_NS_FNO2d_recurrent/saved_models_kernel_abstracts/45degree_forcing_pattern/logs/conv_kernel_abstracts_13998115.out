@@ -1,0 +1,485 @@
+c0907a-s25.ufhpc
+Thu Sep 25 11:03:15 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes128_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes128_width40_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 102.09s
+[Layer 1/4] freq (-kx) ...
+[-] done 64.17s
+[Layer 1/4] spatial HxW=256x254 => 65024 mats
+[Layer 1/4] done in 398.00s
+[Layer 2/4] freq (+kx) ...
+[+] done 57.25s
+[Layer 2/4] freq (-kx) ...
+[-] done 57.28s
+[Layer 2/4] spatial HxW=256x254 => 65024 mats
+[Layer 2/4] done in 334.46s
+[Layer 3/4] freq (+kx) ...
+[+] done 54.96s
+[Layer 3/4] freq (-kx) ...
+[-] done 55.03s
+[Layer 3/4] spatial HxW=256x254 => 65024 mats
+[Layer 3/4] done in 326.56s
+[Layer 4/4] freq (+kx) ...
+[+] done 62.16s
+[Layer 4/4] freq (-kx) ...
+[-] done 62.09s
+[Layer 4/4] spatial HxW=256x254 => 65024 mats
+[Layer 4/4] done in 351.67s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes128_width40_epochs500_Tin10_T10.analysis.pt  (elapsed 1413.63s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 1425.15s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes128_width40_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes12_width20_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes12_width20_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 1.51s
+[Layer 1/4] freq (-kx) ...
+[-] done 0.00s
+[Layer 1/4] spatial HxW=24x22 => 528 mats
+[Layer 1/4] done in 2.13s
+[Layer 2/4] freq (+kx) ...
+[+] done 0.00s
+[Layer 2/4] freq (-kx) ...
+[-] done 0.00s
+[Layer 2/4] spatial HxW=24x22 => 528 mats
+[Layer 2/4] done in 0.01s
+[Layer 3/4] freq (+kx) ...
+[+] done 0.00s
+[Layer 3/4] freq (-kx) ...
+[-] done 0.00s
+[Layer 3/4] spatial HxW=24x22 => 528 mats
+[Layer 3/4] done in 0.01s
+[Layer 4/4] freq (+kx) ...
+[+] done 0.00s
+[Layer 4/4] freq (-kx) ...
+[-] done 0.00s
+[Layer 4/4] spatial HxW=24x22 => 528 mats
+[Layer 4/4] done in 0.01s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes12_width20_epochs500_Tin10_T10.analysis.pt  (elapsed 2.17s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 3.26s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes12_width20_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes16_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes16_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 1.11s
+[Layer 1/4] freq (-kx) ...
+[-] done 1.14s
+[Layer 1/4] spatial HxW=32x30 => 960 mats
+[Layer 1/4] done in 6.17s
+[Layer 2/4] freq (+kx) ...
+[+] done 0.97s
+[Layer 2/4] freq (-kx) ...
+[-] done 0.99s
+[Layer 2/4] spatial HxW=32x30 => 960 mats
+[Layer 2/4] done in 5.63s
+[Layer 3/4] freq (+kx) ...
+[+] done 0.96s
+[Layer 3/4] freq (-kx) ...
+[-] done 0.97s
+[Layer 3/4] spatial HxW=32x30 => 960 mats
+[Layer 3/4] done in 5.53s
+[Layer 4/4] freq (+kx) ...
+[+] done 1.03s
+[Layer 4/4] freq (-kx) ...
+[-] done 1.07s
+[Layer 4/4] spatial HxW=32x30 => 960 mats
+[Layer 4/4] done in 5.87s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes16_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 23.22s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 23.63s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes16_width60_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width40_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 3.95s
+[Layer 1/4] freq (-kx) ...
+[-] done 4.01s
+[Layer 1/4] spatial HxW=64x62 => 3968 mats
+[Layer 1/4] done in 21.83s
+[Layer 2/4] freq (+kx) ...
+[+] done 3.54s
+[Layer 2/4] freq (-kx) ...
+[-] done 3.60s
+[Layer 2/4] spatial HxW=64x62 => 3968 mats
+[Layer 2/4] done in 20.21s
+[Layer 3/4] freq (+kx) ...
+[+] done 3.43s
+[Layer 3/4] freq (-kx) ...
+[-] done 3.47s
+[Layer 3/4] spatial HxW=64x62 => 3968 mats
+[Layer 3/4] done in 19.83s
+[Layer 4/4] freq (+kx) ...
+[+] done 3.73s
+[Layer 4/4] freq (-kx) ...
+[-] done 3.78s
+[Layer 4/4] spatial HxW=64x62 => 3968 mats
+[Layer 4/4] done in 20.58s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width40_epochs500_Tin10_T10.analysis.pt  (elapsed 82.49s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 83.25s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width40_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width40_epochs500_Tin1_T19.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 4.63s
+[Layer 1/4] freq (-kx) ...
+[-] done 4.37s
+[Layer 1/4] spatial HxW=64x62 => 3968 mats
+[Layer 1/4] done in 23.11s
+[Layer 2/4] freq (+kx) ...
+[+] done 3.63s
+[Layer 2/4] freq (-kx) ...
+[-] done 3.67s
+[Layer 2/4] spatial HxW=64x62 => 3968 mats
+[Layer 2/4] done in 20.51s
+[Layer 3/4] freq (+kx) ...
+[+] done 3.54s
+[Layer 3/4] freq (-kx) ...
+[-] done 3.59s
+[Layer 3/4] spatial HxW=64x62 => 3968 mats
+[Layer 3/4] done in 20.23s
+[Layer 4/4] freq (+kx) ...
+[+] done 3.73s
+[Layer 4/4] freq (-kx) ...
+[-] done 3.78s
+[Layer 4/4] spatial HxW=64x62 => 3968 mats
+[Layer 4/4] done in 20.79s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width40_epochs500_Tin1_T19.analysis.pt  (elapsed 84.67s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 85.45s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width40_epochs500_Tin1_T19.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 4.51s
+[Layer 1/4] freq (-kx) ...
+[-] done 4.61s
+[Layer 1/4] spatial HxW=64x62 => 3968 mats
+[Layer 1/4] done in 24.95s
+[Layer 2/4] freq (+kx) ...
+[+] done 3.92s
+[Layer 2/4] freq (-kx) ...
+[-] done 3.98s
+[Layer 2/4] spatial HxW=64x62 => 3968 mats
+[Layer 2/4] done in 23.16s
+[Layer 3/4] freq (+kx) ...
+[+] done 3.85s
+[Layer 3/4] freq (-kx) ...
+[-] done 3.89s
+[Layer 3/4] spatial HxW=64x62 => 3968 mats
+[Layer 3/4] done in 22.60s
+[Layer 4/4] freq (+kx) ...
+[+] done 4.31s
+[Layer 4/4] freq (-kx) ...
+[-] done 4.38s
+[Layer 4/4] spatial HxW=64x62 => 3968 mats
+[Layer 4/4] done in 24.20s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 94.98s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 96.39s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes32_width60_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width40_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 8.95s
+[Layer 1/4] freq (-kx) ...
+[-] done 9.05s
+[Layer 1/4] spatial HxW=96x94 => 9024 mats
+[Layer 1/4] done in 49.79s
+[Layer 2/4] freq (+kx) ...
+[+] done 8.01s
+[Layer 2/4] freq (-kx) ...
+[-] done 8.11s
+[Layer 2/4] spatial HxW=96x94 => 9024 mats
+[Layer 2/4] done in 46.45s
+[Layer 3/4] freq (+kx) ...
+[+] done 7.65s
+[Layer 3/4] freq (-kx) ...
+[-] done 7.75s
+[Layer 3/4] spatial HxW=96x94 => 9024 mats
+[Layer 3/4] done in 45.29s
+[Layer 4/4] freq (+kx) ...
+[+] done 8.70s
+[Layer 4/4] freq (-kx) ...
+[-] done 8.69s
+[Layer 4/4] spatial HxW=96x94 => 9024 mats
+[Layer 4/4] done in 47.80s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width40_epochs500_Tin10_T10.analysis.pt  (elapsed 189.41s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 190.77s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width40_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 10.39s
+[Layer 1/4] freq (-kx) ...
+[-] done 10.84s
+[Layer 1/4] spatial HxW=96x94 => 9024 mats
+[Layer 1/4] done in 57.55s
+[Layer 2/4] freq (+kx) ...
+[+] done 8.98s
+[Layer 2/4] freq (-kx) ...
+[-] done 9.19s
+[Layer 2/4] spatial HxW=96x94 => 9024 mats
+[Layer 2/4] done in 53.31s
+[Layer 3/4] freq (+kx) ...
+[+] done 8.84s
+[Layer 3/4] freq (-kx) ...
+[-] done 8.91s
+[Layer 3/4] spatial HxW=96x94 => 9024 mats
+[Layer 3/4] done in 51.83s
+[Layer 4/4] freq (+kx) ...
+[+] done 9.93s
+[Layer 4/4] freq (-kx) ...
+[-] done 9.97s
+[Layer 4/4] spatial HxW=96x94 => 9024 mats
+[Layer 4/4] done in 55.26s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 218.02s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 220.56s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width60_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width80_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 16.99s
+[Layer 1/4] freq (-kx) ...
+[-] done 17.92s
+[Layer 1/4] spatial HxW=96x94 => 9024 mats
+[Layer 1/4] done in 92.95s
+[Layer 2/4] freq (+kx) ...
+[+] done 15.31s
+[Layer 2/4] freq (-kx) ...
+[-] done 15.56s
+[Layer 2/4] spatial HxW=96x94 => 9024 mats
+[Layer 2/4] done in 85.72s
+[Layer 3/4] freq (+kx) ...
+[+] done 15.30s
+[Layer 3/4] freq (-kx) ...
+[-] done 15.43s
+[Layer 3/4] spatial HxW=96x94 => 9024 mats
+[Layer 3/4] done in 85.10s
+[Layer 4/4] freq (+kx) ...
+[+] done 17.35s
+[Layer 4/4] freq (-kx) ...
+[-] done 17.33s
+[Layer 4/4] spatial HxW=96x94 => 9024 mats
+[Layer 4/4] done in 91.02s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width80_epochs500_Tin10_T10.analysis.pt  (elapsed 355.01s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 359.00s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes48_width80_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width40_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 16.36s
+[Layer 1/4] freq (-kx) ...
+[-] done 16.27s
+[Layer 1/4] spatial HxW=128x126 => 16128 mats
+[Layer 1/4] done in 88.79s
+[Layer 2/4] freq (+kx) ...
+[+] done 14.08s
+[Layer 2/4] freq (-kx) ...
+[-] done 14.17s
+[Layer 2/4] spatial HxW=128x126 => 16128 mats
+[Layer 2/4] done in 85.30s
+[Layer 3/4] freq (+kx) ...
+[+] done 14.71s
+[Layer 3/4] freq (-kx) ...
+[-] done 14.44s
+[Layer 3/4] spatial HxW=128x126 => 16128 mats
+[Layer 3/4] done in 82.40s
+[Layer 4/4] freq (+kx) ...
+[+] done 15.43s
+[Layer 4/4] freq (-kx) ...
+[-] done 15.49s
+[Layer 4/4] spatial HxW=128x126 => 16128 mats
+[Layer 4/4] done in 85.92s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width40_epochs500_Tin10_T10.analysis.pt  (elapsed 342.74s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 345.99s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width40_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 18.93s
+[Layer 1/4] freq (-kx) ...
+[-] done 19.44s
+[Layer 1/4] spatial HxW=128x126 => 16128 mats
+[Layer 1/4] done in 102.89s
+[Layer 2/4] freq (+kx) ...
+[+] done 16.06s
+[Layer 2/4] freq (-kx) ...
+[-] done 16.31s
+[Layer 2/4] spatial HxW=128x126 => 16128 mats
+[Layer 2/4] done in 94.38s
+[Layer 3/4] freq (+kx) ...
+[+] done 15.89s
+[Layer 3/4] freq (-kx) ...
+[-] done 16.05s
+[Layer 3/4] spatial HxW=128x126 => 16128 mats
+[Layer 3/4] done in 92.65s
+[Layer 4/4] freq (+kx) ...
+[+] done 17.62s
+[Layer 4/4] freq (-kx) ...
+[-] done 17.74s
+[Layer 4/4] spatial HxW=128x126 => 16128 mats
+[Layer 4/4] done in 98.08s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 388.28s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 392.80s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width60_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width60_epochs500_Tin1_T19.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 20.89s
+[Layer 1/4] freq (-kx) ...
+[-] done 19.34s
+[Layer 1/4] spatial HxW=128x126 => 16128 mats
+[Layer 1/4] done in 106.06s
+[Layer 2/4] freq (+kx) ...
+[+] done 16.70s
+[Layer 2/4] freq (-kx) ...
+[-] done 16.81s
+[Layer 2/4] spatial HxW=128x126 => 16128 mats
+[Layer 2/4] done in 96.50s
+[Layer 3/4] freq (+kx) ...
+[+] done 16.38s
+[Layer 3/4] freq (-kx) ...
+[-] done 16.64s
+[Layer 3/4] spatial HxW=128x126 => 16128 mats
+[Layer 3/4] done in 95.42s
+[Layer 4/4] freq (+kx) ...
+[+] done 18.07s
+[Layer 4/4] freq (-kx) ...
+[-] done 18.17s
+[Layer 4/4] spatial HxW=128x126 => 16128 mats
+[Layer 4/4] done in 99.49s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width60_epochs500_Tin1_T19.analysis.pt  (elapsed 397.74s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 401.88s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width60_epochs500_Tin1_T19.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width80_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 31.21s
+[Layer 1/4] freq (-kx) ...
+[-] done 33.00s
+[Layer 1/4] spatial HxW=128x126 => 16128 mats
+[Layer 1/4] done in 167.37s
+[Layer 2/4] freq (+kx) ...
+[+] done 27.35s
+[Layer 2/4] freq (-kx) ...
+[-] done 27.75s
+[Layer 2/4] spatial HxW=128x126 => 16128 mats
+[Layer 2/4] done in 152.65s
+[Layer 3/4] freq (+kx) ...
+[+] done 27.23s
+[Layer 3/4] freq (-kx) ...
+[-] done 27.42s
+[Layer 3/4] spatial HxW=128x126 => 16128 mats
+[Layer 3/4] done in 151.35s
+[Layer 4/4] freq (+kx) ...
+[+] done 31.27s
+[Layer 4/4] freq (-kx) ...
+[-] done 31.27s
+[Layer 4/4] spatial HxW=128x126 => 16128 mats
+[Layer 4/4] done in 163.52s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width80_epochs500_Tin10_T10.analysis.pt  (elapsed 635.35s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 642.04s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes64_width80_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width40_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 36.22s
+[Layer 1/4] freq (-kx) ...
+[-] done 36.14s
+[Layer 1/4] spatial HxW=192x190 => 36480 mats
+[Layer 1/4] done in 200.07s
+[Layer 2/4] freq (+kx) ...
+[+] done 32.57s
+[Layer 2/4] freq (-kx) ...
+[-] done 32.56s
+[Layer 2/4] spatial HxW=192x190 => 36480 mats
+[Layer 2/4] done in 186.64s
+[Layer 3/4] freq (+kx) ...
+[+] done 32.28s
+[Layer 3/4] freq (-kx) ...
+[-] done 32.36s
+[Layer 3/4] spatial HxW=192x190 => 36480 mats
+[Layer 3/4] done in 184.93s
+[Layer 4/4] freq (+kx) ...
+[+] done 35.11s
+[Layer 4/4] freq (-kx) ...
+[-] done 35.25s
+[Layer 4/4] spatial HxW=192x190 => 36480 mats
+[Layer 4/4] done in 194.00s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width40_epochs500_Tin10_T10.analysis.pt  (elapsed 765.90s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 770.10s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width40_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width80_epochs1500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width80_epochs1500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 83.97s
+[Layer 1/4] freq (-kx) ...
+[-] done 84.67s
+[Layer 1/4] spatial HxW=192x190 => 36480 mats
+[Layer 1/4] done in 406.68s
+[Layer 2/4] freq (+kx) ...
+[+] done 61.32s
+[Layer 2/4] freq (-kx) ...
+[-] done 60.79s
+[Layer 2/4] spatial HxW=192x190 => 36480 mats
+[Layer 2/4] done in 341.63s
+[Layer 3/4] freq (+kx) ...
+[+] done 57.78s
+[Layer 3/4] freq (-kx) ...
+[-] done 58.54s
+[Layer 3/4] spatial HxW=192x190 => 36480 mats
+[Layer 3/4] done in 331.40s
+[Layer 4/4] freq (+kx) ...
+[+] done 83.76s
+[Layer 4/4] freq (-kx) ...
+[-] done 84.66s
+[Layer 4/4] spatial HxW=192x190 => 36480 mats
+[Layer 4/4] done in 423.17s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width80_epochs1500_Tin10_T10.analysis.pt  (elapsed 1504.05s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 1518.89s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width80_epochs1500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width80_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 75.70s
+[Layer 1/4] freq (-kx) ...
+[-] done 75.22s
+[Layer 1/4] spatial HxW=192x190 => 36480 mats
+[Layer 1/4] done in 387.04s
+[Layer 2/4] freq (+kx) ...
+[+] done 62.40s
+[Layer 2/4] freq (-kx) ...
+[-] done 62.83s
+[Layer 2/4] spatial HxW=192x190 => 36480 mats
+[Layer 2/4] done in 348.38s
+[Layer 3/4] freq (+kx) ...
+[+] done 62.04s
+[Layer 3/4] freq (-kx) ...
+[-] done 62.46s
+[Layer 3/4] spatial HxW=192x190 => 36480 mats
+[Layer 3/4] done in 345.60s
+[Layer 4/4] freq (+kx) ...
+[+] done 73.07s
+[Layer 4/4] freq (-kx) ...
+[-] done 72.65s
+[Layer 4/4] spatial HxW=192x190 => 36480 mats
+[Layer 4/4] done in 374.54s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width80_epochs500_Tin10_T10.analysis.pt  (elapsed 1456.73s)
+[DONE] NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth  elapsed 1472.21s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_results/modes96_width80_epochs500_Tin10_T10.analysis.pt
+
+All models processed.

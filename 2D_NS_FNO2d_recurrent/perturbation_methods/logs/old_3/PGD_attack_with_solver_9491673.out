@@ -1,0 +1,39 @@
+c0904a-s15.ufhpc
+Wed Aug  6 09:45:59 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list:  [(2, 13.1072, 2.5, 100), (2, 39.3216, 2.5, 100), (2, 78.6432, 2.5, 100), (2, 13.1072, 5.0, 100), (2, 39.3216, 5.0, 100), (2, 78.6432, 5.0, 100), (2, 13.1072, 10.0, 100), (2, 39.3216, 10.0, 100), (2, 78.6432, 10.0, 100)]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 2.5, num_steps: 100, index: 1, learning_rate_updating_method: Standard PGD (Fixed Step Size), detach: detached1to5
+x_adv.shape:  torch.Size([256, 256])
+scheduler initialization paramaters:  {'method': 'Standard PGD (Fixed Step Size)', 'alpha0': 2.5, 'state': {}, 'params': {'gamma': 0.9, 'm': 10, 'k': 0.01, 'beta': 0.9, 'beta1': 0.9, 'beta2': 0.999}, 'first_grad_norm': None, 'first_sq_grad': None, 'first_alpha': None}

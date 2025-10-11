@@ -1,0 +1,60 @@
+c0904a-s5.ufhpc
+Mon Jul 21 06:50:13 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[2025-07-21 06:51:51] 🔷 开始加载数据...
+[2025-07-21 06:58:14] ✅ 加载完成，用时 382.7s，形状: (15600, 256, 256)
+[2025-07-21 06:58:14] 🔷 开始预处理...
+[2025-07-21 06:58:57] ✅ 预处理完成，用时 42.9s
+[2025-07-21 06:59:03] 🔷 开始加载数据...
+[2025-07-21 06:59:54] ✅ 加载完成，用时 50.7s，形状: (15600, 256, 256, 21)
+总共 15600 条样本
+
+ predict all data from generalization dataset
+
+✅ 全部样本完成！总耗时: 327.8s
+[2025-07-21 07:05:24] === 开始处理输入: time ===
+[time] pca_umap 2d 用时: 25.77s
+[time] pca_umap 3d 用时: 15.37s
+[2025-07-21 07:06:05] 🔷 Tucker per-sample...
+[2025-07-21 07:10:50] ✅ Tucker per-sample完成，用时 284.7s
+[time] tucker1 UMAP 2d 用时: 13.47s
+[time] tucker1 UMAP 3d 用时: 9.75s
+[2025-07-21 07:11:13] 🔷 Tucker overall...
+[2025-07-21 07:35:37] ✅ Tucker overall完成，用时 1463.9s
+[time] tucker2 UMAP 2d 用时: 3.39s
+[time] tucker2 UMAP 3d 用时: 3.58s
+[2025-07-21 07:35:44] ✅ time 全部维度完成
+[2025-07-21 07:35:44] === 开始处理输入: freq ===
+[freq] pca_umap 2d 用时: 14.21s
+[freq] pca_umap 3d 用时: 14.54s
+[2025-07-21 07:36:13] 🔷 Tucker per-sample...
+[2025-07-21 07:41:12] ✅ Tucker per-sample完成，用时 299.4s
+[freq] tucker1 UMAP 2d 用时: 2.91s
+[freq] tucker1 UMAP 3d 用时: 3.06s
+[2025-07-21 07:41:18] 🔷 Tucker overall...
+[2025-07-21 08:02:32] ✅ Tucker overall完成，用时 1274.0s
+[freq] tucker2 UMAP 2d 用时: 5.46s
+[freq] tucker2 UMAP 3d 用时: 3.49s
+[2025-07-21 08:02:41] ✅ freq 全部维度完成
+[2025-07-21 08:02:41] === 开始处理输入: freq3 ===
+[freq3] pca_umap 2d 用时: 34.28s
+[freq3] pca_umap 3d 用时: 33.71s
+[2025-07-21 08:03:49] 🔷 Tucker per-sample...
+[2025-07-21 08:20:26] ✅ Tucker per-sample完成，用时 996.9s
+[freq3] tucker1 UMAP 2d 用时: 4.52s
+[freq3] tucker1 UMAP 3d 用时: 2.85s
+[2025-07-21 08:20:34] 🔷 Tucker overall...
+[2025-07-21 09:11:47] ✅ Tucker overall完成，用时 3073.1s
+[freq3] tucker2 UMAP 2d 用时: 3.79s
+[freq3] tucker2 UMAP 3d 用时: 3.46s
+[2025-07-21 09:11:54] ✅ freq3 全部维度完成
+[2025-07-21 09:11:54] 🔷 开始合并结果...
+[2025-07-21 09:11:57] ✅ 所有完成，总用时 2.4s，结果保存到 umap_all_methods_results_with_fno_metrics.csv
+     nu_ns  tfinal  nsamples  ...  fno_rmse   fno_mae    fno_mape
+0  0.00001      20        10  ...  0.748859  0.676504  234.073210
+1  0.00001      20        10  ...  0.859249  0.716817  572.055912
+2  0.00001      20        10  ...  0.744119  0.677654  383.331418
+3  0.00001      20        10  ...  0.889847  0.727930  255.978394
+4  0.00001      20        10  ...  0.970804  0.785942  274.652100
+
+[5 rows x 57 columns]

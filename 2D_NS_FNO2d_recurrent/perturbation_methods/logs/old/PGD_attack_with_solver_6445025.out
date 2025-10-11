@@ -1,0 +1,378 @@
+c1100a-s25.ufhpc
+Sat Jun 28 07:53:40 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+Model device: cuda:0
+Input device: cuda:0
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 0] Deep Model Forward - Time: 98.0711s, Mem: 4.12 GB
+[Step 0] PDE Solver Forward - Time: 2.4036s, Mem: -2359296.00 B
+[Step 0] Backward Propagation - Time: 10.7620s, Mem: -4405329920.00 B
+[Step 0] Total Step - Time: 110.1180s, Mem: 22.66 MB
+[Step 0] PGD Update - Time: 1.3936s, Mem: 512.00 KB
+[Step 0] Total Step - Time: 111.6822s, Mem: 23.16 MB
+[Step 0] Peak Memory: 6.21 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 1] Deep Model Forward - Time: 11.3025s, Mem: 4.11 GB
+[Step 1] PDE Solver Forward - Time: 2.3143s, Mem: -5505024.00 B
+[Step 1] Backward Propagation - Time: 0.5834s, Mem: -4414291968.00 B
+[Step 1] Total Step - Time: 12.1638s, Mem: 2.00 MB
+[Step 1] PGD Update - Time: 0.0196s, Mem: 0.00 B
+[Step 1] Total Step - Time: 12.2085s, Mem: 2.00 MB
+[Step 1] Peak Memory: 6.22 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 2] Deep Model Forward - Time: 10.8176s, Mem: 4.12 GB
+[Step 2] PDE Solver Forward - Time: 2.2770s, Mem: -4980736.00 B
+[Step 2] Backward Propagation - Time: 1.4068s, Mem: -4416135168.00 B
+[Step 2] Total Step - Time: 12.3377s, Mem: 2.50 MB
+[Step 2] PGD Update - Time: 0.0255s, Mem: 0.00 B
+[Step 2] Total Step - Time: 12.4109s, Mem: 2.50 MB
+[Step 2] Peak Memory: 6.23 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 3] Deep Model Forward - Time: 9.9681s, Mem: 4.12 GB
+[Step 3] PDE Solver Forward - Time: 2.1656s, Mem: -5505024.00 B
+[Step 3] Backward Propagation - Time: 0.5320s, Mem: -4416135168.00 B
+[Step 3] Total Step - Time: 10.5912s, Mem: 2.50 MB
+[Step 3] PGD Update - Time: 0.0161s, Mem: 0.00 B
+[Step 3] Total Step - Time: 10.6188s, Mem: 2.50 MB
+[Step 3] Peak Memory: 6.23 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 4] Deep Model Forward - Time: 10.5597s, Mem: 4.12 GB
+[Step 4] PDE Solver Forward - Time: 2.1478s, Mem: -4980736.00 B
+[Step 4] Backward Propagation - Time: 0.3828s, Mem: -4416135168.00 B
+[Step 4] Total Step - Time: 11.0473s, Mem: 2.50 MB
+[Step 4] PGD Update - Time: 0.0170s, Mem: 0.00 B
+[Step 4] Total Step - Time: 11.0755s, Mem: 2.50 MB
+[Step 4] Peak Memory: 6.23 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 5] Deep Model Forward - Time: 11.2659s, Mem: 4.12 GB
+[Step 5] PDE Solver Forward - Time: 2.2363s, Mem: -5505024.00 B
+[Step 5] Backward Propagation - Time: 0.4585s, Mem: -4416135168.00 B
+[Step 5] Total Step - Time: 11.8390s, Mem: 2.50 MB
+[Step 5] PGD Update - Time: 0.0208s, Mem: 0.00 B
+[Step 5] Total Step - Time: 11.8737s, Mem: 2.50 MB
+[Step 5] Peak Memory: 6.24 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 6] Deep Model Forward - Time: 11.6294s, Mem: 4.12 GB
+[Step 6] PDE Solver Forward - Time: 2.1783s, Mem: -4980736.00 B
+[Step 6] Backward Propagation - Time: 0.4792s, Mem: -4416135168.00 B
+[Step 6] Total Step - Time: 12.2929s, Mem: 2.50 MB
+[Step 6] PGD Update - Time: 0.0175s, Mem: 0.00 B
+[Step 6] Total Step - Time: 12.3235s, Mem: 2.50 MB
+[Step 6] Peak Memory: 6.24 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 7] Deep Model Forward - Time: 10.3518s, Mem: 4.12 GB
+[Step 7] PDE Solver Forward - Time: 2.2010s, Mem: -5505024.00 B
+[Step 7] Backward Propagation - Time: 1.0971s, Mem: -4416135168.00 B
+[Step 7] Total Step - Time: 11.5569s, Mem: 2.50 MB
+[Step 7] PGD Update - Time: 0.0213s, Mem: 0.00 B
+[Step 7] Total Step - Time: 11.6238s, Mem: 2.50 MB
+[Step 7] Peak Memory: 6.24 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 8] Deep Model Forward - Time: 11.0946s, Mem: 4.12 GB
+[Step 8] PDE Solver Forward - Time: 2.1405s, Mem: -4980736.00 B
+[Step 8] Backward Propagation - Time: 0.4398s, Mem: -4416135168.00 B
+[Step 8] Total Step - Time: 11.6408s, Mem: 2.50 MB
+[Step 8] PGD Update - Time: 0.0209s, Mem: 0.00 B
+[Step 8] Total Step - Time: 11.6742s, Mem: 2.50 MB
+[Step 8] Peak Memory: 6.24 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 9] Deep Model Forward - Time: 10.5186s, Mem: 4.12 GB
+[Step 9] PDE Solver Forward - Time: 2.2045s, Mem: -5505024.00 B
+[Step 9] Backward Propagation - Time: 0.4570s, Mem: -4416135168.00 B
+[Step 9] Total Step - Time: 11.0963s, Mem: 2.50 MB
+[Step 9] PGD Update - Time: 0.0153s, Mem: 0.00 B
+[Step 9] Total Step - Time: 11.1243s, Mem: 2.50 MB
+[Step 9] Peak Memory: 6.25 GB
+PGD攻击完成！对抗样本已保存
+最终损失值: 0.044971
+最终扰动大小: 21.925795

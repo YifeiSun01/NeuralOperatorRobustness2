@@ -1,0 +1,64 @@
+c0901a-s15.ufhpc
+Wed Jul  2 01:36:26 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+Model device: cuda:0
+Input device: cuda:0
+================================================================
+epsilon:  0.1 ,  alpha:  0.05 ,  num_steps:  10
+x_adv.shape:  torch.Size([256, 256])
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 72.122705s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 39.765206s | 显存: 0.00 B
+  t=2s - 时间: 0.482770s | 显存: 0.00 B
+  t=3s - 时间: 0.550474s | 显存: 0.00 B
+  t=4s - 时间: 0.652279s | 显存: 0.00 B
+  t=5s - 时间: 0.749758s | 显存: 0.00 B
+  t=6s - 时间: 0.798973s | 显存: 0.00 B
+  t=7s - 时间: 0.945489s | 显存: 0.00 B
+  t=8s - 时间: 1.000904s | 显存: 0.00 B
+  t=9s - 时间: 1.080924s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.876506s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.876739s | 显存: 0.00 B
+
+[本步骤总计] 时间: 73.999444s | 显存: 4.12 GB
+orginal_loss:  tensor(2874.2017, device='cuda:0', grad_fn=<MseLossBackward0>)
+
+梯度检查结果比较:

@@ -1,0 +1,98 @@
+c1001a-s15.ufhpc
+Sat Sep 27 12:12:37 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/sBands/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pth
+Pattern = sBands
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/sBands/sBands__modes64_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 37.13s
+[Layer 1/4] freq (-kx) ...
+[-] done 18.98s
+[Layer 1/4] spatial HxW=256x256 => 65536 mats
+[Layer 1/4] done in 223.95s
+[Layer 2/4] freq (+kx) ...
+[+] done 16.36s
+[Layer 2/4] freq (-kx) ...
+[-] done 16.29s
+[Layer 2/4] spatial HxW=256x256 => 65536 mats
+[Layer 2/4] done in 190.80s
+[Layer 3/4] freq (+kx) ...
+[+] done 16.84s
+[Layer 3/4] freq (-kx) ...
+[-] done 16.74s
+[Layer 3/4] spatial HxW=256x256 => 65536 mats
+[Layer 3/4] done in 191.50s
+[Layer 4/4] freq (+kx) ...
+[+] done 18.35s
+[Layer 4/4] freq (-kx) ...
+[-] done 17.95s
+[Layer 4/4] spatial HxW=256x256 => 65536 mats
+[Layer 4/4] done in 200.63s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/sBands/sBands__modes64_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 810.39s)
+[DONE] NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pth  elapsed 817.33s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/sBands/sBands__modes64_width60_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsLinf/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pth
+Pattern = ringsLinf
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/ringsLinf/ringsLinf__modes64_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 18.43s
+[Layer 1/4] freq (-kx) ...
+[-] done 18.41s
+[Layer 1/4] spatial HxW=256x256 => 65536 mats
+[Layer 1/4] done in 203.78s
+[Layer 2/4] freq (+kx) ...
+[+] done 16.48s
+[Layer 2/4] freq (-kx) ...
+[-] done 16.53s
+[Layer 2/4] spatial HxW=256x256 => 65536 mats
+[Layer 2/4] done in 192.49s
+[Layer 3/4] freq (+kx) ...
+[+] done 16.79s
+[Layer 3/4] freq (-kx) ...
+[-] done 16.55s
+[Layer 3/4] spatial HxW=256x256 => 65536 mats
+[Layer 3/4] done in 190.53s
+[Layer 4/4] freq (+kx) ...
+[+] done 17.52s
+[Layer 4/4] freq (-kx) ...
+[-] done 17.34s
+[Layer 4/4] spatial HxW=256x256 => 65536 mats
+[Layer 4/4] done in 199.90s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/ringsLinf/ringsLinf__modes64_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 787.01s)
+[DONE] NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pth  elapsed 792.27s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/ringsLinf/ringsLinf__modes64_width60_epochs500_Tin10_T10.analysis.pt
+
+==== Model ====
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsL1/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsL1.pth
+Pattern = ringsL1
+Save -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/ringsL1/ringsL1__modes64_width60_epochs500_Tin10_T10.analysis.pt
+[Layer 1/4] freq (+kx) ...
+[+] done 20.18s
+[Layer 1/4] freq (-kx) ...
+[-] done 19.78s
+[Layer 1/4] spatial HxW=256x256 => 65536 mats
+[Layer 1/4] done in 207.52s
+[Layer 2/4] freq (+kx) ...
+[+] done 16.71s
+[Layer 2/4] freq (-kx) ...
+[-] done 16.73s
+[Layer 2/4] spatial HxW=256x256 => 65536 mats
+[Layer 2/4] done in 194.71s
+[Layer 3/4] freq (+kx) ...
+[+] done 17.17s
+[Layer 3/4] freq (-kx) ...
+[-] done 17.18s
+[Layer 3/4] spatial HxW=256x256 => 65536 mats
+[Layer 3/4] done in 193.34s
+[Layer 4/4] freq (+kx) ...
+[+] done 18.70s
+[Layer 4/4] freq (-kx) ...
+[-] done 18.57s
+[Layer 4/4] spatial HxW=256x256 => 65536 mats
+[Layer 4/4] done in 200.14s
+[SAVE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/ringsL1/ringsL1__modes64_width60_epochs500_Tin10_T10.analysis.pt  (elapsed 795.98s)
+[DONE] NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsL1.pth  elapsed 800.48s  → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/kernel_results/ringsL1/ringsL1__modes64_width60_epochs500_Tin10_T10.analysis.pt
+
+All selected pattern models processed.

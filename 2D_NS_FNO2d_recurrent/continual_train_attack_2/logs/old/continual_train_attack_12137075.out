@@ -1,0 +1,94 @@
+c1004a-s15.ufhpc
+Tue Sep  9 12:45:56 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+初始化PDE求解器: nu=1e-05, device=cuda
+======================================== 参数配置 ========================================
+modes=96, width=80, epochs=2000
+T_in=10, T=10, step=1
+ntrain=1000, ntest=100
+batch_size=2, learning_rate=0.001
+
+======================================== 路径配置 ========================================
+current_file_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py
+pretrained_model_name=NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+pretrained_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+dataset_name=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+dataset_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/dataset/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+
+======================================== 设备与PDE solver ========================================
+device=cuda
+pde_solver=<solver.DifferentiablePDESolver object at 0x14fc55ded840>
+
+======================================== 攻击配置 ========================================
+PGDAdamConfig(epsilon=327.68, alpha=50.0, num_steps=5, norm=2, beta1=0.9, beta2=0.999, adam_eps=1e-08, amsgrad=False, use_sign_for_linf=True, mode_spec='wwwwwwwwww')
+[Resume] Loaded pretrained weights from: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+params: 943823441
+编译新函数: pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 60.18s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.56s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0001/0500] perturb_time:41.042s | train_time:7.678s | loss:1.387795
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0002/0500] perturb_time:30.314s | train_time:0.295s | loss:1.336767
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0003/0500] perturb_time:30.320s | train_time:0.296s | loss:1.281941
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0004/0500] perturb_time:30.316s | train_time:0.295s | loss:1.017501
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0005/0500] perturb_time:30.323s | train_time:0.295s | loss:1.220057
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0006/0500] perturb_time:30.322s | train_time:0.295s | loss:1.238265
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0007/0500] perturb_time:30.318s | train_time:0.295s | loss:1.316884
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0008/0500] perturb_time:30.316s | train_time:0.295s | loss:1.061951
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+[ep 0000 | batch 0009/0500] perturb_time:30.321s | train_time:0.295s | loss:1.050012
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 1.54s for pde_3d_2x256x256_19_1e-05_0.005

@@ -1,0 +1,16 @@
+c0906a-s15.ufhpc
+Mon Sep  1 01:07:29 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[INFO] Scanning 3 dirs (non-recursive *.pt only):
+  [DIR] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150  |  15 files
+  [DIR] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20  |  2 files
+  [DIR] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability  |  1440 files
+[INFO] Found 1457 .pt files across 3 dirs.
+[INFO] Expanded candidates: 15
+
+[PROCESS 1/15] expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10.pt
+  pair train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+  [DONE] elapsed: 0:01:30.125
+
+[PROCESS 2/15] expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10.pt
+  pair train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt

@@ -1,0 +1,51 @@
+c0910a-s5.ufhpc
+Tue Aug 26 06:59:21 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+当前使用的是 GPU (CUDA) 进行计算
+设备名称: NVIDIA B200
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+index:  0     initial condition (GRF):  [0.74224125 0.74906343 0.75566219 ... 0.72067177 0.7280384  0.73523617]
+index:  0     final_solution:  [nan nan nan ... nan nan nan]
+index:  1     initial condition (GRF):  [0.77884358 0.77807874 0.77755979 ... 0.78260207 0.78114936 0.77988671]
+index:  1     final_solution:  [nan nan nan ... nan nan nan]
+index:  2     initial condition (GRF):  [0.23711378 0.23464617 0.23251543 ... 0.24628476 0.2429474  0.23987532]
+index:  2     final_solution:  [nan nan nan ... nan nan nan]
+index:  3     initial condition (GRF):  [1.30803810e-04 1.08984168e-06 0.00000000e+00 ... 1.25545827e-03
+ 7.32222248e-04 3.35988846e-04]
+index:  3     final_solution:  [nan nan nan ... nan nan nan]
+index:  4     initial condition (GRF):  [0.53500149 0.53381365 0.53263901 ... 0.53872339 0.53745591 0.53621209]
+index:  4     final_solution:  [nan nan nan ... nan nan nan]
+index:  5     initial condition (GRF):  [0.75097019 0.75356542 0.75575312 ... 0.74081571 0.74459321 0.74798124]
+index:  5     final_solution:  [nan nan nan ... nan nan nan]
+index:  6     initial condition (GRF):  [0.26491889 0.26102206 0.2573066  ... 0.27811323 0.27348365 0.26909761]
+index:  6     final_solution:  [nan nan nan ... nan nan nan]
+index:  7     initial condition (GRF):  [0.50937931 0.50306766 0.49699792 ... 0.52947955 0.52260563 0.51589206]
+index:  7     final_solution:  [nan nan nan ... nan nan nan]
+index:  8     initial condition (GRF):  [0.47451911 0.4775953  0.48061076 ... 0.46514246 0.46829119 0.47143986]
+index:  8     final_solution:  [nan nan nan ... nan nan nan]
+index:  9     initial condition (GRF):  [0.68228274 0.68498741 0.68767321 ... 0.67432471 0.67693829 0.67961171]
+index:  9     final_solution:  [nan nan nan ... nan nan nan]
+index:  10     initial condition (GRF):  [0.99530971 0.99727335 0.99873887 ... 0.98654277 0.98993365 0.99285506]
+index:  10     final_solution:  [nan nan nan ... nan nan nan]
+index:  11     initial condition (GRF):  [0.81926564 0.81443377 0.80925285 ... 0.83161682 0.82785684 0.82374352]
+index:  11     final_solution:  [nan nan nan ... nan nan nan]
+index:  12     initial condition (GRF):  [0.89483169 0.88755566 0.87984811 ... 0.91411787 0.90809223 0.90165996]
+index:  12     final_solution:  [nan nan nan ... nan nan nan]
+index:  13     initial condition (GRF):  [0.33699075 0.33445927 0.33195749 ... 0.34482407 0.34219461 0.3395713 ]
+index:  13     final_solution:  [nan nan nan ... nan nan nan]
+index:  14     initial condition (GRF):  [0.2700952  0.26686252 0.2636249  ... 0.27968271 0.27649674 0.27329355]
+index:  14     final_solution:  [nan nan nan ... nan nan nan]
+index:  15     initial condition (GRF):  [0.30060064 0.30213858 0.30377275 ... 0.2966617  0.29787346 0.29917198]
+index:  15     final_solution:  [nan nan nan ... nan nan nan]
+index:  16     initial condition (GRF):  [0.81904973 0.81157216 0.80411308 ... 0.84125063 0.83390278 0.82649116]
+index:  16     final_solution:  [nan nan nan ... nan nan nan]
+index:  17     initial condition (GRF):  [0.46511241 0.4688449  0.47253961 ... 0.45406153 0.45771387 0.46141106]
+index:  17     final_solution:  [nan nan nan ... nan nan nan]
+index:  18     initial condition (GRF):  [0.24356415 0.24674017 0.24995999 ... 0.23406164 0.23724349 0.2404177 ]
+index:  18     final_solution:  [nan nan nan ... nan nan nan]
+index:  19     initial condition (GRF):  [0.34804222 0.34736752 0.34704832 ... 0.35270792 0.35071202 0.3491864 ]
+index:  19     final_solution:  [nan nan nan ... nan nan nan]
+{'input tensor shape': torch.Size([20, 1024]), 'output tensor shape': torch.Size([20, 1024])}
+Saved input tensor to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+Saved output tensor to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt

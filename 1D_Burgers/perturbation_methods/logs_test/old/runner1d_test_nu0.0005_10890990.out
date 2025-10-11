@@ -1,0 +1,136 @@
+c0608a-s9.ufhpc
+Tue Aug 26 11:34:21 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Running N=20 ===
+Selected GPU 0 (NVIDIA L4) with 0.00 GB free memory
+Using device: cuda
+========== 当前作业 GPU 信息 ==========
+分区: hpg-turin
+节点: c0608a-s9
+GPU ID (CUDA_VISIBLE_DEVICES): 0
+
+GPU 详细信息:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=====================================
+===============Experiment===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_results/1D
+device:  cuda:0
+nu:  0.0005
+INFO:2025-08-26 11:36:25,000:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0826 11:36:25.000208 22884562789440 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+===============Running===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005.py:72: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005.py:76: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005.py:108: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005.py:111: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.1 ,    alpha: 0.001 ,    total time: 316.7696895599365
+adversarial input samples: 100%|██████████| 1/1 [05:16<00:00, 316.77s/it]adversarial input samples: 100%|██████████| 1/1 [05:16<00:00, 316.77s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.1 ,    alpha: 0.005 ,    total time: 258.21783781051636
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.22s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.22s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.1 ,    alpha: 0.01 ,    total time: 258.21945333480835
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.22s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.22s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.1 ,    alpha: 0.05 ,    total time: 258.2653307914734
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.27s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.27s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.1 ,    alpha: 0.1 ,    total time: 258.14693307876587
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.15s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.15s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.005 ,    total time: 258.2881119251251
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.29s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.29s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.025 ,    total time: 258.3438081741333
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.34s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.34s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.05 ,    total time: 258.05363512039185
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.06s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.06s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.25 ,    total time: 258.46286249160767
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.46s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.46s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.5 ,    total time: 258.4131989479065
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.41s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.41s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 10 ,    alpha: 0.01 ,    total time: 258.466748714447
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.47s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.47s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 10 ,    alpha: 0.05 ,    total time: 258.4156196117401
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.42s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.42s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 10 ,    alpha: 0.1 ,    total time: 258.2802047729492
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.28s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.28s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 10 ,    alpha: 0.5 ,    total time: 264.3095133304596
+adversarial input samples: 100%|██████████| 1/1 [04:24<00:00, 264.34s/it]adversarial input samples: 100%|██████████| 1/1 [04:24<00:00, 264.47s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 0.02 ,    total time: 272.4103946685791
+adversarial input samples: 100%|██████████| 1/1 [04:32<00:00, 272.42s/it]adversarial input samples: 100%|██████████| 1/1 [04:32<00:00, 272.42s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 0.1 ,    total time: 281.99943566322327
+adversarial input samples: 100%|██████████| 1/1 [04:41<00:00, 282.00s/it]adversarial input samples: 100%|██████████| 1/1 [04:41<00:00, 282.00s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 0.2 ,    total time: 258.0117790699005
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.01s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.03s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 1 ,    total time: 258.8216655254364
+adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.82s/it]adversarial input samples: 100%|██████████| 1/1 [04:18<00:00, 258.82s/it]

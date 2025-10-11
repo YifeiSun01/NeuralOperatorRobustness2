@@ -1,0 +1,6 @@
+c0900a-s15.ufhpc
+Fri Aug  8 03:20:37 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Using device: cuda
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0

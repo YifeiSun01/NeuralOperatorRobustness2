@@ -1,0 +1,5 @@
+c0909a-s17.ufhpc
+Wed Jun 18 08:23:26 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+Generating first dataset:
+Generating samples:   0%|          | 0/2000 [00:00<?, ?sample/s]slurmstepd: error: *** JOB 5646659 ON c0909a-s17 CANCELLED AT 2025-06-18T20:25:42 ***

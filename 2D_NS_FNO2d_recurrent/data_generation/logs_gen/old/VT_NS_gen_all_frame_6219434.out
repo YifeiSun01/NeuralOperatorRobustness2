@@ -1,0 +1,28 @@
+c0306a-s25.ufhpc
+Tue Jun 24 08:11:37 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+PyTorch version: 2.7.0+cu126
+CUDA version used by PyTorch: 12.6
+Is CUDA available: True
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA GeForce RTX 2080 Ti
+  Compute Capability: 7.5
+  Total memory: 10.57 GB
+  MultiProcessor count: 68
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]Generating samples:  20%|██        | 1/5 [00:23<01:32, 23.24s/sample]Generating samples:  40%|████      | 2/5 [00:33<00:47, 15.89s/sample]Generating samples:  60%|██████    | 3/5 [00:44<00:27, 13.62s/sample]Generating samples:  80%|████████  | 4/5 [00:55<00:12, 12.25s/sample]Generating samples: 100%|██████████| 5/5 [01:05<00:00, 11.47s/sample]Generating samples: 100%|██████████| 5/5 [01:05<00:00, 13.03s/sample]
+Stacking tensors:   0%|          | 0/2 [00:00<?, ?it/s]Stacking tensors: 100%|██████████| 2/2 [00:00<00:00, 22.82it/s]
+Saving dataset:   0%|          | 0/1 [00:00<?, ?it/s]Saving dataset: 100%|██████████| 1/1 [00:00<00:00,  3.67it/s]Saving dataset: 100%|██████████| 1/1 [00:00<00:00,  3.67it/s]
+
+Dataset saved to ./datasets/dim2d_nx256_N5_solver=exponax_nu0.000_t20.0_test_all_frames.pt

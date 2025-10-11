@@ -1,0 +1,58 @@
+c1001a-s25.ufhpc
+Thu Jun 26 05:47:32 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]E0626 17:47:59.505689 3486614 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+E0626 17:47:59.512851 3486614 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+E0626 17:48:05.641026 3486614 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+E0626 17:48:05.866279 3486614 cuda_dnn.cc:520] Loaded runtime CuDNN library: 9.7.1 but source was compiled with: 9.8.0.  CuDNN library needs to have matching major version and equal or higher minor version. If using a binary install, upgrade your CuDNN library.  If building from sources, make sure the library loaded at runtime is compatible with the version specified during compile configuration.
+Generating samples:   0%|          | 0/5 [00:08<?, ?sample/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 238, in <module>
+    path1 = generator.generate_dataset(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 183, in generate_dataset
+    x, y, selected_times = generate_vorticity_transport_data(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 119, in generate_vorticity_transport_data
+    exponax_solutions = exponaxsolver.solve(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 77, in solve
+    full_ic = jnp.expand_dims(jnp.array(u0, dtype=jnp.float64), axis=0)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/lax_numpy.py", line 5548, in array
+    out_array: Array = lax_internal._convert_element_type(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/lax/lax.py", line 1727, in _convert_element_type
+    return convert_element_type_p.bind(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 496, in bind
+    return self._true_bind(*args, **params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 512, in _true_bind
+    return self.bind_with_trace(prev_trace, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/lax/lax.py", line 4875, in _convert_element_type_bind_with_trace
+    operand = core.Primitive.bind_with_trace(convert_element_type_p, trace, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 517, in bind_with_trace
+    return trace.process_primitive(self, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 1017, in process_primitive
+    return primitive.impl(*args, **params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dispatch.py", line 89, in apply_primitive
+    outs = fun(*args)
+jaxlib.xla_extension.XlaRuntimeError: FAILED_PRECONDITION: DNN library initialization failed. Look at the errors above for more details.

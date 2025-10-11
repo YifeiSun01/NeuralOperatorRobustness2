@@ -1,0 +1,7 @@
+c0903a-s5.ufhpc
+Thu Jul 31 05:13:21 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers
+当前使用的是 GPU (CUDA) 进行计算
+设备名称: NVIDIA B200
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]

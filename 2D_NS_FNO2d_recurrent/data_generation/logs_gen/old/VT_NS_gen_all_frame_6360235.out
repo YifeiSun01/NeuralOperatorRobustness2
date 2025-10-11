@@ -1,0 +1,45 @@
+c0904a-s25.ufhpc
+Fri Jun 27 01:41:27 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py:13: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  mem_stats = xla_bridge.get_backend().memory_stats()
+
+Memory stats unavailable: Unknown attribute memory_stats
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]
+Sample 0 memory status:
+
+Memory stats unavailable: Unknown attribute memory_stats
+
+After array creation:
+
+Memory stats unavailable: Unknown attribute memory_stats
+slurmstepd: error: *** JOB 6360235 ON c0904a-s25 CANCELLED AT 2025-06-27T01:44:58 ***

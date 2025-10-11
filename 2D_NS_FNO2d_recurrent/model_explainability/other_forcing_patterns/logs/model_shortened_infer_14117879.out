@@ -1,0 +1,60 @@
+c0901a-s15.ufhpc
+Sat Sep 27 01:00:14 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[ARGS] MODEL_ROOT=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models
+[ARGS] DATASET_ROOT=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns
+[ARGS] OUT_DIR=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results
+[ARGS] BATCH_SIZE=20
+[ARGS] MAX_KEEP=4
+[SETUP] device=cuda, batch_size=20, max_keep=4
+[ROOTS] model_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models
+[ROOTS] dataset_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns
+[OUT]   out_dir=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results
+
+================================================================================
+[PAIR] pattern = isoCircles
+[DATASET] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/isoCircles/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternisoCircles.pt
+[CKPT]    /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/isoCircles/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternisoCircles.pth
+[DATA] shape=(1150, 256, 256, 10)
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results/isoCircles/modes64_width60_epochs500_Tin10_T10__isoCircles__variants_keep0to4__pred11.pt
+
+================================================================================
+[PAIR] pattern = petals
+[DATASET] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/petals/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternpetals.pt
+[CKPT]    /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/petals/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternpetals.pth
+[DATA] shape=(1150, 256, 256, 10)
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results/petals/modes64_width60_epochs500_Tin10_T10__petals__variants_keep0to4__pred11.pt
+
+================================================================================
+[PAIR] pattern = ringsCos
+[DATASET] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/ringsCos/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsCos.pt
+[CKPT]    /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsCos/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsCos.pth
+[DATA] shape=(1150, 256, 256, 10)
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results/ringsCos/modes64_width60_epochs500_Tin10_T10__ringsCos__variants_keep0to4__pred11.pt
+
+================================================================================
+[PAIR] pattern = ringsL1
+[DATASET] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/ringsL1/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsL1.pt
+[CKPT]    /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsL1/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsL1.pth
+[DATA] shape=(1150, 256, 256, 10)
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results/ringsL1/modes64_width60_epochs500_Tin10_T10__ringsL1__variants_keep0to4__pred11.pt
+
+================================================================================
+[PAIR] pattern = ringsLinf
+[DATASET] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/ringsLinf/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pt
+[CKPT]    /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsLinf/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pth
+[DATA] shape=(1150, 256, 256, 10)
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results/ringsLinf/modes64_width60_epochs500_Tin10_T10__ringsLinf__variants_keep0to4__pred11.pt
+
+================================================================================
+[PAIR] pattern = sBands
+[DATASET] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/sBands/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pt
+[CKPT]    /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/sBands/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pth
+[DATA] shape=(1150, 256, 256, 10)
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/infer_results/sBands/modes64_width60_epochs500_Tin10_T10__sBands__variants_keep0to4__pred11.pt

@@ -1,0 +1,618 @@
+c0605a-s4.ufhpc
+Fri Aug  8 11:50:10 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Using device: cuda
+========== 当前作业 GPU 信息 ==========
+分区: hpg-turin
+节点: c0605a-s4
+GPU ID (CUDA_VISIBLE_DEVICES): 0
+
+GPU 详细信息:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=====================================
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0171_rmseUnnorm0.0091.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0100_rmseUnnorm0.0122.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0074_rmseUnnorm0.0065.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0098_rmseUnnorm0.0057.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0105_rmseUnnorm0.0076.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0080_rmseUnnorm0.0058.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0131_rmseUnnorm0.0084.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0251_rmseUnnorm0.0137.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0116_rmseUnnorm0.0066.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0067_rmseUnnorm0.0056.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0302_rmseUnnorm0.0252.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0137_rmseUnnorm0.0137.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0190_rmseUnnorm0.0065.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0096_rmseUnnorm0.0082.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0083_rmseUnnorm0.0125.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0132_rmseUnnorm0.0126.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0117_rmseUnnorm0.0134.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0157_rmseUnnorm0.0137.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0148_rmseUnnorm0.0151.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0192_rmseUnnorm0.0178.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0248_rmseUnnorm0.0140.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0200_rmseUnnorm0.0199.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0222_rmseUnnorm0.0155.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0266_rmseUnnorm0.0270.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0222_rmseUnnorm0.0180.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0056_rmseUnnorm0.0026.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0051_rmseUnnorm0.0019.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0061_rmseUnnorm0.0025.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0056_rmseUnnorm0.0025.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0094_rmseUnnorm0.0061.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0201_rmseUnnorm0.0140.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0144_rmseUnnorm0.0107.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0065_rmseUnnorm0.0054.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0082_rmseUnnorm0.0049.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0140_rmseUnnorm0.0074.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0090_rmseUnnorm0.0087.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0141_rmseUnnorm0.0106.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0323_rmseUnnorm0.0133.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0236_rmseUnnorm0.0126.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0222_rmseUnnorm0.0156.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0358_rmseUnnorm0.0337.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0479_rmseUnnorm0.0244.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0325_rmseUnnorm0.0293.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0298_rmseUnnorm0.0224.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0340_rmseUnnorm0.0210.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0378_rmseUnnorm0.0210.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0445_rmseUnnorm0.0321.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0422_rmseUnnorm0.0256.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0219_rmseUnnorm0.0159.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0380_rmseUnnorm0.0225.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0179_rmseUnnorm0.0131.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0147_rmseUnnorm0.0110.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0191_rmseUnnorm0.0109.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0135_rmseUnnorm0.0108.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0133_rmseUnnorm0.0106.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0254_rmseUnnorm0.0162.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0306_rmseUnnorm0.0199.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0274_rmseUnnorm0.0150.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0324_rmseUnnorm0.0174.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0190_rmseUnnorm0.0166.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0062_rmseUnnorm0.0033.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0064_rmseUnnorm0.0043.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0060_rmseUnnorm0.0029.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0048_rmseUnnorm0.0021.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0070_rmseUnnorm0.0054.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0120_rmseUnnorm0.0099.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0110_rmseUnnorm0.0087.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0120_rmseUnnorm0.0070.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0130_rmseUnnorm0.0085.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0166_rmseUnnorm0.0109.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0156_rmseUnnorm0.0119.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0184_rmseUnnorm0.0128.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0157_rmseUnnorm0.0099.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0186_rmseUnnorm0.0107.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0186_rmseUnnorm0.0125.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0107_rmseUnnorm0.0073.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0089_rmseUnnorm0.0062.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0077_rmseUnnorm0.0083.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0050_rmseUnnorm0.0043.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0104_rmseUnnorm0.0071.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0142_rmseUnnorm0.0110.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0149_rmseUnnorm0.0109.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0143_rmseUnnorm0.0086.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0162_rmseUnnorm0.0101.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0170_rmseUnnorm0.0115.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0238_rmseUnnorm0.0160.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0306_rmseUnnorm0.0182.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0241_rmseUnnorm0.0145.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0290_rmseUnnorm0.0163.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0211_rmseUnnorm0.0179.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0176_rmseUnnorm0.0133.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0234_rmseUnnorm0.0144.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0172_rmseUnnorm0.0114.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0219_rmseUnnorm0.0120.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_pos/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0202_rmseUnnorm0.0161.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2199_rmseUnnorm0.2079.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.4009_rmseUnnorm0.3398.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.3076_rmseUnnorm0.2841.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1318_rmseUnnorm0.0918.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.5242_rmseUnnorm0.4638.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.3400_rmseUnnorm0.3000.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1972_rmseUnnorm0.1667.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2800_rmseUnnorm0.2418.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2305_rmseUnnorm0.2069.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.3156_rmseUnnorm0.2667.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1910_rmseUnnorm0.1764.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2115_rmseUnnorm0.1606.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2422_rmseUnnorm0.2307.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2822_rmseUnnorm0.2420.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1962_rmseUnnorm0.1579.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2291_rmseUnnorm0.1926.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1968_rmseUnnorm0.1707.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.4576_rmseUnnorm0.4333.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1729_rmseUnnorm0.1648.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.4065_rmseUnnorm0.3326.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0383_rmseUnnorm0.0327.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0463_rmseUnnorm0.0371.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0379_rmseUnnorm0.0313.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0505_rmseUnnorm0.0332.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0518_rmseUnnorm0.0407.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0561_rmseUnnorm0.0480.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0684_rmseUnnorm0.0529.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0582_rmseUnnorm0.0460.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0711_rmseUnnorm0.0503.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0754_rmseUnnorm0.0600.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0778_rmseUnnorm0.0678.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1037_rmseUnnorm0.0836.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0963_rmseUnnorm0.0780.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0941_rmseUnnorm0.0747.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1001_rmseUnnorm0.0839.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1020_rmseUnnorm0.0949.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1380_rmseUnnorm0.1152.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1280_rmseUnnorm0.1043.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1347_rmseUnnorm0.1068.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1285_rmseUnnorm0.1131.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0292_rmseUnnorm0.0249.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0271_rmseUnnorm0.0234.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0254_rmseUnnorm0.0213.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0332_rmseUnnorm0.0220.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0383_rmseUnnorm0.0307.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0347_rmseUnnorm0.0297.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0375_rmseUnnorm0.0310.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0327_rmseUnnorm0.0273.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0441_rmseUnnorm0.0289.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0452_rmseUnnorm0.0358.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1549_rmseUnnorm0.1427.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2426_rmseUnnorm0.2143.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1807_rmseUnnorm0.1612.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1927_rmseUnnorm0.1590.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2040_rmseUnnorm0.1928.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1467_rmseUnnorm0.1349.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2085_rmseUnnorm0.1877.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1847_rmseUnnorm0.1639.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1886_rmseUnnorm0.1535.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1851_rmseUnnorm0.1713.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0916_rmseUnnorm0.0831.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1245_rmseUnnorm0.1026.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1223_rmseUnnorm0.0985.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1099_rmseUnnorm0.0887.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1114_rmseUnnorm0.0958.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1069_rmseUnnorm0.0830.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.0967_rmseUnnorm0.0792.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0749_rmseUnnorm0.0610.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1180_rmseUnnorm0.0836.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0808_rmseUnnorm0.0603.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean/sample_0_rmseNorm0.1874_rmseUnnorm0.1537.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean/sample_1_rmseNorm0.1434_rmseUnnorm0.1230.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean/sample_2_rmseNorm0.1912_rmseUnnorm0.1735.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean/sample_3_rmseNorm0.1999_rmseUnnorm0.1767.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_zeromean/sample_4_rmseNorm0.1806_rmseUnnorm0.1441.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2052_rmseUnnorm0.1883.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2539_rmseUnnorm0.1961.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2163_rmseUnnorm0.2009.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1730_rmseUnnorm0.1524.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2287_rmseUnnorm0.2053.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1389_rmseUnnorm0.1114.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1143_rmseUnnorm0.0972.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0879_rmseUnnorm0.0765.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1468_rmseUnnorm0.1217.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1101_rmseUnnorm0.0832.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2952_rmseUnnorm0.2378.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2749_rmseUnnorm0.2385.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2480_rmseUnnorm0.2237.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2544_rmseUnnorm0.2305.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/pos_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2726_rmseUnnorm0.2492.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1426_rmseUnnorm0.1325.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1527_rmseUnnorm0.1272.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1233_rmseUnnorm0.1071.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1433_rmseUnnorm0.1263.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1472_rmseUnnorm0.1259.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2220_rmseUnnorm0.2199.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2678_rmseUnnorm0.2122.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.3471_rmseUnnorm0.2919.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2956_rmseUnnorm0.2497.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.3791_rmseUnnorm0.3481.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.5784_rmseUnnorm0.4375.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.6049_rmseUnnorm0.4680.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.6248_rmseUnnorm0.4983.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.6345_rmseUnnorm0.5025.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.6002_rmseUnnorm0.4668.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.4284_rmseUnnorm0.3894.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.5387_rmseUnnorm0.4133.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.5559_rmseUnnorm0.4506.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.5566_rmseUnnorm0.4774.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.5177_rmseUnnorm0.4330.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1771_rmseUnnorm0.1697.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2045_rmseUnnorm0.1760.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1548_rmseUnnorm0.1338.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1878_rmseUnnorm0.1571.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/gaussian_diff_distr/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2143_rmseUnnorm0.1826.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0976_rmseUnnorm0.0776.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1548_rmseUnnorm0.1434.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1429_rmseUnnorm0.1206.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1378_rmseUnnorm0.1171.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1132_rmseUnnorm0.1018.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0908_rmseUnnorm0.0666.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1245_rmseUnnorm0.1067.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1135_rmseUnnorm0.0895.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1263_rmseUnnorm0.1108.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1097_rmseUnnorm0.0937.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1042_rmseUnnorm0.0849.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1742_rmseUnnorm0.1593.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1613_rmseUnnorm0.1356.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1525_rmseUnnorm0.1274.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1130_rmseUnnorm0.1043.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1913_rmseUnnorm0.1512.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.3232_rmseUnnorm0.2761.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2573_rmseUnnorm0.2062.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2718_rmseUnnorm0.2343.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2071_rmseUnnorm0.1760.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0929_rmseUnnorm0.0678.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1035_rmseUnnorm0.0805.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0946_rmseUnnorm0.0645.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1036_rmseUnnorm0.0831.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0976_rmseUnnorm0.0738.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0890_rmseUnnorm0.0607.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1004_rmseUnnorm0.0767.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.0929_rmseUnnorm0.0626.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.0892_rmseUnnorm0.0613.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.0892_rmseUnnorm0.0611.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1158_rmseUnnorm0.0913.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2019_rmseUnnorm0.1775.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1733_rmseUnnorm0.1390.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1996_rmseUnnorm0.1706.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1268_rmseUnnorm0.1118.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.0909_rmseUnnorm0.0650.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1102_rmseUnnorm0.0901.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.1020_rmseUnnorm0.0756.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1070_rmseUnnorm0.0876.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1043_rmseUnnorm0.0842.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2356_rmseUnnorm0.1931.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.3921_rmseUnnorm0.3268.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2887_rmseUnnorm0.2424.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2941_rmseUnnorm0.2591.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/matern_diff_distr/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2638_rmseUnnorm0.2269.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.3060_rmseUnnorm0.2424.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1968_rmseUnnorm0.1738.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.3205_rmseUnnorm0.2861.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2518_rmseUnnorm0.2108.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2722_rmseUnnorm0.2221.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.3184_rmseUnnorm0.2779.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.2613_rmseUnnorm0.2135.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2299_rmseUnnorm0.2035.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2012_rmseUnnorm0.1725.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.2869_rmseUnnorm0.2376.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.2387_rmseUnnorm0.1887.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.3958_rmseUnnorm0.3196.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2808_rmseUnnorm0.2344.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.2503_rmseUnnorm0.2059.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.3520_rmseUnnorm0.2974.png
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/datasets/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5.pkl
+          0
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_0_rmseNorm0.1719_rmseUnnorm0.1490.png
+          1
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_1_rmseNorm0.1661_rmseUnnorm0.1476.png
+          2
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_2_rmseNorm0.2348_rmseUnnorm0.1874.png
+          3
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_3_rmseNorm0.1949_rmseUnnorm0.1647.png
+          4
+Saved figure: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/all_neg/zigzag/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5/sample_4_rmseNorm0.1150_rmseUnnorm0.1103.png
+All metrics saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/saved_models/generalization_plots/metrics_summary.csv

@@ -1,0 +1,14 @@
+c0910a-s5.ufhpc
+Thu Sep  4 12:12:10 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[nvidia-smi] name,total(MiB),used(MiB),free(MiB)
+NVIDIA B200, 183359, 4, 182639
+[Device] cuda
+[Resume] start_round=3, end_round=8 (out_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs)
+
+======================== ROUND 3/8 ========================
+[Round 3] Train composition -> total: 1000 (clean: 1000, expanded: 0; pool=0)
+[Round 3] Expanded-by-round: none
+[Round 3] Expanded sources used as pool: 0 file(s)
+
+[Mem] before training GPU0 mem | free 178332.6 MiB / total 182642.4 MiB | allocated 3600.4 MiB | reserved 3616.0 MiB

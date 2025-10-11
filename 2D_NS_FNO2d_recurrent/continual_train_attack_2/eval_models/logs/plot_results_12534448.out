@@ -1,0 +1,100 @@
+c1004a-s25.ufhpc
+Fri Sep 12 04:54:40 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== RUNTIME INFO ===
+Python 3.10.17
+Fri Sep 12 16:54:42 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.148.08             Driver Version: 570.148.08     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA B200                    On  |   00000000:C3:00.0 Off |                    0 |
+| N/A   24C    P0            141W / 1000W |       0MiB / 183359MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+PROJECT_ROOT : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+PLOT_SCRIPT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results.py
+CSV_PATH     : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/performance_results/combined_eval__roots_saved_models.csv
+OUTPUT_ROOT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results
+===============
+[paths] script_dir = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models
+[paths] input CSV = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/performance_results/combined_eval__roots_saved_models.csv
+[paths] save_root  = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus
+[step] reading CSV ...
+[info] rows=11,536, columns=51
+[step] inferring model hyperparams (modes/width/epochs[/Tin/Tout/step]) if missing ...
+[step] building FULL pivot table (rmse/mae/mape mean&std) ...
+[info] pivot_full shape = (1442, 16); columns levels = ['metric', 'model_group', 'model_name', 'model_path', 'model_source_dir', 'modes', 'width', 'epochs']
+[step] writing FULL pivot CSV ...
+[ok] saved FULL pivot to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/pivot_full_metrics.csv
+[step] subtracting baseline per row on rmse_mean ...
+[check] baseline columns after subtraction -> max|value| = 0.0
+[step] writing ΔRMSE pivot CSV ...
+[ok] saved ΔRMSE pivot to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/pivot_rmse_minus_baseline_from_pivot.csv
+[step] plotting by family (GRF/LogGRF/NegLogGRF) ...
+[run] GRF: 482 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF
+[plot] models to plot: 7
+[plot 1/7] drawing: model_name=NS_2d_FNO_model_epoch0010
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0010.png
+[plot 2/7] drawing: model_name=NS_2d_FNO_model_epoch0020
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0020.png
+[plot 3/7] drawing: model_name=NS_2d_FNO_model_epoch0030
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0030.png
+[plot 4/7] drawing: model_name=NS_2d_FNO_model_epoch0040
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0040.png
+[plot 5/7] drawing: model_name=NS_2d_FNO_model_epoch0050
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0050.png
+[plot 6/7] drawing: model_name=NS_2d_FNO_model_epoch0060
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0060.png
+[plot 7/7] drawing: model_name=NS_2d_FNO_model_epoch0070
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/GRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0070.png
+[run] LogGRF: 482 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF
+[plot] models to plot: 7
+[plot 1/7] drawing: model_name=NS_2d_FNO_model_epoch0010
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0010.png
+[plot 2/7] drawing: model_name=NS_2d_FNO_model_epoch0020
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0020.png
+[plot 3/7] drawing: model_name=NS_2d_FNO_model_epoch0030
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0030.png
+[plot 4/7] drawing: model_name=NS_2d_FNO_model_epoch0040
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0040.png
+[plot 5/7] drawing: model_name=NS_2d_FNO_model_epoch0050
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0050.png
+[plot 6/7] drawing: model_name=NS_2d_FNO_model_epoch0060
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0060.png
+[plot 7/7] drawing: model_name=NS_2d_FNO_model_epoch0070
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/LogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0070.png
+[run] NegLogGRF: 482 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF
+[plot] models to plot: 7
+[plot 1/7] drawing: model_name=NS_2d_FNO_model_epoch0010
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0010.png
+[plot 2/7] drawing: model_name=NS_2d_FNO_model_epoch0020
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0020.png
+[plot 3/7] drawing: model_name=NS_2d_FNO_model_epoch0030
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0030.png
+[plot 4/7] drawing: model_name=NS_2d_FNO_model_epoch0040
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0040.png
+[plot 5/7] drawing: model_name=NS_2d_FNO_model_epoch0050
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0050.png
+[plot 6/7] drawing: model_name=NS_2d_FNO_model_epoch0060
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0060.png
+[plot 7/7] drawing: model_name=NS_2d_FNO_model_epoch0070
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results/plots/models_rmse_minus/NegLogGRF/modes96x96_width80_epochs2000/NS_2d_FNO_model_epoch0070.png
+[done] all tasks completed.

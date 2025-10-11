@@ -1,0 +1,46 @@
+c0900a-s25.ufhpc
+Fri Sep  5 08:29:34 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Loading dataset from ../../2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame_real_initial.pt...
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent_real_initial/data_generation/VT_NS_gen_all_frame.py", line 371, in <module>
+    generator = DatasetGenerator(base_seed=0, train_test=train_test)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent_real_initial/data_generation/VT_NS_gen_all_frame.py", line 263, in __init__
+    self.zongyi_dataset = self._load_dataset_to_gpu()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent_real_initial/data_generation/VT_NS_gen_all_frame.py", line 268, in _load_dataset_to_gpu
+    dataset = torch.load(dataset_path, map_location=device, weights_only=False)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 1479, in load
+    with _open_file_like(f, "rb") as opened_file:
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 759, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/serialization.py", line 740, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '../../2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame_real_initial.pt'

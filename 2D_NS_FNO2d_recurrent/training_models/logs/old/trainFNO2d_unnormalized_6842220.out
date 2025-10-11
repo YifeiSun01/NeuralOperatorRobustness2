@@ -1,0 +1,20 @@
+c0901a-s15.ufhpc
+Mon Jul  7 08:08:29 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Training FNO2d
+Variable        Value     
+-------------------------
+ntrain          1000      
+ntest           100       
+batch_size      20        
+learning_rate   0.001     
+modes12         32        
+width           40        
+s               256       
+T_in            1         
+T               19        
+step            1         
+iterations      25000     
+sub             1         
+26240961
+Model saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth

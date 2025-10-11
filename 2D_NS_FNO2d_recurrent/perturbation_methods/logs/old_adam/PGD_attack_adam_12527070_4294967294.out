@@ -1,0 +1,706 @@
+c1010a-s15.ufhpc
+Fri Sep 12 03:03:50 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+>>> Running SINGLE job with MODE_SPEC=wwwwwwwwww
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list: [{'norm': 2, 'epsilon': 471.8592, 'alpha': 50.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 471.8592, 'alpha': 100, 'num_steps': 100}]
+mode_spec = wwwwwwwwww
+Per-frame modes: [t=01] with_solver | [t=02] with_solver | [t=03] with_solver | [t=04] with_solver | [t=05] with_solver | [t=06] with_solver | [t=07] with_solver | [t=08] with_solver | [t=09] with_solver | [t=19] with_solver
+================================================================================
+norm: 2, epsilon: 471.8592, alpha: 50.0, num_steps: 100, index: 5, method: adam, mode_spec: wwwwwwwwww, b1: 0.9, b2: 0.999, adam_eps: 1e-08, sign_Linf: True, amsgrad: False
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 184.372994s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 90.537388s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 90.537388s | 显存: 0.00 B
+
+[本步骤总计] 时间: 274.910383s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  4140.03173828125
+[Step 0] Backward Propagation - Time: 15.1169s, Mem: -4.10 GB
+[Step 0] PGD Update - Time: 2.8513s, Mem: 1.75 MB
+
+[Step 0] 完整步骤总时间: 204.374251s | 总显存: 22.02 MB
+[Step 0] 峰值显存: 16.96 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.216952s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.197629s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.197629s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.414581s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  11625.0859375
+[Step 1] Backward Propagation - Time: 5.2609s, Mem: -4.11 GB
+[Step 1] PGD Update - Time: 0.2992s, Mem: -3.25 MB
+
+[Step 1] 完整步骤总时间: 7.777676s | 总显存: -512.00 KB
+[Step 1] 峰值显存: 16.97 GB
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.167398s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.148411s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.148411s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.315808s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  26601.87890625
+[Step 2] Backward Propagation - Time: 5.3365s, Mem: -4.11 GB
+[Step 2] PGD Update - Time: 0.0023s, Mem: -2.75 MB
+
+[Step 2] 完整步骤总时间: 7.506957s | 总显存: 0.00 B
+[Step 2] 峰值显存: 16.97 GB
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.183548s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.164485s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.164485s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.348032s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  49582.90625
+[Step 3] Backward Propagation - Time: 5.1719s, Mem: -4.11 GB
+[Step 3] PGD Update - Time: 0.0023s, Mem: -2.75 MB
+
+[Step 3] 完整步骤总时间: 7.358548s | 总显存: 0.00 B
+[Step 3] 峰值显存: 16.97 GB
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.170342s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.151270s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.151270s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.321612s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  49945.6328125
+[Step 4] Backward Propagation - Time: 5.1329s, Mem: -4.11 GB
+[Step 4] PGD Update - Time: 0.0024s, Mem: -2.75 MB
+
+[Step 4] 完整步骤总时间: 7.306489s | 总显存: 0.00 B
+[Step 4] 峰值显存: 16.97 GB
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.160619s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.141353s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.141353s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.301972s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  82306.3125
+[Step 5] Backward Propagation - Time: 5.2629s, Mem: -4.11 GB
+[Step 5] PGD Update - Time: 0.0037s, Mem: -2.75 MB
+
+[Step 5] 完整步骤总时间: 7.428648s | 总显存: 0.00 B
+[Step 5] 峰值显存: 16.97 GB
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.192820s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.173573s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.173573s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.366393s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  111979.25
+[Step 6] Backward Propagation - Time: 5.1767s, Mem: -4.11 GB
+[Step 6] PGD Update - Time: 0.0029s, Mem: -2.75 MB
+
+[Step 6] 完整步骤总时间: 7.373301s | 总显存: 0.00 B
+[Step 6] 峰值显存: 16.97 GB
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.170545s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.151058s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.151058s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.321603s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  122489.875
+[Step 7] Backward Propagation - Time: 5.1707s, Mem: -4.11 GB
+[Step 7] PGD Update - Time: 0.0038s, Mem: -2.75 MB
+
+[Step 7] 完整步骤总时间: 7.346235s | 总显存: 0.00 B
+[Step 7] 峰值显存: 16.97 GB
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.220572s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.201339s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.201339s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.421911s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  231194.828125
+[Step 8] Backward Propagation - Time: 5.3085s, Mem: -4.11 GB
+[Step 8] PGD Update - Time: 0.0029s, Mem: -2.75 MB
+
+[Step 8] 完整步骤总时间: 7.532930s | 总显存: 0.00 B
+[Step 8] 峰值显存: 16.97 GB
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.213395s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.193992s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.193992s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.407387s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  210703.75
+[Step 9] Backward Propagation - Time: 5.1293s, Mem: -4.11 GB
+[Step 9] PGD Update - Time: 0.0038s, Mem: -2.75 MB
+
+[Step 9] 完整步骤总时间: 7.347617s | 总显存: 0.00 B
+[Step 9] 峰值显存: 16.97 GB
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.219443s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.200337s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.200337s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.419780s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  346113.375
+[Step 10] Backward Propagation - Time: 5.1612s, Mem: -4.11 GB
+[Step 10] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 10] 完整步骤总时间: 7.384431s | 总显存: 0.00 B
+[Step 10] 峰值显存: 16.97 GB
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.171758s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.152686s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.152686s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.324444s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  354143.0
+[Step 11] Backward Propagation - Time: 5.1712s, Mem: -4.11 GB
+[Step 11] PGD Update - Time: 0.0027s, Mem: -2.75 MB
+
+[Step 11] 完整步骤总时间: 7.346545s | 总显存: 0.00 B
+[Step 11] 峰值显存: 16.97 GB
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.166533s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.147082s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.147082s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.313615s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  399169.4375
+[Step 12] Backward Propagation - Time: 5.1511s, Mem: -4.11 GB
+[Step 12] PGD Update - Time: 0.0023s, Mem: -2.75 MB
+
+[Step 12] 完整步骤总时间: 7.320642s | 总显存: 0.00 B
+[Step 12] 峰值显存: 16.97 GB
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.295224s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.275642s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.275642s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.570866s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  311799.09375
+[Step 13] Backward Propagation - Time: 5.1093s, Mem: -4.11 GB
+[Step 13] PGD Update - Time: 0.0036s, Mem: -2.75 MB
+
+[Step 13] 完整步骤总时间: 7.409211s | 总显存: 0.00 B
+[Step 13] 峰值显存: 16.97 GB
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.161474s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.142459s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.142459s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.303933s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  426740.25
+[Step 14] Backward Propagation - Time: 5.1074s, Mem: -4.11 GB
+[Step 14] PGD Update - Time: 0.0026s, Mem: -2.75 MB
+
+[Step 14] 完整步骤总时间: 7.272351s | 总显存: 0.00 B
+[Step 14] 峰值显存: 16.97 GB
+
+[Step 15] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.181577s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.162269s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.162269s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.343845s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  349675.625
+[Step 15] Backward Propagation - Time: 5.1687s, Mem: -4.11 GB
+[Step 15] PGD Update - Time: 0.3623s, Mem: -2.75 MB
+
+[Step 15] 完整步骤总时间: 7.713485s | 总显存: 0.00 B
+[Step 15] 峰值显存: 16.97 GB
+
+[Step 16] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.189951s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.170680s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.170680s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.360630s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  508329.0625
+[Step 16] Backward Propagation - Time: 5.1607s, Mem: -4.11 GB
+[Step 16] PGD Update - Time: 0.0034s, Mem: -2.75 MB
+
+[Step 16] 完整步骤总时间: 7.355024s | 总显存: 0.00 B
+[Step 16] 峰值显存: 16.97 GB
+
+[Step 17] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.151741s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.132266s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.132266s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.284007s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  409013.15625
+[Step 17] Backward Propagation - Time: 5.3813s, Mem: -4.11 GB
+[Step 17] PGD Update - Time: 0.0025s, Mem: -2.75 MB
+
+[Step 17] 完整步骤总时间: 7.536409s | 总显存: 0.00 B
+[Step 17] 峰值显存: 16.97 GB
+
+[Step 18] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.180799s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.161627s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.161627s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.342426s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  317117.5625
+[Step 18] Backward Propagation - Time: 5.1643s, Mem: -4.11 GB
+[Step 18] PGD Update - Time: 0.0037s, Mem: -2.75 MB
+
+[Step 18] 完整步骤总时间: 7.349814s | 总显存: 0.00 B
+[Step 18] 峰值显存: 16.97 GB
+
+[Step 19] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.164844s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.145930s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.145930s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.310774s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  336342.03125
+[Step 19] Backward Propagation - Time: 5.1580s, Mem: -4.11 GB
+[Step 19] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 19] 完整步骤总时间: 7.326698s | 总显存: 0.00 B
+[Step 19] 峰值显存: 16.97 GB
+
+[Step 20] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.173536s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.154363s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.154363s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.327899s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  337996.34375
+[Step 20] Backward Propagation - Time: 5.1824s, Mem: -4.11 GB
+[Step 20] PGD Update - Time: 0.0027s, Mem: -2.75 MB
+
+[Step 20] 完整步骤总时间: 7.359563s | 总显存: 0.00 B
+[Step 20] 峰值显存: 16.97 GB
+
+[Step 21] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.218223s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.198789s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.198789s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.417012s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  257076.640625
+[Step 21] Backward Propagation - Time: 5.1832s, Mem: -4.11 GB
+[Step 21] PGD Update - Time: 0.0024s, Mem: -2.75 MB
+
+[Step 21] 完整步骤总时间: 7.404632s | 总显存: 0.00 B
+[Step 21] 峰值显存: 16.97 GB
+
+[Step 22] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.208396s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.189411s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.189411s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.397807s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  283111.03125
+[Step 22] Backward Propagation - Time: 5.2583s, Mem: -4.11 GB
+[Step 22] PGD Update - Time: 0.0038s, Mem: -2.75 MB
+
+[Step 22] 完整步骤总时间: 7.471456s | 总显存: 0.00 B
+[Step 22] 峰值显存: 16.97 GB
+
+[Step 23] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.198740s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.179706s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.179706s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.378446s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  272134.21875
+[Step 23] Backward Propagation - Time: 5.3599s, Mem: -4.11 GB
+[Step 23] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 23] 完整步骤总时间: 7.562433s | 总显存: 0.00 B
+[Step 23] 峰值显存: 16.97 GB
+
+[Step 24] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.198011s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.178532s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.178532s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.376542s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  212360.125
+[Step 24] Backward Propagation - Time: 5.2095s, Mem: -4.11 GB
+[Step 24] PGD Update - Time: 0.0025s, Mem: -2.75 MB
+
+[Step 24] 完整步骤总时间: 7.410848s | 总显存: 0.00 B
+[Step 24] 峰值显存: 16.97 GB
+
+[Step 25] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.217188s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.197919s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.197919s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.415107s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  172121.5
+[Step 25] Backward Propagation - Time: 5.2262s, Mem: -4.11 GB
+[Step 25] PGD Update - Time: 0.0025s, Mem: -2.75 MB
+
+[Step 25] 完整步骤总时间: 7.446758s | 总显存: 0.00 B
+[Step 25] 峰值显存: 16.97 GB
+
+[Step 26] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.193406s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.174206s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.174206s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.367611s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  303727.8125
+[Step 26] Backward Propagation - Time: 5.1828s, Mem: -4.11 GB
+[Step 26] PGD Update - Time: 0.0034s, Mem: -2.75 MB
+
+[Step 26] 完整步骤总时间: 7.380269s | 总显存: 0.00 B
+[Step 26] 峰值显存: 16.97 GB
+
+[Step 27] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.204973s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.186046s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.186046s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.391019s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  400439.9375
+[Step 27] Backward Propagation - Time: 5.2493s, Mem: -4.11 GB
+[Step 27] PGD Update - Time: 0.0023s, Mem: -2.75 MB
+
+[Step 27] 完整步骤总时间: 7.457338s | 总显存: 0.00 B
+[Step 27] 峰值显存: 16.97 GB
+
+[Step 28] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.216167s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.197092s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.197092s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.413259s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  329011.40625
+[Step 28] Backward Propagation - Time: 5.2401s, Mem: -4.11 GB
+[Step 28] PGD Update - Time: 0.0026s, Mem: -2.75 MB
+
+[Step 28] 完整步骤总时间: 7.459654s | 总显存: 0.00 B
+[Step 28] 峰值显存: 16.97 GB
+
+[Step 29] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.172363s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.153070s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.153070s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.325433s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  521671.125
+[Step 29] Backward Propagation - Time: 5.1228s, Mem: -4.11 GB
+[Step 29] PGD Update - Time: 0.0039s, Mem: -2.75 MB
+
+[Step 29] 完整步骤总时间: 7.300308s | 总显存: 0.00 B
+[Step 29] 峰值显存: 16.97 GB
+
+[Step 30] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.212294s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.193191s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.193191s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.405485s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  437895.375
+[Step 30] Backward Propagation - Time: 5.4913s, Mem: -4.11 GB
+[Step 30] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 30] 完整步骤总时间: 7.707382s | 总显存: 0.00 B
+[Step 30] 峰值显存: 16.97 GB
+
+[Step 31] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.267018s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.247458s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.247458s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.514476s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  508794.375
+[Step 31] Backward Propagation - Time: 5.1508s, Mem: -4.11 GB
+[Step 31] PGD Update - Time: 0.0023s, Mem: -2.75 MB
+
+[Step 31] 完整步骤总时间: 7.420995s | 总显存: 0.00 B
+[Step 31] 峰值显存: 16.97 GB
+
+[Step 32] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.203385s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.184322s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.184322s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.387707s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  547473.625
+[Step 32] Backward Propagation - Time: 5.1444s, Mem: -4.11 GB
+[Step 32] PGD Update - Time: 0.0040s, Mem: -2.75 MB
+
+[Step 32] 完整步骤总时间: 7.352858s | 总显存: 0.00 B
+[Step 32] 峰值显存: 16.97 GB
+
+[Step 33] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.169827s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.150793s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.150793s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.320620s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  233132.65625
+[Step 33] Backward Propagation - Time: 5.2129s, Mem: -4.11 GB
+[Step 33] PGD Update - Time: 0.0029s, Mem: -2.75 MB
+
+[Step 33] 完整步骤总时间: 7.386398s | 总显存: 0.00 B
+[Step 33] 峰值显存: 16.97 GB
+
+[Step 34] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.177306s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.158211s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.158211s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.335517s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  399705.6875
+[Step 34] Backward Propagation - Time: 5.1340s, Mem: -4.11 GB
+[Step 34] PGD Update - Time: 0.0024s, Mem: -2.75 MB
+
+[Step 34] 完整步骤总时间: 7.314474s | 总显存: 0.00 B
+[Step 34] 峰值显存: 16.97 GB
+
+[Step 35] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.222675s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.203350s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.203350s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.426025s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  333995.8125
+[Step 35] Backward Propagation - Time: 5.1635s, Mem: -4.11 GB
+[Step 35] PGD Update - Time: 0.0024s, Mem: -2.75 MB
+
+[Step 35] 完整步骤总时间: 7.389314s | 总显存: 0.00 B
+[Step 35] 峰值显存: 16.97 GB
+
+[Step 36] ============ 详细性能分析 ============
+[模型部分] 总时间: 2.163072s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 2.144009s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 2.144009s | 显存: 0.00 B
+
+[本步骤总计] 时间: 4.307081s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  418015.125
+[Step 36] Backward Propagation - Time: 5.1466s, Mem: -4.11 GB
+[Step 36] PGD Update - Time: 0.0039s, Mem: -2.75 MB
+
+[Step 36] 完整步骤总时间: 7.314695s | 总显存: 0.00 B
+[Step 36] 峰值显存: 16.97 GB

@@ -1,0 +1,25 @@
+c0903a-s15.ufhpc
+Tue Jun 24 06:54:15 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/cuda/__init__.py:287: UserWarning: 
+NVIDIA B200 with CUDA capability sm_100 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_50 sm_60 sm_70 sm_75 sm_80 sm_86 sm_90.
+If you want to use the NVIDIA B200 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(
+Generating samples:   0%|          | 0/5 [00:09<?, ?sample/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 196, in <module>
+    path1 = generator.generate_dataset(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 141, in generate_dataset
+    x, y, selected_times = generate_vorticity_transport_data(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 60, in generate_vorticity_transport_data
+    exponaxsolver = ExponaxVTSolver2D(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 18, in __init__
+    self.x = torch.linspace(-Lx/2, Lx/2, nx, device=device)
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

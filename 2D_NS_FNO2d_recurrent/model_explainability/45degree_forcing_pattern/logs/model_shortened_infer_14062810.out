@@ -1,0 +1,95 @@
+c0901a-s25.ufhpc
+Fri Sep 26 10:34:13 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[ARGS] MODEL_ROOT=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D
+[ARGS] DATASET_PATH=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+[ARGS] OUT_DIR=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results
+[ARGS] BATCH_SIZE=20
+[ARGS] MAX_KEEP=4
+[DATA] loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt  shape=(1150, 256, 256, 10)
+[RUNTIME] batch_size=20, samples=1150
+[INFO] found 16 checkpoints under /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D
+
+[MODEL] running: modes128_width40_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes128_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=128, modes2=128, width=40, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes128_width40_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes12_width20_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes12_width20_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=12, modes2=12, width=20, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes12_width20_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes16_width60_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes16_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=16, modes2=16, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes16_width60_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes32_width40_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=32, modes2=32, width=40, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes32_width40_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes32_width40_epochs500_Tin1_T19
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=32, modes2=32, width=40, num_layers=4, Tin=1
+[ERROR] processing model modes32_width40_epochs500_Tin1_T19 failed with error:
+mat1 and mat2 shapes cannot be multiplied (1310720x12 and 3x40)
+Skipping this model and continuing with next.
+
+[MODEL] running: modes32_width60_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=32, modes2=32, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes32_width60_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes48_width40_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=48, modes2=48, width=40, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes48_width40_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes48_width60_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=48, modes2=48, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes48_width60_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes48_width80_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=48, modes2=48, width=80, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes48_width80_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes64_width40_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=64, modes2=64, width=40, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes64_width40_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes64_width60_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes64_width60_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes64_width60_epochs500_Tin1_T19
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=64, modes2=64, width=60, num_layers=4, Tin=1
+[ERROR] processing model modes64_width60_epochs500_Tin1_T19 failed with error:
+mat1 and mat2 shapes cannot be multiplied (1310720x12 and 3x60)
+Skipping this model and continuing with next.
+
+[MODEL] running: modes64_width80_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=64, modes2=64, width=80, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes64_width80_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes96_width40_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=96, modes2=96, width=40, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes96_width40_epochs500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes96_width80_epochs1500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width80_epochs1500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=96, modes2=96, width=80, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes96_width80_epochs1500_Tin10_T10__variants_keep0to4__pred11.pt
+
+[MODEL] running: modes96_width80_epochs500_Tin10_T10
+[MODEL] checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width80_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[MODEL] inferred: modes1=96, modes2=96, width=80, num_layers=4, Tin=10
+[SAVE] tensor saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/model_explainability/infer_results/modes96_width80_epochs500_Tin10_T10__variants_keep0to4__pred11.pt

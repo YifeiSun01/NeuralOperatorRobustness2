@@ -1,0 +1,202 @@
+c0901a-s5.ufhpc
+Sat Sep 13 05:28:21 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[nvidia-smi] name,total(MiB),used(MiB),free(MiB)
+NVIDIA B200, 183359, 4, 182639
+[Device] cuda
+[Resume] start_round=6, end_round=11 (out_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs)
+
+======================== ROUND 6/11 ========================
+[Round 6] Train composition -> total: 1000 (clean: 1000, expanded: 0; pool=0)
+[Round 6] Expanded-by-round: none
+[Round 6] Expanded sources used as pool: 0 file(s)
+
+[Round 6] CKPT exists: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs/models/FNO2d_r6_m96x96_w80_Tin10_T10.pth -> 跳过训练，直接加载
+[Round 6] Eval train: RMSEμ=0.08281, MAEμ=0.05979, MAPEμ=31.93%
+[Round 6] Eval test: RMSEμ=0.308, MAEμ=0.2059, MAPEμ=157.21%
+[Round 6] Eval generalizability under: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability
+[Mem] before generalizability eval GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 20
+[Mem] eval generalizability #20 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 40
+[Mem] eval generalizability #40 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 60
+[Mem] eval generalizability #60 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 80
+[Mem] eval generalizability #80 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 100
+[Mem] eval generalizability #100 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 120
+[Mem] eval generalizability #120 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 140
+[Mem] eval generalizability #140 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 160
+[Mem] eval generalizability #160 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 180
+[Mem] eval generalizability #180 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 200
+[Mem] eval generalizability #200 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 220
+[Mem] eval generalizability #220 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 240
+[Mem] eval generalizability #240 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 260
+[Mem] eval generalizability #260 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 280
+[Mem] eval generalizability #280 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 300
+[Mem] eval generalizability #300 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 320
+[Mem] eval generalizability #320 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 340
+[Mem] eval generalizability #340 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 360
+[Mem] eval generalizability #360 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 380
+[Mem] eval generalizability #380 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 400
+[Mem] eval generalizability #400 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 420
+[Mem] eval generalizability #420 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 440
+[Mem] eval generalizability #440 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 460
+[Mem] eval generalizability #460 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 480
+[Mem] eval generalizability #480 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 500
+[Mem] eval generalizability #500 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 520
+[Mem] eval generalizability #520 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 540
+[Mem] eval generalizability #540 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 560
+[Mem] eval generalizability #560 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 580
+[Mem] eval generalizability #580 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 600
+[Mem] eval generalizability #600 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 620
+[Mem] eval generalizability #620 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 640
+[Mem] eval generalizability #640 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 660
+[Mem] eval generalizability #660 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 680
+[Mem] eval generalizability #680 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 700
+[Mem] eval generalizability #700 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 720
+[Mem] eval generalizability #720 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 740
+[Mem] eval generalizability #740 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 760
+[Mem] eval generalizability #760 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 780
+[Mem] eval generalizability #780 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 800
+[Mem] eval generalizability #800 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 820
+[Mem] eval generalizability #820 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 840
+[Mem] eval generalizability #840 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 860
+[Mem] eval generalizability #860 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 880
+[Mem] eval generalizability #880 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 900
+[Mem] eval generalizability #900 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 920
+[Mem] eval generalizability #920 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 940
+[Mem] eval generalizability #940 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 960
+[Mem] eval generalizability #960 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 980
+[Mem] eval generalizability #980 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1000
+[Mem] eval generalizability #1000 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1020
+[Mem] eval generalizability #1020 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1040
+[Mem] eval generalizability #1040 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1060
+[Mem] eval generalizability #1060 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1080
+[Mem] eval generalizability #1080 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1100
+[Mem] eval generalizability #1100 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1120
+[Mem] eval generalizability #1120 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1140
+[Mem] eval generalizability #1140 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1160
+[Mem] eval generalizability #1160 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1180
+[Mem] eval generalizability #1180 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1200
+[Mem] eval generalizability #1200 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1220
+[Mem] eval generalizability #1220 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1240
+[Mem] eval generalizability #1240 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1260
+[Mem] eval generalizability #1260 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1280
+[Mem] eval generalizability #1280 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1300
+[Mem] eval generalizability #1300 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1320
+[Mem] eval generalizability #1320 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1340
+[Mem] eval generalizability #1340 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1360
+[Mem] eval generalizability #1360 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1380
+[Mem] eval generalizability #1380 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1400
+[Mem] eval generalizability #1400 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1420
+[Mem] eval generalizability #1420 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Eval generalizability progress: 1440
+[Mem] eval generalizability #1440 GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Round 6] Generalizability eval done. Files processed: 1440
+[Mem] after generalizability eval GPU0 mem | free 173532.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 8224.0 MiB
+[Mem] before attack (after eval cleanup) GPU0 mem | free 174492.6 MiB / total 182642.4 MiB | allocated 7208.9 MiB | reserved 7264.0 MiB
+[Round 6] Will attack 288 samples (ratio=0.25) | eps=200.0, alpha=100.0, steps=10
+[Mem] attack post idx=4 GPU0 mem | free 167808.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=9 GPU0 mem | free 167706.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=14 GPU0 mem | free 167602.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=19 GPU0 mem | free 167496.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=24 GPU0 mem | free 167392.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=29 GPU0 mem | free 167226.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13728.0 MiB
+[Mem] attack post idx=34 GPU0 mem | free 167122.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13728.0 MiB
+[Mem] attack post idx=39 GPU0 mem | free 167082.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=44 GPU0 mem | free 166948.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=49 GPU0 mem | free 166842.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=54 GPU0 mem | free 166772.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=59 GPU0 mem | free 166668.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=64 GPU0 mem | free 166564.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=69 GPU0 mem | free 166460.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=74 GPU0 mem | free 166324.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=79 GPU0 mem | free 166254.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=84 GPU0 mem | free 166054.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13760.0 MiB
+[Mem] attack post idx=89 GPU0 mem | free 166014.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=94 GPU0 mem | free 165942.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=99 GPU0 mem | free 165838.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=104 GPU0 mem | free 165702.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=109 GPU0 mem | free 165630.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=114 GPU0 mem | free 165496.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=119 GPU0 mem | free 165424.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=124 GPU0 mem | free 165288.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=129 GPU0 mem | free 165186.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=134 GPU0 mem | free 165112.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=139 GPU0 mem | free 165008.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=144 GPU0 mem | free 164872.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13696.0 MiB
+[Mem] attack post idx=149 GPU0 mem | free 164802.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=154 GPU0 mem | free 164700.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=159 GPU0 mem | free 164594.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=164 GPU0 mem | free 164490.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=169 GPU0 mem | free 164386.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=174 GPU0 mem | free 164282.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13664.0 MiB
+[Mem] attack post idx=179 GPU0 mem | free 164660.6 MiB / total 182642.4 MiB | allocated 7222.8 MiB | reserved 13184.0 MiB

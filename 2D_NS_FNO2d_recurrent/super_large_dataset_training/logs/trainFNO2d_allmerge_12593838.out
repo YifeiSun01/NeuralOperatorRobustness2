@@ -1,0 +1,57 @@
+c0903a-s15.ufhpc
+Sat Sep 13 07:51:15 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+[FOUND DATASETS — full list]
+[0001] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha100_epsilon235.93_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0002] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0003] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0004] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0005] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0006] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0007] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0008] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0009] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0010] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0011] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0012] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0013] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0014] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0015] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T_total=21
+[0016] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T_total=21
+
+================ ALL-MERGED RUN CONFIG ================
+mode                        : ALL-MERGED-STREAM
+expanded_root               : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150
+num_pt_files                : 16
+total_samples_N             : 18400
+modes                       : 96
+width                       : 80
+s                           : 256
+T_in                        : 10
+T_out                       : 10
+step                        : 1
+batch_size                  : 20
+epochs                      : 500
+ckpt_every                  : 20
+device                      : cuda
+seed                        : 1234
+num_workers                 : 0
+verbose_file_switch         : True
+============================================================
+
+[Epoch 0000] ▶ START file 1/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 1/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10.pt
+[Epoch 0000] ▶ START file 2/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 2/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10.pt
+[Epoch 0000] ▶ START file 3/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 3/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10.pt
+[Epoch 0000] ▶ START file 4/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 4/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10.pt
+[Epoch 0000] ▶ START file 5/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 5/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10.pt
+[Epoch 0000] ▶ START file 6/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 6/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10.pt
+[Epoch 0000] ▶ START file 7/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T=21
+[Epoch 0000] ■ DONE  file 7/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10.pt
+[Epoch 0000] ▶ START file 8/16: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10.pt | N=1150 H=256 W=256 T=21

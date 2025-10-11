@@ -1,0 +1,50 @@
+c0605a-s6.ufhpc
+Sat Aug  9 12:34:48 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA L4
+Device Memory: 22.05 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA L4
+  Compute Capability: 8.9
+  Total Memory: 22.05 GB
+  Multiprocessors: 58
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list:  [(2, 78.6432, 10.0, 100)]
+detached1to9
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+================================================================================
+norm: 2, epsilon: 78.6432, alpha: 10.0, num_steps: 100, index: 1, learning_rate_updating_method: Standard PGD (Fixed Step Size), detach: detached1to9
+x_adv.shape:  torch.Size([256, 256])
+scheduler initialization paramaters:  {'method': 'Standard PGD (Fixed Step Size)', 'alpha0': 10.0, 'state': {}, 'params': {'gamma': 0.9, 'm': 10, 'k': 0.01, 'beta': 0.9, 'beta1': 0.9, 'beta2': 0.999}, 'first_grad_norm': None, 'first_sq_grad': None, 'first_alpha': None}
+1 sec is detached
+2 sec is detached
+3 sec is detached
+4 sec is detached
+5 sec is detached
+6 sec is detached
+7 sec is detached
+8 sec is detached
+9 sec is detached

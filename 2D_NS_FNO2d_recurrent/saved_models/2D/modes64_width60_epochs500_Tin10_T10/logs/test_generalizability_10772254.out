@@ -1,0 +1,1030 @@
+c0906a-s25.ufhpc
+Sun Aug 24 04:24:35 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[TIME] argparse: 0.006s
+[TIME] make_dirs: 0.472s  -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results
+[INFO] Using model checkpoint: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+[TIME] find_checkpoint: 0.002s
+[TIME] load_checkpoint: 5.983s
+[TIME] parse_state_dict: 0.000s
+[TIME] build_model: 2.174s
+[TIME] model_total: 8.897s
+[FILTER] Keeping index range [0, 0] (inclusive) in the FINAL PICKLE & PLOTS.
+[TIME] init_structs: 0.000s
+[INFO] Found 1440 dataset file(s) in /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability
+[INFO] Device: cuda, T_in=10, T_out=10, step=1
+--------------------------------------------------------------------------------
+[TIME] scan_datasets: 38.502s
+[DATASET 1/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:1] parse_name: 0.001s
+[TIME][dataset:1] load_pt: 0.223s
+[TIME][dataset:1] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.31412  MAE=1.27801  MAPE=576.14% | prep=0.541s fwd=31.932s post=0.050s total=32.524s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.31412 MAE=1.27801 MAPE=576.14% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__hce6bf5f4b067.png | keep=0.000s plot=1.622s
+  [Index 2/10] ... RMSE=1.43514  MAE=1.31966  MAPE=751.885% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.35272  MAE=1.27969  MAPE=373.118% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.38016  MAE=1.28046  MAPE=851.473% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.30607  MAE=1.26042  MAPE=484.017% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.42472  MAE=1.29212  MAPE=424.456% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.35267  MAE=1.25659  MAPE=463.279% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.36635  MAE=1.27505  MAPE=427.145% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.3636  MAE=1.26045  MAPE=534.629% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.31242  MAE=1.2335  MAPE=477.65% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.3608 var=0.00176736 | MAE mean=1.27359 var=0.000481406 | MAPE mean=536.379% var=20995.8
+[TIME][dataset:1] total: 34.545s
+--------------------------------------------------------------------------------
+[DATASET 2/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:2] parse_name: 0.000s
+[TIME][dataset:2] load_pt: 0.273s
+[TIME][dataset:2] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.074592  MAE=0.0595927  MAPE=28.2229% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.074592 MAE=0.0595927 MAPE=28.2229% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__hc3ccd608addd.png | keep=0.000s plot=1.455s
+  [Index 2/10] ... RMSE=0.094107  MAE=0.0738692  MAPE=24.2855% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.0626791  MAE=0.0495102  MAPE=91.0816% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.0806635  MAE=0.0631913  MAPE=25.5019% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.0871638  MAE=0.0681013  MAPE=11.8087% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.0817075  MAE=0.0626507  MAPE=13.7498% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.0773159  MAE=0.0607635  MAPE=14.63% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.0953415  MAE=0.0745748  MAPE=11.0752% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.0986991  MAE=0.0755355  MAPE=15.9882% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.122145  MAE=0.0907995  MAPE=25.8023% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.0874414 var=0.000239759 | MAE mean=0.0678589 var=0.000117075 | MAPE mean=26.2146% var=504.704
+[TIME][dataset:2] total: 1.921s
+--------------------------------------------------------------------------------
+[DATASET 3/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:3] parse_name: 0.000s
+[TIME][dataset:3] load_pt: 0.211s
+[TIME][dataset:3] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.513526  MAE=0.477223  MAPE=122.183% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.513526 MAE=0.477223 MAPE=122.183% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__hb5f76f26e1e4.png | keep=0.000s plot=1.534s
+  [Index 2/10] ... RMSE=0.55516  MAE=0.519262  MAPE=156.182% | prep=0.000s fwd=0.012s post=0.008s total=0.020s
+  [Index 3/10] ... RMSE=0.560418  MAE=0.515425  MAPE=142.66% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.484943  MAE=0.45833  MAPE=114.183% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.527763  MAE=0.501825  MAPE=126.609% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.54066  MAE=0.505771  MAPE=140.467% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.589383  MAE=0.52912  MAPE=196.387% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.558054  MAE=0.514139  MAPE=125.198% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.486524  MAE=0.469913  MAPE=146.532% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.492048  MAE=0.46867  MAPE=127.703% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.530848 var=0.00116151 | MAE mean=0.495968 var=0.000567287 | MAPE mean=139.81% var=502.452
+[TIME][dataset:3] total: 1.937s
+--------------------------------------------------------------------------------
+[DATASET 4/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:4] parse_name: 0.000s
+[TIME][dataset:4] load_pt: 0.506s
+[TIME][dataset:4] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.38626  MAE=1.27359  MAPE=480.581% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.38626 MAE=1.27359 MAPE=480.581% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__h2526d7e9863f.png | keep=0.000s plot=1.469s
+  [Index 2/10] ... RMSE=1.36211  MAE=1.2459  MAPE=369.653% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=1.29402  MAE=1.22167  MAPE=422.633% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.26309  MAE=1.17039  MAPE=398.284% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.30967  MAE=1.22842  MAPE=449.805% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.34841  MAE=1.2566  MAPE=495.651% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.31256  MAE=1.23358  MAPE=926.055% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.2935  MAE=1.21277  MAPE=485.269% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.30739  MAE=1.2165  MAPE=506.698% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.37604  MAE=1.24985  MAPE=465.026% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.32531 var=0.0014766 | MAE mean=1.23093 var=0.000736307 | MAPE mean=499.966% var=21924.5
+[TIME][dataset:4] total: 2.167s
+--------------------------------------------------------------------------------
+[DATASET 5/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:5] parse_name: 0.000s
+[TIME][dataset:5] load_pt: 0.216s
+[TIME][dataset:5] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.299854  MAE=0.188636  MAPE=70.0567% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.299854 MAE=0.188636 MAPE=70.0567% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__h2218bc49ee9e.png | keep=0.000s plot=1.433s
+  [Index 2/10] ... RMSE=0.154509  MAE=0.123323  MAPE=21.0174% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.222154  MAE=0.166189  MAPE=46.9861% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 4/10] ... RMSE=0.191669  MAE=0.15679  MAPE=108.159% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.181719  MAE=0.136844  MAPE=40.2251% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.224979  MAE=0.163297  MAPE=44.2005% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.172858  MAE=0.132512  MAPE=27.767% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.272643  MAE=0.192968  MAPE=83.543% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.221873  MAE=0.155108  MAPE=43.088% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.235708  MAE=0.166234  MAPE=146.197% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.217797 var=0.00181587 | MAE mean=0.15819 var=0.00046334 | MAPE mean=63.124% var=1396.17
+[TIME][dataset:5] total: 1.841s
+--------------------------------------------------------------------------------
+[DATASET 6/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:6] parse_name: 0.000s
+[TIME][dataset:6] load_pt: 0.238s
+[TIME][dataset:6] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.52581  MAE=0.509802  MAPE=132.796% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.52581 MAE=0.509802 MAPE=132.796% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau11_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__hfba3080fd1ad.png | keep=0.000s plot=1.528s
+  [Index 2/10] ... RMSE=0.565063  MAE=0.529054  MAPE=211.534% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.489133  MAE=0.464807  MAPE=106.854% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.606772  MAE=0.558968  MAPE=168.154% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.55747  MAE=0.529326  MAPE=159.759% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.569825  MAE=0.535848  MAPE=134.646% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.449266  MAE=0.429213  MAPE=136.699% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.524982  MAE=0.508026  MAPE=471.838% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.560166  MAE=0.528107  MAPE=161.911% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.535249  MAE=0.521068  MAPE=587.334% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.538374 var=0.00179313 | MAE mean=0.511422 var=0.00128056 | MAPE mean=227.153% var=24223.9
+[TIME][dataset:6] total: 1.958s
+--------------------------------------------------------------------------------
+[DATASET 7/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:7] parse_name: 0.000s
+[TIME][dataset:7] load_pt: 0.215s
+[TIME][dataset:7] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.29271  MAE=1.24547  MAPE=677.347% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.29271 MAE=1.24547 MAPE=677.347% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__h288d3e07d42a.png | keep=0.000s plot=1.508s
+  [Index 2/10] ... RMSE=1.26692  MAE=1.23479  MAPE=478.133% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 3/10] ... RMSE=1.31398  MAE=1.25169  MAPE=1070.14% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.33859  MAE=1.27399  MAPE=1099.41% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.32361  MAE=1.26288  MAPE=372.084% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.32593  MAE=1.22628  MAPE=458.386% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.33663  MAE=1.30942  MAPE=458.312% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.28807  MAE=1.25136  MAPE=409.768% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.32848  MAE=1.25353  MAPE=426.473% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.31525  MAE=1.27533  MAPE=593.411% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.31302 var=0.000489517 | MAE mean=1.25847 var=0.000502745 | MAPE mean=604.347% var=64951.2
+[TIME][dataset:7] total: 1.915s
+--------------------------------------------------------------------------------
+[DATASET 8/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:8] parse_name: 0.000s
+[TIME][dataset:8] load_pt: 0.207s
+[TIME][dataset:8] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.0752846  MAE=0.0573067  MAPE=9.98753% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.0752846 MAE=0.0573067 MAPE=9.98753% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__hf184ccbf19b6.png | keep=0.000s plot=1.467s
+  [Index 2/10] ... RMSE=0.104809  MAE=0.0787418  MAPE=15.9405% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.0825007  MAE=0.0665549  MAPE=17.7601% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.0839434  MAE=0.068842  MAPE=61.882% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.0780743  MAE=0.0648458  MAPE=13.4672% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.0733841  MAE=0.0590752  MAPE=11.3096% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.0704529  MAE=0.0566918  MAPE=15.5655% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.070897  MAE=0.0570881  MAPE=11.4761% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.077932  MAE=0.0629481  MAPE=13.9957% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.069024  MAE=0.0545811  MAPE=9.0513% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.0786302 var=9.87005e-05 | MAE mean=0.0626675 var=4.90314e-05 | MAPE mean=18.0436% var=220.401
+[TIME][dataset:8] total: 1.869s
+--------------------------------------------------------------------------------
+[DATASET 9/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:9] parse_name: 0.000s
+[TIME][dataset:9] load_pt: 0.203s
+[TIME][dataset:9] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.500953  MAE=0.483606  MAPE=371.435% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.500953 MAE=0.483606 MAPE=371.435% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__h8d3bb9e1b6e2.png | keep=0.000s plot=1.513s
+  [Index 2/10] ... RMSE=0.614331  MAE=0.545661  MAPE=208.958% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.513779  MAE=0.471101  MAPE=155.664% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.555177  MAE=0.524001  MAPE=210.278% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.516344  MAE=0.467896  MAPE=109.963% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.534131  MAE=0.51087  MAPE=137.224% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.523504  MAE=0.48503  MAPE=154.69% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.498069  MAE=0.484381  MAPE=184.108% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.547591  MAE=0.532955  MAPE=141.6% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.479371  MAE=0.455619  MAPE=329.676% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.528325 var=0.00129625 | MAE mean=0.496112 var=0.00082863 | MAPE mean=200.36% var=6611.97
+[TIME][dataset:9] total: 1.909s
+--------------------------------------------------------------------------------
+[DATASET 10/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:10] parse_name: 0.000s
+[TIME][dataset:10] load_pt: 0.241s
+[TIME][dataset:10] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.31812  MAE=1.21455  MAPE=453.513% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.31812 MAE=1.21455 MAPE=453.513% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__hbb79c7692669.png | keep=0.000s plot=1.464s
+  [Index 2/10] ... RMSE=1.33963  MAE=1.22584  MAPE=422.909% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 3/10] ... RMSE=1.29435  MAE=1.21467  MAPE=676.128% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.28248  MAE=1.19242  MAPE=541.591% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.33418  MAE=1.22489  MAPE=424.104% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.29977  MAE=1.20093  MAPE=345.801% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.31388  MAE=1.21602  MAPE=464.165% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.33328  MAE=1.23247  MAPE=473.345% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.30302  MAE=1.22375  MAPE=519.604% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.30129  MAE=1.20888  MAPE=472.152% | prep=0.000s fwd=0.012s post=0.006s total=0.019s
+  -> Dataset summary: RMSE mean=1.312 var=0.000327726 | MAE mean=1.21544 var=0.000134179 | MAPE mean=479.331% var=6927.49
+[TIME][dataset:10] total: 1.897s
+--------------------------------------------------------------------------------
+[DATASET 11/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:11] parse_name: 0.000s
+[TIME][dataset:11] load_pt: 0.219s
+[TIME][dataset:11] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.192314  MAE=0.137747  MAPE=46.3911% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.192314 MAE=0.137747 MAPE=46.3911% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__h5e629e566045.png | keep=0.000s plot=1.466s
+  [Index 2/10] ... RMSE=0.105779  MAE=0.0856406  MAPE=83.3459% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.179081  MAE=0.138137  MAPE=61.8816% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.200054  MAE=0.150262  MAPE=40.0543% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.252057  MAE=0.181239  MAPE=92.9016% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.220688  MAE=0.163654  MAPE=60.9853% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.184997  MAE=0.153218  MAPE=48.495% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.143485  MAE=0.112603  MAPE=20.2617% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.139851  MAE=0.103195  MAPE=45.6013% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.10613  MAE=0.085202  MAPE=21.2155% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.172444 var=0.00207671 | MAE mean=0.13109 var=0.000981776 | MAPE mean=52.1133% var=501.615
+[TIME][dataset:11] total: 1.878s
+--------------------------------------------------------------------------------
+[DATASET 12/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:12] parse_name: 0.000s
+[TIME][dataset:12] load_pt: 0.217s
+[TIME][dataset:12] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.521555  MAE=0.492101  MAPE=115.568% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.521555 MAE=0.492101 MAPE=115.568% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__he4b408b87631.png | keep=0.000s plot=1.487s
+  [Index 2/10] ... RMSE=0.444326  MAE=0.429179  MAPE=123.48% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.538847  MAE=0.500455  MAPE=184.557% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.545874  MAE=0.50441  MAPE=130.391% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.611634  MAE=0.56827  MAPE=142.169% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.512947  MAE=0.499382  MAPE=154.899% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.544479  MAE=0.51091  MAPE=147.515% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.558214  MAE=0.529706  MAPE=121.736% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.482763  MAE=0.463749  MAPE=111.993% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.512511  MAE=0.496847  MAPE=113.025% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.527315 var=0.00181673 | MAE mean=0.499501 var=0.00120818 | MAPE mean=134.534% var=477.741
+[TIME][dataset:12] total: 1.896s
+--------------------------------------------------------------------------------
+[DATASET 13/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:13] parse_name: 0.000s
+[TIME][dataset:13] load_pt: 0.232s
+[TIME][dataset:13] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.42507  MAE=1.26416  MAPE=815.552% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.42507 MAE=1.26416 MAPE=815.552% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__h3a6ced0f6421.png | keep=0.000s plot=1.445s
+  [Index 2/10] ... RMSE=1.40465  MAE=1.28511  MAPE=360.974% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.35358  MAE=1.26447  MAPE=441.12% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 4/10] ... RMSE=1.28778  MAE=1.25131  MAPE=567.649% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 5/10] ... RMSE=1.47928  MAE=1.30275  MAPE=550.639% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 6/10] ... RMSE=1.28039  MAE=1.23515  MAPE=409.519% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 7/10] ... RMSE=1.3028  MAE=1.24453  MAPE=336.928% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 8/10] ... RMSE=1.32764  MAE=1.2306  MAPE=558.314% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 9/10] ... RMSE=1.36453  MAE=1.25115  MAPE=2728.02% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  [Index 10/10] ... RMSE=1.42055  MAE=1.28062  MAPE=607.366% | prep=0.001s fwd=0.011s post=0.008s total=0.020s
+  -> Dataset summary: RMSE mean=1.36463 var=0.00398421 | MAE mean=1.26099 var=0.00047859 | MAPE mean=737.609% var=457873
+[TIME][dataset:13] total: 1.875s
+--------------------------------------------------------------------------------
+[DATASET 14/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:14] parse_name: 0.000s
+[TIME][dataset:14] load_pt: 0.201s
+[TIME][dataset:14] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.110792  MAE=0.0821192  MAPE=33.1905% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.110792 MAE=0.0821192 MAPE=33.1905% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__hf39dab11abb8.png | keep=0.000s plot=1.424s
+  [Index 2/10] ... RMSE=0.100123  MAE=0.0769906  MAPE=15.845% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.107486  MAE=0.0773728  MAPE=31.3232% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.10662  MAE=0.087442  MAPE=24.4318% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.128873  MAE=0.0990411  MAPE=28.8353% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.104483  MAE=0.0811412  MAPE=27.2701% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.090843  MAE=0.0673313  MAPE=13.6857% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.0777934  MAE=0.0574548  MAPE=11.1118% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.105877  MAE=0.0781175  MAPE=21.6777% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.0930262  MAE=0.0680754  MAPE=45.9083% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.102592 var=0.000166306 | MAE mean=0.0775086 var=0.000119215 | MAPE mean=25.3279% var=97.908
+[TIME][dataset:14] total: 1.818s
+--------------------------------------------------------------------------------
+[DATASET 15/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:15] parse_name: 0.000s
+[TIME][dataset:15] load_pt: 0.207s
+[TIME][dataset:15] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.540098  MAE=0.494128  MAPE=130.335% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.540098 MAE=0.494128 MAPE=130.335% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__h04127ff46965.png | keep=0.000s plot=1.485s
+  [Index 2/10] ... RMSE=0.57014  MAE=0.544399  MAPE=184.358% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.558968  MAE=0.52288  MAPE=212.944% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.616612  MAE=0.533331  MAPE=158.776% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.58374  MAE=0.503442  MAPE=149.698% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.583646  MAE=0.544675  MAPE=4978.67% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.570875  MAE=0.497734  MAPE=220.75% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.518181  MAE=0.467183  MAPE=136.569% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.518202  MAE=0.486144  MAPE=139.851% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.550393  MAE=0.492999  MAPE=116.829% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.561086 var=0.000852221 | MAE mean=0.508691 var=0.000621561 | MAPE mean=642.878% var=2.08988e+06
+[TIME][dataset:15] total: 1.884s
+--------------------------------------------------------------------------------
+[DATASET 16/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:16] parse_name: 0.000s
+[TIME][dataset:16] load_pt: 0.236s
+[TIME][dataset:16] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.46989  MAE=1.32642  MAPE=414.853% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.46989 MAE=1.32642 MAPE=414.853% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__hdd64cf03194b.png | keep=0.000s plot=1.397s
+  [Index 2/10] ... RMSE=1.29545  MAE=1.21129  MAPE=474.44% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.37549  MAE=1.26126  MAPE=856.661% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.32222  MAE=1.21776  MAPE=584.977% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.34548  MAE=1.23638  MAPE=430.262% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.33336  MAE=1.22517  MAPE=1094.16% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.32613  MAE=1.21923  MAPE=1043.34% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.37737  MAE=1.25536  MAPE=377.882% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.38952  MAE=1.2652  MAPE=519.235% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.42502  MAE=1.29642  MAPE=454.337% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.36599 var=0.00250193 | MAE mean=1.25145 var=0.00126465 | MAPE mean=625.014% var=65651.7
+[TIME][dataset:16] total: 1.825s
+--------------------------------------------------------------------------------
+[DATASET 17/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:17] parse_name: 0.000s
+[TIME][dataset:17] load_pt: 0.235s
+[TIME][dataset:17] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.316026  MAE=0.22362  MAPE=71.8756% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.316026 MAE=0.22362 MAPE=71.8756% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__hf61051a77de0.png | keep=0.000s plot=1.435s
+  [Index 2/10] ... RMSE=0.228017  MAE=0.16382  MAPE=48.196% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.303338  MAE=0.204464  MAPE=114.921% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.316306  MAE=0.211765  MAPE=82.0229% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.259355  MAE=0.192891  MAPE=80.0992% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.194199  MAE=0.146912  MAPE=54.5593% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.251265  MAE=0.177261  MAPE=90.8392% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.209443  MAE=0.156014  MAPE=70.5894% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.186117  MAE=0.143801  MAPE=39.0146% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.327596  MAE=0.219507  MAPE=99.5879% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.259166 var=0.0026194 | MAE mean=0.184006 var=0.000832647 | MAPE mean=75.1705% var=498.458
+[TIME][dataset:17] total: 1.862s
+--------------------------------------------------------------------------------
+[DATASET 18/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:18] parse_name: 0.000s
+[TIME][dataset:18] load_pt: 0.262s
+[TIME][dataset:18] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.56031  MAE=0.536419  MAPE=230.039% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.56031 MAE=0.536419 MAPE=230.039% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau1_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__h73a5797eea2e.png | keep=0.000s plot=1.499s
+  [Index 2/10] ... RMSE=0.492021  MAE=0.467132  MAPE=183.795% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.588203  MAE=0.526791  MAPE=263.519% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.580909  MAE=0.553418  MAPE=630.966% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.504898  MAE=0.462607  MAPE=117.131% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.552402  MAE=0.511291  MAPE=134.039% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.602775  MAE=0.543874  MAPE=144.68% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.613625  MAE=0.546976  MAPE=165.215% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.522995  MAE=0.478765  MAPE=136.186% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.513605  MAE=0.463213  MAPE=122.311% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.553174 var=0.00167093 | MAE mean=0.509049 var=0.00126208 | MAPE mean=212.788% var=21489.2
+[TIME][dataset:18] total: 1.953s
+--------------------------------------------------------------------------------
+[DATASET 19/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:19] parse_name: 0.000s
+[TIME][dataset:19] load_pt: 0.338s
+[TIME][dataset:19] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.47021  MAE=1.31814  MAPE=690.163% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.47021 MAE=1.31814 MAPE=690.163% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__h8491474455f9.png | keep=0.000s plot=1.629s
+  [Index 2/10] ... RMSE=1.42039  MAE=1.27376  MAPE=777.373% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.29837  MAE=1.25017  MAPE=550.375% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.43708  MAE=1.26582  MAPE=407.78% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.49295  MAE=1.30643  MAPE=606.485% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.33729  MAE=1.25794  MAPE=437.454% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.35439  MAE=1.23236  MAPE=453.9% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.4232  MAE=1.26686  MAPE=408.262% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.48681  MAE=1.32343  MAPE=641.404% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.37608  MAE=1.29887  MAPE=399.793% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.40968 var=0.00394113 | MAE mean=1.27938 var=0.000845036 | MAPE mean=537.299% var=16605.7
+[TIME][dataset:19] total: 2.161s
+--------------------------------------------------------------------------------
+[DATASET 20/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:20] parse_name: 0.000s
+[TIME][dataset:20] load_pt: 0.327s
+[TIME][dataset:20] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.129383  MAE=0.101268  MAPE=27.0735% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.129383 MAE=0.101268 MAPE=27.0735% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__hd2baf666d6ce.png | keep=0.000s plot=1.397s
+  [Index 2/10] ... RMSE=0.0765065  MAE=0.0599551  MAPE=14.1039% | prep=0.001s fwd=0.012s post=0.008s total=0.020s
+  [Index 3/10] ... RMSE=0.0891967  MAE=0.0690073  MAPE=15.3086% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 4/10] ... RMSE=0.0875752  MAE=0.0691087  MAPE=16.3563% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.0870047  MAE=0.0651773  MAPE=16.4332% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.0857343  MAE=0.0696144  MAPE=18.2023% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.0934051  MAE=0.0718877  MAPE=16.3051% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.0919125  MAE=0.0721401  MAPE=17.0471% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.130511  MAE=0.0952581  MAPE=21.3908% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.108236  MAE=0.0850589  MAPE=23.4172% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.0979465 var=0.000312425 | MAE mean=0.0758475 var=0.00016347 | MAPE mean=18.5638% var=15.1396
+[TIME][dataset:20] total: 1.917s
+--------------------------------------------------------------------------------
+[DATASET 21/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:21] parse_name: 0.000s
+[TIME][dataset:21] load_pt: 0.206s
+[TIME][dataset:21] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.542402  MAE=0.511949  MAPE=150.369% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.542402 MAE=0.511949 MAPE=150.369% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__hcdb2752ee770.png | keep=0.000s plot=1.481s
+  [Index 2/10] ... RMSE=0.554657  MAE=0.520446  MAPE=203.737% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.505833  MAE=0.478654  MAPE=132.901% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.638789  MAE=0.556798  MAPE=252.633% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.568663  MAE=0.514121  MAPE=211.79% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.556011  MAE=0.493686  MAPE=127.026% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.55324  MAE=0.515677  MAPE=149.857% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.501361  MAE=0.443643  MAPE=122.765% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.579415  MAE=0.506437  MAPE=121.005% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.526436  MAE=0.481666  MAPE=130.985% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.552681 var=0.00140228 | MAE mean=0.502308 var=0.000822791 | MAPE mean=160.307% var=1894.13
+[TIME][dataset:21] total: 1.880s
+--------------------------------------------------------------------------------
+[DATASET 22/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:22] parse_name: 0.000s
+[TIME][dataset:22] load_pt: 0.264s
+[TIME][dataset:22] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.33845  MAE=1.22663  MAPE=428.858% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.33845 MAE=1.22663 MAPE=428.858% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__h071f7dc6e2b7.png | keep=0.000s plot=2.167s
+  [Index 2/10] ... RMSE=1.30505  MAE=1.2225  MAPE=578.955% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.30988  MAE=1.21305  MAPE=752.82% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.36713  MAE=1.25303  MAPE=693.154% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.38859  MAE=1.27121  MAPE=2084.66% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.31119  MAE=1.22952  MAPE=398.947% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.43823  MAE=1.29888  MAPE=309.166% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.41112  MAE=1.29289  MAPE=394.513% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.33758  MAE=1.23693  MAPE=325.798% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.46294  MAE=1.32317  MAPE=484.343% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.36702 var=0.00285865 | MAE mean=1.25678 var=0.0012841 | MAPE mean=645.122% var=250143
+[TIME][dataset:22] total: 2.627s
+--------------------------------------------------------------------------------
+[DATASET 23/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:23] parse_name: 0.000s
+[TIME][dataset:23] load_pt: 0.243s
+[TIME][dataset:23] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.271799  MAE=0.203583  MAPE=121.375% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.271799 MAE=0.203583 MAPE=121.375% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__h1bb9a5a59082.png | keep=0.000s plot=1.428s
+  [Index 2/10] ... RMSE=0.21053  MAE=0.155053  MAPE=50.2659% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.283702  MAE=0.175224  MAPE=79.8268% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.250622  MAE=0.201918  MAPE=43.7449% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.282025  MAE=0.191022  MAPE=102.677% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.192524  MAE=0.140587  MAPE=39.4782% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.161793  MAE=0.118759  MAPE=26.5283% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.146352  MAE=0.112424  MAPE=26.7035% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.190684  MAE=0.141734  MAPE=74.9117% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.211322  MAE=0.157903  MAPE=44.3917% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.220135 var=0.00221172 | MAE mean=0.159821 var=0.000955402 | MAPE mean=60.9903% var=944.657
+[TIME][dataset:23] total: 1.863s
+--------------------------------------------------------------------------------
+[DATASET 24/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:24] parse_name: 0.000s
+[TIME][dataset:24] load_pt: 0.284s
+[TIME][dataset:24] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.631443  MAE=0.555837  MAPE=155.161% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.631443 MAE=0.555837 MAPE=155.161% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__hde4f71624ffb.png | keep=0.000s plot=1.453s
+  [Index 2/10] ... RMSE=0.609065  MAE=0.538381  MAPE=154.002% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.492807  MAE=0.474662  MAPE=121.322% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.489719  MAE=0.467422  MAPE=209.212% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.529448  MAE=0.513154  MAPE=123.582% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.683538  MAE=0.60547  MAPE=416.284% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.590914  MAE=0.550651  MAPE=164.834% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.466942  MAE=0.445016  MAPE=128.859% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.582038  MAE=0.536058  MAPE=243.549% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.518515  MAE=0.492803  MAPE=138.886% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.559443 var=0.00449801 | MAE mean=0.517945 var=0.00213116 | MAPE mean=185.569% var=7286.62
+[TIME][dataset:24] total: 1.930s
+--------------------------------------------------------------------------------
+[DATASET 25/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:25] parse_name: 0.000s
+[TIME][dataset:25] load_pt: 0.245s
+[TIME][dataset:25] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.34493  MAE=1.23858  MAPE=375.07% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.34493 MAE=1.23858 MAPE=375.07% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__h09c44c0da9fa.png | keep=0.000s plot=1.433s
+  [Index 2/10] ... RMSE=1.35247  MAE=1.24589  MAPE=488.428% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.42347  MAE=1.27519  MAPE=411.706% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.36879  MAE=1.26751  MAPE=519.462% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.33597  MAE=1.25311  MAPE=538.893% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.36211  MAE=1.26503  MAPE=490.048% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.36345  MAE=1.25902  MAPE=436.439% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.2842  MAE=1.25526  MAPE=605.584% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.44345  MAE=1.27699  MAPE=1085.16% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.30627  MAE=1.26337  MAPE=396.869% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.35851 var=0.00205571 | MAE mean=1.25999 var=0.000134149 | MAPE mean=534.766% var=38168.1
+[TIME][dataset:25] total: 1.870s
+--------------------------------------------------------------------------------
+[DATASET 26/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:26] parse_name: 0.000s
+[TIME][dataset:26] load_pt: 0.280s
+[TIME][dataset:26] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.0775453  MAE=0.0591828  MAPE=16.7683% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.0775453 MAE=0.0591828 MAPE=16.7683% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__h5661ed9342e1.png | keep=0.000s plot=1.461s
+  [Index 2/10] ... RMSE=0.0716982  MAE=0.0546386  MAPE=13.7945% | prep=0.000s fwd=0.012s post=0.008s total=0.020s
+  [Index 3/10] ... RMSE=0.0547842  MAE=0.0437607  MAPE=13.4853% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.0766586  MAE=0.0587143  MAPE=10.8822% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.0783179  MAE=0.0614779  MAPE=18.1216% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.108436  MAE=0.0824933  MAPE=19.0084% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.0712193  MAE=0.0562396  MAPE=9.78341% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.103009  MAE=0.0790823  MAPE=21.1064% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.0813217  MAE=0.0633281  MAPE=12.3364% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.0907499  MAE=0.0704024  MAPE=11.6754% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.081374 var=0.000223833 | MAE mean=0.062932 var=0.00012145 | MAPE mean=14.6962% var=13.1368
+[TIME][dataset:26] total: 1.933s
+--------------------------------------------------------------------------------
+[DATASET 27/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:27] parse_name: 0.000s
+[TIME][dataset:27] load_pt: 0.220s
+[TIME][dataset:27] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.589588  MAE=0.557936  MAPE=159.869% | prep=0.000s fwd=0.011s post=0.008s total=0.020s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.589588 MAE=0.557936 MAPE=159.869% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__hd5d7d623af33.png | keep=0.000s plot=1.502s
+  [Index 2/10] ... RMSE=0.568267  MAE=0.522168  MAPE=148.859% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.537265  MAE=0.498904  MAPE=141.078% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.512112  MAE=0.482314  MAPE=159.822% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.543532  MAE=0.507458  MAPE=142.424% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.58787  MAE=0.54795  MAPE=338.501% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.564758  MAE=0.522349  MAPE=142.743% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.520736  MAE=0.498125  MAPE=227.102% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.571395  MAE=0.544785  MAPE=222.925% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.57129  MAE=0.535629  MAPE=231.306% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.556681 var=0.000651331 | MAE mean=0.521762 var=0.000555919 | MAPE mean=191.463% var=3659.92
+[TIME][dataset:27] total: 1.914s
+--------------------------------------------------------------------------------
+[DATASET 28/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:28] parse_name: 0.000s
+[TIME][dataset:28] load_pt: 0.273s
+[TIME][dataset:28] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.29412  MAE=1.20907  MAPE=478.092% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.29412 MAE=1.20907 MAPE=478.092% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__h78468be8641e.png | keep=0.000s plot=1.484s
+  [Index 2/10] ... RMSE=1.32298  MAE=1.24059  MAPE=549.021% | prep=0.000s fwd=0.012s post=0.008s total=0.019s
+  [Index 3/10] ... RMSE=1.37174  MAE=1.24919  MAPE=412.021% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.3095  MAE=1.20935  MAPE=609.747% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.3913  MAE=1.2843  MAPE=378.947% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.3201  MAE=1.2308  MAPE=11861.3% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.34266  MAE=1.24131  MAPE=505.954% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.28379  MAE=1.19324  MAPE=456.349% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.36657  MAE=1.25085  MAPE=577.172% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.45121  MAE=1.31392  MAPE=1845.99% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.3454 var=0.00233097 | MAE mean=1.24226 var=0.00117481 | MAPE mean=1767.46% var=1.14871e+07
+[TIME][dataset:28] total: 1.951s
+--------------------------------------------------------------------------------
+[DATASET 29/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:29] parse_name: 0.000s
+[TIME][dataset:29] load_pt: 0.267s
+[TIME][dataset:29] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.523353  MAE=0.330472  MAPE=310.748% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.523353 MAE=0.330472 MAPE=310.748% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__h1254b82d868f.png | keep=0.000s plot=1.420s
+  [Index 2/10] ... RMSE=0.226999  MAE=0.160696  MAPE=57.2018% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.269382  MAE=0.191342  MAPE=109.463% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.258841  MAE=0.181129  MAPE=60.9783% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.290887  MAE=0.198996  MAPE=81.6475% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.142576  MAE=0.112437  MAPE=39.1346% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.255173  MAE=0.179414  MAPE=67.3064% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.229267  MAE=0.173699  MAPE=58.203% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.226289  MAE=0.155758  MAPE=46.7638% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.189774  MAE=0.150035  MAPE=32.0123% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.261254 var=0.00922958 | MAE mean=0.183398 var=0.002948 | MAPE mean=86.3459% var=6030.8
+[TIME][dataset:29] total: 1.879s
+--------------------------------------------------------------------------------
+[DATASET 30/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:30] parse_name: 0.000s
+[TIME][dataset:30] load_pt: 0.247s
+[TIME][dataset:30] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.513859  MAE=0.482129  MAPE=143.557% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.513859 MAE=0.482129 MAPE=143.557% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=1.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__h12d9f111df67.png | keep=0.000s plot=1.440s
+  [Index 2/10] ... RMSE=0.553769  MAE=0.500884  MAPE=205.469% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.543344  MAE=0.521051  MAPE=131.577% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.557671  MAE=0.516021  MAPE=150.521% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.530937  MAE=0.500304  MAPE=221.348% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.539118  MAE=0.494346  MAPE=210.321% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.54803  MAE=0.512492  MAPE=151.788% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.559568  MAE=0.521263  MAPE=179.608% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.505793  MAE=0.485377  MAPE=134.807% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.566541  MAE=0.539282  MAPE=142.245% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.541863 var=0.000356653 | MAE mean=0.507315 var=0.000288208 | MAPE mean=167.124% var=1042.57
+[TIME][dataset:30] total: 1.879s
+--------------------------------------------------------------------------------
+[DATASET 31/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:31] parse_name: 0.000s
+[TIME][dataset:31] load_pt: 0.226s
+[TIME][dataset:31] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.41284  MAE=1.27013  MAPE=418.403% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.41284 MAE=1.27013 MAPE=418.403% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__ha29d438a9149.png | keep=0.000s plot=1.449s
+  [Index 2/10] ... RMSE=1.35552  MAE=1.22008  MAPE=549.493% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.46184  MAE=1.29348  MAPE=558.752% | prep=0.000s fwd=0.012s post=0.006s total=0.019s
+  [Index 4/10] ... RMSE=1.48261  MAE=1.30606  MAPE=479.476% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.36548  MAE=1.26022  MAPE=618.232% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.3899  MAE=1.25086  MAPE=888.078% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.47842  MAE=1.31143  MAPE=1136.67% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.4593  MAE=1.29197  MAPE=634.45% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.28802  MAE=1.25668  MAPE=562.049% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.36138  MAE=1.26808  MAPE=701.689% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.40553 var=0.00374778 | MAE mean=1.2729 var=0.000710139 | MAPE mean=654.729% var=40610.4
+[TIME][dataset:31] total: 1.868s
+--------------------------------------------------------------------------------
+[DATASET 32/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:32] parse_name: 0.000s
+[TIME][dataset:32] load_pt: 0.236s
+[TIME][dataset:32] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.098586  MAE=0.0776605  MAPE=16.0218% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.098586 MAE=0.0776605 MAPE=16.0218% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__h4217e05ef522.png | keep=0.000s plot=1.397s
+  [Index 2/10] ... RMSE=0.0942833  MAE=0.0729548  MAPE=17.6134% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.143458  MAE=0.10814  MAPE=26.2257% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.110904  MAE=0.0825517  MAPE=18.4136% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.13782  MAE=0.101092  MAPE=26.6705% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.121924  MAE=0.0949204  MAPE=20.6275% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.0932848  MAE=0.072346  MAPE=13.3515% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.106791  MAE=0.0815177  MAPE=29.9336% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.119327  MAE=0.0917825  MAPE=15.3981% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.085079  MAE=0.0672064  MAPE=14.7042% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.111146 var=0.000339832 | MAE mean=0.0850172 var=0.000163262 | MAPE mean=19.896% var=29.9682
+[TIME][dataset:32] total: 1.826s
+--------------------------------------------------------------------------------
+[DATASET 33/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:33] parse_name: 0.000s
+[TIME][dataset:33] load_pt: 0.201s
+[TIME][dataset:33] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.589482  MAE=0.520952  MAPE=124.563% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.589482 MAE=0.520952 MAPE=124.563% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__h767b01e6c4b9.png | keep=0.000s plot=1.448s
+  [Index 2/10] ... RMSE=0.423343  MAE=0.394278  MAPE=110.289% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.424611  MAE=0.393276  MAPE=520.537% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.669199  MAE=0.590581  MAPE=157.747% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.653878  MAE=0.568645  MAPE=159.274% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.672627  MAE=0.566544  MAPE=587.28% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.579304  MAE=0.495648  MAPE=150.513% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.595633  MAE=0.555823  MAPE=148.045% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.660305  MAE=0.577911  MAPE=141.653% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.651047  MAE=0.579714  MAPE=223.963% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.591943 var=0.00810862 | MAE mean=0.524337 var=0.00499878 | MAPE mean=232.386% var=26855.1
+[TIME][dataset:33] total: 1.842s
+--------------------------------------------------------------------------------
+[DATASET 34/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:34] parse_name: 0.000s
+[TIME][dataset:34] load_pt: 0.227s
+[TIME][dataset:34] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.46538  MAE=1.30135  MAPE=364.389% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.46538 MAE=1.30135 MAPE=364.389% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__h628ba030ce27.png | keep=0.000s plot=1.385s
+  [Index 2/10] ... RMSE=1.32374  MAE=1.22491  MAPE=689.646% | prep=0.000s fwd=0.012s post=0.008s total=0.020s
+  [Index 3/10] ... RMSE=1.37217  MAE=1.2352  MAPE=460.178% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.34471  MAE=1.2349  MAPE=436.638% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.35468  MAE=1.24389  MAPE=399.305% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.37828  MAE=1.25742  MAPE=453.869% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.49907  MAE=1.34601  MAPE=380.023% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.37536  MAE=1.2428  MAPE=409.205% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.31784  MAE=1.21877  MAPE=464.627% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.30666  MAE=1.19633  MAPE=913.208% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.37379 var=0.00354631 | MAE mean=1.25016 var=0.00169309 | MAPE mean=497.109% var=26677
+[TIME][dataset:34] total: 1.805s
+--------------------------------------------------------------------------------
+[DATASET 35/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:35] parse_name: 0.000s
+[TIME][dataset:35] load_pt: 0.303s
+[TIME][dataset:35] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.323106  MAE=0.227683  MAPE=136.799% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.323106 MAE=0.227683 MAPE=136.799% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__h990ad4441b9f.png | keep=0.000s plot=1.380s
+  [Index 2/10] ... RMSE=0.508953  MAE=0.369575  MAPE=108.637% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.421538  MAE=0.288329  MAPE=97.2158% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.257712  MAE=0.191732  MAPE=61.2943% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.313788  MAE=0.25573  MAPE=128.414% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.621246  MAE=0.400943  MAPE=129.814% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.188545  MAE=0.142522  MAPE=70.2889% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.703787  MAE=0.46486  MAPE=190.05% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.327456  MAE=0.233215  MAPE=81.2286% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.619656  MAE=0.381157  MAPE=112.484% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.428579 var=0.0277219 | MAE mean=0.295575 var=0.00969069 | MAPE mean=111.623% var=1278
+[TIME][dataset:35] total: 1.875s
+--------------------------------------------------------------------------------
+[DATASET 36/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:36] parse_name: 0.000s
+[TIME][dataset:36] load_pt: 0.209s
+[TIME][dataset:36] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.561437  MAE=0.489163  MAPE=236.954% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.561437 MAE=0.489163 MAPE=236.954% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau11_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__he1b636cb5f00.png | keep=0.000s plot=1.417s
+  [Index 2/10] ... RMSE=0.754202  MAE=0.654547  MAPE=379.443% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.513875  MAE=0.479443  MAPE=102.815% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.516846  MAE=0.481874  MAPE=191.585% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.6192  MAE=0.544446  MAPE=222.234% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.655237  MAE=0.610759  MAPE=183.582% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.655353  MAE=0.550922  MAPE=249.509% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.626291  MAE=0.560365  MAPE=162.412% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.509616  MAE=0.478018  MAPE=158.894% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.542346  MAE=0.489131  MAPE=142.679% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.59544 var=0.00580577 | MAE mean=0.533867 var=0.00343651 | MAPE mean=203.011% var=5259.39
+[TIME][dataset:36] total: 1.819s
+--------------------------------------------------------------------------------
+[DATASET 37/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:37] parse_name: 0.000s
+[TIME][dataset:37] load_pt: 0.208s
+[TIME][dataset:37] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.49199  MAE=1.32874  MAPE=447.905% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.49199 MAE=1.32874 MAPE=447.905% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__h99597438b6be.png | keep=0.000s plot=1.471s
+  [Index 2/10] ... RMSE=1.48125  MAE=1.28383  MAPE=1379.55% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.36244  MAE=1.26302  MAPE=583.745% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 4/10] ... RMSE=1.31758  MAE=1.23901  MAPE=566.133% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.39513  MAE=1.30184  MAPE=512.795% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.37631  MAE=1.25635  MAPE=560.022% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.32858  MAE=1.2671  MAPE=717.103% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.32983  MAE=1.26607  MAPE=1383.79% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.29785  MAE=1.24014  MAPE=578.026% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.37723  MAE=1.26144  MAPE=441.331% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.37582 var=0.00389838 | MAE mean=1.27075 var=0.000683461 | MAPE mean=717.04% var=115816
+[TIME][dataset:37] total: 1.871s
+--------------------------------------------------------------------------------
+[DATASET 38/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:38] parse_name: 0.000s
+[TIME][dataset:38] load_pt: 0.263s
+[TIME][dataset:38] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.0771487  MAE=0.0616419  MAPE=16.5589% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.0771487 MAE=0.0616419 MAPE=16.5589% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__hc8a8c506d5c6.png | keep=0.000s plot=1.425s
+  [Index 2/10] ... RMSE=0.111609  MAE=0.084535  MAPE=29.4945% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 3/10] ... RMSE=0.156343  MAE=0.117708  MAPE=34.8694% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.135343  MAE=0.0998926  MAPE=22.4489% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.0805628  MAE=0.0650949  MAPE=17.9539% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.0880907  MAE=0.0680377  MAPE=19.0605% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.103045  MAE=0.084236  MAPE=20.3673% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.114983  MAE=0.0900209  MAPE=21.4632% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.0981299  MAE=0.0762917  MAPE=20.7529% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.0863075  MAE=0.0661196  MAPE=15.0934% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.105156 var=0.000575909 | MAE mean=0.0813578 var=0.00028468 | MAPE mean=21.8063% var=32.8441
+[TIME][dataset:38] total: 1.881s
+--------------------------------------------------------------------------------
+[DATASET 39/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:39] parse_name: 0.000s
+[TIME][dataset:39] load_pt: 0.205s
+[TIME][dataset:39] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.607654  MAE=0.561007  MAPE=158.765% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.607654 MAE=0.561007 MAPE=158.765% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__h870a69342480.png | keep=0.000s plot=1.453s
+  [Index 2/10] ... RMSE=0.455049  MAE=0.419461  MAPE=109.84% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.586766  MAE=0.512937  MAPE=209.238% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.455775  MAE=0.426136  MAPE=162.36% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.538381  MAE=0.455141  MAPE=393.077% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.539535  MAE=0.496575  MAPE=130.638% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.636412  MAE=0.598095  MAPE=234.701% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.557917  MAE=0.496024  MAPE=146.98% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.6774  MAE=0.573156  MAPE=156.784% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.592124  MAE=0.5377  MAPE=123.626% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.564701 var=0.00461879 | MAE mean=0.507623 var=0.0033686 | MAPE mean=182.601% var=6210.96
+[TIME][dataset:39] total: 1.851s
+--------------------------------------------------------------------------------
+[DATASET 40/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:40] parse_name: 0.000s
+[TIME][dataset:40] load_pt: 0.215s
+[TIME][dataset:40] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.45597  MAE=1.3135  MAPE=365.217% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.45597 MAE=1.3135 MAPE=365.217% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__hda96170568c5.png | keep=0.000s plot=1.417s
+  [Index 2/10] ... RMSE=1.39335  MAE=1.28022  MAPE=3636.05% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.53304  MAE=1.3416  MAPE=378.205% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.35922  MAE=1.24613  MAPE=331.015% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.45635  MAE=1.30684  MAPE=678.864% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.31932  MAE=1.22123  MAPE=508.24% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.30706  MAE=1.21695  MAPE=428.597% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.33344  MAE=1.22479  MAPE=368.822% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.37367  MAE=1.24238  MAPE=399.7% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.37645  MAE=1.26482  MAPE=494.087% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.39079 var=0.00456913 | MAE mean=1.26585 var=0.00169033 | MAPE mean=758.88% var=929064
+[TIME][dataset:40] total: 1.824s
+--------------------------------------------------------------------------------
+[DATASET 41/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:41] parse_name: 0.000s
+[TIME][dataset:41] load_pt: 0.257s
+[TIME][dataset:41] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.344869  MAE=0.230818  MAPE=95.6733% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.344869 MAE=0.230818 MAPE=95.6733% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__hd6674bc779bb.png | keep=0.000s plot=1.398s
+  [Index 2/10] ... RMSE=0.323431  MAE=0.244788  MAPE=55.9569% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 3/10] ... RMSE=0.285188  MAE=0.204116  MAPE=176.392% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.19532  MAE=0.150384  MAPE=39.3554% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.592692  MAE=0.376308  MAPE=213.254% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.364128  MAE=0.238009  MAPE=89.2648% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.588606  MAE=0.368996  MAPE=140.365% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.399707  MAE=0.310727  MAPE=206.967% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.264343  MAE=0.187967  MAPE=60.5023% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.664266  MAE=0.440172  MAPE=150.769% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.402255 var=0.0226156 | MAE mean=0.275228 var=0.00800179 | MAPE mean=122.85% var=3640.14
+[TIME][dataset:41] total: 1.847s
+--------------------------------------------------------------------------------
+[DATASET 42/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:42] parse_name: 0.000s
+[TIME][dataset:42] load_pt: 0.245s
+[TIME][dataset:42] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.489117  MAE=0.45099  MAPE=110.622% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.489117 MAE=0.45099 MAPE=110.622% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau15_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__h368219ed1c2c.png | keep=0.000s plot=1.465s
+  [Index 2/10] ... RMSE=0.482031  MAE=0.451423  MAPE=104.446% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.760817  MAE=0.641861  MAPE=201.169% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.625478  MAE=0.573339  MAPE=153.299% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.565557  MAE=0.542687  MAPE=156.418% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.642152  MAE=0.583735  MAPE=147.584% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.53554  MAE=0.502568  MAPE=138.077% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.631582  MAE=0.583846  MAPE=163.931% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.474647  MAE=0.45186  MAPE=146.568% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.590318  MAE=0.544043  MAPE=166.331% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.579724 var=0.00725346 | MAE mean=0.532635 var=0.00397419 | MAPE mean=148.844% var=690.332
+[TIME][dataset:42] total: 1.903s
+--------------------------------------------------------------------------------
+[DATASET 43/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:43] parse_name: 0.000s
+[TIME][dataset:43] load_pt: 0.304s
+[TIME][dataset:43] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.47393  MAE=1.28478  MAPE=445.329% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.47393 MAE=1.28478 MAPE=445.329% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__h0183a12788e7.png | keep=0.000s plot=1.393s
+  [Index 2/10] ... RMSE=1.51318  MAE=1.32462  MAPE=588.954% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.47856  MAE=1.2823  MAPE=634.679% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.47913  MAE=1.30231  MAPE=474.731% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 5/10] ... RMSE=1.42571  MAE=1.29994  MAPE=655.52% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.4436  MAE=1.27736  MAPE=464.08% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.49711  MAE=1.33515  MAPE=547.059% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.49277  MAE=1.29674  MAPE=1892.36% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.5317  MAE=1.3333  MAPE=596.896% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.46571  MAE=1.30049  MAPE=718.842% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.48014 var=0.000874549 | MAE mean=1.3037 var=0.00038867 | MAPE mean=701.845% var=164590
+[TIME][dataset:43] total: 1.890s
+--------------------------------------------------------------------------------
+[DATASET 44/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:44] parse_name: 0.000s
+[TIME][dataset:44] load_pt: 0.253s
+[TIME][dataset:44] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.111954  MAE=0.0810999  MAPE=42.9622% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.111954 MAE=0.0810999 MAPE=42.9622% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__h957149e7c798.png | keep=0.000s plot=1.332s
+  [Index 2/10] ... RMSE=0.132158  MAE=0.101545  MAPE=95.3271% | prep=0.001s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.173449  MAE=0.126581  MAPE=38.0896% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.206871  MAE=0.14299  MAPE=223.54% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.0885079  MAE=0.0659391  MAPE=17.3872% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.164543  MAE=0.114916  MAPE=75.3515% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.134051  MAE=0.0998262  MAPE=28.2629% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.140415  MAE=0.111582  MAPE=39.96% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.10933  MAE=0.0825612  MAPE=20.3325% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.143018  MAE=0.103111  MAPE=24.8832% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.14043 var=0.00106759 | MAE mean=0.103015 var=0.000465398 | MAPE mean=60.6096% var=3502.7
+[TIME][dataset:44] total: 1.778s
+--------------------------------------------------------------------------------
+[DATASET 45/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:45] parse_name: 0.000s
+[TIME][dataset:45] load_pt: 0.255s
+[TIME][dataset:45] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.741367  MAE=0.540492  MAPE=126.175% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.741367 MAE=0.540492 MAPE=126.175% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__hcf2977ded414.png | keep=0.000s plot=1.425s
+  [Index 2/10] ... RMSE=0.728808  MAE=0.579873  MAPE=207.17% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.743605  MAE=0.599432  MAPE=240.938% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.535251  MAE=0.484951  MAPE=167.818% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.483549  MAE=0.41816  MAPE=96.3606% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.643915  MAE=0.540282  MAPE=224.729% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.520267  MAE=0.485828  MAPE=120.529% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.46305  MAE=0.436762  MAPE=146.626% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.644445  MAE=0.532741  MAPE=178.676% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.585999  MAE=0.546929  MAPE=220.559% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.609026 var=0.010335 | MAE mean=0.516545 var=0.00311898 | MAPE mean=172.958% var=2229.48
+[TIME][dataset:45] total: 1.873s
+--------------------------------------------------------------------------------
+[DATASET 46/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:46] parse_name: 0.000s
+[TIME][dataset:46] load_pt: 0.353s
+[TIME][dataset:46] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.40133  MAE=1.27672  MAPE=324.319% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.40133 MAE=1.27672 MAPE=324.319% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__h6f773a16772d.png | keep=0.000s plot=1.404s
+  [Index 2/10] ... RMSE=1.30078  MAE=1.20739  MAPE=432.011% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=1.38653  MAE=1.24577  MAPE=301.163% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.46579  MAE=1.32202  MAPE=734.552% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.46185  MAE=1.31477  MAPE=414.831% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.44554  MAE=1.3021  MAPE=388.608% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.51059  MAE=1.3304  MAPE=739.656% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.56462  MAE=1.39142  MAPE=447.011% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.47107  MAE=1.29568  MAPE=830.695% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.45652  MAE=1.29755  MAPE=619.042% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.44646 var=0.0046243 | MAE mean=1.29838 var=0.00220464 | MAPE mean=523.189% var=32809.5
+[TIME][dataset:46] total: 1.949s
+--------------------------------------------------------------------------------
+[DATASET 47/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:47] parse_name: 0.000s
+[TIME][dataset:47] load_pt: 0.233s
+[TIME][dataset:47] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.504299  MAE=0.367163  MAPE=405.289% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.504299 MAE=0.367163 MAPE=405.289% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__hf40128c6462f.png | keep=0.000s plot=1.343s
+  [Index 2/10] ... RMSE=0.488122  MAE=0.321562  MAPE=292.831% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=0.621022  MAE=0.430229  MAPE=203.63% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.492312  MAE=0.361498  MAPE=149.63% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.408457  MAE=0.288936  MAPE=116.989% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.470913  MAE=0.326085  MAPE=229.004% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.427978  MAE=0.27655  MAPE=174.955% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.478579  MAE=0.346781  MAPE=105.995% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.64847  MAE=0.476445  MAPE=372.334% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.406604  MAE=0.282464  MAPE=203.537% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.494675 var=0.00602198 | MAE mean=0.347771 var=0.0037878 | MAPE mean=225.419% var=9375.79
+[TIME][dataset:47] total: 1.769s
+--------------------------------------------------------------------------------
+[DATASET 48/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:48] parse_name: 0.000s
+[TIME][dataset:48] load_pt: 0.269s
+[TIME][dataset:48] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.536818  MAE=0.483168  MAPE=120.103% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.536818 MAE=0.483168 MAPE=120.103% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=0
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin0_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin0__hd5623786659a.png | keep=0.000s plot=1.416s
+  [Index 2/10] ... RMSE=0.530338  MAE=0.467003  MAPE=138.742% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.487118  MAE=0.444787  MAPE=132.761% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.607584  MAE=0.529297  MAPE=371.917% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.584323  MAE=0.546826  MAPE=161.442% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.722509  MAE=0.578689  MAPE=155.285% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.581021  MAE=0.51352  MAPE=150.847% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.626904  MAE=0.543934  MAPE=306.323% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.550651  MAE=0.463707  MAPE=149.927% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.599008  MAE=0.562414  MAPE=151.788% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.582627 var=0.00374012 | MAE mean=0.513335 var=0.00192111 | MAPE mean=183.913% var=6366.32
+[TIME][dataset:48] total: 1.877s
+--------------------------------------------------------------------------------
+[DATASET 49/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax-1_vmin-1.5_batch0_all_frames.pt
+[TIME][dataset:49] parse_name: 0.000s
+[TIME][dataset:49] load_pt: 0.269s
+[TIME][dataset:49] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.39778  MAE=1.24588  MAPE=592.322% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax-1_vmin-1.5_batch0_all_frames | idx=0 | RMSE=1.39778 MAE=1.24588 MAPE=592.322% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=-1 | vmin=-1.5
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax-1_vmin-1.5_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax-1_vmin-1.5__hb7e34ac39403.png | keep=0.000s plot=1.409s
+  [Index 2/10] ... RMSE=1.56968  MAE=1.33379  MAPE=458.759% | prep=0.000s fwd=0.012s post=0.007s total=0.019s
+  [Index 3/10] ... RMSE=1.54479  MAE=1.33219  MAPE=507.035% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.53026  MAE=1.34229  MAPE=593.149% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.39296  MAE=1.27062  MAPE=520.564% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.35395  MAE=1.29763  MAPE=646.749% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.51688  MAE=1.3281  MAPE=533.983% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.54353  MAE=1.31864  MAPE=530.768% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.41221  MAE=1.23479  MAPE=465.48% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.48751  MAE=1.30961  MAPE=414.228% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.47495 var=0.00547852 | MAE mean=1.30135 var=0.0013228 | MAPE mean=526.304% var=4463.96
+[TIME][dataset:49] total: 1.870s
+--------------------------------------------------------------------------------
+[DATASET 50/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax0.4_vmin-0.4_batch0_all_frames.pt
+[TIME][dataset:50] parse_name: 0.000s
+[TIME][dataset:50] load_pt: 0.245s
+[TIME][dataset:50] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.102032  MAE=0.0802064  MAPE=28.6217% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 | RMSE=0.102032 MAE=0.0802064 MAPE=28.6217% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0.4 | vmin=-0.4
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax0.4_vmin-0.4_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0.4_vmin-0.4__hea556fd01207.png | keep=0.000s plot=1.346s
+  [Index 2/10] ... RMSE=0.0951199  MAE=0.0724908  MAPE=18.4005% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.0867086  MAE=0.0669661  MAPE=14.0272% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.0936912  MAE=0.0692301  MAPE=18.6027% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.168921  MAE=0.113732  MAPE=45.3182% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.122722  MAE=0.093998  MAPE=18.3609% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.0989078  MAE=0.0709862  MAPE=15.9061% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.125227  MAE=0.0900127  MAPE=39.7151% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.16373  MAE=0.120488  MAPE=28.833% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.107998  MAE=0.0784491  MAPE=27.1642% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.116506 var=0.000754952 | MAE mean=0.0856559 var=0.000317938 | MAPE mean=25.495% var=99.1062
+[TIME][dataset:50] total: 1.784s
+--------------------------------------------------------------------------------
+[DATASET 51/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax0_vmin-1_batch0_all_frames.pt
+[TIME][dataset:51] parse_name: 0.000s
+[TIME][dataset:51] load_pt: 0.267s
+[TIME][dataset:51] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.709603  MAE=0.585349  MAPE=200.421% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax0_vmin-1_batch0_all_frames | idx=0 | RMSE=0.709603 MAE=0.585349 MAPE=200.421% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=0 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax0_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax0_vmin-1__hb0d879a4ed02.png | keep=0.000s plot=1.424s
+  [Index 2/10] ... RMSE=0.515095  MAE=0.484482  MAPE=134.373% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.509311  MAE=0.482907  MAPE=150.565% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.662296  MAE=0.532225  MAPE=161.818% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.510188  MAE=0.482057  MAPE=337.247% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.670354  MAE=0.517532  MAPE=139.072% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.625484  MAE=0.548947  MAPE=154.304% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 8/10] ... RMSE=0.518924  MAE=0.47865  MAPE=144.944% | prep=0.000s fwd=0.011s post=0.007s total=0.019s
+  [Index 9/10] ... RMSE=0.490724  MAE=0.443375  MAPE=109.033% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.593194  MAE=0.512072  MAPE=136.597% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.580518 var=0.00597573 | MAE mean=0.50676 var=0.00152321 | MAPE mean=166.837% var=3717.45
+[TIME][dataset:51] total: 1.883s
+--------------------------------------------------------------------------------
+[DATASET 52/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1.5_vmin1_batch0_all_frames.pt
+[TIME][dataset:52] parse_name: 0.000s
+[TIME][dataset:52] load_pt: 0.327s
+[TIME][dataset:52] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=1.56238  MAE=1.36537  MAPE=430.317% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1.5_vmin1_batch0_all_frames | idx=0 | RMSE=1.56238 MAE=1.36537 MAPE=430.317% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1.5 | vmin=1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1.5_vmin1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1.5_vmin1__h41742237e6c3.png | keep=0.000s plot=1.379s
+  [Index 2/10] ... RMSE=1.36368  MAE=1.25989  MAPE=339.442% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=1.4568  MAE=1.30036  MAPE=541.391% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=1.49932  MAE=1.32852  MAPE=341.149% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=1.40264  MAE=1.24437  MAPE=541.116% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=1.3715  MAE=1.24235  MAPE=466.328% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=1.35314  MAE=1.25794  MAPE=630.295% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=1.40176  MAE=1.27386  MAPE=401.599% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=1.45012  MAE=1.30385  MAPE=291.026% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=1.39743  MAE=1.27303  MAPE=371.957% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=1.42588 var=0.00396161 | MAE mean=1.28495 var=0.00140448 | MAPE mean=435.462% var=10547.9
+[TIME][dataset:52] total: 1.898s
+--------------------------------------------------------------------------------
+[DATASET 53/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1_vmin-1_batch0_all_frames.pt
+[TIME][dataset:53] parse_name: 0.000s
+[TIME][dataset:53] load_pt: 0.248s
+[TIME][dataset:53] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.695592  MAE=0.478096  MAPE=323.501% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1_vmin-1_batch0_all_frames | idx=0 | RMSE=0.695592 MAE=0.478096 MAPE=323.501% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=-1
+[PLOT] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1_vmin-1_batch0_all_frames | idx=0 -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/generalizability_results/images/GRF_matern_vmax1_vmin-1__hcfba17e96979.png | keep=0.000s plot=1.385s
+  [Index 2/10] ... RMSE=0.455167  MAE=0.338549  MAPE=210.839% | prep=0.000s fwd=0.012s post=0.007s total=0.020s
+  [Index 3/10] ... RMSE=0.611221  MAE=0.432555  MAPE=269.085% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 4/10] ... RMSE=0.448225  MAE=0.265006  MAPE=158.568% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 5/10] ... RMSE=0.690193  MAE=0.448564  MAPE=153.403% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 6/10] ... RMSE=0.721756  MAE=0.505896  MAPE=882.658% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 7/10] ... RMSE=0.459348  MAE=0.311565  MAPE=112.236% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 8/10] ... RMSE=0.419826  MAE=0.290677  MAPE=101.199% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 9/10] ... RMSE=0.974927  MAE=0.677306  MAPE=258.838% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  [Index 10/10] ... RMSE=0.319877  MAE=0.21895  MAPE=2408.46% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+  -> Dataset summary: RMSE mean=0.579613 var=0.0343364 | MAE mean=0.396716 var=0.0172073 | MAPE mean=487.878% var=455952
+[TIME][dataset:53] total: 1.825s
+--------------------------------------------------------------------------------
+[DATASET 54/1440] Loading: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1_vmin0_batch0_all_frames.pt
+[TIME][dataset:54] parse_name: 0.000s
+[TIME][dataset:54] load_pt: 0.287s
+[TIME][dataset:54] extract_seq: 0.000s
+  [Index 1/10] ... RMSE=0.717536  MAE=0.588725  MAPE=223.899% | prep=0.000s fwd=0.011s post=0.008s total=0.019s
+[PICKLE-KEEP] Dataset=dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau3_vmax1_vmin0_batch0_all_frames | idx=0 | RMSE=0.717536 MAE=0.588725 MAPE=223.899% | type=GRF_matern | solver=exponax | nx=256 | N=10 | nu=0.000 | t=20.0 | ntimepoints=21 | alpha=2.500 | vmax=1 | vmin=0

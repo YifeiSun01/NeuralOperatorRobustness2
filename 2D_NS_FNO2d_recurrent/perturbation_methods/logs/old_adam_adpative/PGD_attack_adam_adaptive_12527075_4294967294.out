@@ -1,0 +1,355 @@
+c1010a-s15.ufhpc
+Fri Sep 12 03:03:50 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+>>> Running SINGLE job with MODE_SPEC=wwwwwwwwww
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list: [{'norm': 2, 'epsilon': 471.8592, 'alpha': 50.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 471.8592, 'alpha': 100, 'num_steps': 100}]
+mode_spec = wwwwwwwwww
+Per-frame modes: [t=01] with_solver | [t=02] with_solver | [t=03] with_solver | [t=04] with_solver | [t=05] with_solver | [t=06] with_solver | [t=07] with_solver | [t=08] with_solver | [t=09] with_solver | [t=19] with_solver
+================================================================================
+norm: 2, epsilon: 471.8592, alpha: 50.0, num_steps: 100, index: 5, method: adam, mode_spec: wwwwwwwwww, b1: 0.9, b2: 0.999, adam_eps: 1e-08, sign_Linf: True, amsgrad: False, adaptive_dt: True, base_dt: 0.01, shrink_seq: (1.0, 0.5, 0.25, 0.1, 0.05)
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 184.373091s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 157.665527s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 157.665527s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 342.038618s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  4297.59716796875
+[Step 0] Backward Propagation - Time: 50.9647s, Mem: -4.10 GB
+[Step 0] PGD Update - Time: 0.0520s, Mem: 1.75 MB
+
+[Step 0] 完整步骤总时间: 237.423127s | 总显存: 22.02 MB
+[Step 0] 峰值显存: 16.96 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.507175s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.486950s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.486950s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.994125s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  10795.39453125
+[Step 1] Backward Propagation - Time: 39.7112s, Mem: -4.11 GB
+[Step 1] PGD Update - Time: 0.0030s, Mem: -3.25 MB
+
+[Step 1] 完整步骤总时间: 94.223071s | 总显存: -512.00 KB
+[Step 1] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.567358s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.546693s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.546693s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 109.114051s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  27157.978515625
+[Step 2] Backward Propagation - Time: 39.7118s, Mem: -4.11 GB
+[Step 2] PGD Update - Time: 0.0025s, Mem: -2.75 MB
+
+[Step 2] 完整步骤总时间: 94.282809s | 总显存: 0.00 B
+[Step 2] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.499530s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.479184s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.479184s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.978714s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  27541.69921875
+[Step 3] Backward Propagation - Time: 39.7113s, Mem: -4.11 GB
+[Step 3] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 3] 完整步骤总时间: 94.215399s | 总显存: 0.00 B
+[Step 3] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.541203s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.520591s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.520591s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 109.061794s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  29732.859375
+[Step 4] Backward Propagation - Time: 38.4845s, Mem: -4.11 GB
+[Step 4] PGD Update - Time: 0.0027s, Mem: -2.75 MB
+
+[Step 4] 完整步骤总时间: 93.029600s | 总显存: 0.00 B
+[Step 4] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.501749s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.481427s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.481427s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.983176s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  137965.609375
+[Step 5] Backward Propagation - Time: 39.7115s, Mem: -4.11 GB
+[Step 5] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 5] 完整步骤总时间: 94.217122s | 总显存: 0.00 B
+[Step 5] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.538604s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.518180s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.518180s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 109.056785s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  155840.0625
+[Step 6] Backward Propagation - Time: 39.7110s, Mem: -4.11 GB
+[Step 6] PGD Update - Time: 0.0027s, Mem: -2.75 MB
+
+[Step 6] 完整步骤总时间: 94.253527s | 总显存: 0.00 B
+[Step 6] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.499067s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.478765s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.478765s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.977833s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  155900.203125
+[Step 7] Backward Propagation - Time: 39.7117s, Mem: -4.11 GB
+[Step 7] PGD Update - Time: 0.0029s, Mem: -2.75 MB
+
+[Step 7] 完整步骤总时间: 94.214863s | 总显存: 0.00 B
+[Step 7] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.541547s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.521126s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.521126s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 109.062673s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  192120.1875
+[Step 8] Backward Propagation - Time: 39.7126s, Mem: -4.11 GB
+[Step 8] PGD Update - Time: 0.0026s, Mem: -2.75 MB
+
+[Step 8] 完整步骤总时间: 94.258468s | 总显存: 0.00 B
+[Step 8] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.499460s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.479082s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.479082s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.978542s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  252132.34375
+[Step 9] Backward Propagation - Time: 39.7124s, Mem: -4.11 GB
+[Step 9] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 9] 完整步骤总时间: 94.215848s | 总显存: 0.00 B
+[Step 9] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.542242s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.521827s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.521827s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 109.064069s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  273235.875
+[Step 10] Backward Propagation - Time: 39.7111s, Mem: -4.11 GB
+[Step 10] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 10] 完整步骤总时间: 94.257932s | 总显存: 0.00 B
+[Step 10] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.495300s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.474908s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.474908s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.970208s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  339844.3125
+[Step 11] Backward Propagation - Time: 39.7095s, Mem: -4.11 GB
+[Step 11] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 11] 完整步骤总时间: 94.210030s | 总显存: 0.00 B
+[Step 11] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.538542s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.518102s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.518102s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 109.056644s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  387232.0625
+[Step 12] Backward Propagation - Time: 39.7112s, Mem: -4.11 GB
+[Step 12] PGD Update - Time: 0.0028s, Mem: -2.75 MB
+
+[Step 12] 完整步骤总时间: 94.253663s | 总显存: 0.00 B
+[Step 12] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 54.497638s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 54.477264s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 54.477264s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 108.974902s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  316787.9375
+[Step 13] Backward Propagation - Time: 39.7107s, Mem: -4.11 GB
+[Step 13] PGD Update - Time: 0.0029s, Mem: -2.75 MB
+
+[Step 13] 完整步骤总时间: 94.212485s | 总显存: 0.00 B
+[Step 13] 峰值显存: 16.97 GB
+[AdaptiveJittedSeconds] Fallback to minimal dt=0.0005; tried=[0.01, 0.005, 0.0025, 0.001, 0.0005]
+[Adaptive dt] chosen dt = 0.0005
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 52.945509s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+
+[19秒 PDE求解]
+  t=19s - 时间: 52.925125s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 52.925125s | 显存: 0.00 B
+[PDE求解部分] 本步使用 dt = 0.0005
+
+[本步骤总计] 时间: 105.870633s | 显存: 4.12 GB
+surrogate_loss (vs forward.true_19):  351269.75
+[Step 14] Backward Propagation - Time: 39.7104s, Mem: -4.11 GB
+[Step 14] PGD Update - Time: 0.0035s, Mem: -2.75 MB
+
+[Step 14] 完整步骤总时间: 92.660462s | 总显存: 0.00 B
+[Step 14] 峰值显存: 16.97 GB

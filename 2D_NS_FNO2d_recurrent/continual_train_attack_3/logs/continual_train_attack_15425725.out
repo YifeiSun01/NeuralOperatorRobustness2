@@ -1,0 +1,24 @@
+c0909a-s5.ufhpc
+Sat Oct 11 05:51:53 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+初始化PDE求解器: nu=1e-05, device=cuda
+======================================== 参数配置 ========================================
+modes=96, width=80, epochs=500
+T_in=10, T=10, step=1
+ntrain=1000, ntest=100
+batch_size=20, learning_rate=0.001
+
+======================================== 路径配置 ========================================
+current_file_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/continual_train_attack.py
+pretrained_model_name=NS_2d_FNO_model_epoch0010
+pretrained_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/saved_models/modes96_width80_epochs2000_Tin10_T10_batch2_2/NS_2d_FNO_model_epoch0010.pth
+dataset_name=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+dataset_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/dataset/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+
+======================================== 设备与PDE solver ========================================
+device=cuda
+pde_solver=<solver.DifferentiablePDESolver object at 0x1527eb271240>
+
+======================================== 攻击配置 ========================================
+PGDAdamConfig(epsilon=524.288, alpha=100.0, num_steps=1, norm=2, beta1=0.9, beta2=0.999, adam_eps=1e-08, amsgrad=False, use_sign_for_linf=True, mode_spec='wwwwwwwwww', use_uniform_shift=True, uniform_shift_range=(-3.0, 3.0))
+

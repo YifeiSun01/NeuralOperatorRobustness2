@@ -1,0 +1,1257 @@
+c1001a-s5.ufhpc
+Wed Oct  1 04:34:21 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Loading dataset from /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame_real_initial.pt...
+Pre-upsampling dataset on GPU...
+Upsampling:   0%|          | 0/50 [00:00<?, ?sample/s]Upsampling:   2%|▏         | 1/50 [00:04<04:01,  4.93s/sample]Upsampling: 100%|██████████| 50/50 [00:04<00:00, 10.13sample/s]
+Generating datasets for all patterns...
+[1/1] pattern = none
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/50 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:85: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:89: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  return torch_dlpack.from_dlpack(jax_dlpack.to_dlpack(jax_array))
+Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 1/50 [00:42<35:05, 42.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 2/50 [00:47<16:14, 20.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 3/50 [00:50<09:37, 12.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 4/50 [00:52<06:31,  8.50s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 5/50 [00:55<04:48,  6.42s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 6/50 [00:58<03:46,  5.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 7/50 [01:00<03:07,  4.35s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 8/50 [01:03<02:40,  3.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 9/50 [01:06<02:22,  3.49s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 10/50 [01:09<02:10,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 11/50 [01:11<02:01,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 12/50 [01:16<02:14,  3.53s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 13/50 [01:19<02:02,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 14/50 [01:21<01:51,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 15/50 [01:24<01:44,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 16/50 [01:27<01:38,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 17/50 [01:29<01:33,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 18/50 [01:32<01:29,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 19/50 [01:35<01:25,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 20/50 [01:38<01:22,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 21/50 [01:40<01:19,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 22/50 [01:45<01:30,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 23/50 [01:47<01:23,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 24/50 [01:50<01:17,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 25/50 [01:53<01:12,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 26/50 [01:56<01:07,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 27/50 [01:58<01:04,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 28/50 [02:01<01:01,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 29/50 [02:04<00:58,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 30/50 [02:06<00:54,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 31/50 [02:09<00:52,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 32/50 [02:14<00:58,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 33/50 [02:16<00:53,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 34/50 [02:19<00:48,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 35/50 [02:22<00:43,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 36/50 [02:25<00:40,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 37/50 [02:27<00:36,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 38/50 [02:30<00:33,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 39/50 [02:33<00:30,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 40/50 [02:36<00:28,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 41/50 [02:39<00:25,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 42/50 [02:43<00:26,  3.32s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 43/50 [02:46<00:21,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 44/50 [02:49<00:18,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 45/50 [02:51<00:14,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 46/50 [02:54<00:11,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 47/50 [02:57<00:08,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 48/50 [03:00<00:05,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 49/50 [03:02<00:02,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 50/50 [03:05<00:00,  2.79s/sample]Generating batch 0: 100%|██████████| 50/50 [03:05<00:00,  3.71s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/none/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_forcingPatternnone.pt
+Done. Summary:
+  none: None
+Loading dataset from /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_train_all_frame_real_initial.pt...
+Pre-upsampling dataset on GPU...
+Upsampling:   0%|          | 0/1150 [00:00<?, ?sample/s]Upsampling:  83%|████████▎ | 953/1150 [00:00<00:00, 9526.99sample/s]Upsampling: 100%|██████████| 1150/1150 [00:00<00:00, 9771.03sample/s]
+Generating datasets for all patterns...
+[1/1] pattern = none
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/1150 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   0%|          | 1/1150 [00:02<54:27,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   0%|          | 2/1150 [00:07<1:12:11,  3.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   0%|          | 3/1150 [00:09<1:02:26,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   0%|          | 4/1150 [00:12<58:34,  3.07s/sample]  Step size 0.01 produced stable solution.
+Generating batch 0:   0%|          | 5/1150 [00:15<56:21,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 6/1150 [00:18<55:22,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 7/1150 [00:21<54:37,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 8/1150 [00:23<53:29,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 9/1150 [00:26<52:49,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 10/1150 [00:29<52:38,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 11/1150 [00:32<52:50,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 12/1150 [00:36<1:02:14,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 13/1150 [00:39<58:48,  3.10s/sample]  Step size 0.01 produced stable solution.
+Generating batch 0:   1%|          | 14/1150 [00:41<56:20,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|▏         | 15/1150 [00:44<55:05,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|▏         | 16/1150 [00:47<53:36,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   1%|▏         | 17/1150 [00:49<52:57,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 18/1150 [00:52<52:25,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 19/1150 [00:55<52:08,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 20/1150 [00:58<51:37,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 21/1150 [01:00<51:53,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 22/1150 [01:05<1:02:02,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 23/1150 [01:08<58:57,  3.14s/sample]  Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 24/1150 [01:10<56:37,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 25/1150 [01:13<54:49,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 26/1150 [01:16<53:19,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 27/1150 [01:19<52:21,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   2%|▏         | 28/1150 [01:21<51:53,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 29/1150 [01:24<51:46,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 30/1150 [01:27<51:34,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 31/1150 [01:30<51:44,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 32/1150 [01:34<1:00:55,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 33/1150 [01:37<57:53,  3.11s/sample]  Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 34/1150 [01:39<55:42,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 35/1150 [01:42<53:48,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 36/1150 [01:45<53:11,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 37/1150 [01:48<52:21,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 38/1150 [01:50<51:32,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 39/1150 [01:53<50:58,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   3%|▎         | 40/1150 [01:56<50:36,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▎         | 41/1150 [01:58<50:57,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▎         | 42/1150 [02:03<59:56,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▎         | 43/1150 [02:06<56:39,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 44/1150 [02:08<54:57,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 45/1150 [02:11<52:57,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 46/1150 [02:14<51:47,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 47/1150 [02:16<51:26,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 48/1150 [02:19<50:44,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 49/1150 [02:22<50:25,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 50/1150 [02:24<50:01,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   4%|▍         | 51/1150 [02:27<50:11,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▍         | 52/1150 [02:32<1:00:08,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▍         | 53/1150 [02:34<56:48,  3.11s/sample]  Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▍         | 54/1150 [02:37<54:47,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▍         | 55/1150 [02:40<52:47,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▍         | 56/1150 [02:43<51:27,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▍         | 57/1150 [02:45<50:38,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 58/1150 [02:48<50:08,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 59/1150 [02:51<49:33,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 60/1150 [02:53<49:30,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 61/1150 [02:56<50:05,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 62/1150 [03:00<58:50,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 63/1150 [03:03<55:13,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 64/1150 [03:06<53:21,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 65/1150 [03:08<51:53,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 66/1150 [03:11<50:47,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 67/1150 [03:14<49:48,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 68/1150 [03:17<49:51,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 69/1150 [03:19<49:28,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 70/1150 [03:22<49:11,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▌         | 71/1150 [03:25<49:25,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▋         | 72/1150 [03:29<58:29,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▋         | 73/1150 [03:32<55:17,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   6%|▋         | 74/1150 [03:35<52:57,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 75/1150 [03:37<51:29,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 76/1150 [03:40<50:42,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 77/1150 [03:43<49:40,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 78/1150 [03:45<49:11,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 79/1150 [03:48<49:07,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 80/1150 [03:51<48:37,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 81/1150 [03:53<48:44,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 82/1150 [03:58<57:42,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 83/1150 [04:01<54:51,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 84/1150 [04:03<53:18,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 85/1150 [04:06<51:27,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   7%|▋         | 86/1150 [04:09<50:19,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 87/1150 [04:11<49:38,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 88/1150 [04:14<49:11,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 89/1150 [04:17<48:49,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 90/1150 [04:20<48:33,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 91/1150 [04:22<49:01,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 92/1150 [04:27<58:19,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 93/1150 [04:30<54:51,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 94/1150 [04:32<52:44,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 95/1150 [04:35<51:25,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 96/1150 [04:38<50:11,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   8%|▊         | 97/1150 [04:41<49:24,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▊         | 98/1150 [04:43<48:48,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▊         | 99/1150 [04:46<48:35,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▊         | 100/1150 [04:49<48:16,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 101/1150 [04:52<48:58,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 102/1150 [04:56<57:28,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 103/1150 [04:59<54:03,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 104/1150 [05:01<51:39,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 105/1150 [05:04<50:05,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 106/1150 [05:07<48:58,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 107/1150 [05:09<48:30,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 108/1150 [05:12<48:37,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:   9%|▉         | 109/1150 [05:15<48:08,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|▉         | 110/1150 [05:18<47:41,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|▉         | 111/1150 [05:21<48:27,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|▉         | 112/1150 [05:25<57:07,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|▉         | 113/1150 [05:28<53:58,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|▉         | 114/1150 [05:30<51:35,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 115/1150 [05:33<50:00,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 116/1150 [05:36<48:59,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 117/1150 [05:39<48:20,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 118/1150 [05:41<47:55,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 119/1150 [05:44<47:42,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 120/1150 [05:47<47:12,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 121/1150 [05:50<47:21,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 122/1150 [05:54<55:56,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 123/1150 [05:57<53:08,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 124/1150 [05:59<51:03,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 125/1150 [06:02<49:34,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 126/1150 [06:05<48:48,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 127/1150 [06:08<47:58,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 128/1150 [06:10<47:07,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█         | 129/1150 [06:13<46:58,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█▏        | 130/1150 [06:16<46:28,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█▏        | 131/1150 [06:19<46:44,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  11%|█▏        | 132/1150 [06:23<55:07,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 133/1150 [06:26<51:55,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 134/1150 [06:28<50:22,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 135/1150 [06:31<48:31,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 136/1150 [06:34<47:28,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 137/1150 [06:36<46:35,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 138/1150 [06:39<46:12,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 139/1150 [06:42<45:46,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 140/1150 [06:44<45:42,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 141/1150 [06:47<46:08,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 142/1150 [06:52<54:32,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  12%|█▏        | 143/1150 [06:54<51:35,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 144/1150 [06:57<50:09,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 145/1150 [07:00<48:44,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 146/1150 [07:02<47:52,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 147/1150 [07:05<46:57,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 148/1150 [07:08<46:12,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 149/1150 [07:11<45:58,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 150/1150 [07:13<45:38,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 151/1150 [07:16<45:49,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 152/1150 [07:21<54:18,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 153/1150 [07:23<51:11,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 154/1150 [07:26<48:55,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  13%|█▎        | 155/1150 [07:29<48:13,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▎        | 156/1150 [07:31<46:53,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▎        | 157/1150 [07:34<46:03,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▎        | 158/1150 [07:37<45:40,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 159/1150 [07:39<45:31,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 160/1150 [07:42<45:08,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 161/1150 [07:45<46:07,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 162/1150 [07:50<55:01,  3.34s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 163/1150 [07:52<51:30,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 164/1150 [07:55<49:42,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 165/1150 [07:58<47:50,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  14%|█▍        | 166/1150 [08:00<47:00,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▍        | 167/1150 [08:03<46:15,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▍        | 168/1150 [08:06<45:49,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▍        | 169/1150 [08:09<45:32,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▍        | 170/1150 [08:11<45:05,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▍        | 171/1150 [08:14<45:12,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▍        | 172/1150 [08:19<53:34,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 173/1150 [08:21<50:42,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 174/1150 [08:24<48:55,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 175/1150 [08:27<47:16,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 176/1150 [08:30<46:05,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 177/1150 [08:32<45:29,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 178/1150 [08:35<45:00,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 179/1150 [08:38<44:31,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 180/1150 [08:40<44:34,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 181/1150 [08:43<45:12,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 182/1150 [08:48<53:46,  3.33s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 183/1150 [08:51<50:42,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 184/1150 [08:53<48:32,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 185/1150 [08:56<46:45,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▌        | 186/1150 [08:59<45:42,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▋        | 187/1150 [09:01<44:50,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▋        | 188/1150 [09:04<44:24,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  16%|█▋        | 189/1150 [09:07<44:06,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 190/1150 [09:09<43:42,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 191/1150 [09:13<45:56,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 192/1150 [09:17<53:06,  3.33s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 193/1150 [09:20<49:47,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 194/1150 [09:22<47:40,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 195/1150 [09:25<46:05,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 196/1150 [09:28<45:21,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 197/1150 [09:31<44:49,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 198/1150 [09:33<44:30,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 199/1150 [09:36<44:23,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 200/1150 [09:39<44:19,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  17%|█▋        | 201/1150 [09:42<44:22,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 202/1150 [09:46<51:51,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 203/1150 [09:49<49:13,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 204/1150 [09:52<47:19,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 205/1150 [09:54<45:22,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 206/1150 [09:57<44:06,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 207/1150 [09:59<43:32,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 208/1150 [10:02<43:04,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 209/1150 [10:05<42:33,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 210/1150 [10:08<42:36,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 211/1150 [10:10<42:41,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  18%|█▊        | 212/1150 [10:15<51:03,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▊        | 213/1150 [10:17<47:54,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▊        | 214/1150 [10:20<46:00,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▊        | 215/1150 [10:23<44:44,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 216/1150 [10:25<43:33,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 217/1150 [10:28<42:46,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 218/1150 [10:31<42:22,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 219/1150 [10:33<42:16,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 220/1150 [10:36<42:03,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 221/1150 [10:39<42:45,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 222/1150 [10:44<50:58,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 223/1150 [10:46<48:16,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  19%|█▉        | 224/1150 [10:49<46:24,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|█▉        | 225/1150 [10:52<44:55,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|█▉        | 226/1150 [10:54<43:43,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|█▉        | 227/1150 [10:57<42:55,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|█▉        | 228/1150 [11:00<42:39,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|█▉        | 229/1150 [11:02<42:18,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 230/1150 [11:05<42:14,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 231/1150 [11:08<42:49,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 232/1150 [11:13<50:36,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 233/1150 [11:15<47:56,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 234/1150 [11:18<45:51,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 235/1150 [11:21<44:49,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 236/1150 [11:24<43:33,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 237/1150 [11:26<42:33,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 238/1150 [11:29<42:04,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 239/1150 [11:32<41:42,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 240/1150 [11:34<41:26,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 241/1150 [11:37<41:54,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 242/1150 [11:42<49:15,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 243/1150 [11:44<46:55,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██        | 244/1150 [11:47<45:20,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██▏       | 245/1150 [11:50<43:49,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██▏       | 246/1150 [11:52<42:57,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  21%|██▏       | 247/1150 [11:55<42:06,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 248/1150 [11:58<41:27,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 249/1150 [12:00<41:10,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 250/1150 [12:03<41:16,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 251/1150 [12:06<41:18,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 252/1150 [12:11<49:04,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 253/1150 [12:13<46:33,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 254/1150 [12:16<44:21,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 255/1150 [12:19<43:10,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 256/1150 [12:21<42:17,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 257/1150 [12:24<41:29,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  22%|██▏       | 258/1150 [12:27<41:08,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 259/1150 [12:29<40:51,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 260/1150 [12:32<40:57,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 261/1150 [12:35<41:26,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 262/1150 [12:40<48:43,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 263/1150 [12:42<45:43,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 264/1150 [12:45<44:15,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 265/1150 [12:48<42:52,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 266/1150 [12:50<41:34,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 267/1150 [12:53<41:00,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 268/1150 [12:56<40:09,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 269/1150 [12:58<39:35,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  23%|██▎       | 270/1150 [13:01<39:40,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▎       | 271/1150 [13:04<39:57,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▎       | 272/1150 [13:08<47:10,  3.22s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▎       | 273/1150 [13:11<44:50,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 274/1150 [13:13<42:47,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 275/1150 [13:16<41:29,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 276/1150 [13:19<40:46,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 277/1150 [13:21<40:17,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 278/1150 [13:24<40:20,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 279/1150 [13:27<40:03,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 280/1150 [13:30<39:36,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  24%|██▍       | 281/1150 [13:32<40:00,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▍       | 282/1150 [13:37<47:30,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▍       | 283/1150 [13:40<44:44,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▍       | 284/1150 [13:42<42:51,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▍       | 285/1150 [13:45<41:20,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▍       | 286/1150 [13:48<40:37,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▍       | 287/1150 [13:50<40:09,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 288/1150 [13:53<39:35,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 289/1150 [13:56<39:14,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 290/1150 [13:58<39:24,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 291/1150 [14:01<39:43,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 292/1150 [14:06<46:58,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 293/1150 [14:08<44:20,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 294/1150 [14:11<42:38,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 295/1150 [14:14<41:17,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 296/1150 [14:17<40:49,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 297/1150 [14:19<40:05,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 298/1150 [14:22<39:26,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 299/1150 [14:25<39:20,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 300/1150 [14:27<38:52,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▌       | 301/1150 [14:30<39:00,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▋       | 302/1150 [14:35<45:57,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▋       | 303/1150 [14:37<43:13,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  26%|██▋       | 304/1150 [14:40<41:42,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 305/1150 [14:43<41:04,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 306/1150 [14:45<39:54,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 307/1150 [14:48<39:19,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 308/1150 [14:51<38:54,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 309/1150 [14:54<38:33,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 310/1150 [14:56<38:30,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 311/1150 [14:59<38:56,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 312/1150 [15:04<45:49,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 313/1150 [15:06<43:06,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 314/1150 [15:09<41:09,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 315/1150 [15:12<40:03,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  27%|██▋       | 316/1150 [15:14<39:03,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 317/1150 [15:17<38:36,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 318/1150 [15:20<38:12,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 319/1150 [15:22<38:15,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 320/1150 [15:25<37:56,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 321/1150 [15:28<38:13,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 322/1150 [15:32<45:16,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 323/1150 [15:35<42:59,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 324/1150 [15:38<40:57,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 325/1150 [15:41<39:51,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 326/1150 [15:43<39:13,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  28%|██▊       | 327/1150 [15:46<38:26,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▊       | 328/1150 [15:49<38:03,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▊       | 329/1150 [15:51<37:41,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▊       | 330/1150 [15:54<37:13,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 331/1150 [15:57<37:29,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 332/1150 [16:01<44:16,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 333/1150 [16:04<42:18,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 334/1150 [16:07<40:42,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 335/1150 [16:09<39:20,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 336/1150 [16:12<38:15,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 337/1150 [16:15<37:25,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 338/1150 [16:17<36:54,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  29%|██▉       | 339/1150 [16:20<36:54,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|██▉       | 340/1150 [16:23<36:51,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|██▉       | 341/1150 [16:26<37:06,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|██▉       | 342/1150 [16:30<43:52,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|██▉       | 343/1150 [16:33<41:17,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|██▉       | 344/1150 [16:35<39:39,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 345/1150 [16:38<38:28,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 346/1150 [16:41<37:35,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 347/1150 [16:43<36:41,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 348/1150 [16:46<36:18,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 349/1150 [16:49<36:11,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 350/1150 [16:51<36:00,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 351/1150 [16:54<36:31,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 352/1150 [16:59<43:06,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 353/1150 [17:01<40:49,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 354/1150 [17:04<39:10,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 355/1150 [17:07<37:52,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 356/1150 [17:09<37:02,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 357/1150 [17:12<36:45,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 358/1150 [17:15<36:54,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███       | 359/1150 [17:17<36:19,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███▏      | 360/1150 [17:20<36:05,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███▏      | 361/1150 [17:23<36:22,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  31%|███▏      | 362/1150 [17:27<43:00,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 363/1150 [17:30<40:42,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 364/1150 [17:33<39:19,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 365/1150 [17:36<38:06,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 366/1150 [17:38<37:38,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 367/1150 [17:41<36:59,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 368/1150 [17:44<36:36,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 369/1150 [17:47<36:01,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 370/1150 [17:49<35:39,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 371/1150 [17:52<35:38,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 372/1150 [17:56<42:11,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  32%|███▏      | 373/1150 [17:59<39:59,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 374/1150 [18:02<38:35,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 375/1150 [18:05<37:34,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 376/1150 [18:07<36:39,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 377/1150 [18:10<35:49,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 378/1150 [18:13<35:47,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 379/1150 [18:15<35:24,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 380/1150 [18:18<34:49,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 381/1150 [18:21<35:00,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 382/1150 [18:25<41:32,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 383/1150 [18:28<39:19,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 384/1150 [18:31<37:37,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  33%|███▎      | 385/1150 [18:33<36:27,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▎      | 386/1150 [18:36<35:56,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▎      | 387/1150 [18:39<35:37,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▎      | 388/1150 [18:41<35:09,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 389/1150 [18:44<35:03,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 390/1150 [18:47<34:38,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 391/1150 [18:50<35:07,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 392/1150 [18:54<41:20,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 393/1150 [18:57<38:50,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 394/1150 [19:00<37:31,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 395/1150 [19:02<36:20,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  34%|███▍      | 396/1150 [19:05<35:45,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▍      | 397/1150 [19:08<35:23,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▍      | 398/1150 [19:11<35:21,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▍      | 399/1150 [19:13<34:51,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▍      | 400/1150 [19:16<34:32,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▍      | 401/1150 [19:19<34:35,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▍      | 402/1150 [19:23<40:54,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 403/1150 [19:26<38:25,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 404/1150 [19:29<36:52,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 405/1150 [19:31<36:00,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 406/1150 [19:34<35:15,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 407/1150 [19:37<34:50,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 408/1150 [19:39<34:25,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 409/1150 [19:42<33:48,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 410/1150 [19:45<33:24,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 411/1150 [19:48<33:43,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 412/1150 [19:52<39:54,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 413/1150 [19:55<37:53,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 414/1150 [19:57<36:13,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 415/1150 [20:00<35:03,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▌      | 416/1150 [20:03<34:39,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▋      | 417/1150 [20:05<33:50,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▋      | 418/1150 [20:08<33:30,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  36%|███▋      | 419/1150 [20:11<33:00,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 420/1150 [20:13<32:43,  2.69s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 421/1150 [20:16<32:51,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 422/1150 [20:21<39:32,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 423/1150 [20:23<37:31,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 424/1150 [20:26<35:58,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 425/1150 [20:29<35:04,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 426/1150 [20:31<34:21,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 427/1150 [20:34<33:52,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 428/1150 [20:37<33:31,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 429/1150 [20:40<33:14,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 430/1150 [20:42<33:04,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  37%|███▋      | 431/1150 [20:45<33:18,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 432/1150 [20:50<39:04,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 433/1150 [20:52<37:13,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 434/1150 [20:55<35:49,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 435/1150 [20:58<34:59,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 436/1150 [21:01<34:25,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 437/1150 [21:03<34:00,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 438/1150 [21:06<33:21,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 439/1150 [21:09<32:50,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 440/1150 [21:12<32:32,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 441/1150 [21:14<32:41,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  38%|███▊      | 442/1150 [21:19<38:58,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▊      | 443/1150 [21:22<36:39,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▊      | 444/1150 [21:24<35:28,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▊      | 445/1150 [21:27<34:20,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 446/1150 [21:30<33:27,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 447/1150 [21:33<33:12,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 448/1150 [21:35<32:49,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 449/1150 [21:38<32:19,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 450/1150 [21:41<32:13,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 451/1150 [21:43<32:10,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 452/1150 [21:48<38:05,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 453/1150 [21:51<35:52,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  39%|███▉      | 454/1150 [21:53<34:16,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|███▉      | 455/1150 [21:56<33:17,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|███▉      | 456/1150 [21:59<32:35,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|███▉      | 457/1150 [22:01<32:21,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|███▉      | 458/1150 [22:04<32:00,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|███▉      | 459/1150 [22:07<31:40,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 460/1150 [22:10<31:31,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 461/1150 [22:12<31:37,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 462/1150 [22:17<37:13,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 463/1150 [22:19<35:06,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 464/1150 [22:22<33:45,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 465/1150 [22:25<32:34,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 466/1150 [22:27<32:11,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 467/1150 [22:30<31:28,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 468/1150 [22:33<31:10,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 469/1150 [22:35<31:07,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 470/1150 [22:38<30:57,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 471/1150 [22:41<31:12,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 472/1150 [22:45<36:54,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 473/1150 [22:48<34:59,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████      | 474/1150 [22:51<33:47,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████▏     | 475/1150 [22:54<32:45,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████▏     | 476/1150 [22:56<32:00,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  41%|████▏     | 477/1150 [22:59<31:41,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 478/1150 [23:02<31:12,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 479/1150 [23:05<31:00,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 480/1150 [23:07<30:38,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 481/1150 [23:10<30:32,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 482/1150 [23:14<36:15,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 483/1150 [23:17<34:25,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 484/1150 [23:20<33:20,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 485/1150 [23:23<32:12,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 486/1150 [23:25<31:15,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 487/1150 [23:28<30:24,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  42%|████▏     | 488/1150 [23:30<30:04,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 489/1150 [23:33<30:00,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 490/1150 [23:36<29:55,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 491/1150 [23:39<30:14,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 492/1150 [23:43<35:48,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 493/1150 [23:46<33:49,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 494/1150 [23:49<32:38,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 495/1150 [23:51<31:42,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 496/1150 [23:54<31:00,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 497/1150 [23:57<30:22,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 498/1150 [23:59<30:08,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 499/1150 [24:02<29:49,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  43%|████▎     | 500/1150 [24:05<29:35,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▎     | 501/1150 [24:08<29:42,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▎     | 502/1150 [24:12<35:14,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▎     | 503/1150 [24:15<33:17,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 504/1150 [24:17<32:02,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 505/1150 [24:20<31:03,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 506/1150 [24:23<30:24,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 507/1150 [24:26<29:58,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 508/1150 [24:28<29:38,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 509/1150 [24:31<29:18,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 510/1150 [24:34<29:00,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  44%|████▍     | 511/1150 [24:36<29:12,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▍     | 512/1150 [24:41<34:58,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▍     | 513/1150 [24:44<33:07,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▍     | 514/1150 [24:46<31:36,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▍     | 515/1150 [24:49<30:45,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▍     | 516/1150 [24:52<30:09,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▍     | 517/1150 [24:55<29:33,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 518/1150 [24:57<29:13,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 519/1150 [25:00<28:49,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 520/1150 [25:03<28:30,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 521/1150 [25:05<28:49,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 522/1150 [25:10<33:59,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 523/1150 [25:12<32:12,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 524/1150 [25:15<30:56,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 525/1150 [25:18<29:52,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 526/1150 [25:21<29:33,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 527/1150 [25:23<29:22,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 528/1150 [25:26<28:56,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 529/1150 [25:29<28:40,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 530/1150 [25:32<28:23,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▌     | 531/1150 [25:34<28:35,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▋     | 532/1150 [25:39<33:49,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▋     | 533/1150 [25:42<32:02,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  46%|████▋     | 534/1150 [25:44<30:52,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 535/1150 [25:47<29:58,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 536/1150 [25:50<29:25,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 537/1150 [25:52<28:49,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 538/1150 [25:55<28:27,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 539/1150 [25:58<28:00,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 540/1150 [26:01<27:55,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 541/1150 [26:03<28:04,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 542/1150 [26:08<33:15,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 543/1150 [26:11<31:26,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 544/1150 [26:13<30:12,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 545/1150 [26:16<29:22,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  47%|████▋     | 546/1150 [26:19<28:54,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 547/1150 [26:22<28:25,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 548/1150 [26:24<27:43,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 549/1150 [26:27<27:20,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 550/1150 [26:29<27:06,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 551/1150 [26:32<27:38,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 552/1150 [26:37<32:37,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 553/1150 [26:40<30:50,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 554/1150 [26:42<29:28,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 555/1150 [26:45<28:30,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 556/1150 [26:47<27:44,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  48%|████▊     | 557/1150 [26:50<27:23,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▊     | 558/1150 [26:53<27:18,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▊     | 559/1150 [26:56<27:21,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▊     | 560/1150 [26:58<27:11,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 561/1150 [27:01<27:26,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 562/1150 [27:06<32:09,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 563/1150 [27:08<30:17,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 564/1150 [27:11<29:04,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 565/1150 [27:14<28:15,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 566/1150 [27:16<27:25,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 567/1150 [27:19<27:05,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 568/1150 [27:22<26:56,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  49%|████▉     | 569/1150 [27:25<26:44,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|████▉     | 570/1150 [27:27<26:38,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|████▉     | 571/1150 [27:30<26:50,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|████▉     | 572/1150 [27:35<31:45,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|████▉     | 573/1150 [27:37<30:02,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|████▉     | 574/1150 [27:40<28:47,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 575/1150 [27:43<28:08,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 576/1150 [27:46<27:16,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 577/1150 [27:48<26:56,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 578/1150 [27:51<26:39,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 579/1150 [27:54<26:16,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 580/1150 [27:57<26:09,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 581/1150 [27:59<26:19,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 582/1150 [28:04<30:47,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 583/1150 [28:06<29:15,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 584/1150 [28:09<28:11,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 585/1150 [28:12<27:26,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 586/1150 [28:15<26:39,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 587/1150 [28:17<26:19,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 588/1150 [28:20<26:16,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████     | 589/1150 [28:23<25:54,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████▏    | 590/1150 [28:25<25:34,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████▏    | 591/1150 [28:28<25:46,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  51%|█████▏    | 592/1150 [28:33<30:36,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 593/1150 [28:36<28:54,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 594/1150 [28:38<27:46,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 595/1150 [28:41<26:46,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 596/1150 [28:44<26:12,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 597/1150 [28:46<25:50,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 598/1150 [28:49<25:27,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 599/1150 [28:52<25:07,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 600/1150 [28:54<25:08,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 601/1150 [28:57<25:17,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 602/1150 [29:02<29:49,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  52%|█████▏    | 603/1150 [29:04<28:15,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 604/1150 [29:07<27:09,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 605/1150 [29:10<26:19,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 606/1150 [29:13<25:49,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 607/1150 [29:15<25:34,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 608/1150 [29:18<25:07,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 609/1150 [29:21<24:52,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 610/1150 [29:23<24:46,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 611/1150 [29:26<24:45,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 612/1150 [29:31<29:13,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 613/1150 [29:33<27:36,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 614/1150 [29:36<26:53,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  53%|█████▎    | 615/1150 [29:39<26:00,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▎    | 616/1150 [29:42<25:18,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▎    | 617/1150 [29:44<25:11,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▎    | 618/1150 [29:47<24:46,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 619/1150 [29:50<24:28,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 620/1150 [29:52<24:16,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 621/1150 [29:55<24:27,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 622/1150 [30:00<28:58,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 623/1150 [30:03<27:30,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 624/1150 [30:05<26:15,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 625/1150 [30:08<25:17,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  54%|█████▍    | 626/1150 [30:10<24:36,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▍    | 627/1150 [30:13<24:20,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▍    | 628/1150 [30:16<24:05,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▍    | 629/1150 [30:19<23:48,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▍    | 630/1150 [30:21<23:36,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▍    | 631/1150 [30:24<24:14,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▍    | 632/1150 [30:29<28:20,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 633/1150 [30:31<26:31,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 634/1150 [30:34<25:20,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 635/1150 [30:37<24:41,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 636/1150 [30:39<24:12,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 637/1150 [30:42<23:40,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 638/1150 [30:45<23:43,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 639/1150 [30:48<23:37,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 640/1150 [30:50<23:20,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 641/1150 [30:53<23:15,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 642/1150 [30:57<27:36,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 643/1150 [31:00<26:13,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 644/1150 [31:03<25:05,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 645/1150 [31:06<24:21,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▌    | 646/1150 [31:08<24:13,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▋    | 647/1150 [31:11<23:54,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▋    | 648/1150 [31:14<23:26,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  56%|█████▋    | 649/1150 [31:17<23:09,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 650/1150 [31:19<23:03,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 651/1150 [31:22<23:07,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 652/1150 [31:27<27:12,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 653/1150 [31:29<25:41,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 654/1150 [31:32<24:46,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 655/1150 [31:35<23:50,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 656/1150 [31:37<23:14,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 657/1150 [31:40<23:00,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 658/1150 [31:43<22:38,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 659/1150 [31:45<22:23,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 660/1150 [31:48<22:04,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  57%|█████▋    | 661/1150 [31:51<22:22,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 662/1150 [31:55<26:37,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 663/1150 [31:58<25:11,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 664/1150 [32:01<24:11,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 665/1150 [32:04<23:36,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 666/1150 [32:06<22:51,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 667/1150 [32:09<22:24,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 668/1150 [32:12<22:06,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 669/1150 [32:14<21:56,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 670/1150 [32:17<22:05,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 671/1150 [32:20<22:11,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  58%|█████▊    | 672/1150 [32:24<26:07,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▊    | 673/1150 [32:27<24:35,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▊    | 674/1150 [32:30<23:26,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▊    | 675/1150 [32:32<22:49,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 676/1150 [32:35<22:13,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 677/1150 [32:38<21:40,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 678/1150 [32:40<21:31,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 679/1150 [32:43<21:22,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 680/1150 [32:46<21:20,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 681/1150 [32:49<21:24,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 682/1150 [32:53<25:23,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 683/1150 [32:56<24:02,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  59%|█████▉    | 684/1150 [32:58<22:57,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|█████▉    | 685/1150 [33:01<22:10,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|█████▉    | 686/1150 [33:04<22:02,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|█████▉    | 687/1150 [33:06<21:39,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|█████▉    | 688/1150 [33:09<21:27,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|█████▉    | 689/1150 [33:12<21:06,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 690/1150 [33:15<20:47,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 691/1150 [33:17<20:56,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 692/1150 [33:22<24:43,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 693/1150 [33:24<23:27,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 694/1150 [33:27<22:29,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 695/1150 [33:30<21:36,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 696/1150 [33:32<21:18,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 697/1150 [33:35<20:53,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 698/1150 [33:38<20:39,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 699/1150 [33:40<20:31,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 700/1150 [33:43<20:15,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 701/1150 [33:46<20:18,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 702/1150 [33:50<24:19,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 703/1150 [33:53<22:59,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████    | 704/1150 [33:56<22:00,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████▏   | 705/1150 [33:58<21:29,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████▏   | 706/1150 [34:01<20:56,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  61%|██████▏   | 707/1150 [34:04<20:42,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 708/1150 [34:07<20:19,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 709/1150 [34:09<20:12,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 710/1150 [34:12<19:57,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 711/1150 [34:15<20:04,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 712/1150 [34:19<23:42,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 713/1150 [34:22<22:22,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 714/1150 [34:25<21:30,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 715/1150 [34:27<20:51,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 716/1150 [34:30<20:17,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 717/1150 [34:33<20:13,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  62%|██████▏   | 718/1150 [34:35<19:58,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 719/1150 [34:38<19:42,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 720/1150 [34:41<19:42,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 721/1150 [34:44<19:42,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 722/1150 [34:48<23:14,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 723/1150 [34:51<22:04,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 724/1150 [34:53<21:11,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 725/1150 [34:56<20:36,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 726/1150 [34:59<20:07,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 727/1150 [35:02<19:49,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 728/1150 [35:04<19:39,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 729/1150 [35:07<19:30,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  63%|██████▎   | 730/1150 [35:10<19:13,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▎   | 731/1150 [35:13<19:25,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▎   | 732/1150 [35:17<22:55,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▎   | 733/1150 [35:20<21:40,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 734/1150 [35:23<20:43,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 735/1150 [35:25<20:15,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 736/1150 [35:28<19:42,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 737/1150 [35:31<19:20,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 738/1150 [35:33<19:07,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 739/1150 [35:36<19:00,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 740/1150 [35:39<18:53,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  64%|██████▍   | 741/1150 [35:42<19:04,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▍   | 742/1150 [35:46<22:24,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▍   | 743/1150 [35:49<21:15,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▍   | 744/1150 [35:52<20:23,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▍   | 745/1150 [35:54<19:50,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▍   | 746/1150 [35:57<19:26,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▍   | 747/1150 [36:00<18:59,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 748/1150 [36:03<18:56,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 749/1150 [36:05<18:31,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 750/1150 [36:08<18:22,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 751/1150 [36:11<18:33,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 752/1150 [36:15<21:53,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 753/1150 [36:18<20:33,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 754/1150 [36:21<19:48,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 755/1150 [36:24<19:14,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 756/1150 [36:26<18:58,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 757/1150 [36:29<18:36,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 758/1150 [36:32<18:16,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 759/1150 [36:35<18:06,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 760/1150 [36:37<17:51,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▌   | 761/1150 [36:40<17:54,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▋   | 762/1150 [36:45<21:07,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▋   | 763/1150 [36:47<19:58,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  66%|██████▋   | 764/1150 [36:50<19:04,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 765/1150 [36:53<18:27,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 766/1150 [36:55<18:07,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 767/1150 [36:58<17:41,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 768/1150 [37:01<17:32,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 769/1150 [37:03<17:24,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 770/1150 [37:06<17:14,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 771/1150 [37:09<17:29,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 772/1150 [37:13<20:43,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 773/1150 [37:16<19:36,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 774/1150 [37:19<18:43,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 775/1150 [37:21<18:03,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  67%|██████▋   | 776/1150 [37:24<17:37,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 777/1150 [37:27<17:23,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 778/1150 [37:30<17:06,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 779/1150 [37:32<16:57,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 780/1150 [37:35<16:55,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 781/1150 [37:38<16:58,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 782/1150 [37:42<20:00,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 783/1150 [37:45<19:00,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 784/1150 [37:48<18:14,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 785/1150 [37:50<17:36,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 786/1150 [37:53<17:13,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  68%|██████▊   | 787/1150 [37:56<17:01,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▊   | 788/1150 [37:59<16:43,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▊   | 789/1150 [38:01<16:29,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▊   | 790/1150 [38:04<16:12,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 791/1150 [38:07<16:20,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 792/1150 [38:11<19:24,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 793/1150 [38:14<18:18,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 794/1150 [38:16<17:35,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 795/1150 [38:19<17:16,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 796/1150 [38:22<16:52,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 797/1150 [38:25<16:36,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 798/1150 [38:27<16:26,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  69%|██████▉   | 799/1150 [38:30<16:06,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|██████▉   | 800/1150 [38:33<15:59,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|██████▉   | 801/1150 [38:36<16:03,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|██████▉   | 802/1150 [38:40<18:56,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|██████▉   | 803/1150 [38:43<17:57,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|██████▉   | 804/1150 [38:45<17:11,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 805/1150 [38:48<16:44,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 806/1150 [38:51<16:22,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 807/1150 [38:54<16:01,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 808/1150 [38:56<15:50,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 809/1150 [38:59<15:33,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 810/1150 [39:02<15:21,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 811/1150 [39:05<15:38,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 812/1150 [39:09<18:25,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 813/1150 [39:12<17:37,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 814/1150 [39:14<16:48,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 815/1150 [39:17<16:20,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 816/1150 [39:20<15:59,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 817/1150 [39:23<15:37,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 818/1150 [39:26<15:36,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████   | 819/1150 [39:28<15:17,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████▏  | 820/1150 [39:31<15:11,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████▏  | 821/1150 [39:34<15:12,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  71%|███████▏  | 822/1150 [39:38<17:51,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 823/1150 [39:41<16:53,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 824/1150 [39:43<16:07,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 825/1150 [39:46<15:33,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 826/1150 [39:49<15:16,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 827/1150 [39:52<14:54,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 828/1150 [39:54<14:38,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 829/1150 [39:57<14:27,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 830/1150 [39:59<14:16,  2.68s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 831/1150 [40:02<14:26,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 832/1150 [40:07<17:12,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  72%|███████▏  | 833/1150 [40:09<16:22,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 834/1150 [40:12<15:42,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 835/1150 [40:15<15:08,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 836/1150 [40:18<14:51,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 837/1150 [40:20<14:39,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 838/1150 [40:23<14:22,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 839/1150 [40:26<14:16,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 840/1150 [40:28<14:09,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 841/1150 [40:31<14:21,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 842/1150 [40:36<17:00,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 843/1150 [40:38<15:55,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 844/1150 [40:41<15:08,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  73%|███████▎  | 845/1150 [40:44<14:39,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▎  | 846/1150 [40:46<14:20,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▎  | 847/1150 [40:49<13:59,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▎  | 848/1150 [40:52<13:51,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 849/1150 [40:55<13:49,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 850/1150 [40:57<13:58,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 851/1150 [41:00<14:12,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 852/1150 [41:05<16:36,  3.34s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 853/1150 [41:08<15:31,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 854/1150 [41:10<14:42,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 855/1150 [41:13<14:12,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  74%|███████▍  | 856/1150 [41:16<13:51,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▍  | 857/1150 [41:18<13:40,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▍  | 858/1150 [41:21<13:22,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▍  | 859/1150 [41:24<13:13,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▍  | 860/1150 [41:26<13:03,  2.70s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▍  | 861/1150 [41:29<13:10,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▍  | 862/1150 [41:34<15:34,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 863/1150 [41:36<14:52,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 864/1150 [41:39<14:21,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 865/1150 [41:42<14:42,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 866/1150 [41:45<14:07,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 867/1150 [41:48<13:41,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 868/1150 [41:50<13:16,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 869/1150 [41:53<13:01,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 870/1150 [41:56<12:54,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 871/1150 [41:59<12:54,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 872/1150 [42:03<15:10,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 873/1150 [42:06<14:25,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 874/1150 [42:09<13:53,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 875/1150 [42:11<13:22,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▌  | 876/1150 [42:14<13:03,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▋  | 877/1150 [42:17<12:49,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▋  | 878/1150 [42:20<12:40,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  76%|███████▋  | 879/1150 [42:22<12:24,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 880/1150 [42:25<12:21,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 881/1150 [42:28<12:25,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 882/1150 [42:32<14:33,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 883/1150 [42:35<13:49,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 884/1150 [42:38<13:13,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 885/1150 [42:40<12:49,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 886/1150 [42:43<12:29,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 887/1150 [42:46<12:12,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 888/1150 [42:48<12:10,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 889/1150 [42:51<12:05,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 890/1150 [42:54<11:57,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  77%|███████▋  | 891/1150 [42:57<12:04,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 892/1150 [43:01<14:10,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 893/1150 [43:04<13:20,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 894/1150 [43:07<12:43,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 895/1150 [43:09<12:19,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 896/1150 [43:12<12:08,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 897/1150 [43:15<11:52,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 898/1150 [43:18<11:40,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 899/1150 [43:20<11:34,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 900/1150 [43:23<11:26,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 901/1150 [43:26<11:29,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  78%|███████▊  | 902/1150 [43:30<13:27,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▊  | 903/1150 [43:33<12:50,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▊  | 904/1150 [43:36<12:18,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▊  | 905/1150 [43:38<11:51,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 906/1150 [43:41<11:32,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 907/1150 [43:44<11:25,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 908/1150 [43:47<11:13,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 909/1150 [43:49<11:03,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 910/1150 [43:52<10:59,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 911/1150 [43:55<10:59,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 912/1150 [43:59<12:58,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 913/1150 [44:02<12:10,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  79%|███████▉  | 914/1150 [44:05<11:40,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|███████▉  | 915/1150 [44:07<11:15,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|███████▉  | 916/1150 [44:10<10:56,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|███████▉  | 917/1150 [44:12<10:42,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|███████▉  | 918/1150 [44:15<10:41,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|███████▉  | 919/1150 [44:18<10:34,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 920/1150 [44:21<10:27,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 921/1150 [44:23<10:28,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 922/1150 [44:28<12:24,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 923/1150 [44:31<11:40,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 924/1150 [44:33<11:08,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 925/1150 [44:36<10:44,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 926/1150 [44:39<10:27,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 927/1150 [44:41<10:18,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 928/1150 [44:44<10:12,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 929/1150 [44:47<10:04,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 930/1150 [44:49<09:57,  2.71s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 931/1150 [44:52<10:03,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 932/1150 [44:57<11:59,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 933/1150 [44:59<11:17,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████  | 934/1150 [45:02<10:45,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████▏ | 935/1150 [45:05<10:27,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████▏ | 936/1150 [45:08<10:13,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  81%|████████▏ | 937/1150 [45:10<10:00,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 938/1150 [45:13<09:53,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 939/1150 [45:16<09:51,  2.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 940/1150 [45:19<09:41,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 941/1150 [45:22<09:50,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 942/1150 [45:26<11:26,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 943/1150 [45:29<10:50,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 944/1150 [45:31<10:17,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 945/1150 [45:34<09:54,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 946/1150 [45:37<09:38,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 947/1150 [45:39<09:30,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  82%|████████▏ | 948/1150 [45:42<09:19,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 949/1150 [45:45<09:11,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 950/1150 [45:48<09:07,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 951/1150 [45:50<09:14,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 952/1150 [45:55<10:54,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 953/1150 [45:58<10:13,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 954/1150 [46:00<09:49,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 955/1150 [46:03<09:31,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 956/1150 [46:06<09:11,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 957/1150 [46:08<08:56,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 958/1150 [46:11<08:50,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 959/1150 [46:14<08:44,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  83%|████████▎ | 960/1150 [46:17<08:37,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▎ | 961/1150 [46:19<08:40,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▎ | 962/1150 [46:24<10:16,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▎ | 963/1150 [46:27<09:41,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 964/1150 [46:29<09:18,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 965/1150 [46:32<08:56,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 966/1150 [46:35<08:45,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 967/1150 [46:37<08:31,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 968/1150 [46:40<08:24,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 969/1150 [46:43<08:21,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 970/1150 [46:46<08:13,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  84%|████████▍ | 971/1150 [46:48<08:17,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▍ | 972/1150 [46:53<09:49,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▍ | 973/1150 [46:56<09:16,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▍ | 974/1150 [46:58<08:52,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▍ | 975/1150 [47:01<08:32,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▍ | 976/1150 [47:04<08:19,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▍ | 977/1150 [47:07<08:13,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 978/1150 [47:09<08:02,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 979/1150 [47:12<07:52,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 980/1150 [47:15<07:45,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 981/1150 [47:18<07:47,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 982/1150 [47:22<09:10,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 983/1150 [47:25<08:39,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 984/1150 [47:27<08:15,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 985/1150 [47:30<07:55,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 986/1150 [47:33<07:44,  2.83s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 987/1150 [47:35<07:30,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 988/1150 [47:38<07:24,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 989/1150 [47:41<07:19,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 990/1150 [47:44<07:14,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▌ | 991/1150 [47:46<07:17,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▋ | 992/1150 [47:51<08:38,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▋ | 993/1150 [47:54<08:09,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  86%|████████▋ | 994/1150 [47:56<07:47,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 995/1150 [47:59<07:32,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 996/1150 [48:02<07:21,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 997/1150 [48:05<07:11,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 998/1150 [48:07<07:06,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 999/1150 [48:10<06:57,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1000/1150 [48:13<06:51,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1001/1150 [48:15<06:51,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1002/1150 [48:20<08:03,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1003/1150 [48:23<07:36,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1004/1150 [48:25<07:18,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1005/1150 [48:28<07:02,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  87%|████████▋ | 1006/1150 [48:31<06:52,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1007/1150 [48:34<06:42,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1008/1150 [48:36<06:34,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1009/1150 [48:39<06:30,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1010/1150 [48:42<06:25,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1011/1150 [48:45<06:26,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1012/1150 [48:49<07:37,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1013/1150 [48:52<07:09,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1014/1150 [48:55<06:51,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1015/1150 [48:57<06:36,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1016/1150 [49:00<06:25,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  88%|████████▊ | 1017/1150 [49:03<06:14,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▊ | 1018/1150 [49:05<06:05,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▊ | 1019/1150 [49:08<06:01,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▊ | 1020/1150 [49:11<05:54,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1021/1150 [49:14<05:54,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1022/1150 [49:18<06:58,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1023/1150 [49:21<06:34,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1024/1150 [49:24<06:17,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1025/1150 [49:26<06:05,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1026/1150 [49:29<05:54,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1027/1150 [49:32<05:45,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1028/1150 [49:34<05:37,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  89%|████████▉ | 1029/1150 [49:37<05:34,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|████████▉ | 1030/1150 [49:40<05:27,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|████████▉ | 1031/1150 [49:43<05:29,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|████████▉ | 1032/1150 [49:47<06:23,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|████████▉ | 1033/1150 [49:50<05:59,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|████████▉ | 1034/1150 [49:52<05:43,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 1035/1150 [49:55<05:30,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 1036/1150 [49:58<05:21,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 1037/1150 [50:00<05:14,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 1038/1150 [50:03<05:11,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 1039/1150 [50:06<05:06,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 1040/1150 [50:09<05:02,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1041/1150 [50:12<05:02,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1042/1150 [50:16<05:53,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1043/1150 [50:19<05:32,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1044/1150 [50:21<05:16,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1045/1150 [50:24<05:04,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1046/1150 [50:27<04:57,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1047/1150 [50:30<04:49,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1048/1150 [50:32<04:43,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████ | 1049/1150 [50:41<07:44,  4.59s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████▏| 1050/1150 [50:45<07:10,  4.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████▏| 1051/1150 [50:47<06:20,  3.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  91%|█████████▏| 1052/1150 [50:52<06:34,  4.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1053/1150 [50:55<05:50,  3.62s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1054/1150 [50:57<05:21,  3.35s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1055/1150 [51:00<05:03,  3.19s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1056/1150 [51:03<04:46,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1057/1150 [51:05<04:30,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1058/1150 [51:08<04:18,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1059/1150 [51:11<04:10,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1060/1150 [51:13<04:08,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1061/1150 [51:16<04:07,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1062/1150 [51:21<04:49,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  92%|█████████▏| 1063/1150 [51:23<04:31,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1064/1150 [51:26<04:16,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1065/1150 [51:29<04:07,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1066/1150 [51:32<03:59,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1067/1150 [51:34<03:53,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1068/1150 [51:37<03:48,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1069/1150 [51:40<03:43,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1070/1150 [51:42<03:38,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1071/1150 [51:45<03:38,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1072/1150 [51:50<04:15,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1073/1150 [51:52<03:58,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1074/1150 [51:55<03:46,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  93%|█████████▎| 1075/1150 [51:58<03:37,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▎| 1076/1150 [52:01<03:31,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▎| 1077/1150 [52:03<03:22,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▎| 1078/1150 [52:06<03:18,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1079/1150 [52:08<03:13,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1080/1150 [52:11<03:10,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1081/1150 [52:14<03:08,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1082/1150 [52:18<03:39,  3.23s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1083/1150 [52:21<03:25,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1084/1150 [52:24<03:16,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1085/1150 [52:27<03:10,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  94%|█████████▍| 1086/1150 [52:29<03:03,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▍| 1087/1150 [52:32<02:57,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▍| 1088/1150 [52:35<02:52,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▍| 1089/1150 [52:37<02:48,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▍| 1090/1150 [52:40<02:45,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▍| 1091/1150 [52:43<02:42,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▍| 1092/1150 [52:47<03:08,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 1093/1150 [52:50<02:56,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 1094/1150 [52:53<02:45,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 1095/1150 [52:55<02:38,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 1096/1150 [52:58<02:32,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 1097/1150 [53:01<02:27,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 1098/1150 [53:03<02:22,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1099/1150 [53:06<02:18,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1100/1150 [53:09<02:15,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1101/1150 [53:12<02:15,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1102/1150 [53:16<02:37,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1103/1150 [53:19<02:27,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1104/1150 [53:22<02:18,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1105/1150 [53:24<02:11,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▌| 1106/1150 [53:27<02:05,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▋| 1107/1150 [53:30<02:01,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▋| 1108/1150 [53:33<01:58,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  96%|█████████▋| 1109/1150 [53:35<01:54,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1110/1150 [53:38<01:50,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1111/1150 [53:41<01:49,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1112/1150 [53:45<02:04,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1113/1150 [53:48<01:54,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1114/1150 [53:51<01:46,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1115/1150 [53:53<01:40,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1116/1150 [53:56<01:36,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1117/1150 [53:59<01:32,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1118/1150 [54:02<01:29,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1119/1150 [54:04<01:26,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1120/1150 [54:07<01:22,  2.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  97%|█████████▋| 1121/1150 [54:10<01:20,  2.79s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1122/1150 [54:14<01:31,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1123/1150 [54:17<01:23,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1124/1150 [54:20<01:16,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1125/1150 [54:22<01:11,  2.87s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1126/1150 [54:25<01:08,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1127/1150 [54:28<01:04,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1128/1150 [54:31<01:01,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1129/1150 [54:33<00:57,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1130/1150 [54:36<00:55,  2.75s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1131/1150 [54:39<00:52,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  98%|█████████▊| 1132/1150 [54:43<00:58,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▊| 1133/1150 [54:46<00:52,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▊| 1134/1150 [54:49<00:47,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▊| 1135/1150 [54:51<00:43,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1136/1150 [54:54<00:39,  2.82s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1137/1150 [54:57<00:36,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1138/1150 [54:59<00:33,  2.77s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1139/1150 [55:02<00:30,  2.73s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1140/1150 [55:05<00:27,  2.72s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1141/1150 [55:07<00:24,  2.74s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1142/1150 [55:12<00:26,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1143/1150 [55:15<00:21,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  99%|█████████▉| 1144/1150 [55:17<00:17,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|█████████▉| 1145/1150 [55:20<00:14,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|█████████▉| 1146/1150 [55:23<00:11,  2.84s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|█████████▉| 1147/1150 [55:26<00:08,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|█████████▉| 1148/1150 [55:28<00:05,  2.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|█████████▉| 1149/1150 [55:31<00:02,  2.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 1150/1150 [55:34<00:00,  2.74s/sample]Generating batch 0: 100%|██████████| 1150/1150 [55:34<00:00,  2.90s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/none/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternnone.pt
+Done. Summary:
+  none: None

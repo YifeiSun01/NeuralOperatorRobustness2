@@ -1,0 +1,15 @@
+c0900a-s25.ufhpc
+Sun Jul  6 10:50:48 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent
+Variable        Value     
+-------------------------
+ntrain          1000      
+ntest           100       
+batch_size      20        
+learning_rate   0.001     
+modes12         32        
+width           40        
+s               256       
+T_in            1         
+T               19        
+step            1         

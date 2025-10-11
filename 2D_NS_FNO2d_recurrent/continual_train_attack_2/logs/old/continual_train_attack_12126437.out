@@ -1,0 +1,47 @@
+c0907a-s5.ufhpc
+Mon Sep  8 09:10:37 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+======================================== 参数配置 ========================================
+modes=96, width=80, epochs=2000
+T_in=10, T=10, step=1
+ntrain=1000, ntest=100
+batch_size=2, learning_rate=0.001
+
+======================================== 路径配置 ========================================
+current_file_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py
+pretrained_model_name=NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+pretrained_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+dataset_name=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+dataset_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/dataset/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+
+======================================== 设备与PDE solver ========================================
+device=cuda
+pde_solver=<solver.DifferentiablePDESolver object at 0x14e2f85a1870>
+
+======================================== 攻击配置 ========================================
+PGDAdamConfig(epsilon=39.3216, alpha=1.0, num_steps=100, norm=2, beta1=0.9, beta2=0.999, adam_eps=1e-08, amsgrad=False, use_sign_for_linf=True, mode_spec='wwwwwwwwww')
+[Resume] Loaded pretrained weights from: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+params: 943823441
+[ep 0000 | batch 0001/0500] perturb_time:630.889s | train_time:15.724s | loss:0.913215
+[ep 0000 | batch 0002/0500] perturb_time:576.843s | train_time:0.293s | loss:1.035916
+[ep 0000 | batch 0003/0500] perturb_time:576.833s | train_time:0.293s | loss:1.562108
+[ep 0000 | batch 0004/0500] perturb_time:576.848s | train_time:0.293s | loss:1.263916
+[ep 0000 | batch 0005/0500] perturb_time:576.774s | train_time:0.293s | loss:1.445391
+[ep 0000 | batch 0006/0500] perturb_time:576.981s | train_time:0.295s | loss:1.038512
+[ep 0000 | batch 0007/0500] perturb_time:579.568s | train_time:0.309s | loss:1.125274
+[ep 0000 | batch 0008/0500] perturb_time:598.271s | train_time:5.907s | loss:0.985290
+[ep 0000 | batch 0009/0500] perturb_time:576.887s | train_time:0.293s | loss:0.956243
+[ep 0000 | batch 0010/0500] perturb_time:576.864s | train_time:0.293s | loss:0.991253
+[ep 0000 | batch 0011/0500] perturb_time:577.165s | train_time:0.293s | loss:1.262162
+[ep 0000 | batch 0012/0500] perturb_time:576.850s | train_time:0.293s | loss:1.031793
+[ep 0000 | batch 0013/0500] perturb_time:580.011s | train_time:0.303s | loss:1.019771
+[ep 0000 | batch 0014/0500] perturb_time:586.058s | train_time:1.549s | loss:0.992154
+[ep 0000 | batch 0015/0500] perturb_time:592.528s | train_time:1.990s | loss:0.872484
+[ep 0000 | batch 0016/0500] perturb_time:576.870s | train_time:0.293s | loss:0.896827
+[ep 0000 | batch 0017/0500] perturb_time:576.843s | train_time:0.293s | loss:1.390996
+[ep 0000 | batch 0018/0500] perturb_time:576.779s | train_time:0.293s | loss:0.873803
+[ep 0000 | batch 0019/0500] perturb_time:577.362s | train_time:0.293s | loss:1.156528
+[ep 0000 | batch 0020/0500] perturb_time:585.234s | train_time:1.503s | loss:1.076033
+[ep 0000 | batch 0021/0500] perturb_time:593.532s | train_time:2.339s | loss:0.820295
+[ep 0000 | batch 0022/0500] perturb_time:577.768s | train_time:0.293s | loss:1.080833
+[ep 0000 | batch 0023/0500] perturb_time:576.873s | train_time:0.293s | loss:1.151175

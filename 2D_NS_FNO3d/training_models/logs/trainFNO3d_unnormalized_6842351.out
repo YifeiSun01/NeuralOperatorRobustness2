@@ -1,0 +1,21 @@
+c0903a-s15.ufhpc
+Mon Jul  7 08:16:34 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Training FNO3d
+Variable        Value     
+-------------------------
+ntrain          1000      
+ntest           100       
+batch_size      20        
+learning_rate   0.001     
+modes12         32        
+modes3          8         
+width           40        
+s               256       
+T_in            10        
+T               10        
+step            1         
+iterations      25000     
+sub             1         
+419457361
+Model saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/saved_models/3D/modes1232_modes38_width40_epochs500_Tin10_T10/NS_3d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth

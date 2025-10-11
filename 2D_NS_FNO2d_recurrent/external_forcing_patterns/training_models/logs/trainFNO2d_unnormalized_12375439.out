@@ -1,0 +1,25 @@
+c0906a-s15.ufhpc
+Thu Sep 11 07:44:49 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Training FNO2d (multi-pattern loop)
+Variable        Value     
+-------------------------
+ntrain          1000      
+ntest           100       
+batch_size      20        
+learning_rate   0.001     
+modes           64        
+width           60        
+s               256       
+T_in            10        
+T               10        
+step            1         
+
+================================================================================
+Pattern: isoCircles
+Train PT: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/isoCircles/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternisoCircles.pt
+sub             1         
+[isoCircles] x_train: (1000, 256, 256, 10), y_train: (1000, 256, 256, 10)
+[isoCircles] x_val  : (100, 256, 256, 10), y_val  : (100, 256, 256, 10)
+iterations      75000      (epochs=1500 * steps/epoch=50)
+[isoCircles] params: 235989181

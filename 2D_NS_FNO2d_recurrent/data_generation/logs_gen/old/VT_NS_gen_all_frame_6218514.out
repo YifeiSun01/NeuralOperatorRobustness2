@@ -1,0 +1,13 @@
+c0306a-s25.ufhpc
+Tue Jun 24 07:27:17 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+PyTorch version: 2.7.0+cu126
+CUDA version used by PyTorch: 12.6
+Is CUDA available: True
+Current CUDA device name: NVIDIA GeForce RTX 2080 Ti
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]Generating samples:  20%|██        | 1/5 [00:50<03:22, 50.52s/sample]Generating samples:  40%|████      | 2/5 [00:59<01:17, 25.91s/sample]Generating samples:  60%|██████    | 3/5 [01:08<00:36, 18.34s/sample]Generating samples:  80%|████████  | 4/5 [01:17<00:14, 14.58s/sample]Generating samples: 100%|██████████| 5/5 [01:25<00:00, 12.40s/sample]Generating samples: 100%|██████████| 5/5 [01:25<00:00, 17.18s/sample]
+Stacking tensors:   0%|          | 0/2 [00:00<?, ?it/s]Stacking tensors:  50%|█████     | 1/2 [00:00<00:00,  1.42it/s]Stacking tensors: 100%|██████████| 2/2 [00:00<00:00,  2.83it/s]
+Saving dataset:   0%|          | 0/1 [00:00<?, ?it/s]Saving dataset: 100%|██████████| 1/1 [00:00<00:00,  3.67it/s]Saving dataset: 100%|██████████| 1/1 [00:00<00:00,  3.67it/s]
+
+Dataset saved to ./datasets/dim2d_nx128_N5_solver=exponax_nu0.000_t20.0_test_all_frames.pt

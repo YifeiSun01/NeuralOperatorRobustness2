@@ -1,0 +1,45 @@
+c0308a-s33.ufhpc
+Tue Jun 24 09:47:15 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+PyTorch version: 2.7.0+cu126
+CUDA version used by PyTorch: 12.6
+Is CUDA available: True
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA GeForce RTX 2080 Ti
+  Compute Capability: 7.5
+  Total memory: 10.57 GB
+  MultiProcessor count: 68
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]2025-06-24 21:48:46.172416: E external/xla/xla/service/gpu/gpu_hlo_schedule.cc:652] The byte size of input/output arguments (10491068688) exceeds the base limit (8511504384). This indicates an error in the calculation!
+2025-06-24 21:48:46.187268: W external/xla/xla/hlo/transforms/simplifiers/hlo_rematerialization.cc:3021] Can't reduce memory use below 0B (0 bytes) by rematerialization; only reduced to 9.77GiB (10490507392 bytes), down from 9.77GiB (10491039904 bytes) originally
+2025-06-24 21:48:56.395275: W external/xla/xla/tsl/framework/bfc_allocator.cc:501] Allocator (GPU_0_bfc) ran out of memory trying to allocate 9.77GiB (rounded to 10485760000)requested by op 
+2025-06-24 21:48:56.418024: W external/xla/xla/tsl/framework/bfc_allocator.cc:512] *___________________________________________________________________________________________________
+E0624 21:48:56.418051 3901186 pjrt_stream_executor_client.cc:2839] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 10485760000 bytes. [tf-allocator-allocation-error='']
+Generating samples:   0%|          | 0/5 [00:39<?, ?sample/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 238, in <module>
+    path1 = generator.generate_dataset(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 183, in generate_dataset
+    x, y, selected_times = generate_vorticity_transport_data(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 119, in generate_vorticity_transport_data
+    exponax_solutions = exponaxsolver.solve(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 91, in solve
+    longer_trajectory = longer_rollout_NS_stepper(full_ic)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_utils.py", line 172, in rollout_stepper_fn
+    _, trj = jax.lax.scan(scan_fn, u_0, None, length=n)
+jaxlib.xla_extension.XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 10485760000 bytes.

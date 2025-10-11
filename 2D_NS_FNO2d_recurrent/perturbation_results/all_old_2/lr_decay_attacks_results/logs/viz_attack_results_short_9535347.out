@@ -1,0 +1,6 @@
+c0901a-s25.ufhpc
+Wed Aug  6 08:47:09 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+📊 绘图中: 参数组合 alpha=5.0 | epsilon=39.3216 | steps=100 | idx=1 | attack_type=with_solver
+✅ 保存图像到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/lr_decay_attacks_results/comparison_plots/lineplot_alpha5pt0_epsilon39pt3216_steps100_idx1_attack_typewith_solver.png

@@ -1,0 +1,76 @@
+c1103a-s5.ufhpc
+Thu Jun 26 06:08:26 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]2025-06-26 18:10:51.963882: W external/xla/xla/hlo/transforms/simplifiers/hlo_rematerialization.cc:3021] Can't reduce memory use below 34.30GiB (36834254589 bytes) by rematerialization; only reduced to 97.66GiB (104862867584 bytes), down from 97.66GiB (104862875776 bytes) originally
+2025-06-26 18:12:26.226770: E external/xla/xla/service/gpu/gpu_hlo_schedule.cc:652] The byte size of input/output arguments (209716248576) exceeds the base limit (143635808256). This indicates an error in the calculation!
+2025-06-26 18:12:26.229203: W external/xla/xla/hlo/transforms/simplifiers/hlo_rematerialization.cc:3021] Can't reduce memory use below 0B (0 bytes) by rematerialization; only reduced to 97.66GiB (104858124288 bytes), down from 97.66GiB (104858124288 bytes) originally
+2025-06-26 18:12:36.359764: W external/xla/xla/tsl/framework/bfc_allocator.cc:501] Allocator (GPU_0_bfc) ran out of memory trying to allocate 97.66GiB (rounded to 104858124288)requested by op 
+2025-06-26 18:12:36.373366: W external/xla/xla/tsl/framework/bfc_allocator.cc:512] **************************************************************************__________________________
+E0626 18:12:36.373412 1627284 pjrt_stream_executor_client.cc:2839] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 104858124288 bytes. [tf-allocator-allocation-error='']
+Generating samples:   0%|          | 0/5 [02:21<?, ?sample/s]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 246, in <module>
+    path1 = generator.generate_dataset(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 191, in generate_dataset
+    x, y, selected_times = generate_vorticity_transport_data(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 127, in generate_vorticity_transport_data
+    exponax_solutions = exponaxsolver.solve(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 99, in solve
+    longer_trajectory = longer_rollout_NS_stepper(full_ic)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_utils.py", line 175, in rollout_stepper_fn
+    trj_with_init = jtu.tree_map(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/tree_util.py", line 358, in tree_map
+    return treedef.unflatten(f(*xs) for xs in zip(*all_leaves))
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/tree_util.py", line 358, in <genexpr>
+    return treedef.unflatten(f(*xs) for xs in zip(*all_leaves))
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_utils.py", line 176, in <lambda>
+    lambda init, history: jnp.concatenate(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/lax_numpy.py", line 4648, in concatenate
+    arrays_out = [lax.concatenate(arrays_out[i:i+k], axis)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/numpy/lax_numpy.py", line 4648, in <listcomp>
+    arrays_out = [lax.concatenate(arrays_out[i:i+k], axis)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/lax/lax.py", line 2000, in concatenate
+    return concatenate_p.bind(*operands, dimension=dimension)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 496, in bind
+    return self._true_bind(*args, **params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 512, in _true_bind
+    return self.bind_with_trace(prev_trace, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 517, in bind_with_trace
+    return trace.process_primitive(self, args, params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/core.py", line 1017, in process_primitive
+    return primitive.impl(*args, **params)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/jax/_src/dispatch.py", line 89, in apply_primitive
+    outs = fun(*args)
+jaxlib.xla_extension.XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 104858124288 bytes.

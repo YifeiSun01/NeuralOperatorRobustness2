@@ -1,0 +1,83 @@
+c1010a-s15.ufhpc
+Sun Aug 31 02:42:12 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Expanded files found: 15
+TOTAL combos: 60
+TASKS: 5, TASK_ID: 1
+Processing slice: [12, 24)  (size=12)
+==> Running combo 13/60: file=./2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt  percent=0.25
+
+================ ADD RUN CONFIG ================
+mode                      : ADD (添加)
+expanded_dataset_file     : dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt
+percent_added             : 25.00%
+samples_added_vs_total    : 288 / 1150
+original_dataset_file     : dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+total_samples_after_merge : 1438
+ntrain                    : 1250
+ntest                     : 125
+modes                     : 96
+width                     : 80
+s                         : 256
+T_in                      : 10
+T_out                     : 10
+step                      : 1
+batch_size                : 20
+epochs                    : 1500
+iterations                : 93000
+subsample_factor          : 1
+device                    : cuda
+seed                      : 1234
+======================================================
+
+[SAVED][ADD] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_expanded/2D/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10/25pct/add/modes96_width80_epochs1500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+
+================ REPLACE RUN CONFIG ================
+mode                      : REPLACE (替换)
+expanded_dataset_file     : dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt
+percent_replaced          : 25.00%
+samples_replaced_vs_total : 288 / 1150
+original_dataset_file     : dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+total_samples_after_replace: 1150
+ntrain                    : 1000
+ntest                     : 100
+modes                     : 96
+width                     : 80
+s                         : 256
+T_in                      : 10
+T_out                     : 10
+step                      : 1
+batch_size                : 20
+epochs                    : 1500
+iterations                : 75000
+subsample_factor          : 1
+device                    : cuda
+seed                      : 1234
+======================================================
+
+[SAVED][REPLACE] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_expanded/2D/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10/25pct/replace/modes96__width80_epochs1500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+==> Running combo 14/60: file=./2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt  percent=0.5
+
+================ ADD RUN CONFIG ================
+mode                      : ADD (添加)
+expanded_dataset_file     : dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10.pt
+percent_added             : 50.00%
+samples_added_vs_total    : 575 / 1150
+original_dataset_file     : dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+total_samples_after_merge : 1725
+ntrain                    : 1500
+ntest                     : 150
+modes                     : 96
+width                     : 80
+s                         : 256
+T_in                      : 10
+T_out                     : 10
+step                      : 1
+batch_size                : 20
+epochs                    : 1500
+iterations                : 112500
+subsample_factor          : 1
+device                    : cuda
+seed                      : 1234
+======================================================
+

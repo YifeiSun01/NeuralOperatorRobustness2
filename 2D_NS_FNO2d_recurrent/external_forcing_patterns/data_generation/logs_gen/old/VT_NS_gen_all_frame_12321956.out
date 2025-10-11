@@ -1,0 +1,434 @@
+c1007a-s5.ufhpc
+Wed Sep 10 08:38:44 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Loading dataset from /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame_real_initial.pt...
+Pre-upsampling dataset on GPU...
+Upsampling:   0%|          | 0/50 [00:00<?, ?sample/s]Upsampling:   2%|▏         | 1/50 [00:05<04:44,  5.80s/sample]Upsampling: 100%|██████████| 50/50 [00:05<00:00,  8.62sample/s]
+Generating datasets for all patterns...
+[1/6] pattern = ringsCos
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:85: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 0 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0:  10%|█         | 1/10 [00:21<03:17, 21.98s/sample]Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 1 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 2 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 3 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 4 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 5 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 6 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 7 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 8 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 9 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0: 100%|██████████| 10/10 [00:21<00:00,  2.20s/sample]
+[Error] All samples in batch 0 failed. Skipping save.
+[2/6] pattern = sBands
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 0 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 1 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 2 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 3 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 4 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 5 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 6 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 7 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 8 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 9 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0: 100%|██████████| 10/10 [00:00<00:00, 874.16sample/s]
+[Error] All samples in batch 0 failed. Skipping save.
+[3/6] pattern = isoCircles
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 0 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 1 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 2 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 3 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 4 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 5 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 6 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 7 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 8 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 9 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0: 100%|██████████| 10/10 [00:00<00:00, 881.66sample/s]
+[Error] All samples in batch 0 failed. Skipping save.
+[4/6] pattern = petals
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 0 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 1 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 2 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 3 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 4 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 5 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 6 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 7 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 8 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 9 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0: 100%|██████████| 10/10 [00:00<00:00, 876.17sample/s]
+[Error] All samples in batch 0 failed. Skipping save.
+[5/6] pattern = ringsL1
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 0 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 1 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 2 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 3 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 4 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 5 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 6 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 7 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 8 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 9 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0: 100%|██████████| 10/10 [00:00<00:00, 870.24sample/s]
+[Error] All samples in batch 0 failed. Skipping save.
+[6/6] pattern = ringsLinf
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 0 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 1 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 2 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 3 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 4 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 5 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 6 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 7 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 8 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Error with step size 0.01: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.001: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0005: Cannot set attribute forcing_pattern. Trying smaller step.
+Error with step size 0.0001: Cannot set attribute forcing_pattern. Trying smaller step.
+[Warning] Sample 9 failed: Failed to find stable solution after 5 attempts with step sizes: [0.01, 0.005, 0.001, 0.0005, 0.0001]
+Generating batch 0: 100%|██████████| 10/10 [00:00<00:00, 870.37sample/s]
+[Error] All samples in batch 0 failed. Skipping save.
+Done. Summary:
+  ringsCos: None
+  sBands: None
+  isoCircles: None
+  petals: None
+  ringsL1: None
+  ringsLinf: None

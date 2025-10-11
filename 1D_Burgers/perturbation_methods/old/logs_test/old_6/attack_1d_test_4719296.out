@@ -1,0 +1,3310 @@
+c1107a-s35.ufhpc
+Mon Jun  9 05:46:56 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Selected GPU 0 (NVIDIA A100-SXM4-80GB) with 0.00 GB free memory
+===============Experiment===============
+
+
+
+
+=============jacobian, model gradient cleared=============
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_results/1D
+device:  cuda:0
+nu:  0.0005
+INFO:2025-06-09 05:49:07,134:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0609 05:49:07.134530 22787956871872 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+===============Running===============
+
+
+
+
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test_jacobian_model_gradient_clear.py:40: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test_jacobian_model_gradient_clear.py:44: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test_jacobian_model_gradient_clear.py:76: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test_jacobian_model_gradient_clear.py:79: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+
+Jacobian Matrix Validation, STEP=0
+====================================
+  ∥J_G∥_F = 8.698e+00
+  ∥J_g∥_F = 8.907e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.976
+  Residual norm ∥J_G + J_g∥_F: 1.752e+01
+  Residual norm ∥J_G - J_g∥_F: 1.688e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.015e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.955e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -8.059e+00
+  Average cosine similarity row: 0.704666
+  Minimum cosine similarity row: 0.296257
+  Average cosine similarity col: 0.952354
+  Minimum cosine similarity col: 0.628865
+====================================
+
+Jacobian Matrix Validation, STEP=1
+====================================
+  ∥J_G∥_F = 8.803e+00
+  ∥J_g∥_F = 8.987e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.979
+  Residual norm ∥J_G + J_g∥_F: 1.770e+01
+  Residual norm ∥J_G - J_g∥_F: 1.843e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.010e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.947e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -9.975e+00
+  Average cosine similarity row: 0.698619
+  Minimum cosine similarity row: 0.033556
+  Average cosine similarity col: 0.949638
+  Minimum cosine similarity col: 0.610595
+====================================
+
+Jacobian Matrix Validation, STEP=2
+====================================
+  ∥J_G∥_F = 8.748e+00
+  ∥J_g∥_F = 9.055e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.966
+  Residual norm ∥J_G + J_g∥_F: 1.765e+01
+  Residual norm ∥J_G - J_g∥_F: 2.319e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.018e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.916e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -7.557e+00
+  Average cosine similarity row: 0.693222
+  Minimum cosine similarity row: 0.348503
+  Average cosine similarity col: 0.939234
+  Minimum cosine similarity col: 0.616559
+====================================
+
+Jacobian Matrix Validation, STEP=3
+====================================
+  ∥J_G∥_F = 8.662e+00
+  ∥J_g∥_F = 9.236e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.938
+  Residual norm ∥J_G + J_g∥_F: 1.757e+01
+  Residual norm ∥J_G - J_g∥_F: 3.450e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.029e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.818e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -6.004e+00
+  Average cosine similarity row: 0.684362
+  Minimum cosine similarity row: 0.306381
+  Average cosine similarity col: 0.907700
+  Minimum cosine similarity col: 0.613221
+====================================
+
+Jacobian Matrix Validation, STEP=4
+====================================
+  ∥J_G∥_F = 9.166e+00
+  ∥J_g∥_F = 1.041e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.881
+  Residual norm ∥J_G + J_g∥_F: 1.920e+01
+  Residual norm ∥J_G - J_g∥_F: 3.997e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.095e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.810e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.221e+00
+  Average cosine similarity row: 0.672244
+  Minimum cosine similarity row: 0.095376
+  Average cosine similarity col: 0.900921
+  Minimum cosine similarity col: 0.504020
+====================================
+
+Jacobian Matrix Validation, STEP=5
+====================================
+  ∥J_G∥_F = 1.024e+01
+  ∥J_g∥_F = 1.089e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.940
+  Residual norm ∥J_G + J_g∥_F: 2.091e+01
+  Residual norm ∥J_G - J_g∥_F: 3.098e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.043e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.897e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.742e+00
+  Average cosine similarity row: 0.658618
+  Minimum cosine similarity row: -0.069999
+  Average cosine similarity col: 0.908405
+  Minimum cosine similarity col: 0.355174
+====================================
+
+Jacobian Matrix Validation, STEP=6
+====================================
+  ∥J_G∥_F = 1.027e+01
+  ∥J_g∥_F = 1.094e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.939
+  Residual norm ∥J_G + J_g∥_F: 2.092e+01
+  Residual norm ∥J_G - J_g∥_F: 3.565e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.037e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.863e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -5.350e+00
+  Average cosine similarity row: 0.650773
+  Minimum cosine similarity row: -0.308925
+  Average cosine similarity col: 0.891254
+  Minimum cosine similarity col: 0.230682
+====================================
+
+Jacobian Matrix Validation, STEP=7
+====================================
+  ∥J_G∥_F = 1.027e+01
+  ∥J_g∥_F = 1.098e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.935
+  Residual norm ∥J_G + J_g∥_F: 2.078e+01
+  Residual norm ∥J_G - J_g∥_F: 4.482e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.024e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.781e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -6.302e+00
+  Average cosine similarity row: 0.641719
+  Minimum cosine similarity row: -0.035799
+  Average cosine similarity col: 0.865358
+  Minimum cosine similarity col: 0.161559
+====================================
+
+Jacobian Matrix Validation, STEP=8
+====================================
+  ∥J_G∥_F = 1.021e+01
+  ∥J_g∥_F = 1.101e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.927
+  Residual norm ∥J_G + J_g∥_F: 2.045e+01
+  Residual norm ∥J_G - J_g∥_F: 5.723e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.003e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.637e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -7.116e+00
+  Average cosine similarity row: 0.634212
+  Minimum cosine similarity row: -0.432660
+  Average cosine similarity col: 0.829582
+  Minimum cosine similarity col: 0.117004
+====================================
+
+Jacobian Matrix Validation, STEP=9
+====================================
+  ∥J_G∥_F = 1.008e+01
+  ∥J_g∥_F = 1.104e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.913
+  Residual norm ∥J_G + J_g∥_F: 1.987e+01
+  Residual norm ∥J_G - J_g∥_F: 7.217e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.972e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.409e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -7.487e+00
+  Average cosine similarity row: 0.625250
+  Minimum cosine similarity row: -0.556463
+  Average cosine similarity col: 0.776654
+  Minimum cosine similarity col: 0.085736
+====================================
+
+Jacobian Matrix Validation, STEP=10
+====================================
+  ∥J_G∥_F = 9.824e+00
+  ∥J_g∥_F = 1.107e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.887
+  Residual norm ∥J_G + J_g∥_F: 1.911e+01
+  Residual norm ∥J_G - J_g∥_F: 8.546e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.945e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.145e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -6.851e+00
+  Average cosine similarity row: 0.617185
+  Minimum cosine similarity row: -0.771714
+  Average cosine similarity col: 0.715944
+  Minimum cosine similarity col: 0.064155
+====================================
+
+Jacobian Matrix Validation, STEP=11
+====================================
+  ∥J_G∥_F = 9.458e+00
+  ∥J_g∥_F = 1.110e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.852
+  Residual norm ∥J_G + J_g∥_F: 1.837e+01
+  Residual norm ∥J_G - J_g∥_F: 9.386e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.942e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.933e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -5.707e+00
+  Average cosine similarity row: 0.606958
+  Minimum cosine similarity row: -0.582324
+  Average cosine similarity col: 0.664338
+  Minimum cosine similarity col: 0.053175
+====================================
+
+Jacobian Matrix Validation, STEP=12
+====================================
+  ∥J_G∥_F = 9.074e+00
+  ∥J_g∥_F = 1.114e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.815
+  Residual norm ∥J_G + J_g∥_F: 1.782e+01
+  Residual norm ∥J_G - J_g∥_F: 9.760e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.964e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.816e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.729e+00
+  Average cosine similarity row: 0.596414
+  Minimum cosine similarity row: -0.739090
+  Average cosine similarity col: 0.631140
+  Minimum cosine similarity col: 0.050527
+====================================
+
+Jacobian Matrix Validation, STEP=13
+====================================
+  ∥J_G∥_F = 8.782e+00
+  ∥J_g∥_F = 1.118e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.785
+  Residual norm ∥J_G + J_g∥_F: 1.746e+01
+  Residual norm ∥J_G - J_g∥_F: 9.971e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.989e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.747e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.150e+00
+  Average cosine similarity row: 0.584601
+  Minimum cosine similarity row: -0.890065
+  Average cosine similarity col: 0.608559
+  Minimum cosine similarity col: 0.047915
+====================================
+
+Jacobian Matrix Validation, STEP=14
+====================================
+  ∥J_G∥_F = 8.690e+00
+  ∥J_g∥_F = 1.131e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.768
+  Residual norm ∥J_G + J_g∥_F: 1.731e+01
+  Residual norm ∥J_G - J_g∥_F: 1.036e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.992e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.654e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.949e+00
+  Average cosine similarity row: 0.569164
+  Minimum cosine similarity row: -0.887413
+  Average cosine similarity col: 0.581456
+  Minimum cosine similarity col: 0.044031
+====================================
+
+Jacobian Matrix Validation, STEP=15
+====================================
+  ∥J_G∥_F = 8.898e+00
+  ∥J_g∥_F = 1.182e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.753
+  Residual norm ∥J_G + J_g∥_F: 1.766e+01
+  Residual norm ∥J_G - J_g∥_F: 1.121e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.985e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.526e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.842e+00
+  Average cosine similarity row: 0.547870
+  Minimum cosine similarity row: -0.909347
+  Average cosine similarity col: 0.542535
+  Minimum cosine similarity col: 0.040082
+====================================
+
+Jacobian Matrix Validation, STEP=16
+====================================
+  ∥J_G∥_F = 9.328e+00
+  ∥J_g∥_F = 1.235e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.755
+  Residual norm ∥J_G + J_g∥_F: 1.818e+01
+  Residual norm ∥J_G - J_g∥_F: 1.219e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.949e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.386e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.031e+00
+  Average cosine similarity row: 0.527285
+  Minimum cosine similarity row: -0.906922
+  Average cosine similarity col: 0.509152
+  Minimum cosine similarity col: 0.036072
+====================================
+
+Jacobian Matrix Validation, STEP=17
+====================================
+  ∥J_G∥_F = 9.649e+00
+  ∥J_g∥_F = 1.253e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.770
+  Residual norm ∥J_G + J_g∥_F: 1.827e+01
+  Residual norm ∥J_G - J_g∥_F: 1.291e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.893e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.236e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.476e+00
+  Average cosine similarity row: 0.501795
+  Minimum cosine similarity row: -0.887485
+  Average cosine similarity col: 0.475524
+  Minimum cosine similarity col: 0.031817
+====================================
+
+Jacobian Matrix Validation, STEP=18
+====================================
+  ∥J_G∥_F = 9.729e+00
+  ∥J_g∥_F = 1.260e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.772
+  Residual norm ∥J_G + J_g∥_F: 1.810e+01
+  Residual norm ∥J_G - J_g∥_F: 1.339e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.861e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.106e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.661e+00
+  Average cosine similarity row: 0.489398
+  Minimum cosine similarity row: -0.901454
+  Average cosine similarity col: 0.445635
+  Minimum cosine similarity col: 0.009404
+====================================
+
+Jacobian Matrix Validation, STEP=19
+====================================
+  ∥J_G∥_F = 9.731e+00
+  ∥J_g∥_F = 1.265e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.769
+  Residual norm ∥J_G + J_g∥_F: 1.800e+01
+  Residual norm ∥J_G - J_g∥_F: 1.362e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.850e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.041e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.660e+00
+  Average cosine similarity row: 0.480240
+  Minimum cosine similarity row: -0.911884
+  Average cosine similarity col: 0.428804
+  Minimum cosine similarity col: -0.011467
+====================================
+
+Jacobian Matrix Validation, STEP=20
+====================================
+  ∥J_G∥_F = 9.683e+00
+  ∥J_g∥_F = 1.270e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.763
+  Residual norm ∥J_G + J_g∥_F: 1.793e+01
+  Residual norm ∥J_G - J_g∥_F: 1.373e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.851e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.010e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.557e+00
+  Average cosine similarity row: 0.468102
+  Minimum cosine similarity row: -0.913966
+  Average cosine similarity col: 0.418859
+  Minimum cosine similarity col: -0.012874
+====================================
+
+Jacobian Matrix Validation, STEP=21
+====================================
+  ∥J_G∥_F = 9.658e+00
+  ∥J_g∥_F = 1.274e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.758
+  Residual norm ∥J_G + J_g∥_F: 1.789e+01
+  Residual norm ∥J_G - J_g∥_F: 1.382e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.852e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.987e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.485e+00
+  Average cosine similarity row: 0.448994
+  Minimum cosine similarity row: -0.905959
+  Average cosine similarity col: 0.410717
+  Minimum cosine similarity col: -0.013529
+====================================
+
+Jacobian Matrix Validation, STEP=22
+====================================
+  ∥J_G∥_F = 9.629e+00
+  ∥J_g∥_F = 1.278e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.754
+  Residual norm ∥J_G + J_g∥_F: 1.787e+01
+  Residual norm ∥J_G - J_g∥_F: 1.388e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.856e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.975e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.410e+00
+  Average cosine similarity row: 0.436963
+  Minimum cosine similarity row: -0.903406
+  Average cosine similarity col: 0.403510
+  Minimum cosine similarity col: -0.015065
+====================================
+
+Jacobian Matrix Validation, STEP=23
+====================================
+  ∥J_G∥_F = 9.568e+00
+  ∥J_g∥_F = 1.281e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.747
+  Residual norm ∥J_G + J_g∥_F: 1.784e+01
+  Residual norm ∥J_G - J_g∥_F: 1.390e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.864e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.970e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.287e+00
+  Average cosine similarity row: 0.426588
+  Minimum cosine similarity row: -0.885901
+  Average cosine similarity col: 0.396334
+  Minimum cosine similarity col: -0.014212
+====================================
+
+Jacobian Matrix Validation, STEP=24
+====================================
+  ∥J_G∥_F = 9.439e+00
+  ∥J_g∥_F = 1.284e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.735
+  Residual norm ∥J_G + J_g∥_F: 1.775e+01
+  Residual norm ∥J_G - J_g∥_F: 1.389e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.880e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.966e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.082e+00
+  Average cosine similarity row: 0.420024
+  Minimum cosine similarity row: -0.894315
+  Average cosine similarity col: 0.387304
+  Minimum cosine similarity col: -0.011371
+====================================
+
+Jacobian Matrix Validation, STEP=25
+====================================
+  ∥J_G∥_F = 9.311e+00
+  ∥J_g∥_F = 1.288e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.723
+  Residual norm ∥J_G + J_g∥_F: 1.764e+01
+  Residual norm ∥J_G - J_g∥_F: 1.392e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.894e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.950e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.906e+00
+  Average cosine similarity row: 0.407399
+  Minimum cosine similarity row: -0.855940
+  Average cosine similarity col: 0.376322
+  Minimum cosine similarity col: -0.009488
+====================================
+
+Jacobian Matrix Validation, STEP=26
+====================================
+  ∥J_G∥_F = 9.234e+00
+  ∥J_g∥_F = 1.291e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.715
+  Residual norm ∥J_G + J_g∥_F: 1.755e+01
+  Residual norm ∥J_G - J_g∥_F: 1.399e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.901e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.927e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.808e+00
+  Average cosine similarity row: 0.404346
+  Minimum cosine similarity row: -0.893338
+  Average cosine similarity col: 0.366721
+  Minimum cosine similarity col: -0.010615
+====================================
+
+Jacobian Matrix Validation, STEP=27
+====================================
+  ∥J_G∥_F = 9.213e+00
+  ∥J_g∥_F = 1.294e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.712
+  Residual norm ∥J_G + J_g∥_F: 1.751e+01
+  Residual norm ∥J_G - J_g∥_F: 1.407e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.901e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.905e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.776e+00
+  Average cosine similarity row: 0.390103
+  Minimum cosine similarity row: -0.855961
+  Average cosine similarity col: 0.359228
+  Minimum cosine similarity col: -0.032232
+====================================
+
+Jacobian Matrix Validation, STEP=28
+====================================
+  ∥J_G∥_F = 9.242e+00
+  ∥J_g∥_F = 1.297e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.713
+  Residual norm ∥J_G + J_g∥_F: 1.751e+01
+  Residual norm ∥J_G - J_g∥_F: 1.415e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.895e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.886e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.800e+00
+  Average cosine similarity row: 0.385964
+  Minimum cosine similarity row: -0.885690
+  Average cosine similarity col: 0.352403
+  Minimum cosine similarity col: -0.065922
+====================================
+
+Jacobian Matrix Validation, STEP=29
+====================================
+  ∥J_G∥_F = 9.240e+00
+  ∥J_g∥_F = 1.300e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.711
+  Residual norm ∥J_G + J_g∥_F: 1.751e+01
+  Residual norm ∥J_G - J_g∥_F: 1.421e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.895e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.874e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.785e+00
+  Average cosine similarity row: 0.372665
+  Minimum cosine similarity row: -0.851239
+  Average cosine similarity col: 0.343438
+  Minimum cosine similarity col: -0.101637
+====================================
+
+Jacobian Matrix Validation, STEP=30
+====================================
+  ∥J_G∥_F = 9.210e+00
+  ∥J_g∥_F = 1.303e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.707
+  Residual norm ∥J_G + J_g∥_F: 1.748e+01
+  Residual norm ∥J_G - J_g∥_F: 1.427e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.898e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.859e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.737e+00
+  Average cosine similarity row: 0.364428
+  Minimum cosine similarity row: -0.851754
+  Average cosine similarity col: 0.331952
+  Minimum cosine similarity col: -0.117945
+====================================
+
+Jacobian Matrix Validation, STEP=31
+====================================
+  ∥J_G∥_F = 9.257e+00
+  ∥J_g∥_F = 1.306e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.709
+  Residual norm ∥J_G + J_g∥_F: 1.752e+01
+  Residual norm ∥J_G - J_g∥_F: 1.433e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.893e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.853e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.771e+00
+  Average cosine similarity row: 0.358319
+  Minimum cosine similarity row: -0.866244
+  Average cosine similarity col: 0.323472
+  Minimum cosine similarity col: -0.113429
+====================================
+
+Jacobian Matrix Validation, STEP=32
+====================================
+  ∥J_G∥_F = 9.440e+00
+  ∥J_g∥_F = 1.308e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.722
+  Residual norm ∥J_G + J_g∥_F: 1.767e+01
+  Residual norm ∥J_G - J_g∥_F: 1.444e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.871e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.843e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.964e+00
+  Average cosine similarity row: 0.345671
+  Minimum cosine similarity row: -0.855181
+  Average cosine similarity col: 0.316705
+  Minimum cosine similarity col: -0.104277
+====================================
+
+Jacobian Matrix Validation, STEP=33
+====================================
+  ∥J_G∥_F = 9.675e+00
+  ∥J_g∥_F = 1.310e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.738
+  Residual norm ∥J_G + J_g∥_F: 1.784e+01
+  Residual norm ∥J_G - J_g∥_F: 1.458e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.844e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.830e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.251e+00
+  Average cosine similarity row: 0.335162
+  Minimum cosine similarity row: -0.858093
+  Average cosine similarity col: 0.309766
+  Minimum cosine similarity col: -0.091454
+====================================
+
+Jacobian Matrix Validation, STEP=34
+====================================
+  ∥J_G∥_F = 9.692e+00
+  ∥J_g∥_F = 1.312e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.739
+  Residual norm ∥J_G + J_g∥_F: 1.785e+01
+  Residual norm ∥J_G - J_g∥_F: 1.462e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.841e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.822e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.262e+00
+  Average cosine similarity row: 0.324361
+  Minimum cosine similarity row: -0.853586
+  Average cosine similarity col: 0.297963
+  Minimum cosine similarity col: -0.062216
+====================================
+
+Jacobian Matrix Validation, STEP=35
+====================================
+  ∥J_G∥_F = 9.512e+00
+  ∥J_g∥_F = 1.314e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.724
+  Residual norm ∥J_G + J_g∥_F: 1.764e+01
+  Residual norm ∥J_G - J_g∥_F: 1.467e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.855e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.787e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.041e+00
+  Average cosine similarity row: 0.312251
+  Minimum cosine similarity row: -0.849857
+  Average cosine similarity col: 0.273165
+  Minimum cosine similarity col: -0.023321
+====================================
+
+Jacobian Matrix Validation, STEP=36
+====================================
+  ∥J_G∥_F = 9.257e+00
+  ∥J_g∥_F = 1.316e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.703
+  Residual norm ∥J_G + J_g∥_F: 1.727e+01
+  Residual norm ∥J_G - J_g∥_F: 1.482e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.865e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.702e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.797e+00
+  Average cosine similarity row: 0.297816
+  Minimum cosine similarity row: -0.846271
+  Average cosine similarity col: 0.231230
+  Minimum cosine similarity col: -0.004893
+====================================
+
+Jacobian Matrix Validation, STEP=37
+====================================
+  ∥J_G∥_F = 9.045e+00
+  ∥J_g∥_F = 1.318e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.686
+  Residual norm ∥J_G + J_g∥_F: 1.683e+01
+  Residual norm ∥J_G - J_g∥_F: 1.509e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.860e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.572e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.652e+00
+  Average cosine similarity row: 0.282650
+  Minimum cosine similarity row: -0.834038
+  Average cosine similarity col: 0.177766
+  Minimum cosine similarity col: -0.005200
+====================================
+
+Jacobian Matrix Validation, STEP=38
+====================================
+  ∥J_G∥_F = 8.975e+00
+  ∥J_g∥_F = 1.320e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.680
+  Residual norm ∥J_G + J_g∥_F: 1.646e+01
+  Residual norm ∥J_G - J_g∥_F: 1.545e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.834e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.422e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.659e+00
+  Average cosine similarity row: 0.268251
+  Minimum cosine similarity row: -0.820901
+  Average cosine similarity col: 0.124990
+  Minimum cosine similarity col: -0.013411
+====================================
+
+Jacobian Matrix Validation, STEP=39
+====================================
+  ∥J_G∥_F = 9.000e+00
+  ∥J_g∥_F = 1.321e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.681
+  Residual norm ∥J_G + J_g∥_F: 1.623e+01
+  Residual norm ∥J_G - J_g∥_F: 1.574e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.804e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.307e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.735e+00
+  Average cosine similarity row: 0.250397
+  Minimum cosine similarity row: -0.812630
+  Average cosine similarity col: 0.087967
+  Minimum cosine similarity col: -0.020902
+====================================
+
+Jacobian Matrix Validation, STEP=40
+====================================
+  ∥J_G∥_F = 8.800e+00
+  ∥J_g∥_F = 1.323e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.665
+  Residual norm ∥J_G + J_g∥_F: 1.605e+01
+  Residual norm ∥J_G - J_g∥_F: 1.573e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.824e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.284e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.550e+00
+  Average cosine similarity row: 0.235494
+  Minimum cosine similarity row: -0.791323
+  Average cosine similarity col: 0.073522
+  Minimum cosine similarity col: -0.026586
+====================================
+
+Jacobian Matrix Validation, STEP=41
+====================================
+  ∥J_G∥_F = 8.253e+00
+  ∥J_g∥_F = 1.325e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.623
+  Residual norm ∥J_G + J_g∥_F: 1.575e+01
+  Residual norm ∥J_G - J_g∥_F: 1.546e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.909e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.327e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.095e+00
+  Average cosine similarity row: 0.221826
+  Minimum cosine similarity row: -0.780969
+  Average cosine similarity col: 0.068570
+  Minimum cosine similarity col: -0.029564
+====================================
+
+Jacobian Matrix Validation, STEP=42
+====================================
+  ∥J_G∥_F = 7.900e+00
+  ∥J_g∥_F = 1.327e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.595
+  Residual norm ∥J_G + J_g∥_F: 1.560e+01
+  Residual norm ∥J_G - J_g∥_F: 1.529e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.974e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.367e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.847e+00
+  Average cosine similarity row: 0.207717
+  Minimum cosine similarity row: -0.749751
+  Average cosine similarity col: 0.065600
+  Minimum cosine similarity col: -0.031971
+====================================
+
+Jacobian Matrix Validation, STEP=43
+====================================
+  ∥J_G∥_F = 7.868e+00
+  ∥J_g∥_F = 1.436e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.548
+  Residual norm ∥J_G + J_g∥_F: 1.654e+01
+  Residual norm ∥J_G - J_g∥_F: 1.620e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.102e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.441e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.497e+00
+  Average cosine similarity row: 0.181787
+  Minimum cosine similarity row: -0.767324
+  Average cosine similarity col: 0.062290
+  Minimum cosine similarity col: -0.032259
+====================================
+
+Jacobian Matrix Validation, STEP=44
+====================================
+  ∥J_G∥_F = 7.862e+00
+  ∥J_g∥_F = 1.791e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.439
+  Residual norm ∥J_G + J_g∥_F: 1.981e+01
+  Residual norm ∥J_G - J_g∥_F: 1.930e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.520e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.688e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.921e+00
+  Average cosine similarity row: 0.160353
+  Minimum cosine similarity row: -0.685099
+  Average cosine similarity col: 0.065332
+  Minimum cosine similarity col: -0.027865
+====================================
+
+Jacobian Matrix Validation, STEP=45
+====================================
+  ∥J_G∥_F = 7.750e+00
+  ∥J_g∥_F = 1.800e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.431
+  Residual norm ∥J_G + J_g∥_F: 1.999e+01
+  Residual norm ∥J_G - J_g∥_F: 1.920e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.580e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.764e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.873e+00
+  Average cosine similarity row: 0.141094
+  Minimum cosine similarity row: -0.683201
+  Average cosine similarity col: 0.079789
+  Minimum cosine similarity col: -0.022701
+====================================
+
+Jacobian Matrix Validation, STEP=46
+====================================
+  ∥J_G∥_F = 7.550e+00
+  ∥J_g∥_F = 1.813e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.417
+  Residual norm ∥J_G + J_g∥_F: 2.059e+01
+  Residual norm ∥J_G - J_g∥_F: 1.863e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.727e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.018e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.762e+00
+  Average cosine similarity row: 0.115684
+  Minimum cosine similarity row: -0.699965
+  Average cosine similarity col: 0.140578
+  Minimum cosine similarity col: -0.124083
+====================================
+
+Jacobian Matrix Validation, STEP=47
+====================================
+  ∥J_G∥_F = 7.477e+00
+  ∥J_g∥_F = 1.824e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.410
+  Residual norm ∥J_G + J_g∥_F: 2.009e+01
+  Residual norm ∥J_G - J_g∥_F: 1.933e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.687e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.811e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.796e+00
+  Average cosine similarity row: 0.115775
+  Minimum cosine similarity row: -0.718458
+  Average cosine similarity col: 0.078493
+  Minimum cosine similarity col: -0.030371
+====================================
+
+Jacobian Matrix Validation, STEP=48
+====================================
+  ∥J_G∥_F = 8.015e+00
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.439
+  Residual norm ∥J_G + J_g∥_F: 1.998e+01
+  Residual norm ∥J_G - J_g∥_F: 1.993e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.493e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.600e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.943e+00
+  Average cosine similarity row: 0.125447
+  Minimum cosine similarity row: -0.706189
+  Average cosine similarity col: 0.038785
+  Minimum cosine similarity col: -0.044472
+====================================
+
+Jacobian Matrix Validation, STEP=49
+====================================
+  ∥J_G∥_F = 9.108e+00
+  ∥J_g∥_F = 1.829e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.498
+  Residual norm ∥J_G + J_g∥_F: 2.046e+01
+  Residual norm ∥J_G - J_g∥_F: 2.041e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.246e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.467e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.222e+00
+  Average cosine similarity row: 0.119854
+  Minimum cosine similarity row: -0.667566
+  Average cosine similarity col: 0.034674
+  Minimum cosine similarity col: -0.064750
+====================================
+
+Jacobian Matrix Validation, STEP=50
+====================================
+  ∥J_G∥_F = 1.010e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.550
+  Residual norm ∥J_G + J_g∥_F: 2.097e+01
+  Residual norm ∥J_G - J_g∥_F: 2.093e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.076e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.371e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.536e+00
+  Average cosine similarity row: 0.102267
+  Minimum cosine similarity row: -0.611691
+  Average cosine similarity col: 0.028190
+  Minimum cosine similarity col: -0.110103
+====================================
+
+Jacobian Matrix Validation, STEP=51
+====================================
+  ∥J_G∥_F = 1.037e+01
+  ∥J_g∥_F = 1.846e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.562
+  Residual norm ∥J_G + J_g∥_F: 2.120e+01
+  Residual norm ∥J_G - J_g∥_F: 2.114e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.045e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.355e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.614e+00
+  Average cosine similarity row: 0.096173
+  Minimum cosine similarity row: -0.478461
+  Average cosine similarity col: 0.028856
+  Minimum cosine similarity col: -0.103268
+====================================
+
+Jacobian Matrix Validation, STEP=52
+====================================
+  ∥J_G∥_F = 1.037e+01
+  ∥J_g∥_F = 1.836e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.565
+  Residual norm ∥J_G + J_g∥_F: 2.115e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.039e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.360e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.632e+00
+  Average cosine similarity row: 0.111044
+  Minimum cosine similarity row: -0.644378
+  Average cosine similarity col: 0.030727
+  Minimum cosine similarity col: -0.103226
+====================================
+
+Jacobian Matrix Validation, STEP=53
+====================================
+  ∥J_G∥_F = 1.041e+01
+  ∥J_g∥_F = 1.833e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.568
+  Residual norm ∥J_G + J_g∥_F: 2.116e+01
+  Residual norm ∥J_G - J_g∥_F: 2.101e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.032e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.360e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.653e+00
+  Average cosine similarity row: 0.095075
+  Minimum cosine similarity row: -0.661521
+  Average cosine similarity col: 0.031704
+  Minimum cosine similarity col: -0.100313
+====================================
+
+Jacobian Matrix Validation, STEP=54
+====================================
+  ∥J_G∥_F = 1.041e+01
+  ∥J_g∥_F = 1.844e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.565
+  Residual norm ∥J_G + J_g∥_F: 2.125e+01
+  Residual norm ∥J_G - J_g∥_F: 2.110e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.041e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.365e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.629e+00
+  Average cosine similarity row: 0.091747
+  Minimum cosine similarity row: -0.503930
+  Average cosine similarity col: 0.031726
+  Minimum cosine similarity col: -0.099071
+====================================
+
+Jacobian Matrix Validation, STEP=55
+====================================
+  ∥J_G∥_F = 1.048e+01
+  ∥J_g∥_F = 1.841e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.569
+  Residual norm ∥J_G + J_g∥_F: 2.124e+01
+  Residual norm ∥J_G - J_g∥_F: 2.112e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.027e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.352e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.665e+00
+  Average cosine similarity row: 0.083651
+  Minimum cosine similarity row: -0.603243
+  Average cosine similarity col: 0.030920
+  Minimum cosine similarity col: -0.090466
+====================================
+
+Jacobian Matrix Validation, STEP=56
+====================================
+  ∥J_G∥_F = 1.045e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.570
+  Residual norm ∥J_G + J_g∥_F: 2.114e+01
+  Residual norm ∥J_G - J_g∥_F: 2.109e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.023e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.340e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.671e+00
+  Average cosine similarity row: 0.111407
+  Minimum cosine similarity row: -0.641075
+  Average cosine similarity col: 0.028731
+  Minimum cosine similarity col: -0.090112
+====================================
+
+Jacobian Matrix Validation, STEP=57
+====================================
+  ∥J_G∥_F = 1.045e+01
+  ∥J_g∥_F = 1.834e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.570
+  Residual norm ∥J_G + J_g∥_F: 2.111e+01
+  Residual norm ∥J_G - J_g∥_F: 2.110e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.021e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.334e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.674e+00
+  Average cosine similarity row: 0.110927
+  Minimum cosine similarity row: -0.637233
+  Average cosine similarity col: 0.027884
+  Minimum cosine similarity col: -0.083523
+====================================
+
+Jacobian Matrix Validation, STEP=58
+====================================
+  ∥J_G∥_F = 1.046e+01
+  ∥J_g∥_F = 1.833e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.571
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.111e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.017e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.329e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.682e+00
+  Average cosine similarity row: 0.082398
+  Minimum cosine similarity row: -0.674690
+  Average cosine similarity col: 0.027123
+  Minimum cosine similarity col: -0.081574
+====================================
+
+Jacobian Matrix Validation, STEP=59
+====================================
+  ∥J_G∥_F = 1.053e+01
+  ∥J_g∥_F = 1.830e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.112e+01
+  Residual norm ∥J_G - J_g∥_F: 2.111e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.005e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.325e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.718e+00
+  Average cosine similarity row: 0.105557
+  Minimum cosine similarity row: -0.723245
+  Average cosine similarity col: 0.028364
+  Minimum cosine similarity col: -0.072326
+====================================
+
+Jacobian Matrix Validation, STEP=60
+====================================
+  ∥J_G∥_F = 1.048e+01
+  ∥J_g∥_F = 1.840e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.569
+  Residual norm ∥J_G + J_g∥_F: 2.122e+01
+  Residual norm ∥J_G - J_g∥_F: 2.114e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.024e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.345e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.668e+00
+  Average cosine similarity row: 0.090142
+  Minimum cosine similarity row: -0.603516
+  Average cosine similarity col: 0.030317
+  Minimum cosine similarity col: -0.072489
+====================================
+
+Jacobian Matrix Validation, STEP=61
+====================================
+  ∥J_G∥_F = 1.047e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.571
+  Residual norm ∥J_G + J_g∥_F: 2.118e+01
+  Residual norm ∥J_G - J_g∥_F: 2.108e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.022e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.349e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.676e+00
+  Average cosine similarity row: 0.113002
+  Minimum cosine similarity row: -0.724644
+  Average cosine similarity col: 0.031724
+  Minimum cosine similarity col: -0.067197
+====================================
+
+Jacobian Matrix Validation, STEP=62
+====================================
+  ∥J_G∥_F = 1.056e+01
+  ∥J_g∥_F = 1.837e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.575
+  Residual norm ∥J_G + J_g∥_F: 2.126e+01
+  Residual norm ∥J_G - J_g∥_F: 2.113e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.012e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.346e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.706e+00
+  Average cosine similarity row: 0.107843
+  Minimum cosine similarity row: -0.732341
+  Average cosine similarity col: 0.032781
+  Minimum cosine similarity col: -0.060178
+====================================
+
+Jacobian Matrix Validation, STEP=63
+====================================
+  ∥J_G∥_F = 1.053e+01
+  ∥J_g∥_F = 1.838e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.573
+  Residual norm ∥J_G + J_g∥_F: 2.125e+01
+  Residual norm ∥J_G - J_g∥_F: 2.112e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.019e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.350e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.688e+00
+  Average cosine similarity row: 0.084747
+  Minimum cosine similarity row: -0.646700
+  Average cosine similarity col: 0.032698
+  Minimum cosine similarity col: -0.060444
+====================================
+
+Jacobian Matrix Validation, STEP=64
+====================================
+  ∥J_G∥_F = 1.048e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.573
+  Residual norm ∥J_G + J_g∥_F: 2.112e+01
+  Residual norm ∥J_G - J_g∥_F: 2.102e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.016e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.345e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.694e+00
+  Average cosine similarity row: 0.100253
+  Minimum cosine similarity row: -0.700953
+  Average cosine similarity col: 0.031981
+  Minimum cosine similarity col: -0.059266
+====================================
+
+Jacobian Matrix Validation, STEP=65
+====================================
+  ∥J_G∥_F = 1.043e+01
+  ∥J_g∥_F = 1.829e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.571
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.101e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.022e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.345e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.675e+00
+  Average cosine similarity row: 0.105538
+  Minimum cosine similarity row: -0.698766
+  Average cosine similarity col: 0.031134
+  Minimum cosine similarity col: -0.061279
+====================================
+
+Jacobian Matrix Validation, STEP=66
+====================================
+  ∥J_G∥_F = 1.055e+01
+  ∥J_g∥_F = 1.831e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.116e+01
+  Residual norm ∥J_G - J_g∥_F: 2.110e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.006e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.333e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.720e+00
+  Average cosine similarity row: 0.109718
+  Minimum cosine similarity row: -0.721717
+  Average cosine similarity col: 0.030847
+  Minimum cosine similarity col: -0.054011
+====================================
+
+Jacobian Matrix Validation, STEP=67
+====================================
+  ∥J_G∥_F = 1.049e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.574
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.104e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.013e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.336e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.700e+00
+  Average cosine similarity row: 0.088235
+  Minimum cosine similarity row: -0.731469
+  Average cosine similarity col: 0.030489
+  Minimum cosine similarity col: -0.057077
+====================================
+
+Jacobian Matrix Validation, STEP=68
+====================================
+  ∥J_G∥_F = 1.038e+01
+  ∥J_g∥_F = 1.829e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.568
+  Residual norm ∥J_G + J_g∥_F: 2.105e+01
+  Residual norm ∥J_G - J_g∥_F: 2.101e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.027e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.342e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.658e+00
+  Average cosine similarity row: 0.084945
+  Minimum cosine similarity row: -0.729472
+  Average cosine similarity col: 0.029847
+  Minimum cosine similarity col: -0.059603
+====================================
+
+Jacobian Matrix Validation, STEP=69
+====================================
+  ∥J_G∥_F = 1.051e+01
+  ∥J_g∥_F = 1.831e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.574
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.110e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.011e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.332e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.704e+00
+  Average cosine similarity row: 0.110197
+  Minimum cosine similarity row: -0.720852
+  Average cosine similarity col: 0.029736
+  Minimum cosine similarity col: -0.055718
+====================================
+
+Jacobian Matrix Validation, STEP=70
+====================================
+  ∥J_G∥_F = 1.047e+01
+  ∥J_g∥_F = 1.830e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.572
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.106e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.016e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.335e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.689e+00
+  Average cosine similarity row: 0.108486
+  Minimum cosine similarity row: -0.727158
+  Average cosine similarity col: 0.029800
+  Minimum cosine similarity col: -0.057441
+====================================
+
+Jacobian Matrix Validation, STEP=71
+====================================
+  ∥J_G∥_F = 1.040e+01
+  ∥J_g∥_F = 1.829e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.569
+  Residual norm ∥J_G + J_g∥_F: 2.106e+01
+  Residual norm ∥J_G - J_g∥_F: 2.102e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.025e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.340e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.665e+00
+  Average cosine similarity row: 0.082889
+  Minimum cosine similarity row: -0.726353
+  Average cosine similarity col: 0.029765
+  Minimum cosine similarity col: -0.058276
+====================================
+
+Jacobian Matrix Validation, STEP=72
+====================================
+  ∥J_G∥_F = 1.042e+01
+  ∥J_g∥_F = 1.827e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.570
+  Residual norm ∥J_G + J_g∥_F: 2.106e+01
+  Residual norm ∥J_G - J_g∥_F: 2.101e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.021e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.339e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.674e+00
+  Average cosine similarity row: 0.098515
+  Minimum cosine similarity row: -0.734455
+  Average cosine similarity col: 0.029945
+  Minimum cosine similarity col: -0.058883
+====================================
+
+Jacobian Matrix Validation, STEP=73
+====================================
+  ∥J_G∥_F = 1.040e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.569
+  Residual norm ∥J_G + J_g∥_F: 2.106e+01
+  Residual norm ∥J_G - J_g∥_F: 2.101e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.024e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.341e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.667e+00
+  Average cosine similarity row: 0.086167
+  Minimum cosine similarity row: -0.730070
+  Average cosine similarity col: 0.029912
+  Minimum cosine similarity col: -0.059192
+====================================
+
+Jacobian Matrix Validation, STEP=74
+====================================
+  ∥J_G∥_F = 1.038e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.568
+  Residual norm ∥J_G + J_g∥_F: 2.105e+01
+  Residual norm ∥J_G - J_g∥_F: 2.100e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.028e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.344e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.656e+00
+  Average cosine similarity row: 0.086266
+  Minimum cosine similarity row: -0.730698
+  Average cosine similarity col: 0.030002
+  Minimum cosine similarity col: -0.060985
+====================================
+
+Jacobian Matrix Validation, STEP=75
+====================================
+  ∥J_G∥_F = 1.040e+01
+  ∥J_g∥_F = 1.831e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.568
+  Residual norm ∥J_G + J_g∥_F: 2.108e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.028e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.343e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.658e+00
+  Average cosine similarity row: 0.078492
+  Minimum cosine similarity row: -0.718618
+  Average cosine similarity col: 0.029920
+  Minimum cosine similarity col: -0.061032
+====================================
+
+Jacobian Matrix Validation, STEP=76
+====================================
+  ∥J_G∥_F = 1.037e+01
+  ∥J_g∥_F = 1.833e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.566
+  Residual norm ∥J_G + J_g∥_F: 2.108e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.033e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.347e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.642e+00
+  Average cosine similarity row: 0.076802
+  Minimum cosine similarity row: -0.708651
+  Average cosine similarity col: 0.029932
+  Minimum cosine similarity col: -0.063305
+====================================
+
+Jacobian Matrix Validation, STEP=77
+====================================
+  ∥J_G∥_F = 1.048e+01
+  ∥J_g∥_F = 1.827e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.574
+  Residual norm ∥J_G + J_g∥_F: 2.109e+01
+  Residual norm ∥J_G - J_g∥_F: 2.104e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.012e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.336e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.701e+00
+  Average cosine similarity row: 0.096014
+  Minimum cosine similarity row: -0.733562
+  Average cosine similarity col: 0.030298
+  Minimum cosine similarity col: -0.060496
+====================================
+
+Jacobian Matrix Validation, STEP=78
+====================================
+  ∥J_G∥_F = 1.038e+01
+  ∥J_g∥_F = 1.838e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.565
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.108e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.036e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.348e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.636e+00
+  Average cosine similarity row: 0.083603
+  Minimum cosine similarity row: -0.650339
+  Average cosine similarity col: 0.029811
+  Minimum cosine similarity col: -0.065838
+====================================
+
+Jacobian Matrix Validation, STEP=79
+====================================
+  ∥J_G∥_F = 1.050e+01
+  ∥J_g∥_F = 1.827e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.575
+  Residual norm ∥J_G + J_g∥_F: 2.111e+01
+  Residual norm ∥J_G - J_g∥_F: 2.104e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.010e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.335e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.708e+00
+  Average cosine similarity row: 0.096033
+  Minimum cosine similarity row: -0.733371
+  Average cosine similarity col: 0.030499
+  Minimum cosine similarity col: -0.062382
+====================================
+
+Jacobian Matrix Validation, STEP=80
+====================================
+  ∥J_G∥_F = 1.037e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.567
+  Residual norm ∥J_G + J_g∥_F: 2.104e+01
+  Residual norm ∥J_G - J_g∥_F: 2.099e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.030e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.346e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.653e+00
+  Average cosine similarity row: 0.102081
+  Minimum cosine similarity row: -0.701018
+  Average cosine similarity col: 0.029884
+  Minimum cosine similarity col: -0.072376
+====================================
+
+Jacobian Matrix Validation, STEP=81
+====================================
+  ∥J_G∥_F = 1.044e+01
+  ∥J_g∥_F = 1.834e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.569
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.107e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.025e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.344e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.666e+00
+  Average cosine similarity row: 0.077642
+  Minimum cosine similarity row: -0.697468
+  Average cosine similarity col: 0.030398
+  Minimum cosine similarity col: -0.065655
+====================================
+
+Jacobian Matrix Validation, STEP=82
+====================================
+  ∥J_G∥_F = 1.040e+01
+  ∥J_g∥_F = 1.838e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.566
+  Residual norm ∥J_G + J_g∥_F: 2.115e+01
+  Residual norm ∥J_G - J_g∥_F: 2.109e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.034e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.348e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.642e+00
+  Average cosine similarity row: 0.085557
+  Minimum cosine similarity row: -0.630083
+  Average cosine similarity col: 0.030186
+  Minimum cosine similarity col: -0.068911
+====================================
+
+Jacobian Matrix Validation, STEP=83
+====================================
+  ∥J_G∥_F = 1.043e+01
+  ∥J_g∥_F = 1.838e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.568
+  Residual norm ∥J_G + J_g∥_F: 2.117e+01
+  Residual norm ∥J_G - J_g∥_F: 2.110e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.029e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.347e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.655e+00
+  Average cosine similarity row: 0.084874
+  Minimum cosine similarity row: -0.639750
+  Average cosine similarity col: 0.030474
+  Minimum cosine similarity col: -0.068550
+====================================
+
+Jacobian Matrix Validation, STEP=84
+====================================
+  ∥J_G∥_F = 1.040e+01
+  ∥J_g∥_F = 1.839e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.566
+  Residual norm ∥J_G + J_g∥_F: 2.116e+01
+  Residual norm ∥J_G - J_g∥_F: 2.109e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.035e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.350e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.640e+00
+  Average cosine similarity row: 0.089095
+  Minimum cosine similarity row: -0.614490
+  Average cosine similarity col: 0.030374
+  Minimum cosine similarity col: -0.071099
+====================================
+
+Jacobian Matrix Validation, STEP=85
+====================================
+  ∥J_G∥_F = 1.049e+01
+  ∥J_g∥_F = 1.834e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.572
+  Residual norm ∥J_G + J_g∥_F: 2.117e+01
+  Residual norm ∥J_G - J_g∥_F: 2.109e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.017e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.342e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.689e+00
+  Average cosine similarity row: 0.077317
+  Minimum cosine similarity row: -0.700433
+  Average cosine similarity col: 0.031065
+  Minimum cosine similarity col: -0.067676
+====================================
+
+Jacobian Matrix Validation, STEP=86
+====================================
+  ∥J_G∥_F = 1.041e+01
+  ∥J_g∥_F = 1.834e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.567
+  Residual norm ∥J_G + J_g∥_F: 2.112e+01
+  Residual norm ∥J_G - J_g∥_F: 2.106e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.029e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.346e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.654e+00
+  Average cosine similarity row: 0.111672
+  Minimum cosine similarity row: -0.687058
+  Average cosine similarity col: 0.030113
+  Minimum cosine similarity col: -0.074197
+====================================
+
+Jacobian Matrix Validation, STEP=87
+====================================
+  ∥J_G∥_F = 1.055e+01
+  ∥J_g∥_F = 1.829e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.577
+  Residual norm ∥J_G + J_g∥_F: 2.115e+01
+  Residual norm ∥J_G - J_g∥_F: 2.107e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.005e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.334e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.722e+00
+  Average cosine similarity row: 0.106983
+  Minimum cosine similarity row: -0.728109
+  Average cosine similarity col: 0.030920
+  Minimum cosine similarity col: -0.065512
+====================================
+
+Jacobian Matrix Validation, STEP=88
+====================================
+  ∥J_G∥_F = 1.040e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.569
+  Residual norm ∥J_G + J_g∥_F: 2.107e+01
+  Residual norm ∥J_G - J_g∥_F: 2.100e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.026e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.347e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.664e+00
+  Average cosine similarity row: 0.089271
+  Minimum cosine similarity row: -0.696875
+  Average cosine similarity col: 0.030484
+  Minimum cosine similarity col: -0.077219
+====================================
+
+Jacobian Matrix Validation, STEP=89
+====================================
+  ∥J_G∥_F = 1.052e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.105e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.009e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.337e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.713e+00
+  Average cosine similarity row: 0.086869
+  Minimum cosine similarity row: -0.728850
+  Average cosine similarity col: 0.031104
+  Minimum cosine similarity col: -0.068232
+====================================
+
+Jacobian Matrix Validation, STEP=90
+====================================
+  ∥J_G∥_F = 1.034e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.563
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.042e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.355e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.622e+00
+  Average cosine similarity row: 0.079465
+  Minimum cosine similarity row: -0.647807
+  Average cosine similarity col: 0.030322
+  Minimum cosine similarity col: -0.080307
+====================================
+
+Jacobian Matrix Validation, STEP=91
+====================================
+  ∥J_G∥_F = 1.052e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.105e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.008e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.337e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.714e+00
+  Average cosine similarity row: 0.087585
+  Minimum cosine similarity row: -0.729337
+  Average cosine similarity col: 0.031101
+  Minimum cosine similarity col: -0.068138
+====================================
+
+Jacobian Matrix Validation, STEP=92
+====================================
+  ∥J_G∥_F = 1.034e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.563
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.042e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.355e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.622e+00
+  Average cosine similarity row: 0.079465
+  Minimum cosine similarity row: -0.647807
+  Average cosine similarity col: 0.030322
+  Minimum cosine similarity col: -0.080307
+====================================
+
+Jacobian Matrix Validation, STEP=93
+====================================
+  ∥J_G∥_F = 1.052e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.105e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.008e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.337e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.714e+00
+  Average cosine similarity row: 0.087585
+  Minimum cosine similarity row: -0.729337
+  Average cosine similarity col: 0.031101
+  Minimum cosine similarity col: -0.068138
+====================================
+
+Jacobian Matrix Validation, STEP=94
+====================================
+  ∥J_G∥_F = 1.034e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.563
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.042e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.355e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.622e+00
+  Average cosine similarity row: 0.079465
+  Minimum cosine similarity row: -0.647807
+  Average cosine similarity col: 0.030322
+  Minimum cosine similarity col: -0.080307
+====================================
+
+Jacobian Matrix Validation, STEP=95
+====================================
+  ∥J_G∥_F = 1.052e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.105e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.008e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.337e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.714e+00
+  Average cosine similarity row: 0.087585
+  Minimum cosine similarity row: -0.729337
+  Average cosine similarity col: 0.031101
+  Minimum cosine similarity col: -0.068138
+====================================
+
+Jacobian Matrix Validation, STEP=96
+====================================
+  ∥J_G∥_F = 1.034e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.563
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.042e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.355e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.622e+00
+  Average cosine similarity row: 0.079465
+  Minimum cosine similarity row: -0.647807
+  Average cosine similarity col: 0.030322
+  Minimum cosine similarity col: -0.080307
+====================================
+
+Jacobian Matrix Validation, STEP=97
+====================================
+  ∥J_G∥_F = 1.052e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.105e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.008e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.337e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.714e+00
+  Average cosine similarity row: 0.087585
+  Minimum cosine similarity row: -0.729337
+  Average cosine similarity col: 0.031101
+  Minimum cosine similarity col: -0.068138
+====================================
+
+Jacobian Matrix Validation, STEP=98
+====================================
+  ∥J_G∥_F = 1.034e+01
+  ∥J_g∥_F = 1.835e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.563
+  Residual norm ∥J_G + J_g∥_F: 2.110e+01
+  Residual norm ∥J_G - J_g∥_F: 2.103e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.042e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.355e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.622e+00
+  Average cosine similarity row: 0.079465
+  Minimum cosine similarity row: -0.647807
+  Average cosine similarity col: 0.030322
+  Minimum cosine similarity col: -0.080307
+====================================
+
+Jacobian Matrix Validation, STEP=99
+====================================
+  ∥J_G∥_F = 1.052e+01
+  ∥J_g∥_F = 1.828e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.576
+  Residual norm ∥J_G + J_g∥_F: 2.113e+01
+  Residual norm ∥J_G - J_g∥_F: 2.105e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.008e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.337e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.714e+00
+  Average cosine similarity row: 0.087585
+  Minimum cosine similarity row: -0.729337
+  Average cosine similarity col: 0.031101
+  Minimum cosine similarity col: -0.068138
+====================================
+
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.61127         | 8.237742e+02    | 5.289669e+02    | 621.49          | 0.952184           | 17.78975°       | 83.89          
+2. with PDE solver vs PDE approximated             | 1.44892         | 8.348170e+02    | 5.952989e+02    | 814.39          | 0.918305           | 23.32048°       | 89.75          
+3. PDE detached vs PDE approximated                | 0.89924         | 3.307821e+02    | 2.474216e+02    | 311.32          | 0.967386           | 14.67329°       | 79.30          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 0.97909         | 5.826009e-02    | 2.252930e-02    | 64739244643450928.00 | 0.992318           | 7.10650°        | 96.68          
+2. with PDE solver vs PDE approximated             | 1.00977         | 8.807900e-02    | 3.600586e-02    | 56857945295552560.00 | 0.981412           | 11.06435°       | 94.82          
+3. PDE detached vs PDE approximated                | 1.03134         | 1.151943e-01    | 4.525391e-02    | 3565349705001669.50 | 0.969268           | 14.24138°       | 94.04          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 6.8847e+04      | 6.0818e+05      | 5.3933e+05      | 783.37      % | 0.1597     | 0.9239     | 0.0030     | 0.1562         
+perturbation PDE detached      | 6.8847e+04      | 6.0884e+05      | 5.3999e+05      | 784.33      % | 0.2713     | 0.0045     | 0.0099     | 0.2583         
+perturbation PDE approximate   | 6.8847e+04      | 6.0418e+05      | 5.3533e+05      | 777.56      % | 0.0731     | 0.0025     | 0.0025     | 0.0704         
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.01 ,    total time: 31889.735857725143
+adversarial input samples: 100%|██████████| 1/1 [8:51:29<00:00, 31889.74s/it]adversarial input samples: 100%|██████████| 1/1 [8:51:29<00:00, 31889.77s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]
+Jacobian Matrix Validation, STEP=0
+====================================
+  ∥J_G∥_F = 8.698e+00
+  ∥J_g∥_F = 8.907e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.976
+  Residual norm ∥J_G + J_g∥_F: 1.752e+01
+  Residual norm ∥J_G - J_g∥_F: 1.688e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.015e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.955e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -8.059e+00
+  Average cosine similarity row: 0.704666
+  Minimum cosine similarity row: 0.296257
+  Average cosine similarity col: 0.952354
+  Minimum cosine similarity col: 0.628865
+====================================
+
+Jacobian Matrix Validation, STEP=1
+====================================
+  ∥J_G∥_F = 8.686e+00
+  ∥J_g∥_F = 8.981e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.967
+  Residual norm ∥J_G + J_g∥_F: 1.754e+01
+  Residual norm ∥J_G - J_g∥_F: 2.137e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.019e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.928e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -7.245e+00
+  Average cosine similarity row: 0.695613
+  Minimum cosine similarity row: 0.071458
+  Average cosine similarity col: 0.935778
+  Minimum cosine similarity col: 0.624535
+====================================
+
+Jacobian Matrix Validation, STEP=2
+====================================
+  ∥J_G∥_F = 8.529e+00
+  ∥J_g∥_F = 9.098e+00
+  Norm ratio (∥J_G∥/∥J_g∥): 0.937
+  Residual norm ∥J_G + J_g∥_F: 1.730e+01
+  Residual norm ∥J_G - J_g∥_F: 3.412e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.029e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.816e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -5.997e+00
+  Average cosine similarity row: 0.677889
+  Minimum cosine similarity row: 0.363700
+  Average cosine similarity col: 0.882937
+  Minimum cosine similarity col: 0.252442
+====================================
+
+Jacobian Matrix Validation, STEP=3
+====================================
+  ∥J_G∥_F = 8.747e+00
+  ∥J_g∥_F = 1.003e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.872
+  Residual norm ∥J_G + J_g∥_F: 1.828e+01
+  Residual norm ∥J_G - J_g∥_F: 4.488e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.089e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.734e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.503e+00
+  Average cosine similarity row: 0.649370
+  Minimum cosine similarity row: 0.161543
+  Average cosine similarity col: 0.848415
+  Minimum cosine similarity col: 0.058725
+====================================
+
+Jacobian Matrix Validation, STEP=4
+====================================
+  ∥J_G∥_F = 9.348e+00
+  ∥J_g∥_F = 1.077e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.868
+  Residual norm ∥J_G + J_g∥_F: 1.967e+01
+  Residual norm ∥J_G - J_g∥_F: 4.488e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.104e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.774e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.151e+00
+  Average cosine similarity row: 0.619820
+  Minimum cosine similarity row: 0.022843
+  Average cosine similarity col: 0.851133
+  Minimum cosine similarity col: 0.063120
+====================================
+
+Jacobian Matrix Validation, STEP=5
+====================================
+  ∥J_G∥_F = 9.695e+00
+  ∥J_g∥_F = 1.104e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.878
+  Residual norm ∥J_G + J_g∥_F: 1.995e+01
+  Residual norm ∥J_G - J_g∥_F: 5.809e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.058e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.622e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -4.313e+00
+  Average cosine similarity row: 0.587028
+  Minimum cosine similarity row: -0.237147
+  Average cosine similarity col: 0.808842
+  Minimum cosine similarity col: 0.043153
+====================================
+
+Jacobian Matrix Validation, STEP=6
+====================================
+  ∥J_G∥_F = 9.756e+00
+  ∥J_g∥_F = 1.126e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.867
+  Residual norm ∥J_G + J_g∥_F: 1.934e+01
+  Residual norm ∥J_G - J_g∥_F: 8.350e+00
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.982e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 9.204e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -5.565e+00
+  Average cosine similarity row: 0.552817
+  Minimum cosine similarity row: -0.344870
+  Average cosine similarity col: 0.709058
+  Minimum cosine similarity col: 0.038360
+====================================
+
+Jacobian Matrix Validation, STEP=7
+====================================
+  ∥J_G∥_F = 9.735e+00
+  ∥J_g∥_F = 1.208e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.806
+  Residual norm ∥J_G + J_g∥_F: 1.848e+01
+  Residual norm ∥J_G - J_g∥_F: 1.184e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.898e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.468e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -5.045e+00
+  Average cosine similarity row: 0.519697
+  Minimum cosine similarity row: -0.206096
+  Average cosine similarity col: 0.555358
+  Minimum cosine similarity col: 0.017317
+====================================
+
+Jacobian Matrix Validation, STEP=8
+====================================
+  ∥J_G∥_F = 9.676e+00
+  ∥J_g∥_F = 1.329e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.728
+  Residual norm ∥J_G + J_g∥_F: 1.856e+01
+  Residual norm ∥J_G - J_g∥_F: 1.400e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.918e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.081e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.873e+00
+  Average cosine similarity row: 0.491181
+  Minimum cosine similarity row: -0.879482
+  Average cosine similarity col: 0.480962
+  Minimum cosine similarity col: 0.000004
+====================================
+
+Jacobian Matrix Validation, STEP=9
+====================================
+  ∥J_G∥_F = 9.532e+00
+  ∥J_g∥_F = 1.354e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.704
+  Residual norm ∥J_G + J_g∥_F: 1.856e+01
+  Residual norm ∥J_G - J_g∥_F: 1.428e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.948e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.044e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.559e+00
+  Average cosine similarity row: 0.462434
+  Minimum cosine similarity row: -0.850626
+  Average cosine similarity col: 0.466837
+  Minimum cosine similarity col: -0.008943
+====================================
+
+Jacobian Matrix Validation, STEP=10
+====================================
+  ∥J_G∥_F = 9.437e+00
+  ∥J_g∥_F = 1.433e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.659
+  Residual norm ∥J_G + J_g∥_F: 1.910e+01
+  Residual norm ∥J_G - J_g∥_F: 1.497e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.024e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.035e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.059e+00
+  Average cosine similarity row: 0.433370
+  Minimum cosine similarity row: -0.855441
+  Average cosine similarity col: 0.442677
+  Minimum cosine similarity col: -0.021961
+====================================
+
+Jacobian Matrix Validation, STEP=11
+====================================
+  ∥J_G∥_F = 9.967e+00
+  ∥J_g∥_F = 1.528e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.652
+  Residual norm ∥J_G + J_g∥_F: 2.022e+01
+  Residual norm ∥J_G - J_g∥_F: 1.602e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.028e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.009e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.017e+00
+  Average cosine similarity row: 0.391542
+  Minimum cosine similarity row: -0.839922
+  Average cosine similarity col: 0.396931
+  Minimum cosine similarity col: -0.013544
+====================================
+
+Jacobian Matrix Validation, STEP=12
+====================================
+  ∥J_G∥_F = 1.091e+01
+  ∥J_g∥_F = 1.608e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.678
+  Residual norm ∥J_G + J_g∥_F: 2.183e+01
+  Residual norm ∥J_G - J_g∥_F: 1.668e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.002e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.091e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.225e+00
+  Average cosine similarity row: 0.381487
+  Minimum cosine similarity row: -0.850265
+  Average cosine similarity col: 0.371954
+  Minimum cosine similarity col: -0.007727
+====================================
+
+Jacobian Matrix Validation, STEP=13
+====================================
+  ∥J_G∥_F = 1.146e+01
+  ∥J_g∥_F = 1.642e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.698
+  Residual norm ∥J_G + J_g∥_F: 2.280e+01
+  Residual norm ∥J_G - J_g∥_F: 1.680e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.989e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.176e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.389e+00
+  Average cosine similarity row: 0.362090
+  Minimum cosine similarity row: -0.851934
+  Average cosine similarity col: 0.392224
+  Minimum cosine similarity col: -0.003862
+====================================
+
+Jacobian Matrix Validation, STEP=14
+====================================
+  ∥J_G∥_F = 1.177e+01
+  ∥J_g∥_F = 1.657e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.710
+  Residual norm ∥J_G + J_g∥_F: 2.327e+01
+  Residual norm ∥J_G - J_g∥_F: 1.687e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.977e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.212e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.515e+00
+  Average cosine similarity row: 0.353060
+  Minimum cosine similarity row: -0.854987
+  Average cosine similarity col: 0.403631
+  Minimum cosine similarity col: -0.001682
+====================================
+
+Jacobian Matrix Validation, STEP=15
+====================================
+  ∥J_G∥_F = 1.191e+01
+  ∥J_g∥_F = 1.668e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.714
+  Residual norm ∥J_G + J_g∥_F: 2.336e+01
+  Residual norm ∥J_G - J_g∥_F: 1.715e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.962e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.174e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.592e+00
+  Average cosine similarity row: 0.337804
+  Minimum cosine similarity row: -0.858352
+  Average cosine similarity col: 0.387819
+  Minimum cosine similarity col: -0.001649
+====================================
+
+Jacobian Matrix Validation, STEP=16
+====================================
+  ∥J_G∥_F = 1.191e+01
+  ∥J_g∥_F = 1.677e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.710
+  Residual norm ∥J_G + J_g∥_F: 2.315e+01
+  Residual norm ∥J_G - J_g∥_F: 1.763e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.943e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.069e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.629e+00
+  Average cosine similarity row: 0.322472
+  Minimum cosine similarity row: -0.854245
+  Average cosine similarity col: 0.345556
+  Minimum cosine similarity col: -0.001193
+====================================
+
+Jacobian Matrix Validation, STEP=17
+====================================
+  ∥J_G∥_F = 1.183e+01
+  ∥J_g∥_F = 1.685e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.702
+  Residual norm ∥J_G + J_g∥_F: 2.263e+01
+  Residual norm ∥J_G - J_g∥_F: 1.831e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.913e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.893e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.648e+00
+  Average cosine similarity row: 0.310155
+  Minimum cosine similarity row: -0.854353
+  Average cosine similarity col: 0.279459
+  Minimum cosine similarity col: -0.014016
+====================================
+
+Jacobian Matrix Validation, STEP=18
+====================================
+  ∥J_G∥_F = 1.169e+01
+  ∥J_g∥_F = 1.691e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.691
+  Residual norm ∥J_G + J_g∥_F: 2.201e+01
+  Residual norm ∥J_G - J_g∥_F: 1.899e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.884e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.697e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.632e+00
+  Average cosine similarity row: 0.299868
+  Minimum cosine similarity row: -0.851362
+  Average cosine similarity col: 0.207993
+  Minimum cosine similarity col: -0.090533
+====================================
+
+Jacobian Matrix Validation, STEP=19
+====================================
+  ∥J_G∥_F = 1.149e+01
+  ∥J_g∥_F = 1.698e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.677
+  Residual norm ∥J_G + J_g∥_F: 2.138e+01
+  Residual norm ∥J_G - J_g∥_F: 1.960e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.860e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.507e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.571e+00
+  Average cosine similarity row: 0.285746
+  Minimum cosine similarity row: -0.849709
+  Average cosine similarity col: 0.140866
+  Minimum cosine similarity col: -0.095510
+====================================
+
+Jacobian Matrix Validation, STEP=20
+====================================
+  ∥J_G∥_F = 1.128e+01
+  ∥J_g∥_F = 1.704e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.662
+  Residual norm ∥J_G + J_g∥_F: 2.088e+01
+  Residual norm ∥J_G - J_g∥_F: 1.999e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.851e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.372e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.470e+00
+  Average cosine similarity row: 0.273087
+  Minimum cosine similarity row: -0.843729
+  Average cosine similarity col: 0.091524
+  Minimum cosine similarity col: -0.076932
+====================================
+
+Jacobian Matrix Validation, STEP=21
+====================================
+  ∥J_G∥_F = 1.106e+01
+  ∥J_g∥_F = 1.709e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.647
+  Residual norm ∥J_G + J_g∥_F: 2.052e+01
+  Residual norm ∥J_G - J_g∥_F: 2.019e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.856e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.290e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.347e+00
+  Average cosine similarity row: 0.253048
+  Minimum cosine similarity row: -0.829028
+  Average cosine similarity col: 0.059885
+  Minimum cosine similarity col: -0.060690
+====================================
+
+Jacobian Matrix Validation, STEP=22
+====================================
+  ∥J_G∥_F = 1.083e+01
+  ∥J_g∥_F = 1.712e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.632
+  Residual norm ∥J_G + J_g∥_F: 2.031e+01
+  Residual norm ∥J_G - J_g∥_F: 2.020e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.876e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.269e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.209e+00
+  Average cosine similarity row: 0.252365
+  Minimum cosine similarity row: -0.842508
+  Average cosine similarity col: 0.046523
+  Minimum cosine similarity col: -0.058225
+====================================
+
+Jacobian Matrix Validation, STEP=23
+====================================
+  ∥J_G∥_F = 1.060e+01
+  ∥J_g∥_F = 1.717e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.617
+  Residual norm ∥J_G + J_g∥_F: 2.021e+01
+  Residual norm ∥J_G - J_g∥_F: 2.015e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.907e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.279e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -3.064e+00
+  Average cosine similarity row: 0.242491
+  Minimum cosine similarity row: -0.836783
+  Average cosine similarity col: 0.042528
+  Minimum cosine similarity col: -0.051565
+====================================
+
+Jacobian Matrix Validation, STEP=24
+====================================
+  ∥J_G∥_F = 1.038e+01
+  ∥J_g∥_F = 1.721e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.603
+  Residual norm ∥J_G + J_g∥_F: 2.014e+01
+  Residual norm ∥J_G - J_g∥_F: 2.005e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.941e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.301e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.934e+00
+  Average cosine similarity row: 0.222562
+  Minimum cosine similarity row: -0.812025
+  Average cosine similarity col: 0.042373
+  Minimum cosine similarity col: -0.044924
+====================================
+
+Jacobian Matrix Validation, STEP=25
+====================================
+  ∥J_G∥_F = 1.016e+01
+  ∥J_g∥_F = 1.724e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.590
+  Residual norm ∥J_G + J_g∥_F: 2.007e+01
+  Residual norm ∥J_G - J_g∥_F: 1.995e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 1.975e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.326e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.821e+00
+  Average cosine similarity row: 0.222603
+  Minimum cosine similarity row: -0.836696
+  Average cosine similarity col: 0.043062
+  Minimum cosine similarity col: -0.040293
+====================================
+
+Jacobian Matrix Validation, STEP=26
+====================================
+  ∥J_G∥_F = 9.968e+00
+  ∥J_g∥_F = 1.729e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.577
+  Residual norm ∥J_G + J_g∥_F: 2.001e+01
+  Residual norm ∥J_G - J_g∥_F: 1.989e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.008e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.344e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.718e+00
+  Average cosine similarity row: 0.212483
+  Minimum cosine similarity row: -0.827624
+  Average cosine similarity col: 0.041805
+  Minimum cosine similarity col: -0.037635
+====================================
+
+Jacobian Matrix Validation, STEP=27
+====================================
+  ∥J_G∥_F = 9.789e+00
+  ∥J_g∥_F = 1.730e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.566
+  Residual norm ∥J_G + J_g∥_F: 1.994e+01
+  Residual norm ∥J_G - J_g∥_F: 1.982e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.037e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.361e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.638e+00
+  Average cosine similarity row: 0.204296
+  Minimum cosine similarity row: -0.819996
+  Average cosine similarity col: 0.040740
+  Minimum cosine similarity col: -0.035978
+====================================
+
+Jacobian Matrix Validation, STEP=28
+====================================
+  ∥J_G∥_F = 9.632e+00
+  ∥J_g∥_F = 1.734e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.555
+  Residual norm ∥J_G + J_g∥_F: 1.990e+01
+  Residual norm ∥J_G - J_g∥_F: 1.978e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.066e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.377e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.565e+00
+  Average cosine similarity row: 0.201733
+  Minimum cosine similarity row: -0.828683
+  Average cosine similarity col: 0.039438
+  Minimum cosine similarity col: -0.034100
+====================================
+
+Jacobian Matrix Validation, STEP=29
+====================================
+  ∥J_G∥_F = 9.498e+00
+  ∥J_g∥_F = 1.737e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.547
+  Residual norm ∥J_G + J_g∥_F: 1.985e+01
+  Residual norm ∥J_G - J_g∥_F: 1.974e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.090e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.388e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.508e+00
+  Average cosine similarity row: 0.182818
+  Minimum cosine similarity row: -0.803887
+  Average cosine similarity col: 0.037403
+  Minimum cosine similarity col: -0.032430
+====================================
+
+Jacobian Matrix Validation, STEP=30
+====================================
+  ∥J_G∥_F = 9.389e+00
+  ∥J_g∥_F = 1.740e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.540
+  Residual norm ∥J_G + J_g∥_F: 1.982e+01
+  Residual norm ∥J_G - J_g∥_F: 1.971e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.111e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.400e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.462e+00
+  Average cosine similarity row: 0.187596
+  Minimum cosine similarity row: -0.820848
+  Average cosine similarity col: 0.036264
+  Minimum cosine similarity col: -0.031265
+====================================
+
+Jacobian Matrix Validation, STEP=31
+====================================
+  ∥J_G∥_F = 9.301e+00
+  ∥J_g∥_F = 1.743e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.534
+  Residual norm ∥J_G + J_g∥_F: 1.981e+01
+  Residual norm ∥J_G - J_g∥_F: 1.970e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.130e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.410e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.424e+00
+  Average cosine similarity row: 0.172654
+  Minimum cosine similarity row: -0.808492
+  Average cosine similarity col: 0.034968
+  Minimum cosine similarity col: -0.029685
+====================================
+
+Jacobian Matrix Validation, STEP=32
+====================================
+  ∥J_G∥_F = 9.236e+00
+  ∥J_g∥_F = 1.745e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.529
+  Residual norm ∥J_G + J_g∥_F: 1.978e+01
+  Residual norm ∥J_G - J_g∥_F: 1.970e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.142e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.413e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.399e+00
+  Average cosine similarity row: 0.174002
+  Minimum cosine similarity row: -0.822085
+  Average cosine similarity col: 0.033029
+  Minimum cosine similarity col: -0.027687
+====================================
+
+Jacobian Matrix Validation, STEP=33
+====================================
+  ∥J_G∥_F = 9.186e+00
+  ∥J_g∥_F = 1.748e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.525
+  Residual norm ∥J_G + J_g∥_F: 1.979e+01
+  Residual norm ∥J_G - J_g∥_F: 1.971e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.154e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.420e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.375e+00
+  Average cosine similarity row: 0.160995
+  Minimum cosine similarity row: -0.811378
+  Average cosine similarity col: 0.031855
+  Minimum cosine similarity col: -0.025926
+====================================
+
+Jacobian Matrix Validation, STEP=34
+====================================
+  ∥J_G∥_F = 9.152e+00
+  ∥J_g∥_F = 1.750e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.523
+  Residual norm ∥J_G + J_g∥_F: 1.978e+01
+  Residual norm ∥J_G - J_g∥_F: 1.971e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.162e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.423e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.362e+00
+  Average cosine similarity row: 0.160361
+  Minimum cosine similarity row: -0.812749
+  Average cosine similarity col: 0.030779
+  Minimum cosine similarity col: -0.023986
+====================================
+
+Jacobian Matrix Validation, STEP=35
+====================================
+  ∥J_G∥_F = 9.128e+00
+  ∥J_g∥_F = 1.753e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.521
+  Residual norm ∥J_G + J_g∥_F: 1.980e+01
+  Residual norm ∥J_G - J_g∥_F: 1.974e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.169e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.425e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.348e+00
+  Average cosine similarity row: 0.151399
+  Minimum cosine similarity row: -0.813842
+  Average cosine similarity col: 0.029122
+  Minimum cosine similarity col: -0.021971
+====================================
+
+Jacobian Matrix Validation, STEP=36
+====================================
+  ∥J_G∥_F = 9.113e+00
+  ∥J_g∥_F = 1.755e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.519
+  Residual norm ∥J_G + J_g∥_F: 1.980e+01
+  Residual norm ∥J_G - J_g∥_F: 1.975e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.172e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.426e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.341e+00
+  Average cosine similarity row: 0.147065
+  Minimum cosine similarity row: -0.816102
+  Average cosine similarity col: 0.027963
+  Minimum cosine similarity col: -0.020105
+====================================
+
+Jacobian Matrix Validation, STEP=37
+====================================
+  ∥J_G∥_F = 9.108e+00
+  ∥J_g∥_F = 1.758e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.518
+  Residual norm ∥J_G + J_g∥_F: 1.983e+01
+  Residual norm ∥J_G - J_g∥_F: 1.978e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.177e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.428e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.334e+00
+  Average cosine similarity row: 0.142991
+  Minimum cosine similarity row: -0.806580
+  Average cosine similarity col: 0.027210
+  Minimum cosine similarity col: -0.018319
+====================================
+
+Jacobian Matrix Validation, STEP=38
+====================================
+  ∥J_G∥_F = 9.108e+00
+  ∥J_g∥_F = 1.760e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.518
+  Residual norm ∥J_G + J_g∥_F: 1.984e+01
+  Residual norm ∥J_G - J_g∥_F: 1.979e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.178e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.428e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.331e+00
+  Average cosine similarity row: 0.138035
+  Minimum cosine similarity row: -0.812230
+  Average cosine similarity col: 0.026146
+  Minimum cosine similarity col: -0.016359
+====================================
+
+Jacobian Matrix Validation, STEP=39
+====================================
+  ∥J_G∥_F = 9.117e+00
+  ∥J_g∥_F = 1.762e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.517
+  Residual norm ∥J_G + J_g∥_F: 1.987e+01
+  Residual norm ∥J_G - J_g∥_F: 1.982e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.179e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.429e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.330e+00
+  Average cosine similarity row: 0.130588
+  Minimum cosine similarity row: -0.808878
+  Average cosine similarity col: 0.025508
+  Minimum cosine similarity col: -0.015038
+====================================
+
+Jacobian Matrix Validation, STEP=40
+====================================
+  ∥J_G∥_F = 9.130e+00
+  ∥J_g∥_F = 1.765e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.517
+  Residual norm ∥J_G + J_g∥_F: 1.990e+01
+  Residual norm ∥J_G - J_g∥_F: 1.984e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.180e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.431e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.328e+00
+  Average cosine similarity row: 0.131859
+  Minimum cosine similarity row: -0.816873
+  Average cosine similarity col: 0.025370
+  Minimum cosine similarity col: -0.012949
+====================================
+
+Jacobian Matrix Validation, STEP=41
+====================================
+  ∥J_G∥_F = 9.144e+00
+  ∥J_g∥_F = 1.767e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.518
+  Residual norm ∥J_G + J_g∥_F: 1.992e+01
+  Residual norm ∥J_G - J_g∥_F: 1.986e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.178e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.430e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.331e+00
+  Average cosine similarity row: 0.119040
+  Minimum cosine similarity row: -0.774364
+  Average cosine similarity col: 0.024601
+  Minimum cosine similarity col: -0.012166
+====================================
+
+Jacobian Matrix Validation, STEP=42
+====================================
+  ∥J_G∥_F = 9.130e+00
+  ∥J_g∥_F = 1.768e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.516
+  Residual norm ∥J_G + J_g∥_F: 1.992e+01
+  Residual norm ∥J_G - J_g∥_F: 1.987e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.182e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.432e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.324e+00
+  Average cosine similarity row: 0.122977
+  Minimum cosine similarity row: -0.819898
+  Average cosine similarity col: 0.024529
+  Minimum cosine similarity col: -0.012273
+====================================
+
+Jacobian Matrix Validation, STEP=43
+====================================
+  ∥J_G∥_F = 9.101e+00
+  ∥J_g∥_F = 1.768e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.515
+  Residual norm ∥J_G + J_g∥_F: 1.991e+01
+  Residual norm ∥J_G - J_g∥_F: 1.986e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.188e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.436e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.314e+00
+  Average cosine similarity row: 0.130187
+  Minimum cosine similarity row: -0.814346
+  Average cosine similarity col: 0.024894
+  Minimum cosine similarity col: -0.012866
+====================================
+
+Jacobian Matrix Validation, STEP=44
+====================================
+  ∥J_G∥_F = 9.065e+00
+  ∥J_g∥_F = 1.767e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.513
+  Residual norm ∥J_G + J_g∥_F: 1.989e+01
+  Residual norm ∥J_G - J_g∥_F: 1.983e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.194e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.440e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.304e+00
+  Average cosine similarity row: 0.127608
+  Minimum cosine similarity row: -0.806073
+  Average cosine similarity col: 0.025370
+  Minimum cosine similarity col: -0.013481
+====================================
+
+Jacobian Matrix Validation, STEP=45
+====================================
+  ∥J_G∥_F = 9.020e+00
+  ∥J_g∥_F = 1.765e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.511
+  Residual norm ∥J_G + J_g∥_F: 1.986e+01
+  Residual norm ∥J_G - J_g∥_F: 1.979e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.202e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.446e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.292e+00
+  Average cosine similarity row: 0.123201
+  Minimum cosine similarity row: -0.789524
+  Average cosine similarity col: 0.025922
+  Minimum cosine similarity col: -0.014054
+====================================
+
+Jacobian Matrix Validation, STEP=46
+====================================
+  ∥J_G∥_F = 8.969e+00
+  ∥J_g∥_F = 1.766e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.508
+  Residual norm ∥J_G + J_g∥_F: 1.984e+01
+  Residual norm ∥J_G - J_g∥_F: 1.976e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.212e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.453e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.275e+00
+  Average cosine similarity row: 0.125293
+  Minimum cosine similarity row: -0.784953
+  Average cosine similarity col: 0.026454
+  Minimum cosine similarity col: -0.014619
+====================================
+
+Jacobian Matrix Validation, STEP=47
+====================================
+  ∥J_G∥_F = 8.911e+00
+  ∥J_g∥_F = 1.766e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.505
+  Residual norm ∥J_G + J_g∥_F: 1.982e+01
+  Residual norm ∥J_G - J_g∥_F: 1.974e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.224e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.460e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.256e+00
+  Average cosine similarity row: 0.135933
+  Minimum cosine similarity row: -0.791702
+  Average cosine similarity col: 0.026887
+  Minimum cosine similarity col: -0.015175
+====================================
+
+Jacobian Matrix Validation, STEP=48
+====================================
+  ∥J_G∥_F = 8.848e+00
+  ∥J_g∥_F = 1.764e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.502
+  Residual norm ∥J_G + J_g∥_F: 1.978e+01
+  Residual norm ∥J_G - J_g∥_F: 1.969e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.235e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.466e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.240e+00
+  Average cosine similarity row: 0.125701
+  Minimum cosine similarity row: -0.777591
+  Average cosine similarity col: 0.027181
+  Minimum cosine similarity col: -0.015675
+====================================
+
+Jacobian Matrix Validation, STEP=49
+====================================
+  ∥J_G∥_F = 8.781e+00
+  ∥J_g∥_F = 1.764e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.498
+  Residual norm ∥J_G + J_g∥_F: 1.974e+01
+  Residual norm ∥J_G - J_g∥_F: 1.966e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.248e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.474e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.220e+00
+  Average cosine similarity row: 0.124463
+  Minimum cosine similarity row: -0.790257
+  Average cosine similarity col: 0.027361
+  Minimum cosine similarity col: -0.016127
+====================================
+
+Jacobian Matrix Validation, STEP=50
+====================================
+  ∥J_G∥_F = 8.713e+00
+  ∥J_g∥_F = 1.764e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.494
+  Residual norm ∥J_G + J_g∥_F: 1.971e+01
+  Residual norm ∥J_G - J_g∥_F: 1.963e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.263e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.481e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.200e+00
+  Average cosine similarity row: 0.134766
+  Minimum cosine similarity row: -0.791309
+  Average cosine similarity col: 0.027488
+  Minimum cosine similarity col: -0.016540
+====================================
+
+Jacobian Matrix Validation, STEP=51
+====================================
+  ∥J_G∥_F = 8.643e+00
+  ∥J_g∥_F = 1.762e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.491
+  Residual norm ∥J_G + J_g∥_F: 1.966e+01
+  Residual norm ∥J_G - J_g∥_F: 1.958e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.275e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.488e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.182e+00
+  Average cosine similarity row: 0.125363
+  Minimum cosine similarity row: -0.766978
+  Average cosine similarity col: 0.027597
+  Minimum cosine similarity col: -0.016876
+====================================
+
+Jacobian Matrix Validation, STEP=52
+====================================
+  ∥J_G∥_F = 8.575e+00
+  ∥J_g∥_F = 1.762e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.487
+  Residual norm ∥J_G + J_g∥_F: 1.964e+01
+  Residual norm ∥J_G - J_g∥_F: 1.956e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.290e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.496e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.161e+00
+  Average cosine similarity row: 0.135129
+  Minimum cosine similarity row: -0.780977
+  Average cosine similarity col: 0.027650
+  Minimum cosine similarity col: -0.017188
+====================================
+
+Jacobian Matrix Validation, STEP=53
+====================================
+  ∥J_G∥_F = 8.508e+00
+  ∥J_g∥_F = 1.761e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.483
+  Residual norm ∥J_G + J_g∥_F: 1.960e+01
+  Residual norm ∥J_G - J_g∥_F: 1.952e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.303e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.503e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.145e+00
+  Average cosine similarity row: 0.131494
+  Minimum cosine similarity row: -0.778762
+  Average cosine similarity col: 0.027583
+  Minimum cosine similarity col: -0.017579
+====================================
+
+Jacobian Matrix Validation, STEP=54
+====================================
+  ∥J_G∥_F = 8.444e+00
+  ∥J_g∥_F = 1.761e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.479
+  Residual norm ∥J_G + J_g∥_F: 1.957e+01
+  Residual norm ∥J_G - J_g∥_F: 1.950e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.317e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.509e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.127e+00
+  Average cosine similarity row: 0.129231
+  Minimum cosine similarity row: -0.783739
+  Average cosine similarity col: 0.027335
+  Minimum cosine similarity col: -0.017917
+====================================
+
+Jacobian Matrix Validation, STEP=55
+====================================
+  ∥J_G∥_F = 8.383e+00
+  ∥J_g∥_F = 1.760e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.476
+  Residual norm ∥J_G + J_g∥_F: 1.953e+01
+  Residual norm ∥J_G - J_g∥_F: 1.947e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.329e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.515e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.111e+00
+  Average cosine similarity row: 0.132914
+  Minimum cosine similarity row: -0.781693
+  Average cosine similarity col: 0.026974
+  Minimum cosine similarity col: -0.018270
+====================================
+
+Jacobian Matrix Validation, STEP=56
+====================================
+  ∥J_G∥_F = 8.326e+00
+  ∥J_g∥_F = 1.760e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.473
+  Residual norm ∥J_G + J_g∥_F: 1.950e+01
+  Residual norm ∥J_G - J_g∥_F: 1.944e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.342e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.520e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.097e+00
+  Average cosine similarity row: 0.130219
+  Minimum cosine similarity row: -0.782429
+  Average cosine similarity col: 0.026793
+  Minimum cosine similarity col: -0.018742
+====================================
+
+Jacobian Matrix Validation, STEP=57
+====================================
+  ∥J_G∥_F = 8.273e+00
+  ∥J_g∥_F = 1.759e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.470
+  Residual norm ∥J_G + J_g∥_F: 1.947e+01
+  Residual norm ∥J_G - J_g∥_F: 1.941e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.353e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.528e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.083e+00
+  Average cosine similarity row: 0.136283
+  Minimum cosine similarity row: -0.785246
+  Average cosine similarity col: 0.027413
+  Minimum cosine similarity col: -0.019463
+====================================
+
+Jacobian Matrix Validation, STEP=58
+====================================
+  ∥J_G∥_F = 8.224e+00
+  ∥J_g∥_F = 1.759e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.468
+  Residual norm ∥J_G + J_g∥_F: 1.947e+01
+  Residual norm ∥J_G - J_g∥_F: 1.937e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.367e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.541e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.068e+00
+  Average cosine similarity row: 0.134444
+  Minimum cosine similarity row: -0.780918
+  Average cosine similarity col: 0.029814
+  Minimum cosine similarity col: -0.020881
+====================================
+
+Jacobian Matrix Validation, STEP=59
+====================================
+  ∥J_G∥_F = 8.179e+00
+  ∥J_g∥_F = 1.757e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.465
+  Residual norm ∥J_G + J_g∥_F: 1.948e+01
+  Residual norm ∥J_G - J_g∥_F: 1.929e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.381e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.564e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.053e+00
+  Average cosine similarity row: 0.134474
+  Minimum cosine similarity row: -0.768937
+  Average cosine similarity col: 0.035245
+  Minimum cosine similarity col: -0.023278
+====================================
+
+Jacobian Matrix Validation, STEP=60
+====================================
+  ∥J_G∥_F = 8.138e+00
+  ∥J_g∥_F = 1.758e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.463
+  Residual norm ∥J_G + J_g∥_F: 1.955e+01
+  Residual norm ∥J_G - J_g∥_F: 1.919e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.402e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.601e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.033e+00
+  Average cosine similarity row: 0.142037
+  Minimum cosine similarity row: -0.787881
+  Average cosine similarity col: 0.045000
+  Minimum cosine similarity col: -0.028393
+====================================
+
+Jacobian Matrix Validation, STEP=61
+====================================
+  ∥J_G∥_F = 8.100e+00
+  ∥J_g∥_F = 1.756e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.461
+  Residual norm ∥J_G + J_g∥_F: 1.963e+01
+  Residual norm ∥J_G - J_g∥_F: 1.903e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.424e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.653e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.012e+00
+  Average cosine similarity row: 0.134537
+  Minimum cosine similarity row: -0.756031
+  Average cosine similarity col: 0.060110
+  Minimum cosine similarity col: -0.037747
+====================================
+
+Jacobian Matrix Validation, STEP=62
+====================================
+  ∥J_G∥_F = 8.066e+00
+  ∥J_g∥_F = 1.756e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.459
+  Residual norm ∥J_G + J_g∥_F: 1.980e+01
+  Residual norm ∥J_G - J_g∥_F: 1.885e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.455e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.725e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.984e+00
+  Average cosine similarity row: 0.149633
+  Minimum cosine similarity row: -0.776208
+  Average cosine similarity col: 0.080928
+  Minimum cosine similarity col: -0.052054
+====================================
+
+Jacobian Matrix Validation, STEP=63
+====================================
+  ∥J_G∥_F = 8.034e+00
+  ∥J_g∥_F = 1.755e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.458
+  Residual norm ∥J_G + J_g∥_F: 1.999e+01
+  Residual norm ∥J_G - J_g∥_F: 1.860e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.488e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.811e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.954e+00
+  Average cosine similarity row: 0.135402
+  Minimum cosine similarity row: -0.776766
+  Average cosine similarity col: 0.106828
+  Minimum cosine similarity col: -0.070993
+====================================
+
+Jacobian Matrix Validation, STEP=64
+====================================
+  ∥J_G∥_F = 8.005e+00
+  ∥J_g∥_F = 1.754e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.456
+  Residual norm ∥J_G + J_g∥_F: 2.020e+01
+  Residual norm ∥J_G - J_g∥_F: 1.832e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.523e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.907e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.921e+00
+  Average cosine similarity row: 0.140594
+  Minimum cosine similarity row: -0.767298
+  Average cosine similarity col: 0.136002
+  Minimum cosine similarity col: -0.092729
+====================================
+
+Jacobian Matrix Validation, STEP=65
+====================================
+  ∥J_G∥_F = 7.979e+00
+  ∥J_g∥_F = 1.755e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.455
+  Residual norm ∥J_G + J_g∥_F: 2.043e+01
+  Residual norm ∥J_G - J_g∥_F: 1.805e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.560e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.002e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.886e+00
+  Average cosine similarity row: 0.151225
+  Minimum cosine similarity row: -0.780348
+  Average cosine similarity col: 0.165574
+  Minimum cosine similarity col: -0.114784
+====================================
+
+Jacobian Matrix Validation, STEP=66
+====================================
+  ∥J_G∥_F = 7.956e+00
+  ∥J_g∥_F = 1.753e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.454
+  Residual norm ∥J_G + J_g∥_F: 2.061e+01
+  Residual norm ∥J_G - J_g∥_F: 1.779e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.591e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.087e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.858e+00
+  Average cosine similarity row: 0.139229
+  Minimum cosine similarity row: -0.756118
+  Average cosine similarity col: 0.191930
+  Minimum cosine similarity col: -0.134089
+====================================
+
+Jacobian Matrix Validation, STEP=67
+====================================
+  ∥J_G∥_F = 7.934e+00
+  ∥J_g∥_F = 1.753e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.453
+  Residual norm ∥J_G + J_g∥_F: 2.075e+01
+  Residual norm ∥J_G - J_g∥_F: 1.760e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.615e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.149e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.835e+00
+  Average cosine similarity row: 0.147275
+  Minimum cosine similarity row: -0.773373
+  Average cosine similarity col: 0.211402
+  Minimum cosine similarity col: -0.147518
+====================================
+
+Jacobian Matrix Validation, STEP=68
+====================================
+  ∥J_G∥_F = 7.914e+00
+  ∥J_g∥_F = 1.753e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.452
+  Residual norm ∥J_G + J_g∥_F: 2.081e+01
+  Residual norm ∥J_G - J_g∥_F: 1.751e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.630e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.181e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.821e+00
+  Average cosine similarity row: 0.153577
+  Minimum cosine similarity row: -0.783273
+  Average cosine similarity col: 0.221149
+  Minimum cosine similarity col: -0.153016
+====================================
+
+Jacobian Matrix Validation, STEP=69
+====================================
+  ∥J_G∥_F = 7.896e+00
+  ∥J_g∥_F = 1.751e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.451
+  Residual norm ∥J_G + J_g∥_F: 2.078e+01
+  Residual norm ∥J_G - J_g∥_F: 1.750e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.631e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.178e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.820e+00
+  Average cosine similarity row: 0.140190
+  Minimum cosine similarity row: -0.767552
+  Average cosine similarity col: 0.219828
+  Minimum cosine similarity col: -0.149126
+====================================
+
+Jacobian Matrix Validation, STEP=70
+====================================
+  ∥J_G∥_F = 7.879e+00
+  ∥J_g∥_F = 1.750e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.450
+  Residual norm ∥J_G + J_g∥_F: 2.067e+01
+  Residual norm ∥J_G - J_g∥_F: 1.759e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.623e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.144e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.828e+00
+  Average cosine similarity row: 0.146421
+  Minimum cosine similarity row: -0.778972
+  Average cosine similarity col: 0.208126
+  Minimum cosine similarity col: -0.136808
+====================================
+
+Jacobian Matrix Validation, STEP=71
+====================================
+  ∥J_G∥_F = 7.864e+00
+  ∥J_g∥_F = 1.751e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.449
+  Residual norm ∥J_G + J_g∥_F: 2.051e+01
+  Residual norm ∥J_G - J_g∥_F: 1.777e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.608e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.085e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.843e+00
+  Average cosine similarity row: 0.159098
+  Minimum cosine similarity row: -0.778671
+  Average cosine similarity col: 0.188625
+  Minimum cosine similarity col: -0.118191
+====================================
+
+Jacobian Matrix Validation, STEP=72
+====================================
+  ∥J_G∥_F = 7.849e+00
+  ∥J_g∥_F = 1.749e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.449
+  Residual norm ∥J_G + J_g∥_F: 2.030e+01
+  Residual norm ∥J_G - J_g∥_F: 1.797e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.587e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 8.012e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.864e+00
+  Average cosine similarity row: 0.144478
+  Minimum cosine similarity row: -0.779920
+  Average cosine similarity col: 0.164971
+  Minimum cosine similarity col: -0.096567
+====================================
+
+Jacobian Matrix Validation, STEP=73
+====================================
+  ∥J_G∥_F = 7.836e+00
+  ∥J_g∥_F = 1.747e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.448
+  Residual norm ∥J_G + J_g∥_F: 2.009e+01
+  Residual norm ∥J_G - J_g∥_F: 1.817e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.564e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.937e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.885e+00
+  Average cosine similarity row: 0.144419
+  Minimum cosine similarity row: -0.741605
+  Average cosine similarity col: 0.140865
+  Minimum cosine similarity col: -0.074937
+====================================
+
+Jacobian Matrix Validation, STEP=74
+====================================
+  ∥J_G∥_F = 7.824e+00
+  ∥J_g∥_F = 1.747e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.448
+  Residual norm ∥J_G + J_g∥_F: 1.990e+01
+  Residual norm ∥J_G - J_g∥_F: 1.835e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.544e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.868e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.902e+00
+  Average cosine similarity row: 0.153948
+  Minimum cosine similarity row: -0.782075
+  Average cosine similarity col: 0.119126
+  Minimum cosine similarity col: -0.055684
+====================================
+
+Jacobian Matrix Validation, STEP=75
+====================================
+  ∥J_G∥_F = 7.813e+00
+  ∥J_g∥_F = 1.747e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.447
+  Residual norm ∥J_G + J_g∥_F: 1.974e+01
+  Residual norm ∥J_G - J_g∥_F: 1.850e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.527e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.811e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.917e+00
+  Average cosine similarity row: 0.159543
+  Minimum cosine similarity row: -0.780675
+  Average cosine similarity col: 0.101219
+  Minimum cosine similarity col: -0.039928
+====================================
+
+Jacobian Matrix Validation, STEP=76
+====================================
+  ∥J_G∥_F = 7.803e+00
+  ∥J_g∥_F = 1.744e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.447
+  Residual norm ∥J_G + J_g∥_F: 1.960e+01
+  Residual norm ∥J_G - J_g∥_F: 1.860e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.512e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.765e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.930e+00
+  Average cosine similarity row: 0.146542
+  Minimum cosine similarity row: -0.775384
+  Average cosine similarity col: 0.087430
+  Minimum cosine similarity col: -0.032760
+====================================
+
+Jacobian Matrix Validation, STEP=77
+====================================
+  ∥J_G∥_F = 7.793e+00
+  ∥J_g∥_F = 1.741e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.448
+  Residual norm ∥J_G + J_g∥_F: 1.949e+01
+  Residual norm ∥J_G - J_g∥_F: 1.866e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.500e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.730e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.940e+00
+  Average cosine similarity row: 0.148391
+  Minimum cosine similarity row: -0.742611
+  Average cosine similarity col: 0.077214
+  Minimum cosine similarity col: -0.026815
+====================================
+
+Jacobian Matrix Validation, STEP=78
+====================================
+  ∥J_G∥_F = 7.784e+00
+  ∥J_g∥_F = 1.739e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.447
+  Residual norm ∥J_G + J_g∥_F: 1.940e+01
+  Residual norm ∥J_G - J_g∥_F: 1.871e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.492e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.705e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.946e+00
+  Average cosine similarity row: 0.158191
+  Minimum cosine similarity row: -0.771542
+  Average cosine similarity col: 0.069764
+  Minimum cosine similarity col: -0.021943
+====================================
+
+Jacobian Matrix Validation, STEP=79
+====================================
+  ∥J_G∥_F = 7.775e+00
+  ∥J_g∥_F = 1.737e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.448
+  Residual norm ∥J_G + J_g∥_F: 1.933e+01
+  Residual norm ∥J_G - J_g∥_F: 1.873e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.485e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.686e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.952e+00
+  Average cosine similarity row: 0.163722
+  Minimum cosine similarity row: -0.775499
+  Average cosine similarity col: 0.064299
+  Minimum cosine similarity col: -0.021202
+====================================
+
+Jacobian Matrix Validation, STEP=80
+====================================
+  ∥J_G∥_F = 7.767e+00
+  ∥J_g∥_F = 1.732e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.448
+  Residual norm ∥J_G + J_g∥_F: 1.924e+01
+  Residual norm ∥J_G - J_g∥_F: 1.872e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.477e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.670e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.959e+00
+  Average cosine similarity row: 0.153214
+  Minimum cosine similarity row: -0.768189
+  Average cosine similarity col: 0.060241
+  Minimum cosine similarity col: -0.021505
+====================================
+
+Jacobian Matrix Validation, STEP=81
+====================================
+  ∥J_G∥_F = 7.760e+00
+  ∥J_g∥_F = 1.726e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.450
+  Residual norm ∥J_G + J_g∥_F: 1.915e+01
+  Residual norm ∥J_G - J_g∥_F: 1.869e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.468e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.656e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.968e+00
+  Average cosine similarity row: 0.150374
+  Minimum cosine similarity row: -0.755746
+  Average cosine similarity col: 0.057201
+  Minimum cosine similarity col: -0.021802
+====================================
+
+Jacobian Matrix Validation, STEP=82
+====================================
+  ∥J_G∥_F = 7.753e+00
+  ∥J_g∥_F = 1.719e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.451
+  Residual norm ∥J_G + J_g∥_F: 1.907e+01
+  Residual norm ∥J_G - J_g∥_F: 1.865e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.460e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.644e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.976e+00
+  Average cosine similarity row: 0.156017
+  Minimum cosine similarity row: -0.759101
+  Average cosine similarity col: 0.054940
+  Minimum cosine similarity col: -0.022092
+====================================
+
+Jacobian Matrix Validation, STEP=83
+====================================
+  ∥J_G∥_F = 7.746e+00
+  ∥J_g∥_F = 1.712e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.452
+  Residual norm ∥J_G + J_g∥_F: 1.898e+01
+  Residual norm ∥J_G - J_g∥_F: 1.860e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.451e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.633e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.984e+00
+  Average cosine similarity row: 0.165042
+  Minimum cosine similarity row: -0.771010
+  Average cosine similarity col: 0.053314
+  Minimum cosine similarity col: -0.022376
+====================================
+
+Jacobian Matrix Validation, STEP=84
+====================================
+  ∥J_G∥_F = 7.740e+00
+  ∥J_g∥_F = 1.703e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.455
+  Residual norm ∥J_G + J_g∥_F: 1.888e+01
+  Residual norm ∥J_G - J_g∥_F: 1.853e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.439e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.623e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -1.995e+00
+  Average cosine similarity row: 0.168196
+  Minimum cosine similarity row: -0.773060
+  Average cosine similarity col: 0.052231
+  Minimum cosine similarity col: -0.022656
+====================================
+
+Jacobian Matrix Validation, STEP=85
+====================================
+  ∥J_G∥_F = 7.734e+00
+  ∥J_g∥_F = 1.691e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.457
+  Residual norm ∥J_G + J_g∥_F: 1.876e+01
+  Residual norm ∥J_G - J_g∥_F: 1.843e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.426e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.613e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.008e+00
+  Average cosine similarity row: 0.157318
+  Minimum cosine similarity row: -0.768512
+  Average cosine similarity col: 0.051616
+  Minimum cosine similarity col: -0.022931
+====================================
+
+Jacobian Matrix Validation, STEP=86
+====================================
+  ∥J_G∥_F = 7.729e+00
+  ∥J_g∥_F = 1.679e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.460
+  Residual norm ∥J_G + J_g∥_F: 1.864e+01
+  Residual norm ∥J_G - J_g∥_F: 1.832e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.412e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.604e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.022e+00
+  Average cosine similarity row: 0.155697
+  Minimum cosine similarity row: -0.754529
+  Average cosine similarity col: 0.051394
+  Minimum cosine similarity col: -0.023202
+====================================
+
+Jacobian Matrix Validation, STEP=87
+====================================
+  ∥J_G∥_F = 7.724e+00
+  ∥J_g∥_F = 1.667e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.463
+  Residual norm ∥J_G + J_g∥_F: 1.853e+01
+  Residual norm ∥J_G - J_g∥_F: 1.822e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.399e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.595e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.036e+00
+  Average cosine similarity row: 0.159412
+  Minimum cosine similarity row: -0.764708
+  Average cosine similarity col: 0.051486
+  Minimum cosine similarity col: -0.023468
+====================================
+
+Jacobian Matrix Validation, STEP=88
+====================================
+  ∥J_G∥_F = 7.719e+00
+  ∥J_g∥_F = 1.657e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.466
+  Residual norm ∥J_G + J_g∥_F: 1.843e+01
+  Residual norm ∥J_G - J_g∥_F: 1.812e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.387e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.588e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.048e+00
+  Average cosine similarity row: 0.168431
+  Minimum cosine similarity row: -0.775913
+  Average cosine similarity col: 0.051809
+  Minimum cosine similarity col: -0.023731
+====================================
+
+Jacobian Matrix Validation, STEP=89
+====================================
+  ∥J_G∥_F = 7.714e+00
+  ∥J_g∥_F = 1.648e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.468
+  Residual norm ∥J_G + J_g∥_F: 1.834e+01
+  Residual norm ∥J_G - J_g∥_F: 1.804e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.378e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.582e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.059e+00
+  Average cosine similarity row: 0.174605
+  Minimum cosine similarity row: -0.778378
+  Average cosine similarity col: 0.052282
+  Minimum cosine similarity col: -0.023989
+====================================
+
+Jacobian Matrix Validation, STEP=90
+====================================
+  ∥J_G∥_F = 7.710e+00
+  ∥J_g∥_F = 1.639e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.470
+  Residual norm ∥J_G + J_g∥_F: 1.826e+01
+  Residual norm ∥J_G - J_g∥_F: 1.797e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.369e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.577e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.069e+00
+  Average cosine similarity row: 0.170078
+  Minimum cosine similarity row: -0.777385
+  Average cosine similarity col: 0.052834
+  Minimum cosine similarity col: -0.025310
+====================================
+
+Jacobian Matrix Validation, STEP=91
+====================================
+  ∥J_G∥_F = 7.706e+00
+  ∥J_g∥_F = 1.632e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.472
+  Residual norm ∥J_G + J_g∥_F: 1.820e+01
+  Residual norm ∥J_G - J_g∥_F: 1.790e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.362e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.573e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.077e+00
+  Average cosine similarity row: 0.160790
+  Minimum cosine similarity row: -0.772670
+  Average cosine similarity col: 0.053407
+  Minimum cosine similarity col: -0.030443
+====================================
+
+Jacobian Matrix Validation, STEP=92
+====================================
+  ∥J_G∥_F = 7.702e+00
+  ∥J_g∥_F = 1.627e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.473
+  Residual norm ∥J_G + J_g∥_F: 1.815e+01
+  Residual norm ∥J_G - J_g∥_F: 1.785e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.356e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.570e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.084e+00
+  Average cosine similarity row: 0.162110
+  Minimum cosine similarity row: -0.758548
+  Average cosine similarity col: 0.053967
+  Minimum cosine similarity col: -0.035750
+====================================
+
+Jacobian Matrix Validation, STEP=93
+====================================
+  ∥J_G∥_F = 7.698e+00
+  ∥J_g∥_F = 1.624e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.474
+  Residual norm ∥J_G + J_g∥_F: 1.811e+01
+  Residual norm ∥J_G - J_g∥_F: 1.782e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.353e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.087e+00
+  Average cosine similarity row: 0.165282
+  Minimum cosine similarity row: -0.763792
+  Average cosine similarity col: 0.054498
+  Minimum cosine similarity col: -0.041119
+====================================
+
+Jacobian Matrix Validation, STEP=94
+====================================
+  ∥J_G∥_F = 7.694e+00
+  ∥J_g∥_F = 1.622e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.474
+  Residual norm ∥J_G + J_g∥_F: 1.810e+01
+  Residual norm ∥J_G - J_g∥_F: 1.780e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.352e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.089e+00
+  Average cosine similarity row: 0.172353
+  Minimum cosine similarity row: -0.775554
+  Average cosine similarity col: 0.055002
+  Minimum cosine similarity col: -0.046432
+====================================
+
+Jacobian Matrix Validation, STEP=95
+====================================
+  ∥J_G∥_F = 7.691e+00
+  ∥J_g∥_F = 1.621e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.474
+  Residual norm ∥J_G + J_g∥_F: 1.809e+01
+  Residual norm ∥J_G - J_g∥_F: 1.779e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.352e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.089e+00
+  Average cosine similarity row: 0.179339
+  Minimum cosine similarity row: -0.779302
+  Average cosine similarity col: 0.055488
+  Minimum cosine similarity col: -0.051669
+====================================
+
+Jacobian Matrix Validation, STEP=96
+====================================
+  ∥J_G∥_F = 7.688e+00
+  ∥J_g∥_F = 1.620e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.475
+  Residual norm ∥J_G + J_g∥_F: 1.808e+01
+  Residual norm ∥J_G - J_g∥_F: 1.778e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.352e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.089e+00
+  Average cosine similarity row: 0.180329
+  Minimum cosine similarity row: -0.779954
+  Average cosine similarity col: 0.055967
+  Minimum cosine similarity col: -0.056772
+====================================
+
+Jacobian Matrix Validation, STEP=97
+====================================
+  ∥J_G∥_F = 7.684e+00
+  ∥J_g∥_F = 1.619e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.475
+  Residual norm ∥J_G + J_g∥_F: 1.807e+01
+  Residual norm ∥J_G - J_g∥_F: 1.777e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.351e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.090e+00
+  Average cosine similarity row: 0.172239
+  Minimum cosine similarity row: -0.778317
+  Average cosine similarity col: 0.056449
+  Minimum cosine similarity col: -0.061804
+====================================
+
+Jacobian Matrix Validation, STEP=98
+====================================
+  ∥J_G∥_F = 7.681e+00
+  ∥J_g∥_F = 1.618e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.475
+  Residual norm ∥J_G + J_g∥_F: 1.805e+01
+  Residual norm ∥J_G - J_g∥_F: 1.776e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.350e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.091e+00
+  Average cosine similarity row: 0.165926
+  Minimum cosine similarity row: -0.773275
+  Average cosine similarity col: 0.056940
+  Minimum cosine similarity col: -0.066708
+====================================
+
+Jacobian Matrix Validation, STEP=99
+====================================
+  ∥J_G∥_F = 7.679e+00
+  ∥J_g∥_F = 1.617e+01
+  Norm ratio (∥J_G∥/∥J_g∥): 0.475
+  Residual norm ∥J_G + J_g∥_F: 1.805e+01
+  Residual norm ∥J_G - J_g∥_F: 1.775e+01
+  Relative residual (∥J_G + J_g∥/∥J_G∥): 2.350e+00
+  Relative residual (∥J_G + J_g∥/(∥J_G∥ + ∥J_g∥)): 7.568e-01
+  Relative residual (∥J_G - J_g∥/(∥J_G∥ - ∥J_g∥)): -2.091e+00
+  Average cosine similarity row: 0.167660
+  Minimum cosine similarity row: -0.759670
+  Average cosine similarity col: 0.057444
+  Minimum cosine similarity col: -0.071524
+====================================
+
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.06153         | 5.711527e+02    | 4.084587e+02    | 86.96           | 0.975550           | 12.69589°       | 96.19          
+2. with PDE solver vs PDE approximated             | 0.98716         | 7.963573e+02    | 6.110219e+02    | 52.31           | 0.952657           | 17.70079°       | 98.34          
+3. PDE detached vs PDE approximated                | 0.92994         | 3.644074e+02    | 3.316095e+02    | 2224.43         | 0.992097           | 7.20790°        | 94.73          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.00000         | 1.325956e-01    | 1.004330e-01    | 76.74           | 0.977496           | 12.17838°       | 96.48          
+2. with PDE solver vs PDE approximated             | 1.00000         | 1.992163e-01    | 1.604722e-01    | 107.68          | 0.949200           | 18.34102°       | 95.90          
+3. PDE detached vs PDE approximated                | 1.00000         | 9.362615e-02    | 8.474976e-02    | 155.75          | 0.988780           | 8.59106°        | 92.38          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 6.8847e+04      | 1.1270e+06      | 1.0582e+06      | 1537.00     % | 0.2034     | 0.5385     | 0.0355     | 0.1589         
+perturbation PDE detached      | 6.8847e+04      | 1.0751e+06      | 1.0063e+06      | 1461.59     % | 0.2137     | 0.0031     | 0.0053     | 0.2079         
+perturbation PDE approximate   | 6.8847e+04      | 1.0223e+06      | 9.5341e+05      | 1384.81     % | 0.0476     | 0.0025     | 0.0023     | 0.0450         
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 0.5 ,    total time: 32399.239258527756
+adversarial input samples: 100%|██████████| 1/1 [8:59:59<00:00, 32399.25s/it]adversarial input samples: 100%|██████████| 1/1 [8:59:59<00:00, 32399.27s/it]

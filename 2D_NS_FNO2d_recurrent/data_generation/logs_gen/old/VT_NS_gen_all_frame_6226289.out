@@ -1,0 +1,25 @@
+c0306a-s13.ufhpc
+Tue Jun 24 09:08:53 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+PyTorch version: 2.7.0+cu126
+CUDA version used by PyTorch: 12.6
+Is CUDA available: True
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA GeForce RTX 2080 Ti
+  Compute Capability: 7.5
+  Total memory: 10.57 GB
+  MultiProcessor count: 68
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+
+Generating samples:   0%|          | 0/5 [00:00<?, ?sample/s]Generating samples:  20%|██        | 1/5 [1:11:47<4:47:10, 4307.73s/sample]slurmstepd: error: *** JOB 6226289 ON c0306a-s13 CANCELLED AT 2025-06-24T23:09:10 DUE TO TIME LIMIT ***

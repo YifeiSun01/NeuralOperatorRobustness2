@@ -1,0 +1,70 @@
+c0900a-s15.ufhpc
+Tue Aug 26 07:12:55 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+当前使用的是 GPU (CUDA) 进行计算
+设备名称: NVIDIA B200
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 0    initial condition (GRF): shape=(1024,)
+index: 0    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 1    initial condition (GRF): shape=(1024,)
+index: 1    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 2    initial condition (GRF): shape=(1024,)
+index: 2    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 3    initial condition (GRF): shape=(1024,)
+index: 3    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 4    initial condition (GRF): shape=(1024,)
+index: 4    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 5    initial condition (GRF): shape=(1024,)
+index: 5    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 6    initial condition (GRF): shape=(1024,)
+index: 6    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 7    initial condition (GRF): shape=(1024,)
+index: 7    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 8    initial condition (GRF): shape=(1024,)
+index: 8    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 9    initial condition (GRF): shape=(1024,)
+index: 9    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 10    initial condition (GRF): shape=(1024,)
+index: 10    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 11    initial condition (GRF): shape=(1024,)
+index: 11    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 12    initial condition (GRF): shape=(1024,)
+index: 12    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 13    initial condition (GRF): shape=(1024,)
+index: 13    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 14    initial condition (GRF): shape=(1024,)
+index: 14    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 15    initial condition (GRF): shape=(1024,)
+index: 15    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 16    initial condition (GRF): shape=(1024,)
+index: 16    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 17    initial condition (GRF): shape=(1024,)
+index: 17    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 18    initial condition (GRF): shape=(1024,)
+index: 18    final_solution: shape=(1024,)    used_step=0.002
+[Adaptive] 成功：使用 step=0.002（尝试次数 1）
+index: 19    initial condition (GRF): shape=(1024,)
+index: 19    final_solution: shape=(1024,)    used_step=0.002
+{'input tensor shape': torch.Size([20, 1024]), 'output tensor shape': torch.Size([20, 1024])}
+Saved input tensor to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+Saved output tensor to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt

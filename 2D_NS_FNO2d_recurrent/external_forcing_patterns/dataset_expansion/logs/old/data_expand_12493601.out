@@ -1,0 +1,16 @@
+c0901a-s15.ufhpc
+Fri Sep 12 08:05:23 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[2025-09-12T08:05:24-04:00] ▶ pattern=isoCircles  split=train  N=1150
+                ds=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/isoCircles/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternisoCircles.pt
+                mdl=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/isoCircles/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternisoCircles.pth
+[2025-09-12T09:40:54-04:00] ✅ done -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/expanded_datasets/isoCircles_attack_N1150_train.pt
+
+[2025-09-12T09:40:54-04:00] ▶ pattern=petals  split=train  N=1150
+                ds=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/petals/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternpetals.pt
+                mdl=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/petals/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternpetals.pth
+[2025-09-12T11:18:08-04:00] ✅ done -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/expanded_datasets/petals_attack_N1150_train.pt
+
+[2025-09-12T11:18:08-04:00] ▶ pattern=ringsCos  split=train  N=1150
+                ds=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/ringsCos/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsCos.pt
+                mdl=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsCos/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsCos.pth

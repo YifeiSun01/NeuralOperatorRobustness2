@@ -1,0 +1,103 @@
+c1000a-s15.ufhpc
+Mon Sep  1 11:23:54 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== RUNTIME INFO ===
+Python 3.10.17
+Mon Sep  1 23:23:56 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.148.08             Driver Version: 570.148.08     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA B200                    On  |   00000000:43:00.0 Off |                    0 |
+| N/A   26C    P0            142W / 1000W |       0MiB / 183359MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+PROJECT_ROOT : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+PLOT_SCRIPT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_results.py
+CSV_PATH     : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/combined_eval__baseline_NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_n__set_saved_models_expanded.csv
+OUTPUT_ROOT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models
+===============
+[paths] script_dir = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models
+[paths] input CSV = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/combined_eval__baseline_NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_n__set_saved_models_expanded.csv
+[paths] save_root  = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus
+[step] reading CSV ...
+[info] rows=30,317, columns=47
+[step] building pivot table (rmse_mean) ...
+[info] pivot shape = (1457, 9)
+[step] subtracting baseline per row ...
+[check] baseline columns after subtraction -> max|value| = 0.0
+[step] writing pivot-minus CSV ...
+[ok] saved pivot-minus CSV to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/pivot_rmse_minus_baseline_from_pivot.csv
+[step] plotting by family (GRF/LogGRF/NegLogGRF) ...
+[run] GRF: 497 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF
+[plot] models to plot: 8
+[plot 1/8] drawing: model_group=folder | strategy=add | pct_tag=100pct | percent=1.0 | k_requested=1150.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_add_pct_tag_100pct_percent_1.0_k_requested_1150.0.png
+[plot 2/8] drawing: model_group=folder | strategy=add | pct_tag=25pct | percent=0.25 | k_requested=288.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_add_pct_tag_25pct_percent_0.25_k_requested_288.0.png
+[plot 3/8] drawing: model_group=folder | strategy=add | pct_tag=50pct | percent=0.5 | k_requested=575.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_add_pct_tag_50pct_percent_0.5_k_requested_575.0.png
+[plot 4/8] drawing: model_group=folder | strategy=add | pct_tag=75pct | percent=0.75 | k_requested=862.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_add_pct_tag_75pct_percent_0.75_k_requested_862.0.png
+[plot 5/8] drawing: model_group=folder | strategy=replace | pct_tag=100pct | percent=1.0 | k_requested=1150.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_replace_pct_tag_100pct_percent_1.0_k_requested_1150.0.png
+[plot 6/8] drawing: model_group=folder | strategy=replace | pct_tag=25pct | percent=0.25 | k_requested=288.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_replace_pct_tag_25pct_percent_0.25_k_requested_288.0.png
+[plot 7/8] drawing: model_group=folder | strategy=replace | pct_tag=50pct | percent=0.5 | k_requested=575.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_replace_pct_tag_50pct_percent_0.5_k_requested_575.0.png
+[plot 8/8] drawing: model_group=folder | strategy=replace | pct_tag=75pct | percent=0.75 | k_requested=862.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/GRF/model_group_folder_strategy_replace_pct_tag_75pct_percent_0.75_k_requested_862.0.png
+[run] LogGRF: 497 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF
+[plot] models to plot: 8
+[plot 1/8] drawing: model_group=folder | strategy=add | pct_tag=100pct | percent=1.0 | k_requested=1150.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_add_pct_tag_100pct_percent_1.0_k_requested_1150.0.png
+[plot 2/8] drawing: model_group=folder | strategy=add | pct_tag=25pct | percent=0.25 | k_requested=288.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_add_pct_tag_25pct_percent_0.25_k_requested_288.0.png
+[plot 3/8] drawing: model_group=folder | strategy=add | pct_tag=50pct | percent=0.5 | k_requested=575.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_add_pct_tag_50pct_percent_0.5_k_requested_575.0.png
+[plot 4/8] drawing: model_group=folder | strategy=add | pct_tag=75pct | percent=0.75 | k_requested=862.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_add_pct_tag_75pct_percent_0.75_k_requested_862.0.png
+[plot 5/8] drawing: model_group=folder | strategy=replace | pct_tag=100pct | percent=1.0 | k_requested=1150.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_replace_pct_tag_100pct_percent_1.0_k_requested_1150.0.png
+[plot 6/8] drawing: model_group=folder | strategy=replace | pct_tag=25pct | percent=0.25 | k_requested=288.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_replace_pct_tag_25pct_percent_0.25_k_requested_288.0.png
+[plot 7/8] drawing: model_group=folder | strategy=replace | pct_tag=50pct | percent=0.5 | k_requested=575.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_replace_pct_tag_50pct_percent_0.5_k_requested_575.0.png
+[plot 8/8] drawing: model_group=folder | strategy=replace | pct_tag=75pct | percent=0.75 | k_requested=862.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/LogGRF/model_group_folder_strategy_replace_pct_tag_75pct_percent_0.75_k_requested_862.0.png
+[run] NegLogGRF: 497 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF
+[plot] models to plot: 8
+[plot 1/8] drawing: model_group=folder | strategy=add | pct_tag=100pct | percent=1.0 | k_requested=1150.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_add_pct_tag_100pct_percent_1.0_k_requested_1150.0.png
+[plot 2/8] drawing: model_group=folder | strategy=add | pct_tag=25pct | percent=0.25 | k_requested=288.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_add_pct_tag_25pct_percent_0.25_k_requested_288.0.png
+[plot 3/8] drawing: model_group=folder | strategy=add | pct_tag=50pct | percent=0.5 | k_requested=575.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_add_pct_tag_50pct_percent_0.5_k_requested_575.0.png
+[plot 4/8] drawing: model_group=folder | strategy=add | pct_tag=75pct | percent=0.75 | k_requested=862.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_add_pct_tag_75pct_percent_0.75_k_requested_862.0.png
+[plot 5/8] drawing: model_group=folder | strategy=replace | pct_tag=100pct | percent=1.0 | k_requested=1150.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_replace_pct_tag_100pct_percent_1.0_k_requested_1150.0.png
+[plot 6/8] drawing: model_group=folder | strategy=replace | pct_tag=25pct | percent=0.25 | k_requested=288.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_replace_pct_tag_25pct_percent_0.25_k_requested_288.0.png
+[plot 7/8] drawing: model_group=folder | strategy=replace | pct_tag=50pct | percent=0.5 | k_requested=575.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_replace_pct_tag_50pct_percent_0.5_k_requested_575.0.png
+[plot 8/8] drawing: model_group=folder | strategy=replace | pct_tag=75pct | percent=0.75 | k_requested=862.0
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/NegLogGRF/model_group_folder_strategy_replace_pct_tag_75pct_percent_0.75_k_requested_862.0.png
+[done] all tasks completed.

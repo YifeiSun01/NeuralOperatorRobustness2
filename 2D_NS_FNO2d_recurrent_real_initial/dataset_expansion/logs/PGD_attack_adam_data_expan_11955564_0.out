@@ -1,0 +1,80 @@
+c0900a-s5.ufhpc
+Sat Sep  6 01:18:13 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Total combos = 4
+This array task id = 0
+N_TASKS (stride) = 2
+>>> Combo idx=0: MODE_SPEC=wwwwwwwwww eps_mult=0.0006 alpha_mult=0.10
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+================================================================================
+[RUN] mode_spec=wwwwwwwwww | eps_mult=0.0006 -> epsilon=39.3216 | alpha_mult=0.1 -> alpha=10.0 | norm=2 | steps=10 | split=train
+mode_spec = wwwwwwwwww
+Per-frame modes: [t=01] with_solver | [t=02] with_solver | [t=03] with_solver | [t=04] with_solver | [t=05] with_solver | [t=06] with_solver | [t=07] with_solver | [t=08] with_solver | [t=09] with_solver | [t=19] with_solver
+✅ Saved perturbed dataset: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent_real_initial/datasets/expanded_exponax_datasets/t20/N=500/dim2d_nx256_N500_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10.pt
+>>> Combo idx=2: MODE_SPEC=wwwwwwwwww eps_mult=0.0012 alpha_mult=0.10
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+================================================================================
+[RUN] mode_spec=wwwwwwwwww | eps_mult=0.0012 -> epsilon=78.6432 | alpha_mult=0.1 -> alpha=10.0 | norm=2 | steps=10 | split=train
+mode_spec = wwwwwwwwww
+Per-frame modes: [t=01] with_solver | [t=02] with_solver | [t=03] with_solver | [t=04] with_solver | [t=05] with_solver | [t=06] with_solver | [t=07] with_solver | [t=08] with_solver | [t=09] with_solver | [t=19] with_solver
+✅ Saved perturbed dataset: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent_real_initial/datasets/expanded_exponax_datasets/t20/N=500/dim2d_nx256_N500_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10.pt

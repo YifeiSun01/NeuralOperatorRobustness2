@@ -1,0 +1,246 @@
+c1000a-s15.ufhpc
+Tue Jul 29 02:52:01 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+========================================================
+FNO2d initial_to_final modes32_width40_epochs500
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/saved_models/2D/256_256/modes32_width40_epochs500/input_frame_0_output_frame_19/NS_2d_FNO_model_trainedby_NS_data_zongyi_train.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/datasets/2D/NS/256_256/output_frame_19/NS_data_zongyi_test.pt', 'modes': 32, 'width': 40}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx0.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx1.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx2.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx3.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx4.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx5.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx6.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx7.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx8.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes32_width40_epochs500 idx9.png
+========================================================
+FNO2d initial_to_final modes64_width60_epochs500
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/saved_models/2D/256_256/modes64_width60_epochs500/input_frame_0_output_frame_19/NS_2d_FNO_model_trainedby_NS_data_zongyi_train.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/datasets/2D/NS/256_256/output_frame_19/NS_data_zongyi_test.pt', 'modes': 64, 'width': 60}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx0.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx1.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx2.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx3.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx4.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx5.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx6.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx7.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx8.png
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d initial_to_final modes64_width60_epochs500 idx9.png
+========================================================
+FNO2d recurrent modes12_width20_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes12_width20_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 12, 'width': 20, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx0.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx1.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx2.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx3.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx4.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx5.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx6.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx7.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx8.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes12_width20_epochs500_Tin10_T10 idx9.png
+GIF saved as modes12-width20 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes16_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes16_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 16, 'width': 60, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx0.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx1.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx2.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx3.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx4.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx5.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx6.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx7.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx8.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes16_width60_epochs500_Tin10_T10 idx9.png
+GIF saved as modes16-width60 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes32_width40_epochs500_Tin1_T19
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 32, 'width': 40, 'Tin': 1, 'T': 19}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx0.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx1.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx2.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx3.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx4.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx5.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx6.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx7.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx8.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin1_T19 idx9.png
+GIF saved as modes32-width40 test (Autoregressive T_in=1, T_out=19) index=9.gif
+========================================================
+FNO2d recurrent modes32_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 32, 'width': 40, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx0.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx1.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx2.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx3.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx4.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx5.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx6.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx7.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx8.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width40_epochs500_Tin10_T10 idx9.png
+GIF saved as modes32-width40 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes32_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 32, 'width': 60, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx0.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx1.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx2.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx3.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx4.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx5.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx6.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx7.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx8.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes32_width60_epochs500_Tin10_T10 idx9.png
+GIF saved as modes32-width60 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes48_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 48, 'width': 40, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx0.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx1.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx2.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx3.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx4.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx5.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx6.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx7.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx8.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width40_epochs500_Tin10_T10 idx9.png
+GIF saved as modes48-width40 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes48_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 48, 'width': 60, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx0.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx1.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx2.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx3.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx4.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx5.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx6.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx7.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx8.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes48_width60_epochs500_Tin10_T10 idx9.png
+GIF saved as modes48-width60 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes64_width60_epochs500_Tin1_T19
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 64, 'width': 60, 'Tin': 1, 'T': 19}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx0.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx1.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx2.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx3.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx4.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx5.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx6.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx7.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx8.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin1_T19 idx9.png
+GIF saved as modes64-width60 test (Autoregressive T_in=1, T_out=19) index=9.gif
+========================================================
+FNO2d recurrent modes64_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 64, 'width': 60, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx0.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx1.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx2.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx3.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=3.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx4.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=4.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx5.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=5.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx6.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=6.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx7.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=7.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx8.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=8.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width60_epochs500_Tin10_T10 idx9.png
+GIF saved as modes64-width60 test (Autoregressive T_in=10, T_out=10) index=9.gif
+========================================================
+FNO2d recurrent modes64_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 64, 'width': 40, 'Tin': 10, 'T': 10}
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width40_epochs500_Tin10_T10 idx0.png
+GIF saved as modes64-width40 test (Autoregressive T_in=10, T_out=10) index=0.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width40_epochs500_Tin10_T10 idx1.png
+GIF saved as modes64-width40 test (Autoregressive T_in=10, T_out=10) index=1.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width40_epochs500_Tin10_T10 idx2.png
+GIF saved as modes64-width40 test (Autoregressive T_in=10, T_out=10) index=2.gif
+Plot saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_compare/plots/FNO2d recurrent modes64_width40_epochs500_Tin10_T10 idx3.png

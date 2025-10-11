@@ -1,0 +1,48 @@
+c1010a-s25.ufhpc
+Fri Sep 19 10:26:27 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[nvidia-smi] name,total(MiB),used(MiB),free(MiB)
+NVIDIA B200, 183359, 4, 182639
+[Device] cuda
+[Resume] detected latest_r=6  -> start_round=7, end_round=12 (out_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs)
+
+======================== ROUND 7/12 ========================
+[Round 7] Train composition -> total: 1000 (clean: 1000, expanded: 0; pool=0)
+[Round 7] Expanded-by-round: none
+[Round 7] Expanded sources used as pool: 0 file(s)
+
+[Round 7] Warm-start from latest model r6: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs/models/FNO2d_r6_m96x96_w80_Tin10_T10.pth
+[Mem] before training GPU0 mem | free 174716.6 MiB / total 182642.4 MiB | allocated 3600.4 MiB | reserved 7232.0 MiB
+[Mem] after epoch 0 GPU0 mem | free 39304.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142368.0 MiB
+[Mem] after epoch 1 GPU0 mem | free 39304.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142368.0 MiB
+[Mem] after epoch 2 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 3 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 4 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 5 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 6 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 7 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 8 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 9 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 10 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 11 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 12 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 13 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 14 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 15 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 16 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 17 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 18 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 19 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 20 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 21 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 22 GPU0 mem | free 39208.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142464.0 MiB
+[Mem] after epoch 23 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 24 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 25 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 26 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 27 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 28 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 29 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 30 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 31 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB
+[Mem] after epoch 32 GPU0 mem | free 39112.6 MiB / total 182642.4 MiB | allocated 14567.9 MiB | reserved 142560.0 MiB

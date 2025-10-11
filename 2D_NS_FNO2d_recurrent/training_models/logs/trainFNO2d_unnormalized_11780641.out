@@ -1,0 +1,19 @@
+c1007a-s15.ufhpc
+Wed Sep  3 06:21:49 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Training FNO2d
+Variable        Value     
+-------------------------
+ntrain          1000      
+ntest           100       
+batch_size      20        
+learning_rate   0.001     
+modes12         96        
+width           80        
+s               256       
+T_in            10        
+T               10        
+step            1         
+iterations      75000     
+sub             1         
+943823441

@@ -1,0 +1,19 @@
+c1004a-s25.ufhpc
+Sat Sep  6 09:03:04 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Using device: cuda
+========== GPU ==========
+Partition: hpg-b200
+Node: c1004a-s25
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA B200, 183359 MiB, 4 MiB, 182639 MiB
+=========================
+Loaded dataset: N=1500, X=1024, t_final=1.0
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+Model params: 2155713
+
+================================================================================
+▶ Round 1/3: train → attack(30.0%) → replace → save
+✅ [Round 1] Model saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/continual_train_attack/results/models/m64_w64_e500_20250906_090626/round01/burgers1d_FNO_round01.pth

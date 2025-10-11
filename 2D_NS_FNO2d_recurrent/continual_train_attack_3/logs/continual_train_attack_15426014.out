@@ -1,0 +1,128 @@
+c0909a-s5.ufhpc
+Sat Oct 11 06:47:08 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+初始化PDE求解器: nu=1e-05, device=cuda
+======================================== 参数配置 ========================================
+modes=96, width=80, epochs=500
+T_in=10, T=10, step=1
+ntrain=1000, ntest=100
+batch_size=2, learning_rate=0.001
+
+======================================== 路径配置 ========================================
+current_file_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/continual_train_attack.py
+pretrained_model_name=NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+pretrained_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+dataset_name=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+dataset_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/dataset/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt
+
+======================================== 设备与PDE solver ========================================
+device=cuda
+pde_solver=<solver.DifferentiablePDESolver object at 0x147966768dc0>
+
+======================================== 攻击配置 ========================================
+PGDAdamConfig(epsilon=524.288, alpha=100.0, num_steps=1, norm=2, beta1=0.9, beta2=0.999, adam_eps=1e-08, amsgrad=False, use_sign_for_linf=True, mode_spec='wwwwwwwwww', use_uniform_shift=True, uniform_shift_range=(-3.0, 3.0))
+
+======================================== 预训练加载状态 ========================================
+Loaded pretrained weights from: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_3/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+模型起始（base_epoch）= 0
+判定： 未检测到已训练轮次（可能是全新模型或未知），本次按全新开始（base_epoch=0）。
+（训练期间所有保存将使用 global_epoch = base_epoch + ep 命名）
+
+params: 943823441
+编译新函数: pde_3d_2x256x256_19_1e-05_0.005
+⚠️  rollout_seconds took 4.14s for pde_3d_2x256x256_19_1e-05_0.005
+[ep_local 0000 | ep_global 0000 | batch 0001/0500] perturb_time:1.539s | train_time:3.299s | loss:0.527681
+[ep_local 0000 | ep_global 0000 | batch 0002/0500] perturb_time:1.539s | train_time:0.293s | loss:2.234309
+[ep_local 0000 | ep_global 0000 | batch 0003/0500] perturb_time:1.538s | train_time:0.293s | loss:1.748347
+[ep_local 0000 | ep_global 0000 | batch 0004/0500] perturb_time:1.538s | train_time:0.292s | loss:1.632251
+[ep_local 0000 | ep_global 0000 | batch 0005/0500] perturb_time:1.538s | train_time:0.293s | loss:1.574902
+[ep_local 0000 | ep_global 0000 | batch 0006/0500] perturb_time:1.538s | train_time:0.292s | loss:1.209572
+[ep_local 0000 | ep_global 0000 | batch 0007/0500] perturb_time:1.538s | train_time:0.292s | loss:1.411603
+[ep_local 0000 | ep_global 0000 | batch 0008/0500] perturb_time:1.539s | train_time:0.293s | loss:1.244310
+[ep_local 0000 | ep_global 0000 | batch 0009/0500] perturb_time:1.538s | train_time:0.293s | loss:1.328987
+[ep_local 0000 | ep_global 0000 | batch 0010/0500] perturb_time:1.539s | train_time:0.293s | loss:0.880442
+[ep_local 0000 | ep_global 0000 | batch 0011/0500] perturb_time:1.538s | train_time:0.292s | loss:0.838812
+[ep_local 0000 | ep_global 0000 | batch 0012/0500] perturb_time:1.538s | train_time:0.292s | loss:1.135706
+[ep_local 0000 | ep_global 0000 | batch 0013/0500] perturb_time:1.538s | train_time:0.292s | loss:1.138396
+[ep_local 0000 | ep_global 0000 | batch 0014/0500] perturb_time:1.538s | train_time:0.292s | loss:1.162986
+[ep_local 0000 | ep_global 0000 | batch 0015/0500] perturb_time:1.538s | train_time:0.292s | loss:1.151345
+[ep_local 0000 | ep_global 0000 | batch 0016/0500] perturb_time:1.538s | train_time:0.292s | loss:0.861219
+[ep_local 0000 | ep_global 0000 | batch 0017/0500] perturb_time:1.538s | train_time:0.292s | loss:0.997944
+[ep_local 0000 | ep_global 0000 | batch 0018/0500] perturb_time:1.538s | train_time:0.292s | loss:0.838689
+[ep_local 0000 | ep_global 0000 | batch 0019/0500] perturb_time:1.538s | train_time:0.292s | loss:0.716386
+[ep_local 0000 | ep_global 0000 | batch 0020/0500] perturb_time:1.538s | train_time:0.292s | loss:0.681501
+[ep_local 0000 | ep_global 0000 | batch 0021/0500] perturb_time:1.538s | train_time:0.292s | loss:0.678676
+[ep_local 0000 | ep_global 0000 | batch 0022/0500] perturb_time:1.538s | train_time:0.292s | loss:0.857026
+[ep_local 0000 | ep_global 0000 | batch 0023/0500] perturb_time:1.538s | train_time:0.292s | loss:1.011054
+[ep_local 0000 | ep_global 0000 | batch 0024/0500] perturb_time:1.538s | train_time:0.292s | loss:0.755101
+[ep_local 0000 | ep_global 0000 | batch 0025/0500] perturb_time:1.538s | train_time:0.293s | loss:0.687922
+[ep_local 0000 | ep_global 0000 | batch 0026/0500] perturb_time:1.538s | train_time:0.292s | loss:0.577753
+[ep_local 0000 | ep_global 0000 | batch 0027/0500] perturb_time:1.538s | train_time:0.292s | loss:0.642689
+[ep_local 0000 | ep_global 0000 | batch 0028/0500] perturb_time:1.538s | train_time:0.292s | loss:0.659422
+[ep_local 0000 | ep_global 0000 | batch 0029/0500] perturb_time:1.538s | train_time:0.292s | loss:0.667148
+[ep_local 0000 | ep_global 0000 | batch 0030/0500] perturb_time:1.538s | train_time:0.293s | loss:0.571238
+[ep_local 0000 | ep_global 0000 | batch 0031/0500] perturb_time:1.538s | train_time:0.292s | loss:0.691106
+[ep_local 0000 | ep_global 0000 | batch 0032/0500] perturb_time:1.538s | train_time:0.292s | loss:0.881209
+[ep_local 0000 | ep_global 0000 | batch 0033/0500] perturb_time:1.538s | train_time:0.293s | loss:0.653966
+[ep_local 0000 | ep_global 0000 | batch 0034/0500] perturb_time:1.538s | train_time:0.293s | loss:0.476475
+[ep_local 0000 | ep_global 0000 | batch 0035/0500] perturb_time:1.538s | train_time:0.292s | loss:0.718383
+[ep_local 0000 | ep_global 0000 | batch 0036/0500] perturb_time:1.538s | train_time:0.292s | loss:0.478741
+[ep_local 0000 | ep_global 0000 | batch 0037/0500] perturb_time:1.538s | train_time:0.293s | loss:0.710443
+[ep_local 0000 | ep_global 0000 | batch 0038/0500] perturb_time:1.538s | train_time:0.292s | loss:0.455986
+[ep_local 0000 | ep_global 0000 | batch 0039/0500] perturb_time:1.538s | train_time:0.293s | loss:0.649446
+[ep_local 0000 | ep_global 0000 | batch 0040/0500] perturb_time:1.538s | train_time:0.293s | loss:0.456562
+[ep_local 0000 | ep_global 0000 | batch 0041/0500] perturb_time:1.538s | train_time:0.293s | loss:0.608512
+[ep_local 0000 | ep_global 0000 | batch 0042/0500] perturb_time:1.539s | train_time:0.293s | loss:0.550804
+[ep_local 0000 | ep_global 0000 | batch 0043/0500] perturb_time:1.539s | train_time:0.293s | loss:0.577799
+[ep_local 0000 | ep_global 0000 | batch 0044/0500] perturb_time:1.538s | train_time:0.292s | loss:0.523564
+[ep_local 0000 | ep_global 0000 | batch 0045/0500] perturb_time:1.538s | train_time:0.293s | loss:0.524511
+[ep_local 0000 | ep_global 0000 | batch 0046/0500] perturb_time:1.538s | train_time:0.293s | loss:0.406786
+[ep_local 0000 | ep_global 0000 | batch 0047/0500] perturb_time:1.538s | train_time:0.293s | loss:0.365263
+[ep_local 0000 | ep_global 0000 | batch 0048/0500] perturb_time:1.538s | train_time:0.293s | loss:0.515162
+[ep_local 0000 | ep_global 0000 | batch 0049/0500] perturb_time:1.538s | train_time:0.292s | loss:0.473840
+[ep_local 0000 | ep_global 0000 | batch 0050/0500] perturb_time:1.538s | train_time:0.293s | loss:0.426413
+[ep_local 0000 | ep_global 0000 | batch 0051/0500] perturb_time:1.538s | train_time:0.292s | loss:0.644139
+[ep_local 0000 | ep_global 0000 | batch 0052/0500] perturb_time:1.538s | train_time:0.293s | loss:0.452587
+[ep_local 0000 | ep_global 0000 | batch 0053/0500] perturb_time:1.538s | train_time:0.293s | loss:0.451776
+[ep_local 0000 | ep_global 0000 | batch 0054/0500] perturb_time:1.538s | train_time:0.292s | loss:0.560975
+[ep_local 0000 | ep_global 0000 | batch 0055/0500] perturb_time:1.539s | train_time:0.292s | loss:0.656691
+[ep_local 0000 | ep_global 0000 | batch 0056/0500] perturb_time:1.538s | train_time:0.293s | loss:0.618621
+[ep_local 0000 | ep_global 0000 | batch 0057/0500] perturb_time:1.539s | train_time:0.293s | loss:0.449446
+[ep_local 0000 | ep_global 0000 | batch 0058/0500] perturb_time:1.539s | train_time:0.293s | loss:0.562249
+[ep_local 0000 | ep_global 0000 | batch 0059/0500] perturb_time:1.538s | train_time:0.292s | loss:0.414495
+[ep_local 0000 | ep_global 0000 | batch 0060/0500] perturb_time:1.539s | train_time:0.293s | loss:0.367416
+[ep_local 0000 | ep_global 0000 | batch 0061/0500] perturb_time:1.538s | train_time:0.293s | loss:0.553630
+[ep_local 0000 | ep_global 0000 | batch 0062/0500] perturb_time:1.538s | train_time:0.292s | loss:0.528628
+[ep_local 0000 | ep_global 0000 | batch 0063/0500] perturb_time:1.538s | train_time:0.293s | loss:0.460584
+[ep_local 0000 | ep_global 0000 | batch 0064/0500] perturb_time:1.538s | train_time:0.293s | loss:0.433660
+[ep_local 0000 | ep_global 0000 | batch 0065/0500] perturb_time:1.538s | train_time:0.292s | loss:0.400926
+[ep_local 0000 | ep_global 0000 | batch 0066/0500] perturb_time:1.538s | train_time:0.293s | loss:0.413098
+[ep_local 0000 | ep_global 0000 | batch 0067/0500] perturb_time:1.538s | train_time:0.292s | loss:0.458346
+[ep_local 0000 | ep_global 0000 | batch 0068/0500] perturb_time:1.539s | train_time:0.292s | loss:0.455287
+[ep_local 0000 | ep_global 0000 | batch 0069/0500] perturb_time:1.538s | train_time:0.293s | loss:0.594473
+[ep_local 0000 | ep_global 0000 | batch 0070/0500] perturb_time:1.538s | train_time:0.292s | loss:0.576833
+[ep_local 0000 | ep_global 0000 | batch 0071/0500] perturb_time:1.538s | train_time:0.293s | loss:0.501946
+[ep_local 0000 | ep_global 0000 | batch 0072/0500] perturb_time:1.538s | train_time:0.293s | loss:0.421843
+[ep_local 0000 | ep_global 0000 | batch 0073/0500] perturb_time:1.538s | train_time:0.292s | loss:0.657181
+[ep_local 0000 | ep_global 0000 | batch 0074/0500] perturb_time:1.538s | train_time:0.293s | loss:0.540567
+[ep_local 0000 | ep_global 0000 | batch 0075/0500] perturb_time:1.538s | train_time:0.292s | loss:0.458798
+[ep_local 0000 | ep_global 0000 | batch 0076/0500] perturb_time:1.539s | train_time:0.293s | loss:0.363548
+[ep_local 0000 | ep_global 0000 | batch 0077/0500] perturb_time:1.538s | train_time:0.293s | loss:0.532309
+[ep_local 0000 | ep_global 0000 | batch 0078/0500] perturb_time:1.538s | train_time:0.292s | loss:0.497204
+[ep_local 0000 | ep_global 0000 | batch 0079/0500] perturb_time:1.538s | train_time:0.293s | loss:0.407244
+[ep_local 0000 | ep_global 0000 | batch 0080/0500] perturb_time:1.538s | train_time:0.293s | loss:0.412881
+[ep_local 0000 | ep_global 0000 | batch 0081/0500] perturb_time:1.538s | train_time:0.293s | loss:0.540339
+[ep_local 0000 | ep_global 0000 | batch 0082/0500] perturb_time:1.538s | train_time:0.293s | loss:0.546155
+[ep_local 0000 | ep_global 0000 | batch 0083/0500] perturb_time:1.538s | train_time:0.292s | loss:0.612016
+[ep_local 0000 | ep_global 0000 | batch 0084/0500] perturb_time:1.538s | train_time:0.293s | loss:0.592751
+[ep_local 0000 | ep_global 0000 | batch 0085/0500] perturb_time:1.538s | train_time:0.293s | loss:0.387974
+[ep_local 0000 | ep_global 0000 | batch 0086/0500] perturb_time:1.538s | train_time:0.293s | loss:0.529121
+[ep_local 0000 | ep_global 0000 | batch 0087/0500] perturb_time:1.538s | train_time:0.293s | loss:0.546558
+[ep_local 0000 | ep_global 0000 | batch 0088/0500] perturb_time:1.539s | train_time:0.293s | loss:0.355801
+[ep_local 0000 | ep_global 0000 | batch 0089/0500] perturb_time:1.538s | train_time:0.292s | loss:0.459644
+[ep_local 0000 | ep_global 0000 | batch 0090/0500] perturb_time:1.538s | train_time:0.293s | loss:0.435124
+[ep_local 0000 | ep_global 0000 | batch 0091/0500] perturb_time:1.538s | train_time:0.292s | loss:0.476636
+[ep_local 0000 | ep_global 0000 | batch 0092/0500] perturb_time:1.538s | train_time:0.293s | loss:0.623713
+[ep_local 0000 | ep_global 0000 | batch 0093/0500] perturb_time:1.538s | train_time:0.293s | loss:0.394787
+[ep_local 0000 | ep_global 0000 | batch 0094/0500] perturb_time:1.538s | train_time:0.292s | loss:0.514235
+[ep_local 0000 | ep_global 0000 | batch 0095/0500] perturb_time:1.538s | train_time:0.293s | loss:0.518084

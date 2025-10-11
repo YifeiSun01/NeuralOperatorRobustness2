@@ -1,0 +1,520 @@
+c0900a-s5.ufhpc
+Sat Jul 19 08:26:29 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+===========RBF kernel GRF=============
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=-0.4, vmax=0.4
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/./data_generation/VT_NS_gen_all_frame_generalizability.py:85: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/./data_generation/VT_NS_gen_all_frame_generalizability.py:89: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  return torch_dlpack.from_dlpack(jax_dlpack.to_dlpack(jax_array))
+Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:06<02:04,  6.56s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:11<01:40,  5.60s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:14<01:13,  4.32s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:17<01:00,  3.81s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:20<00:52,  3.49s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:23<00:45,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:25<00:40,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:29<00:37,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:32<00:33,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:34<00:30,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:38<00:27,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:42<00:28,  3.57s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:45<00:23,  3.36s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:48<00:19,  3.17s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:51<00:15,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:54<00:12,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:57<00:09,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [01:00<00:05,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [01:02<00:02,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:06<00:00,  2.98s/sample]Generating batch 0: 100%|██████████| 20/20 [01:06<00:00,  3.30s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.020_variance0.100_vmax0.4_vmin-0.4_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<01:01,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:13,  4.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<01:01,  3.60s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:53,  3.33s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:46,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:38,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:34,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:27<00:31,  2.85s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:28,  2.86s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:25,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.51s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.37s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.20s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:03,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.00s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.11s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<00:59,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:08<01:15,  4.17s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:11<01:01,  3.63s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.16s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:38,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:29,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:26,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.52s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.19s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:06,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:03,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.97s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.13s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames.pt
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=-1, vmax=0
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:55,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:11,  3.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:59,  3.48s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:51,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:38,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:27<00:32,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:29,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:26,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:27,  3.45s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.21s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:06,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.00s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.11s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.020_variance0.100_vmax0_vmin-1_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:56,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:14,  4.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<01:01,  3.61s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:54,  3.38s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.18s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:44,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:40,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:36,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:33,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:30,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:27,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:28,  3.61s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:42<00:23,  3.40s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:45<00:19,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:48<00:15,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:51<00:12,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:54<00:09,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:57<00:05,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [01:00<00:02,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:03<00:00,  2.95s/sample]Generating batch 0: 100%|██████████| 20/20 [01:03<00:00,  3.15s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax0_vmin-1_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<00:58,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:14,  4.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:11<01:02,  3.66s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:14<00:54,  3.41s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:48,  3.22s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:44,  3.16s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:36,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:29,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:27,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:28,  3.59s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:42<00:23,  3.39s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:45<00:19,  3.23s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:48<00:15,  3.19s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:51<00:12,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:54<00:09,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:57<00:05,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [01:00<00:02,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:03<00:00,  2.97s/sample]Generating batch 0: 100%|██████████| 20/20 [01:03<00:00,  3.15s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax0_vmin-1_batch0_all_frames.pt
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=0, vmax=1
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<01:01,  3.22s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:08<01:15,  4.18s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:11<01:01,  3.62s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:43,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:38,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:34,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:29,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:26,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:28,  3.56s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.33s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.16s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.88s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.10s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.020_variance0.100_vmax1_vmin0_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<00:57,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:13,  4.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<01:00,  3.55s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:54,  3.40s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:48,  3.26s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:43,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:28,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:26,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:28,  3.52s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:08,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.91s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.93s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.11s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax1_vmin0_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:55,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:10,  3.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:59,  3.49s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:51,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:46,  3.12s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:27<00:32,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:29,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:26,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.53s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.38s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.23s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:08,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:58<00:02,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:01<00:00,  2.92s/sample]Generating batch 0: 100%|██████████| 20/20 [01:01<00:00,  3.09s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax1_vmin0_batch0_all_frames.pt
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=-1, vmax=1
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<01:00,  3.20s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:08<01:17,  4.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:11<01:02,  3.67s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:14<00:54,  3.39s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:17<00:47,  3.20s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:20<00:43,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:23<00:40,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:28,  2.90s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:26,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:27,  3.50s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:42<00:23,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:18,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.08s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:08,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:03,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.04s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.13s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.020_variance0.100_vmax1_vmin-1_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:56,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:12,  4.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:59,  3.50s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.30s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:48,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:43,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:29,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:26,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:27,  3.49s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.32s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.22s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.16s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:08,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.90s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.10s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<00:57,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:12,  4.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:59,  3.52s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:53,  3.36s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.17s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:43,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:36,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:29,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:27,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:28,  3.59s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:42<00:23,  3.36s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:45<00:19,  3.23s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:06,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.99s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.14s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames.pt
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=1, vmax=1.5
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:56,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:13,  4.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<01:00,  3.55s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:51,  3.23s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:46,  3.11s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:29,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:26,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.58s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.40s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.22s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:06,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.95s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.12s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.020_variance0.100_vmax1.5_vmin1_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:56,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:12,  4.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:58,  3.42s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.27s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:46,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:18<00:41,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:21<00:38,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:24<00:35,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:27<00:32,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:28,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:26,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:27,  3.49s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.36s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.18s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:08,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:06,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:58<00:02,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:01<00:00,  2.92s/sample]Generating batch 0: 100%|██████████| 20/20 [01:01<00:00,  3.09s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:56,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:14,  4.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<01:00,  3.57s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:32,  2.93s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:28,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:26,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.58s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.36s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.19s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  3.00s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.98s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.12s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames.pt
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=-1.5, vmax=-1
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<01:00,  3.16s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:08<01:16,  4.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:11<01:02,  3.65s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:53,  3.31s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:43,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:39,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:25<00:35,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:28<00:33,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:31<00:30,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:34<00:27,  3.04s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:39<00:29,  3.63s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:42<00:23,  3.41s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:45<00:19,  3.25s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:48<00:15,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:51<00:12,  3.10s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:54<00:09,  3.03s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:57<00:06,  3.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [01:00<00:02,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:03<00:00,  3.02s/sample]Generating batch 0: 100%|██████████| 20/20 [01:03<00:00,  3.16s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.020_variance0.100_vmax-1_vmin-1.5_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:02<00:56,  2.96s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:13,  4.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:59,  3.49s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:38,  2.95s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:24<00:35,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:27<00:32,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:28,  2.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:26,  2.99s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.50s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.35s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:16,  3.20s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.07s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:06,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:03,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.96s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.11s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames.pt
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<00:59,  3.14s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:07<01:12,  4.02s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:10<00:59,  3.52s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:51,  3.24s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:46,  3.09s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:42,  3.05s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:22<00:38,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:24<00:34,  2.92s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:27<00:31,  2.89s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:30<00:29,  2.94s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:33<00:27,  3.01s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:38<00:28,  3.58s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:41<00:23,  3.39s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [00:44<00:19,  3.20s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [00:47<00:15,  3.17s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [00:50<00:12,  3.13s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [00:53<00:09,  3.06s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [00:56<00:05,  2.98s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  95%|█████████▌| 19/20 [00:59<00:02,  2.97s/sample]Step size 0.01 produced stable solution.
+Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  2.94s/sample]Generating batch 0: 100%|██████████| 20/20 [01:02<00:00,  3.11s/sample]
+[Saved] Batch 0 saved to ./datasets/exponax_datasets/t20/generalizability/dim2d_nx256_N20_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance0.100_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames.pt
+
+
+
+Generating test set with RBF kernel: length_scale=0.02, variance=0.1, exp_factor=2.5, vmin=-2, vmax=2
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/20 [00:00<?, ?sample/s]Step size 0.01 produced stable solution.
+Generating batch 0:   5%|▌         | 1/20 [00:03<01:01,  3.21s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  10%|█         | 2/20 [00:08<01:14,  4.16s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  15%|█▌        | 3/20 [00:11<01:01,  3.62s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  20%|██        | 4/20 [00:13<00:52,  3.28s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  25%|██▌       | 5/20 [00:16<00:47,  3.15s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  30%|███       | 6/20 [00:19<00:43,  3.07s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  35%|███▌      | 7/20 [00:27<01:01,  4.76s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  40%|████      | 8/20 [00:30<00:50,  4.20s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  45%|████▌     | 9/20 [00:38<00:59,  5.41s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  50%|█████     | 10/20 [00:41<00:46,  4.64s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  55%|█████▌    | 11/20 [00:50<00:52,  5.88s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  60%|██████    | 12/20 [00:55<00:44,  5.61s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  65%|██████▌   | 13/20 [00:58<00:33,  4.78s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  70%|███████   | 14/20 [01:01<00:25,  4.18s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  75%|███████▌  | 15/20 [01:04<00:19,  3.80s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  80%|████████  | 16/20 [01:07<00:14,  3.56s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  85%|████████▌ | 17/20 [01:09<00:09,  3.29s/sample]Step size 0.01 produced stable solution.
+Generating batch 0:  90%|█████████ | 18/20 [01:16<00:08,  4.24s/sample]slurmstepd: error: *** JOB 7732323 ON c0900a-s5 CANCELLED AT 2025-07-19T08:47:08 ***

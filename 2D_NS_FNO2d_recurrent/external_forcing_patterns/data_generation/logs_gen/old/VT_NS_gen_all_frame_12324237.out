@@ -1,0 +1,65 @@
+c0907a-s5.ufhpc
+Wed Sep 10 09:31:16 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Loading dataset from /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame_real_initial.pt...
+Pre-upsampling dataset on GPU...
+Upsampling:   0%|          | 0/50 [00:00<?, ?sample/s]Upsampling:   2%|▏         | 1/50 [00:04<04:03,  4.97s/sample]Upsampling: 100%|██████████| 50/50 [00:04<00:00, 10.04sample/s]
+Generating datasets for all patterns...
+[1/6] pattern = ringsCos
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:85: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+Generating batch 0:   0%|          | 0/10 [00:42<?, ?sample/s]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py", line 388, in <module>
+    path_i = generator.generate_dataset(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py", line 323, in generate_dataset
+    x, y, selected_times = generate_vorticity_transport_data(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py", line 198, in generate_vorticity_transport_data
+    exponax_solutions = exponaxsolver.solve(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py", line 121, in solve
+    slower_NS_stepper = ex.stepper._navier_stokes.NavierStokesVorticityPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_module.py", line 512, in __call__
+    self = super(_ActualModuleMeta, initable_cls).__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_better_abstract.py", line 228, in __call__
+    self = super().__call__(*args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 407, in __init__
+    super().__init__(
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/_base_stepper.py", line 116, in __init__
+    nonlinear_fun = self._build_nonlinear_fun(derivative_operator)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_module.py", line 1041, in __call__
+    return self.__func__(self.__self__, *args, **kwargs)
+  File "/blue/shiboli.fsu/yifeisun.umich/local_packages/exponax/exponax/stepper/_navier_stokes.py", line 431, in _build_nonlinear_fun
+    return VorticityConvection2dPatterns(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/equinox/_module.py", line 537, in __call__
+    raise ValueError(
+ValueError: The following fields were not initialised during __init__: {'forcing_pattern'}

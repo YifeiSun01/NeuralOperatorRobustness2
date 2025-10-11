@@ -1,0 +1,27 @@
+c0903a-s5.ufhpc
+Tue Jul 22 11:02:50 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Loading Main Dataset ===
+Dataset keys available: dict_keys(['x', 'y', 'metadata'])
+Input data (x) shape - [samples, height, width]: torch.Size([2000, 256, 256])
+Output data (y) shape - [samples, height, width, timesteps]: torch.Size([2000, 256, 256, 21])
+
+=== Loading Test Dataset ===
+Test dataset keys available: dict_keys(['x', 'y', 'metadata'])
+Test input data (x) shape: torch.Size([50, 256, 256])
+Test output data (y) shape: torch.Size([50, 256, 256, 21])
+
+=== Loading Training Dataset ===
+Training dataset keys available: dict_keys(['x', 'y', 'metadata'])
+Training input data (x) shape: torch.Size([1150, 256, 256])
+Training output data (y) shape: torch.Size([1150, 256, 256, 21])
+
+=== Dataset Statistics ===
+Total samples in main dataset: 2000
+Total samples in training set: 1150
+Total samples in test set: 50
+Combined train+test samples: 1200
+Image dimensions: torch.Size([256, 256]) (height × width)
+Number of timesteps in output: 21
+
+No identical tensors found between train+test and main dataset

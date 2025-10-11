@@ -1,0 +1,7 @@
+c0904a-s15.ufhpc
+Wed Sep  3 09:24:00 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[RUN] spatial similarity (frame 0)
+[ERROR] Missing dataset_stats_1440.h5
+[RUN] fft(|F|) similarity (frame 0)
+[ERROR] Missing dataset_stats_fft_1440.h5

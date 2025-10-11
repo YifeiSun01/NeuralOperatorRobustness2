@@ -1,0 +1,16 @@
+c0901a-s15.ufhpc
+Fri Jul 11 11:53:02 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+GIF saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1.gif
+GIF successfully saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1.gif
+Created visualization: attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1.gif 
+    | Time: 114.55s
+Enhanced GIF saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1_periodic.gif
+Created visualization: attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1_periodic.gif 
+    | Time: 142.32s
+Enhanced GIF saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1_periodic_grad.gif
+Created visualization: attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1_periodic_grad.gif 
+    | Time: 184.42s
+Enhanced GIF saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1_periodic_x0.gif
+Created visualization: attack_progress_norm2_epsilon65.536_alpha10.0_num_steps100_index1_periodic_x0.gif 
+    | Time: 196.31s

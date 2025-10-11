@@ -1,0 +1,151 @@
+c1009a-s29.ufhpc
+Sun Jun  8 11:19:16 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Selected GPU 0 (NVIDIA A100-SXM4-80GB) with 0.00 GB free memory
+===============Experiment===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_results/1D
+device:  cuda:0
+nu:  0.0005
+INFO:2025-06-08 11:19:26,963:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0608 11:19:26.963900 22709622932160 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+===============Running===============
+
+
+
+
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test.py:40: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test.py:44: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test.py:76: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_test.py:79: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+
+====================================================================================================
+               COMPARISON 2: With Solver - Numerical vs Analytical Gradients (Step 0)               
+====================================================================================================
+Metric                         | analytical           | numerical            | Difference/Analysis      
+------------------------------+----------------------+----------------------+-------------------------
+Vector Length                  | 1024                 | 1024                 |
+Non-zero Count                 | N/A                  | N/A                  |
+
+                                         Norms and Extremes                                         
+----------------------------------------------------------------------------------------------------
+L2 Norm                        | 2.080240e+04         | 2.080246e+04         | ratio: 1.00
+
+                                         Difference Metrics                                         
+----------------------------------------------------------------------------------------------------
+RMSE                           | -                    | -                    | 1.127022e-02
+
+                                       Directional Similarity                                       
+----------------------------------------------------------------------------------------------------
+Cosine Similarity              | -                    | -                    | 1.000000
+Angle (Degrees)                | -                    | -                    | 0.00°
+====================================================================================================
+
+
+====================================================================================================
+             COMPARISON 3: Without Solver - Numerical vs Analytical Gradients (Step 0)              
+====================================================================================================
+Metric                         | analytical           | numerical            | Difference/Analysis      
+------------------------------+----------------------+----------------------+-------------------------
+Vector Length                  | 1024                 | 1024                 |
+Non-zero Count                 | N/A                  | N/A                  |
+
+                                         Norms and Extremes                                         
+----------------------------------------------------------------------------------------------------
+L2 Norm                        | 1.041660e+04         | 2.080246e+04         | ratio: 0.50
+
+                                         Difference Metrics                                         
+----------------------------------------------------------------------------------------------------
+RMSE                           | -                    | -                    | 3.251351e+02
+
+                                       Directional Similarity                                       
+----------------------------------------------------------------------------------------------------
+Cosine Similarity              | -                    | -                    | 0.999114
+Angle (Degrees)                | -                    | -                    | 2.41°
+====================================================================================================
+
+
+====================================================================================================
+               COMPARISON 4: Approximate - Numerical vs Analytical Gradients (Step 0)               
+====================================================================================================
+Metric                         | analytical           | numerical            | Difference/Analysis      
+------------------------------+----------------------+----------------------+-------------------------
+Vector Length                  | 1024                 | 1024                 |
+Non-zero Count                 | N/A                  | N/A                  |
+
+                                         Norms and Extremes                                         
+----------------------------------------------------------------------------------------------------
+L2 Norm                        | 1.054020e+04         | 1.054020e+04         | ratio: 1.00
+
+                                         Difference Metrics                                         
+----------------------------------------------------------------------------------------------------
+RMSE                           | -                    | -                    | 4.572694e-04
+
+                                       Directional Similarity                                       
+----------------------------------------------------------------------------------------------------
+Cosine Similarity              | -                    | -                    | 1.000000
+Angle (Degrees)                | -                    | -                    | 0.00°
+====================================================================================================
+
+
+====================================================================================================
+           COMPARISON 5: Approximate (Real) - Numerical vs Analytical Gradients (Step 0)            
+====================================================================================================
+Metric                         | analytical           | numerical            | Difference/Analysis      
+------------------------------+----------------------+----------------------+-------------------------
+Vector Length                  | 1024                 | 1024                 |
+Non-zero Count                 | N/A                  | N/A                  |
+
+                                         Norms and Extremes                                         
+----------------------------------------------------------------------------------------------------
+L2 Norm                        | 1.054020e+04         | 2.080246e+04         | ratio: 0.51
+
+                                         Difference Metrics                                         
+----------------------------------------------------------------------------------------------------
+RMSE                           | -                    | -                    | 3.299333e+02
+
+                                       Directional Similarity                                       
+----------------------------------------------------------------------------------------------------
+Cosine Similarity              | -                    | -                    | 0.985965
+Angle (Degrees)                | -                    | -                    | 9.61°
+====================================================================================================
+
+
+====================================================================================================
+               COMPARISON 2: With Solver - Numerical vs Analytical Gradients (Step 1)               
+====================================================================================================
+Metric                         | analytical           | numerical            | Difference/Analysis      
+------------------------------+----------------------+----------------------+-------------------------
+Vector Length                  | 1024                 | 1024                 |
+Non-zero Count                 | N/A                  | N/A                  |
+
+                                         Norms and Extremes                                         
+----------------------------------------------------------------------------------------------------
+L2 Norm                        | 2.128064e+04         | 2.128067e+04         | ratio: 1.00
+
+                                         Difference Metrics                                         
+----------------------------------------------------------------------------------------------------
+RMSE                           | -                    | -                    | 1.005324e-02
+
+                                       Directional Similarity                                       
+----------------------------------------------------------------------------------------------------
+Cosine Similarity              | -                    | -                    | 1.000000
+Angle (Degrees)                | -                    | -                    | 0.00°
+====================================================================================================
+
+slurmstepd: error: *** JOB 4716572 ON c1009a-s29 CANCELLED AT 2025-06-08T11:42:12 ***

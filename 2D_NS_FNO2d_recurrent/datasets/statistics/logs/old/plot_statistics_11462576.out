@@ -1,0 +1,819 @@
+c1009a-s5.ufhpc
+Sun Aug 31 08:42:59 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[INFO] Script dir: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics
+[INFO] H5 in script dir: ['dataset_stats.h5', 'dataset_stats_fft.h5']
+[INFO] H5 in CWD      : []
+[INFO] Spatial file loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats.h5
+[INFO] FFT file loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_fft.h5
+[INFO] Total datasets discovered: 1457
+[INFO] generalizability datasets available: 1440
+[INFO] Sampling 50 from generalizability with seed=20240901
+       Selected (first 10 shown): dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau3_vmax-1_vmin-1.5_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax-1_vmin-1.5_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax0_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.050_variance2.000_vmax-1_vmin-1.5_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax0.4_vmin-0.4_batch0_all_frames ...
+[INFO] Total datasets to draw after sampling: 67 (non-gen=17, gen-picked=50)
+
+[1/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau15_vmax-1_vmin-1.5_batch0_all_frames
+
+[2/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau3_vmax1.5_vmin1_batch0_all_frames
+
+[3/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha1.500_tau7_vmax0.4_vmin-0.4_batch0_all_frames
+
+[4/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2.500_tau1_vmax1_vmin-1_batch0_all_frames
+
+[5/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau3_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau3_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau3_vmax-1_vmin-1.5_batch0_all_frames
+
+[6/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax-1_vmin-1.5_batch0_all_frames
+
+[7/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.100_vmax0_vmin-1_batch0_all_frames
+
+[8/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin-1_batch0_all_frames
+
+[9/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.050_variance2.000_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.050_variance2.000_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rbf_length_scale0.050_variance2.000_vmax-1_vmin-1.5_batch0_all_frames
+
+[10/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax0.4_vmin-0.4_batch0_all_frames
+
+[11/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha0.750_vmax1.5_vmin1_batch0_all_frames
+
+[12/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha0.750_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha0.750_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha0.750_vmax1_vmin-1_batch0_all_frames
+
+[13/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames
+
+[14/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.700_alpha1.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.700_alpha1.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.700_alpha1.500_vmax0_vmin-1_batch0_all_frames
+
+[15/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha1.000_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha1.000_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha1.000_vmax0_vmin-1_batch0_all_frames
+
+[16/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha1.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha1.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha1.500_vmax1_vmin0_batch0_all_frames
+
+[17/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha0.750_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha0.750_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha0.750_vmax1.5_vmin1_batch0_all_frames
+
+[18/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[19/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance0.700_alpha0.750_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance0.700_alpha0.750_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance0.700_alpha0.750_vmax1_vmin0_batch0_all_frames
+
+[20/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau1_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau1_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau1_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+
+[21/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+
+[22/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau3_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau3_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau3_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[23/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau11_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau11_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau11_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+
+[24/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau1_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau1_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau1_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[25/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau7_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau7_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau7_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+
+[26/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance2.000_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance2.000_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.020_variance2.000_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[27/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance0.500_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance0.500_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance0.500_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+
+[28/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance2.000_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance2.000_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance2.000_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[29/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance0.700_alpha1.000_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance0.700_alpha1.000_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance0.700_alpha1.000_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+
+[30/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance1.700_alpha0.750_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance1.700_alpha0.750_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance1.700_alpha0.750_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[31/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance1.700_alpha0.750_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance1.700_alpha0.750_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.050_variance1.700_alpha0.750_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+
+[32/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance0.700_alpha1.500_exp_factor2.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance0.700_alpha1.500_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance0.700_alpha1.500_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+
+[33/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance0.700_alpha1.700_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance0.700_alpha1.700_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance0.700_alpha1.700_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[34/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance1.700_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance1.700_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance1.700_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[35/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance1.700_alpha1.700_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance1.700_alpha1.700_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rq_length_scale0.100_variance1.700_alpha1.700_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[36/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha1.500_tau11_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha1.500_tau11_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha1.500_tau11_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+
+[37/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2.500_tau1_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2.500_tau1_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2.500_tau1_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+
+[38/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[39/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2_tau1_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2_tau1_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha2_tau1_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[40/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance2.000_exp_factor2.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance2.000_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance2.000_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+
+[41/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance5_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance5_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance5_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[42/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance5_exp_factor2.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance5_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.020_variance5_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+
+[43/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.100_variance1.000_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.100_variance1.000_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.100_variance1.000_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[44/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.200_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.200_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.200_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+
+[45/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance0.700_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance0.700_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance0.700_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[46/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha0.750_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha0.750_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha0.750_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+
+[47/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha1.700_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[48/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.700_alpha1.500_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.700_alpha1.500_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.700_alpha1.500_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+
+[49/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance1.700_alpha0.750_exp_factor2.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance1.700_alpha0.750_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance1.700_alpha0.750_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+
+[50/67] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance1.700_alpha1.700_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance1.700_alpha1.700_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance1.700_alpha1.700_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+
+[51/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames  type=train
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+
+[52/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10
+
+[53/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10
+
+[54/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10
+
+[55/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10
+
+[56/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10
+
+[57/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10
+
+[58/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10
+
+[59/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10
+
+[60/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10
+
+[61/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10
+
+[62/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10
+
+[63/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10
+
+[64/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10
+
+[65/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10
+
+[66/67] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10
+
+[67/67] Drawing dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames  type=test
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames
+
+[OK] Plots saved under: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type

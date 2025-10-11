@@ -1,0 +1,62 @@
+c0900a-s15.ufhpc
+Wed Aug  6 09:28:56 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list:  [(2, 13.1072, 2.5, 100), (2, 39.3216, 2.5, 100), (2, 78.6432, 2.5, 100), (2, 13.1072, 5.0, 100), (2, 39.3216, 5.0, 100), (2, 78.6432, 5.0, 100), (2, 13.1072, 10.0, 100), (2, 39.3216, 10.0, 100), (2, 78.6432, 10.0, 100)]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 2.5, num_steps: 100, index: 1, learning_rate_updating_method: ATSS (Adaptive Similarity Step Size), detach: with_solver
+x_adv.shape:  torch.Size([256, 256])
+scheduler initialization paramaters:  {'method': 'ATSS (Adaptive Similarity Step Size)', 'alpha0': 2.5, 'state': {'prev_grad': None}, 'params': {'gamma': 0.9, 'm': 10, 'k': 0.01, 'beta': 0.9, 'beta1': 0.9, 'beta2': 0.999}, 'first_grad_norm': None, 'first_sq_grad': None, 'first_alpha': None}
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 77.294218s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 39.999328s | 显存: 0.00 B
+  t=2s - 时间: 0.482612s | 显存: 0.00 B
+  t=3s - 时间: 0.556347s | 显存: 0.00 B
+  t=4s - 时间: 0.633685s | 显存: 0.00 B
+  t=5s - 时间: 0.715480s | 显存: 0.00 B
+  t=6s - 时间: 0.802807s | 显存: 0.00 B
+  t=7s - 时间: 0.909682s | 显存: 0.00 B
+  t=8s - 时间: 0.981231s | 显存: 0.00 B
+  t=9s - 时间: 1.062788s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.889920s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.890140s | 显存: 0.00 B
+
+[本步骤总计] 时间: 79.184358s | 显存: 4.12 GB
+orginal_loss:  tensor(3644.5620, device='cuda:0', grad_fn=<MseLossBackward0>)

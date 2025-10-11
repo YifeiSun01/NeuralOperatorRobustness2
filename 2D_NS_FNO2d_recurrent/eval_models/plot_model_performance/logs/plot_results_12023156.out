@@ -1,0 +1,202 @@
+c1000a-s5.ufhpc
+Sun Sep  7 12:52:54 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== RUNTIME INFO ===
+Python 3.10.17
+Sun Sep  7 12:52:56 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.148.08             Driver Version: 570.148.08     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA B200                    On  |   00000000:52:00.0 Off |                    0 |
+| N/A   36C    P0            145W / 1000W |       0MiB / 183359MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+PROJECT_ROOT : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+PLOT_SCRIPT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/plot_results.py
+CSV_PATH     : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500.csv
+OUTPUT_ROOT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500
+===============
+[paths] script_dir = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance
+[paths] input CSV = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500.csv
+[paths] save_root  = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus
+[step] reading CSV ...
+[info] rows=36,089, columns=48
+[step] inferring model hyperparams (modes/width/epochs[/Tin/Tout/step] + mdl_alpha/mdl_epsilon + strategy/pct) ...
+[step] building FULL pivot table (rmse/mae/mape mean&std) ...
+[info] pivot_full shape = (1457, 150); columns levels = ['metric', 'model_group', 'model_path', 'model_source_dir', 'strategy', 'pct_tag', 'percent', 'expanded_stem', 'expanded_file_name', 'expanded_file_path', 'k_requested', 'mdl_alpha', 'model_name', 'modes', 'width', 'epochs', 'mdl_epsilon']
+[step] writing FULL pivot CSV ...
+[ok] saved FULL pivot to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/pivot_full_metrics.csv
+[step] subtracting baseline per row on rmse_mean ...
+[check] baseline columns after subtraction -> max|value| = 0.0
+[step] writing ΔRMSE pivot CSV ...
+[ok] saved ΔRMSE pivot to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/pivot_rmse_minus_baseline_from_pivot_epochs500.csv
+[step] plotting by family (GRF/LogGRF/NegLogGRF) ...
+[run] GRF: 497 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF
+[plot] models to plot: 24
+[plot 1/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha10.0_epsilon13.1072.png
+[plot 2/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha10.0_epsilon13.1072.png
+[plot 3/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha10.0_epsilon13.1072.png
+[plot 4/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha10.0_epsilon13.1072.png
+[plot 5/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha10.0_epsilon13.1072.png
+[plot 6/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha10.0_epsilon13.1072.png
+[plot 7/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha10.0_epsilon13.1072.png
+[plot 8/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha10.0_epsilon13.1072.png
+[plot 9/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha1.0_epsilon13.1072.png
+[plot 10/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha1.0_epsilon13.1072.png
+[plot 11/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha1.0_epsilon13.1072.png
+[plot 12/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha1.0_epsilon13.1072.png
+[plot 13/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha2.5_epsilon13.1072.png
+[plot 14/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha2.5_epsilon13.1072.png
+[plot 15/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha2.5_epsilon13.1072.png
+[plot 16/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha2.5_epsilon13.1072.png
+[plot 17/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha50.0_epsilon13.1072.png
+[plot 18/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha50.0_epsilon13.1072.png
+[plot 19/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha50.0_epsilon13.1072.png
+[plot 20/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha50.0_epsilon13.1072.png
+[plot 21/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha50.0_epsilon13.1072.png
+[plot 22/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha50.0_epsilon13.1072.png
+[plot 23/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha50.0_epsilon13.1072.png
+[plot 24/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/GRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha50.0_epsilon13.1072.png
+[run] LogGRF: 497 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF
+[plot] models to plot: 24
+[plot 1/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha10.0_epsilon13.1072.png
+[plot 2/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha10.0_epsilon13.1072.png
+[plot 3/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha10.0_epsilon13.1072.png
+[plot 4/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha10.0_epsilon13.1072.png
+[plot 5/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha10.0_epsilon13.1072.png
+[plot 6/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha10.0_epsilon13.1072.png
+[plot 7/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha10.0_epsilon13.1072.png
+[plot 8/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha10.0_epsilon13.1072.png
+[plot 9/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha1.0_epsilon13.1072.png
+[plot 10/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha1.0_epsilon13.1072.png
+[plot 11/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha1.0_epsilon13.1072.png
+[plot 12/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha1.0_epsilon13.1072.png
+[plot 13/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha2.5_epsilon13.1072.png
+[plot 14/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha2.5_epsilon13.1072.png
+[plot 15/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha2.5_epsilon13.1072.png
+[plot 16/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha2.5_epsilon13.1072.png
+[plot 17/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha50.0_epsilon13.1072.png
+[plot 18/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha50.0_epsilon13.1072.png
+[plot 19/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha50.0_epsilon13.1072.png
+[plot 20/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha50.0_epsilon13.1072.png
+[plot 21/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha50.0_epsilon13.1072.png
+[plot 22/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha50.0_epsilon13.1072.png
+[plot 23/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha50.0_epsilon13.1072.png
+[plot 24/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/LogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha50.0_epsilon13.1072.png
+[run] NegLogGRF: 497 rows → /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF
+[plot] preparing color palette and row layout ...
+[plot] output directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF
+[plot] models to plot: 24
+[plot 1/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha10.0_epsilon13.1072.png
+[plot 2/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha10.0_epsilon13.1072.png
+[plot 3/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha10.0_epsilon13.1072.png
+[plot 4/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha10.0_epsilon13.1072.png
+[plot 5/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha10.0_epsilon13.1072.png
+[plot 6/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha10.0_epsilon13.1072.png
+[plot 7/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha10.0_epsilon13.1072.png
+[plot 8/24] drawing: modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha10.0_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha10.0_epsilon13.1072.png
+[plot 9/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha1.0_epsilon13.1072.png
+[plot 10/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha1.0_epsilon13.1072.png
+[plot 11/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha1.0_epsilon13.1072.png
+[plot 12/24] drawing: modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha1.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha1.0_epsilon13.1072.png
+[plot 13/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha2.5_epsilon13.1072.png
+[plot 14/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha2.5_epsilon13.1072.png
+[plot 15/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha2.5_epsilon13.1072.png
+[plot 16/24] drawing: modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha2.5_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha2.5_epsilon13.1072.png
+[plot 17/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_100pct/model_group_folder_strategy_add_pct_100pct_k_requested_1150.0_alpha50.0_epsilon13.1072.png
+[plot 18/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_100pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_100pct/model_group_folder_strategy_replace_pct_100pct_k_requested_1150.0_alpha50.0_epsilon13.1072.png
+[plot 19/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_25pct/model_group_folder_strategy_add_pct_25pct_k_requested_288.0_alpha50.0_epsilon13.1072.png
+[plot 20/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_25pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_25pct/model_group_folder_strategy_replace_pct_25pct_k_requested_288.0_alpha50.0_epsilon13.1072.png
+[plot 21/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_50pct/model_group_folder_strategy_add_pct_50pct_k_requested_575.0_alpha50.0_epsilon13.1072.png
+[plot 22/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_50pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_50pct/model_group_folder_strategy_replace_pct_50pct_k_requested_575.0_alpha50.0_epsilon13.1072.png
+[plot 23/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/add_75pct/model_group_folder_strategy_add_pct_75pct_k_requested_862.0_alpha50.0_epsilon13.1072.png
+[plot 24/24] drawing: modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_75pct
+   -> saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500/plots/models_rmse_minus/NegLogGRF/modes64x64_width60_epochs500/alpha50.0_epsilon13.1072/replace_75pct/model_group_folder_strategy_replace_pct_75pct_k_requested_862.0_alpha50.0_epsilon13.1072.png
+[done] all tasks completed.

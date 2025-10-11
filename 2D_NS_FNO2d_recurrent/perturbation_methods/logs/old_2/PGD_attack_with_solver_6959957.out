@@ -1,0 +1,67 @@
+c1101a-s15.ufhpc
+Wed Jul  9 11:16:44 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list:  [('inf', 0.1, 0.05, 100), ('inf', 0.1, 0.01, 100), ('inf', 0.5, 0.05, 100), ('inf', 0.5, 0.01, 100), ('inf', 1, 0.01, 100), ('inf', 1, 0.05, 100), ('inf', 1, 0.1, 100)]
+================================================================================
+norm: inf, epsilon: 0.1, alpha: 0.05, num_steps: 100, index: 1
+x_adv.shape:  torch.Size([256, 256])
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 58.137920s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 28.619569s | 显存: 0.00 B
+  t=2s - 时间: 0.472084s | 显存: 0.00 B
+  t=3s - 时间: 0.567112s | 显存: 0.00 B
+  t=4s - 时间: 0.646063s | 显存: 0.00 B
+  t=5s - 时间: 0.702319s | 显存: 0.00 B
+  t=6s - 时间: 0.778724s | 显存: 0.00 B
+  t=7s - 时间: 0.850334s | 显存: 0.00 B
+  t=8s - 时间: 0.950892s | 显存: 0.00 B
+  t=9s - 时间: 1.023178s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.834752s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.835009s | 显存: 0.00 B
+
+[本步骤总计] 时间: 59.972929s | 显存: 4.12 GB
+orginal_loss:  tensor(3644.5620, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 0] Backward Propagation - Time: 28.2383s, Mem: -4405592064.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(13.3852, device='cuda:0')
+Autograd grad min:  tensor(-18.1044, device='cuda:0')
+Autograd grad mean:  tensor(0.1148, device='cuda:0')

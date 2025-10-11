@@ -1,0 +1,30 @@
+c1001a-s5.ufhpc
+Tue Aug 26 10:55:33 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+当前使用的是 GPU (CUDA) 进行计算
+设备名称: NVIDIA B200
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+index:  0     final_solution:  [nan nan nan ... nan nan nan]
+index:  1     final_solution:  [nan nan nan ... nan nan nan]
+index:  2     final_solution:  [nan nan nan ... nan nan nan]
+index:  3     final_solution:  [nan nan nan ... nan nan nan]
+index:  4     final_solution:  [nan nan nan ... nan nan nan]
+index:  5     final_solution:  [nan nan nan ... nan nan nan]
+index:  6     final_solution:  [nan nan nan ... nan nan nan]
+index:  7     final_solution:  [nan nan nan ... nan nan nan]
+index:  8     final_solution:  [nan nan nan ... nan nan nan]
+index:  9     final_solution:  [nan nan nan ... nan nan nan]
+index:  10     final_solution:  [nan nan nan ... nan nan nan]
+index:  11     final_solution:  [nan nan nan ... nan nan nan]
+index:  12     final_solution:  [nan nan nan ... nan nan nan]
+index:  13     final_solution:  [nan nan nan ... nan nan nan]
+index:  14     final_solution:  [nan nan nan ... nan nan nan]
+index:  15     final_solution:  [nan nan nan ... nan nan nan]
+index:  16     final_solution:  [nan nan nan ... nan nan nan]
+index:  17     final_solution:  [nan nan nan ... nan nan nan]
+index:  18     final_solution:  [nan nan nan ... nan nan nan]
+index:  19     final_solution:  [nan nan nan ... nan nan nan]
+{'input tensor shape': torch.Size([20, 1024]), 'output tensor shape': torch.Size([20, 1024])}
+Saved input tensor to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+Saved output tensor to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt

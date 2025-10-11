@@ -1,0 +1,37 @@
+c0904a-s25.ufhpc
+Fri Jun 27 02:18:31 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/50 [00:00<?, ?sample/s]Generating samples:   2%|▏         | 1/50 [00:47<39:00, 47.76s/sample]Generating samples:   4%|▍         | 2/50 [01:28<34:57, 43.69s/sample]Generating samples:   6%|▌         | 3/50 [02:09<33:07, 42.28s/sample]Generating samples:   8%|▊         | 4/50 [02:49<31:49, 41.51s/sample]Generating samples:  10%|█         | 5/50 [03:29<30:48, 41.07s/sample]Generating samples:  12%|█▏        | 6/50 [04:10<29:58, 40.88s/sample]Generating samples:  14%|█▍        | 7/50 [04:50<29:12, 40.75s/sample]Generating samples:  16%|█▌        | 8/50 [05:31<28:29, 40.71s/sample]Generating samples:  18%|█▊        | 9/50 [06:13<28:05, 41.12s/sample]Generating samples:  20%|██        | 10/50 [06:57<27:56, 41.92s/sample]Generating samples:  22%|██▏       | 11/50 [07:37<26:54, 41.41s/sample]Generating samples:  24%|██▍       | 12/50 [08:19<26:26, 41.75s/sample]Generating samples:  26%|██▌       | 13/50 [09:05<26:30, 43.00s/sample]Generating samples:  28%|██▊       | 14/50 [09:47<25:32, 42.56s/sample]Generating samples:  30%|███       | 15/50 [10:31<25:05, 43.02s/sample]Generating samples:  32%|███▏      | 16/50 [11:12<24:02, 42.43s/sample]Generating samples:  34%|███▍      | 17/50 [11:53<23:04, 41.95s/sample]Generating samples:  36%|███▌      | 18/50 [12:34<22:11, 41.62s/sample]Generating samples:  38%|███▊      | 19/50 [13:15<21:24, 41.42s/sample]Generating samples:  40%|████      | 20/50 [14:01<21:23, 42.78s/sample]Generating samples:  42%|████▏     | 21/50 [14:49<21:25, 44.34s/sample]Generating samples:  44%|████▍     | 22/50 [15:31<20:21, 43.61s/sample]Generating samples:  46%|████▌     | 23/50 [16:14<19:36, 43.57s/sample]Generating samples:  48%|████▊     | 24/50 [16:55<18:35, 42.92s/sample]Generating samples:  50%|█████     | 25/50 [17:36<17:39, 42.36s/sample]Generating samples:  52%|█████▏    | 26/50 [18:18<16:47, 42.00s/sample]Generating samples:  54%|█████▍    | 27/50 [18:59<16:02, 41.84s/sample]Generating samples:  56%|█████▌    | 28/50 [19:41<15:19, 41.78s/sample]Generating samples:  58%|█████▊    | 29/50 [20:22<14:36, 41.74s/sample]Generating samples:  60%|██████    | 30/50 [21:03<13:47, 41.36s/sample]Generating samples:  62%|██████▏   | 31/50 [21:44<13:05, 41.33s/sample]Generating samples:  64%|██████▍   | 32/50 [22:26<12:26, 41.45s/sample]Generating samples:  66%|██████▌   | 33/50 [23:07<11:41, 41.29s/sample]Generating samples:  68%|██████▊   | 34/50 [23:48<11:02, 41.41s/sample]Generating samples:  70%|███████   | 35/50 [24:30<10:20, 41.38s/sample]Generating samples:  72%|███████▏  | 36/50 [25:11<09:40, 41.49s/sample]Generating samples:  74%|███████▍  | 37/50 [25:55<09:07, 42.14s/sample]Generating samples:  76%|███████▌  | 38/50 [26:40<08:33, 42.81s/sample]Generating samples:  78%|███████▊  | 39/50 [27:22<07:48, 42.59s/sample]Generating samples:  80%|████████  | 40/50 [28:03<07:02, 42.28s/sample]Generating samples:  82%|████████▏ | 41/50 [28:44<06:17, 41.91s/sample]Generating samples:  84%|████████▍ | 42/50 [29:25<05:33, 41.73s/sample]Generating samples:  86%|████████▌ | 43/50 [30:07<04:50, 41.54s/sample]Generating samples:  88%|████████▊ | 44/50 [30:51<04:14, 42.47s/sample]Generating samples:  90%|█████████ | 45/50 [31:40<03:41, 44.24s/sample]Generating samples:  92%|█████████▏| 46/50 [32:22<02:55, 43.77s/sample]Generating samples:  94%|█████████▍| 47/50 [33:09<02:14, 44.73s/sample]Generating samples:  96%|█████████▌| 48/50 [33:51<01:27, 43.83s/sample]Generating samples:  98%|█████████▊| 49/50 [34:32<00:43, 43.03s/sample]Generating samples: 100%|██████████| 50/50 [35:13<00:00, 42.44s/sample]Generating samples: 100%|██████████| 50/50 [35:13<00:00, 42.27s/sample]
+Stacking tensors:   0%|          | 0/2 [00:00<?, ?it/s]Stacking tensors:  50%|█████     | 1/2 [00:00<00:00,  2.78it/s]Stacking tensors: 100%|██████████| 2/2 [00:00<00:00,  5.55it/s]
+Saving dataset:   0%|          | 0/1 [00:00<?, ?it/s]Saving dataset: 100%|██████████| 1/1 [00:00<00:00,  1.24it/s]Saving dataset: 100%|██████████| 1/1 [00:00<00:00,  1.24it/s]
+
+Dataset saved to ./datasets/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt

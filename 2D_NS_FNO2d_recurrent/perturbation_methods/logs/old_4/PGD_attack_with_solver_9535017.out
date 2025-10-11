@@ -1,0 +1,76 @@
+c0900a-s25.ufhpc
+Wed Aug  6 08:36:59 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list:  [(2, 39.3216, 5.0, 100)]
+detached1to9
+[]
+================================================================================
+norm: 2, epsilon: 39.3216, alpha: 5.0, num_steps: 100, index: 1, learning_rate_updating_method: Standard PGD (Fixed Step Size), detach: detached1to9
+x_adv.shape:  torch.Size([256, 256])
+scheduler initialization paramaters:  {'method': 'Standard PGD (Fixed Step Size)', 'alpha0': 5.0, 'state': {}, 'params': {'gamma': 0.9, 'm': 10, 'k': 0.01, 'beta': 0.9, 'beta1': 0.9, 'beta2': 0.999}, 'first_grad_norm': None, 'first_sq_grad': None, 'first_alpha': None}
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 11.717413s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 4.022763s | 显存: 0.00 B
+  t=2s - 时间: 0.506733s | 显存: 0.00 B
+  t=3s - 时间: 0.572573s | 显存: 0.00 B
+  t=4s - 时间: 0.663861s | 显存: 0.00 B
+  t=5s - 时间: 0.752533s | 显存: 0.00 B
+  t=6s - 时间: 0.816587s | 显存: 0.00 B
+  t=7s - 时间: 0.905793s | 显存: 0.00 B
+  t=8s - 时间: 0.980871s | 显存: 0.00 B
+  t=9s - 时间: 1.062628s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.869177s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.869432s | 显存: 0.00 B
+
+[本步骤总计] 时间: 13.586845s | 显存: 4.12 GB
+orginal_loss:  tensor(3644.5620, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 0] alpha=5.000000e+00, first_alpha=5.000000e+00, 100.000000%, alpha change ratio=nan
+Step 0 α = 5.000000
+[Step 0] Backward Propagation - Time: 21.5268s, Mem: -4405592064.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(13.3852, device='cuda:0')
+Autograd grad min:  tensor(-18.1044, device='cuda:0')
+Autograd grad mean:  tensor(0.1148, device='cuda:0')
+[Step 0] PGD Update - Time: 0.0014s, Mem: 513.00 KB
+
+[Step 0] 完整步骤总时间: 35.244850s | 总显存: 20.41 MB
+[Step 0] 峰值显存: 6.21 GB

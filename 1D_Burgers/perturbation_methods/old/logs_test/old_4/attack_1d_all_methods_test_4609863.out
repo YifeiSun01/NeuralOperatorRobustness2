@@ -1,0 +1,183 @@
+c1106a-s17.ufhpc
+Sat Jun  7 05:36:10 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Selected GPU 0 (NVIDIA A100-SXM4-80GB) with 0.00 GB free memory
+===============Experiment===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_results/1D
+device:  cuda:0
+nu:  0.0005
+INFO:2025-06-07 05:37:49,049:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0607 05:37:49.049587 22988244697792 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+===============Running===============
+
+
+
+
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pt
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_compare.py:39: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_compare.py:43: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_compare.py:75: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./perturbation_methods/runner1d_compare.py:78: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 2.03464         | 4.636602e+02    | 3.690980e+02    | 57.48           | 0.998366           | 3.27616°        | 98.54          
+2. with PDE solver vs PDE approximated             | 1.99972         | 5.623846e+02    | 5.285933e+02    | 4962.51         | 0.867160           | 29.86975°       | 76.46          
+3. PDE detached vs PDE approximated                | 0.98284         | 2.314036e+02    | 2.214280e+02    | 2166.40         | 0.868305           | 29.73768°       | 77.54          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.00277         | 6.994697e-03    | 1.572266e-03    | 3940649673949186.50 | 0.997456           | 4.08767°        | 99.61          
+2. with PDE solver vs PDE approximated             | 1.13449         | 5.164884e-02    | 2.718262e-02    | 16044073672507424.00 | 0.850817           | 31.69938°       | 91.70          
+3. PDE detached vs PDE approximated                | 1.13136         | 5.371660e-02    | 2.862793e-02    | 10696049115004968.00 | 0.837166           | 33.15795°       | 91.31          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 6.8847e+04      | 1.2888e+05      | 6.0035e+04      | 87.20       % | 0.1590     | 0.2996     | 0.0026     | 0.1561         
+perturbation PDE detached      | 6.8847e+04      | 1.2886e+05      | 6.0017e+04      | 87.17       % | 0.1733     | 0.0027     | 0.0060     | 0.1670         
+perturbation PDE approximate   | 6.8847e+04      | 1.2337e+05      | 5.4519e+04      | 79.19       % | 0.0029     | 0.0024     | 0.0023     | 0.0005         
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.1 ,    alpha: 0.005 ,    total time: 202.56786584854126
+adversarial input samples: 100%|██████████| 1/1 [03:22<00:00, 202.57s/it]adversarial input samples: 100%|██████████| 1/1 [03:22<00:00, 202.57s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.60944         | 8.191094e+02    | 5.010580e+02    | 111.89          | 0.954289           | 17.39061°       | 95.12          
+2. with PDE solver vs PDE approximated             | 1.45260         | 8.540524e+02    | 6.286034e+02    | 262.97          | 0.912441           | 24.15508°       | 76.95          
+3. PDE detached vs PDE approximated                | 0.90255         | 3.586859e+02    | 2.742775e+02    | 589.36          | 0.960388           | 16.18063°       | 72.07          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 0.98823         | 4.974299e-02    | 1.635742e-02    | 11962686510202890.00 | 0.994336           | 6.10121°        | 97.07          
+2. with PDE solver vs PDE approximated             | 1.02070         | 8.996934e-02    | 3.886719e-02    | 26740122787512336.00 | 0.980834           | 11.23554°       | 97.56          
+3. PDE detached vs PDE approximated                | 1.03285         | 1.062730e-01    | 4.345703e-02    | 28851185112842256.00 | 0.973807           | 13.14267°       | 94.63          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 6.8847e+04      | 6.0805e+05      | 5.3920e+05      | 783.18      % | 0.1577     | 0.2883     | 0.0024     | 0.1550         
+perturbation PDE detached      | 6.8847e+04      | 6.0888e+05      | 5.4003e+05      | 784.38      % | 0.1659     | 0.0026     | 0.0045     | 0.1611         
+perturbation PDE approximate   | 6.8847e+04      | 6.0385e+05      | 5.3500e+05      | 777.08      % | 0.0028     | 0.0024     | 0.0023     | 0.0004         
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.025 ,    total time: 168.31876254081726
+adversarial input samples: 100%|██████████| 1/1 [02:48<00:00, 168.32s/it]adversarial input samples: 100%|██████████| 1/1 [02:48<00:00, 168.32s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.37680         | 8.046949e+02    | 7.304747e+02    | 117.61          | 0.883293           | 27.95787°       | 92.97          
+2. with PDE solver vs PDE approximated             | 1.26926         | 8.827200e+02    | 7.770779e+02    | 99.76           | 0.841894           | 32.65930°       | 95.51          
+3. PDE detached vs PDE approximated                | 0.92189         | 2.356259e+02    | 2.235173e+02    | 212.95          | 0.984997           | 9.93733°        | 92.97          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.00000         | 1.455427e-01    | 1.364702e-01    | 131.70          | 0.891545           | 26.93200°       | 93.26          
+2. with PDE solver vs PDE approximated             | 1.00000         | 1.659926e-01    | 1.494175e-01    | 110.86          | 0.858926           | 30.80381°       | 97.56          
+3. PDE detached vs PDE approximated                | 1.00000         | 4.556135e-02    | 4.240026e-02    | 159.51          | 0.989372           | 8.36093°        | 95.70          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 6.8847e+04      | 4.1957e+05      | 3.5072e+05      | 509.42      % | 0.1576     | 0.2931     | 0.0023     | 0.1550         
+perturbation PDE detached      | 6.8847e+04      | 3.8624e+05      | 3.1740e+05      | 461.01      % | 0.1740     | 0.0027     | 0.0039     | 0.1696         
+perturbation PDE approximate   | 6.8847e+04      | 3.7420e+05      | 3.0536e+05      | 443.53      % | 0.0030     | 0.0024     | 0.0025     | 0.0004         
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 10 ,    alpha: 0.5 ,    total time: 169.99332475662231
+adversarial input samples: 100%|██████████| 1/1 [02:49<00:00, 169.99s/it]adversarial input samples: 100%|██████████| 1/1 [02:49<00:00, 169.99s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.07724         | 5.771696e+02    | 4.064036e+02    | 77.37           | 0.976769           | 12.37418°       | 97.07          
+2. with PDE solver vs PDE approximated             | 1.00070         | 8.318507e+02    | 6.443186e+02    | 60.56           | 0.949830           | 18.22612°       | 97.66          
+3. PDE detached vs PDE approximated                | 0.92895         | 3.912391e+02    | 3.607079e+02    | 90.18           | 0.990762           | 7.79390°        | 94.92          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.00000         | 1.345802e-01    | 1.030900e-01    | 114.41          | 0.976817           | 12.36137°       | 96.48          
+2. with PDE solver vs PDE approximated             | 1.00000         | 2.010536e-01    | 1.576949e-01    | 94.68           | 0.948259           | 18.51164°       | 97.07          
+3. PDE detached vs PDE approximated                | 1.00000         | 9.031517e-02    | 8.073386e-02    | 94.07           | 0.989559           | 8.28671°        | 93.95          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 6.8847e+04      | 1.1319e+06      | 1.0631e+06      | 1544.08     % | 0.1584     | 0.2914     | 0.0025     | 0.1557         
+perturbation PDE detached      | 6.8847e+04      | 1.0696e+06      | 1.0007e+06      | 1453.51     % | 0.1716     | 0.0027     | 0.0049     | 0.1662         
+perturbation PDE approximate   | 6.8847e+04      | 1.0122e+06      | 9.4333e+05      | 1370.18     % | 0.0029     | 0.0024     | 0.0024     | 0.0004         
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 1 ,    total time: 171.26210856437683
+adversarial input samples: 100%|██████████| 1/1 [02:51<00:00, 171.26s/it]adversarial input samples: 100%|██████████| 1/1 [02:51<00:00, 171.26s/it]

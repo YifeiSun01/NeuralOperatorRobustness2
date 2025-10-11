@@ -1,0 +1,44 @@
+c0609a-s12.ufhpc
+Sat Aug 23 05:25:35 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[Scan] Base folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files
+[SCAN] Found 6 .pkl under /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files
+  - file        : gradient_test_exponax_nu0.0005_nsamples1.pkl
+    abs path    : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1.pkl
+    rel path    : nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1.pkl
+    ancestors[all]: nu=0.0005_PGD_results/approxN200
+
+  - file        : gradient_test_exponax_nu0.0005_nsamples1.pkl
+    abs path    : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.0005_PGD_results/approxN2000/gradient_test_exponax_nu0.0005_nsamples1.pkl
+    rel path    : nu=0.0005_PGD_results/approxN2000/gradient_test_exponax_nu0.0005_nsamples1.pkl
+    ancestors[all]: nu=0.0005_PGD_results/approxN2000
+
+  - file        : gradient_test_exponax_nu0.0005_nsamples1.pkl
+    abs path    : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.0005_PGD_results/approxN20000/gradient_test_exponax_nu0.0005_nsamples1.pkl
+    rel path    : nu=0.0005_PGD_results/approxN20000/gradient_test_exponax_nu0.0005_nsamples1.pkl
+    ancestors[all]: nu=0.0005_PGD_results/approxN20000
+
+  - file        : gradient_test_exponax_nu0.01_nsamples1.pkl
+    abs path    : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.01_PGD_results/approxN200/gradient_test_exponax_nu0.01_nsamples1.pkl
+    rel path    : nu=0.01_PGD_results/approxN200/gradient_test_exponax_nu0.01_nsamples1.pkl
+    ancestors[all]: nu=0.01_PGD_results/approxN200
+
+  - file        : gradient_test_exponax_nu0.01_nsamples1.pkl
+    abs path    : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.01_PGD_results/approxN2000/gradient_test_exponax_nu0.01_nsamples1.pkl
+    rel path    : nu=0.01_PGD_results/approxN2000/gradient_test_exponax_nu0.01_nsamples1.pkl
+    ancestors[all]: nu=0.01_PGD_results/approxN2000
+
+  - file        : gradient_test_exponax_nu0.01_nsamples1.pkl
+    abs path    : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.01_PGD_results/approxN20000/gradient_test_exponax_nu0.01_nsamples1.pkl
+    rel path    : nu=0.01_PGD_results/approxN20000/gradient_test_exponax_nu0.01_nsamples1.pkl
+    ancestors[all]: nu=0.01_PGD_results/approxN20000
+
+[Found] 6 pickle files
+
+[Load] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/pickle_files/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1.pkl
+✅ Saved GIF: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/gifs/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1/gif__norm_inf_index_0_numsteps_100_epsilon_0.1_alpha_0.00100.gif
+  -> Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/gifs/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1/gradient_test_exponax_nu0.0005_nsamples1__norm=inf_index=0_steps=100_epsilon=0.1_alpha=0.001.png
+✅ Saved GIF: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/gifs/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1/gif__norm_inf_index_0_numsteps_100_epsilon_0.1_alpha_0.00500.gif
+  -> Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/gifs/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1/gradient_test_exponax_nu0.0005_nsamples1__norm=inf_index=0_steps=100_epsilon=0.1_alpha=0.005.png
+✅ Saved GIF: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/gifs/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1/gif__norm_inf_index_0_numsteps_100_epsilon_0.1_alpha_0.01000.gif
+  -> Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/attack_results/gifs/nu=0.0005_PGD_results/approxN200/gradient_test_exponax_nu0.0005_nsamples1/gradient_test_exponax_nu0.0005_nsamples1__norm=inf_index=0_steps=100_epsilon=0.1_alpha=0.01.png

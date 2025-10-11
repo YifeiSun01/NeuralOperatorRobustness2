@@ -1,0 +1,123 @@
+c1007a-s5.ufhpc
+Mon Sep  8 08:36:16 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+-> pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+================================================================================
+[PKL] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_1solver_1sample_integer_frames/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+Top-level keys: ['steps', 'metadata']
+  - steps        => type=list, shape/desc=list[len=100], dtype=None
+  - metadata     => type=dict, shape/desc=dict[11 keys], dtype=None
+
+[steps] length = 100
+  * gradient           -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * loss               -> present=100/100, shapes={{ scalar }}, dtypes={{ float }}, types={{ float }}
+  * output             -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * reach_boundary     -> present=100/100, shapes={{ scalar }}, dtypes={{ bool }}, types={{ bool }}
+  * scaled_gradient    -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * step               -> present=100/100, shapes={{ scalar }}, dtypes={{ int }}, types={{ int }}
+  * truth              -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * x0                 -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+================================================================================
+
+   Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/results/perturbation_results_1solver_1sample_integer_frames/final_heatmaps_4col/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0.png
+-> pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx1|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+================================================================================
+[PKL] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_1solver_1sample_integer_frames/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx1|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+Top-level keys: ['steps', 'metadata']
+  - steps        => type=list, shape/desc=list[len=100], dtype=None
+  - metadata     => type=dict, shape/desc=dict[11 keys], dtype=None
+
+[steps] length = 100
+  * gradient           -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * loss               -> present=100/100, shapes={{ scalar }}, dtypes={{ float }}, types={{ float }}
+  * output             -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * reach_boundary     -> present=100/100, shapes={{ scalar }}, dtypes={{ bool }}, types={{ bool }}
+  * scaled_gradient    -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * step               -> present=100/100, shapes={{ scalar }}, dtypes={{ int }}, types={{ int }}
+  * truth              -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * x0                 -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+================================================================================
+
+   Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/results/perturbation_results_1solver_1sample_integer_frames/final_heatmaps_4col/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx1.png
+-> pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx2|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+================================================================================
+[PKL] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_1solver_1sample_integer_frames/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx2|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+Top-level keys: ['steps', 'metadata']
+  - steps        => type=list, shape/desc=list[len=100], dtype=None
+  - metadata     => type=dict, shape/desc=dict[11 keys], dtype=None
+
+[steps] length = 100
+  * gradient           -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * loss               -> present=100/100, shapes={{ scalar }}, dtypes={{ float }}, types={{ float }}
+  * output             -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * reach_boundary     -> present=100/100, shapes={{ scalar }}, dtypes={{ bool }}, types={{ bool }}
+  * scaled_gradient    -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * step               -> present=100/100, shapes={{ scalar }}, dtypes={{ int }}, types={{ int }}
+  * truth              -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * x0                 -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+================================================================================
+
+   Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/results/perturbation_results_1solver_1sample_integer_frames/final_heatmaps_4col/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx2.png
+-> pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx3|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+================================================================================
+[PKL] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_1solver_1sample_integer_frames/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx3|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+Top-level keys: ['steps', 'metadata']
+  - steps        => type=list, shape/desc=list[len=100], dtype=None
+  - metadata     => type=dict, shape/desc=dict[11 keys], dtype=None
+
+[steps] length = 100
+  * gradient           -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * loss               -> present=100/100, shapes={{ scalar }}, dtypes={{ float }}, types={{ float }}
+  * output             -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * reach_boundary     -> present=100/100, shapes={{ scalar }}, dtypes={{ bool }}, types={{ bool }}
+  * scaled_gradient    -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * step               -> present=100/100, shapes={{ scalar }}, dtypes={{ int }}, types={{ int }}
+  * truth              -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * x0                 -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+================================================================================
+
+   Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/results/perturbation_results_1solver_1sample_integer_frames/final_heatmaps_4col/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx3.png
+-> pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+================================================================================
+[PKL] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_1solver_1sample_integer_frames/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+Top-level keys: ['steps', 'metadata']
+  - steps        => type=list, shape/desc=list[len=100], dtype=None
+  - metadata     => type=dict, shape/desc=dict[11 keys], dtype=None
+
+[steps] length = 100
+  * gradient           -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * loss               -> present=100/100, shapes={{ scalar }}, dtypes={{ float }}, types={{ float }}
+  * output             -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * reach_boundary     -> present=100/100, shapes={{ scalar }}, dtypes={{ bool }}, types={{ bool }}
+  * scaled_gradient    -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * step               -> present=100/100, shapes={{ scalar }}, dtypes={{ int }}, types={{ int }}
+  * truth              -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * x0                 -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+================================================================================
+
+   Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/results/perturbation_results_1solver_1sample_integer_frames/final_heatmaps_4col/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4.png
+-> pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+================================================================================
+[PKL] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_1solver_1sample_integer_frames/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+Top-level keys: ['steps', 'metadata']
+  - steps        => type=list, shape/desc=list[len=100], dtype=None
+  - metadata     => type=dict, shape/desc=dict[11 keys], dtype=None
+
+[steps] length = 100
+  * gradient           -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * loss               -> present=100/100, shapes={{ scalar }}, dtypes={{ float }}, types={{ float }}
+  * output             -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * reach_boundary     -> present=100/100, shapes={{ scalar }}, dtypes={{ bool }}, types={{ bool }}
+  * scaled_gradient    -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * step               -> present=100/100, shapes={{ scalar }}, dtypes={{ int }}, types={{ int }}
+  * truth              -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+  * x0                 -> present=100/100, shapes={{ (256, 256) }}, dtypes={{ float32 }}, types={{ numpy.ndarray }}
+================================================================================
+
+   Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/results/perturbation_results_1solver_1sample_integer_frames/final_heatmaps_4col/pgd_attack_records_modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx5.png

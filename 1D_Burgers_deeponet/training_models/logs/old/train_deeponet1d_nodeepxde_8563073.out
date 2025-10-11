@@ -1,0 +1,54 @@
+c1103a-s15.ufhpc
+Mon Jul 28 12:17:45 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet
+Epoch 10/500 Train Loss: 0.028159 Test Loss: 0.027822
+Epoch 20/500 Train Loss: 0.026053 Test Loss: 0.025290
+Epoch 30/500 Train Loss: 0.024636 Test Loss: 0.023823
+Epoch 40/500 Train Loss: 0.023770 Test Loss: 0.023094
+Epoch 50/500 Train Loss: 0.022337 Test Loss: 0.021823
+Epoch 60/500 Train Loss: 0.019501 Test Loss: 0.019562
+Epoch 70/500 Train Loss: 0.019109 Test Loss: 0.019218
+Epoch 80/500 Train Loss: 0.018938 Test Loss: 0.019022
+Epoch 90/500 Train Loss: 0.018721 Test Loss: 0.018765
+Epoch 100/500 Train Loss: 0.018409 Test Loss: 0.018403
+Epoch 110/500 Train Loss: 0.017828 Test Loss: 0.017850
+Epoch 120/500 Train Loss: 0.017261 Test Loss: 0.017332
+Epoch 130/500 Train Loss: 0.016779 Test Loss: 0.016873
+Epoch 140/500 Train Loss: 0.016521 Test Loss: 0.016702
+Epoch 150/500 Train Loss: 0.016567 Test Loss: 0.016775
+Epoch 160/500 Train Loss: 0.016307 Test Loss: 0.016498
+Epoch 170/500 Train Loss: 0.016205 Test Loss: 0.016343
+Epoch 180/500 Train Loss: 0.016239 Test Loss: 0.016299
+Epoch 190/500 Train Loss: 0.015881 Test Loss: 0.016105
+Epoch 200/500 Train Loss: 0.015947 Test Loss: 0.015882
+Epoch 210/500 Train Loss: 0.015576 Test Loss: 0.015670
+Epoch 220/500 Train Loss: 0.015874 Test Loss: 0.015802
+Epoch 230/500 Train Loss: 0.014665 Test Loss: 0.015106
+Epoch 240/500 Train Loss: 0.015054 Test Loss: 0.016204
+Epoch 250/500 Train Loss: 0.014509 Test Loss: 0.014779
+Epoch 260/500 Train Loss: 0.014333 Test Loss: 0.014847
+Epoch 270/500 Train Loss: 0.013704 Test Loss: 0.014001
+Epoch 280/500 Train Loss: 0.013386 Test Loss: 0.013581
+Epoch 290/500 Train Loss: 0.013582 Test Loss: 0.013380
+Epoch 300/500 Train Loss: 0.012925 Test Loss: 0.013161
+Epoch 310/500 Train Loss: 0.012795 Test Loss: 0.014208
+Epoch 320/500 Train Loss: 0.012497 Test Loss: 0.012762
+Epoch 330/500 Train Loss: 0.012261 Test Loss: 0.012664
+Epoch 340/500 Train Loss: 0.012119 Test Loss: 0.012362
+Epoch 350/500 Train Loss: 0.011845 Test Loss: 0.012393
+Epoch 360/500 Train Loss: 0.011635 Test Loss: 0.012105
+Epoch 370/500 Train Loss: 0.011867 Test Loss: 0.011955
+Epoch 380/500 Train Loss: 0.011573 Test Loss: 0.011798
+Epoch 390/500 Train Loss: 0.011205 Test Loss: 0.012073
+Epoch 400/500 Train Loss: 0.011510 Test Loss: 0.011674
+Epoch 410/500 Train Loss: 0.011344 Test Loss: 0.011811
+Epoch 420/500 Train Loss: 0.010997 Test Loss: 0.011600
+Epoch 430/500 Train Loss: 0.011035 Test Loss: 0.011286
+Epoch 440/500 Train Loss: 0.010777 Test Loss: 0.011596
+Epoch 450/500 Train Loss: 0.011397 Test Loss: 0.012423
+Epoch 460/500 Train Loss: 0.010606 Test Loss: 0.011110
+Epoch 470/500 Train Loss: 0.010777 Test Loss: 0.011004
+Epoch 480/500 Train Loss: 0.010944 Test Loss: 0.011666
+Epoch 490/500 Train Loss: 0.011983 Test Loss: 0.011508
+Epoch 500/500 Train Loss: 0.010246 Test Loss: 0.010818
+Models saved in directory: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/training_models/../saved_models/DeepONet_b1024_t1024_h1024_lr0.001_bs100_ep500_20250728_001948

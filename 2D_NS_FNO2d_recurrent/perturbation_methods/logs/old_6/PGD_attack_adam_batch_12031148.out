@@ -1,0 +1,56 @@
+c0906a-s15.ufhpc
+Sun Sep  7 04:17:56 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+>>> Running SINGLE job with MODE_SPEC=wwwwwwwwww
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+======================================== 诊断结束 ========================================
+
+input_list: [{'norm': 2, 'epsilon': 13.1072, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 39.3216, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 78.6432, 'alpha': 1.0, 'num_steps': 100}]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 1.0, num_steps: 100, mode_spec: wwwwwwwwww, loss_reduction: sum, b1: 0.9, b2: 0.999, adam_eps: 1e-08, sign_Linf: True, amsgrad: False
+[step 0] loss=3.526949e+05 | peak_mem=21632.1MB
+[step 1] loss=3.649270e+05 | peak_mem=21647.6MB
+[step 2] loss=3.758052e+05 | peak_mem=21647.6MB
+[step 3] loss=3.853689e+05 | peak_mem=21648.0MB
+[step 4] loss=3.940055e+05 | peak_mem=21647.6MB
+[step 5] loss=4.020574e+05 | peak_mem=21648.0MB
+[step 6] loss=4.097580e+05 | peak_mem=21647.6MB
+[step 7] loss=4.172666e+05 | peak_mem=21648.0MB
+[step 8] loss=4.247361e+05 | peak_mem=21647.6MB
+[step 9] loss=4.322848e+05 | peak_mem=21648.0MB
+[step 10] loss=4.399974e+05 | peak_mem=21647.6MB
+[step 11] loss=4.479209e+05 | peak_mem=21648.0MB
+[step 12] loss=4.560971e+05 | peak_mem=21647.6MB
+[step 13] loss=4.645848e+05 | peak_mem=21648.0MB
+[step 14] loss=4.726594e+05 | peak_mem=21647.6MB
+[step 15] loss=4.749227e+05 | peak_mem=21648.0MB
+[step 16] loss=4.763834e+05 | peak_mem=21647.6MB
+[step 17] loss=4.776435e+05 | peak_mem=21648.0MB
+[step 18] loss=4.787045e+05 | peak_mem=21647.6MB
+[step 19] loss=4.795886e+05 | peak_mem=21648.0MB
+[step 20] loss=4.803244e+05 | peak_mem=21647.6MB
+[step 21] loss=4.809378e+05 | peak_mem=21648.0MB
+[step 22] loss=4.814771e+05 | peak_mem=21647.6MB
+[step 23] loss=4.819728e+05 | peak_mem=21648.0MB
+[step 24] loss=4.824418e+05 | peak_mem=21647.6MB
+[step 25] loss=4.828881e+05 | peak_mem=21648.0MB
+[step 26] loss=4.833115e+05 | peak_mem=21647.6MB

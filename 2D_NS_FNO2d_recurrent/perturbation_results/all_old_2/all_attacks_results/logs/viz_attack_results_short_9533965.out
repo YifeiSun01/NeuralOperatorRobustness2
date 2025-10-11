@@ -1,0 +1,12 @@
+c0901a-s25.ufhpc
+Wed Aug  6 08:01:16 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+📊 绘图中: with_solver, 参数: ('alpha=5.0', 'epsilon=39.3216', 'steps=100', 'idx=1')
+✅ 保存图像到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/lr_decay_attacks_results/comparison_plots/lineplot_with_solver_alpha=5.0_epsilon=39.3216_steps=100_idx=1.png
+
+📊 绘图中: detached1to5, 参数: ('alpha=5.0', 'epsilon=39.3216', 'steps=100', 'idx=1')
+✅ 保存图像到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/lr_decay_attacks_results/comparison_plots/lineplot_detached1to5_alpha=5.0_epsilon=39.3216_steps=100_idx=1.png
+
+📊 绘图中: detached1to9, 参数: ('alpha=5.0', 'epsilon=39.3216', 'steps=100', 'idx=1')
+✅ 保存图像到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/lr_decay_attacks_results/comparison_plots/lineplot_detached1to9_alpha=5.0_epsilon=39.3216_steps=100_idx=1.png

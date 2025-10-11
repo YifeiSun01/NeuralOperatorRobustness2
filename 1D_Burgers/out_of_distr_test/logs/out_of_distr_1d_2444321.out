@@ -1,0 +1,255 @@
+c1009a-s23.ufhpc
+Sat May 17 09:26:30 EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Running ./out_of_distr_test/gaussian_diff_distr_1d.py with True
+Received from shell script: zero_mean=True
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+----------------------------------
+Running ./out_of_distr_test/gaussian_diff_distr_1d.py with False
+Received from shell script: zero_mean=False
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/gaussiandiffdistr_cl0.005_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.005_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/gaussiandiffdistr_cl0.01_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.01_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/gaussiandiffdistr_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/gaussiandiffdistr_cl0.1_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.1_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/gaussiandiffdistr_cl0.2_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.2_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+----------------------------------
+Running ./out_of_distr_test/gaussian_diff_distr_nonperiodic_1d.py with True
+Received from shell script: zero_mean=True
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/gaussiandiffdistrnonperiodic_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+----------------------------------
+Running ./out_of_distr_test/gaussian_diff_distr_nonperiodic_1d.py with False
+Received from shell script: zero_mean=False
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/gaussiandiffdistrnonperiodic_cl0.03_dim=1d_solver=exponax_kernel=gaussian_correlation_length=0.03_bc=nonperiodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+----------------------------------
+Running ./out_of_distr_test/matern_diff_distr_1d.py with True
+Received from shell script: zero_mean=True
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+----------------------------------
+Running ./out_of_distr_test/matern_diff_distr_1d.py with False
+Received from shell script: zero_mean=False
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.005_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.005_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.005_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.005_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.03_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.03_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.03_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.03_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.2_nu0.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=0.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.2_nu1.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=1.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/materndiffdistr_cl0.2_nu2.5_dim=1d_solver=exponax_kernel=matern_correlation_length=0.2_nu=2.5_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+----------------------------------
+Running ./out_of_distr_test/zigzag_1d.py with True
+Received from shell script: zero_mean=True
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=True/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=True.pkl
+----------------------------------
+Running ./out_of_distr_test/zigzag_1d.py with False
+Received from shell script: zero_mean=False
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/zigzag_peaks10_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/zigzag_peaks30_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/zigzag_peaks50_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+index:  0
+index:  1
+index:  2
+index:  3
+index:  4
+saved path:   /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/out_of_distr_test/1D/result_mean=False/zigzag_peaks100_amp1.0_dim=1d_solver=exponax_bc=periodic_nu=0.0005_t=1.0_seed=3_N=5_mean=False.pkl
+----------------------------------

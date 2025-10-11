@@ -1,0 +1,14 @@
+c0901a-s25.ufhpc
+Mon Sep  8 12:19:48 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[Resume] Loaded pretrained weights from: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack_2/original_model/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth
+params: 943823441
+[ep 0000 | batch 0001/0500] perturb_time:938.467s | train_time:8.481s | loss:0.913215
+[ep 0000 | batch 0002/0500] perturb_time:808.968s | train_time:0.481s | loss:1.035916
+[ep 0000 | batch 0003/0500] perturb_time:807.739s | train_time:0.295s | loss:1.562108
+[ep 0000 | batch 0004/0500] perturb_time:808.995s | train_time:0.296s | loss:1.263916
+[ep 0000 | batch 0005/0500] perturb_time:890.985s | train_time:5.360s | loss:1.445391
+[ep 0000 | batch 0006/0500] perturb_time:839.317s | train_time:0.295s | loss:1.038512
+[ep 0000 | batch 0007/0500] perturb_time:811.430s | train_time:0.296s | loss:1.125274
+[ep 0000 | batch 0008/0500] perturb_time:814.014s | train_time:0.295s | loss:0.985290
+[ep 0000 | batch 0009/0500] perturb_time:832.352s | train_time:5.191s | loss:0.956243

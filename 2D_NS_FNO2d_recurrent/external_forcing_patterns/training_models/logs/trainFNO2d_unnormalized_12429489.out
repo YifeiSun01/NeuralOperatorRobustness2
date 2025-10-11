@@ -1,0 +1,36 @@
+c1004a-s25.ufhpc
+Thu Sep 11 05:03:47 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Training FNO2d (multi-pattern loop)
+Variable        Value     
+-------------------------
+ntrain          1000      
+ntest           100       
+batch_size      20        
+learning_rate   0.001     
+modes           64        
+width           60        
+s               256       
+T_in            10        
+T               10        
+step            1         
+
+================================================================================
+Pattern: ringsLinf
+Train PT: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/ringsLinf/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pt
+sub             1         
+[ringsLinf] x_train: (1000, 256, 256, 10), y_train: (1000, 256, 256, 10)
+[ringsLinf] x_val  : (100, 256, 256, 10), y_val  : (100, 256, 256, 10)
+iterations      25000      (epochs=500 * steps/epoch=50)
+[ringsLinf] params: 235989181
+[ringsLinf] Model saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsLinf/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pth
+
+================================================================================
+Pattern: sBands
+Train PT: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/sBands/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pt
+sub             1         
+[sBands] x_train: (1000, 256, 256, 10), y_train: (1000, 256, 256, 10)
+[sBands] x_val  : (100, 256, 256, 10), y_val  : (100, 256, 256, 10)
+iterations      25000      (epochs=500 * steps/epoch=50)
+[sBands] params: 235989181
+[sBands] Model saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/sBands/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternsBands.pth

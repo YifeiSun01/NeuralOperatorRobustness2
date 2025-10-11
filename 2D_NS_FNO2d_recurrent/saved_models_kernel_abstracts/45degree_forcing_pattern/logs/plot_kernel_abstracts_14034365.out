@@ -1,0 +1,76 @@
+c1009a-s5.ufhpc
+Fri Sep 26 01:12:25 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[info] RunTag = dlog=none__clog=off
+[info] 发现 16 个模型：
+ - modes128_width40_epochs500_Tin10_T10.analysis.pt
+ - modes12_width20_epochs500_Tin10_T10.analysis.pt
+ - modes16_width60_epochs500_Tin10_T10.analysis.pt
+ - modes32_width40_epochs500_Tin10_T10.analysis.pt
+ - modes32_width40_epochs500_Tin1_T19.analysis.pt
+ - modes32_width60_epochs500_Tin10_T10.analysis.pt
+ - modes48_width40_epochs500_Tin10_T10.analysis.pt
+ - modes48_width60_epochs500_Tin10_T10.analysis.pt
+ - modes48_width80_epochs500_Tin10_T10.analysis.pt
+ - modes64_width40_epochs500_Tin10_T10.analysis.pt
+ - modes64_width60_epochs500_Tin10_T10.analysis.pt
+ - modes64_width60_epochs500_Tin1_T19.analysis.pt
+ - modes64_width80_epochs500_Tin10_T10.analysis.pt
+ - modes96_width40_epochs500_Tin10_T10.analysis.pt
+ - modes96_width80_epochs1500_Tin10_T10.analysis.pt
+ - modes96_width80_epochs500_Tin10_T10.analysis.pt
+[run] 处理 modes128_width40_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes12_width20_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes16_width60_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes32_width40_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes32_width40_epochs500_Tin1_T19.analysis.pt ...
+[run] 处理 modes32_width60_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes48_width40_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes48_width60_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes48_width80_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes64_width40_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes64_width60_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes64_width60_epochs500_Tin1_T19.analysis.pt ...
+[run] 处理 modes64_width80_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes96_width40_epochs500_Tin10_T10.analysis.pt ...
+[run] 处理 modes96_width80_epochs1500_Tin10_T10.analysis.pt ...
+[run] 处理 modes96_width80_epochs500_Tin10_T10.analysis.pt ...
+[done] 全部完成。输出位于： /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/kernel_plots_val/dlog=none__clog=off
+[info] RunTag = dlog=log1p__clog=on__eps=1e-12
+[info] 发现 16 个模型：
+ - modes128_width40_epochs500_Tin10_T10.analysis.pt
+ - modes12_width20_epochs500_Tin10_T10.analysis.pt
+ - modes16_width60_epochs500_Tin10_T10.analysis.pt
+ - modes32_width40_epochs500_Tin10_T10.analysis.pt
+ - modes32_width40_epochs500_Tin1_T19.analysis.pt
+ - modes32_width60_epochs500_Tin10_T10.analysis.pt
+ - modes48_width40_epochs500_Tin10_T10.analysis.pt
+ - modes48_width60_epochs500_Tin10_T10.analysis.pt
+ - modes48_width80_epochs500_Tin10_T10.analysis.pt
+ - modes64_width40_epochs500_Tin10_T10.analysis.pt
+ - modes64_width60_epochs500_Tin10_T10.analysis.pt
+ - modes64_width60_epochs500_Tin1_T19.analysis.pt
+ - modes64_width80_epochs500_Tin10_T10.analysis.pt
+ - modes96_width40_epochs500_Tin10_T10.analysis.pt
+ - modes96_width80_epochs1500_Tin10_T10.analysis.pt
+ - modes96_width80_epochs500_Tin10_T10.analysis.pt
+[run] 处理 modes128_width40_epochs500_Tin10_T10.analysis.pt ...
+[info] RunTag = dlog=log__clog=on__eps=1e-12
+[info] 发现 16 个模型：
+ - modes128_width40_epochs500_Tin10_T10.analysis.pt
+ - modes12_width20_epochs500_Tin10_T10.analysis.pt
+ - modes16_width60_epochs500_Tin10_T10.analysis.pt
+ - modes32_width40_epochs500_Tin10_T10.analysis.pt
+ - modes32_width40_epochs500_Tin1_T19.analysis.pt
+ - modes32_width60_epochs500_Tin10_T10.analysis.pt
+ - modes48_width40_epochs500_Tin10_T10.analysis.pt
+ - modes48_width60_epochs500_Tin10_T10.analysis.pt
+ - modes48_width80_epochs500_Tin10_T10.analysis.pt
+ - modes64_width40_epochs500_Tin10_T10.analysis.pt
+ - modes64_width60_epochs500_Tin10_T10.analysis.pt
+ - modes64_width60_epochs500_Tin1_T19.analysis.pt
+ - modes64_width80_epochs500_Tin10_T10.analysis.pt
+ - modes96_width40_epochs500_Tin10_T10.analysis.pt
+ - modes96_width80_epochs1500_Tin10_T10.analysis.pt
+ - modes96_width80_epochs500_Tin10_T10.analysis.pt
+[run] 处理 modes128_width40_epochs500_Tin10_T10.analysis.pt ...

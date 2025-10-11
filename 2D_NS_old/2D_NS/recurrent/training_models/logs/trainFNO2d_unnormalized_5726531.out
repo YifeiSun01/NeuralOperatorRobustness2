@@ -1,0 +1,5 @@
+c0906a-s17.ufhpc
+Thu Jun 19 10:34:10 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent
+1073809473
+Model saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/recurrent/saved_models/2D/modes128_width64_epochs500_T10_Tin10_trainN1500/NS_2d_FNO_model_trainedby_dim2d_nx256_N1500_solver=exponax_kernel=matern_correlation_length0.50_bcperiodic_nu0.010_t40.0_seed0_all_frames.pth

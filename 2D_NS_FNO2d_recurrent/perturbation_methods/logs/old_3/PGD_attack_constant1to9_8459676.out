@@ -1,0 +1,38 @@
+c1000a-s15.ufhpc
+Sun Jul 27 02:19:54 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+input_list:  [(2, 13.1072, 1.0, 100), (2, 39.3216, 1.0, 100), (2, 26.2144, 2.0, 100), (2, 39.3216, 5.0, 100), (2, 13.1072, 5.0, 100)]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 1.0, num_steps: 100, index: 1
+x_adv.shape:  torch.Size([256, 256])

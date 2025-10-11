@@ -1,0 +1,6 @@
+c1004a-s25.ufhpc
+Tue Jul 29 03:16:51 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+========================================================
+FNO2d initial_to_final modes32_width40_epochs500
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/saved_models/2D/256_256/modes32_width40_epochs500/input_frame_0_output_frame_19/NS_2d_FNO_model_trainedby_NS_data_zongyi_train.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/datasets/2D/NS/256_256/output_frame_19/NS_data_zongyi_test.pt', 'modes': 32, 'width': 40}

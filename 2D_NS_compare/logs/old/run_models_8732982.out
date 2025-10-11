@@ -1,0 +1,60 @@
+c1004a-s15.ufhpc
+Tue Jul 29 03:38:26 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+========================================================
+FNO2d initial_to_final modes32_width40_epochs500
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/saved_models/2D/256_256/modes32_width40_epochs500/input_frame_0_output_frame_19/NS_2d_FNO_model_trainedby_NS_data_zongyi_train.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/datasets/2D/NS/256_256/output_frame_19/NS_data_zongyi_test.pt', 'modes': 32, 'width': 40}
+========================================================
+FNO2d initial_to_final modes64_width60_epochs500
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/saved_models/2D/256_256/modes64_width60_epochs500/input_frame_0_output_frame_19/NS_2d_FNO_model_trainedby_NS_data_zongyi_train.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/datasets/2D/NS/256_256/output_frame_19/NS_data_zongyi_test.pt', 'modes': 64, 'width': 60}
+========================================================
+FNO2d recurrent modes12_width20_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes12_width20_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 12, 'width': 20, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes16_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes16_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 16, 'width': 60, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes32_width40_epochs500_Tin1_T19
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 32, 'width': 40, 'Tin': 1, 'T': 19}
+========================================================
+FNO2d recurrent modes32_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 32, 'width': 40, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes32_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes32_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 32, 'width': 60, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes48_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 48, 'width': 40, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes48_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes48_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 48, 'width': 60, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes64_width60_epochs500_Tin1_T19
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin1_T19/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 64, 'width': 60, 'Tin': 1, 'T': 19}
+========================================================
+FNO2d recurrent modes64_width60_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 64, 'width': 60, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes64_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 64, 'width': 40, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes96_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes96_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 96, 'width': 40, 'Tin': 10, 'T': 10}
+========================================================
+FNO2d recurrent modes128_width40_epochs500_Tin10_T10
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/saved_models/2D/modes128_width40_epochs500_Tin10_T10/NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes': 128, 'width': 40, 'Tin': 10, 'T': 10}
+========================================================
+FNO3d no_padding modes1232_modes36_width40_epochs500_Tin10_T10_no_padding
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/saved_models/3D/no_padding/modes1232_modes36_width40_epochs500_Tin10_T10/NS_3d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes12': 32, 'modes3': 6, 'width': 40, 'Tin': 10, 'T': 10}
+========================================================
+FNO3d no_padding modes1232_modes38_width40_epochs500_Tin1_T19_no_padding
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/saved_models/3D/no_padding/modes1232_modes38_width40_epochs500_Tin1_T19/NS_3d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes12': 32, 'modes3': 8, 'width': 40, 'Tin': 1, 'T': 19}
+========================================================
+FNO3d no_padding modes1264_modes36_width60_epochs500_Tin10_T10_no_padding
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/saved_models/3D/no_padding/modes1264_modes36_width60_epochs500_Tin10_T10/NS_3d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes12': 64, 'modes3': 6, 'width': 60, 'Tin': 10, 'T': 10}
+========================================================
+FNO3d padding modes1232_modes38_width40_epochs500_Tin10_T10_padding
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/saved_models/3D/padding/modes1232_modes38_width40_epochs500_Tin10_T10/NS_3d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes12': 32, 'modes3': 8, 'width': 40, 'Tin': 10, 'T': 10, 'padding': 6}
+========================================================
+FNO3d padding modes1232_modes312_width40_epochs500_Tin1_T19_padding
+{'model_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO3d/saved_models/3D/padding/modes1232_modes312_width40_epochs500_Tin1_T19/NS_3d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pth', 'data_path': '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt', 'modes12': 32, 'modes3': 12, 'width': 40, 'Tin': 1, 'T': 19, 'padding': 6}

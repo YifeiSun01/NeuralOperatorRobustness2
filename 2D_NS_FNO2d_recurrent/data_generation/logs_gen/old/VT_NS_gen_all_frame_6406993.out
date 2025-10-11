@@ -1,0 +1,162 @@
+c1000a-s15.ufhpc
+Fri Jun 27 08:03:11 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Loading dataset from ../2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame.pt...
+Pre-upsampling dataset on GPU...
+
+Upsampling:   0%|          | 0/50 [00:00<?, ?sample/s]
+Upsampling:   2%|▏         | 1/50 [00:17<14:07, 17.29s/sample]
+Upsampling:   4%|▍         | 2/50 [00:17<05:46,  7.23s/sample]
+Upsampling: 100%|██████████| 50/50 [00:17<00:00,  2.86sample/s]
+Generating dataset:
+
+Generating samples:   0%|          | 0/50 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py:84: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py:88: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  return torch_dlpack.from_dlpack(jax_dlpack.to_dlpack(jax_array))
+Step size 0.01 produced stable solution.
+
+Generating samples:   2%|▏         | 1/50 [01:07<54:47, 67.09s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:   4%|▍         | 2/50 [01:22<29:16, 36.59s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:   6%|▌         | 3/50 [01:35<20:17, 25.91s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:   8%|▊         | 4/50 [01:44<14:46, 19.27s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  10%|█         | 5/50 [01:54<11:57, 15.95s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  12%|█▏        | 6/50 [01:59<09:00, 12.29s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  14%|█▍        | 7/50 [02:03<06:43,  9.39s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  16%|█▌        | 8/50 [02:14<06:57,  9.94s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  18%|█▊        | 9/50 [02:19<05:41,  8.33s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  20%|██        | 10/50 [02:23<04:41,  7.04s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  22%|██▏       | 11/50 [02:27<03:59,  6.15s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  24%|██▍       | 12/50 [02:35<04:11,  6.62s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  26%|██▌       | 13/50 [02:39<03:36,  5.85s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  28%|██▊       | 14/50 [02:50<04:28,  7.45s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  30%|███       | 15/50 [03:01<04:54,  8.41s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  32%|███▏      | 16/50 [03:04<03:59,  7.05s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  34%|███▍      | 17/50 [03:08<03:21,  6.11s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  36%|███▌      | 18/50 [03:13<03:03,  5.75s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  38%|███▊      | 19/50 [03:18<02:45,  5.35s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  40%|████      | 20/50 [03:21<02:24,  4.80s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  42%|████▏     | 21/50 [03:24<02:06,  4.35s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  44%|████▍     | 22/50 [03:31<02:20,  5.02s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  46%|████▌     | 23/50 [03:50<04:11,  9.31s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  48%|████▊     | 24/50 [04:03<04:29, 10.36s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  50%|█████     | 25/50 [04:09<03:45,  9.02s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  52%|█████▏    | 26/50 [04:14<03:07,  7.79s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  54%|█████▍    | 27/50 [04:20<02:50,  7.39s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  56%|█████▌    | 28/50 [04:29<02:47,  7.59s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  58%|█████▊    | 29/50 [04:44<03:29,  9.96s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  60%|██████    | 30/50 [04:49<02:48,  8.44s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  62%|██████▏   | 31/50 [04:53<02:16,  7.17s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  64%|██████▍   | 32/50 [05:05<02:35,  8.64s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  66%|██████▌   | 33/50 [05:12<02:17,  8.09s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  68%|██████▊   | 34/50 [05:16<01:52,  7.01s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  70%|███████   | 35/50 [05:22<01:37,  6.49s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  72%|███████▏  | 36/50 [05:34<01:54,  8.20s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  74%|███████▍  | 37/50 [05:47<02:05,  9.67s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  76%|███████▌  | 38/50 [05:53<01:42,  8.55s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  78%|███████▊  | 39/50 [05:57<01:20,  7.28s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  80%|████████  | 40/50 [06:01<01:02,  6.23s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  82%|████████▏ | 41/50 [06:05<00:50,  5.58s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  84%|████████▍ | 42/50 [06:12<00:47,  5.98s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  86%|████████▌ | 43/50 [06:17<00:38,  5.54s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  88%|████████▊ | 44/50 [06:20<00:30,  5.04s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  90%|█████████ | 45/50 [06:33<00:35,  7.15s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  92%|█████████▏| 46/50 [06:44<00:33,  8.47s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  94%|█████████▍| 47/50 [06:56<00:28,  9.44s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples:  96%|█████████▌| 48/50 [07:10<00:21, 10.95s/sample]Step size 0.01 produced stable solution.
+
+Generating samples:  98%|█████████▊| 49/50 [07:16<00:09,  9.53s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+
+Generating samples: 100%|██████████| 50/50 [07:28<00:00, 10.22s/sample]
+Generating samples: 100%|██████████| 50/50 [07:28<00:00,  8.98s/sample]
+
+Dataset saved to ./datasets/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames.pt

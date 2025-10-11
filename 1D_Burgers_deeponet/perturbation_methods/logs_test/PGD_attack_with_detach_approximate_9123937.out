@@ -1,0 +1,121 @@
+c0900a-s15.ufhpc
+Thu Jul 31 11:54:30 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet
+Using backend: pytorch
+Other supported backends: tensorflow.compat.v1, tensorflow, jax, paddle.
+paddle supports more examples now and is recommended.
+Selected GPU 0 (NVIDIA B200) with 0.00 GB free memory
+===============Experiment===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/saved_models/nu0.01/deepxde_2/DeepONet_b1024_lr0.001_ep50000/model.pt
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/perturbation_results/1D
+device:  cuda:0
+nu:  0.01
+INFO:2025-07-31 23:56:43,100:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0731 23:56:43.100552 23021491021632 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+===============Running===============
+
+
+
+
+Compiling model...
+'compile' took 25.124786 s
+
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed1000045.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed1000045.pt
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./perturbation_methods/PGD_attack_with_detach_approximate.py:44: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./perturbation_methods/PGD_attack_with_detach_approximate.py:48: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./perturbation_methods/PGD_attack_with_detach_approximate.py:80: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/./perturbation_methods/PGD_attack_with_detach_approximate.py:83: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 31.82575        | 1.374138e+00    | 1.120374e+00    | 163.17          | 0.219132           | 77.34197°       | 54.30          
+2. with PDE solver vs PDE approximated             | 32.63074        | 1.383915e+00    | 1.122505e+00    | 195.87          | -0.006129          | 90.35117°       | 51.95          
+3. PDE detached vs PDE approximated                | 1.02529         | 6.159663e-02    | 4.844338e-02    | 760.95          | -0.029698          | 91.70181°       | 50.00          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.14604         | 5.873421e-01    | 4.380469e-01    | 31274997412417.82 | 0.124724           | 82.83517°       | 55.66          
+2. with PDE solver vs PDE approximated             | 1.08973         | 6.379246e-01    | 4.866602e-01    | 1563749870614891.00 | 0.011462           | 89.34326°       | 49.71          
+3. PDE detached vs PDE approximated                | 0.95087         | 6.359962e-01    | 5.167188e-01    | 15420330746588246.00 | -0.129006          | 97.41213°       | 44.82          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 4.6295e-03      | 4.2143e+02      | 4.2143e+02      | 9102962.43  % | 0.1772     | 0.3034     | 0.0010     | 0.1760         
+perturbation PDE detached      | 4.6295e-03      | 1.0565e+02      | 1.0564e+02      | 2281970.39  % | 0.1769     | 0.0008     | 0.0007     | 0.1760         
+perturbation PDE approximate   | 4.6295e-03      | 6.4287e+01      | 6.4283e+01      | 1388526.94  % | 0.0008     | 0.0007     | 0.0006     | 0.0002         
+ 
+     index: 0 ,    norm: inf ,    num_steps: 100 ,    epsilon: 0.5 ,    alpha: 0.01 ,    total time: 283.8724720478058
+adversarial input samples: 100%|██████████| 1/1 [04:43<00:00, 283.87s/it]adversarial input samples: 100%|██████████| 1/1 [04:43<00:00, 283.92s/it]
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]
+################################################################################
+## FINAL COMPARISON: INITIAL (Step 0) vs FINAL (Step 99) RESULTS
+################################################################################
+
+================================================================================================================================================================
+                                                             GRADIENT COMPARISON ANALYSIS (Step 99)                                                             
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 136.84957       | 1.669661e+00    | 1.419693e+00    | 100.19          | 0.045894           | 87.36954°       | 50.29          
+2. with PDE solver vs PDE approximated             | 104.44059       | 1.671962e+00    | 1.421673e+00    | 102.18          | -0.106913          | 96.13741°       | 47.36          
+3. PDE detached vs PDE approximated                | 0.76318         | 1.881722e-02    | 1.511799e-02    | 949.83          | 0.129616           | 82.55263°       | 56.25          
+================================================================================================================================================================
+
+
+================================================================================================================================================================
+                                                              DELTA COMPARISON ANALYSIS (Step 99)                                                               
+================================================================================================================================================================
+Comparison                                         | L2 Norm Ratio   | RMSE            | AME             | PME (%)         | Cosine Similarity  | Angle (Degrees) | Sign Agree %   
+--------------------------------------------------+-----------------+-----------------+-----------------+-----------------+--------------------+-----------------+-----------------
+1. with PDE solver vs PDE detached                 | 1.00000         | 8.125831e-01    | 6.782509e-01    | 659.90          | 0.154827           | 81.09323°       | 49.02          
+2. with PDE solver vs PDE approximated             | 1.00649         | 8.934931e-01    | 7.131823e-01    | 780.33          | -0.028477          | 91.63182°       | 56.15          
+3. PDE detached vs PDE approximated                | 1.00649         | 9.058955e-01    | 7.327659e-01    | 2692.11         | -0.057228          | 93.28070°       | 46.97          
+================================================================================================================================================================
+
+
+                                     COMPREHENSIVE ANALYSIS (Initial Step 0 vs Final Step 99)                                     
+----------------------------------------------------------------------------------------------------------------------------------
+Case                           | Initial Loss    | Final Loss      | Abs Increase    | % Increase   | Fwd Time   | Bwd Time   | G Time     | g/find Time    
+------------------------------+-----------------+-----------------+-----------------+--------------+------------+------------+------------+-----------------
+perturbation with solver       | 4.6295e-03      | 7.5372e+02      | 7.5372e+02      | 16280550.06 % | 0.1770     | 0.3119     | 0.0008     | 0.1760         
+perturbation PDE detached      | 4.6295e-03      | 9.7230e+01      | 9.7225e+01      | 2100095.73  % | 0.1770     | 0.0008     | 0.0007     | 0.1760         
+perturbation PDE approximate   | 4.6295e-03      | 4.5777e+01      | 4.5773e+01      | 988706.57   % | 0.0021     | 0.0007     | 0.0006     | 0.0014         
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 0.5 ,    total time: 252.67009139060974
+adversarial input samples: 100%|██████████| 1/1 [04:12<00:00, 252.67s/it]adversarial input samples: 100%|██████████| 1/1 [04:12<00:00, 252.67s/it]
+gradient_records.keys:  dict_keys([('norm_inf', 'index_0', 'numsteps_100', 'epsilon_0.5', 'alpha_0.01000', 'sample_0'), ('norm_2', 'index_0', 'numsteps_100', 'epsilon_20', 'alpha_0.50000', 'sample_0')])
+gradient_records.keys:  dict_keys([('norm_inf', 'index_0', 'numsteps_100', 'epsilon_0.5', 'alpha_0.01000', 'sample_0'), ('norm_2', 'index_0', 'numsteps_100', 'epsilon_20', 'alpha_0.50000', 'sample_0')])
+Attack results saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet/perturbation_methods/attack_results/gradient_test_exponax_nu0.01_nsamples1.pkl
+gradient_records.keys:  dict_keys([('norm_inf', 'index_0', 'numsteps_100', 'epsilon_0.5', 'alpha_0.01000', 'sample_0'), ('norm_2', 'index_0', 'numsteps_100', 'epsilon_20', 'alpha_0.50000', 'sample_0')])
+data.keys:  dict_keys([('norm_inf', 'index_0', 'numsteps_100', 'epsilon_0.5', 'alpha_0.01000', 'sample_0'), ('norm_2', 'index_0', 'numsteps_100', 'epsilon_20', 'alpha_0.50000', 'sample_0')])
+ 

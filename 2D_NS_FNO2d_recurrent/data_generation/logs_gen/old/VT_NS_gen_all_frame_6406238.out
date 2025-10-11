@@ -1,0 +1,33 @@
+c0903a-s5.ufhpc
+Fri Jun 27 06:23:00 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Generating first dataset:
+Generating samples:   0%|          | 0/1150 [00:00<?, ?sample/s]Generating samples:   0%|          | 1/1150 [06:15<119:56:54, 375.82s/sample]Generating samples:   0%|          | 2/1150 [07:21<61:36:05, 193.18s/sample] Generating samples:   0%|          | 3/1150 [08:40<44:55:38, 141.01s/sample]Generating samples:   0%|          | 4/1150 [09:45<35:23:12, 111.16s/sample]Generating samples:   0%|          | 5/1150 [10:48<29:49:46, 93.79s/sample] Generating samples:   1%|          | 6/1150 [11:53<26:43:49, 84.12s/sample]Generating samples:   1%|          | 7/1150 [14:18<33:02:01, 104.04s/sample]Generating samples:   1%|          | 8/1150 [16:03<33:02:48, 104.18s/sample]Generating samples:   1%|          | 9/1150 [18:17<35:59:22, 113.55s/sample]Generating samples:   1%|          | 10/1150 [19:28<31:46:49, 100.36s/sample]Generating samples:   1%|          | 11/1150 [20:40<28:58:41, 91.59s/sample] Generating samples:   1%|          | 12/1150 [21:34<25:25:51, 80.45s/sample]Generating samples:   1%|          | 13/1150 [22:22<22:15:12, 70.46s/sample]Generating samples:   1%|          | 14/1150 [23:05<19:34:32, 62.04s/sample]Generating samples:   1%|▏         | 15/1150 [23:46<17:38:32, 55.96s/sample]Generating samples:   1%|▏         | 16/1150 [24:29<16:19:46, 51.84s/sample]Generating samples:   1%|▏         | 17/1150 [25:11<15:25:57, 49.04s/sample]Generating samples:   2%|▏         | 18/1150 [25:53<14:45:11, 46.92s/sample]Generating samples:   2%|▏         | 19/1150 [26:37<14:26:16, 45.96s/sample]Generating samples:   2%|▏         | 20/1150 [27:19<14:02:16, 44.72s/sample]Generating samples:   2%|▏         | 21/1150 [28:04<14:01:43, 44.73s/sample]Generating samples:   2%|▏         | 22/1150 [28:50<14:10:04, 45.22s/sample]Generating samples:   2%|▏         | 23/1150 [29:31<13:48:33, 44.11s/sample]Generating samples:   2%|▏         | 24/1150 [30:13<13:33:46, 43.36s/sample]Generating samples:   2%|▏         | 25/1150 [30:54<13:22:13, 42.79s/sample]Generating samples:   2%|▏         | 26/1150 [31:42<13:48:09, 44.21s/sample]Generating samples:   2%|▏         | 27/1150 [32:24<13:32:29, 43.41s/sample]Generating samples:   2%|▏         | 28/1150 [33:09<13:42:40, 43.99s/sample]Generating samples:   3%|▎         | 29/1150 [34:12<15:31:23, 49.85s/sample]Generating samples:   3%|▎         | 30/1150 [35:05<15:43:50, 50.56s/sample]Generating samples:   3%|▎         | 31/1150 [36:05<16:39:20, 53.58s/sample]Generating samples:   3%|▎         | 32/1150 [36:53<16:08:12, 51.96s/sample]Generating samples:   3%|▎         | 33/1150 [37:41<15:45:05, 50.77s/sample]slurmstepd: error: *** JOB 6406238 ON c0903a-s5 CANCELLED AT 2025-06-27T19:10:18 ***

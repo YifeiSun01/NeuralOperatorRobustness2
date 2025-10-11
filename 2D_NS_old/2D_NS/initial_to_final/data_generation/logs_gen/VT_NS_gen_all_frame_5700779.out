@@ -1,0 +1,10 @@
+c0906a-s29.ufhpc
+Thu Jun 19 02:13:06 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+Initial memory state GPU: Allocated=0.00GB, Reserved=0.00GB, Free=79.25GB
+Generating first dataset:
+Processing chunks:   0%|          | 0/10 [00:00<?, ?it/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py:35: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+  raise NotImplementedError("Matern kernel currently only supports periodic BCs")
+2025-06-19 03:01:25.105333: F jaxlib/xla/py_client.cc:270] Non-OK-status: pjrt_buf ->ReleaseDeviceMemoryOwnership( true) .status()
+Status: UNIMPLEMENTED: PJRT C API does not support ReleaseDeviceMemoryOwnership
+/var/spool/slurmd/job5700779/slurm_script: line 19: 2429119 Aborted                 (core dumped) python -u ./data_generation/VT_NS_gen_all_frame.py 2>&1

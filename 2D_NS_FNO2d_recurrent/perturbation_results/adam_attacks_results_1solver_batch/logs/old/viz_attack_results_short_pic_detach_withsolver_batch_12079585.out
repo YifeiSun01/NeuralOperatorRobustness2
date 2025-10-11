@@ -1,0 +1,65 @@
+c0910a-s15.ufhpc
+Mon Sep  8 07:41:15 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+🔎 使用根目录: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames  (检测到 per-sample PKL 数: 20)
+分组数量: 20
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=7') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=4') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=6') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=5') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=9') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=8') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=2') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=1') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=3') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=0') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=0') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=3') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=2') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=1') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=8') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=9') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=6') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=4') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=5') => ['wwwwwwwwww']
+('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=7') => ['wwwwwwwwww']
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0-3/per_sample/sample_000000.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=0')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0-3/per_sample/sample_000001.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=1')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0-3/per_sample/sample_000002.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=2')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx0-3/per_sample/sample_000003.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=3')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4-7/per_sample/sample_000004.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=4')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4-7/per_sample/sample_000005.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=5')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4-7/per_sample/sample_000006.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=6')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx4-7/per_sample/sample_000007.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=7')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx8-9/per_sample/sample_000008.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=8')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon13.1072_steps100_idx8-9/per_sample/sample_000009.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=13.1072', 'steps=100', 'gid=9')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx0-3/per_sample/sample_000000.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=0')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx0-3/per_sample/sample_000001.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=1')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx0-3/per_sample/sample_000002.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=2')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx0-3/per_sample/sample_000003.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=3')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx4-7/per_sample/sample_000004.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=4')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx4-7/per_sample/sample_000005.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=5')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx4-7/per_sample/sample_000006.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=6')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx4-7/per_sample/sample_000007.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=7')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx8-9/per_sample/sample_000008.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=8')
+⚠️ 读取失败/空序列: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/pickle_files/perturbation_results_batch4_integer_frames/modespec=wwwwwwwwww_norm2_alpha1.0_epsilon39.3216_steps100_idx8-9/per_sample/sample_000009.pkl (wwwwwwwwww)
+⚠️ 分组无可绘制数据: ('norm=2', 'alpha=1.0', 'epsilon=39.3216', 'steps=100', 'gid=9')

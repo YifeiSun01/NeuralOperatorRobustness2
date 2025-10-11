@@ -1,0 +1,153 @@
+c0602a-s5.ufhpc
+Fri Sep  5 12:23:32 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== RUN: norm=2, epsilon=10, steps=100, alpha=0.01 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=10, steps=100, alpha=0.01 ===
+=== RUN: norm=2, epsilon=10, steps=100, alpha=0.05 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=10, steps=100, alpha=0.05 ===
+=== RUN: norm=2, epsilon=10, steps=100, alpha=0.1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=10, steps=100, alpha=0.1 ===
+=== RUN: norm=2, epsilon=10, steps=100, alpha=0.5 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=10, steps=100, alpha=0.5 ===
+=== RUN: norm=2, epsilon=10, steps=100, alpha=1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=10, steps=100, alpha=1 ===
+=== RUN: norm=2, epsilon=20, steps=100, alpha=0.01 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=20, steps=100, alpha=0.01 ===
+=== RUN: norm=2, epsilon=20, steps=100, alpha=0.05 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=20, steps=100, alpha=0.05 ===
+=== RUN: norm=2, epsilon=20, steps=100, alpha=0.1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=20, steps=100, alpha=0.1 ===
+=== RUN: norm=2, epsilon=20, steps=100, alpha=0.5 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=20, steps=100, alpha=0.5 ===
+=== RUN: norm=2, epsilon=20, steps=100, alpha=1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=20, steps=100, alpha=1 ===
+=== RUN: norm=2, epsilon=50, steps=100, alpha=0.01 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=50, steps=100, alpha=0.01 ===
+=== RUN: norm=2, epsilon=50, steps=100, alpha=0.05 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=50, steps=100, alpha=0.05 ===
+=== RUN: norm=2, epsilon=50, steps=100, alpha=0.1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=50, steps=100, alpha=0.1 ===
+=== RUN: norm=2, epsilon=50, steps=100, alpha=0.5 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=50, steps=100, alpha=0.5 ===
+=== RUN: norm=2, epsilon=50, steps=100, alpha=1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s5
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+=== DONE: norm=2, epsilon=50, steps=100, alpha=1 ===

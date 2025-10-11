@@ -1,0 +1,7 @@
+c1001a-s15.ufhpc
+Wed Sep 10 08:26:18 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py", line 286
+    f"forcingPattern{params["forcing_pattern"]}_")
+                             ^^^^^^^^^^^^^^^
+SyntaxError: f-string: unmatched '['

@@ -1,0 +1,355 @@
+c1001a-s5.ufhpc
+Wed Jul  2 12:19:30 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+Model device: cuda:0
+Input device: cuda:0
+================================================================
+epsilon:  0.1 ,  alpha:  0.05 ,  num_steps:  2
+x_adv.shape:  torch.Size([256, 256])
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 63.845813s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 34.912357s | 显存: 0.00 B
+  t=2s - 时间: 0.482855s | 显存: 0.00 B
+  t=3s - 时间: 0.536464s | 显存: 0.00 B
+  t=4s - 时间: 0.640813s | 显存: 0.00 B
+  t=5s - 时间: 0.703763s | 显存: 0.00 B
+  t=6s - 时间: 0.791589s | 显存: 0.00 B
+  t=7s - 时间: 0.861921s | 显存: 0.00 B
+  t=8s - 时间: 0.929639s | 显存: 0.00 B
+  t=9s - 时间: 1.019836s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.851892s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.852119s | 显存: 0.00 B
+
+[本步骤总计] 时间: 65.697933s | 显存: 4.12 GB
+orginal_loss:  tensor(2874.2017, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 0] Backward Propagation - Time: 26.0565s, Mem: -4405592064.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(5.5374, device='cuda:0')
+Autograd grad min:  tensor(-6.3897, device='cuda:0')
+Autograd grad mean:  tensor(0.2062, device='cuda:0')
+
+开始数值梯度计算，共需计算 64 个点（步长 32）
+loss_plus:  tensor(2874.3411, device='cuda:0')
+loss_minus:  tensor(2874.0283, device='cuda:0')
+gradient at this entry:  tensor(1563.7207, device='cuda:0')
+进度: (0,0) [1/64] | 当前点耗时: 16.55s | 累计: 0m17s | 剩余预估: 17m23s
+loss_plus:  tensor(2874.4189, device='cuda:0')
+loss_minus:  tensor(2874.4824, device='cuda:0')
+gradient at this entry:  tensor(-317.3828, device='cuda:0')
+进度: (0,32) [2/64] | 当前点耗时: 16.36s | 累计: 0m33s | 剩余预估: 17m0s
+loss_plus:  tensor(2874.3638, device='cuda:0')
+loss_minus:  tensor(2874.4111, device='cuda:0')
+gradient at this entry:  tensor(-236.8164, device='cuda:0')
+进度: (0,64) [3/64] | 当前点耗时: 16.30s | 累计: 0m49s | 剩余预估: 16m41s
+loss_plus:  tensor(2874.1836, device='cuda:0')
+loss_minus:  tensor(2874.3984, device='cuda:0')
+gradient at this entry:  tensor(-1074.2188, device='cuda:0')
+进度: (0,96) [4/64] | 当前点耗时: 16.12s | 累计: 1m5s | 剩余预估: 16m20s
+loss_plus:  tensor(2874.3242, device='cuda:0')
+loss_minus:  tensor(2874.2334, device='cuda:0')
+gradient at this entry:  tensor(454.1016, device='cuda:0')
+进度: (0,128) [5/64] | 当前点耗时: 16.62s | 累计: 1m22s | 剩余预估: 16m7s
+loss_plus:  tensor(2874.2329, device='cuda:0')
+loss_minus:  tensor(2873.9116, device='cuda:0')
+gradient at this entry:  tensor(1606.4453, device='cuda:0')
+进度: (0,160) [6/64] | 当前点耗时: 16.32s | 累计: 1m38s | 剩余预估: 15m50s
+loss_plus:  tensor(2874.0669, device='cuda:0')
+loss_minus:  tensor(2874.1951, device='cuda:0')
+gradient at this entry:  tensor(-640.8691, device='cuda:0')
+进度: (0,192) [7/64] | 当前点耗时: 16.18s | 累计: 1m54s | 剩余预估: 15m32s
+loss_plus:  tensor(2874.1333, device='cuda:0')
+loss_minus:  tensor(2874.4141, device='cuda:0')
+gradient at this entry:  tensor(-1403.8086, device='cuda:0')
+进度: (0,224) [8/64] | 当前点耗时: 16.17s | 累计: 2m11s | 剩余预估: 15m14s
+loss_plus:  tensor(2874.3096, device='cuda:0')
+loss_minus:  tensor(2874.1431, device='cuda:0')
+gradient at this entry:  tensor(832.5195, device='cuda:0')
+进度: (32,0) [9/64] | 当前点耗时: 16.46s | 累计: 2m27s | 剩余预估: 14m59s
+loss_plus:  tensor(2874.2903, device='cuda:0')
+loss_minus:  tensor(2874.4246, device='cuda:0')
+gradient at this entry:  tensor(-671.3867, device='cuda:0')
+进度: (32,32) [10/64] | 当前点耗时: 16.15s | 累计: 2m43s | 剩余预估: 14m41s
+loss_plus:  tensor(2874.0278, device='cuda:0')
+loss_minus:  tensor(2874.2681, device='cuda:0')
+gradient at this entry:  tensor(-1201.1719, device='cuda:0')
+进度: (32,64) [11/64] | 当前点耗时: 16.29s | 累计: 2m60s | 剩余预估: 14m25s
+loss_plus:  tensor(2874.0820, device='cuda:0')
+loss_minus:  tensor(2874.0745, device='cuda:0')
+gradient at this entry:  tensor(37.8418, device='cuda:0')
+进度: (32,96) [12/64] | 当前点耗时: 16.27s | 累计: 3m16s | 剩余预估: 14m8s
+loss_plus:  tensor(2874.0996, device='cuda:0')
+loss_minus:  tensor(2874.5259, device='cuda:0')
+gradient at this entry:  tensor(-2131.3477, device='cuda:0')
+进度: (32,128) [13/64] | 当前点耗时: 16.41s | 累计: 3m32s | 剩余预估: 13m53s
+loss_plus:  tensor(2874.5002, device='cuda:0')
+loss_minus:  tensor(2874.2939, device='cuda:0')
+gradient at this entry:  tensor(1031.4941, device='cuda:0')
+进度: (32,160) [14/64] | 当前点耗时: 16.22s | 累计: 3m48s | 剩余预估: 13m36s
+loss_plus:  tensor(2874.1562, device='cuda:0')
+loss_minus:  tensor(2874.1519, device='cuda:0')
+gradient at this entry:  tensor(21.9727, device='cuda:0')
+进度: (32,192) [15/64] | 当前点耗时: 16.31s | 累计: 4m5s | 剩余预估: 13m19s
+loss_plus:  tensor(2874.1580, device='cuda:0')
+loss_minus:  tensor(2874.1548, device='cuda:0')
+gradient at this entry:  tensor(15.8691, device='cuda:0')
+进度: (32,224) [16/64] | 当前点耗时: 16.42s | 累计: 4m21s | 剩余预估: 13m4s
+loss_plus:  tensor(2874.3311, device='cuda:0')
+loss_minus:  tensor(2874.3489, device='cuda:0')
+gradient at this entry:  tensor(-89.1113, device='cuda:0')
+进度: (64,0) [17/64] | 当前点耗时: 16.44s | 累计: 4m38s | 剩余预估: 12m48s
+loss_plus:  tensor(2874.1355, device='cuda:0')
+loss_minus:  tensor(2874.4263, device='cuda:0')
+gradient at this entry:  tensor(-1453.8574, device='cuda:0')
+进度: (64,32) [18/64] | 当前点耗时: 16.03s | 累计: 4m54s | 剩余预估: 12m30s
+loss_plus:  tensor(2873.9268, device='cuda:0')
+loss_minus:  tensor(2873.9663, device='cuda:0')
+gradient at this entry:  tensor(-197.7539, device='cuda:0')
+进度: (64,64) [19/64] | 当前点耗时: 16.52s | 累计: 5m10s | 剩余预估: 12m15s
+loss_plus:  tensor(2873.7671, device='cuda:0')
+loss_minus:  tensor(2874.2534, device='cuda:0')
+gradient at this entry:  tensor(-2431.6406, device='cuda:0')
+进度: (64,96) [20/64] | 当前点耗时: 16.33s | 累计: 5m26s | 剩余预估: 11m58s
+loss_plus:  tensor(2874.1890, device='cuda:0')
+loss_minus:  tensor(2874.1860, device='cuda:0')
+gradient at this entry:  tensor(14.6484, device='cuda:0')
+进度: (64,128) [21/64] | 当前点耗时: 16.18s | 累计: 5m43s | 剩余预估: 11m42s
+loss_plus:  tensor(2874.2073, device='cuda:0')
+loss_minus:  tensor(2874.3130, device='cuda:0')
+gradient at this entry:  tensor(-528.5645, device='cuda:0')
+进度: (64,160) [22/64] | 当前点耗时: 16.33s | 累计: 5m59s | 剩余预估: 11m25s
+loss_plus:  tensor(2874.2166, device='cuda:0')
+loss_minus:  tensor(2874.1548, device='cuda:0')
+gradient at this entry:  tensor(308.8379, device='cuda:0')
+进度: (64,192) [23/64] | 当前点耗时: 16.19s | 累计: 6m15s | 剩余预估: 11m9s
+loss_plus:  tensor(2874.3030, device='cuda:0')
+loss_minus:  tensor(2874.5410, device='cuda:0')
+gradient at this entry:  tensor(-1190.1855, device='cuda:0')
+进度: (64,224) [24/64] | 当前点耗时: 16.14s | 累计: 6m31s | 剩余预估: 10m52s
+loss_plus:  tensor(2874.2192, device='cuda:0')
+loss_minus:  tensor(2874.4102, device='cuda:0')
+gradient at this entry:  tensor(-954.5898, device='cuda:0')
+进度: (96,0) [25/64] | 当前点耗时: 19.20s | 累计: 6m51s | 剩余预估: 10m40s
+loss_plus:  tensor(2874.2039, device='cuda:0')
+loss_minus:  tensor(2874.4656, device='cuda:0')
+gradient at this entry:  tensor(-1308.5938, device='cuda:0')
+进度: (96,32) [26/64] | 当前点耗时: 18.81s | 累计: 7m9s | 剩余预估: 10m28s
+loss_plus:  tensor(2874.3616, device='cuda:0')
+loss_minus:  tensor(2874.1365, device='cuda:0')
+gradient at this entry:  tensor(1125.4883, device='cuda:0')
+进度: (96,64) [27/64] | 当前点耗时: 16.53s | 累计: 7m26s | 剩余预估: 10m11s
+loss_plus:  tensor(2874.2825, device='cuda:0')
+loss_minus:  tensor(2874.3757, device='cuda:0')
+gradient at this entry:  tensor(-466.3086, device='cuda:0')
+进度: (96,96) [28/64] | 当前点耗时: 16.46s | 累计: 7m42s | 剩余预估: 9m54s
+loss_plus:  tensor(2874.2378, device='cuda:0')
+loss_minus:  tensor(2874.5835, device='cuda:0')
+gradient at this entry:  tensor(-1728.5156, device='cuda:0')
+进度: (96,128) [29/64] | 当前点耗时: 16.30s | 累计: 7m59s | 剩余预估: 9m38s
+loss_plus:  tensor(2873.9954, device='cuda:0')
+loss_minus:  tensor(2874.6265, device='cuda:0')
+gradient at this entry:  tensor(-3155.5176, device='cuda:0')
+进度: (96,160) [30/64] | 当前点耗时: 16.27s | 累计: 8m15s | 剩余预估: 9m21s
+loss_plus:  tensor(2873.9355, device='cuda:0')
+loss_minus:  tensor(2874.3828, device='cuda:0')
+gradient at this entry:  tensor(-2236.3281, device='cuda:0')
+进度: (96,192) [31/64] | 当前点耗时: 16.27s | 累计: 8m31s | 剩余预估: 9m4s
+loss_plus:  tensor(2874.4014, device='cuda:0')
+loss_minus:  tensor(2873.9678, device='cuda:0')
+gradient at this entry:  tensor(2167.9688, device='cuda:0')
+进度: (96,224) [32/64] | 当前点耗时: 16.28s | 累计: 8m47s | 剩余预估: 8m47s
+loss_plus:  tensor(2874.1653, device='cuda:0')
+loss_minus:  tensor(2874.2073, device='cuda:0')
+gradient at this entry:  tensor(-209.9609, device='cuda:0')
+进度: (128,0) [33/64] | 当前点耗时: 16.26s | 累计: 9m4s | 剩余预估: 8m31s
+loss_plus:  tensor(2874.2312, device='cuda:0')
+loss_minus:  tensor(2874.3438, device='cuda:0')
+gradient at this entry:  tensor(-562.7441, device='cuda:0')
+进度: (128,32) [34/64] | 当前点耗时: 16.72s | 累计: 9m20s | 剩余预估: 8m15s
+loss_plus:  tensor(2874.2542, device='cuda:0')
+loss_minus:  tensor(2874.4858, device='cuda:0')
+gradient at this entry:  tensor(-1158.4473, device='cuda:0')
+进度: (128,64) [35/64] | 当前点耗时: 16.32s | 累计: 9m37s | 剩余预估: 7m58s
+loss_plus:  tensor(2874.1777, device='cuda:0')
+loss_minus:  tensor(2873.9448, device='cuda:0')
+gradient at this entry:  tensor(1164.5508, device='cuda:0')
+进度: (128,96) [36/64] | 当前点耗时: 16.28s | 累计: 9m53s | 剩余预估: 7m41s
+loss_plus:  tensor(2874.1804, device='cuda:0')
+loss_minus:  tensor(2874.5168, device='cuda:0')
+gradient at this entry:  tensor(-1682.1289, device='cuda:0')
+进度: (128,128) [37/64] | 当前点耗时: 16.41s | 累计: 10m9s | 剩余预估: 7m25s
+loss_plus:  tensor(2874.2539, device='cuda:0')
+loss_minus:  tensor(2874.2698, device='cuda:0')
+gradient at this entry:  tensor(-79.3457, device='cuda:0')
+进度: (128,160) [38/64] | 当前点耗时: 16.45s | 累计: 10m26s | 剩余预估: 7m8s
+loss_plus:  tensor(2874.2393, device='cuda:0')
+loss_minus:  tensor(2874.2825, device='cuda:0')
+gradient at this entry:  tensor(-216.0645, device='cuda:0')
+进度: (128,192) [39/64] | 当前点耗时: 16.36s | 累计: 10m42s | 剩余预估: 6m52s
+loss_plus:  tensor(2873.8291, device='cuda:0')
+loss_minus:  tensor(2874.3020, device='cuda:0')
+gradient at this entry:  tensor(-2364.5020, device='cuda:0')
+进度: (128,224) [40/64] | 当前点耗时: 16.31s | 累计: 10m59s | 剩余预估: 6m35s
+loss_plus:  tensor(2874.3181, device='cuda:0')
+loss_minus:  tensor(2874.4546, device='cuda:0')
+gradient at this entry:  tensor(-682.3730, device='cuda:0')
+进度: (160,0) [41/64] | 当前点耗时: 16.49s | 累计: 11m15s | 剩余预估: 6m19s
+loss_plus:  tensor(2874.3906, device='cuda:0')
+loss_minus:  tensor(2874.2036, device='cuda:0')
+gradient at this entry:  tensor(935.0586, device='cuda:0')
+进度: (160,32) [42/64] | 当前点耗时: 16.34s | 累计: 11m31s | 剩余预估: 6m2s
+loss_plus:  tensor(2874.2559, device='cuda:0')
+loss_minus:  tensor(2874.1968, device='cuda:0')
+gradient at this entry:  tensor(295.4102, device='cuda:0')
+进度: (160,64) [43/64] | 当前点耗时: 16.25s | 累计: 11m48s | 剩余预估: 5m46s
+loss_plus:  tensor(2874.3467, device='cuda:0')
+loss_minus:  tensor(2874.2759, device='cuda:0')
+gradient at this entry:  tensor(354.0039, device='cuda:0')
+进度: (160,96) [44/64] | 当前点耗时: 16.84s | 累计: 12m5s | 剩余预估: 5m29s
+loss_plus:  tensor(2874.2241, device='cuda:0')
+loss_minus:  tensor(2874.0317, device='cuda:0')
+gradient at this entry:  tensor(961.9141, device='cuda:0')
+进度: (160,128) [45/64] | 当前点耗时: 16.47s | 累计: 12m21s | 剩余预估: 5m13s
+loss_plus:  tensor(2874.0918, device='cuda:0')
+loss_minus:  tensor(2874.1892, device='cuda:0')
+gradient at this entry:  tensor(-487.0605, device='cuda:0')
+进度: (160,160) [46/64] | 当前点耗时: 16.84s | 累计: 12m38s | 剩余预估: 4m57s
+loss_plus:  tensor(2874.1709, device='cuda:0')
+loss_minus:  tensor(2874.4260, device='cuda:0')
+gradient at this entry:  tensor(-1275.6348, device='cuda:0')
+进度: (160,192) [47/64] | 当前点耗时: 16.25s | 累计: 12m54s | 剩余预估: 4m40s
+loss_plus:  tensor(2874.3579, device='cuda:0')
+loss_minus:  tensor(2874.0918, device='cuda:0')
+gradient at this entry:  tensor(1330.5664, device='cuda:0')
+进度: (160,224) [48/64] | 当前点耗时: 16.41s | 累计: 13m10s | 剩余预估: 4m23s
+loss_plus:  tensor(2874.0718, device='cuda:0')
+loss_minus:  tensor(2874.4724, device='cuda:0')
+gradient at this entry:  tensor(-2003.1738, device='cuda:0')
+进度: (192,0) [49/64] | 当前点耗时: 16.31s | 累计: 13m27s | 剩余预估: 4m7s
+loss_plus:  tensor(2874.3745, device='cuda:0')
+loss_minus:  tensor(2874.2805, device='cuda:0')
+gradient at this entry:  tensor(469.9707, device='cuda:0')
+进度: (192,32) [50/64] | 当前点耗时: 16.22s | 累计: 13m43s | 剩余预估: 3m50s
+loss_plus:  tensor(2874.4451, device='cuda:0')
+loss_minus:  tensor(2874.3408, device='cuda:0')
+gradient at this entry:  tensor(521.2402, device='cuda:0')
+进度: (192,64) [51/64] | 当前点耗时: 16.45s | 累计: 13m59s | 剩余预估: 3m34s
+loss_plus:  tensor(2874.1887, device='cuda:0')
+loss_minus:  tensor(2874.5967, device='cuda:0')
+gradient at this entry:  tensor(-2039.7949, device='cuda:0')
+进度: (192,96) [52/64] | 当前点耗时: 16.36s | 累计: 14m16s | 剩余预估: 3m17s
+loss_plus:  tensor(2874.2319, device='cuda:0')
+loss_minus:  tensor(2874.1897, device='cuda:0')
+gradient at this entry:  tensor(211.1816, device='cuda:0')
+进度: (192,128) [53/64] | 当前点耗时: 16.34s | 累计: 14m32s | 剩余预估: 3m1s
+loss_plus:  tensor(2874.1709, device='cuda:0')
+loss_minus:  tensor(2874.2625, device='cuda:0')
+gradient at this entry:  tensor(-457.7637, device='cuda:0')
+进度: (192,160) [54/64] | 当前点耗时: 16.71s | 累计: 14m49s | 剩余预估: 2m45s
+loss_plus:  tensor(2874.3687, device='cuda:0')
+loss_minus:  tensor(2874.3164, device='cuda:0')
+gradient at this entry:  tensor(261.2305, device='cuda:0')
+进度: (192,192) [55/64] | 当前点耗时: 16.35s | 累计: 15m5s | 剩余预估: 2m28s
+loss_plus:  tensor(2874.4268, device='cuda:0')
+loss_minus:  tensor(2874.2551, device='cuda:0')
+gradient at this entry:  tensor(858.1543, device='cuda:0')
+进度: (192,224) [56/64] | 当前点耗时: 16.86s | 累计: 15m22s | 剩余预估: 2m12s
+loss_plus:  tensor(2874.0356, device='cuda:0')
+loss_minus:  tensor(2873.8267, device='cuda:0')
+gradient at this entry:  tensor(1044.9219, device='cuda:0')
+进度: (224,0) [57/64] | 当前点耗时: 17.41s | 累计: 15m39s | 剩余预估: 1m55s
+loss_plus:  tensor(2874.0339, device='cuda:0')
+loss_minus:  tensor(2874.1577, device='cuda:0')
+gradient at this entry:  tensor(-618.8965, device='cuda:0')
+进度: (224,32) [58/64] | 当前点耗时: 16.65s | 累计: 15m56s | 剩余预估: 1m39s
+loss_plus:  tensor(2874.3044, device='cuda:0')
+loss_minus:  tensor(2874.0088, device='cuda:0')
+gradient at this entry:  tensor(1478.2715, device='cuda:0')
+进度: (224,64) [59/64] | 当前点耗时: 16.61s | 累计: 16m13s | 剩余预估: 1m22s
+loss_plus:  tensor(2874.2695, device='cuda:0')
+loss_minus:  tensor(2874.1504, device='cuda:0')
+gradient at this entry:  tensor(595.7031, device='cuda:0')
+进度: (224,96) [60/64] | 当前点耗时: 16.37s | 累计: 16m29s | 剩余预估: 1m6s
+loss_plus:  tensor(2874.5115, device='cuda:0')
+loss_minus:  tensor(2874.2046, device='cuda:0')
+gradient at this entry:  tensor(1534.4238, device='cuda:0')
+进度: (224,128) [61/64] | 当前点耗时: 16.73s | 累计: 16m46s | 剩余预估: 0m49s
+loss_plus:  tensor(2874.3613, device='cuda:0')
+loss_minus:  tensor(2874.4116, device='cuda:0')
+gradient at this entry:  tensor(-251.4648, device='cuda:0')
+进度: (224,160) [62/64] | 当前点耗时: 16.32s | 累计: 17m2s | 剩余预估: 0m33s
+loss_plus:  tensor(2874.1079, device='cuda:0')
+loss_minus:  tensor(2874.3735, device='cuda:0')
+gradient at this entry:  tensor(-1328.1250, device='cuda:0')
+进度: (224,192) [63/64] | 当前点耗时: 16.63s | 累计: 17m19s | 剩余预估: 0m16s
+loss_plus:  tensor(2873.9934, device='cuda:0')
+loss_minus:  tensor(2874.2141, device='cuda:0')
+gradient at this entry:  tensor(-1103.5156, device='cuda:0')
+进度: (224,224) [64/64] | 当前点耗时: 16.66s | 累计: 17m35s | 剩余预估: 0m0s
+数值梯度计算完成！共计算 64 个点
+[Step 0] Numerical Gradient - Time: 1055.4595s, Mem: 5.75 MB
+[Step 0] PGD Update - Time: 1.1314s, Mem: 512.00 KB
+
+[Step 0] 完整步骤总时间: 1153.885281s | 总显存: 26.16 MB
+[Step 0] 峰值显存: 6.21 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.350904s | 显存: 4.11 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.399866s | 显存: 0.00 B
+  t=2s - 时间: 0.461616s | 显存: 0.00 B
+  t=3s - 时间: 0.555251s | 显存: 0.00 B
+  t=4s - 时间: 0.625454s | 显存: 0.00 B
+  t=5s - 时间: 0.696437s | 显存: 0.00 B
+  t=6s - 时间: 0.752388s | 显存: 0.00 B
+  t=7s - 时间: 0.852872s | 显存: 0.00 B
+  t=8s - 时间: 0.946014s | 显存: 0.00 B
+  t=9s - 时间: 1.031338s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.838991s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.839220s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.190124s | 显存: 4.11 GB
+orginal_loss:  tensor(4403.9229, device='cuda:0', grad_fn=<MseLossBackward0>)

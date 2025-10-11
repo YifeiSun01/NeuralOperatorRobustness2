@@ -1,0 +1,70 @@
+c0602a-s4.ufhpc
+Fri Sep  5 01:25:11 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+SLURM_ARRAY_TASK_ID=0 handling indices [0, 2] out of 15
+=== RUN: norm=2, epsilon=10, steps=20, alpha=0.01 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s4
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+================================================================================
+Dataset N=1500, X=1024; nu=0.0005, solver=exponax (final-only)
+
+✅ Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.01_steps20/N=1500/dataset.pt
+⏱️  Combo time: 7730.42s | Done 1/1 combos | Samples: 1500/1500
+
+================================================================================
+🎉 All done. Total combos: 1, Total samples: 1500
+🧭 Total wall time: 7730.43 seconds
+================================================================================
+=== DONE: norm=2, epsilon=10, steps=20, alpha=0.01 ===
+=== RUN: norm=2, epsilon=10, steps=20, alpha=0.05 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s4
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+================================================================================
+Dataset N=1500, X=1024; nu=0.0005, solver=exponax (final-only)
+
+✅ Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.05_steps20/N=1500/dataset.pt
+⏱️  Combo time: 7718.88s | Done 1/1 combos | Samples: 1500/1500
+
+================================================================================
+🎉 All done. Total combos: 1, Total samples: 1500
+🧭 Total wall time: 7718.90 seconds
+================================================================================
+=== DONE: norm=2, epsilon=10, steps=20, alpha=0.05 ===
+=== RUN: norm=2, epsilon=10, steps=20, alpha=0.1 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s4
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+================================================================================
+Dataset N=1500, X=1024; nu=0.0005, solver=exponax (final-only)
+
+✅ Saved: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/expanded_pos/t1/nu0.0005_pgd/norm2_eps10_alpha0.1_steps20/N=1500/dataset.pt
+⏱️  Combo time: 7704.30s | Done 1/1 combos | Samples: 1500/1500
+
+================================================================================
+🎉 All done. Total combos: 1, Total samples: 1500
+🧭 Total wall time: 7705.08 seconds
+================================================================================
+=== DONE: norm=2, epsilon=10, steps=20, alpha=0.1 ===

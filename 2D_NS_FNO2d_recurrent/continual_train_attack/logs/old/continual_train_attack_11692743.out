@@ -1,0 +1,16 @@
+c0901a-s5.ufhpc
+Tue Sep  2 06:07:53 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[Device] cuda
+[Resume] start_round=1, end_round=5 (out_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs)
+
+======================== ROUND 1/5 ========================
+[Round 1] Saved CKPT -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs/models/FNO2d_r1_m96x96_w80_Tin10_T10.pth
+[Round 1] Eval train: RMSEμ=0.1377, MAEμ=0.1006, MAPEμ=67.46%
+[Round 1] Eval test: RMSEμ=0.3272, MAEμ=0.2197, MAPEμ=158.47%
+[Round 1] Will attack 288 samples (ratio=0.25) | eps=8, alpha=2.5, steps=10
+[Round 1] Saved expanded -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs/expanded/round001/adv_train_mspec=wwwwwwwwww_norm2_alpha2.5_epsilon8_steps10.pt
+[Round 1] Done.
+
+======================== ROUND 2/5 ========================
+[Round 2] Mixed expanded samples: 250 / clean 1000 (ratio=0.25)

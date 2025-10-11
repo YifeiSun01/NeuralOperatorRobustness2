@@ -1,0 +1,245 @@
+c0907a-s25.ufhpc
+Wed Sep 10 09:52:57 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+--- PyTorch Info ---
+PyTorch version: 2.7.0+cu128
+CUDA version used by PyTorch: 12.8
+Is CUDA available: True
+
+--- JAX Info ---
+JAX version: 0.6.0
+JAXlib version: 0.6.0
+JAX default backend: gpu
+JAX devices: [CudaDevice(id=0)]
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA B200
+  Compute Capability: 10.0
+  Total memory: 178.36 GiB
+  Total memory: 191.51 GB
+  MultiProcessor count: 148
+  Memory Bus Width: N/A bits
+  Memory Clock Rate: 0 MHz
+  GPU Clock Rate: 0 MHz
+  Shared memory per block: 48.0 KB
+  Registers per block: N/A
+
+--- Memory usage on Device 0 ---
+Allocated memory: 0.00 GB
+Reserved memory:  0.00 GB
+Loading dataset from /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_test_all_frame_real_initial.pt...
+Pre-upsampling dataset on GPU...
+Upsampling:   0%|          | 0/50 [00:00<?, ?sample/s]Upsampling:   2%|▏         | 1/50 [00:05<04:27,  5.46s/sample]Upsampling: 100%|██████████| 50/50 [00:05<00:00,  9.14sample/s]
+Generating datasets for all patterns...
+[1/6] pattern = ringsCos
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:85: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:89: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  return torch_dlpack.from_dlpack(jax_dlpack.to_dlpack(jax_array))
+Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  10%|█         | 1/10 [01:13<11:05, 73.95s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  20%|██        | 2/10 [01:50<06:53, 51.73s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  30%|███       | 3/10 [02:31<05:28, 46.92s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  40%|████      | 4/10 [03:04<04:09, 41.58s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  50%|█████     | 5/10 [03:38<03:13, 38.67s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  60%|██████    | 6/10 [04:11<02:27, 36.98s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  70%|███████   | 7/10 [04:45<01:47, 35.81s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  80%|████████  | 8/10 [05:19<01:10, 35.24s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  90%|█████████ | 9/10 [05:52<00:34, 34.66s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0: 100%|██████████| 10/10 [06:26<00:00, 34.32s/sample]Generating batch 0: 100%|██████████| 10/10 [06:26<00:00, 38.63s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/ringsCos/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_forcingPatternringsCos_batch0_.pt
+[2/6] pattern = sBands
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  10%|█         | 1/10 [00:34<05:12, 34.72s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  20%|██        | 2/10 [01:10<04:41, 35.20s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  30%|███       | 3/10 [01:43<04:01, 34.52s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  40%|████      | 4/10 [01:52<02:24, 24.07s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  50%|█████     | 5/10 [02:25<02:17, 27.49s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  60%|██████    | 6/10 [02:58<01:57, 29.39s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  70%|███████   | 7/10 [03:32<01:32, 30.90s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  80%|████████  | 8/10 [04:06<01:03, 31.70s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  90%|█████████ | 9/10 [04:39<00:32, 32.31s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0: 100%|██████████| 10/10 [05:13<00:00, 32.68s/sample]Generating batch 0: 100%|██████████| 10/10 [05:13<00:00, 31.32s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/sBands/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_forcingPatternsBands_batch0_.pt
+[3/6] pattern = isoCircles
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  10%|█         | 1/10 [00:33<05:03, 33.73s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  20%|██        | 2/10 [01:08<04:35, 34.43s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  30%|███       | 3/10 [01:42<03:58, 34.02s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  40%|████      | 4/10 [02:15<03:22, 33.82s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  50%|█████     | 5/10 [02:48<02:47, 33.53s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  60%|██████    | 6/10 [03:22<02:14, 33.65s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  70%|███████   | 7/10 [03:56<01:41, 33.68s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  80%|████████  | 8/10 [04:29<01:07, 33.62s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  90%|█████████ | 9/10 [05:03<00:33, 33.68s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0: 100%|██████████| 10/10 [05:36<00:00, 33.50s/sample]Generating batch 0: 100%|██████████| 10/10 [05:36<00:00, 33.67s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/isoCircles/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_forcingPatternisoCircles_batch0_.pt
+[4/6] pattern = petals
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  10%|█         | 1/10 [00:09<01:23,  9.31s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  20%|██        | 2/10 [00:19<01:16,  9.61s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  30%|███       | 3/10 [00:26<01:01,  8.76s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  40%|████      | 4/10 [00:34<00:50,  8.36s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  50%|█████     | 5/10 [00:42<00:40,  8.14s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  60%|██████    | 6/10 [00:50<00:32,  8.04s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  70%|███████   | 7/10 [00:58<00:24,  8.03s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  80%|████████  | 8/10 [01:06<00:15,  7.97s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0:  90%|█████████ | 9/10 [01:14<00:07,  7.96s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced stable solution.
+Generating batch 0: 100%|██████████| 10/10 [01:21<00:00,  7.91s/sample]Generating batch 0: 100%|██████████| 10/10 [01:21<00:00,  8.18s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/petals/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_forcingPatternpetals_batch0_.pt
+[5/6] pattern = ringsL1
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  10%|█         | 1/10 [00:34<05:06, 34.06s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  20%|██        | 2/10 [01:09<04:39, 34.99s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  30%|███       | 3/10 [01:42<03:59, 34.17s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  40%|████      | 4/10 [02:17<03:24, 34.15s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  50%|█████     | 5/10 [02:50<02:48, 33.79s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  60%|██████    | 6/10 [03:23<02:14, 33.73s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  70%|███████   | 7/10 [03:57<01:41, 33.67s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  80%|████████  | 8/10 [04:30<01:07, 33.55s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  90%|█████████ | 9/10 [05:04<00:33, 33.68s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0: 100%|██████████| 10/10 [05:37<00:00, 33.56s/sample]Generating batch 0: 100%|██████████| 10/10 [05:37<00:00, 33.79s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/ringsL1/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_forcingPatternringsL1_batch0_.pt
+[6/6] pattern = ringsLinf
+
+Starting batch 1/1...
+Generating batch 0:   0%|          | 0/10 [00:00<?, ?sample/s]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  10%|█         | 1/10 [00:33<05:02, 33.62s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  20%|██        | 2/10 [01:09<04:37, 34.68s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  30%|███       | 3/10 [01:42<04:00, 34.33s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  40%|████      | 4/10 [02:16<03:23, 33.97s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  50%|█████     | 5/10 [02:50<02:49, 33.98s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  60%|██████    | 6/10 [03:23<02:15, 33.85s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  70%|███████   | 7/10 [03:57<01:40, 33.67s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  80%|████████  | 8/10 [04:31<01:07, 33.75s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0:  90%|█████████ | 9/10 [05:05<00:33, 33.96s/sample]Step size 0.01 produced unstable solution. Trying smaller step.
+Step size 0.005 produced unstable solution. Trying smaller step.
+Step size 0.001 produced stable solution.
+Generating batch 0: 100%|██████████| 10/10 [05:39<00:00, 34.03s/sample]Generating batch 0: 100%|██████████| 10/10 [05:39<00:00, 33.98s/sample]
+[Saved] Batch 0 saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/ringsLinf/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_forcingPatternringsLinf_batch0_.pt
+Done. Summary:
+  ringsCos: None
+  sBands: None
+  isoCircles: None
+  petals: None
+  ringsL1: None
+  ringsLinf: None

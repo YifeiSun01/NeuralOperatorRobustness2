@@ -1,0 +1,1569 @@
+c1110a-s15.ufhpc
+Sun Aug 31 09:24:26 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[INFO] Script dir: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics
+[INFO] H5 in script dir: ['dataset_stats.h5', 'dataset_stats_fft.h5']
+[INFO] H5 in CWD      : []
+[INFO] Spatial file loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats.h5
+[INFO] FFT file loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_fft.h5
+[INFO] Total datasets discovered: 117
+[INFO] generalizability datasets available: 100
+[INFO] Sampling 20 from generalizability with seed=20240901
+       Selected (first 10 shown): dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2_tau3_vmax1_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau7_vmax0_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin0_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha1.000_vmax0.4_vmin-0.4_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha0.750_vmax0_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.000_vmax-1_vmin-1.5_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance1.000_alpha1.000_vmax0_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha1.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames, dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames ...
+[INFO] Total datasets to draw after sampling: 37 (non-gen=17, gen-picked=20)
+
+[1/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2_tau3_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2_tau3_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha2_tau3_vmax1_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[2/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau7_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau7_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_matern_alpha3.500_tau7_vmax0_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[3/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_periodic_length_scale40_period0.500_vmax1_vmin0_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[4/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha1.000_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha1.000_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance0.700_alpha1.000_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[5/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.050_variance1.000_alpha1.000_vmax1.5_vmin1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[6/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha0.750_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha0.750_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance0.700_alpha0.750_vmax0_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[7/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.000_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.000_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.100_variance1.000_alpha1.000_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[8/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance1.000_alpha1.000_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance1.000_alpha1.000_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_GRF_rq_length_scale0.200_variance1.000_alpha1.000_vmax0_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[9/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha1.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha1.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha1.500_tau3_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[10/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2.500_tau7_exp_factor2.500_vmax0.4_vmin-0.4_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[11/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau7_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau7_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha2_tau7_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[12/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha3.500_tau7_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha3.500_tau7_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_matern_alpha3.500_tau7_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[13/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_periodic_length_scale40_period0.050_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_periodic_length_scale40_period0.050_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_periodic_length_scale40_period0.050_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[14/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_LogGRF_rbf_length_scale0.100_variance0.100_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[15/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha3.500_tau11_exp_factor2.500_vmax1_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha3.500_tau11_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_matern_alpha3.500_tau11_exp_factor2.500_vmax1_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[16/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.050_variance5_exp_factor2.500_vmax0_vmin-1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.050_variance5_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.050_variance5_exp_factor2.500_vmax0_vmin-1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[17/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.050_variance5_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.050_variance5_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.050_variance5_exp_factor2.500_vmax1.5_vmin1_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[18/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.200_variance0.500_exp_factor2.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.200_variance0.500_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rbf_length_scale0.200_variance0.500_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[19/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha1.500_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha1.500_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.100_variance1.000_alpha1.500_exp_factor2.500_vmax-1_vmin-1.5_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[20/37] Drawing dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance0.700_alpha0.750_exp_factor2.500_vmax1_vmin0_batch0_all_frames  type=generalizability
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance0.700_alpha0.750_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/generalizability/dim2d_nx256_N10_solver=exponax_nu0.000_t20.0_test_ntimepoints21_NegLogGRF_rq_length_scale0.200_variance0.700_alpha0.750_exp_factor2.500_vmax1_vmin0_batch0_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[21/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames  type=train
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[22/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[23/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[24/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[25/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[26/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[27/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[28/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[29/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[30/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[31/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[32/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[33/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[34/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[35/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[36/37] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10  type=expanded
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[37/37] Drawing dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames  type=test
+  [do] spatial plots
+  [spatial] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames
+    [saved] spatial_frame0_global_hist.png
+    [saved] spatial_frame0_percell_mean_std_min_max.png
+    [saved] spatial_frame0_percell_quantiles.png
+    [saved] spatial_frame19_global_hist.png
+    [saved] spatial_frame19_percell_mean_std_min_max.png
+    [saved] spatial_frame19_percell_quantiles.png
+  [do] fft plots (components: mag/real/imag if present)
+  [fft] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_all_frames
+    [saved] fft_mag_frame0_global_hist.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max.png
+    [saved] fft_mag_frame0_percell_quantiles.png
+    [saved] fft_mag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame0_percell_quantiles_log.png
+    [saved] fft_real_frame0_global_hist.png
+    [saved] fft_real_frame0_percell_mean_std_min_max.png
+    [saved] fft_real_frame0_percell_quantiles.png
+    [saved] fft_real_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame0_percell_quantiles_log.png
+    [saved] fft_imag_frame0_global_hist.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max.png
+    [saved] fft_imag_frame0_percell_quantiles.png
+    [saved] fft_imag_frame0_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame0_percell_quantiles_log.png
+    [saved] fft_mag_frame19_global_hist.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max.png
+    [saved] fft_mag_frame19_percell_quantiles.png
+    [saved] fft_mag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_mag_frame19_percell_quantiles_log.png
+    [saved] fft_real_frame19_global_hist.png
+    [saved] fft_real_frame19_percell_mean_std_min_max.png
+    [saved] fft_real_frame19_percell_quantiles.png
+    [saved] fft_real_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_real_frame19_percell_quantiles_log.png
+    [saved] fft_imag_frame19_global_hist.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max.png
+    [saved] fft_imag_frame19_percell_quantiles.png
+    [saved] fft_imag_frame19_percell_mean_std_min_max_log.png
+    [saved] fft_imag_frame19_percell_quantiles_log.png
+
+[OK] Plots saved under: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type

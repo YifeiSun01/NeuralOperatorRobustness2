@@ -1,0 +1,391 @@
+c0907a-s15.ufhpc
+Sun Sep  7 08:20:52 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+>>> Running SINGLE job with MODE_SPEC=wwwwwwwwww
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+======================================== 诊断结束 ========================================
+
+input_list: [{'norm': 2, 'epsilon': 13.1072, 'alpha': 1.0, 'num_steps': 100}, {'norm': 2, 'epsilon': 39.3216, 'alpha': 1.0, 'num_steps': 100}]
+================================================================================
+norm: 2, epsilon: 13.1072, alpha: 1.0, num_steps: 100, mode_spec: wwwwwwwwww, loss_reduction: sum, b1: 0.9, b2: 0.999, adam_eps: 1e-08, sign_Linf: True, amsgrad: False
+x_batch.shape:  torch.Size([1, 256, 256])
+batch start index:  0 batch end index:  1
+
+[Step 0] ============ 详细性能分析 ============
+[PDE ] Time: 9.249438s | Mem: 0.00 B
+[Model] Time: 5.906747s | Mem: 4.12 GB
+[BWD ] Time: 11.981442s | Mem: -4.10 GB
+[UPDT] Time: 0.203495s | Mem: 2.00 MB
+[STEP] Total: 27.481703s | ΔMem: 22.78 MB | Peak: 16.96 GB
+[Loss] batch=2.337810e+05 | per-sample mean: 3.567215e+00
+
+[Step 1] ============ 详细性能分析 ============
+[PDE ] Time: 4.065983s | Mem: -256.00 KB
+[Model] Time: 0.019107s | Mem: 4.11 GB
+[BWD ] Time: 11.149022s | Mem: -4.11 GB
+[UPDT] Time: 0.001664s | Mem: 256.00 KB
+[STEP] Total: 15.237262s | ΔMem: -512.00 KB | Peak: 16.97 GB
+[Loss] batch=2.741115e+05 | per-sample mean: 4.182610e+00
+
+[Step 2] ============ 详细性能分析 ============
+[PDE ] Time: 4.087706s | Mem: -256.00 KB
+[Model] Time: 0.018918s | Mem: 4.12 GB
+[BWD ] Time: 11.093897s | Mem: -4.11 GB
+[UPDT] Time: 0.002051s | Mem: 256.00 KB
+[STEP] Total: 15.204607s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.426665e+05 | per-sample mean: 3.702797e+00
+
+[Step 3] ============ 详细性能分析 ============
+[PDE ] Time: 4.078347s | Mem: -256.00 KB
+[Model] Time: 0.019224s | Mem: 4.12 GB
+[BWD ] Time: 11.080179s | Mem: -4.11 GB
+[UPDT] Time: 0.002074s | Mem: 256.00 KB
+[STEP] Total: 15.182122s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.458150e+05 | per-sample mean: 3.750840e+00
+
+[Step 4] ============ 详细性能分析 ============
+[PDE ] Time: 4.098147s | Mem: -256.00 KB
+[Model] Time: 0.019319s | Mem: 4.12 GB
+[BWD ] Time: 11.176200s | Mem: -4.11 GB
+[UPDT] Time: 0.001991s | Mem: 256.00 KB
+[STEP] Total: 15.298022s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.764179e+05 | per-sample mean: 4.217803e+00
+
+[Step 5] ============ 详细性能分析 ============
+[PDE ] Time: 4.056263s | Mem: -256.00 KB
+[Model] Time: 0.019226s | Mem: 4.12 GB
+[BWD ] Time: 11.097304s | Mem: -4.11 GB
+[UPDT] Time: 0.001960s | Mem: 256.00 KB
+[STEP] Total: 15.176937s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.560226e+05 | per-sample mean: 3.906595e+00
+
+[Step 6] ============ 详细性能分析 ============
+[PDE ] Time: 4.148775s | Mem: -256.00 KB
+[Model] Time: 0.019091s | Mem: 4.12 GB
+[BWD ] Time: 11.106523s | Mem: -4.11 GB
+[UPDT] Time: 0.001910s | Mem: 256.00 KB
+[STEP] Total: 15.278310s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.539255e+05 | per-sample mean: 3.874596e+00
+
+[Step 7] ============ 详细性能分析 ============
+[PDE ] Time: 4.095832s | Mem: -256.00 KB
+[Model] Time: 0.019219s | Mem: 4.12 GB
+[BWD ] Time: 11.207517s | Mem: -4.11 GB
+[UPDT] Time: 0.001992s | Mem: 256.00 KB
+[STEP] Total: 15.326672s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.399361e+05 | per-sample mean: 3.661135e+00
+
+[Step 8] ============ 详细性能分析 ============
+[PDE ] Time: 4.120702s | Mem: -256.00 KB
+[Model] Time: 0.019190s | Mem: 4.12 GB
+[BWD ] Time: 11.043350s | Mem: -4.11 GB
+[UPDT] Time: 0.002056s | Mem: 256.00 KB
+[STEP] Total: 15.187432s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.492795e+05 | per-sample mean: 3.803704e+00
+
+[Step 9] ============ 详细性能分析 ============
+[PDE ] Time: 4.063261s | Mem: -256.00 KB
+[Model] Time: 0.019202s | Mem: 4.12 GB
+[BWD ] Time: 11.124196s | Mem: -4.11 GB
+[UPDT] Time: 0.002051s | Mem: 256.00 KB
+[STEP] Total: 15.210910s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.347575e+05 | per-sample mean: 3.582114e+00
+
+[Step 10] ============ 详细性能分析 ============
+[PDE ] Time: 4.128124s | Mem: -256.00 KB
+[Model] Time: 0.019284s | Mem: 4.12 GB
+[BWD ] Time: 11.253460s | Mem: -4.11 GB
+[UPDT] Time: 0.002008s | Mem: 256.00 KB
+[STEP] Total: 15.405763s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.436534e+05 | per-sample mean: 3.717855e+00
+
+[Step 11] ============ 详细性能分析 ============
+[PDE ] Time: 4.081507s | Mem: -256.00 KB
+[Model] Time: 0.019181s | Mem: 4.12 GB
+[BWD ] Time: 11.107045s | Mem: -4.11 GB
+[UPDT] Time: 0.001959s | Mem: 256.00 KB
+[STEP] Total: 15.211528s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.340818e+05 | per-sample mean: 3.571804e+00
+
+[Step 12] ============ 详细性能分析 ============
+[PDE ] Time: 4.102458s | Mem: -256.00 KB
+[Model] Time: 0.019092s | Mem: 4.12 GB
+[BWD ] Time: 11.120569s | Mem: -4.11 GB
+[UPDT] Time: 0.002079s | Mem: 256.00 KB
+[STEP] Total: 15.246240s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.418655e+05 | per-sample mean: 3.690575e+00
+
+[Step 13] ============ 详细性能分析 ============
+[PDE ] Time: 4.051680s | Mem: -256.00 KB
+[Model] Time: 0.019299s | Mem: 4.12 GB
+[BWD ] Time: 11.046096s | Mem: -4.11 GB
+[UPDT] Time: 0.002158s | Mem: 256.00 KB
+[STEP] Total: 15.121604s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.349641e+05 | per-sample mean: 3.585268e+00
+
+[Step 14] ============ 详细性能分析 ============
+[PDE ] Time: 4.256884s | Mem: -256.00 KB
+[Model] Time: 0.019090s | Mem: 4.12 GB
+[BWD ] Time: 11.294009s | Mem: -4.11 GB
+[UPDT] Time: 0.001932s | Mem: 256.00 KB
+[STEP] Total: 15.574147s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.418510e+05 | per-sample mean: 3.690354e+00
+
+[Step 15] ============ 详细性能分析 ============
+[PDE ] Time: 4.081928s | Mem: -256.00 KB
+[Model] Time: 0.019201s | Mem: 4.12 GB
+[BWD ] Time: 11.148273s | Mem: -4.11 GB
+[UPDT] Time: 0.001771s | Mem: 256.00 KB
+[STEP] Total: 15.253255s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355787e+05 | per-sample mean: 3.594646e+00
+
+[Step 16] ============ 详细性能分析 ============
+[PDE ] Time: 4.091605s | Mem: -256.00 KB
+[Model] Time: 0.019194s | Mem: 4.12 GB
+[BWD ] Time: 11.135354s | Mem: -4.11 GB
+[UPDT] Time: 0.001819s | Mem: 256.00 KB
+[STEP] Total: 15.250056s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.423204e+05 | per-sample mean: 3.697516e+00
+
+[Step 17] ============ 详细性能分析 ============
+[PDE ] Time: 4.060825s | Mem: -256.00 KB
+[Model] Time: 0.018816s | Mem: 4.12 GB
+[BWD ] Time: 11.090242s | Mem: -4.11 GB
+[UPDT] Time: 0.002015s | Mem: 256.00 KB
+[STEP] Total: 15.173634s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.357303e+05 | per-sample mean: 3.596959e+00
+
+[Step 18] ============ 详细性能分析 ============
+[PDE ] Time: 4.112966s | Mem: -256.00 KB
+[Model] Time: 0.019214s | Mem: 4.12 GB
+[BWD ] Time: 11.092946s | Mem: -4.11 GB
+[UPDT] Time: 0.001945s | Mem: 256.00 KB
+[STEP] Total: 15.229396s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.426000e+05 | per-sample mean: 3.701783e+00
+
+[Step 19] ============ 详细性能分析 ============
+[PDE ] Time: 4.087556s | Mem: -256.00 KB
+[Model] Time: 0.019365s | Mem: 4.12 GB
+[BWD ] Time: 11.076234s | Mem: -4.11 GB
+[UPDT] Time: 0.002010s | Mem: 256.00 KB
+[STEP] Total: 15.187491s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.356407e+05 | per-sample mean: 3.595592e+00
+
+[Step 20] ============ 详细性能分析 ============
+[PDE ] Time: 4.130677s | Mem: -256.00 KB
+[Model] Time: 0.019169s | Mem: 4.12 GB
+[BWD ] Time: 11.092648s | Mem: -4.11 GB
+[UPDT] Time: 0.001818s | Mem: 256.00 KB
+[STEP] Total: 15.246279s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.426100e+05 | per-sample mean: 3.701935e+00
+
+[Step 21] ============ 详细性能分析 ============
+[PDE ] Time: 4.081541s | Mem: -256.00 KB
+[Model] Time: 0.019119s | Mem: 4.12 GB
+[BWD ] Time: 11.055222s | Mem: -4.11 GB
+[UPDT] Time: 0.001795s | Mem: 256.00 KB
+[STEP] Total: 15.159796s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355632e+05 | per-sample mean: 3.594409e+00
+
+[Step 22] ============ 详细性能分析 ============
+[PDE ] Time: 4.107045s | Mem: -256.00 KB
+[Model] Time: 0.019211s | Mem: 4.12 GB
+[BWD ] Time: 11.078477s | Mem: -4.11 GB
+[UPDT] Time: 0.001852s | Mem: 256.00 KB
+[STEP] Total: 15.208693s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.425377e+05 | per-sample mean: 3.700831e+00
+
+[Step 23] ============ 详细性能分析 ============
+[PDE ] Time: 4.065444s | Mem: -256.00 KB
+[Model] Time: 0.019047s | Mem: 4.12 GB
+[BWD ] Time: 11.313270s | Mem: -4.11 GB
+[UPDT] Time: 0.002073s | Mem: 256.00 KB
+[STEP] Total: 15.401892s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355271e+05 | per-sample mean: 3.593858e+00
+
+[Step 24] ============ 详细性能分析 ============
+[PDE ] Time: 4.096381s | Mem: -256.00 KB
+[Model] Time: 0.019140s | Mem: 4.12 GB
+[BWD ] Time: 11.155586s | Mem: -4.11 GB
+[UPDT] Time: 0.001867s | Mem: 256.00 KB
+[STEP] Total: 15.274876s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.425051e+05 | per-sample mean: 3.700334e+00
+
+[Step 25] ============ 详细性能分析 ============
+[PDE ] Time: 4.098397s | Mem: -256.00 KB
+[Model] Time: 0.019159s | Mem: 4.12 GB
+[BWD ] Time: 11.100634s | Mem: -4.11 GB
+[UPDT] Time: 0.001759s | Mem: 256.00 KB
+[STEP] Total: 15.221795s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355439e+05 | per-sample mean: 3.594114e+00
+
+[Step 26] ============ 详细性能分析 ============
+[PDE ] Time: 4.130439s | Mem: -256.00 KB
+[Model] Time: 0.018994s | Mem: 4.12 GB
+[BWD ] Time: 11.085735s | Mem: -4.11 GB
+[UPDT] Time: 0.001756s | Mem: 256.00 KB
+[STEP] Total: 15.238760s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.425077e+05 | per-sample mean: 3.700373e+00
+
+[Step 27] ============ 详细性能分析 ============
+[PDE ] Time: 4.083976s | Mem: -256.00 KB
+[Model] Time: 0.019142s | Mem: 4.12 GB
+[BWD ] Time: 11.044833s | Mem: -4.11 GB
+[UPDT] Time: 0.001831s | Mem: 256.00 KB
+[STEP] Total: 15.151923s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355645e+05 | per-sample mean: 3.594429e+00
+
+[Step 28] ============ 详细性能分析 ============
+[PDE ] Time: 4.137761s | Mem: -256.00 KB
+[Model] Time: 0.019134s | Mem: 4.12 GB
+[BWD ] Time: 11.115996s | Mem: -4.11 GB
+[UPDT] Time: 0.001744s | Mem: 256.00 KB
+[STEP] Total: 15.276509s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.425239e+05 | per-sample mean: 3.700621e+00
+
+[Step 29] ============ 详细性能分析 ============
+[PDE ] Time: 4.068376s | Mem: -256.00 KB
+[Model] Time: 0.019176s | Mem: 4.12 GB
+[BWD ] Time: 11.320990s | Mem: -4.11 GB
+[UPDT] Time: 0.001828s | Mem: 256.00 KB
+[STEP] Total: 15.412448s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355528e+05 | per-sample mean: 3.594251e+00
+
+[Step 30] ============ 详细性能分析 ============
+[PDE ] Time: 4.121548s | Mem: -256.00 KB
+[Model] Time: 0.018966s | Mem: 4.12 GB
+[BWD ] Time: 11.079876s | Mem: -4.11 GB
+[UPDT] Time: 0.001937s | Mem: 256.00 KB
+[STEP] Total: 15.224092s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.425185e+05 | per-sample mean: 3.700539e+00
+
+[Step 31] ============ 详细性能分析 ============
+[PDE ] Time: 4.066088s | Mem: -256.00 KB
+[Model] Time: 0.019287s | Mem: 4.12 GB
+[BWD ] Time: 11.038316s | Mem: -4.11 GB
+[UPDT] Time: 0.001877s | Mem: 256.00 KB
+[STEP] Total: 15.127791s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355333e+05 | per-sample mean: 3.593954e+00
+
+[Step 32] ============ 详细性能分析 ============
+[PDE ] Time: 4.161792s | Mem: -256.00 KB
+[Model] Time: 0.019178s | Mem: 4.12 GB
+[BWD ] Time: 11.014841s | Mem: -4.11 GB
+[UPDT] Time: 0.001759s | Mem: 256.00 KB
+[STEP] Total: 15.199423s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424886e+05 | per-sample mean: 3.700083e+00
+
+[Step 33] ============ 详细性能分析 ============
+[PDE ] Time: 4.068163s | Mem: -256.00 KB
+[Model] Time: 0.019092s | Mem: 4.12 GB
+[BWD ] Time: 11.144167s | Mem: -4.11 GB
+[UPDT] Time: 0.001965s | Mem: 256.00 KB
+[STEP] Total: 15.235410s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355552e+05 | per-sample mean: 3.594286e+00
+
+[Step 34] ============ 详细性能分析 ============
+[PDE ] Time: 4.120173s | Mem: -256.00 KB
+[Model] Time: 0.019049s | Mem: 4.12 GB
+[BWD ] Time: 11.122418s | Mem: -4.11 GB
+[UPDT] Time: 0.001935s | Mem: 256.00 KB
+[STEP] Total: 15.265436s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424856e+05 | per-sample mean: 3.700037e+00
+
+[Step 35] ============ 详细性能分析 ============
+[PDE ] Time: 4.094992s | Mem: -256.00 KB
+[Model] Time: 0.019372s | Mem: 4.12 GB
+[BWD ] Time: 11.083780s | Mem: -4.11 GB
+[UPDT] Time: 0.001840s | Mem: 256.00 KB
+[STEP] Total: 15.202328s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355680e+05 | per-sample mean: 3.594482e+00
+
+[Step 36] ============ 详细性能分析 ============
+[PDE ] Time: 4.381296s | Mem: -256.00 KB
+[Model] Time: 0.018940s | Mem: 4.12 GB
+[BWD ] Time: 11.075607s | Mem: -4.11 GB
+[UPDT] Time: 0.001714s | Mem: 256.00 KB
+[STEP] Total: 15.479448s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424918e+05 | per-sample mean: 3.700131e+00
+
+[Step 37] ============ 详细性能分析 ============
+[PDE ] Time: 4.089409s | Mem: -256.00 KB
+[Model] Time: 0.018754s | Mem: 4.12 GB
+[BWD ] Time: 11.128041s | Mem: -4.11 GB
+[UPDT] Time: 0.001822s | Mem: 256.00 KB
+[STEP] Total: 15.239682s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355417e+05 | per-sample mean: 3.594081e+00
+
+[Step 38] ============ 详细性能分析 ============
+[PDE ] Time: 4.137942s | Mem: -256.00 KB
+[Model] Time: 0.019282s | Mem: 4.12 GB
+[BWD ] Time: 11.109907s | Mem: -4.11 GB
+[UPDT] Time: 0.001998s | Mem: 256.00 KB
+[STEP] Total: 15.271635s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424656e+05 | per-sample mean: 3.699732e+00
+
+[Step 39] ============ 详细性能分析 ============
+[PDE ] Time: 4.084262s | Mem: -256.00 KB
+[Model] Time: 0.019192s | Mem: 4.12 GB
+[BWD ] Time: 11.114766s | Mem: -4.11 GB
+[UPDT] Time: 0.001796s | Mem: 256.00 KB
+[STEP] Total: 15.221988s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355288e+05 | per-sample mean: 3.593884e+00
+
+[Step 40] ============ 详细性能分析 ============
+[PDE ] Time: 4.121034s | Mem: -256.00 KB
+[Model] Time: 0.018880s | Mem: 4.12 GB
+[BWD ] Time: 11.118481s | Mem: -4.11 GB
+[UPDT] Time: 0.001966s | Mem: 256.00 KB
+[STEP] Total: 15.262314s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424877e+05 | per-sample mean: 3.700068e+00
+
+[Step 41] ============ 详细性能分析 ============
+[PDE ] Time: 4.080263s | Mem: -256.00 KB
+[Model] Time: 0.019198s | Mem: 4.12 GB
+[BWD ] Time: 11.061020s | Mem: -4.11 GB
+[UPDT] Time: 0.001942s | Mem: 256.00 KB
+[STEP] Total: 15.164993s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355592e+05 | per-sample mean: 3.594348e+00
+
+[Step 42] ============ 详细性能分析 ============
+[PDE ] Time: 4.134796s | Mem: -256.00 KB
+[Model] Time: 0.019195s | Mem: 4.12 GB
+[BWD ] Time: 11.114718s | Mem: -4.11 GB
+[UPDT] Time: 0.001702s | Mem: 256.00 KB
+[STEP] Total: 15.272453s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424937e+05 | per-sample mean: 3.700161e+00
+
+[Step 43] ============ 详细性能分析 ============
+[PDE ] Time: 4.045646s | Mem: -256.00 KB
+[Model] Time: 0.018970s | Mem: 4.12 GB
+[BWD ] Time: 11.367573s | Mem: -4.11 GB
+[UPDT] Time: 0.001917s | Mem: 256.00 KB
+[STEP] Total: 15.436021s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.355479e+05 | per-sample mean: 3.594175e+00
+
+[Step 44] ============ 详细性能分析 ============
+[PDE ] Time: 4.128176s | Mem: -256.00 KB
+[Model] Time: 0.019236s | Mem: 4.12 GB
+[BWD ] Time: 11.089528s | Mem: -4.11 GB
+[UPDT] Time: 0.001773s | Mem: 256.00 KB
+[STEP] Total: 15.241256s | ΔMem: 0.00 B | Peak: 16.97 GB
+[Loss] batch=2.424884e+05 | per-sample mean: 3.700079e+00

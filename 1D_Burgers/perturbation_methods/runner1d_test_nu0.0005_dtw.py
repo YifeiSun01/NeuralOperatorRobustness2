@@ -123,26 +123,51 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
 
     records = {
         "step": {},
-        # for each step: store input, G_out, T_out, losses
+        # for each step: store input, G_out, T_out_recorded, losses
     }
 
     # helper functions
     def get_pair_outputs(input_tensor):
+        """
+        返回三元组 (G_out, T_used_for_loss, T_record_fullsolver)
+        - G_out: 模型的输出（tensor）
+        - T_used_for_loss: 根据 mode 决定，用于反传/攻击的目标（可能 detached 或 approximate）
+        - T_record_fullsolver: 始终用完整 solver 计算（不 detach），用于记录并保存到日志
+        """
         G_out = G(input_tensor)
+
+        # 先用完整 solver 计算用于记录的 ground truth（不 detach）
+        # 注意：JaxPDEWrapper.apply 可能会因设备/数据类型问题抛异常，保留 try/except
+        try:
+            T_full = JaxPDEWrapper.apply(input_tensor, g)  # 不 detach，不变
+        except Exception as e:
+            # 若 GPU transfer 等失败，JaxPDEWrapper 内部会 fallback 到 CPU 版本并返回 tensor
+            T_full = JaxPDEWrapper.apply(input_tensor, g)
+
+        # 根据 mode 决定用于 loss/backprop 的目标
         if mode == "with_solver":
-            T_out = JaxPDEWrapper.apply(input_tensor, g)
+            T_used = T_full  # 带梯度（如果 JaxPDEWrapper 支持 VJP）
         elif mode == "without_solver":
-            T_out = JaxPDEWrapper.apply(input_tensor, g).detach()
+            T_used = T_full.detach()  # 断开梯度，只作为固定目标
         elif mode == "approximate":
-            T_out = find_closest_ground_truth(input_tensor, x_dict, y_dict)
+            # approximate 使用最近邻近似（无梯度）
+            T_used = find_closest_ground_truth(input_tensor, x_dict, y_dict)
         else:
             raise ValueError("Unknown mode")
-        # align dtype / device
-        if T_out.dtype != G_out.dtype:
-            T_out = T_out.to(G_out.dtype)
-        if T_out.device != G_out.device:
-            T_out = T_out.to(G_out.device)
-        return G_out, T_out
+
+        # align dtype / device for T_used and G_out
+        if T_used.dtype != G_out.dtype:
+            T_used = T_used.to(G_out.dtype)
+        if T_used.device != G_out.device:
+            T_used = T_used.to(G_out.device)
+
+        # align dtype / device for T_full as well (for recording)
+        if T_full.dtype != G_out.dtype:
+            T_full = T_full.to(G_out.dtype)
+        if T_full.device != G_out.device:
+            T_full = T_full.to(G_out.device)
+
+        return G_out, T_used, T_full
 
     def compute_losses(G_out, T_out):
         # flatten to 1D for MSE and SoftDTW seq shape (1, L, 1)
@@ -159,16 +184,16 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
 
         return mse_loss, softdtw_loss
 
-    # record step 0
+    # record step 0 (在记录时，T_out 要使用完整 solver 的输出)
     inp0 = a.clone().detach().cpu().numpy()
-    G0, T0 = get_pair_outputs(a)
+    G0, T0_used, T0_full = get_pair_outputs(a)
     G0_np = G0.clone().detach().cpu().numpy()
-    T0_np = T0.clone().detach().cpu().numpy()
-    mse0, sdtw0 = compute_losses(G0, T0)
+    T0_np = T0_full.clone().detach().cpu().numpy()  # 记录使用完整 solver 的输出
+    mse0, sdtw0 = compute_losses(G0, T0_used)  # 计算 loss 时使用 T_used（mode 决定）
     records["step"]["step_0"] = {
         "input": inp0,
         "G_out": G0_np,
-        "T_out": T0_np,
+        "T_out": T0_np,   # 始终记录完整 solver 输出
         "loss": {
             "mse": float(mse0.item()),
             "softdtw": float(sdtw0.item())
@@ -178,8 +203,9 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
     for step in range(1, num_steps + 1):
         # forward, backward, update
         x_pert = a + delta
-        G_out, T_out = get_pair_outputs(x_pert)
-        mse_l, sdtw_l = compute_losses(G_out, T_out)
+        G_out, T_used, T_full = get_pair_outputs(x_pert)
+
+        mse_l, sdtw_l = compute_losses(G_out, T_used)  # 注意：loss 计算用 T_used
 
         # choose which loss to backprop
         if loss_type == "mse":
@@ -207,10 +233,10 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
         else:
             raise ValueError(f"Unsupported norm: {norm}")
 
-        # record after update — both losses
+        # record after update — both losses, and record T_full (完整 solver 输出)
         inp = (a + delta).clone().detach().cpu().numpy()
         G_np = G_out.clone().detach().cpu().numpy()
-        T_np = T_out.clone().detach().cpu().numpy()
+        T_np = T_full.clone().detach().cpu().numpy()  # 始终记录完整 solver 输出
         records["step"][f"step_{step}"] = {
             "input": inp,
             "G_out": G_np,
@@ -314,7 +340,7 @@ def main(argv):
             t_span = (0, burgers_params["simulation_time"])
             PDE_func = jax.jit(lambda u0: solver.solve(
                 u0, t_final=burgers_params["simulation_time"],
-                t_eval=t_span, step=burgers_params["step"]
+                t_eval=t_span, step=burgers_params['step']
             )[1][1])
 
             sample_results = {}

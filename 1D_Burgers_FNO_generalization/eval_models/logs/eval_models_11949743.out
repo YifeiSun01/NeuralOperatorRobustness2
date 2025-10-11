@@ -1,0 +1,126 @@
+c0604a-s3.ufhpc
+Sat Sep  6 12:13:51 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Using device: cuda
+========== GPU Information ==========
+Partition: hpg-turin
+Node: c0604a-s3
+GPU IDs: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB
+=====================================
+
+Collected models: 25
+  - extras: 1
+  - dir: 24
+Collected datasets: 206
+  - expanded: 15
+  - generalizability: 188
+  - train_test: 3
+
+Model/Dataset inventory saved to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/model_dataset_info_20250906_001403.txt
+
+Writing results to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/model_testing_results.csv (append)
+
+[Model 1/25] Loading: (extras) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/old/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/old/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 2/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 3/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.5_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.5_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 4/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 5/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.01_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.01_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 6/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.05_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.05_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 7/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 8/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.5_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.5_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 9/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 10/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 11/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.5_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.5_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 12/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 13/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.01_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.01_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 14/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.05_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.05_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 15/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 16/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.5_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.5_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 17/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 18/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 19/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.5_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.5_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 20/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 21/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.01_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.01_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 22/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.05_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.05_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 23/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 24/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.5_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.5_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+[Model 25/25] Loading: (dir) /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha1_steps20/model.pth
+[load_model] Error loading model /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha1_steps20/model.pth: FNO1d.__init__() missing 2 required positional arguments: 'modes' and 'width'
+  -> skip (failed to load)
+
+All done.
+Results CSV: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_FNO_generalization/model_testing_results.csv

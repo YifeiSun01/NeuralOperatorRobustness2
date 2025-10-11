@@ -1,0 +1,17 @@
+c0306a-s25.ufhpc
+Tue Jun 24 08:09:53 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+PyTorch version: 2.7.0+cu126
+CUDA version used by PyTorch: 12.6
+Is CUDA available: True
+Number of CUDA devices: 1
+
+--- Device 0 ---
+Device name: NVIDIA GeForce RTX 2080 Ti
+  Compute Capability: 7.5
+  Total memory: 10.57 GB
+  MultiProcessor count: 68
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/./data_generation/VT_NS_gen_all_frame.py", line 23, in <module>
+    print(f"  Max Threads per block: {props.max_threads_per_block}")
+AttributeError: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'

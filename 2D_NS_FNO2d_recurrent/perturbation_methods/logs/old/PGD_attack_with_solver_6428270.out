@@ -1,0 +1,46 @@
+c0904a-s25.ufhpc
+Sat Jun 28 11:08:48 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+Model device: cuda:0
+Input device: cuda:0
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (800, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1000, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1200, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1400, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1600, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (1800, 1, 256, 256)
+[Step 0] PDE Solver Forward - Time: 36.0274s, Mem: 4.75 MB
+[Step 0] Deep Model Forward - Time: 33.0823s, Mem: 4.12 GB
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (3800, 1, 256, 256)
+[Step 0] True Solution Compute - Time: 2.2328s, Mem: 256.00 KB
+1.==============================
+2.==============================
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (0, 1, 256, 256)
+full_ic shape: (1, 256, 256)
+full_ic dtype: float32
+rollout_stepper output shape: (0, 1, 256, 256)

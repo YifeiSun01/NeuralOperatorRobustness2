@@ -1,0 +1,638 @@
+c0901a-s15.ufhpc
+Mon Sep  1 12:49:36 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[INFO] Spatial loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats.h5
+[INFO] FFT loaded: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_fft.h5
+[INFO] Expanded datasets to draw: 15
+
+[1/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon13.1072_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[2/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon39.3216_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[3/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha10_epsilon78.6432_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[4/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon13.1072_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[5/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon39.3216_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[6/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha1_epsilon78.6432_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[7/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon13.1072_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[8/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon39.3216_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[9/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha2.5_epsilon78.6432_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[10/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon13.1072_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[11/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon39.3216_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[12/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha50_epsilon78.6432_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[13/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon13.1072_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[14/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon39.3216_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[15/15] Drawing dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10  (expanded-only; using expanded - train)
+  [do] spatial diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [spatial DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10/spatial_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+  [do] fft diff: expanded=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10  minus  train=dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames
+  [fft DIFF] -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type/expanded/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames_modespec=wwwwwwwwww_norm2_alpha5_epsilon78.6432_steps10/fourier_diff
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame0_global_hist_percell_mean_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff.png
+    [saved] frame0_percell_quantiles_diff.png
+    [saved] frame0_percell_mean_std_min_max_diff_log.png
+    [saved] frame0_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+    [saved] frame19_global_hist_percell_mean_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff.png
+    [saved] frame19_percell_quantiles_diff.png
+    [saved] frame19_percell_mean_std_min_max_diff_log.png
+    [saved] frame19_percell_quantiles_diff_log.png
+
+[OK] Plots saved under: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/datasets/statistics/dataset_stats_plots_by_type

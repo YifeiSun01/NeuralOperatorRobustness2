@@ -1,0 +1,10 @@
+c1100a-s25.ufhpc
+Tue Oct  7 08:00:23 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[2025-10-07T08:00:25-04:00] ▶ pattern=ringsLinf  split=train  N=1150
+                ds=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/all_patterns/ringsLinf/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pt
+                mdl=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/saved_models/ringsLinf/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_trained_on_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_forcingPatternringsLinf.pth
+
+✅ Saved expanded dataset (same keys/shapes as input): /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/expanded_datasets/ringsLinf_attack_N1150_train.pt
+[2025-10-07T14:37:17-04:00] ✅ done -> /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/expanded_datasets/ringsLinf_attack_N1150_train.pt
+

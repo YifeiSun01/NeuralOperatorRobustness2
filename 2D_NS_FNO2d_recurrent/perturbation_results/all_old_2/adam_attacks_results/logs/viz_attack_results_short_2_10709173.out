@@ -1,0 +1,645 @@
+c0900a-s25.ufhpc
+Sat Aug 23 01:11:15 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+adam_folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/pickle_files | exists: True
+norm_folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/pickle_files | exists: True
+
+================================================================================
+[SCAN] Folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/pickle_files
+  共发现 65 个 .pkl 文件
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_approximated.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_constant1to9.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached13579.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached19.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to5.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to6.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to7.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to8.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9_19.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached2468.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached5to9.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_withsolver.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_approximated.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_constant1to9.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached13579.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached19.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to5.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to6.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to7.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to8.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9_19.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached2468.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached5to9.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_withsolver.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_approximated.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_constant1to9.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached13579.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached19.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to5.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to6.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to7.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to8.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to9.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to9_19.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached2468.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached5to9.pkl
+    - pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_withsolver.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_approximated.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_constant1to9.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached13579.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached19.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to5.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to6.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to7.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to8.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9_19.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached2468.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached5to9.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_withsolver.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_approximated.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_constant1to9.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached13579.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached19.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to5.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to6.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to7.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to8.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9_19.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached2468.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached5to9.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_withsolver.pkl
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_approximated.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=approximated, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_constant1to9.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=constant1to9, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached13579.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached13579, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached19.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached19, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to5.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to5, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to6.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to6, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to7.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to7, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to8.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to8, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to9, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9_19.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to9_19, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached2468.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached2468, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached5to9.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached5to9, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_withsolver.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=withsolver, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_approximated.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=approximated, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_constant1to9.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=constant1to9, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached13579.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached13579, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached19.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached19, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to5.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to5, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to6.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to6, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to7.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to7, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to8.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to8, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to9, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9_19.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to9_19, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached2468.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached2468, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached5to9.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached5to9, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_withsolver.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=withsolver, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_approximated.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=approximated, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_constant1to9.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=constant1to9, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached13579.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached13579, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached19.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached19, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to5.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached1to5, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to6.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached1to6, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to7.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached1to7, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to8.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached1to8, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to9.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached1to9, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached1to9_19.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached1to9_19, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached2468.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached2468, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_detached5to9.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=detached5to9, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_withsolver.pkl
+     -> parsed: alpha=2.0, epsilon=26.2144, steps=100, idx=1
+     -> method=norm, tag=withsolver, key=(2.0, 26.2144)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_approximated.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=approximated, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_constant1to9.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=constant1to9, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached13579.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached13579, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached19.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached19, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to5.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to5, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to6.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to6, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to7.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to7, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to8.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to8, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to9, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9_19.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached1to9_19, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached2468.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached2468, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached5to9.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=detached5to9, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_withsolver.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=norm, tag=withsolver, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_approximated.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=approximated, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_constant1to9.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=constant1to9, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached13579.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached13579, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached19.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached19, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to5.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to5, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to6.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to6, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to7.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to7, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to8.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to8, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to9, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9_19.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached1to9_19, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached2468.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached2468, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached5to9.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=detached5to9, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_withsolver.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=norm, tag=withsolver, key=(5.0, 39.3216)
+[SUMMARY] 目录 pickle_files 提取到的 (alpha, epsilon) 键数: 5
+  key=(1.0, 13.1072)  | norm:13 条 | adam:0 条
+  key=(1.0, 39.3216)  | norm:13 条 | adam:0 条
+  key=(2.0, 26.2144)  | norm:13 条 | adam:0 条
+  key=(5.0, 13.1072)  | norm:13 条 | adam:0 条
+  key=(5.0, 39.3216)  | norm:13 条 | adam:0 条
+
+================================================================================
+[SCAN] Folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/pickle_files
+  共发现 60 个 .pkl 文件
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+    - pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(1.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha1.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=1.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(1.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(10.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(10.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(10.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha10.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=10.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(10.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(2.5, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(2.5, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(2.5, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha2.5_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=2.5, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(2.5, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(5.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha5.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=5.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(5.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(50.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=13.1072, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 13.1072)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(50.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=39.3216, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 39.3216)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0, key=(50.0, 78.6432)
+[OK] file=pgd_attack_records_norm2_alpha50.0_epsilon78.6432_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+     -> parsed: alpha=50.0, epsilon=78.6432, steps=100, idx=1
+     -> method=adam, tag=with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0, key=(50.0, 78.6432)
+[SUMMARY] 目录 pickle_files 提取到的 (alpha, epsilon) 键数: 15
+  key=(1.0, 13.1072)  | norm:0 条 | adam:4 条
+  key=(1.0, 39.3216)  | norm:0 条 | adam:4 条
+  key=(1.0, 78.6432)  | norm:0 条 | adam:4 条
+  key=(2.5, 13.1072)  | norm:0 条 | adam:4 条
+  key=(2.5, 39.3216)  | norm:0 条 | adam:4 条
+  key=(2.5, 78.6432)  | norm:0 条 | adam:4 条
+  key=(5.0, 13.1072)  | norm:0 条 | adam:4 条
+  key=(5.0, 39.3216)  | norm:0 条 | adam:4 条
+  key=(5.0, 78.6432)  | norm:0 条 | adam:4 条
+  key=(10.0, 13.1072)  | norm:0 条 | adam:4 条
+  key=(10.0, 39.3216)  | norm:0 条 | adam:4 条
+  key=(10.0, 78.6432)  | norm:0 条 | adam:4 条
+  key=(50.0, 13.1072)  | norm:0 条 | adam:4 条
+  key=(50.0, 39.3216)  | norm:0 条 | adam:4 条
+  key=(50.0, 78.6432)  | norm:0 条 | adam:4 条
+
+================================================================================
+[CROSS-CHECK] 键集合统计
+  norm 目录键数: 5
+  adam 目录键数: 15
+  共有键数(交集): 4
+  仅在 norm 出现的键 (1):
+     (2.0, 26.2144)
+  仅在 adam 出现的键 (11):
+     (1.0, 78.6432)
+     (2.5, 13.1072)
+     (2.5, 39.3216)
+     (2.5, 78.6432)
+     (5.0, 78.6432)
+     (10.0, 13.1072)
+     (10.0, 39.3216)
+     (10.0, 78.6432)
+     (50.0, 13.1072)
+     (50.0, 39.3216)
+     (50.0, 78.6432)
+
+[COMMON] key=(1.0, 13.1072)
+  -> norm 文件：
+       [approximated] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_approximated.pkl
+       [constant1to9] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_constant1to9.pkl
+       [detached13579] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached13579.pkl
+       [detached19] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached19.pkl
+       [detached1to5] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to5.pkl
+       [detached1to6] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to6.pkl
+       [detached1to7] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to7.pkl
+       [detached1to8] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to8.pkl
+       [detached1to9] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9.pkl
+       [detached1to9_19] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9_19.pkl
+       [detached2468] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached2468.pkl
+       [detached5to9] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached5to9.pkl
+       [withsolver] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_withsolver.pkl
+  -> adam 文件：
+       [detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+       [with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+[COMMON] key=(1.0, 39.3216)
+  -> norm 文件：
+       [approximated] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_approximated.pkl
+       [constant1to9] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_constant1to9.pkl
+       [detached13579] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached13579.pkl
+       [detached19] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached19.pkl
+       [detached1to5] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to5.pkl
+       [detached1to6] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to6.pkl
+       [detached1to7] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to7.pkl
+       [detached1to8] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to8.pkl
+       [detached1to9] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9.pkl
+       [detached1to9_19] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9_19.pkl
+       [detached2468] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached2468.pkl
+       [detached5to9] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached5to9.pkl
+       [withsolver] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_withsolver.pkl
+  -> adam 文件：
+       [detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+       [with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+[COMMON] key=(5.0, 13.1072)
+  -> norm 文件：
+       [approximated] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_approximated.pkl
+       [constant1to9] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_constant1to9.pkl
+       [detached13579] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached13579.pkl
+       [detached19] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached19.pkl
+       [detached1to5] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to5.pkl
+       [detached1to6] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to6.pkl
+       [detached1to7] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to7.pkl
+       [detached1to8] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to8.pkl
+       [detached1to9] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9.pkl
+       [detached1to9_19] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9_19.pkl
+       [detached2468] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached2468.pkl
+       [detached5to9] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached5to9.pkl
+       [withsolver] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_withsolver.pkl
+  -> adam 文件：
+       [detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+       [with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+[COMMON] key=(5.0, 39.3216)
+  -> norm 文件：
+       [approximated] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_approximated.pkl
+       [constant1to9] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_constant1to9.pkl
+       [detached13579] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached13579.pkl
+       [detached19] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached19.pkl
+       [detached1to5] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to5.pkl
+       [detached1to6] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to6.pkl
+       [detached1to7] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to7.pkl
+       [detached1to8] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to8.pkl
+       [detached1to9] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9.pkl
+       [detached1to9_19] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9_19.pkl
+       [detached2468] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached2468.pkl
+       [detached5to9] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached5to9.pkl
+       [withsolver] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_withsolver.pkl
+  -> adam 文件：
+       [detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to5|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached1to9|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+       [detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_detached5to9|adam_b10.9_b20.999_ae1e-08_sgn0_ams0.pkl
+       [with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0] pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_with_solver|adam_b10.9_b20.999_ae1e-08_sgn1_ams0.pkl
+
+共有的 (alpha, epsilon) 组合数: 4
+✅ 保存: comparison_plots_common/compare_alpha1.0_epsilon13.1072.png
+✅ 保存: comparison_plots_common/compare_alpha1.0_epsilon39.3216.png
+✅ 保存: comparison_plots_common/compare_alpha5.0_epsilon13.1072.png
+✅ 保存: comparison_plots_common/compare_alpha5.0_epsilon39.3216.png

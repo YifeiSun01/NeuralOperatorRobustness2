@@ -1,0 +1,5 @@
+c1106a-s11.ufhpc
+Tue Jun 17 08:23:31 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+67175937
+Model saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS/saved_models/2D/modes32_width64_epochs500/NS_2d_FNO_model_trainedby_dim2d_nx256_N5000_solver=exponax_kernel=matern_correlation_length0.50_bcperiodic_nu0.010_t40.0_seed0.pth

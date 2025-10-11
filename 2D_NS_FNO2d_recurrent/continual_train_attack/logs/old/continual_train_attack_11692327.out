@@ -1,0 +1,7 @@
+c0904a-s15.ufhpc
+Tue Sep  2 06:01:22 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+[Device] cuda
+[Resume] start_round=1, end_round=5 (out_root=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/continual_train_attack/outputs)
+
+======================== ROUND 1/5 ========================

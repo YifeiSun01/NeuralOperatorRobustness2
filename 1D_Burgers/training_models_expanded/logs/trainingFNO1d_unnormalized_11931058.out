@@ -1,0 +1,46 @@
+c0904a-s25.ufhpc
+Fri Sep  5 04:04:47 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+
+=== Attacked: norm2_eps20_alpha0.1_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.1_steps20/model.pth
+
+=== Attacked: norm2_eps20_alpha0.5_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha0.5_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha0.5_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha0.5_steps20/model.pth
+
+=== Attacked: norm2_eps20_alpha1_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps20_alpha1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps20_alpha1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps20_alpha1_steps20/model.pth
+
+=== Attacked: norm2_eps50_alpha0.01_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.01_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.01_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.01_steps20/model.pth
+
+=== Attacked: norm2_eps50_alpha0.05_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.05_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.05_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.05_steps20/model.pth
+
+=== Attacked: norm2_eps50_alpha0.1_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.1_steps20/model.pth
+
+=== Attacked: norm2_eps50_alpha0.5_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha0.5_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha0.5_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha0.5_steps20/model.pth
+
+=== Attacked: norm2_eps50_alpha1_steps20 ===
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/replace50/norm2_eps50_alpha1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add50/norm2_eps50_alpha1_steps20/model.pth
+[saved] /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models_expanded/1D/modes16_width64_epochs500/unnormalized/add100/norm2_eps50_alpha1_steps20/model.pth
+
+All trainings finished.
+

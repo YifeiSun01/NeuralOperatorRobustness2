@@ -1,0 +1,9 @@
+c1003a-s25.ufhpc
+Mon Jul 28 02:54:12 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers_deeponet
+Compiling model...
+'compile' took 26.048968 s
+
+Warning: epochs is deprecated and will be removed in a future version. Use iterations instead.
+Training model...
+

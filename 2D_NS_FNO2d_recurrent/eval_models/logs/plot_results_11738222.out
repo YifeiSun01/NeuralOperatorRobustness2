@@ -1,0 +1,41 @@
+c1110a-s25.ufhpc
+Wed Sep  3 05:37:39 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== RUNTIME INFO ===
+Python 3.10.17
+Wed Sep  3 05:37:40 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.148.08             Driver Version: 570.148.08     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA B200                    On  |   00000000:9D:00.0 Off |                    0 |
+| N/A   24C    P0            137W / 1000W |       0MiB / 183359MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+PROJECT_ROOT : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+PLOT_SCRIPT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plot_results.py
+CSV_PATH     : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/combined_eval__baseline_NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_n__set_saved_models_expanded.csv
+OUTPUT_ROOT  : /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models
+===============
+[paths] script_dir = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models
+[paths] input CSV = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/combined_eval__baseline_NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_n__set_saved_models_expanded.csv
+[paths] save_root  = /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus
+[step] reading CSV ...
+[info] rows=50,519, columns=47
+[step] inferring model hyperparams (modes/width/epochs[/Tin/Tout/step]) if missing ...
+[step] building FULL pivot table (rmse/mae/mape mean&std) ...
+[info] pivot_full shape = (1457, 210); columns levels = [None, 'model_group', 'model_path', 'model_source_dir', 'modes1', 'width', 'epochs', 'strategy', 'pct_tag', 'percent', 'expanded_stem', 'expanded_file_name', 'expanded_file_path', 'k_requested', 'model_name', 'modes']
+[step] writing FULL pivot CSV ...
+[ok] saved FULL pivot to: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/eval_models/plots/models_rmse_minus/pivot_full_metrics.csv
+[step] subtracting baseline per row on rmse_mean ...

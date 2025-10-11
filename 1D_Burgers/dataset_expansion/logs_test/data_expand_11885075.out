@@ -1,0 +1,16 @@
+c0602a-s4.ufhpc
+Fri Sep  5 01:00:31 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== RUN: norm=2, epsilon=10, steps=100, alpha=0.01 ===
+Using device: cuda
+========== GPU ==========
+Partition: hpg-turin
+Node: c0602a-s4
+CUDA_VISIBLE_DEVICES: 0
+GPU Details:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=========================
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+================================================================================
+Dataset N=1500, X=1024; nu=0.0005, solver=exponax (final-only)

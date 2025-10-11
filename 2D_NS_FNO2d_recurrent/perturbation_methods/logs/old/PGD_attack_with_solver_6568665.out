@@ -1,0 +1,1611 @@
+c0900a-s5.ufhpc
+Wed Jul  2 11:02:24 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS
+
+======================================== 环境诊断 ========================================
+
+[PyTorch]
+Version: 2.7.0+cu128
+CUDA Available: True
+CUDA Version: 12.8
+cuDNN Version: 90800
+Current Device: 0
+Device Name: NVIDIA B200
+Device Memory: 178.36 GB
+
+[JAX]
+JAX Version: 0.6.0
+JAXlib Version: 0.6.0
+JAX Backend: gpu
+JAX Devices Error: module 'jax.lib.xla_bridge' has no attribute 'devices'
+
+[CUDA/cuDNN System Info]
+nvcc not found
+
+[GPU Details]
+Device 0: NVIDIA B200
+  Compute Capability: 10.0
+  Total Memory: 178.36 GB
+  Multiprocessors: 148
+GPU Details Error: 'torch._C._CudaDeviceProperties' object has no attribute 'max_threads_per_block'
+
+[Compatibility Warnings]
+======================================== 诊断结束 ========================================
+
+================================================================================
+norm: 2, epsilon: 6553.6, alpha: 5.0, num_steps: 100
+x_adv.shape:  torch.Size([256, 256])
+
+[Step 0] ============ 详细性能分析 ============
+[模型部分] 总时间: 37.119338s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 12.584498s | 显存: 0.00 B
+  t=2s - 时间: 0.500524s | 显存: 0.00 B
+  t=3s - 时间: 0.583812s | 显存: 0.00 B
+  t=4s - 时间: 0.657888s | 显存: 0.00 B
+  t=5s - 时间: 0.729964s | 显存: 0.00 B
+  t=6s - 时间: 0.831976s | 显存: 0.00 B
+  t=7s - 时间: 0.910754s | 显存: 0.00 B
+  t=8s - 时间: 0.989430s | 显存: 0.00 B
+  t=9s - 时间: 1.069555s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.915869s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.916080s | 显存: 0.00 B
+
+[本步骤总计] 时间: 39.035418s | 显存: 4.12 GB
+orginal_loss:  tensor(2874.2017, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 0] Backward Propagation - Time: 25.1689s, Mem: -4405592064.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(5.5374, device='cuda:0')
+Autograd grad min:  tensor(-6.3897, device='cuda:0')
+Autograd grad mean:  tensor(0.2062, device='cuda:0')
+[Step 0] PGD Update - Time: 0.8869s, Mem: 513.00 KB
+
+[Step 0] 完整步骤总时间: 72.023698s | 总显存: 20.41 MB
+[Step 0] 峰值显存: 6.21 GB
+
+[Step 1] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.503451s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.400244s | 显存: 0.00 B
+  t=2s - 时间: 0.478064s | 显存: 0.00 B
+  t=3s - 时间: 0.552341s | 显存: 0.00 B
+  t=4s - 时间: 0.651640s | 显存: 0.00 B
+  t=5s - 时间: 0.724500s | 显存: 0.00 B
+  t=6s - 时间: 0.776407s | 显存: 0.00 B
+  t=7s - 时间: 0.871877s | 显存: 0.00 B
+  t=8s - 时间: 0.977311s | 显存: 0.00 B
+  t=9s - 时间: 1.050610s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.852225s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.852425s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.355876s | 显存: 4.12 GB
+orginal_loss:  tensor(4909.8740, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 1] Backward Propagation - Time: 20.8604s, Mem: -4414291968.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(13.5077, device='cuda:0')
+Autograd grad min:  tensor(-13.1833, device='cuda:0')
+Autograd grad mean:  tensor(0.3434, device='cuda:0')
+[Step 1] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 1] 完整步骤总时间: 29.221942s | 总显存: -524288.00 B
+[Step 1] 峰值显存: 6.22 GB
+
+[Step 2] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.370871s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.371746s | 显存: 0.00 B
+  t=2s - 时间: 0.467349s | 显存: 0.00 B
+  t=3s - 时间: 0.510203s | 显存: 0.00 B
+  t=4s - 时间: 0.601995s | 显存: 0.00 B
+  t=5s - 时间: 0.726108s | 显存: 0.00 B
+  t=6s - 时间: 0.793026s | 显存: 0.00 B
+  t=7s - 时间: 0.882143s | 显存: 0.00 B
+  t=8s - 时间: 0.976003s | 显存: 0.00 B
+  t=9s - 时间: 1.021786s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.825259s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.825497s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.196368s | 显存: 4.12 GB
+orginal_loss:  tensor(8897.0117, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 2] Backward Propagation - Time: 20.9523s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(18.4677, device='cuda:0')
+Autograd grad min:  tensor(-21.1761, device='cuda:0')
+Autograd grad mean:  tensor(0.4020, device='cuda:0')
+[Step 2] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 2] 完整步骤总时间: 29.154260s | 总显存: 0.00 B
+[Step 2] 峰值显存: 6.22 GB
+
+[Step 3] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.340591s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.397907s | 显存: 0.00 B
+  t=2s - 时间: 0.449720s | 显存: 0.00 B
+  t=3s - 时间: 0.525539s | 显存: 0.00 B
+  t=4s - 时间: 0.612336s | 显存: 0.00 B
+  t=5s - 时间: 0.697042s | 显存: 0.00 B
+  t=6s - 时间: 0.788754s | 显存: 0.00 B
+  t=7s - 时间: 0.871606s | 显存: 0.00 B
+  t=8s - 时间: 0.947796s | 显存: 0.00 B
+  t=9s - 时间: 1.029413s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.833983s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.834194s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.174786s | 显存: 4.12 GB
+orginal_loss:  tensor(14124.9395, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 3] Backward Propagation - Time: 45.4310s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(28.7537, device='cuda:0')
+Autograd grad min:  tensor(-25.9679, device='cuda:0')
+Autograd grad mean:  tensor(0.3954, device='cuda:0')
+[Step 3] PGD Update - Time: 0.0476s, Mem: 0.00 B
+
+[Step 3] 完整步骤总时间: 54.977805s | 总显存: 0.00 B
+[Step 3] 峰值显存: 6.22 GB
+
+[Step 4] ============ 详细性能分析 ============
+[模型部分] 总时间: 7.769475s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.677292s | 显存: 0.00 B
+  t=2s - 时间: 0.483168s | 显存: 0.00 B
+  t=3s - 时间: 0.560287s | 显存: 0.00 B
+  t=4s - 时间: 0.623397s | 显存: 0.00 B
+  t=5s - 时间: 0.703347s | 显存: 0.00 B
+  t=6s - 时间: 0.766900s | 显存: 0.00 B
+  t=7s - 时间: 0.890237s | 显存: 0.00 B
+  t=8s - 时间: 0.934675s | 显存: 0.00 B
+  t=9s - 时间: 1.016849s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.847442s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.847706s | 显存: 0.00 B
+
+[本步骤总计] 时间: 9.617182s | 显存: 4.12 GB
+orginal_loss:  tensor(18851.9609, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 4] Backward Propagation - Time: 20.7318s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(30.8077, device='cuda:0')
+Autograd grad min:  tensor(-35.3504, device='cuda:0')
+Autograd grad mean:  tensor(0.5493, device='cuda:0')
+[Step 4] PGD Update - Time: 0.0013s, Mem: 0.00 B
+
+[Step 4] 完整步骤总时间: 30.450600s | 总显存: 0.00 B
+[Step 4] 峰值显存: 6.22 GB
+
+[Step 5] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.357042s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.377963s | 显存: 0.00 B
+  t=2s - 时间: 0.445225s | 显存: 0.00 B
+  t=3s - 时间: 0.530158s | 显存: 0.00 B
+  t=4s - 时间: 0.603075s | 显存: 0.00 B
+  t=5s - 时间: 0.685561s | 显存: 0.00 B
+  t=6s - 时间: 0.784689s | 显存: 0.00 B
+  t=7s - 时间: 0.880323s | 显存: 0.00 B
+  t=8s - 时间: 0.971983s | 显存: 0.00 B
+  t=9s - 时间: 1.057542s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.869565s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.869789s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.226830s | 显存: 4.12 GB
+orginal_loss:  tensor(21684.1113, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 5] Backward Propagation - Time: 20.9223s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(30.3658, device='cuda:0')
+Autograd grad min:  tensor(-36.6242, device='cuda:0')
+Autograd grad mean:  tensor(0.4915, device='cuda:0')
+[Step 5] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 5] 完整步骤总时间: 29.154372s | 总显存: 0.00 B
+[Step 5] 峰值显存: 6.22 GB
+
+[Step 6] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.361066s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.373995s | 显存: 0.00 B
+  t=2s - 时间: 0.463901s | 显存: 0.00 B
+  t=3s - 时间: 0.534456s | 显存: 0.00 B
+  t=4s - 时间: 0.609471s | 显存: 0.00 B
+  t=5s - 时间: 0.712871s | 显存: 0.00 B
+  t=6s - 时间: 0.786431s | 显存: 0.00 B
+  t=7s - 时间: 0.886930s | 显存: 0.00 B
+  t=8s - 时间: 0.939662s | 显存: 0.00 B
+  t=9s - 时间: 1.032792s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.829491s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.829731s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.190798s | 显存: 4.12 GB
+orginal_loss:  tensor(25924.4082, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 6] Backward Propagation - Time: 21.0224s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(36.7710, device='cuda:0')
+Autograd grad min:  tensor(-38.6169, device='cuda:0')
+Autograd grad mean:  tensor(0.6387, device='cuda:0')
+[Step 6] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 6] 完整步骤总时间: 29.219030s | 总显存: 0.00 B
+[Step 6] 峰值显存: 6.22 GB
+
+[Step 7] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.203644s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.349286s | 显存: 0.00 B
+  t=2s - 时间: 0.443227s | 显存: 0.00 B
+  t=3s - 时间: 0.514090s | 显存: 0.00 B
+  t=4s - 时间: 0.605012s | 显存: 0.00 B
+  t=5s - 时间: 0.681085s | 显存: 0.00 B
+  t=6s - 时间: 0.768574s | 显存: 0.00 B
+  t=7s - 时间: 0.841320s | 显存: 0.00 B
+  t=8s - 时间: 0.932005s | 显存: 0.00 B
+  t=9s - 时间: 1.048637s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.841602s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.841819s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.045463s | 显存: 4.12 GB
+orginal_loss:  tensor(27825.9844, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 7] Backward Propagation - Time: 20.7279s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(30.2702, device='cuda:0')
+Autograd grad min:  tensor(-40.0555, device='cuda:0')
+Autograd grad mean:  tensor(0.6000, device='cuda:0')
+[Step 7] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 7] 完整步骤总时间: 28.778728s | 总显存: 0.00 B
+[Step 7] 峰值显存: 6.22 GB
+
+[Step 8] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.374136s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.399529s | 显存: 0.00 B
+  t=2s - 时间: 0.453408s | 显存: 0.00 B
+  t=3s - 时间: 0.531590s | 显存: 0.00 B
+  t=4s - 时间: 0.613397s | 显存: 0.00 B
+  t=5s - 时间: 0.699042s | 显存: 0.00 B
+  t=6s - 时间: 0.791792s | 显存: 0.00 B
+  t=7s - 时间: 0.883896s | 显存: 0.00 B
+  t=8s - 时间: 0.968796s | 显存: 0.00 B
+  t=9s - 时间: 1.012268s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.843389s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.843647s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.217783s | 显存: 4.12 GB
+orginal_loss:  tensor(31901.5859, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 8] Backward Propagation - Time: 20.8434s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(33.7443, device='cuda:0')
+Autograd grad min:  tensor(-33.7309, device='cuda:0')
+Autograd grad mean:  tensor(0.7433, device='cuda:0')
+[Step 8] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 8] 完整步骤总时间: 29.067141s | 总显存: 0.00 B
+[Step 8] 峰值显存: 6.22 GB
+
+[Step 9] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.319100s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.382088s | 显存: 0.00 B
+  t=2s - 时间: 0.459504s | 显存: 0.00 B
+  t=3s - 时间: 0.533031s | 显存: 0.00 B
+  t=4s - 时间: 0.613999s | 显存: 0.00 B
+  t=5s - 时间: 0.701431s | 显存: 0.00 B
+  t=6s - 时间: 0.772684s | 显存: 0.00 B
+  t=7s - 时间: 0.869535s | 显存: 0.00 B
+  t=8s - 时间: 0.943527s | 显存: 0.00 B
+  t=9s - 时间: 1.022795s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.843305s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.843517s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.162617s | 显存: 4.12 GB
+orginal_loss:  tensor(34542.1875, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 9] Backward Propagation - Time: 21.2857s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(30.9419, device='cuda:0')
+Autograd grad min:  tensor(-42.6100, device='cuda:0')
+Autograd grad mean:  tensor(0.7224, device='cuda:0')
+[Step 9] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 9] 完整步骤总时间: 29.453478s | 总显存: 0.00 B
+[Step 9] 峰值显存: 6.22 GB
+
+[Step 10] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.243419s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.371447s | 显存: 0.00 B
+  t=2s - 时间: 0.443600s | 显存: 0.00 B
+  t=3s - 时间: 0.523885s | 显存: 0.00 B
+  t=4s - 时间: 0.614024s | 显存: 0.00 B
+  t=5s - 时间: 0.698324s | 显存: 0.00 B
+  t=6s - 时间: 0.775251s | 显存: 0.00 B
+  t=7s - 时间: 0.846772s | 显存: 0.00 B
+  t=8s - 时间: 0.939233s | 显存: 0.00 B
+  t=9s - 时间: 1.010434s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.880234s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.880455s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.123874s | 显存: 4.12 GB
+orginal_loss:  tensor(38235.4844, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 10] Backward Propagation - Time: 20.8456s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(32.7316, device='cuda:0')
+Autograd grad min:  tensor(-32.7664, device='cuda:0')
+Autograd grad mean:  tensor(0.8676, device='cuda:0')
+[Step 10] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 10] 完整步骤总时间: 28.975070s | 总显存: 0.00 B
+[Step 10] 峰值显存: 6.22 GB
+
+[Step 11] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.506707s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.399735s | 显存: 0.00 B
+  t=2s - 时间: 0.473731s | 显存: 0.00 B
+  t=3s - 时间: 0.559018s | 显存: 0.00 B
+  t=4s - 时间: 0.642430s | 显存: 0.00 B
+  t=5s - 时间: 0.720783s | 显存: 0.00 B
+  t=6s - 时间: 0.797143s | 显存: 0.00 B
+  t=7s - 时间: 0.887827s | 显存: 0.00 B
+  t=8s - 时间: 0.961900s | 显存: 0.00 B
+  t=9s - 时间: 1.043635s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.850696s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.850914s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.357622s | 显存: 4.12 GB
+orginal_loss:  tensor(42043.3086, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 11] Backward Propagation - Time: 21.2924s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(31.1988, device='cuda:0')
+Autograd grad min:  tensor(-37.4542, device='cuda:0')
+Autograd grad mean:  tensor(0.7902, device='cuda:0')
+[Step 11] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 11] 完整步骤总时间: 29.655403s | 总显存: 0.00 B
+[Step 11] 峰值显存: 6.22 GB
+
+[Step 12] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.275369s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.374403s | 显存: 0.00 B
+  t=2s - 时间: 0.439094s | 显存: 0.00 B
+  t=3s - 时间: 0.530576s | 显存: 0.00 B
+  t=4s - 时间: 0.606425s | 显存: 0.00 B
+  t=5s - 时间: 0.693472s | 显存: 0.00 B
+  t=6s - 时间: 0.776228s | 显存: 0.00 B
+  t=7s - 时间: 0.881575s | 显存: 0.00 B
+  t=8s - 时间: 0.929435s | 显存: 0.00 B
+  t=9s - 时间: 1.023807s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.827405s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.827620s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.102989s | 显存: 4.12 GB
+orginal_loss:  tensor(43810.7500, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 12] Backward Propagation - Time: 20.5627s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(74.7944, device='cuda:0')
+Autograd grad min:  tensor(-64.4762, device='cuda:0')
+Autograd grad mean:  tensor(0.9319, device='cuda:0')
+[Step 12] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 12] 完整步骤总时间: 28.670975s | 总显存: 0.00 B
+[Step 12] 峰值显存: 6.22 GB
+
+[Step 13] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.299240s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.386215s | 显存: 0.00 B
+  t=2s - 时间: 0.453828s | 显存: 0.00 B
+  t=3s - 时间: 0.538913s | 显存: 0.00 B
+  t=4s - 时间: 0.607430s | 显存: 0.00 B
+  t=5s - 时间: 0.688530s | 显存: 0.00 B
+  t=6s - 时间: 0.777833s | 显存: 0.00 B
+  t=7s - 时间: 0.863497s | 显存: 0.00 B
+  t=8s - 时间: 0.940315s | 显存: 0.00 B
+  t=9s - 时间: 1.022003s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.839564s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.839849s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.139089s | 显存: 4.12 GB
+orginal_loss:  tensor(42295.0312, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 13] Backward Propagation - Time: 21.2072s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(57.7449, device='cuda:0')
+Autograd grad min:  tensor(-78.7609, device='cuda:0')
+Autograd grad mean:  tensor(0.9485, device='cuda:0')
+[Step 13] PGD Update - Time: 0.0007s, Mem: 0.00 B
+
+[Step 13] 完整步骤总时间: 29.351592s | 总显存: 0.00 B
+[Step 13] 峰值显存: 6.22 GB
+
+[Step 14] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.743450s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.388560s | 显存: 0.00 B
+  t=2s - 时间: 0.464644s | 显存: 0.00 B
+  t=3s - 时间: 0.532068s | 显存: 0.00 B
+  t=4s - 时间: 0.620265s | 显存: 0.00 B
+  t=5s - 时间: 0.691153s | 显存: 0.00 B
+  t=6s - 时间: 0.760159s | 显存: 0.00 B
+  t=7s - 时间: 0.839418s | 显存: 0.00 B
+  t=8s - 时间: 1.265048s | 显存: 0.00 B
+  t=9s - 时间: 1.161255s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.888770s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.889095s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.632545s | 显存: 4.12 GB
+orginal_loss:  tensor(47901.8906, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 14] Backward Propagation - Time: 20.4146s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(85.3032, device='cuda:0')
+Autograd grad min:  tensor(-72.0469, device='cuda:0')
+Autograd grad mean:  tensor(1.0172, device='cuda:0')
+[Step 14] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 14] 完整步骤总时间: 29.053272s | 总显存: 0.00 B
+[Step 14] 峰值显存: 6.22 GB
+
+[Step 15] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.316896s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.386688s | 显存: 0.00 B
+  t=2s - 时间: 0.455619s | 显存: 0.00 B
+  t=3s - 时间: 0.530648s | 显存: 0.00 B
+  t=4s - 时间: 0.607916s | 显存: 0.00 B
+  t=5s - 时间: 0.677034s | 显存: 0.00 B
+  t=6s - 时间: 0.805871s | 显存: 0.00 B
+  t=7s - 时间: 0.862084s | 显存: 0.00 B
+  t=8s - 时间: 0.942845s | 显存: 0.00 B
+  t=9s - 时间: 1.027758s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.844226s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.844438s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.161334s | 显存: 4.12 GB
+orginal_loss:  tensor(48186.8594, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 15] Backward Propagation - Time: 20.6361s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(59.1963, device='cuda:0')
+Autograd grad min:  tensor(-72.0566, device='cuda:0')
+Autograd grad mean:  tensor(1.0647, device='cuda:0')
+[Step 15] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 15] 完整步骤总时间: 28.802828s | 总显存: 0.00 B
+[Step 15] 峰值显存: 6.22 GB
+
+[Step 16] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.461646s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.402664s | 显存: 0.00 B
+  t=2s - 时间: 0.508339s | 显存: 0.00 B
+  t=3s - 时间: 0.543027s | 显存: 0.00 B
+  t=4s - 时间: 0.639290s | 显存: 0.00 B
+  t=5s - 时间: 0.710944s | 显存: 0.00 B
+  t=6s - 时间: 0.795129s | 显存: 0.00 B
+  t=7s - 时间: 0.876049s | 显存: 0.00 B
+  t=8s - 时间: 0.945397s | 显存: 0.00 B
+  t=9s - 时间: 1.020169s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.828440s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.828668s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.290314s | 显存: 4.12 GB
+orginal_loss:  tensor(53149.2656, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 16] Backward Propagation - Time: 21.2431s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(80.0412, device='cuda:0')
+Autograd grad min:  tensor(-71.6611, device='cuda:0')
+Autograd grad mean:  tensor(1.0003, device='cuda:0')
+[Step 16] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 16] 完整步骤总时间: 29.538995s | 总显存: 0.00 B
+[Step 16] 峰值显存: 6.22 GB
+
+[Step 17] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.306643s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.372060s | 显存: 0.00 B
+  t=2s - 时间: 0.444748s | 显存: 0.00 B
+  t=3s - 时间: 0.532281s | 显存: 0.00 B
+  t=4s - 时间: 0.622027s | 显存: 0.00 B
+  t=5s - 时间: 0.706314s | 显存: 0.00 B
+  t=6s - 时间: 0.782945s | 显存: 0.00 B
+  t=7s - 时间: 0.858292s | 显存: 0.00 B
+  t=8s - 时间: 0.947118s | 显存: 0.00 B
+  t=9s - 时间: 1.020312s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.838438s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.838640s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.145283s | 显存: 4.12 GB
+orginal_loss:  tensor(53822.5898, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 17] Backward Propagation - Time: 20.5368s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(62.1790, device='cuda:0')
+Autograd grad min:  tensor(-68.6124, device='cuda:0')
+Autograd grad mean:  tensor(1.0255, device='cuda:0')
+[Step 17] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 17] 完整步骤总时间: 28.687257s | 总显存: 0.00 B
+[Step 17] 峰值显存: 6.22 GB
+
+[Step 18] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.322908s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.374905s | 显存: 0.00 B
+  t=2s - 时间: 0.428834s | 显存: 0.00 B
+  t=3s - 时间: 0.524030s | 显存: 0.00 B
+  t=4s - 时间: 0.609937s | 显存: 0.00 B
+  t=5s - 时间: 0.700260s | 显存: 0.00 B
+  t=6s - 时间: 0.787345s | 显存: 0.00 B
+  t=7s - 时间: 0.866647s | 显存: 0.00 B
+  t=8s - 时间: 0.957544s | 显存: 0.00 B
+  t=9s - 时间: 1.053140s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.853416s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.853634s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.176543s | 显存: 4.12 GB
+orginal_loss:  tensor(59748.0312, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 18] Backward Propagation - Time: 20.8698s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(68.6444, device='cuda:0')
+Autograd grad min:  tensor(-66.7718, device='cuda:0')
+Autograd grad mean:  tensor(1.0418, device='cuda:0')
+[Step 18] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 18] 完整步骤总时间: 29.051513s | 总显存: 0.00 B
+[Step 18] 峰值显存: 6.22 GB
+
+[Step 19] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.480289s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.400433s | 显存: 0.00 B
+  t=2s - 时间: 0.474997s | 显存: 0.00 B
+  t=3s - 时间: 0.573283s | 显存: 0.00 B
+  t=4s - 时间: 0.652854s | 显存: 0.00 B
+  t=5s - 时间: 0.719583s | 显存: 0.00 B
+  t=6s - 时间: 0.786795s | 显存: 0.00 B
+  t=7s - 时间: 0.867151s | 显存: 0.00 B
+  t=8s - 时间: 0.953832s | 显存: 0.00 B
+  t=9s - 时间: 1.030761s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.839942s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.840230s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.320519s | 显存: 4.12 GB
+orginal_loss:  tensor(59320.3594, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 19] Backward Propagation - Time: 21.2588s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(60.9159, device='cuda:0')
+Autograd grad min:  tensor(-63.4684, device='cuda:0')
+Autograd grad mean:  tensor(0.9968, device='cuda:0')
+[Step 19] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 19] 完整步骤总时间: 29.586464s | 总显存: 0.00 B
+[Step 19] 峰值显存: 6.22 GB
+
+[Step 20] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.391132s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.377700s | 显存: 0.00 B
+  t=2s - 时间: 0.463339s | 显存: 0.00 B
+  t=3s - 时间: 0.532871s | 显存: 0.00 B
+  t=4s - 时间: 0.616992s | 显存: 0.00 B
+  t=5s - 时间: 0.700231s | 显存: 0.00 B
+  t=6s - 时间: 0.793958s | 显存: 0.00 B
+  t=7s - 时间: 0.914253s | 显存: 0.00 B
+  t=8s - 时间: 0.948033s | 显存: 0.00 B
+  t=9s - 时间: 1.023287s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.836180s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.836384s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.227516s | 显存: 4.12 GB
+orginal_loss:  tensor(65697.1875, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 20] Backward Propagation - Time: 20.4448s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(64.0302, device='cuda:0')
+Autograd grad min:  tensor(-66.2760, device='cuda:0')
+Autograd grad mean:  tensor(1.0733, device='cuda:0')
+[Step 20] PGD Update - Time: 0.0010s, Mem: 0.00 B
+
+[Step 20] 完整步骤总时间: 28.679690s | 总显存: 0.00 B
+[Step 20] 峰值显存: 6.22 GB
+
+[Step 21] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.424515s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.375972s | 显存: 0.00 B
+  t=2s - 时间: 0.473893s | 显存: 0.00 B
+  t=3s - 时间: 0.544502s | 显存: 0.00 B
+  t=4s - 时间: 0.627167s | 显存: 0.00 B
+  t=5s - 时间: 0.712970s | 显存: 0.00 B
+  t=6s - 时间: 0.807131s | 显存: 0.00 B
+  t=7s - 时间: 0.874844s | 显存: 0.00 B
+  t=8s - 时间: 0.947043s | 显存: 0.00 B
+  t=9s - 时间: 1.040675s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.860820s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.861029s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.285545s | 显存: 4.12 GB
+orginal_loss:  tensor(64907.5859, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 21] Backward Propagation - Time: 20.5461s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(62.4126, device='cuda:0')
+Autograd grad min:  tensor(-62.9101, device='cuda:0')
+Autograd grad mean:  tensor(1.0102, device='cuda:0')
+[Step 21] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 21] 完整步骤总时间: 28.837015s | 总显存: 0.00 B
+[Step 21] 峰值显存: 6.22 GB
+
+[Step 22] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.411900s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.387575s | 显存: 0.00 B
+  t=2s - 时间: 0.459966s | 显存: 0.00 B
+  t=3s - 时间: 0.526985s | 显存: 0.00 B
+  t=4s - 时间: 0.646647s | 显存: 0.00 B
+  t=5s - 时间: 0.718230s | 显存: 0.00 B
+  t=6s - 时间: 0.786375s | 显存: 0.00 B
+  t=7s - 时间: 0.864085s | 显存: 0.00 B
+  t=8s - 时间: 0.952356s | 显存: 0.00 B
+  t=9s - 时间: 1.048933s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.924625s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.924851s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.336751s | 显存: 4.12 GB
+orginal_loss:  tensor(71947.3906, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 22] Backward Propagation - Time: 21.7929s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(60.4857, device='cuda:0')
+Autograd grad min:  tensor(-61.0841, device='cuda:0')
+Autograd grad mean:  tensor(1.0773, device='cuda:0')
+[Step 22] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 22] 完整步骤总时间: 30.135303s | 总显存: 0.00 B
+[Step 22] 峰值显存: 6.22 GB
+
+[Step 23] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.278065s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.384405s | 显存: 0.00 B
+  t=2s - 时间: 0.446191s | 显存: 0.00 B
+  t=3s - 时间: 0.531600s | 显存: 0.00 B
+  t=4s - 时间: 0.609865s | 显存: 0.00 B
+  t=5s - 时间: 0.688530s | 显存: 0.00 B
+  t=6s - 时间: 0.788105s | 显存: 0.00 B
+  t=7s - 时间: 0.859742s | 显存: 0.00 B
+  t=8s - 时间: 0.933440s | 显存: 0.00 B
+  t=9s - 时间: 1.015706s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.846551s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.846783s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.124848s | 显存: 4.12 GB
+orginal_loss:  tensor(70375.2031, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 23] Backward Propagation - Time: 20.4963s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(70.1260, device='cuda:0')
+Autograd grad min:  tensor(-73.4815, device='cuda:0')
+Autograd grad mean:  tensor(1.0458, device='cuda:0')
+[Step 23] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 23] 完整步骤总时间: 28.626469s | 总显存: 0.00 B
+[Step 23] 峰值显存: 6.22 GB
+
+[Step 24] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.387876s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.382198s | 显存: 0.00 B
+  t=2s - 时间: 0.468136s | 显存: 0.00 B
+  t=3s - 时间: 0.531125s | 显存: 0.00 B
+  t=4s - 时间: 0.618178s | 显存: 0.00 B
+  t=5s - 时间: 0.710537s | 显存: 0.00 B
+  t=6s - 时间: 0.787879s | 显存: 0.00 B
+  t=7s - 时间: 0.863679s | 显存: 0.00 B
+  t=8s - 时间: 0.956528s | 显存: 0.00 B
+  t=9s - 时间: 1.049196s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.840348s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.840605s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.228480s | 显存: 4.12 GB
+orginal_loss:  tensor(77345.7031, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 24] Backward Propagation - Time: 20.7150s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(64.4161, device='cuda:0')
+Autograd grad min:  tensor(-60.1011, device='cuda:0')
+Autograd grad mean:  tensor(1.0363, device='cuda:0')
+[Step 24] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 24] 完整步骤总时间: 28.948908s | 总显存: 0.00 B
+[Step 24] 峰值显存: 6.22 GB
+
+[Step 25] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.294837s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.357208s | 显存: 0.00 B
+  t=2s - 时间: 0.426834s | 显存: 0.00 B
+  t=3s - 时间: 0.517107s | 显存: 0.00 B
+  t=4s - 时间: 0.635310s | 显存: 0.00 B
+  t=5s - 时间: 0.714911s | 显存: 0.00 B
+  t=6s - 时间: 0.793133s | 显存: 0.00 B
+  t=7s - 时间: 0.879519s | 显存: 0.00 B
+  t=8s - 时间: 0.927901s | 显存: 0.00 B
+  t=9s - 时间: 1.022408s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.841171s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.841407s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.136244s | 显存: 4.12 GB
+orginal_loss:  tensor(77128.7500, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 25] Backward Propagation - Time: 20.5488s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(87.5008, device='cuda:0')
+Autograd grad min:  tensor(-74.5718, device='cuda:0')
+Autograd grad mean:  tensor(1.0980, device='cuda:0')
+[Step 25] PGD Update - Time: 0.0010s, Mem: 0.00 B
+
+[Step 25] 完整步骤总时间: 28.690596s | 总显存: 0.00 B
+[Step 25] 峰值显存: 6.22 GB
+
+[Step 26] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.401921s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.371704s | 显存: 0.00 B
+  t=2s - 时间: 0.483834s | 显存: 0.00 B
+  t=3s - 时间: 0.529314s | 显存: 0.00 B
+  t=4s - 时间: 0.611144s | 显存: 0.00 B
+  t=5s - 时间: 0.700691s | 显存: 0.00 B
+  t=6s - 时间: 0.799469s | 显存: 0.00 B
+  t=7s - 时间: 0.912379s | 显存: 0.00 B
+  t=8s - 时间: 0.949086s | 显存: 0.00 B
+  t=9s - 时间: 1.023955s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.842760s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.842983s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.244904s | 显存: 4.12 GB
+orginal_loss:  tensor(82858.3750, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 26] Backward Propagation - Time: 21.9087s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(69.9249, device='cuda:0')
+Autograd grad min:  tensor(-65.0883, device='cuda:0')
+Autograd grad mean:  tensor(1.0199, device='cuda:0')
+[Step 26] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 26] 完整步骤总时间: 30.158964s | 总显存: 0.00 B
+[Step 26] 峰值显存: 6.22 GB
+
+[Step 27] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.440107s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.385273s | 显存: 0.00 B
+  t=2s - 时间: 0.451250s | 显存: 0.00 B
+  t=3s - 时间: 0.529624s | 显存: 0.00 B
+  t=4s - 时间: 0.619267s | 显存: 0.00 B
+  t=5s - 时间: 0.725579s | 显存: 0.00 B
+  t=6s - 时间: 0.803278s | 显存: 0.00 B
+  t=7s - 时间: 0.888176s | 显存: 0.00 B
+  t=8s - 时间: 0.975177s | 显存: 0.00 B
+  t=9s - 时间: 1.041938s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.838037s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.838264s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.278371s | 显存: 4.12 GB
+orginal_loss:  tensor(81573.2422, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 27] Backward Propagation - Time: 20.5921s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(93.5966, device='cuda:0')
+Autograd grad min:  tensor(-75.3199, device='cuda:0')
+Autograd grad mean:  tensor(0.9576, device='cuda:0')
+[Step 27] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 27] 完整步骤总时间: 28.875658s | 总显存: 0.00 B
+[Step 27] 峰值显存: 6.22 GB
+
+[Step 28] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.531849s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.393165s | 显存: 0.00 B
+  t=2s - 时间: 0.473196s | 显存: 0.00 B
+  t=3s - 时间: 0.561421s | 显存: 0.00 B
+  t=4s - 时间: 0.638908s | 显存: 0.00 B
+  t=5s - 时间: 0.727060s | 显存: 0.00 B
+  t=6s - 时间: 0.806923s | 显存: 0.00 B
+  t=7s - 时间: 0.866984s | 显存: 0.00 B
+  t=8s - 时间: 0.993808s | 显存: 0.00 B
+  t=9s - 时间: 1.049715s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.852006s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.852229s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.384079s | 显存: 4.12 GB
+orginal_loss:  tensor(86084.3594, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 28] Backward Propagation - Time: 20.6863s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(62.8874, device='cuda:0')
+Autograd grad min:  tensor(-68.9993, device='cuda:0')
+Autograd grad mean:  tensor(0.9154, device='cuda:0')
+[Step 28] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 28] 完整步骤总时间: 29.075663s | 总显存: 0.00 B
+[Step 28] 峰值显存: 6.22 GB
+
+[Step 29] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.235074s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.369355s | 显存: 0.00 B
+  t=2s - 时间: 0.443102s | 显存: 0.00 B
+  t=3s - 时间: 0.527058s | 显存: 0.00 B
+  t=4s - 时间: 0.610611s | 显存: 0.00 B
+  t=5s - 时间: 0.678206s | 显存: 0.00 B
+  t=6s - 时间: 0.774790s | 显存: 0.00 B
+  t=7s - 时间: 0.871105s | 显存: 0.00 B
+  t=8s - 时间: 0.927688s | 显存: 0.00 B
+  t=9s - 时间: 1.012704s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.843462s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.843694s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.078768s | 显存: 4.12 GB
+orginal_loss:  tensor(85186.6406, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 29] Backward Propagation - Time: 21.0224s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(90.5626, device='cuda:0')
+Autograd grad min:  tensor(-75.2474, device='cuda:0')
+Autograd grad mean:  tensor(0.7724, device='cuda:0')
+[Step 29] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 29] 完整步骤总时间: 29.106358s | 总显存: 0.00 B
+[Step 29] 峰值显存: 6.22 GB
+
+[Step 30] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.751177s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.422299s | 显存: 0.00 B
+  t=2s - 时间: 0.492621s | 显存: 0.00 B
+  t=3s - 时间: 0.570684s | 显存: 0.00 B
+  t=4s - 时间: 0.613497s | 显存: 0.00 B
+  t=5s - 时间: 0.718231s | 显存: 0.00 B
+  t=6s - 时间: 0.781558s | 显存: 0.00 B
+  t=7s - 时间: 0.880265s | 显存: 0.00 B
+  t=8s - 时间: 1.195380s | 显存: 0.00 B
+  t=9s - 时间: 1.055740s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.867005s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.867261s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.618438s | 显存: 4.12 GB
+orginal_loss:  tensor(88977.0078, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 30] Backward Propagation - Time: 21.0570s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(51.9727, device='cuda:0')
+Autograd grad min:  tensor(-63.9461, device='cuda:0')
+Autograd grad mean:  tensor(0.8144, device='cuda:0')
+[Step 30] PGD Update - Time: 0.0010s, Mem: 0.00 B
+
+[Step 30] 完整步骤总时间: 29.681105s | 总显存: 0.00 B
+[Step 30] 峰值显存: 6.22 GB
+
+[Step 31] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.375850s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.397044s | 显存: 0.00 B
+  t=2s - 时间: 0.453056s | 显存: 0.00 B
+  t=3s - 时间: 0.537727s | 显存: 0.00 B
+  t=4s - 时间: 0.601699s | 显存: 0.00 B
+  t=5s - 时间: 0.700611s | 显存: 0.00 B
+  t=6s - 时间: 0.783569s | 显存: 0.00 B
+  t=7s - 时间: 0.867438s | 显存: 0.00 B
+  t=8s - 时间: 0.983780s | 显存: 0.00 B
+  t=9s - 时间: 1.030421s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.834586s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.834856s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.210706s | 显存: 4.12 GB
+orginal_loss:  tensor(89450.0312, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 31] Backward Propagation - Time: 21.8600s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(87.0267, device='cuda:0')
+Autograd grad min:  tensor(-66.1101, device='cuda:0')
+Autograd grad mean:  tensor(0.6537, device='cuda:0')
+[Step 31] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 31] 完整步骤总时间: 30.076310s | 总显存: 0.00 B
+[Step 31] 峰值显存: 6.22 GB
+
+[Step 32] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.452203s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.402638s | 显存: 0.00 B
+  t=2s - 时间: 0.476918s | 显存: 0.00 B
+  t=3s - 时间: 0.566974s | 显存: 0.00 B
+  t=4s - 时间: 0.632439s | 显存: 0.00 B
+  t=5s - 时间: 0.712985s | 显存: 0.00 B
+  t=6s - 时间: 0.784942s | 显存: 0.00 B
+  t=7s - 时间: 0.888982s | 显存: 0.00 B
+  t=8s - 时间: 0.932023s | 显存: 0.00 B
+  t=9s - 时间: 1.033872s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.842139s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.842374s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.294577s | 显存: 4.12 GB
+orginal_loss:  tensor(91858.9688, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 32] Backward Propagation - Time: 20.7849s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(58.7632, device='cuda:0')
+Autograd grad min:  tensor(-70.1729, device='cuda:0')
+Autograd grad mean:  tensor(0.8017, device='cuda:0')
+[Step 32] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 32] 完整步骤总时间: 29.084413s | 总显存: 0.00 B
+[Step 32] 峰值显存: 6.22 GB
+
+[Step 33] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.501173s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.417228s | 显存: 0.00 B
+  t=2s - 时间: 0.450849s | 显存: 0.00 B
+  t=3s - 时间: 0.581911s | 显存: 0.00 B
+  t=4s - 时间: 0.623586s | 显存: 0.00 B
+  t=5s - 时间: 0.709402s | 显存: 0.00 B
+  t=6s - 时间: 0.806268s | 显存: 0.00 B
+  t=7s - 时间: 0.889954s | 显存: 0.00 B
+  t=8s - 时间: 0.964714s | 显存: 0.00 B
+  t=9s - 时间: 1.036610s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.853400s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.853618s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.354791s | 显存: 4.12 GB
+orginal_loss:  tensor(92565.9297, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 33] Backward Propagation - Time: 20.7663s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(84.1040, device='cuda:0')
+Autograd grad min:  tensor(-65.3718, device='cuda:0')
+Autograd grad mean:  tensor(0.6451, device='cuda:0')
+[Step 33] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 33] 完整步骤总时间: 29.126524s | 总显存: 0.00 B
+[Step 33] 峰值显存: 6.22 GB
+
+[Step 34] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.344930s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.378693s | 显存: 0.00 B
+  t=2s - 时间: 0.456666s | 显存: 0.00 B
+  t=3s - 时间: 0.541019s | 显存: 0.00 B
+  t=4s - 时间: 0.627938s | 显存: 0.00 B
+  t=5s - 时间: 0.690142s | 显存: 0.00 B
+  t=6s - 时间: 0.785492s | 显存: 0.00 B
+  t=7s - 时间: 0.874648s | 显存: 0.00 B
+  t=8s - 时间: 0.942887s | 显存: 0.00 B
+  t=9s - 时间: 1.027104s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.851302s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.851527s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.196458s | 显存: 4.12 GB
+orginal_loss:  tensor(94400.2109, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 34] Backward Propagation - Time: 20.4672s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(62.9721, device='cuda:0')
+Autograd grad min:  tensor(-74.9245, device='cuda:0')
+Autograd grad mean:  tensor(0.7772, device='cuda:0')
+[Step 34] PGD Update - Time: 0.0013s, Mem: 0.00 B
+
+[Step 34] 完整步骤总时间: 28.668947s | 总显存: 0.00 B
+[Step 34] 峰值显存: 6.22 GB
+
+[Step 35] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.299913s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.376587s | 显存: 0.00 B
+  t=2s - 时间: 0.450018s | 显存: 0.00 B
+  t=3s - 时间: 0.522816s | 显存: 0.00 B
+  t=4s - 时间: 0.611212s | 显存: 0.00 B
+  t=5s - 时间: 0.685203s | 显存: 0.00 B
+  t=6s - 时间: 0.769956s | 显存: 0.00 B
+  t=7s - 时间: 0.880233s | 显存: 0.00 B
+  t=8s - 时间: 0.951493s | 显存: 0.00 B
+  t=9s - 时间: 1.031756s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.853522s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.853757s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.153669s | 显存: 4.12 GB
+orginal_loss:  tensor(95256.3203, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 35] Backward Propagation - Time: 20.9188s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(80.0647, device='cuda:0')
+Autograd grad min:  tensor(-63.7570, device='cuda:0')
+Autograd grad mean:  tensor(0.6281, device='cuda:0')
+[Step 35] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 35] 完整步骤总时间: 29.077249s | 总显存: 0.00 B
+[Step 35] 峰值显存: 6.22 GB
+
+[Step 36] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.534835s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.375347s | 显存: 0.00 B
+  t=2s - 时间: 0.462145s | 显存: 0.00 B
+  t=3s - 时间: 0.567575s | 显存: 0.00 B
+  t=4s - 时间: 0.639440s | 显存: 0.00 B
+  t=5s - 时间: 0.737963s | 显存: 0.00 B
+  t=6s - 时间: 0.807780s | 显存: 0.00 B
+  t=7s - 时间: 0.890906s | 显存: 0.00 B
+  t=8s - 时间: 0.975516s | 显存: 0.00 B
+  t=9s - 时间: 1.057787s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.865917s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.866246s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.401081s | 显存: 4.12 GB
+orginal_loss:  tensor(96870.8906, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 36] Backward Propagation - Time: 22.1970s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(58.2842, device='cuda:0')
+Autograd grad min:  tensor(-69.9335, device='cuda:0')
+Autograd grad mean:  tensor(0.7203, device='cuda:0')
+[Step 36] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 36] 完整步骤总时间: 30.603541s | 总显存: 0.00 B
+[Step 36] 峰值显存: 6.22 GB
+
+[Step 37] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.298314s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.377605s | 显存: 0.00 B
+  t=2s - 时间: 0.440233s | 显存: 0.00 B
+  t=3s - 时间: 0.528127s | 显存: 0.00 B
+  t=4s - 时间: 0.609982s | 显存: 0.00 B
+  t=5s - 时间: 0.688138s | 显存: 0.00 B
+  t=6s - 时间: 0.777081s | 显存: 0.00 B
+  t=7s - 时间: 0.851469s | 显存: 0.00 B
+  t=8s - 时间: 0.985582s | 显存: 0.00 B
+  t=9s - 时间: 1.019383s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.844610s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.844835s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.143149s | 显存: 4.12 GB
+orginal_loss:  tensor(97889.2266, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 37] Backward Propagation - Time: 20.8357s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(77.5381, device='cuda:0')
+Autograd grad min:  tensor(-62.9964, device='cuda:0')
+Autograd grad mean:  tensor(0.5827, device='cuda:0')
+[Step 37] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 37] 完整步骤总时间: 28.984378s | 总显存: 0.00 B
+[Step 37] 峰值显存: 6.22 GB
+
+[Step 38] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.362200s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.381630s | 显存: 0.00 B
+  t=2s - 时间: 0.463924s | 显存: 0.00 B
+  t=3s - 时间: 0.558723s | 显存: 0.00 B
+  t=4s - 时间: 0.605699s | 显存: 0.00 B
+  t=5s - 时间: 0.696884s | 显存: 0.00 B
+  t=6s - 时间: 0.783723s | 显存: 0.00 B
+  t=7s - 时间: 0.875312s | 显存: 0.00 B
+  t=8s - 时间: 0.940322s | 显存: 0.00 B
+  t=9s - 时间: 1.035535s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.849744s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.850022s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.212222s | 显存: 4.12 GB
+orginal_loss:  tensor(99202.8516, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 38] Backward Propagation - Time: 21.0274s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(56.6908, device='cuda:0')
+Autograd grad min:  tensor(-69.5109, device='cuda:0')
+Autograd grad mean:  tensor(0.6885, device='cuda:0')
+[Step 38] PGD Update - Time: 0.0012s, Mem: 0.00 B
+
+[Step 38] 完整步骤总时间: 29.244859s | 总显存: 0.00 B
+[Step 38] 峰值显存: 6.22 GB
+
+[Step 39] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.430922s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.393967s | 显存: 0.00 B
+  t=2s - 时间: 0.457916s | 显存: 0.00 B
+  t=3s - 时间: 0.548788s | 显存: 0.00 B
+  t=4s - 时间: 0.624271s | 显存: 0.00 B
+  t=5s - 时间: 0.700339s | 显存: 0.00 B
+  t=6s - 时间: 0.788829s | 显存: 0.00 B
+  t=7s - 时间: 0.877622s | 显存: 0.00 B
+  t=8s - 时间: 0.971988s | 显存: 0.00 B
+  t=9s - 时间: 1.046619s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.868055s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.868294s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.299216s | 显存: 4.12 GB
+orginal_loss:  tensor(100416.5156, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 39] Backward Propagation - Time: 21.1528s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(77.6745, device='cuda:0')
+Autograd grad min:  tensor(-63.3590, device='cuda:0')
+Autograd grad mean:  tensor(0.5514, device='cuda:0')
+[Step 39] PGD Update - Time: 0.0010s, Mem: 0.00 B
+
+[Step 39] 完整步骤总时间: 29.457919s | 总显存: 0.00 B
+[Step 39] 峰值显存: 6.22 GB
+
+[Step 40] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.420203s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.384455s | 显存: 0.00 B
+  t=2s - 时间: 0.469108s | 显存: 0.00 B
+  t=3s - 时间: 0.550066s | 显存: 0.00 B
+  t=4s - 时间: 0.628794s | 显存: 0.00 B
+  t=5s - 时间: 0.719871s | 显存: 0.00 B
+  t=6s - 时间: 0.789309s | 显存: 0.00 B
+  t=7s - 时间: 0.852280s | 显存: 0.00 B
+  t=8s - 时间: 0.955183s | 显存: 0.00 B
+  t=9s - 时间: 1.050806s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.874046s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.874290s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.294492s | 显存: 4.12 GB
+orginal_loss:  tensor(101436.4062, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 40] Backward Propagation - Time: 21.0031s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(62.1116, device='cuda:0')
+Autograd grad min:  tensor(-77.8394, device='cuda:0')
+Autograd grad mean:  tensor(0.7032, device='cuda:0')
+[Step 40] PGD Update - Time: 0.0013s, Mem: 0.00 B
+
+[Step 40] 完整步骤总时间: 29.303091s | 总显存: 0.00 B
+[Step 40] 峰值显存: 6.22 GB
+
+[Step 41] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.495728s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.417766s | 显存: 0.00 B
+  t=2s - 时间: 0.477856s | 显存: 0.00 B
+  t=3s - 时间: 0.553661s | 显存: 0.00 B
+  t=4s - 时间: 0.644697s | 显存: 0.00 B
+  t=5s - 时间: 0.719524s | 显存: 0.00 B
+  t=6s - 时间: 0.815792s | 显存: 0.00 B
+  t=7s - 时间: 0.887189s | 显存: 0.00 B
+  t=8s - 时间: 0.949200s | 显存: 0.00 B
+  t=9s - 时间: 1.009458s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.838011s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.838262s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.333990s | 显存: 4.12 GB
+orginal_loss:  tensor(102602.9062, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 41] Backward Propagation - Time: 22.7194s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(78.4436, device='cuda:0')
+Autograd grad min:  tensor(-63.7701, device='cuda:0')
+Autograd grad mean:  tensor(0.5395, device='cuda:0')
+[Step 41] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 41] 完整步骤总时间: 31.058362s | 总显存: 0.00 B
+[Step 41] 峰值显存: 6.22 GB
+
+[Step 42] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.320983s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.375891s | 显存: 0.00 B
+  t=2s - 时间: 0.453310s | 显存: 0.00 B
+  t=3s - 时间: 0.523986s | 显存: 0.00 B
+  t=4s - 时间: 0.616713s | 显存: 0.00 B
+  t=5s - 时间: 0.701885s | 显存: 0.00 B
+  t=6s - 时间: 0.791527s | 显存: 0.00 B
+  t=7s - 时间: 0.861839s | 显存: 0.00 B
+  t=8s - 时间: 0.947662s | 显存: 0.00 B
+  t=9s - 时间: 1.027708s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.870983s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.871214s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.192197s | 显存: 4.12 GB
+orginal_loss:  tensor(103619.0469, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 42] Backward Propagation - Time: 20.8636s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(66.5314, device='cuda:0')
+Autograd grad min:  tensor(-82.9931, device='cuda:0')
+Autograd grad mean:  tensor(0.7091, device='cuda:0')
+[Step 42] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 42] 完整步骤总时间: 29.061125s | 总显存: 0.00 B
+[Step 42] 峰值显存: 6.22 GB
+
+[Step 43] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.537834s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.427438s | 显存: 0.00 B
+  t=2s - 时间: 0.499613s | 显存: 0.00 B
+  t=3s - 时间: 0.577387s | 显存: 0.00 B
+  t=4s - 时间: 0.657151s | 显存: 0.00 B
+  t=5s - 时间: 0.704378s | 显存: 0.00 B
+  t=6s - 时间: 0.786891s | 显存: 0.00 B
+  t=7s - 时间: 0.878933s | 显存: 0.00 B
+  t=8s - 时间: 0.946302s | 显存: 0.00 B
+  t=9s - 时间: 1.039190s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.841644s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.841927s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.379761s | 显存: 4.12 GB
+orginal_loss:  tensor(104597.3906, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 43] Backward Propagation - Time: 21.0431s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(79.8620, device='cuda:0')
+Autograd grad min:  tensor(-66.6913, device='cuda:0')
+Autograd grad mean:  tensor(0.5361, device='cuda:0')
+[Step 43] PGD Update - Time: 0.0013s, Mem: 0.00 B
+
+[Step 43] 完整步骤总时间: 29.428413s | 总显存: 0.00 B
+[Step 43] 峰值显存: 6.22 GB
+
+[Step 44] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.327169s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.398833s | 显存: 0.00 B
+  t=2s - 时间: 0.469423s | 显存: 0.00 B
+  t=3s - 时间: 0.542300s | 显存: 0.00 B
+  t=4s - 时间: 0.621484s | 显存: 0.00 B
+  t=5s - 时间: 0.688267s | 显存: 0.00 B
+  t=6s - 时间: 0.776046s | 显存: 0.00 B
+  t=7s - 时间: 0.855988s | 显存: 0.00 B
+  t=8s - 时间: 0.944179s | 显存: 0.00 B
+  t=9s - 时间: 1.009996s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.843969s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.844199s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.171368s | 显存: 4.12 GB
+orginal_loss:  tensor(105761.3047, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 44] Backward Propagation - Time: 20.6932s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(69.3418, device='cuda:0')
+Autograd grad min:  tensor(-84.1541, device='cuda:0')
+Autograd grad mean:  tensor(0.7118, device='cuda:0')
+[Step 44] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 44] 完整步骤总时间: 28.876373s | 总显存: 0.00 B
+[Step 44] 峰值显存: 6.22 GB
+
+[Step 45] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.406847s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.384190s | 显存: 0.00 B
+  t=2s - 时间: 0.462335s | 显存: 0.00 B
+  t=3s - 时间: 0.552770s | 显存: 0.00 B
+  t=4s - 时间: 0.633707s | 显存: 0.00 B
+  t=5s - 时间: 0.716765s | 显存: 0.00 B
+  t=6s - 时间: 0.787807s | 显存: 0.00 B
+  t=7s - 时间: 0.878672s | 显存: 0.00 B
+  t=8s - 时间: 0.932639s | 显存: 0.00 B
+  t=9s - 时间: 1.037478s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.827745s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.828007s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.234853s | 显存: 4.12 GB
+orginal_loss:  tensor(106574.3203, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 45] Backward Propagation - Time: 20.9911s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(86.4720, device='cuda:0')
+Autograd grad min:  tensor(-72.0358, device='cuda:0')
+Autograd grad mean:  tensor(0.5450, device='cuda:0')
+[Step 45] PGD Update - Time: 0.0011s, Mem: 0.00 B
+
+[Step 45] 完整步骤总时间: 29.241378s | 总显存: 0.00 B
+[Step 45] 峰值显存: 6.22 GB
+
+[Step 46] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.476882s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.392731s | 显存: 0.00 B
+  t=2s - 时间: 0.454268s | 显存: 0.00 B
+  t=3s - 时间: 0.531051s | 显存: 0.00 B
+  t=4s - 时间: 0.638334s | 显存: 0.00 B
+  t=5s - 时间: 0.718545s | 显存: 0.00 B
+  t=6s - 时间: 0.816350s | 显存: 0.00 B
+  t=7s - 时间: 0.895791s | 显存: 0.00 B
+  t=8s - 时间: 0.967441s | 显存: 0.00 B
+  t=9s - 时间: 1.041710s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.872503s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.872751s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.349633s | 显存: 4.12 GB
+orginal_loss:  tensor(107940.1562, device='cuda:0', grad_fn=<MseLossBackward0>)
+[Step 46] Backward Propagation - Time: 20.8499s, Mem: -4416135168.00 B
+x_adv.requires_grad:  True
+pred_19.requires_grad, true_19.requires_grad:  True True
+Autograd grad max:  tensor(71.6124, device='cuda:0')
+Autograd grad min:  tensor(-85.0754, device='cuda:0')
+Autograd grad mean:  tensor(0.7288, device='cuda:0')
+[Step 46] PGD Update - Time: 0.0013s, Mem: 0.00 B
+
+[Step 46] 完整步骤总时间: 29.208244s | 总显存: 0.00 B
+[Step 46] 峰值显存: 6.22 GB
+
+[Step 47] ============ 详细性能分析 ============
+[模型部分] 总时间: 6.498392s | 显存: 4.12 GB
+
+[0-9秒 PDE求解详细性能]
+  t=0s - 时间: 0.000000s | 显存: 0.00 B
+  t=1s - 时间: 0.403262s | 显存: 0.00 B
+  t=2s - 时间: 0.476455s | 显存: 0.00 B
+  t=3s - 时间: 0.553868s | 显存: 0.00 B
+  t=4s - 时间: 0.636156s | 显存: 0.00 B
+  t=5s - 时间: 0.712250s | 显存: 0.00 B
+  t=6s - 时间: 0.798476s | 显存: 0.00 B
+  t=7s - 时间: 0.874221s | 显存: 0.00 B
+  t=8s - 时间: 0.971679s | 显存: 0.00 B
+  t=9s - 时间: 1.051652s | 显存: 0.00 B
+
+[19秒 PDE求解]
+  t=19.0s - 时间: 1.874391s | 显存: 0.00 B
+
+[PDE求解部分] 总时间: 1.874639s | 显存: 0.00 B
+
+[本步骤总计] 时间: 8.373030s | 显存: 4.12 GB
+orginal_loss:  tensor(108695.4688, device='cuda:0', grad_fn=<MseLossBackward0>)

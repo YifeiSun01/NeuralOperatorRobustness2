@@ -1,0 +1,17 @@
+c0904a-s5.ufhpc
+Sun Jul 27 04:02:15 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Warning: 无法解析文件名: pgd_attack_records_norm2_alpha2.0_epsilon26.2144_steps100_idx1_constant1to9
+Warning: 无法解析文件名: pgd_attack_records_norm2_alpha5.0_epsilon39.3216_steps100_idx1_constant1to9
+Warning: 无法解析文件名: pgd_attack_records_norm2_alpha1.0_epsilon13.1072_steps100_idx1_constant1to9
+Warning: 无法解析文件名: pgd_attack_records_norm2_alpha5.0_epsilon13.1072_steps100_idx1_constant1to9
+Warning: 无法解析文件名: pgd_attack_records_norm2_alpha1.0_epsilon39.3216_steps100_idx1_constant1to9
+加载文件...
+✅ GIF 保存到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/gifs/attack_comparison_alpha=5.0_epsilon=13.1072_steps=100_idx=1_surrogate.gif
+加载文件...
+✅ GIF 保存到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/gifs/attack_comparison_alpha=5.0_epsilon=13.1072_steps=100_idx=1_true.gif
+加载文件...
+✅ GIF 保存到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/gifs/attack_comparison_alpha=2.0_epsilon=26.2144_steps=100_idx=1_surrogate.gif
+加载文件...
+✅ GIF 保存到: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/gifs/attack_comparison_alpha=2.0_epsilon=26.2144_steps=100_idx=1_true.gif
+加载文件...

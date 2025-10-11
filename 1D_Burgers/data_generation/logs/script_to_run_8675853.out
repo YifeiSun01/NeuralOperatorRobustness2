@@ -1,0 +1,6 @@
+c1001a-s5.ufhpc
+Mon Jul 28 06:58:43 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers
+{'input tensor shape': torch.Size([1500, 1024]), 'output tensor shape': torch.Size([1500, 1024])}
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/datasets/1D/Burgers/dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.1_t1.0_seed45.pt
+x shape:  torch.Size([1500, 1024]) y shape torch.Size([1500, 1024])
