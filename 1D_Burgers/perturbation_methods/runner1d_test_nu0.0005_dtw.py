@@ -48,7 +48,7 @@ def get_gpu_info():
         print(f"获取 GPU 信息时出错: {e}")
 
 class JaxPDEWrapper(torch.autograd.Function):
-    _vpj_cache = {}
+    _vjp_cache = {}
 
     @staticmethod
     def forward(ctx, a_torch, g):
@@ -81,8 +81,8 @@ class JaxPDEWrapper(torch.autograd.Function):
             def jax_vjp(a_jax, grad_jax):
                 _, vjp_fn = jax.vjp(g, a_jax)
                 return vjp_fn(grad_jax)
-            JaxPDEWrapper._vpj_cache[cache_key] = jax.jit(jax_vjp)
-        jitted = JaxPDEWrapper._vpj_cache[cache_key]
+            JaxPDEWrapper._vjp_cache[cache_key] = jax.jit(jax_vjp)
+        jitted = JaxPDEWrapper._vjp_cache[cache_key]
         try:
             grad_dlpack = torch.utils.dlpack.to_dlpack(grad_output.contiguous())
             grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
