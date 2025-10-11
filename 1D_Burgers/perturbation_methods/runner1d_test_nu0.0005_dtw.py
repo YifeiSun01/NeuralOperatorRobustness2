@@ -215,10 +215,10 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
         delta.grad.zero_()
 
         # 更新 delta
-        if norm == 'inf':
+        if norm in ['inf', float('inf'), np.inf]:
             delta.data.add_(alpha * torch.sign(grad))
             delta.data.copy_(delta.data.clamp(-epsilon, epsilon))
-        elif norm == '2':
+        elif norm in ['2', 2]:
             delta.data.add_(alpha * grad / (torch.norm(grad, p=2) + 1e-15))
             n2 = torch.norm(delta.data, p=2)
             if n2 > epsilon:
