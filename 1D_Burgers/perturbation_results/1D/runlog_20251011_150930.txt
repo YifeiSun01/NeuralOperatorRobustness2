@@ -1,0 +1,68 @@
+[LOG] 日志文件: ./1D_Burgers/perturbation_results/1D/runlog_20251011_150930.txt
+Using device: cuda
+========== 当前作业 GPU 信息 ==========
+分区: hpg-turin
+节点: c0607a-s14
+GPU ID (CUDA_VISIBLE_DEVICES): 0
+
+GPU 详细信息:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=====================================
+[LOAD] Loading model: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py:1341: UserWarning: Casting complex values to real discards the imaginary part (Triggered internally at /pytorch/aten/src/ATen/native/Copy.cpp:307.)
+  return t.to(
+    TOTAL               : 127.12 ms
+[OUT] Save folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/nu=0.0005_PGD_results/approxN20
+[LOAD] Loading dict tensors ...
+    TOTAL               : 2.75 ms
+Configs:   0%|          | 0/1 [00:00<?, ?it/s]Configs:   0%|          | 0/1 [00:00<?, ?it/s, alpha=1.000e+00, eps=20, norm=2, steps=100]
+Samples:   0%|          | 0/1 [00:00<?, ?it/s][A
+Samples:   0%|          | 0/1 [00:00<?, ?it/s, sample=0][A
+=== Sample 0 | norm=2 epsilon=20 alpha=1 num_steps=100 ===
+[GEN]
+    TOTAL               : 0.65 ms
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[SOLVER-BUILD]
+    TOTAL               : 2004.49 ms
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:97: UserWarning: JAX forward失败，fallback CPU: 'float' object is not subscriptable
+  import warnings; warnings.warn(f"JAX forward失败，fallback CPU: {e}")
+Samples:   0%|          | 0/1 [00:04<?, ?it/s, sample=0]
+Configs:   0%|          | 0/1 [00:04<?, ?it/s, alpha=1.000e+00, eps=20, norm=2, steps=100]
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 92, in forward
+    g_out = g(a_jax).astype(JAX_DTYPE)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 354, in _solve
+    return u_arr[1].astype(JAX_DTYPE)
+TypeError: 'float' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 381, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 359, in main
+    recs = run_sixway_attack_for_sample(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 205, in run_sixway_attack_for_sample
+    G_out, T_out, mse, sdtw = forward_and_losses(a0, mode_label)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 184, in forward_and_losses
+    T_out = JaxPDEWrapper.apply(a_input, g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 99, in forward
+    g_np = np.asarray(g(jnp.array(a_np, dtype=JAX_DTYPE)), dtype=np.float32)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 354, in _solve
+    return u_arr[1].astype(JAX_DTYPE)
+TypeError: 'float' object is not subscriptable

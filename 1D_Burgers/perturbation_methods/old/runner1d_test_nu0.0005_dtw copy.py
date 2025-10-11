@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from absl import app
 from absl import flags
 from ml_collections.config_flags import config_flags
@@ -84,100 +81,61 @@ def get_gpu_info():
 
 
 class JaxPDEWrapper(torch.autograd.Function):
-    """
-    A PyTorch <-> JAX bridge with optional finite-difference VJP fallback.
-    """
     _vjp_cache = {}
 
     @staticmethod
     def forward(ctx, a_torch, g):
-        """
-        a_torch: CUDA tensor
-        g: callable that maps jnp.array(u0) -> jnp.array(u_final)
-           May carry attributes:
-             - _enable_fd (bool)
-             - _fd_delta (float)
-        """
         if not a_torch.is_cuda:
             raise ValueError("Input must be a CUDA tensor")
-
-        # Save flags from g for backward
-        ctx.g = g
-        ctx.fd_delta = getattr(g, "_fd_delta", 1e-4)
-        ctx.enable_fd = getattr(g, "_enable_fd", False)
-
         try:
-            # Fast GPU DLPack path
             a_dlpack = torch.utils.dlpack.to_dlpack(a_torch.contiguous())
             a_jax = jax.dlpack.from_dlpack(a_dlpack)
             g_output_jax = g(a_jax)
             out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
             g_output = torch.utils.dlpack.from_dlpack(out_dlpack)
             ctx.save_for_backward(a_torch)
+            ctx.g = g
             return g_output
         except Exception as e:
             import warnings
             warnings.warn(f"GPU transfer failed, fallback to CPU: {str(e)}")
             a_np = a_torch.detach().cpu().numpy()
             g_output_np = g(jnp.array(a_np))
-            g_output_np = np.asarray(g_output_np)
-            ctx.save_for_backward(a_torch)
-            return torch.as_tensor(g_output_np, device=a_torch.device, dtype=a_torch.dtype)
+            return torch.as_tensor(np.asarray(g_output_np),
+                                   device=a_torch.device,
+                                   dtype=a_torch.dtype)
 
     @staticmethod
     def backward(ctx, grad_output):
-        (a_torch,) = ctx.saved_tensors
+        a_torch, = ctx.saved_tensors
         g = ctx.g
-
-        # Try JAX VJP first
-        try:
-            def jax_vjp(a_jax, v):
+        cache_key = id(g)
+        if cache_key not in JaxPDEWrapper._vjp_cache:
+            def jax_vjp(a_jax, grad_jax):
                 _, vjp_fn = jax.vjp(g, a_jax)
-                return vjp_fn(v)
-            jitted = JaxPDEWrapper._vjp_cache.get(id(g))
-            if jitted is None:
-                jitted = jax.jit(jax_vjp)
-                JaxPDEWrapper._vjp_cache[id(g)] = jitted
+                return vjp_fn(grad_jax)
+            # 修复：缓存正确的 jax_vjp
+            JaxPDEWrapper._vjp_cache[cache_key] = jax.jit(jax_vjp)
 
+        jitted = JaxPDEWrapper._vjp_cache[cache_key]
+        try:
             grad_dlpack = torch.utils.dlpack.to_dlpack(grad_output.contiguous())
-            v_jax = jax.dlpack.from_dlpack(grad_dlpack)
+            grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
             a_dlpack = torch.utils.dlpack.to_dlpack(a_torch.contiguous())
             a_jax = jax.dlpack.from_dlpack(a_dlpack)
-
-            (grad_input_jax,) = jitted(a_jax, v_jax)
+            grad_input_jax, = jitted(a_jax, grad_jax)
             grad_input_dlpack = jax.dlpack.to_dlpack(grad_input_jax)
-            grad_input = torch.utils.dlpack.from_dlpack(grad_input_dlpack)
-            return grad_input, None
-
-        except Exception:
-            # Finite-difference fallback if enabled
-            if not getattr(ctx, "enable_fd", False):
-                import warnings
-                warnings.warn("VJP failed and FD fallback disabled; returning zero grad.")
-                return torch.zeros_like(a_torch), None
-
-            h = float(getattr(ctx, "fd_delta", 1e-4))
-            a0 = a_torch.detach()
-            v = grad_output.detach().cpu().numpy()
-            v = np.asarray(v, dtype=np.float32).reshape(-1)
-
-            a0_np = a0.cpu().numpy().astype(np.float32)
-            flat = a0_np.reshape(-1)
-            out = np.zeros_like(flat, dtype=np.float32)
-
-            for i in range(flat.size):
-                ei = np.zeros_like(flat, dtype=np.float32)
-                ei[i] = h
-                a_plus  = (flat + ei).reshape(a0_np.shape)
-                a_minus = (flat - ei).reshape(a0_np.shape)
-
-                g_plus  = np.asarray(g(jnp.array(a_plus)),  dtype=np.float32).reshape(-1)
-                g_minus = np.asarray(g(jnp.array(a_minus)), dtype=np.float32).reshape(-1)
-
-                out[i] = np.dot((g_plus - g_minus), v) / (2.0 * h)
-
-            grad_fd = torch.as_tensor(out.reshape(a0_np.shape), device=a_torch.device, dtype=a_torch.dtype)
-            return grad_fd, None
+            return torch.utils.dlpack.from_dlpack(grad_input_dlpack), None
+        except Exception as e:
+            import warnings
+            warnings.warn(f"Backward GPU failed: {str(e)}")
+            grad_np = grad_output.detach().cpu().numpy()
+            a_np = a_torch.detach().cpu().numpy()
+            _, vjp_fn = jax.vjp(g, jnp.array(a_np))
+            grad_input_jax, = vjp_fn(jnp.array(grad_np))
+            return torch.as_tensor(np.asarray(grad_input_jax),
+                                   device=a_torch.device,
+                                   dtype=a_torch.dtype), None
 
 
 def find_closest_ground_truth(a_perturbed, x_dict, y_dict):
@@ -196,10 +154,6 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
     G = G.to(dtype)
     a = a.to(dtype)
 
-    # Bind FD flags to g (PDE_func) for JaxPDEWrapper
-    g._fd_delta = fd_delta
-    g._enable_fd = enable_fd
-
     sdtw_loss_fn = SoftDTWLossPyTorch(gamma=1.0, normalize=False).to(a.device)
 
     delta = torch.zeros_like(a, requires_grad=True, dtype=dtype)
@@ -212,7 +166,7 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
         返回三元组 (G_out, T_used_for_loss, T_record_fullsolver)
         - G_out: 模型的输出（tensor）
         - T_used_for_loss: 根据 mode 决定，用于反传/攻击的目标（可能 detached 或 approximate）
-        - T_record_fullsolver: 始终用完整 solver 计算，用于记录
+        - T_record_fullsolver: 始终用完整 solver 计算（不 detach），用于记录并保存到日志
         """
         if timer: timer.lap("pre-G-forward")
         G_out = G(input_tensor)
@@ -242,18 +196,6 @@ def single_attack_pgd(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps,
             T_full = T_full.to(G_out.dtype)
         if T_full.device != G_out.device:
             T_full = T_full.to(G_out.device)
-
-        # 形状对齐，避免记录时意外形状
-        if T_full.ndim != G_out.ndim:
-            try:
-                T_full = T_full.view_as(G_out)
-            except Exception:
-                pass
-        if T_used.ndim != G_out.ndim:
-            try:
-                T_used = T_used.view_as(G_out)
-            except Exception:
-                pass
 
         return G_out, T_used, T_full
 
@@ -450,7 +392,7 @@ def main(argv):
 
     gradient_records = {}
 
-    # 仅保留这两种优化目标 & 三种传播方式（共 6 路攻击）
+    # 仅保留这两种优化目标
     loss_types = ["mse", "softdtw"]
     modes = ["with_solver", "without_solver", "approximate"]
 
@@ -493,38 +435,17 @@ def main(argv):
             else:
                 raise ValueError("Unsupported solver")
 
-            # --- 修正后的 PDE 函数：不使用 jit；稳健地取最终时刻解 ---
-            def PDE_func(u0):
-                """
-                纯 Python 封装的求解器调用：返回最终状态的 jnp.array，形状与 G 输出兼容。
-                """
-                u0_np = np.asarray(np.array(u0), dtype=np.float32)
-                ts, us = solver.solve(
-                    u0_np,
-                    t_final=burgers_params["simulation_time"],
-                    # 明确给出数组形式的 t_eval，以确保返回 (2, s) 这样的栅格
-                    t_eval=np.array([0.0, burgers_params["simulation_time"]], dtype=np.float32),
-                    step=burgers_params['step']
-                )
-                if isinstance(us, (float, np.floating)):
-                    u_last = np.array([us], dtype=np.float32)
-                else:
-                    us = np.asarray(us)
-                    u_last = us[-1] if us.ndim >= 2 else us
-                return jnp.asarray(u_last, dtype=jnp.float32)
-
-            # 可选：给 PDE_func 绑定 FD 选项（默认关闭；需要时可改 True）
-            PDE_func._enable_fd = False
-            PDE_func._fd_delta  = 1e-4
-
+            t_span = (0, burgers_params["simulation_time"])
+            PDE_func = jax.jit(lambda u0: solver.solve(
+                u0, t_final=burgers_params["simulation_time"],
+                t_eval=t_span, step=burgers_params['step']
+            )[1][1])
             print("[SOLVER-BUILD]\n" + t_solver.to_string("    "))
 
             sample_results = {}
             for lt in tqdm(loss_types, desc="Loss types", leave=False):
                 for md in tqdm(modes, desc="Modes", leave=False):
-                    combo = f"{lt}__{md}."
-                    # 去掉末尾多余点（只为防止拼接错误）
-                    combo = combo[:-1] if combo.endswith(".") else combo
+                    combo = f"{lt}__{md}"
                     print(f"\n[ATTACK] combo={combo}")
                     t_attack = Timer()
 
@@ -540,8 +461,8 @@ def main(argv):
                         norm=norm,
                         loss_type=lt,
                         mode=md,
-                        fd_delta=1e-4,     # 可根据需要调大到 1e-3 提升数值稳定性
-                        enable_fd=False,   # 若想要 true-with-solver 梯度，可改为 True（计算量大）
+                        fd_delta=1e-8,
+                        enable_fd=False,
                         use_double=False,
                         verbose_log_file=logfile
                     )
@@ -568,7 +489,6 @@ def main(argv):
 
 if __name__ == "__main__":
     app.run(main)
-
 
 
 
