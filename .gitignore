@@ -1,0 +1,15 @@
+*.pt
+*.pth
+*.pkl
+*.gif
+*.png
+*.jpg
+*.ufhpc
+2D_NS_FNO2d_recurrent/eval_models/logs/old/eval_models_11440924.err
+2D_NS_compare/eval_all_models/combined_eval__roots_2D_saved_models_saved_models_expanded.csv
+2D_NS_FNO2d_recurrent/eval_models/combined_eval__baseline_NS_2d_FNO_model_trainedby_dim2d_nx256_N1150_solver=exponax_n__set_saved_models_expanded.csv
+# 下面这几行是你要恢复跟踪的后缀
+!*.err
+!*.out
+!*.csv
+!*.txt
