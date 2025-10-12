@@ -18,7 +18,7 @@ import pickle
 import numpy as np
 import jax
 
-import torch.nn.functional as F
+import torch.nn.functional as F  
 from scipy.spatial.distance import cosine
 from torch.autograd.functional import jacobian
 
@@ -29,13 +29,13 @@ def get_gpu_info():
     try:
         # 获取当前分区（Slurm 环境变量）
         partition = os.environ.get("SLURM_JOB_PARTITION", "N/A")
-
+        
         # 获取当前节点名
         node_name = os.environ.get("SLURMD_NODENAME", "N/A")
-
+        
         # 获取当前使用的 GPU ID（如果用 --gres）
         gpu_ids = os.environ.get("CUDA_VISIBLE_DEVICES", "N/A")
-
+        
         # 调用 nvidia-smi 获取详细信息
         try:
             nvidia_smi_output = subprocess.check_output(
@@ -44,7 +44,7 @@ def get_gpu_info():
             ).strip()
         except FileNotFoundError:
             nvidia_smi_output = "nvidia-smi 未找到，可能此节点没有 NVIDIA GPU"
-
+        
         print("========== 当前作业 GPU 信息 ==========")
         print(f"分区: {partition}")
         print(f"节点: {node_name}")
@@ -52,10 +52,10 @@ def get_gpu_info():
         print("\nGPU 详细信息:")
         print(nvidia_smi_output)
         print("=====================================")
-
+    
     except Exception as e:
         print(f"获取 GPU 信息时出错: {e}")
-
+        
 class JaxPDEWrapper(torch.autograd.Function):
     _vjp_cache = {}
 
@@ -130,19 +130,21 @@ def find_closest_ground_truth(a_perturbed, x_dict, y_dict):
     # If a_perturbed is [256], reshape it to [1, 256]
     if len(a_perturbed.shape) == 1:
         a_perturbed = a_perturbed.unsqueeze(0)  # Shape: [1, 256]
-
+    
     # Compute distances using broadcasting
     a_perturbed = a_perturbed.squeeze(-1)
     # print(x_dict.shape,a_perturbed.shape)
     distances = torch.norm(x_dict - a_perturbed, p=2, dim=1)  # Shape: [20000]
-
+    
     # Find the closest index
     closest_idx = torch.argmin(distances)
-
+    
     # Return the corresponding y_dict value
     return y_dict[closest_idx]
 
-def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, norm='inf',
+
+
+def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, norm='inf', 
                           fd_delta=1e-8, enable_fd=False, use_double=True):
     original_dtypes = {name: param.dtype for name, param in G.named_parameters()}
 
@@ -162,77 +164,77 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         elif isinstance(data, dict):
             return {k: convert_data(v) for k, v in data.items()}
         return data
-
+    
     x_dict = convert_data(x_dict)
     y_dict = convert_data(y_dict)
 
     delta_with = torch.zeros_like(a, requires_grad=True, dtype=dtype)
     delta_without = torch.zeros_like(a, requires_grad=True, dtype=dtype)
     delta_approximate = torch.zeros_like(a, requires_grad=True, dtype=dtype)
-    grad_records = {}
+    grad_records = {} 
     grad_records["step_update"] = {}
 
     def wrap_with_solver(input):
         # Initialize timing dict
         timing = {}
-
+        
         # Time G computation
         start = time.time()
         G_output = G(input)
         timing['G_time'] = time.time() - start
-
+        
         # Time JaxPDEWrapper (g) computation
         start = time.time()
         g_output = JaxPDEWrapper.apply(input, g)
         timing['g_time'] = time.time() - start
-
+        
         # Time norm computation
         start = time.time()
         loss = torch.norm(G_output - g_output, p=2)**2
         timing['norm_time'] = time.time() - start
-
+        
         return loss, timing
 
     def wrap_without_solver(input):
         # Initialize timing dict
         timing = {}
-
+        
         # Time G computation
         start = time.time()
         G_output = G(input)
         timing['G_time'] = time.time() - start
-
+        
         # Time JaxPDEWrapper (g) computation
         start = time.time()
         g_output = JaxPDEWrapper.apply(input, g)
         timing['find_time'] = time.time() - start
-
+        
         # Time norm computation
         start = time.time()
         loss = torch.norm(G_output - g_output.detach(), p=2)**2
         timing['norm_time'] = time.time() - start
-
+        
         return loss, timing
 
     def wrap_approximate(input):
         # Initialize timing dict
         timing = {}
-
+        
         # Time G computation
         start = time.time()
         G_output = G(input)
         timing['G_time'] = time.time() - start
-
+        
         # Time find_closest_ground_truth computation
         start = time.time()
         closest_output = find_closest_ground_truth(input, x_dict, y_dict)
         timing['find_time'] = time.time() - start
-
+        
         # Time norm computation
         start = time.time()
         loss = torch.norm(G_output - closest_output, p=2)**2
         timing['norm_time'] = time.time() - start
-
+        
         return loss, timing
 
     def compute_all_loss_metrics(a, delta_with, delta_without, delta_approximate, G, g):
@@ -259,62 +261,56 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         }
     step_metrics.update(step_metrics_add)
     grad_records["step_update"][f"step_0"] = step_metrics
-
+  
     for step in range(num_steps):
-        # === 仅新增打印所需的 step 级别计时，不改动其他逻辑 ===
-        step_start_wall = time.time()
-
         step_metrics = {}
         timing_metrics = {"with_solver":{},"without_solver":{},"approximate":{}}
-
+        
         # 1. Compute gradient with solver (with timing)
         a_with = a + delta_with
+        # zero_all_gradients()
         start_forward = time.time()
         loss_with, forward_timing_with = wrap_with_solver(a_with)
-        with_forward_total = time.time() - start_forward
-        timing_metrics["with_solver"]['with_solver_forward_time'] = with_forward_total
+        timing_metrics["with_solver"]['with_solver_forward_time'] = time.time() - start_forward
         timing_metrics["with_solver"].update({f'with_solver_{k}':v for k,v in forward_timing_with.items()})
-
+        
         start_backward = time.time()
         loss_with.backward()
-        with_backward_total = time.time() - start_backward
-        timing_metrics["with_solver"]['with_solver_backward_time'] = with_backward_total
-
+        timing_metrics["with_solver"]['with_solver_backward_time'] = time.time() - start_backward
+        
         grad_with = delta_with.grad.clone().detach()
         delta_with.grad.zero_()
-
+        
         # 2. Compute gradient without solver (with timing)
         a_without = a + delta_without
+        # zero_all_gradients()
         start_forward = time.time()
         loss_without, forward_timing_without = wrap_without_solver(a_without)
-        without_forward_total = time.time() - start_forward
-        timing_metrics["without_solver"]['without_solver_forward_time'] = without_forward_total
+        timing_metrics["without_solver"]['without_solver_forward_time'] = time.time() - start_forward
         timing_metrics["without_solver"].update({f'without_solver_{k}':v for k,v in forward_timing_without.items()})
-
+        
         start_backward = time.time()
         loss_without.backward()
-        without_backward_total = time.time() - start_backward
-        timing_metrics["without_solver"]['without_solver_backward_time'] = without_backward_total
-
+        timing_metrics["without_solver"]['without_solver_backward_time'] = time.time() - start_backward
+        
         grad_without = delta_without.grad.clone().detach()
         delta_without.grad.zero_()
 
         # 3. Compute gradient approximate (with timing)
         a_approximate = a + delta_approximate
+        # zero_all_gradients()
         start_forward = time.time()
         loss_approximate, forward_timing_approximate = wrap_approximate(a_approximate)
-        approximate_forward_total = time.time() - start_forward
-        timing_metrics["approximate"]['approximate_forward_time'] = approximate_forward_total
+        timing_metrics["approximate"]['approximate_forward_time'] = time.time() - start_forward
         timing_metrics["approximate"].update({f'approximate_{k}':v for k,v in forward_timing_approximate.items()})
-
+        
         start_backward = time.time()
         loss_approximate.backward()
-        approximate_backward_total = time.time() - start_backward
-        timing_metrics["approximate"]['approximate_backward_time'] = approximate_backward_total
-
+        timing_metrics["approximate"]['approximate_backward_time'] = time.time() - start_backward
+        
         grad_approximate = delta_approximate.grad.clone().detach()
         delta_approximate.grad.zero_()
-
+        
         # Update perturbations
         def update(delta, grad):
             if norm == 'inf':
@@ -350,7 +346,7 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
                     delta.data = delta.data * (radius / l2_norm)
 
                 return exceeded  # Boolean
-
+        
         # 2. Update perturbations
         with_boundary = update(delta_with, grad_with)
         without_boundary = update(delta_without, grad_without)
@@ -380,11 +376,11 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         grad_records["step_update"][f"step_{step+1}"]["values"]["g_values"]['g(a_with)'] = JaxPDEWrapper.apply(a_with, g).squeeze().clone().detach()
         grad_records["step_update"][f"step_{step+1}"]["values"]["g_values"]['g(a_without)'] = JaxPDEWrapper.apply(a_without, g).squeeze().clone().detach()
         grad_records["step_update"][f"step_{step+1}"]["values"]["g_values"]['g(a_approximate)'] = JaxPDEWrapper.apply(a_approximate, g).squeeze().clone().detach()
-
+        
         # Store final losses if last step
         if step == num_steps - 1:
             final_losses = current_after
-
+            
             grad_records["final_values"] = {}
 
             grad_records["final_values"]["a_values"] = {}
@@ -424,27 +420,6 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         grad_records["step_update"][f"step_{step+1}"].update(step_metrics)
         all_timing_metrics.append(timing_metrics)
 
-        # === 新增：打印每个 step 的详细时间（参考第二个代码的风格与缩写） ===
-        step_total_time = time.time() - step_start_wall
-
-        print(f"[STEP {step+1}/{num_steps}] (norm={norm}, eps={epsilon}, alpha={alpha})", flush=True)
-        print(f"  [WITH ] fwd_total={with_forward_total:.3f}s "
-              f"(FNO={forward_timing_with.get('G_time',0):.3f}s, "
-              f"Solver={forward_timing_with.get('g_time',0):.3f}s, "
-              f"Loss={forward_timing_with.get('norm_time',0):.3f}s)  |  "
-              f"bwd_total={with_backward_total:.3f}s", flush=True)
-        print(f"  [W/O  ] fwd_total={without_forward_total:.3f}s "
-              f"(FNO={forward_timing_without.get('G_time',0):.3f}s, "
-              f"Solver={forward_timing_without.get('find_time',0):.3f}s, "
-              f"Loss={forward_timing_without.get('norm_time',0):.3f}s)  |  "
-              f"bwd_total={without_backward_total:.3f}s", flush=True)
-        print(f"  [APRX ] fwd_total={approximate_forward_total:.3f}s "
-              f"(FNO={forward_timing_approximate.get('G_time',0):.3f}s, "
-              f"Find={forward_timing_approximate.get('find_time',0):.3f}s, "
-              f"Loss={forward_timing_approximate.get('norm_time',0):.3f}s)  |  "
-              f"bwd_total={approximate_backward_total:.3f}s", flush=True)
-        print(f"  [STEP_TOTAL] {step_total_time:.3f}s\n", flush=True)
-
     return grad_records
 
 FLAGS = flags.FLAGS
@@ -462,7 +437,7 @@ def main(argv):
 
     model_path = config.model_path
     workdir = config.workdir
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M") 
     device = config.device
     nu = float(re.findall(r'nu([a-zA-Z0-9|.]+)', model_path)[0])
     num_records = config.num_records
@@ -477,9 +452,9 @@ def main(argv):
             return data.cpu().detach().numpy()
         else:
             return data
-
+    
     print("===============Experiment===============")
-
+    
     print("\n\n\n")
     print("model_path: ",model_path)
     print("workdir: ",workdir)
@@ -504,7 +479,7 @@ def main(argv):
     burgers_params = {
         'nu': nu,
         'simulation_time': 1.0,
-        "step": 0.00001
+        "step": 0.0001
     }
 
     dataset_params = {
@@ -524,7 +499,7 @@ def main(argv):
 
     solver_name = re.findall(r'solver=([a-zA-Z0-9]+)', model_path)[0]
 
-    model = FNO1d(modes=16, width=64)
+    model = FNO1d(modes=16, width=64) 
     print("model_path: ",model_path)
     model.load_state_dict(torch.load(model_path))
     model.eval()
@@ -558,9 +533,9 @@ def main(argv):
                             seed=grf_params['seed'] + i,  # Ensure different GRFs for each sample
                             zero_mean=grf_params['zero_mean']
                         )
-
+            
             a = a[::sub]
-
+            
             a_torch = torch.from_numpy(a).float().unsqueeze(0).unsqueeze(-1).to(device)
 
             if solver_name == "exponax":
@@ -573,7 +548,7 @@ def main(argv):
                 solver = PhiFlowBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
             else:
                 raise ValueError("Specified solver not inplemented")
-
+            
             t_span = (0, burgers_params['simulation_time'])
 
             PDE_func = jax.jit(lambda u0: solver.solve(u0, t_final=burgers_params['simulation_time'], t_eval=t_span, step=burgers_params["step"])[1][1])

@@ -69,3 +69,67 @@ output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Bur
   [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=1.374291e+01
   [STEP_TOTAL] 79.881s
 
+[STEP 3/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.278s (FNO=0.001s, Solver=7.185s, Loss=0.093s)  |  bwd_total=14.289s (Solver_bwd=14.232s, FNO_bwd=0.057s)
+  [W/O  ] fwd_total=7.278s (FNO=0.002s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.038s (FNO_bwd=0.038s)
+  [APRX ] fwd_total=0.140s (FNO=0.001s, Find=0.007s, Loss=0.132s)  |  bwd_total=0.044s (FNO_bwd=0.044s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=2.152865e+01
+  [STEP_TOTAL] 79.848s
+
+[STEP 4/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.278s (FNO=0.001s, Solver=7.184s, Loss=0.093s)  |  bwd_total=14.289s (Solver_bwd=14.233s, FNO_bwd=0.057s)
+  [W/O  ] fwd_total=7.278s (FNO=0.001s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.039s (FNO_bwd=0.039s)
+  [APRX ] fwd_total=0.139s (FNO=0.001s, Find=0.006s, Loss=0.132s)  |  bwd_total=0.041s (FNO_bwd=0.041s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=3.039984e+01
+  [STEP_TOTAL] 79.848s
+
+[STEP 5/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.279s (FNO=0.001s, Solver=7.186s, Loss=0.093s)  |  bwd_total=14.289s (Solver_bwd=14.232s, FNO_bwd=0.057s)
+  [W/O  ] fwd_total=7.279s (FNO=0.001s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.039s (FNO_bwd=0.039s)
+  [APRX ] fwd_total=0.139s (FNO=0.001s, Find=0.006s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=4.286146e+01
+  [STEP_TOTAL] 79.845s
+
+[STEP 6/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.278s (FNO=0.001s, Solver=7.185s, Loss=0.093s)  |  bwd_total=14.289s (Solver_bwd=14.233s, FNO_bwd=0.057s)
+  [W/O  ] fwd_total=7.278s (FNO=0.001s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.039s (FNO_bwd=0.039s)
+  [APRX ] fwd_total=0.139s (FNO=0.001s, Find=0.006s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=5.394322e+01
+  [STEP_TOTAL] 79.827s
+
+[STEP 7/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.278s (FNO=0.001s, Solver=7.184s, Loss=0.093s)  |  bwd_total=14.994s (Solver_bwd=14.231s, FNO_bwd=0.764s)
+  [W/O  ] fwd_total=7.442s (FNO=0.165s, Solver=7.185s, Loss=0.093s)  |  bwd_total=0.146s (FNO_bwd=0.146s)
+  [APRX ] fwd_total=0.141s (FNO=0.002s, Find=0.007s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=1.522212e+01
+  [STEP_TOTAL] 80.820s
+
+[STEP 8/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.291s (FNO=0.001s, Solver=7.184s, Loss=0.106s)  |  bwd_total=14.298s (Solver_bwd=14.231s, FNO_bwd=0.066s)
+  [W/O  ] fwd_total=7.278s (FNO=0.002s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.039s (FNO_bwd=0.039s)
+  [APRX ] fwd_total=0.139s (FNO=0.001s, Find=0.006s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=7.017909e+01
+  [STEP_TOTAL] 79.850s
+
+[STEP 9/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.279s (FNO=0.002s, Solver=7.185s, Loss=0.093s)  |  bwd_total=14.289s (Solver_bwd=14.232s, FNO_bwd=0.056s)
+  [W/O  ] fwd_total=7.278s (FNO=0.002s, Solver=7.183s, Loss=0.093s)  |  bwd_total=0.038s (FNO_bwd=0.038s)
+  [APRX ] fwd_total=0.141s (FNO=0.001s, Find=0.007s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=2.258979e+01
+  [STEP_TOTAL] 79.846s
+
+[STEP 10/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.279s (FNO=0.001s, Solver=7.185s, Loss=0.093s)  |  bwd_total=14.290s (Solver_bwd=14.234s, FNO_bwd=0.057s)
+  [W/O  ] fwd_total=7.279s (FNO=0.002s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.037s (FNO_bwd=0.037s)
+  [APRX ] fwd_total=0.141s (FNO=0.001s, Find=0.008s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=2.887226e+01
+  [STEP_TOTAL] 79.845s
+
+[STEP 11/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=7.280s (FNO=0.002s, Solver=7.185s, Loss=0.093s)  |  bwd_total=14.289s (Solver_bwd=14.233s, FNO_bwd=0.056s)
+  [W/O  ] fwd_total=7.279s (FNO=0.002s, Solver=7.184s, Loss=0.093s)  |  bwd_total=0.038s (FNO_bwd=0.038s)
+  [APRX ] fwd_total=0.140s (FNO=0.001s, Find=0.007s, Loss=0.132s)  |  bwd_total=0.040s (FNO_bwd=0.040s)
+  [LOSSES] with=nan  |  without=nan  |  approx=nan  |  approx_surr=1.083075e+02
+  [STEP_TOTAL] 79.845s
+
+slurmstepd: error: *** JOB 15495683 ON c0606a-s8 CANCELLED AT 2025-10-12T09:01:03 ***

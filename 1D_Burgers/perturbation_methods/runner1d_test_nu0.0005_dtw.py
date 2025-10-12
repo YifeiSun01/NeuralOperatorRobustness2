@@ -132,11 +132,11 @@ def find_closest_ground_truth(a_perturbed, x_dict, y_dict):
 def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, norm='inf',
                            fd_delta=1e-8, enable_fd=False, use_double=True, gamma=0.1):
     """
-    仅改动：
-      - 换 Soft-DTW loss（normalize=True, gamma=参数）
-      - 分别打印三种攻击(with/without/approx)的 forward 分项时间与 backward 时间
-      - 打印每个 step 的总用时
-    其余记录结构、保存格式不改。
+    修改点：
+      - 不再在“更新后”做任何额外前向评估真 loss（只做一次前向得到梯度，然后更新）。
+      - 打印与记录结构保持；step 的 loss_metrics 采用本 step 反传前的三个损失：
+          with_solver / without_solver / approximate_surrogate，
+        其中 approximate（真 solver on approximate）设为 None。
     """
     original_dtypes = {name: param.dtype for name, param in G.named_parameters()}
 
@@ -225,10 +225,11 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         timing['norm_time'] = time.time() - t0
         return loss, timing
 
+    # 仅用于 step_0 的初始记录（保留不改）
     def compute_all_loss_metrics(a, delta_with, delta_without, delta_approximate, G, g):
         return {
             'delta_with': wrap_with_solver(a + delta_with)[0].item(),
-            'delta_without_solver': wrap_with_solver(a + delta_without)[0].item(),
+            'delta_without_solver': wrap_without_solver(a + delta_without)[0].item(),
             'delta_approximate': wrap_with_solver(a + delta_approximate)[0].item(),
             'delta_approximate_surrogate': wrap_approximate(a + delta_approximate)[0].item(),
         }
@@ -241,9 +242,9 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         flush=True
     )
 
+    # 保留 step_0：初始状态的四个 loss（与原来一致）
     current_after = compute_all_loss_metrics(a, delta_with, delta_without, delta_approximate, G, g)
-    step_metrics = {}
-    step_metrics_add = {
+    grad_records["step_update"][f"step_0"] = {
         'loss_metrics': {
             'with_solver': current_after['delta_with'],
             'without_solver': current_after['delta_without_solver'],
@@ -251,13 +252,9 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
             'approximate_surrogate': current_after['delta_approximate_surrogate'],
         }
     }
-    step_metrics.update(step_metrics_add)
-    grad_records["step_update"][f"step_0"] = step_metrics
 
     for step in range(num_steps):
         step_start_wall = time.time()  # 本 step 总用时计时
-
-        step_metrics = {}
         timing_metrics = {"with_solver": {}, "without_solver": {}, "approximate": {}}
 
         # ---- WITH SOLVER ----
@@ -333,8 +330,7 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
         without_boundary = update(delta_without, grad_without)
         approximate_boundary = update(delta_approximate, grad_approximate)
 
-        # ---- LOSSES AFTER UPDATE ----
-        current_after = compute_all_loss_metrics(a, delta_with, delta_without, delta_approximate, G, g)
+        # === 不再做“更新后再评估真 loss”的额外前向 ===
 
         # ---- 记录（结构保持不变）----
         grad_records["step_update"][f"step_{step+1}"] = {}
@@ -360,7 +356,6 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
 
         # 最后一轮 final_values（保持结构）
         if step == num_steps - 1:
-            final_losses = current_after
             grad_records["final_values"] = {}
             grad_records["final_values"]["a_values"] = {}
             grad_records["final_values"]["a_values"]['a'] = old_a.squeeze().clone().detach()
@@ -380,27 +375,26 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
             grad_records["final_values"]["g_values"]['g(a_without)'] = JaxPDEWrapper.apply(a_without, g).squeeze().clone().detach()
             grad_records["final_values"]["g_values"]['g(a_approximate)'] = JaxPDEWrapper.apply(a_approximate, g).squeeze().clone().detach()
 
-        # 保存指标（字段名不改）
-        step_metrics_add = {
+        # 保存指标（字段名不改）；loss_metrics 采用“更新前”的三个损失，approximate 置 None
+        grad_records["step_update"][f"step_{step+1}"].update({
             "reaches_boundary": {
                 "with_solver": with_boundary,
                 "detached": without_boundary,
                 "approximated": approximate_boundary,
             },
             'loss_metrics': {
-                'with_solver': current_after['delta_with'],
-                'without_solver': current_after['delta_without_solver'],
-                'approximate': current_after['delta_approximate'],
-                'approximate_surrogate': current_after['delta_approximate_surrogate'],
+                'with_solver': float(loss_with.detach().item()),
+                'without_solver': float(loss_without.detach().item()),
+                'approximate': None,
+                'approximate_surrogate': float(loss_approximate.detach().item()),
             },
             "timing_metrics": timing_metrics
-        }
-        grad_records["step_update"][f"step_{step+1}"].update(step_metrics_add)
+        })
 
         # 本 step 总用时
         step_total_time = time.time() - step_start_wall
 
-        # ---- 分别打印三种攻击的时间 + 本 step 总时间 ----
+        # ---- 分别打印三种攻击的时间 + 本 step 总时间（保留原打印风格，去掉 LOSSES 行）----
         print(f"[STEP {step+1}/{num_steps}] (norm={norm}, eps={epsilon}, alpha={alpha}, gamma={gamma})", flush=True)
         print(f"  [WITH ] fwd_total={with_forward_total:.3f}s "
               f"(FNO={forward_timing_with.get('G_time',0):.3f}s, "
@@ -418,10 +412,6 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
               f"Find={forward_timing_approximate.get('find_time',0):.3f}s, "
               f"Loss={forward_timing_approximate.get('norm_time',0):.3f}s)  |  "
               f"bwd_total={approximate_backward_total:.3f}s (FNO_bwd={approximate_backward_total:.3f}s)", flush=True)
-        print(f"  [LOSSES] with={current_after['delta_with']:.6e}  |  "
-              f"without={current_after['delta_without_solver']:.6e}  |  "
-              f"approx={current_after['delta_approximate']:.6e}  |  "
-              f"approx_surr={current_after['delta_approximate_surrogate']:.6e}", flush=True)
         print(f"  [STEP_TOTAL] {step_total_time:.3f}s\n", flush=True)
 
     return grad_records
@@ -587,6 +577,7 @@ def main(argv):
 
 if __name__ == "__main__":
     app.run(main)
+
 
 
 
