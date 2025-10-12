@@ -1,0 +1,13 @@
+c0606a-s7.ufhpc
+Sat Oct 11 09:29:00 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Found 1 pickle files in /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/attack_result_viz/pickle_files/dt0.0001:
+  - gradient_test_exponax_nu0.0005_nsamples1_2.pkl
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz_2.py", line 847, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz_2.py", line 842, in main
+    render_folder(args.folder, args.outdir, args.fps,
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz_2.py", line 815, in render_folder
+    print(f"\n[LOAD] {pkl.name}")
+NameError: name 'pkl' is not defined. Did you mean: 'pkls'?

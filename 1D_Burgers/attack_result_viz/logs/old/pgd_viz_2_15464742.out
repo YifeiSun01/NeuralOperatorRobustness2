@@ -1,0 +1,9 @@
+c0606a-s18.ufhpc
+Sat Oct 11 09:47:01 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz_2.py", line 876, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz_2.py", line 871, in main
+    render_folder(args.folder, args.outdir, args.fps,
+TypeError: render_folder() got an unexpected keyword argument 'audit_head'

@@ -1,0 +1,74 @@
+[LOG] 日志文件: ./1D_Burgers/perturbation_results/1D/runlog_20251011_155904.txt
+Using device: cuda
+========== 当前作业 GPU 信息 ==========
+分区: hpg-turin
+节点: c0607a-s12
+GPU ID (CUDA_VISIBLE_DEVICES): 0
+
+GPU 详细信息:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=====================================
+[LOAD] Loading model: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py:1341: UserWarning: Casting complex values to real discards the imaginary part (Triggered internally at /pytorch/aten/src/ATen/native/Copy.cpp:307.)
+  return t.to(
+    TOTAL               : 3008.91 ms
+[OUT] Save folder: /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/nu=0.0005_PGD_results/approxN20
+[LOAD] Loading dict tensors ...
+    TOTAL               : 126.21 ms
+Configs:   0%|          | 0/4 [00:00<?, ?it/s]Configs:   0%|          | 0/4 [00:00<?, ?it/s, alpha=1.000e+00, eps=20, norm=2, steps=100]
+Samples:   0%|          | 0/1 [00:00<?, ?it/s][A
+Samples:   0%|          | 0/1 [00:00<?, ?it/s, sample=0][A
+=== Sample 0 | norm=2 epsilon=20 alpha=1 num_steps=100 ===
+[GEN]
+    TOTAL               : 104.78 ms
+JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[SOLVER-BUILD]
+    TOTAL               : 26466.76 ms
+
+
+Loss types:   0%|          | 0/2 [00:00<?, ?it/s][A[A
+
+
+Modes:   0%|          | 0/3 [00:00<?, ?it/s][A[A[A
+[ATTACK] combo=mse__with_solver
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:112: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:120: UserWarning: GPU transfer failed, fallback to CPU: cannot reshape array of size 1 into shape (1,1024,1)
+  warnings.warn(f"GPU transfer failed, fallback to CPU: {str(e)}")
+
+
+
+                                            [A[A[A
+
+                                                 [A[ASamples:   0%|          | 0/1 [00:57<?, ?it/s, sample=0]
+Configs:   0%|          | 0/4 [00:57<?, ?it/s, alpha=1.000e+00, eps=20, norm=2, steps=100]
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 113, in forward
+    g_output_jax = g(a_jax)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 522, in PDE_func
+    u_last = np.asarray(u_last, dtype=np.float32).reshape(1, s, 1)
+ValueError: cannot reshape array of size 1 into shape (1,1024,1)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 577, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 538, in main
+    rec = single_attack_pgd(
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 275, in single_attack_pgd
+    G0, T0_used, T0_full = get_pair_outputs(a, timer=timer0)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 222, in get_pair_outputs
+    T_full = JaxPDEWrapper.apply(input_tensor, g)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 122, in forward
+    g_output_np = g(jnp.array(a_np))
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 522, in PDE_func
+    u_last = np.asarray(u_last, dtype=np.float32).reshape(1, s, 1)
+ValueError: cannot reshape array of size 1 into shape (1,1024,1)

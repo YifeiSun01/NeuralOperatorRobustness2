@@ -1,0 +1,9 @@
+c0606a-s19.ufhpc
+Sat Oct 11 08:07:57 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Found 1 pickle files in /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/attack_result_viz/pickle_files/dt0.0001:
+  - gradient_test_exponax_nu0.0005_nsamples1_2.pkl
+
+[LOAD] gradient_test_exponax_nu0.0005_nsamples1_2.pkl
+[WARN] Empty bundle for key=('loss_mse', 'norm_2', 'index_0', 'numsteps_100', 'epsilon_20', 'alpha_1.00000'), skip
+[WARN] Empty bundle for key=('loss_sdtw', 'norm_2', 'index_0', 'numsteps_100', 'epsilon_20', 'alpha_1.00000'), skip

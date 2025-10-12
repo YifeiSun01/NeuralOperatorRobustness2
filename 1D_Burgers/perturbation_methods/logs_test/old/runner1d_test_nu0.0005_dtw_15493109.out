@@ -1,0 +1,471 @@
+c0606a-s11.ufhpc
+Sun Oct 12 07:36:43 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Running N=20 ===
+Selected GPU 0 (NVIDIA L4) with 0.00 GB free memory
+Using device: cuda
+========== 当前作业 GPU 信息 ==========
+分区: hpg-turin
+节点: c0606a-s11
+GPU ID (CUDA_VISIBLE_DEVICES): 0
+
+GPU 详细信息:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=====================================
+===============Experiment===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_results/1D
+device:  cuda:0
+nu:  0.0005
+INFO:2025-10-12 07:36:48,685:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I1012 07:36:48.685201 22606975550528 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+[ENTRY PARAMS]
+  config.model_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+  config.dict_input_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+  config.dict_output_path=/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+  config.num_records=1
+  config.inputs (count)=1
+
+===============Running===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+
+===== Global Attack Config Summary =====
+  gamma_list: [0.01, 0.05, 0.1, 0.5, 1.0]
+  inputs (norm, epsilon, num_steps, alpha):
+    - norm=2, epsilon=20, num_steps=100, alpha=1
+  dataset.num_record=1, nx=1024, sub=1, s=1024
+  solver inferred from model_path: exponax
+=========================================
+
+
+########################################################################################
+### GAMMA BLOCK START: gamma=0.01 (normalize=True) ###
+########################################################################################
+
+----------------------------------------------------------------------------------------
+[ATTACK COMBO] norm=2, epsilon=20, num_steps=100, alpha=1  |  gamma=0.01
+----------------------------------------------------------------------------------------
+adversarial input samples (gamma=0.01):   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[Sample 0] start attack  -> (gamma=0.01, norm=2, eps=20, alpha=1, steps=100)
+
+========================================================================================
+[ATTACK START] norm=2, epsilon=20, alpha=1, num_steps=100 | gamma=0.01, normalize=True
+  input(a): shape=(1, 1024, 1), device=cuda:0, dtype=torch.float32
+  PDE(g): <lambda>
+  Model(G): FNO1d
+========================================================================================
+
+/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/torch/nn/modules/module.py:1341: UserWarning: Casting complex values to real discards the imaginary part (Triggered internally at /pytorch/aten/src/ATen/native/Copy.cpp:307.)
+  return t.to(
+[DType] set_default_dtype=torch.float32, model_param_dtype=torch.float32
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:68: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+[STEP 0] loss(with)=7.378489e+00, loss(without)=7.378489e+00, loss(approx)=7.378489e+00, loss(approx_surrogate)=7.875512e+00
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:95: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:97: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:66: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+[STEP 001] total=34.482s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=21.144s  ||  without: fwd=2.434s (G=0.003s, g=2.290s, loss=0.141s), bwd=0.065s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.058s
+           losses: with=1.094500e+01, without=9.870749e+00, approx=1.061244e+01, approx_surr=1.487147e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 002] total=17.186s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.621s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.059s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.056s
+           losses: with=1.471940e+01, without=1.114665e+01, approx=1.291506e+01, approx_surr=2.488474e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 003] total=17.184s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.620s  ||  without: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=0.059s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.054s
+           losses: with=1.670947e+01, without=1.068790e+01, approx=1.236835e+01, approx_surr=3.530148e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 004] total=17.208s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.625s  ||  without: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=0.063s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.061s
+           losses: with=1.731643e+01, without=1.113502e+01, approx=1.187800e+01, approx_surr=4.664480e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 005] total=17.212s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.614s  ||  without: fwd=2.440s (G=0.002s, g=2.290s, loss=0.148s), bwd=0.069s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.059s
+           losses: with=1.841120e+01, without=1.220617e+01, approx=1.270724e+01, approx_surr=7.279999e+00 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 006] total=17.191s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.614s  ||  without: fwd=2.437s (G=0.003s, g=2.290s, loss=0.144s), bwd=0.056s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.059s
+           losses: with=2.124195e+01, without=1.315193e+01, approx=1.250013e+01, approx_surr=1.119196e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 007] total=17.199s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.628s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.058s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.056s
+           losses: with=2.494228e+01, without=1.306901e+01, approx=1.340292e+01, approx_surr=2.416877e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 008] total=17.176s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.622s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.056s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.054s
+           losses: with=3.065466e+01, without=1.216804e+01, approx=1.418492e+01, approx_surr=3.683448e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 009] total=17.198s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.624s  ||  without: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=0.063s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.052s
+           losses: with=3.608535e+01, without=1.176015e+01, approx=1.526830e+01, approx_surr=5.396810e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 010] total=17.194s | with: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.628s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.061s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.056s
+           losses: with=4.250690e+01, without=1.143448e+01, approx=1.536914e+01, approx_surr=7.275667e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 011] total=17.183s | with: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.616s  ||  without: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=0.064s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.056s
+           losses: with=3.789115e+01, without=1.161586e+01, approx=1.502249e+01, approx_surr=9.353621e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 012] total=17.196s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.627s  ||  without: fwd=2.434s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.055s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.062s
+           losses: with=3.332665e+01, without=1.269718e+01, approx=1.599546e+01, approx_surr=1.137299e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 013] total=17.185s | with: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.619s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.058s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.059s
+           losses: with=3.781299e+01, without=1.454769e+01, approx=1.678507e+01, approx_surr=1.323458e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 014] total=17.182s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.629s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.051s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.059s
+           losses: with=4.449146e+01, without=1.718038e+01, approx=1.708190e+01, approx_surr=1.504840e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 015] total=17.172s | with: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.618s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.057s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.062s
+           losses: with=5.189293e+01, without=2.070369e+01, approx=1.713201e+01, approx_surr=1.694578e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 016] total=17.187s | with: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=4.619s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.061s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=4.713129e+01, without=2.498108e+01, approx=1.753139e+01, approx_surr=1.903761e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 017] total=17.185s | with: fwd=2.433s (G=0.003s, g=2.290s, loss=0.140s), bwd=4.619s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.059s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.056s
+           losses: with=5.516876e+01, without=3.026591e+01, approx=1.731271e+01, approx_surr=2.124690e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 018] total=17.186s | with: fwd=2.435s (G=0.003s, g=2.290s, loss=0.142s), bwd=4.625s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.060s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.054s
+           losses: with=6.318924e+01, without=3.641821e+01, approx=1.705994e+01, approx_surr=2.365096e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 019] total=17.177s | with: fwd=2.432s (G=0.003s, g=2.290s, loss=0.140s), bwd=4.624s  ||  without: fwd=2.428s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.060s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.054s
+           losses: with=7.143409e+01, without=4.245453e+01, approx=1.679245e+01, approx_surr=2.631147e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 020] total=17.170s | with: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=4.627s  ||  without: fwd=2.426s (G=0.002s, g=2.290s, loss=0.134s), bwd=0.063s  ||  approx: fwd=0.137s (G=0.002s, find=0.000s, loss=0.135s), bwd=0.057s
+           losses: with=7.806074e+01, without=4.950861e+01, approx=1.638113e+01, approx_surr=2.924407e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 021] total=17.170s | with: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=4.625s  ||  without: fwd=2.428s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.057s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.061s
+           losses: with=8.516599e+01, without=5.772748e+01, approx=1.419519e+01, approx_surr=3.245820e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 022] total=17.442s | with: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=4.622s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.068s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.057s
+           losses: with=9.294828e+01, without=6.053121e+01, approx=1.393512e+01, approx_surr=3.413202e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 023] total=17.185s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.622s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.063s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.061s
+           losses: with=8.572760e+01, without=6.063406e+01, approx=1.403245e+01, approx_surr=3.422994e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 024] total=17.172s | with: fwd=2.427s (G=0.002s, g=2.290s, loss=0.135s), bwd=4.620s  ||  without: fwd=2.426s (G=0.002s, g=2.290s, loss=0.134s), bwd=0.060s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.062s
+           losses: with=9.170645e+01, without=6.077580e+01, approx=1.414495e+01, approx_surr=3.431833e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 025] total=17.173s | with: fwd=2.432s (G=0.003s, g=2.290s, loss=0.139s), bwd=4.623s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.059s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=8.771518e+01, without=6.086256e+01, approx=1.428388e+01, approx_surr=3.439848e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 026] total=17.172s | with: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=4.628s  ||  without: fwd=2.427s (G=0.002s, g=2.290s, loss=0.135s), bwd=0.063s  ||  approx: fwd=0.137s (G=0.002s, find=0.000s, loss=0.134s), bwd=0.057s
+           losses: with=9.222367e+01, without=6.092655e+01, approx=1.442197e+01, approx_surr=3.447202e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 027] total=17.164s | with: fwd=2.428s (G=0.002s, g=2.290s, loss=0.136s), bwd=4.611s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.063s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.058s
+           losses: with=9.406673e+01, without=6.094014e+01, approx=1.458301e+01, approx_surr=3.453843e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 028] total=17.177s | with: fwd=2.426s (G=0.002s, g=2.290s, loss=0.134s), bwd=4.633s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.060s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.062s
+           losses: with=9.598856e+01, without=6.087519e+01, approx=1.474685e+01, approx_surr=3.459978e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 029] total=17.188s | with: fwd=2.427s (G=0.002s, g=2.290s, loss=0.135s), bwd=4.625s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.067s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.055s
+           losses: with=9.354068e+01, without=6.089204e+01, approx=1.491245e+01, approx_surr=3.465650e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 030] total=17.175s | with: fwd=2.426s (G=0.002s, g=2.290s, loss=0.134s), bwd=4.622s  ||  without: fwd=2.428s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.066s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.135s), bwd=0.061s
+           losses: with=5.456892e+01, without=6.090370e+01, approx=1.508498e+01, approx_surr=3.470872e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 031] total=17.170s | with: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.623s  ||  without: fwd=2.428s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.063s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.051s
+           losses: with=5.636410e+01, without=6.102491e+01, approx=1.525786e+01, approx_surr=3.475524e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 032] total=17.179s | with: fwd=2.431s (G=0.002s, g=2.290s, loss=0.138s), bwd=4.623s  ||  without: fwd=2.426s (G=0.002s, g=2.290s, loss=0.134s), bwd=0.060s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.056s
+           losses: with=5.472765e+01, without=6.093264e+01, approx=1.543960e+01, approx_surr=3.479839e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 033] total=17.200s | with: fwd=2.440s (G=0.002s, g=2.290s, loss=0.148s), bwd=4.624s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.061s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.065s
+           losses: with=5.686148e+01, without=6.103819e+01, approx=1.561047e+01, approx_surr=3.483781e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 034] total=17.195s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.626s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.064s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.058s
+           losses: with=5.489080e+01, without=6.094462e+01, approx=1.578408e+01, approx_surr=3.487470e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 035] total=17.197s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.632s  ||  without: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=0.059s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.057s
+           losses: with=5.740815e+01, without=6.090873e+01, approx=1.594838e+01, approx_surr=3.490796e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 036] total=17.206s | with: fwd=2.439s (G=0.002s, g=2.290s, loss=0.146s), bwd=4.636s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.055s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.062s
+           losses: with=5.504095e+01, without=6.098420e+01, approx=1.610396e+01, approx_surr=3.493898e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 037] total=17.183s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.625s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.057s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.058s
+           losses: with=5.799908e+01, without=6.099912e+01, approx=1.625823e+01, approx_surr=3.496689e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 038] total=17.162s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.619s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.059s  ||  approx: fwd=0.137s (G=0.002s, find=0.000s, loss=0.135s), bwd=0.056s
+           losses: with=5.520101e+01, without=6.090367e+01, approx=1.640743e+01, approx_surr=3.499418e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 039] total=17.182s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.617s  ||  without: fwd=2.427s (G=0.002s, g=2.290s, loss=0.135s), bwd=0.068s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.058s
+           losses: with=5.860769e+01, without=6.089962e+01, approx=1.655606e+01, approx_surr=3.501821e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 040] total=17.169s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.618s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.056s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.060s
+           losses: with=5.535038e+01, without=6.095318e+01, approx=1.669755e+01, approx_surr=3.503964e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 041] total=17.193s | with: fwd=2.435s (G=0.003s, g=2.290s, loss=0.142s), bwd=4.624s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.067s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.060s
+           losses: with=5.907174e+01, without=6.097102e+01, approx=1.682826e+01, approx_surr=3.505997e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 042] total=17.179s | with: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.631s  ||  without: fwd=2.428s (G=0.002s, g=2.290s, loss=0.135s), bwd=0.053s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.058s
+           losses: with=5.546171e+01, without=6.088396e+01, approx=1.697324e+01, approx_surr=3.507948e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 043] total=17.181s | with: fwd=2.437s (G=0.003s, g=2.290s, loss=0.144s), bwd=4.619s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.054s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.064s
+           losses: with=5.935335e+01, without=6.085576e+01, approx=1.710126e+01, approx_surr=3.509702e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 044] total=17.173s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.617s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.059s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=5.558168e+01, without=6.082983e+01, approx=1.722985e+01, approx_surr=3.511285e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 045] total=17.182s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.626s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.057s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.055s
+           losses: with=5.960046e+01, without=6.080723e+01, approx=1.735430e+01, approx_surr=3.512989e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 046] total=17.205s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.634s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.067s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.063s
+           losses: with=5.567866e+01, without=6.079463e+01, approx=1.747839e+01, approx_surr=3.514212e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 047] total=17.174s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.619s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.058s
+           losses: with=5.984225e+01, without=6.075806e+01, approx=1.759644e+01, approx_surr=3.515492e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 048] total=17.189s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.620s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.060s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.056s
+           losses: with=5.578710e+01, without=6.074155e+01, approx=1.770408e+01, approx_surr=3.516796e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 049] total=17.202s | with: fwd=2.434s (G=0.003s, g=2.290s, loss=0.141s), bwd=4.618s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.066s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.063s
+           losses: with=6.005069e+01, without=6.080279e+01, approx=1.782173e+01, approx_surr=3.517939e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 050] total=17.209s | with: fwd=2.436s (G=0.003s, g=2.290s, loss=0.143s), bwd=4.627s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.057s
+           losses: with=6.222036e+01, without=6.085680e+01, approx=1.792374e+01, approx_surr=3.519020e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 051] total=17.202s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.146s), bwd=4.631s  ||  without: fwd=2.431s (G=0.003s, g=2.290s, loss=0.138s), bwd=0.062s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.057s
+           losses: with=6.017832e+01, without=6.077880e+01, approx=1.803162e+01, approx_surr=3.519955e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 052] total=17.206s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.635s  ||  without: fwd=2.431s (G=0.003s, g=2.290s, loss=0.138s), bwd=0.060s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.057s
+           losses: with=6.311542e+01, without=6.076591e+01, approx=1.812962e+01, approx_surr=3.520772e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 053] total=17.193s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.620s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.065s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=6.037105e+01, without=6.074436e+01, approx=1.822388e+01, approx_surr=3.521758e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 054] total=17.183s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.623s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.057s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.057s
+           losses: with=6.389093e+01, without=6.072980e+01, approx=1.831180e+01, approx_surr=3.522658e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 055] total=17.209s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.628s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.060s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.060s
+           losses: with=6.466796e+01, without=6.071586e+01, approx=1.839980e+01, approx_surr=3.523233e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 056] total=17.213s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.635s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.063s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.059s
+           losses: with=6.407608e+01, without=6.069027e+01, approx=1.848571e+01, approx_surr=3.523940e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 057] total=17.200s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.629s  ||  without: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=0.057s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.057s
+           losses: with=6.542004e+01, without=6.067490e+01, approx=1.857296e+01, approx_surr=3.524651e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 058] total=17.165s | with: fwd=2.436s (G=0.003s, g=2.290s, loss=0.143s), bwd=4.620s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.055s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.055s
+           losses: with=6.427009e+01, without=6.073149e+01, approx=1.864935e+01, approx_surr=3.525070e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 059] total=17.212s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.623s  ||  without: fwd=2.433s (G=0.003s, g=2.290s, loss=0.140s), bwd=0.066s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.059s
+           losses: with=6.635353e+01, without=6.080302e+01, approx=1.872597e+01, approx_surr=3.525751e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 060] total=17.208s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.626s  ||  without: fwd=2.436s (G=0.002s, g=2.290s, loss=0.143s), bwd=0.062s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.061s
+           losses: with=6.446651e+01, without=6.075068e+01, approx=1.879691e+01, approx_surr=3.526329e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 061] total=17.191s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.624s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.066s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=6.699286e+01, without=6.072908e+01, approx=1.886842e+01, approx_surr=3.526821e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 062] total=17.196s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.620s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.063s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.060s
+           losses: with=6.692238e+01, without=6.072717e+01, approx=1.893473e+01, approx_surr=3.527240e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 063] total=17.205s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.616s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.066s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.058s
+           losses: with=6.716045e+01, without=6.070315e+01, approx=1.899474e+01, approx_surr=3.527797e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 064] total=17.196s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.621s  ||  without: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=0.061s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.059s
+           losses: with=6.764080e+01, without=6.068462e+01, approx=1.905890e+01, approx_surr=3.469815e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 065] total=17.214s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.146s), bwd=4.627s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.065s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.062s
+           losses: with=6.732193e+01, without=6.069375e+01, approx=1.915773e+01, approx_surr=3.472062e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 066] total=17.211s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.634s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.058s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.064s
+           losses: with=6.842373e+01, without=6.079619e+01, approx=1.923058e+01, approx_surr=3.474279e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 067] total=17.260s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.622s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.059s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.060s
+           losses: with=6.748842e+01, without=6.081889e+01, approx=1.928551e+01, approx_surr=3.476216e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 068] total=17.296s | with: fwd=2.519s (G=0.002s, g=2.376s, loss=0.141s), bwd=4.645s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.057s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.054s
+           losses: with=6.848016e+01, without=6.076255e+01, approx=1.931938e+01, approx_surr=3.478141e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 069] total=17.204s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.622s  ||  without: fwd=2.435s (G=0.003s, g=2.290s, loss=0.142s), bwd=0.066s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.062s
+           losses: with=6.709280e+01, without=6.076501e+01, approx=1.934511e+01, approx_surr=3.479907e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 070] total=17.198s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.146s), bwd=4.624s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.059s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.060s
+           losses: with=6.859398e+01, without=6.074651e+01, approx=1.937218e+01, approx_surr=3.481553e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 071] total=17.218s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.627s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.061s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.065s
+           losses: with=6.739312e+01, without=6.074967e+01, approx=1.938934e+01, approx_surr=3.483065e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 072] total=17.186s | with: fwd=2.439s (G=0.002s, g=2.290s, loss=0.147s), bwd=4.621s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.052s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.061s
+           losses: with=6.869363e+01, without=6.073850e+01, approx=1.939550e+01, approx_surr=3.484412e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 073] total=17.192s | with: fwd=2.439s (G=0.002s, g=2.290s, loss=0.147s), bwd=4.615s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.066s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=6.771156e+01, without=6.073337e+01, approx=1.941740e+01, approx_surr=3.485802e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 074] total=17.208s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.630s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.061s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.060s
+           losses: with=6.879557e+01, without=6.072121e+01, approx=1.943096e+01, approx_surr=3.487021e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 075] total=17.202s | with: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.622s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.059s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.063s
+           losses: with=6.807191e+01, without=6.072011e+01, approx=1.943905e+01, approx_surr=3.488196e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 076] total=17.224s | with: fwd=2.439s (G=0.002s, g=2.290s, loss=0.146s), bwd=4.630s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.066s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.059s
+           losses: with=6.892036e+01, without=6.071021e+01, approx=1.946448e+01, approx_surr=3.489243e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 077] total=17.211s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.629s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.059s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.055s
+           losses: with=6.844335e+01, without=6.069166e+01, approx=1.947641e+01, approx_surr=3.490153e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 078] total=17.205s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.629s  ||  without: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=0.056s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.060s
+           losses: with=6.902728e+01, without=6.071770e+01, approx=1.949466e+01, approx_surr=3.491144e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 079] total=17.200s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.615s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.063s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.062s
+           losses: with=6.867202e+01, without=6.083090e+01, approx=1.951743e+01, approx_surr=3.491947e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 080] total=17.194s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.621s  ||  without: fwd=2.432s (G=0.003s, g=2.290s, loss=0.139s), bwd=0.064s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.056s
+           losses: with=6.729107e+01, without=6.084815e+01, approx=1.953560e+01, approx_surr=3.492708e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 081] total=17.190s | with: fwd=2.437s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.623s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.057s  ||  approx: fwd=0.141s (G=0.003s, find=0.000s, loss=0.138s), bwd=0.058s
+           losses: with=6.877467e+01, without=6.077241e+01, approx=1.954621e+01, approx_surr=3.493525e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 082] total=17.201s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.629s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.061s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.055s
+           losses: with=6.760354e+01, without=6.076805e+01, approx=1.957416e+01, approx_surr=3.494187e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 083] total=17.201s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.621s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.140s), bwd=0.064s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.059s
+           losses: with=6.888270e+01, without=6.075956e+01, approx=1.958836e+01, approx_surr=3.494762e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 084] total=17.189s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.620s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.136s), bwd=0.060s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.060s
+           losses: with=6.791898e+01, without=6.079080e+01, approx=1.962422e+01, approx_surr=3.495483e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 085] total=17.208s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.626s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.067s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.061s
+           losses: with=6.899715e+01, without=6.086062e+01, approx=1.964058e+01, approx_surr=3.496013e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 086] total=17.214s | with: fwd=2.441s (G=0.002s, g=2.290s, loss=0.149s), bwd=4.626s  ||  without: fwd=2.435s (G=0.002s, g=2.290s, loss=0.142s), bwd=0.066s  ||  approx: fwd=0.143s (G=0.003s, find=0.000s, loss=0.141s), bwd=0.064s
+           losses: with=6.817521e+01, without=6.091194e+01, approx=1.966128e+01, approx_surr=3.496514e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 087] total=17.185s | with: fwd=2.432s (G=0.002s, g=2.290s, loss=0.140s), bwd=4.627s  ||  without: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.065s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.055s
+           losses: with=6.643379e+01, without=6.092257e+01, approx=1.968678e+01, approx_surr=3.496942e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 088] total=17.184s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.617s  ||  without: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=0.057s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.059s
+           losses: with=6.586827e+01, without=6.086448e+01, approx=1.970092e+01, approx_surr=3.497569e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 089] total=17.189s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.622s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.062s
+           losses: with=6.858780e+01, without=6.091657e+01, approx=1.972511e+01, approx_surr=3.497873e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 090] total=17.190s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.613s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.062s
+           losses: with=6.822318e+01, without=6.084748e+01, approx=1.973629e+01, approx_surr=3.498326e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 091] total=17.187s | with: fwd=2.438s (G=0.003s, g=2.290s, loss=0.145s), bwd=4.637s  ||  without: fwd=2.428s (G=0.002s, g=2.290s, loss=0.135s), bwd=0.055s  ||  approx: fwd=0.137s (G=0.002s, find=0.000s, loss=0.135s), bwd=0.057s
+           losses: with=6.448116e+01, without=6.085754e+01, approx=1.976310e+01, approx_surr=3.498668e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 092] total=17.185s | with: fwd=2.430s (G=0.002s, g=2.290s, loss=0.138s), bwd=4.623s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.058s
+           losses: with=6.581248e+01, without=6.084845e+01, approx=1.978359e+01, approx_surr=3.499004e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 093] total=17.168s | with: fwd=2.435s (G=0.002s, g=2.290s, loss=0.143s), bwd=4.621s  ||  without: fwd=2.425s (G=0.002s, g=2.290s, loss=0.133s), bwd=0.055s  ||  approx: fwd=0.138s (G=0.002s, find=0.000s, loss=0.136s), bwd=0.058s
+           losses: with=7.011763e+01, without=6.084837e+01, approx=1.980599e+01, approx_surr=3.499293e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 094] total=17.177s | with: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=4.612s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.063s  ||  approx: fwd=0.139s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.061s
+           losses: with=7.598092e+01, without=6.084563e+01, approx=1.982207e+01, approx_surr=3.499554e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 095] total=17.194s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.621s  ||  without: fwd=2.431s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.062s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.063s
+           losses: with=7.292360e+01, without=6.087765e+01, approx=1.983963e+01, approx_surr=3.499877e+02 | hit_boundary: with=1.0, w/o=1.0, approx=1.0
+[STEP 096] total=17.189s | with: fwd=2.433s (G=0.002s, g=2.290s, loss=0.141s), bwd=4.615s  ||  without: fwd=2.429s (G=0.002s, g=2.290s, loss=0.137s), bwd=0.061s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.062s
+           losses: with=7.647015e+01, without=6.090365e+01, approx=1.985219e+01, approx_surr=3.500103e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 097] total=17.192s | with: fwd=2.436s (G=0.002s, g=2.290s, loss=0.144s), bwd=4.617s  ||  without: fwd=2.431s (G=0.003s, g=2.290s, loss=0.139s), bwd=0.062s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.059s
+           losses: with=7.347799e+01, without=6.093012e+01, approx=1.986604e+01, approx_surr=3.500365e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 098] total=19.228s | with: fwd=2.435s (G=0.003s, g=2.290s, loss=0.142s), bwd=4.615s  ||  without: fwd=2.434s (G=0.002s, g=2.290s, loss=0.141s), bwd=0.063s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.063s
+           losses: with=7.672473e+01, without=6.096423e+01, approx=1.989047e+01, approx_surr=3.500573e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 099] total=17.577s | with: fwd=2.434s (G=0.002s, g=2.290s, loss=0.142s), bwd=4.870s  ||  without: fwd=2.432s (G=0.003s, g=2.290s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.059s
+           losses: with=7.363893e+01, without=6.099106e+01, approx=1.990057e+01, approx_surr=3.500738e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 100] total=17.188s | with: fwd=2.438s (G=0.002s, g=2.290s, loss=0.145s), bwd=4.616s  ||  without: fwd=2.432s (G=0.002s, g=2.290s, loss=0.139s), bwd=0.058s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=7.713466e+01, without=6.100999e+01, approx=1.990512e+01, approx_surr=3.500982e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[PROFILE AVG] with(fwd/bwd)=2.435/4.791s, without(fwd/bwd)=2.431/0.061s, approx(fwd/bwd)=0.141/0.059s, step_total=17.392s
+[DType] restored_default_dtype=torch.float32
+ 
+     index: 0 ,    norm: 2 ,    num_steps: 100 ,    epsilon: 20 ,    alpha: 1 ,    total time: 1781.691s
+adversarial input samples (gamma=0.01): 100%|██████████| 1/1 [29:41<00:00, 1781.69s/it]adversarial input samples (gamma=0.01): 100%|██████████| 1/1 [29:41<00:00, 1781.69s/it]
+[SAVE] Pickle file saved to /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/nu=0.0005_PGD_results/approxN20/gradient_test_exponax_nu0.0005_nsamples1_dtw_gamma=0_01.pkl
+[GAMMA DONE] gamma=0.01 finished.
+
+
+########################################################################################
+### GAMMA BLOCK START: gamma=0.05 (normalize=True) ###
+########################################################################################
+
+----------------------------------------------------------------------------------------
+[ATTACK COMBO] norm=2, epsilon=20, num_steps=100, alpha=1  |  gamma=0.05
+----------------------------------------------------------------------------------------
+adversarial input samples (gamma=0.05):   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[Sample 0] start attack  -> (gamma=0.05, norm=2, eps=20, alpha=1, steps=100)
+
+========================================================================================
+[ATTACK START] norm=2, epsilon=20, alpha=1, num_steps=100 | gamma=0.05, normalize=True
+  input(a): shape=(1, 1024, 1), device=cuda:0, dtype=torch.float32
+  PDE(g): <lambda>
+  Model(G): FNO1d
+========================================================================================
+
+[DType] set_default_dtype=torch.float32, model_param_dtype=torch.float32
+[STEP 0] loss(with)=1.273505e+01, loss(without)=1.273505e+01, loss(approx)=1.273505e+01, loss(approx_surrogate)=1.380264e+01
+[STEP 001] total=25.487s | with: fwd=2.434s (G=0.003s, g=2.288s, loss=0.142s), bwd=12.912s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.060s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.059s
+           losses: with=1.743187e+01, without=1.554199e+01, approx=1.664814e+01, approx_surr=2.165147e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 002] total=19.446s | with: fwd=3.924s (G=0.003s, g=3.775s, loss=0.146s), bwd=5.380s  ||  without: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.060s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.057s
+           losses: with=2.347549e+01, without=1.790839e+01, approx=2.020443e+01, approx_surr=3.441004e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 003] total=17.192s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.622s  ||  without: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.057s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.064s
+           losses: with=3.110725e+01, without=1.873004e+01, approx=2.025570e+01, approx_surr=4.978983e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 004] total=17.249s | with: fwd=2.429s (G=0.003s, g=2.287s, loss=0.140s), bwd=4.694s  ||  without: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=0.060s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.054s
+           losses: with=3.692862e+01, without=2.037161e+01, approx=1.985398e+01, approx_surr=6.389778e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 005] total=17.187s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.619s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.055s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=4.428305e+01, without=2.163247e+01, approx=2.015868e+01, approx_surr=1.414431e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 006] total=17.185s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.610s  ||  without: fwd=2.433s (G=0.003s, g=2.287s, loss=0.144s), bwd=0.062s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.057s
+           losses: with=4.956366e+01, without=2.289114e+01, approx=2.073640e+01, approx_surr=2.085719e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 007] total=17.186s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.618s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.060s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.058s
+           losses: with=5.856707e+01, without=2.395231e+01, approx=2.183247e+01, approx_surr=3.386908e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 008] total=17.213s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.630s  ||  without: fwd=2.432s (G=0.003s, g=2.287s, loss=0.143s), bwd=0.073s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.053s
+           losses: with=6.720654e+01, without=2.404066e+01, approx=2.135129e+01, approx_surr=5.092992e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 009] total=17.193s | with: fwd=2.433s (G=0.003s, g=2.287s, loss=0.143s), bwd=4.626s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.064s  ||  approx: fwd=0.146s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.052s
+           losses: with=7.594081e+01, without=2.339777e+01, approx=2.119828e+01, approx_surr=7.159859e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 010] total=17.187s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.618s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.064s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.061s
+           losses: with=8.691080e+01, without=2.371005e+01, approx=2.163894e+01, approx_surr=9.430179e+01 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 011] total=22.596s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=7.914s  ||  without: fwd=3.663s (G=0.762s, g=2.388s, loss=0.380s), bwd=0.346s  ||  approx: fwd=0.190s (G=0.002s, find=0.046s, loss=0.141s), bwd=0.053s
+           losses: with=9.861947e+01, without=2.486800e+01, approx=2.239971e+01, approx_surr=1.185487e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 012] total=17.174s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=4.620s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.058s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.058s
+           losses: with=1.109016e+02, without=2.728028e+01, approx=2.358940e+01, approx_surr=1.417719e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 013] total=17.167s | with: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=4.613s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.064s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.060s
+           losses: with=1.242887e+02, without=3.109830e+01, approx=2.449757e+01, approx_surr=1.632364e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 014] total=17.171s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.617s  ||  without: fwd=2.430s (G=0.003s, g=2.287s, loss=0.140s), bwd=0.059s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.058s
+           losses: with=1.137577e+02, without=3.582020e+01, approx=2.494548e+01, approx_surr=1.840943e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 015] total=17.204s | with: fwd=2.436s (G=0.002s, g=2.287s, loss=0.146s), bwd=4.630s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.064s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.058s
+           losses: with=1.242582e+02, without=3.910597e+01, approx=2.514992e+01, approx_surr=2.058849e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 016] total=17.171s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.618s  ||  without: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=0.064s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.052s
+           losses: with=1.303111e+02, without=4.259250e+01, approx=2.579008e+01, approx_surr=2.296531e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 017] total=17.186s | with: fwd=2.430s (G=0.003s, g=2.287s, loss=0.140s), bwd=4.616s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.064s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.066s
+           losses: with=1.347689e+02, without=4.748260e+01, approx=2.639312e+01, approx_surr=2.559120e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 018] total=17.214s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.619s  ||  without: fwd=2.454s (G=0.026s, g=2.287s, loss=0.141s), bwd=0.063s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.056s
+           losses: with=1.328669e+02, without=5.335643e+01, approx=2.594219e+01, approx_surr=2.845571e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 019] total=17.176s | with: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=4.618s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.063s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.053s
+           losses: with=1.297809e+02, without=6.053195e+01, approx=2.552146e+01, approx_surr=3.157852e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 020] total=17.171s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.618s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.055s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.057s
+           losses: with=1.292822e+02, without=6.880517e+01, approx=2.504873e+01, approx_surr=3.492697e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 021] total=17.161s | with: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=4.614s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.056s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.054s
+           losses: with=1.214494e+02, without=7.791503e+01, approx=2.380112e+01, approx_surr=3.852779e+02 | hit_boundary: with=0.0, w/o=0.0, approx=0.0
+[STEP 022] total=17.206s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.620s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.061s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.056s
+           losses: with=1.330220e+02, without=8.780029e+01, approx=2.325157e+01, approx_surr=3.953871e+02 | hit_boundary: with=0.0, w/o=0.0, approx=1.0
+[STEP 023] total=17.165s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.605s  ||  without: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=0.061s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.052s
+           losses: with=1.248310e+02, without=8.833576e+01, approx=2.298031e+01, approx_surr=3.961082e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 024] total=17.182s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.619s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.057s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.059s
+           losses: with=1.098555e+02, without=8.868940e+01, approx=2.276911e+01, approx_surr=3.967619e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 025] total=17.178s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.615s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.060s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.057s
+           losses: with=9.760714e+01, without=8.931228e+01, approx=2.260334e+01, approx_surr=3.973563e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 026] total=17.185s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.618s  ||  without: fwd=2.430s (G=0.002s, g=2.286s, loss=0.142s), bwd=0.066s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.061s
+           losses: with=8.420590e+01, without=8.942184e+01, approx=2.247123e+01, approx_surr=3.979125e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 027] total=17.171s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.624s  ||  without: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=0.056s  ||  approx: fwd=0.144s (G=0.003s, find=0.000s, loss=0.141s), bwd=0.056s
+           losses: with=9.308635e+01, without=8.979247e+01, approx=2.238302e+01, approx_surr=3.984097e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 028] total=17.192s | with: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=4.621s  ||  without: fwd=2.428s (G=0.002s, g=2.286s, loss=0.140s), bwd=0.074s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.054s
+           losses: with=1.081185e+02, without=9.009613e+01, approx=2.232178e+01, approx_surr=3.988698e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 029] total=17.172s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.611s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.057s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.054s
+           losses: with=1.127138e+02, without=9.038951e+01, approx=2.228649e+01, approx_surr=3.992890e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 030] total=17.172s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.609s  ||  without: fwd=2.429s (G=0.002s, g=2.286s, loss=0.140s), bwd=0.053s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.065s
+           losses: with=1.237786e+02, without=9.087197e+01, approx=2.227155e+01, approx_surr=3.996728e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 031] total=17.178s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.621s  ||  without: fwd=2.428s (G=0.002s, g=2.287s, loss=0.140s), bwd=0.063s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.059s
+           losses: with=1.296585e+02, without=9.088582e+01, approx=2.228031e+01, approx_surr=4.000161e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 032] total=17.182s | with: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=4.629s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.058s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.054s
+           losses: with=1.411103e+02, without=9.120732e+01, approx=2.230496e+01, approx_surr=4.003391e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 033] total=17.183s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=4.616s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.061s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.053s
+           losses: with=1.465991e+02, without=9.146408e+01, approx=2.233875e+01, approx_surr=4.006459e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 034] total=17.171s | with: fwd=2.432s (G=0.003s, g=2.287s, loss=0.142s), bwd=4.616s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.064s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.055s
+           losses: with=1.319056e+02, without=9.159636e+01, approx=2.238770e+01, approx_surr=4.009120e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 035] total=17.201s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.621s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.068s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.057s
+           losses: with=1.483372e+02, without=9.172003e+01, approx=2.244699e+01, approx_surr=4.011673e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 036] total=17.169s | with: fwd=2.430s (G=0.003s, g=2.287s, loss=0.140s), bwd=4.623s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.140s), bwd=0.054s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.138s), bwd=0.054s
+           losses: with=1.333334e+02, without=9.197534e+01, approx=2.251237e+01, approx_surr=4.013928e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 037] total=17.185s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.619s  ||  without: fwd=2.430s (G=0.003s, g=2.287s, loss=0.141s), bwd=0.067s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.054s
+           losses: with=1.492016e+02, without=9.213075e+01, approx=2.258523e+01, approx_surr=4.015970e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 038] total=17.178s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.617s  ||  without: fwd=2.428s (G=0.002s, g=2.287s, loss=0.139s), bwd=0.063s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.054s
+           losses: with=1.425610e+02, without=9.229306e+01, approx=2.266085e+01, approx_surr=4.017873e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 039] total=17.178s | with: fwd=2.434s (G=0.003s, g=2.287s, loss=0.143s), bwd=4.609s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.069s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.053s
+           losses: with=1.518083e+02, without=9.223962e+01, approx=2.273902e+01, approx_surr=4.019735e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 040] total=17.184s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=4.613s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.067s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.053s
+           losses: with=1.393043e+02, without=9.233097e+01, approx=2.282191e+01, approx_surr=4.021180e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 041] total=17.177s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.612s  ||  without: fwd=2.432s (G=0.003s, g=2.287s, loss=0.143s), bwd=0.057s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.054s
+           losses: with=1.525956e+02, without=9.241674e+01, approx=2.290832e+01, approx_surr=4.022722e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 042] total=17.184s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.619s  ||  without: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=0.058s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.059s
+           losses: with=1.404105e+02, without=9.246391e+01, approx=2.298975e+01, approx_surr=4.024034e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 043] total=17.182s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.622s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.061s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=1.529975e+02, without=9.256815e+01, approx=2.306793e+01, approx_surr=4.025113e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 044] total=17.181s | with: fwd=2.427s (G=0.002s, g=2.287s, loss=0.139s), bwd=4.619s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.055s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.058s
+           losses: with=1.417021e+02, without=9.273676e+01, approx=2.314381e+01, approx_surr=4.025953e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 045] total=17.164s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.615s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.057s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.053s
+           losses: with=1.528346e+02, without=9.254433e+01, approx=2.320625e+01, approx_surr=4.026840e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 046] total=17.167s | with: fwd=2.429s (G=0.003s, g=2.287s, loss=0.139s), bwd=4.613s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.056s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.058s
+           losses: with=1.417894e+02, without=9.274044e+01, approx=2.326398e+01, approx_surr=4.027413e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 047] total=17.204s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.623s  ||  without: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.067s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.058s
+           losses: with=1.533740e+02, without=9.252902e+01, approx=2.331618e+01, approx_surr=4.027928e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 048] total=17.179s | with: fwd=2.433s (G=0.003s, g=2.287s, loss=0.143s), bwd=4.609s  ||  without: fwd=2.429s (G=0.003s, g=2.287s, loss=0.139s), bwd=0.061s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.062s
+           losses: with=1.469744e+02, without=9.268441e+01, approx=2.336003e+01, approx_surr=4.028540e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 049] total=17.195s | with: fwd=2.435s (G=0.002s, g=2.287s, loss=0.146s), bwd=4.617s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.063s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.058s
+           losses: with=1.568506e+02, without=9.260795e+01, approx=2.340269e+01, approx_surr=4.028945e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 050] total=17.183s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.623s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.058s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.057s
+           losses: with=1.504733e+02, without=9.249471e+01, approx=2.343874e+01, approx_surr=4.029343e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 051] total=17.191s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.621s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.060s  ||  approx: fwd=0.146s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.059s
+           losses: with=1.574391e+02, without=9.258181e+01, approx=2.347146e+01, approx_surr=4.029759e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 052] total=17.203s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.620s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.063s  ||  approx: fwd=0.147s (G=0.002s, find=0.000s, loss=0.144s), bwd=0.063s
+           losses: with=1.560769e+02, without=9.262531e+01, approx=2.350033e+01, approx_surr=4.030071e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 053] total=17.192s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.621s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.057s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.058s
+           losses: with=1.635743e+02, without=9.254761e+01, approx=2.353217e+01, approx_surr=4.030350e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 054] total=17.204s | with: fwd=2.435s (G=0.003s, g=2.287s, loss=0.146s), bwd=4.612s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.064s  ||  approx: fwd=0.146s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.065s
+           losses: with=1.596773e+02, without=9.244910e+01, approx=2.355691e+01, approx_surr=4.030696e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 055] total=17.192s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.624s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.060s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.057s
+           losses: with=1.468273e+02, without=9.231436e+01, approx=2.358477e+01, approx_surr=4.031040e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 056] total=17.200s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.615s  ||  without: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.063s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.058s
+           losses: with=1.634400e+02, without=9.220067e+01, approx=2.360504e+01, approx_surr=4.031303e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 057] total=17.193s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.622s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.061s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.056s
+           losses: with=1.674118e+02, without=9.213048e+01, approx=2.363004e+01, approx_surr=4.031548e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 058] total=17.193s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.620s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.061s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.054s
+           losses: with=6.088238e+01, without=9.207770e+01, approx=2.364988e+01, approx_surr=4.031737e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 059] total=17.180s | with: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.613s  ||  without: fwd=2.434s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.054s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.059s
+           losses: with=6.117494e+01, without=9.201209e+01, approx=2.366756e+01, approx_surr=4.032004e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 060] total=17.176s | with: fwd=2.435s (G=0.002s, g=2.287s, loss=0.146s), bwd=4.615s  ||  without: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=0.056s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.058s
+           losses: with=6.100512e+01, without=9.194822e+01, approx=2.368497e+01, approx_surr=4.032146e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 061] total=17.174s | with: fwd=2.432s (G=0.003s, g=2.287s, loss=0.142s), bwd=4.622s  ||  without: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=0.059s  ||  approx: fwd=0.140s (G=0.002s, find=0.000s, loss=0.137s), bwd=0.052s
+           losses: with=6.128259e+01, without=9.188312e+01, approx=2.369943e+01, approx_surr=4.032281e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 062] total=17.183s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.619s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.057s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.053s
+           losses: with=6.112182e+01, without=9.183027e+01, approx=2.371714e+01, approx_surr=4.032497e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 063] total=17.176s | with: fwd=2.434s (G=0.003s, g=2.287s, loss=0.144s), bwd=4.609s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.060s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.056s
+           losses: with=6.135915e+01, without=9.177933e+01, approx=2.373244e+01, approx_surr=4.032705e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 064] total=17.181s | with: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.617s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.062s  ||  approx: fwd=0.145s (G=0.002s, find=0.000s, loss=0.143s), bwd=0.057s
+           losses: with=6.120338e+01, without=9.173298e+01, approx=2.374664e+01, approx_surr=4.032864e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 065] total=17.237s | with: fwd=2.427s (G=0.002s, g=2.287s, loss=0.138s), bwd=4.619s  ||  without: fwd=2.427s (G=0.003s, g=2.287s, loss=0.138s), bwd=0.065s  ||  approx: fwd=0.197s (G=0.059s, find=0.000s, loss=0.138s), bwd=0.058s
+           losses: with=6.142653e+01, without=9.170359e+01, approx=2.375655e+01, approx_surr=4.032994e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 066] total=17.195s | with: fwd=2.439s (G=0.002s, g=2.287s, loss=0.149s), bwd=4.618s  ||  without: fwd=2.435s (G=0.002s, g=2.287s, loss=0.145s), bwd=0.055s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.061s
+           losses: with=6.128557e+01, without=9.169147e+01, approx=2.376546e+01, approx_surr=4.033275e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 067] total=17.341s | with: fwd=2.583s (G=0.155s, g=2.287s, loss=0.141s), bwd=4.616s  ||  without: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=0.066s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.061s
+           losses: with=6.149252e+01, without=9.166669e+01, approx=2.377942e+01, approx_surr=4.033369e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 068] total=17.178s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.141s), bwd=4.620s  ||  without: fwd=2.427s (G=0.002s, g=2.287s, loss=0.138s), bwd=0.062s  ||  approx: fwd=0.143s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.057s
+           losses: with=6.136295e+01, without=9.144827e+01, approx=2.379110e+01, approx_surr=4.033430e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 069] total=17.185s | with: fwd=2.430s (G=0.003s, g=2.287s, loss=0.140s), bwd=4.621s  ||  without: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.062s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.061s
+           losses: with=6.153824e+01, without=9.135980e+01, approx=2.379673e+01, approx_surr=4.033663e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 070] total=17.192s | with: fwd=2.434s (G=0.002s, g=2.287s, loss=0.144s), bwd=4.619s  ||  without: fwd=2.436s (G=0.003s, g=2.287s, loss=0.147s), bwd=0.057s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.062s
+           losses: with=6.142391e+01, without=9.125671e+01, approx=2.380899e+01, approx_surr=4.033721e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 071] total=17.168s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.611s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.057s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.061s
+           losses: with=6.160540e+01, without=9.117240e+01, approx=2.381798e+01, approx_surr=4.033788e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 072] total=17.162s | with: fwd=2.430s (G=0.002s, g=2.287s, loss=0.140s), bwd=4.604s  ||  without: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=0.058s  ||  approx: fwd=0.142s (G=0.002s, find=0.000s, loss=0.140s), bwd=0.060s
+           losses: with=6.149199e+01, without=9.113263e+01, approx=2.382334e+01, approx_surr=4.033923e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 073] total=17.182s | with: fwd=2.429s (G=0.002s, g=2.287s, loss=0.140s), bwd=4.618s  ||  without: fwd=2.431s (G=0.002s, g=2.287s, loss=0.142s), bwd=0.072s  ||  approx: fwd=0.141s (G=0.002s, find=0.000s, loss=0.139s), bwd=0.055s
+           losses: with=6.166781e+01, without=9.110122e+01, approx=2.383105e+01, approx_surr=4.034032e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 074] total=17.206s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.624s  ||  without: fwd=2.433s (G=0.003s, g=2.287s, loss=0.144s), bwd=0.070s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.054s
+           losses: with=6.155885e+01, without=9.110240e+01, approx=2.383748e+01, approx_surr=4.034094e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 075] total=17.195s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.143s), bwd=4.621s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.144s), bwd=0.064s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.142s), bwd=0.056s
+           losses: with=6.172218e+01, without=9.112050e+01, approx=2.384565e+01, approx_surr=4.034179e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+[STEP 076] total=17.181s | with: fwd=2.432s (G=0.002s, g=2.287s, loss=0.142s), bwd=4.618s  ||  without: fwd=2.433s (G=0.002s, g=2.287s, loss=0.143s), bwd=0.062s  ||  approx: fwd=0.144s (G=0.002s, find=0.000s, loss=0.141s), bwd=0.055s
+           losses: with=6.161303e+01, without=9.094346e+01, approx=2.385162e+01, approx_surr=4.034215e+02 | hit_boundary: with=0.0, w/o=1.0, approx=1.0
+slurmstepd: error: *** JOB 15493109 ON c0606a-s11 CANCELLED AT 2025-10-12T08:28:46 ***

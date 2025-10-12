@@ -1,0 +1,7 @@
+c0606a-s18.ufhpc
+Sat Oct 11 09:43:59 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+usage: pgd_viz_2.py [-h] --folder FOLDER --outdir OUTDIR [--fps FPS] [--debug]
+                    [--debug-every DEBUG_EVERY] [--debug-head DEBUG_HEAD]
+                    [--audit] [--audit-head AUDIT_HEAD]
+pgd_viz_2.py: error: unrecognized arguments: --audit-every 1

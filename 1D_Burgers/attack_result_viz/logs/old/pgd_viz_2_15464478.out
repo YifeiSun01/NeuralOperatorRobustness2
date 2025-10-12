@@ -1,0 +1,7 @@
+c0606a-s7.ufhpc
+Sat Oct 11 09:26:00 PM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz_2.py", line 307
+    def _collect_all_finals(combos: Dict[str, Dict[str, Any]]) -> Dict[str, Dict[str, Tuple[Optional[np.ndarray], Optional[np.ndarray]]]]):
+                                                                                                                                         ^
+SyntaxError: unmatched ')'
