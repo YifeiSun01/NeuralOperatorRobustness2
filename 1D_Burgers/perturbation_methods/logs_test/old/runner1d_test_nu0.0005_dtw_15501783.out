@@ -1,0 +1,7 @@
+c0606a-s14.ufhpc
+Sun Oct 12 10:44:16 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Running N=20 ===
+Selected GPU 0 (NVIDIA L4) with 0.00 GB free memory
+FATAL Flags parsing error: Type <class 'list'> of field config.gamma is not supported for overriding. Currently supported types are: dict_keys([<class 'float'>, <class 'bool'>, <class 'tuple'>, <class 'int'>, <class 'str'>, <class 'ml_collections.config_dict.config_dict.ConfigDict'>, <class 'object'>]). (Note that tuples should be passed as a string on the command line, `--flag='(a, b, c)'`, or by repeated flags, `--flag=1 --flag=2 --flag=3`, rather than --flag=(a, b, c).)
+Pass --helpshort or --helpfull to see help on flags.

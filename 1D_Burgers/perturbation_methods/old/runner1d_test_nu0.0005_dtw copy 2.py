@@ -430,8 +430,6 @@ flags.DEFINE_string("workdir", None, "Work directory.")
 flags.mark_flags_as_required(["workdir", "config"])
 
 
-# ------------- 以上所有代码保持不变 -------------
-
 def main(argv):
     config = FLAGS.config
     workdir = FLAGS.workdir
@@ -448,13 +446,9 @@ def main(argv):
     num_records = config.num_records
     inputs = config.inputs
 
-    # ==== 仅此处修改：gamma 支持标量或列表 ====
-    gamma_cfg = getattr(config, "gamma", 0.05)
-    if isinstance(gamma_cfg, (list, tuple)):
-        gamma_list = list(gamma_cfg)
-    else:
-        gamma_list = [gamma_cfg]
-    # =======================================
+    # gamma: 从 config 读取；若无，则默认 0.01
+    gamma = getattr(config, "gamma", 0.05)
+    print(f"[Soft-DTW] gamma={gamma} (normalize=True)")
 
     def convert_to_cpu_serializable(data):
         if isinstance(data, dict):
@@ -530,67 +524,63 @@ def main(argv):
     x_dict = torch.load(input_path)[:, ::sub].to(device)
     y_dict = torch.load(output_path)[:, ::sub].to(device)
 
-    # ==== 仅此处新增：对每个 gamma 循环 ====
-    for gamma in gamma_list:
-        print(f"[Soft-DTW] gamma={gamma} (normalize=True)")
-        gradient_records = {}  # 每个 gamma 单独聚合一次
+    gradient_records = {}
 
-        for input_tuple in inputs:
-            norm, epsilon, num_steps, alpha = input_tuple
-            print(f"\n[COMBO] norm={norm}, epsilon={epsilon}, num_steps={num_steps}, alpha={alpha}, gamma={gamma}\n", flush=True)
-            for i in tqdm(range(dataset_params['num_record']), desc="adversarial input samples"):
-                start_time = time.time()
-                a = GRFGenerator.generate_grf(
-                    shape=shape,
-                    kernel=grf_params['kernel'],
-                    kernel_params=grf_params['kernel_params'],
-                    bc=grf_params['bc'],
-                    seed=grf_params['seed'] + i,
-                    zero_mean=grf_params['zero_mean']
-                )
+    for input_tuple in inputs:
+        norm, epsilon, num_steps, alpha = input_tuple
+        print(f"\n[COMBO] norm={norm}, epsilon={epsilon}, num_steps={num_steps}, alpha={alpha}, gamma={gamma}\n", flush=True)
+        for i in tqdm(range(dataset_params['num_record']), desc="adversarial input samples"):
+            start_time = time.time()
+            a = GRFGenerator.generate_grf(
+                shape=shape,
+                kernel=grf_params['kernel'],
+                kernel_params=grf_params['kernel_params'],
+                bc=grf_params['bc'],
+                seed=grf_params['seed'] + i,
+                zero_mean=grf_params['zero_mean']
+            )
 
-                a = a[::sub]
-                a_torch = torch.from_numpy(a).float().unsqueeze(0).unsqueeze(-1).to(device)
+            a = a[::sub]
+            a_torch = torch.from_numpy(a).float().unsqueeze(0).unsqueeze(-1).to(device)
 
-                if solver_name == "exponax":
-                    solver = ExponaxBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'], xlim=(0, 1))
-                elif solver_name == "scipy":
-                    solver = SciPyBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
-                elif solver_name == "scipy_spectral":
-                    solver = SciPySpectralBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
-                elif solver_name == "phiflow":
-                    solver = PhiFlowBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
-                else:
-                    raise ValueError("Specified solver not inplemented")
+            if solver_name == "exponax":
+                solver = ExponaxBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'], xlim=(0, 1))
+            elif solver_name == "scipy":
+                solver = SciPyBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+            elif solver_name == "scipy_spectral":
+                solver = SciPySpectralBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+            elif solver_name == "phiflow":
+                solver = PhiFlowBurgersSolver1D(s, nu=burgers_params['nu'], bc=grf_params['bc'])
+            else:
+                raise ValueError("Specified solver not inplemented")
 
-                t_span = (0, burgers_params['simulation_time'])
+            t_span = (0, burgers_params['simulation_time'])
 
-                PDE_func = jax.jit(lambda u0: solver.solve(
-                    u0, t_final=burgers_params['simulation_time'], t_eval=t_span, step=burgers_params["step"])[1][1])
+            PDE_func = jax.jit(lambda u0: solver.solve(
+                u0, t_final=burgers_params['simulation_time'], t_eval=t_span, step=burgers_params["step"])[1][1])
 
-                records = compare_gradient_attack(
-                    a_torch, model, PDE_func, x_dict, y_dict,
-                    epsilon=epsilon,
-                    alpha=alpha,
-                    num_steps=num_steps,
-                    norm=norm,
-                    enable_fd=True,
-                    fd_delta=1e-8,
-                    gamma=gamma  # 传入 Soft-DTW 的 gamma
-                )
-                gradient_records[(f"norm_{norm}", f"index_{i}", f"numsteps_{num_steps}",
-                                  f"epsilon_{epsilon}", f"alpha_{alpha:.5f}")] = convert_to_cpu_serializable(records)
-                total_time = time.time() - start_time
-                print(" \n     index:", i, ",    norm:", norm, ",    num_steps:", num_steps,
-                      ",    epsilon:", epsilon, ",    alpha:", alpha, ",    gamma:", gamma,
-                      ",    total time:", total_time, flush=True)
+            records = compare_gradient_attack(
+                a_torch, model, PDE_func, x_dict, y_dict,
+                epsilon=epsilon,
+                alpha=alpha,
+                num_steps=num_steps,
+                norm=norm,
+                enable_fd=True,
+                fd_delta=1e-8,
+                gamma=gamma  # 传入 Soft-DTW 的 gamma
+            )
+            gradient_records[(f"norm_{norm}", f"index_{i}", f"numsteps_{num_steps}",
+                              f"epsilon_{epsilon}", f"alpha_{alpha:.5f}")] = convert_to_cpu_serializable(records)
+            total_time = time.time() - start_time
+            print(" \n     index:", i, ",    norm:", norm, ",    num_steps:", num_steps,
+                  ",    epsilon:", epsilon, ",    alpha:", alpha, ",    gamma:", gamma,
+                  ",    total time:", total_time, flush=True)
 
-        # 每个 gamma 各自保存一个文件
-        gradient_filename = f"gradient_test_{solver_name}_nu{nu}_nsamples{num_records}_gamma{gamma}_dt{burgers_params['step']}.pkl"
-        with open(gradient_folder / gradient_filename, "wb") as f:
-            pickle.dump(gradient_records, f)
-        print(f"Pickle file saved to {gradient_folder}/{gradient_filename}")
-    # ==== 循环结束 ====
+    gradient_filename = f"gradient_test_{solver_name}_nu{nu}_nsamples{num_records}_gamma{gamma}_dt{burgers_params['step']}.pkl"
+    with open(gradient_folder / gradient_filename, "wb") as f:
+        pickle.dump(gradient_records, f)
+    print(f"Pickle file saved to {gradient_folder}/{gradient_filename}")
+
 
 if __name__ == "__main__":
     app.run(main)

@@ -1,0 +1,47 @@
+c0606a-s9.ufhpc
+Sun Oct 12 10:36:39 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Running N=20 ===
+Selected GPU 0 (NVIDIA L4) with 0.00 GB free memory
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_dict/config_dict.py", line 952, in __getitem__
+    field = self._fields[key]
+KeyError: 'gamma'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_dict/config_dict.py", line 853, in __getattr__
+    return self[attribute]
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_dict/config_dict.py", line 958, in __getitem__
+    raise KeyError(self._generate_did_you_mean_message(key, str(e)))
+KeyError: "'gamma'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py", line 586, in <module>
+    app.run(main)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 308, in run
+    args = _run_init(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 377, in _run_init
+    args = _register_and_parse_flags_with_usage(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 223, in _register_and_parse_flags_with_usage
+    args_to_main = flags_parser(original_argv)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/app.py", line 162, in parse_flags_with_usage
+    return FLAGS(args)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/flags/_flagvalues.py", line 687, in __call__
+    unknown_flags, unparsed_args = self._parse_args(args, known_only)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/flags/_flagvalues.py", line 841, in _parse_args
+    flag.parse(value)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/absl/flags/_flag.py", line 192, in parse
+    self.value = self._parse(argument)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_flags/config_flags.py", line 836, in _parse
+    field_type = config_path.get_type(
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_flags/config_path.py", line 298, in get_type
+    return holder.get_type(field)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_dict/config_dict.py", line 1331, in get_type
+    field = self.__getattr__(key)
+  File "/blue/shiboli.fsu/yifeisun.umich/.conda/envs/adv_robust/lib/python3.10/site-packages/ml_collections/config_dict/config_dict.py", line 855, in __getattr__
+    raise AttributeError(e)
+AttributeError: "'gamma'"

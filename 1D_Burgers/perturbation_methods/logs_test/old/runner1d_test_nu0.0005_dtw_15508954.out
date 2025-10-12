@@ -1,0 +1,5 @@
+c0606a-s14.ufhpc
+Sun Oct 12 11:56:16 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Running N=20 ===
+slurmstepd: error: *** JOB 15508954 ON c0606a-s14 CANCELLED AT 2025-10-12T11:57:11 ***

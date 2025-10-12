@@ -52,3 +52,16 @@ output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Bur
   [APRX ] fwd_total=0.002s (FNO=0.001s, Find=0.000s, Loss=0.000s)  |  bwd_total=0.001s
   [STEP_TOTAL] 299.855s
 
+[STEP 2/100] (norm=2, eps=20, alpha=1)
+  [WITH ] fwd_total=23.016s (FNO=0.001s, Solver=23.014s, Loss=0.000s)  |  bwd_total=45.519s
+  [W/O  ] fwd_total=23.016s (FNO=0.002s, Solver=23.014s, Loss=0.000s)  |  bwd_total=0.002s
+  [APRX ] fwd_total=0.002s (FNO=0.001s, Find=0.000s, Loss=0.000s)  |  bwd_total=0.001s
+  [STEP_TOTAL] 252.669s
+
+[STEP 3/100] (norm=2, eps=20, alpha=1)
+  [WITH ] fwd_total=23.016s (FNO=0.001s, Solver=23.014s, Loss=0.000s)  |  bwd_total=45.524s
+  [W/O  ] fwd_total=23.017s (FNO=0.002s, Solver=23.015s, Loss=0.000s)  |  bwd_total=0.002s
+  [APRX ] fwd_total=0.002s (FNO=0.001s, Find=0.000s, Loss=0.000s)  |  bwd_total=0.001s
+  [STEP_TOTAL] 252.678s
+
+slurmstepd: error: *** JOB 15496555 ON c0606a-s13 CANCELLED AT 2025-10-12T09:34:14 ***

@@ -1,0 +1,254 @@
+c0606a-s11.ufhpc
+Sun Oct 12 08:48:43 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+=== Running N=20 ===
+Selected GPU 0 (NVIDIA L4) with 0.00 GB free memory
+Using device: cuda
+========== 当前作业 GPU 信息 ==========
+分区: hpg-turin
+节点: c0606a-s11
+GPU ID (CUDA_VISIBLE_DEVICES): 0
+
+GPU 详细信息:
+0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+=====================================
+[Soft-DTW] gamma=0.01 (normalize=True)
+===============Experiment===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_results/1D
+device:  cuda:0
+nu:  0.0005
+INFO:2025-10-12 08:48:49,175:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I1012 08:48:49.175621 22488537445440 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+jax.devices() [CudaDevice(id=0)]
+
+
+
+
+===============Running===============
+
+
+
+
+model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/saved_models/1D/modes16_width64_epochs500/pos/unnormalized/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed45.pth
+input_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.0005_t1.0_seed1000045.pt
+
+[COMBO] norm=2, epsilon=20, num_steps=100, alpha=1, gamma=0.01
+
+adversarial input samples:   0%|          | 0/1 [00:00<?, ?it/s]JAX正在使用的后端: gpu
+可用的JAX设备: [CudaDevice(id=0)]
+[ATTACK START] norm=2, epsilon=20, alpha=1, num_steps=100, gamma=0.01
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:70: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:72: DeprecationWarning: jax.dlpack.to_dlpack was deprecated in JAX v0.6.0 and will be removed in JAX v0.7.0. Please use the newer DLPack API based on __dlpack__ and __dlpack_device__ instead. Typically, you can pass a JAX array directly to the `from_dlpack` function of another framework without using `to_dlpack`.
+  out_dlpack = jax.dlpack.to_dlpack(g_output_jax)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:70: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:102: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  grad_jax = jax.dlpack.from_dlpack(grad_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:104: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:70: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
+  a_jax = jax.dlpack.from_dlpack(a_dlpack)
+[STEP 1/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.160s (FNO=0.003s, Solver=23.014s, Loss=0.143s)  |  bwd_total=120.253s (Solver_bwd=119.410s, FNO_bwd=0.844s)
+  [W/O  ] fwd_total=23.162s (FNO=0.002s, Solver=23.014s, Loss=0.146s)  |  bwd_total=0.067s (FNO_bwd=0.067s)
+  [APRX ] fwd_total=0.145s (FNO=0.002s, Find=0.000s, Loss=0.143s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
+  [LOSSES] with=1.830578e-02  |  without=9.482384e-03  |  approx=6.980896e-03  |  approx_surr=9.617253e+00
+  [STEP_TOTAL] 328.632s
+
+[STEP 2/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.157s (FNO=0.002s, Solver=23.013s, Loss=0.142s)  |  bwd_total=45.609s (Solver_bwd=45.522s, FNO_bwd=0.087s)
+  [W/O  ] fwd_total=23.161s (FNO=0.002s, Solver=23.014s, Loss=0.145s)  |  bwd_total=0.060s (FNO_bwd=0.060s)
+  [APRX ] fwd_total=0.146s (FNO=0.002s, Find=0.000s, Loss=0.144s)  |  bwd_total=0.067s (FNO_bwd=0.067s)
+  [LOSSES] with=4.130173e-02  |  without=3.920555e-03  |  approx=2.335358e-02  |  approx_surr=1.374291e+01
+  [STEP_TOTAL] 253.887s
+
+[STEP 3/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.161s (FNO=0.002s, Solver=23.014s, Loss=0.145s)  |  bwd_total=45.606s (Solver_bwd=45.522s, FNO_bwd=0.084s)
+  [W/O  ] fwd_total=23.157s (FNO=0.002s, Solver=23.014s, Loss=0.141s)  |  bwd_total=0.055s (FNO_bwd=0.055s)
+  [APRX ] fwd_total=0.142s (FNO=0.002s, Find=0.000s, Loss=0.140s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [LOSSES] with=1.154547e-01  |  without=2.651215e-03  |  approx=5.129528e-02  |  approx_surr=2.152865e+01
+  [STEP_TOTAL] 254.036s
+
+[STEP 4/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.157s (FNO=0.002s, Solver=23.014s, Loss=0.141s)  |  bwd_total=45.648s (Solver_bwd=45.523s, FNO_bwd=0.125s)
+  [W/O  ] fwd_total=23.158s (FNO=0.002s, Solver=23.014s, Loss=0.143s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
+  [APRX ] fwd_total=0.144s (FNO=0.002s, Find=0.000s, Loss=0.142s)  |  bwd_total=0.064s (FNO_bwd=0.064s)
+  [LOSSES] with=1.901255e-01  |  without=2.465248e-03  |  approx=8.612251e-02  |  approx_surr=3.039984e+01
+  [STEP_TOTAL] 253.921s
+
+[STEP 5/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.156s (FNO=0.002s, Solver=23.014s, Loss=0.140s)  |  bwd_total=45.620s (Solver_bwd=45.522s, FNO_bwd=0.098s)
+  [W/O  ] fwd_total=23.155s (FNO=0.002s, Solver=23.014s, Loss=0.140s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
+  [APRX ] fwd_total=0.143s (FNO=0.002s, Find=0.000s, Loss=0.141s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
+  [LOSSES] with=1.706390e-01  |  without=4.430771e-03  |  approx=1.445923e-01  |  approx_surr=4.286146e+01
+  [STEP_TOTAL] 254.133s
+
+[STEP 6/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.226s (FNO=0.062s, Solver=23.014s, Loss=0.150s)  |  bwd_total=45.742s (Solver_bwd=45.622s, FNO_bwd=0.120s)
+  [W/O  ] fwd_total=23.158s (FNO=0.003s, Solver=23.014s, Loss=0.140s)  |  bwd_total=0.059s (FNO_bwd=0.059s)
+  [APRX ] fwd_total=0.141s (FNO=0.002s, Find=0.003s, Loss=0.136s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [LOSSES] with=3.639193e-01  |  without=1.926517e-02  |  approx=1.968555e-01  |  approx_surr=5.394322e+01
+  [STEP_TOTAL] 257.735s
+
+[STEP 7/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.153s (FNO=0.002s, Solver=23.014s, Loss=0.137s)  |  bwd_total=46.998s (Solver_bwd=45.523s, FNO_bwd=1.475s)
+  [W/O  ] fwd_total=23.163s (FNO=0.002s, Solver=23.014s, Loss=0.146s)  |  bwd_total=0.060s (FNO_bwd=0.060s)
+  [APRX ] fwd_total=0.145s (FNO=0.002s, Find=0.000s, Loss=0.143s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
+  [LOSSES] with=2.801628e-01  |  without=1.419611e-01  |  approx=3.184052e-01  |  approx_surr=1.522212e+01
+  [STEP_TOTAL] 255.440s
+
+[STEP 8/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.163s (FNO=0.002s, Solver=23.014s, Loss=0.147s)  |  bwd_total=45.612s (Solver_bwd=45.523s, FNO_bwd=0.089s)
+  [W/O  ] fwd_total=23.159s (FNO=0.002s, Solver=23.014s, Loss=0.143s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
+  [APRX ] fwd_total=0.144s (FNO=0.002s, Find=0.000s, Loss=0.142s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
+  [LOSSES] with=5.096054e-01  |  without=4.881907e-01  |  approx=2.613554e-01  |  approx_surr=7.017909e+01
+  [STEP_TOTAL] 253.883s
+
+[STEP 9/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.157s (FNO=0.002s, Solver=23.014s, Loss=0.141s)  |  bwd_total=45.607s (Solver_bwd=45.521s, FNO_bwd=0.086s)
+  [W/O  ] fwd_total=23.158s (FNO=0.002s, Solver=23.014s, Loss=0.142s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [APRX ] fwd_total=0.142s (FNO=0.002s, Find=0.000s, Loss=0.139s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
+  [LOSSES] with=5.913715e-01  |  without=9.615679e-01  |  approx=4.738798e-01  |  approx_surr=2.258979e+01
+  [STEP_TOTAL] 253.861s
+
+[STEP 10/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.160s (FNO=0.002s, Solver=23.014s, Loss=0.144s)  |  bwd_total=45.612s (Solver_bwd=45.523s, FNO_bwd=0.089s)
+  [W/O  ] fwd_total=23.157s (FNO=0.002s, Solver=23.014s, Loss=0.140s)  |  bwd_total=0.058s (FNO_bwd=0.058s)
+  [APRX ] fwd_total=0.142s (FNO=0.002s, Find=0.000s, Loss=0.140s)  |  bwd_total=0.051s (FNO_bwd=0.051s)
+  [LOSSES] with=7.428818e-01  |  without=1.744505e+00  |  approx=1.083995e+00  |  approx_surr=2.887226e+01
+  [STEP_TOTAL] 253.854s
+
+[STEP 11/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.159s (FNO=0.002s, Solver=23.014s, Loss=0.143s)  |  bwd_total=45.612s (Solver_bwd=45.522s, FNO_bwd=0.090s)
+  [W/O  ] fwd_total=23.152s (FNO=0.002s, Solver=23.014s, Loss=0.136s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [APRX ] fwd_total=0.141s (FNO=0.002s, Find=0.000s, Loss=0.139s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
+  [LOSSES] with=8.877916e-01  |  without=3.059798e+00  |  approx=1.882324e+00  |  approx_surr=1.083075e+02
+  [STEP_TOTAL] 253.982s
+
+[STEP 12/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.159s (FNO=0.002s, Solver=23.014s, Loss=0.143s)  |  bwd_total=45.616s (Solver_bwd=45.524s, FNO_bwd=0.092s)
+  [W/O  ] fwd_total=23.154s (FNO=0.002s, Solver=23.014s, Loss=0.137s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
+  [APRX ] fwd_total=0.144s (FNO=0.002s, Find=0.000s, Loss=0.142s)  |  bwd_total=0.065s (FNO_bwd=0.065s)
+  [LOSSES] with=1.193661e+00  |  without=4.874589e+00  |  approx=2.963846e+00  |  approx_surr=4.452954e+01
+  [STEP_TOTAL] 253.875s
+
+[STEP 13/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.159s (FNO=0.002s, Solver=23.014s, Loss=0.143s)  |  bwd_total=45.615s (Solver_bwd=45.522s, FNO_bwd=0.093s)
+  [W/O  ] fwd_total=23.150s (FNO=0.002s, Solver=23.013s, Loss=0.135s)  |  bwd_total=0.060s (FNO_bwd=0.060s)
+  [APRX ] fwd_total=0.143s (FNO=0.002s, Find=0.000s, Loss=0.141s)  |  bwd_total=0.059s (FNO_bwd=0.059s)
+  [LOSSES] with=1.456873e+00  |  without=7.064003e+00  |  approx=4.720968e+00  |  approx_surr=5.470701e+01
+  [STEP_TOTAL] 253.862s
+
+[STEP 14/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.155s (FNO=0.002s, Solver=23.014s, Loss=0.138s)  |  bwd_total=45.622s (Solver_bwd=45.523s, FNO_bwd=0.099s)
+  [W/O  ] fwd_total=23.152s (FNO=0.002s, Solver=23.014s, Loss=0.135s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
+  [APRX ] fwd_total=0.142s (FNO=0.002s, Find=0.000s, Loss=0.140s)  |  bwd_total=0.064s (FNO_bwd=0.064s)
+  [LOSSES] with=1.885524e+00  |  without=9.752725e+00  |  approx=6.908306e+00  |  approx_surr=6.664101e+01
+  [STEP_TOTAL] 253.876s
+
+[STEP 15/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.160s (FNO=0.002s, Solver=23.014s, Loss=0.144s)  |  bwd_total=45.615s (Solver_bwd=45.523s, FNO_bwd=0.092s)
+  [W/O  ] fwd_total=23.146s (FNO=0.002s, Solver=23.014s, Loss=0.130s)  |  bwd_total=0.059s (FNO_bwd=0.059s)
+  [APRX ] fwd_total=0.145s (FNO=0.002s, Find=0.000s, Loss=0.143s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
+  [LOSSES] with=2.292628e+00  |  without=1.245733e+01  |  approx=9.210666e+00  |  approx_surr=1.861710e+02
+  [STEP_TOTAL] 255.980s
+
+[STEP 16/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=24.348s (FNO=1.169s, Solver=23.014s, Loss=0.165s)  |  bwd_total=45.635s (Solver_bwd=45.522s, FNO_bwd=0.113s)
+  [W/O  ] fwd_total=23.147s (FNO=0.002s, Solver=23.014s, Loss=0.131s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [APRX ] fwd_total=0.147s (FNO=0.002s, Find=0.005s, Loss=0.139s)  |  bwd_total=0.053s (FNO_bwd=0.053s)
+  [LOSSES] with=2.963023e+00  |  without=1.649676e+01  |  approx=1.249121e+01  |  approx_surr=9.731804e+01
+  [STEP_TOTAL] 255.038s
+
+[STEP 17/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.162s (FNO=0.002s, Solver=23.014s, Loss=0.146s)  |  bwd_total=45.608s (Solver_bwd=45.521s, FNO_bwd=0.086s)
+  [W/O  ] fwd_total=23.145s (FNO=0.002s, Solver=23.013s, Loss=0.129s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
+  [APRX ] fwd_total=0.144s (FNO=0.002s, Find=0.000s, Loss=0.141s)  |  bwd_total=0.056s (FNO_bwd=0.056s)
+  [LOSSES] with=3.498954e+00  |  without=2.072423e+01  |  approx=1.552245e+01  |  approx_surr=2.376126e+02
+  [STEP_TOTAL] 253.832s
+
+[STEP 18/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.161s (FNO=0.002s, Solver=23.014s, Loss=0.144s)  |  bwd_total=45.622s (Solver_bwd=45.522s, FNO_bwd=0.099s)
+  [W/O  ] fwd_total=23.146s (FNO=0.002s, Solver=23.014s, Loss=0.129s)  |  bwd_total=0.069s (FNO_bwd=0.069s)
+  [APRX ] fwd_total=0.136s (FNO=0.002s, Find=0.000s, Loss=0.134s)  |  bwd_total=0.058s (FNO_bwd=0.058s)
+  [LOSSES] with=4.108835e+00  |  without=2.704411e+01  |  approx=2.027386e+01  |  approx_surr=1.368053e+02
+  [STEP_TOTAL] 253.842s
+
+[STEP 19/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.158s (FNO=0.002s, Solver=23.014s, Loss=0.142s)  |  bwd_total=45.799s (Solver_bwd=45.630s, FNO_bwd=0.169s)
+  [W/O  ] fwd_total=23.146s (FNO=0.003s, Solver=23.014s, Loss=0.129s)  |  bwd_total=0.055s (FNO_bwd=0.055s)
+  [APRX ] fwd_total=0.136s (FNO=0.002s, Find=0.000s, Loss=0.134s)  |  bwd_total=0.054s (FNO_bwd=0.054s)
+  [LOSSES] with=3.619860e+00  |  without=3.442980e+01  |  approx=2.336542e+01  |  approx_surr=1.956537e+02
+  [STEP_TOTAL] 254.000s
+
+[STEP 20/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.154s (FNO=0.002s, Solver=23.014s, Loss=0.138s)  |  bwd_total=45.610s (Solver_bwd=45.523s, FNO_bwd=0.087s)
+  [W/O  ] fwd_total=23.143s (FNO=0.002s, Solver=23.014s, Loss=0.127s)  |  bwd_total=0.060s (FNO_bwd=0.060s)
+  [APRX ] fwd_total=0.138s (FNO=0.002s, Find=0.000s, Loss=0.136s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [LOSSES] with=5.810484e+00  |  without=4.263388e+01  |  approx=2.943724e+01  |  approx_surr=2.253059e+02
+  [STEP_TOTAL] 253.829s
+
+[STEP 21/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.160s (FNO=0.002s, Solver=23.014s, Loss=0.144s)  |  bwd_total=48.819s (Solver_bwd=47.148s, FNO_bwd=1.671s)
+  [W/O  ] fwd_total=26.035s (FNO=1.154s, Solver=24.063s, Loss=0.818s)  |  bwd_total=0.403s (FNO_bwd=0.403s)
+  [APRX ] fwd_total=0.441s (FNO=0.112s, Find=0.192s, Loss=0.137s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [LOSSES] with=6.936342e+00  |  without=5.271397e+01  |  approx=3.659424e+01  |  approx_surr=2.591620e+02
+  [STEP_TOTAL] 262.800s
+
+[STEP 22/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=26.155s (FNO=2.081s, Solver=23.014s, Loss=0.851s)  |  bwd_total=46.928s (Solver_bwd=45.523s, FNO_bwd=1.405s)
+  [W/O  ] fwd_total=23.145s (FNO=0.002s, Solver=23.014s, Loss=0.129s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [APRX ] fwd_total=0.263s (FNO=0.002s, Find=0.124s, Loss=0.137s)  |  bwd_total=0.069s (FNO_bwd=0.069s)
+  [LOSSES] with=8.540301e+00  |  without=6.411928e+01  |  approx=4.436397e+01  |  approx_surr=2.996550e+02
+  [STEP_TOTAL] 258.597s
+
+[STEP 23/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.156s (FNO=0.002s, Solver=23.014s, Loss=0.140s)  |  bwd_total=45.609s (Solver_bwd=45.523s, FNO_bwd=0.086s)
+  [W/O  ] fwd_total=23.142s (FNO=0.002s, Solver=23.014s, Loss=0.125s)  |  bwd_total=0.064s (FNO_bwd=0.064s)
+  [APRX ] fwd_total=0.137s (FNO=0.002s, Find=0.000s, Loss=0.135s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
+  [LOSSES] with=9.966630e+00  |  without=7.646825e+01  |  approx=5.155864e+01  |  approx_surr=2.483891e+02
+  [STEP_TOTAL] 253.812s
+
+[STEP 24/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.149s (FNO=0.002s, Solver=23.014s, Loss=0.133s)  |  bwd_total=45.615s (Solver_bwd=45.522s, FNO_bwd=0.093s)
+  [W/O  ] fwd_total=23.135s (FNO=0.002s, Solver=23.013s, Loss=0.119s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
+  [APRX ] fwd_total=0.130s (FNO=0.002s, Find=0.000s, Loss=0.128s)  |  bwd_total=0.058s (FNO_bwd=0.058s)
+  [LOSSES] with=1.152040e+01  |  without=9.141862e+01  |  approx=5.450431e+01  |  approx_surr=3.643218e+02
+  [STEP_TOTAL] 254.321s
+
+[STEP 25/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.149s (FNO=0.002s, Solver=23.014s, Loss=0.133s)  |  bwd_total=45.608s (Solver_bwd=45.522s, FNO_bwd=0.087s)
+  [W/O  ] fwd_total=23.135s (FNO=0.002s, Solver=23.014s, Loss=0.119s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
+  [APRX ] fwd_total=0.134s (FNO=0.002s, Find=0.000s, Loss=0.132s)  |  bwd_total=0.052s (FNO_bwd=0.052s)
+  [LOSSES] with=1.113140e+01  |  without=9.921140e+01  |  approx=5.191526e+01  |  approx_surr=2.783830e+02
+  [STEP_TOTAL] 253.776s
+
+[STEP 26/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.149s (FNO=0.002s, Solver=23.014s, Loss=0.132s)  |  bwd_total=45.609s (Solver_bwd=45.523s, FNO_bwd=0.087s)
+  [W/O  ] fwd_total=23.138s (FNO=0.002s, Solver=23.014s, Loss=0.122s)  |  bwd_total=0.056s (FNO_bwd=0.056s)
+  [APRX ] fwd_total=0.132s (FNO=0.002s, Find=0.000s, Loss=0.130s)  |  bwd_total=0.053s (FNO_bwd=0.053s)
+  [LOSSES] with=1.339882e+01  |  without=1.015688e+02  |  approx=4.712286e+01  |  approx_surr=3.060151e+02
+  [STEP_TOTAL] 253.765s
+
+[STEP 27/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.151s (FNO=0.002s, Solver=23.014s, Loss=0.135s)  |  bwd_total=45.617s (Solver_bwd=45.522s, FNO_bwd=0.095s)
+  [W/O  ] fwd_total=23.133s (FNO=0.002s, Solver=23.014s, Loss=0.117s)  |  bwd_total=0.067s (FNO_bwd=0.067s)
+  [APRX ] fwd_total=0.131s (FNO=0.002s, Find=0.000s, Loss=0.129s)  |  bwd_total=0.057s (FNO_bwd=0.057s)
+  [LOSSES] with=1.346935e+01  |  without=1.041126e+02  |  approx=1.670508e+01  |  approx_surr=3.557167e+02
+  [STEP_TOTAL] 253.790s
+
+[STEP 28/100] (norm=2, eps=20, alpha=1, gamma=0.01)
+  [WITH ] fwd_total=23.154s (FNO=0.002s, Solver=23.014s, Loss=0.137s)  |  bwd_total=45.605s (Solver_bwd=45.523s, FNO_bwd=0.083s)
+  [W/O  ] fwd_total=23.136s (FNO=0.002s, Solver=23.014s, Loss=0.120s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
+  [APRX ] fwd_total=0.132s (FNO=0.002s, Find=0.000s, Loss=0.130s)  |  bwd_total=0.058s (FNO_bwd=0.058s)
+  [LOSSES] with=1.365201e+01  |  without=1.064851e+02  |  approx=4.233949e+01  |  approx_surr=3.117891e+02
+  [STEP_TOTAL] 253.786s
+
+slurmstepd: error: *** JOB 15495703 ON c0606a-s11 CANCELLED AT 2025-10-12T10:51:35 ***

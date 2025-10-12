@@ -1,16 +1,16 @@
-c0606a-s11.ufhpc
-Sun Oct 12 08:48:43 AM EDT 2025
+c0606a-s8.ufhpc
+Sun Oct 12 09:03:44 AM EDT 2025
 /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
 === Running N=20 ===
 Selected GPU 0 (NVIDIA L4) with 0.00 GB free memory
 Using device: cuda
 ========== 当前作业 GPU 信息 ==========
 分区: hpg-turin
-节点: c0606a-s11
+节点: c0606a-s8
 GPU ID (CUDA_VISIBLE_DEVICES): 0
 
 GPU 详细信息:
-0, NVIDIA L4, 23034 MiB, 3 MiB, 22572 MiB
+0, NVIDIA L4, 23034 MiB, 10720 MiB, 11855 MiB
 =====================================
 [Soft-DTW] gamma=0.01 (normalize=True)
 ===============Experiment===============
@@ -22,8 +22,8 @@ model_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burg
 workdir:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/perturbation_results/1D
 device:  cuda:0
 nu:  0.0005
-INFO:2025-10-12 08:48:49,175:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
-I1012 08:48:49.175621 22488537445440 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+INFO:2025-10-12 09:04:17,794:jax._src.xla_bridge:867: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I1012 09:04:17.794781 22859739051072 xla_bridge.py:867] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
 jax.devices() [CudaDevice(id=0)]
 
 
@@ -56,51 +56,21 @@ output_path:  /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Bur
 /blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.py:70: DeprecationWarning: Calling from_dlpack with a DLPack tensor is deprecated. The argument to from_dlpack should be an array from another framework that implements the __dlpack__ protocol.
   a_jax = jax.dlpack.from_dlpack(a_dlpack)
 [STEP 1/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.160s (FNO=0.003s, Solver=23.014s, Loss=0.143s)  |  bwd_total=120.253s (Solver_bwd=119.410s, FNO_bwd=0.844s)
-  [W/O  ] fwd_total=23.162s (FNO=0.002s, Solver=23.014s, Loss=0.146s)  |  bwd_total=0.067s (FNO_bwd=0.067s)
-  [APRX ] fwd_total=0.145s (FNO=0.002s, Find=0.000s, Loss=0.143s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
-  [LOSSES] with=1.830578e-02  |  without=9.482384e-03  |  approx=6.980896e-03  |  approx_surr=9.617253e+00
-  [STEP_TOTAL] 328.632s
+  [WITH ] fwd_total=71.649s (FNO=0.001s, Solver=71.516s, Loss=0.132s)  |  bwd_total=193.031s (Solver_bwd=191.614s, FNO_bwd=1.416s)
+  [W/O  ] fwd_total=71.651s (FNO=0.002s, Solver=71.517s, Loss=0.132s)  |  bwd_total=0.044s (FNO_bwd=0.044s)
+  [APRX ] fwd_total=0.139s (FNO=0.001s, Find=0.006s, Loss=0.132s)  |  bwd_total=0.046s (FNO_bwd=0.046s)
+  [STEP_TOTAL] 622.647s
 
 [STEP 2/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.157s (FNO=0.002s, Solver=23.013s, Loss=0.142s)  |  bwd_total=45.609s (Solver_bwd=45.522s, FNO_bwd=0.087s)
-  [W/O  ] fwd_total=23.161s (FNO=0.002s, Solver=23.014s, Loss=0.145s)  |  bwd_total=0.060s (FNO_bwd=0.060s)
-  [APRX ] fwd_total=0.146s (FNO=0.002s, Find=0.000s, Loss=0.144s)  |  bwd_total=0.067s (FNO_bwd=0.067s)
-  [LOSSES] with=4.130173e-02  |  without=3.920555e-03  |  approx=2.335358e-02  |  approx_surr=1.374291e+01
-  [STEP_TOTAL] 253.887s
+  [WITH ] fwd_total=71.644s (FNO=0.002s, Solver=71.511s, Loss=0.132s)  |  bwd_total=141.415s (Solver_bwd=141.352s, FNO_bwd=0.063s)
+  [W/O  ] fwd_total=71.642s (FNO=0.001s, Solver=71.509s, Loss=0.132s)  |  bwd_total=0.045s (FNO_bwd=0.045s)
+  [APRX ] fwd_total=0.138s (FNO=0.001s, Find=0.005s, Loss=0.132s)  |  bwd_total=0.046s (FNO_bwd=0.046s)
+  [STEP_TOTAL] 571.002s
 
 [STEP 3/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.161s (FNO=0.002s, Solver=23.014s, Loss=0.145s)  |  bwd_total=45.606s (Solver_bwd=45.522s, FNO_bwd=0.084s)
-  [W/O  ] fwd_total=23.157s (FNO=0.002s, Solver=23.014s, Loss=0.141s)  |  bwd_total=0.055s (FNO_bwd=0.055s)
-  [APRX ] fwd_total=0.142s (FNO=0.002s, Find=0.000s, Loss=0.140s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
-  [LOSSES] with=1.154547e-01  |  without=2.651215e-03  |  approx=5.129528e-02  |  approx_surr=2.152865e+01
-  [STEP_TOTAL] 254.036s
+  [WITH ] fwd_total=71.644s (FNO=0.002s, Solver=71.511s, Loss=0.132s)  |  bwd_total=141.447s (Solver_bwd=141.384s, FNO_bwd=0.064s)
+  [W/O  ] fwd_total=71.643s (FNO=0.001s, Solver=71.510s, Loss=0.132s)  |  bwd_total=0.046s (FNO_bwd=0.046s)
+  [APRX ] fwd_total=0.141s (FNO=0.001s, Find=0.008s, Loss=0.132s)  |  bwd_total=0.041s (FNO_bwd=0.041s)
+  [STEP_TOTAL] 571.041s
 
-[STEP 4/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.157s (FNO=0.002s, Solver=23.014s, Loss=0.141s)  |  bwd_total=45.648s (Solver_bwd=45.523s, FNO_bwd=0.125s)
-  [W/O  ] fwd_total=23.158s (FNO=0.002s, Solver=23.014s, Loss=0.143s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
-  [APRX ] fwd_total=0.144s (FNO=0.002s, Find=0.000s, Loss=0.142s)  |  bwd_total=0.064s (FNO_bwd=0.064s)
-  [LOSSES] with=1.901255e-01  |  without=2.465248e-03  |  approx=8.612251e-02  |  approx_surr=3.039984e+01
-  [STEP_TOTAL] 253.921s
-
-[STEP 5/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.156s (FNO=0.002s, Solver=23.014s, Loss=0.140s)  |  bwd_total=45.620s (Solver_bwd=45.522s, FNO_bwd=0.098s)
-  [W/O  ] fwd_total=23.155s (FNO=0.002s, Solver=23.014s, Loss=0.140s)  |  bwd_total=0.061s (FNO_bwd=0.061s)
-  [APRX ] fwd_total=0.143s (FNO=0.002s, Find=0.000s, Loss=0.141s)  |  bwd_total=0.062s (FNO_bwd=0.062s)
-  [LOSSES] with=1.706390e-01  |  without=4.430771e-03  |  approx=1.445923e-01  |  approx_surr=4.286146e+01
-  [STEP_TOTAL] 254.133s
-
-[STEP 6/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.226s (FNO=0.062s, Solver=23.014s, Loss=0.150s)  |  bwd_total=45.742s (Solver_bwd=45.622s, FNO_bwd=0.120s)
-  [W/O  ] fwd_total=23.158s (FNO=0.003s, Solver=23.014s, Loss=0.140s)  |  bwd_total=0.059s (FNO_bwd=0.059s)
-  [APRX ] fwd_total=0.141s (FNO=0.002s, Find=0.003s, Loss=0.136s)  |  bwd_total=0.063s (FNO_bwd=0.063s)
-  [LOSSES] with=3.639193e-01  |  without=1.926517e-02  |  approx=1.968555e-01  |  approx_surr=5.394322e+01
-  [STEP_TOTAL] 257.735s
-
-[STEP 7/100] (norm=2, eps=20, alpha=1, gamma=0.01)
-  [WITH ] fwd_total=23.153s (FNO=0.002s, Solver=23.014s, Loss=0.137s)  |  bwd_total=46.998s (Solver_bwd=45.523s, FNO_bwd=1.475s)
-  [W/O  ] fwd_total=23.163s (FNO=0.002s, Solver=23.014s, Loss=0.146s)  |  bwd_total=0.060s (FNO_bwd=0.060s)
-  [APRX ] fwd_total=0.145s (FNO=0.002s, Find=0.000s, Loss=0.143s)  |  bwd_total=0.066s (FNO_bwd=0.066s)
-  [LOSSES] with=2.801628e-01  |  without=1.419611e-01  |  approx=3.184052e-01  |  approx_surr=1.522212e+01
-  [STEP_TOTAL] 255.440s
-
+slurmstepd: error: *** JOB 15495796 ON c0606a-s8 CANCELLED AT 2025-10-12T09:38:16 ***

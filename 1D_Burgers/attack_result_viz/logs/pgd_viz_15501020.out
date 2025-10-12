@@ -1,0 +1,11 @@
+c0606a-s9.ufhpc
+Sun Oct 12 10:23:15 AM EDT 2025
+/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO
+Traceback (most recent call last):
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz.py", line 323, in <module>
+    main()
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz.py", line 320, in main
+    make_gifs(args.pickle, args.outdir, args.fps)
+  File "/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/./1D_Burgers/attack_result_viz/pgd_viz.py", line 259, in make_gifs
+    with open(pickle_path, 'rb') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/blue/shiboli.fsu/yifeisun.umich/adversarial_robustness_FNO/1D_Burgers/attack_result_viz/pickle_files/dt0.0001/gradient_test_exponax_nu0.0005_nsamples1_gamma=0.01_dt0.0001.pkl'

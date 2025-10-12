@@ -84,6 +84,8 @@ class JaxPDEWrapper(torch.autograd.Function):
             import warnings
             warnings.warn(f"GPU transfer failed, fallback to CPU: {str(e)}")
             a_np = a_torch.detach().cpu().numpy()
+            # 注意：按你原始代码保留此处的 jnp 调用（未改其他逻辑）
+            import jax.numpy as jnp
             g_output_np = g(jnp.array(a_np))
             return torch.as_tensor(np.asarray(g_output_np),
                                    device=a_torch.device,
@@ -119,6 +121,7 @@ class JaxPDEWrapper(torch.autograd.Function):
             warnings.warn(f"Backward GPU failed: {str(e)}")
             grad_np = grad_output.detach().cpu().numpy()
             a_np = a_torch.detach().cpu().numpy()
+            import jax.numpy as jnp
             _, vjp_fn = jax.vjp(g, jnp.array(a_np))
             grad_input_jax, = vjp_fn(jnp.array(grad_np))
             return torch.as_tensor(np.asarray(grad_input_jax),
@@ -443,6 +446,14 @@ def compare_gradient_attack(a, G, g, x_dict, y_dict, epsilon, alpha, num_steps, 
               f"Find={forward_timing_approximate.get('find_time',0):.3f}s, "
               f"Loss={forward_timing_approximate.get('norm_time',0):.3f}s)  |  "
               f"bwd_total={approximate_backward_total:.3f}s", flush=True)
+        # === 新增：打印本 step 的 loss（与第二个代码一致的四项） ===
+        print(
+            f"  [LOSSES] with={loss_with.detach().item():.6e}  |  "
+            f"without={loss_without.detach().item():.6e}  |  "
+            f"approx={current_after['delta_approximate']:.6e}  |  "
+            f"approx_surr={loss_approximate.detach().item():.6e}",
+            flush=True
+        )
         print(f"  [STEP_TOTAL] {step_total_time:.3f}s\n", flush=True)
 
     return grad_records
@@ -504,7 +515,7 @@ def main(argv):
     burgers_params = {
         'nu': nu,
         'simulation_time': 1.0,
-        "step": 0.00001
+        "step": 0.0001
     }
 
     dataset_params = {
@@ -597,3 +608,5 @@ def main(argv):
 
 if __name__ == "__main__":
     app.run(main)
+
+
