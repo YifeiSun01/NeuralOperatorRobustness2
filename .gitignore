@@ -45,4 +45,23 @@ mlruns/
 !*.err
 !*.out
 !*.csv
+
+# Legacy large artifacts kept locally but not tracked on Vast AI branch.
+2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/read_data.ipynb
+2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/read_data.ipynb
+2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs500.csv
+2D_NS_FNO2d_recurrent/eval_models/logs/old/eval_models_11331524.err
+2D_NS_compare/all_models_performance/read_data.ipynb
+2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/62 models' performance.csv
+2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/epochs1500.csv
+2D_NS_FNO2d_recurrent/datasets/expanded_exponax_datasets/t20/N=1150/read_data_3.ipynb
+2D_NS_FNO2d_recurrent/external_forcing_patterns/datasets/read_data_4.ipynb
+2D_NS_FNO2d_recurrent/datasets/statistics/old_results/similarity_spatial_frame0.csv
+2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/read_data.ipynb
+2D_NS_FNO2d_recurrent/datasets/statistics/old_results/similarity_fft_mag_frame0.csv
+2D_NS_FNO2d_recurrent/datasets/statistics/similarity_spatial_frame0.csv
+2D_NS_FNO2d_recurrent/datasets/statistics/similarity_fft_mag_frame0.csv
+2D_NS_compare/all_models_performance/results_batch_eval.csv
+2D_NS_compare/results_batch_eval_2.csv
+2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/performance_results/combined_eval__roots_saved_models.csv
 !*.txt
