@@ -6,14 +6,13 @@ import torch
 import os
 from tqdm import tqdm
 import jaxlib
-from jax.lib import xla_bridge
 from torch.utils import dlpack as torch_dlpack
 import jax.dlpack as jax_dlpack
 import math
 
 def print_memory_stats():
     try:
-        mem_stats = xla_bridge.get_backend().memory_stats()
+        mem_stats = jax.devices()[0].memory_stats()
         print(f"\n--- JAX Memory Usage ---")
         print(f"Used: {mem_stats['bytes_in_use']/1e9:.1f} GB")
         print(f"Total: {mem_stats['bytes_limit']/1e9:.1f} GB")
@@ -82,11 +81,11 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def torch_to_jax(tensor):
     """将 PyTorch 张量安全转换为 JAX 数组"""
-    return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+    return jax_dlpack.from_dlpack(tensor.contiguous())
 
 def jax_to_torch(jax_array):
     """将JAX数组转换为PyTorch张量而不复制数据"""
-    return torch_dlpack.from_dlpack(jax_dlpack.to_dlpack(jax_array))
+    return torch.from_dlpack(jax_array)
 
 class PeriodicGRF:
     def __init__(self, dim, size, kernel="matern", device="cpu", **kernel_params):
@@ -868,6 +867,4 @@ if __name__ == "__main__":
                                 save_dir=save_directory,
                                 grf_config_idx=i
                             )
-
-
 

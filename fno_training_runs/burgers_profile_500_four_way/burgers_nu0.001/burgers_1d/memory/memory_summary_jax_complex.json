@@ -1,0 +1,72 @@
+{
+  "num_sample_rows": 87,
+  "num_phase_rows": 31,
+  "max_process_gpu_memory_mib": NaN,
+  "max_gpu_memory_used_mib": 2733.0,
+  "sampled_whole_run_peak_process_gpu_memory_mib": NaN,
+  "sampled_whole_run_peak_gpu_memory_used_mib": 2733.0,
+  "sampled_whole_run_seconds": 99.08860497095156,
+  "profiled_train_peak_mib": 2729.0,
+  "profiled_inference_peak_mib": 2733.0,
+  "profiled_backward_to_forward_peak_ratio": 1.0,
+  "profiled_backward_to_forward_mean_time_ratio": 2.9971501148419044,
+  "scopes": {
+    "inference": {
+      "num_rows": 1,
+      "max_memory_mib": 2733.0,
+      "mean_seconds": 1.5660868600243703,
+      "max_seconds": 1.5660868600243703,
+      "total_seconds": 1.5660868600243703
+    },
+    "train": {
+      "num_rows": 30,
+      "max_memory_mib": 2729.0,
+      "mean_seconds": 0.4939418466839319,
+      "max_seconds": 10.431534804054536,
+      "total_seconds": 14.818255400517955
+    }
+  },
+  "phases": {
+    "backward": {
+      "num_rows": 10,
+      "max_memory_mib": 2729.0,
+      "mean_memory_mib": 2727.2,
+      "mean_seconds": 1.0485001954133621,
+      "max_seconds": 10.431534804054536,
+      "min_seconds": 0.004628255032002926,
+      "total_seconds": 10.485001954133622
+    },
+    "forward": {
+      "num_rows": 10,
+      "max_memory_mib": 2729.0,
+      "mean_memory_mib": 2624.4,
+      "mean_seconds": 0.34983239251887427,
+      "max_seconds": 3.478694805991836,
+      "min_seconds": 0.001762968022376299,
+      "total_seconds": 3.4983239251887426
+    },
+    "inference_forward": {
+      "num_rows": 1,
+      "max_memory_mib": 2733.0,
+      "mean_memory_mib": 2733.0,
+      "mean_seconds": 1.5660868600243703,
+      "max_seconds": 1.5660868600243703,
+      "min_seconds": 1.5660868600243703,
+      "total_seconds": 1.5660868600243703
+    },
+    "optimizer_step": {
+      "num_rows": 10,
+      "max_memory_mib": 2729.0,
+      "mean_memory_mib": 2727.4,
+      "mean_seconds": 0.08349295211955905,
+      "max_seconds": 0.8124151070369408,
+      "min_seconds": 0.001853537978604436,
+      "total_seconds": 0.8349295211955905
+    }
+  },
+  "profile_outputs_enabled": true,
+  "samples_csv": "fno_training_runs/burgers_profile_500_four_way/burgers_nu0.001/burgers_1d/memory/gpu_samples_jax_complex.csv",
+  "phases_csv": "fno_training_runs/burgers_profile_500_four_way/burgers_nu0.001/burgers_1d/memory/memory_phases_jax_complex.csv",
+  "samples_plot": "fno_training_runs/burgers_profile_500_four_way/burgers_nu0.001/burgers_1d/memory/gpu_memory_curve_jax_complex.png",
+  "phases_plot": "fno_training_runs/burgers_profile_500_four_way/burgers_nu0.001/burgers_1d/memory/phase_memory_peaks_jax_complex.png"
+}

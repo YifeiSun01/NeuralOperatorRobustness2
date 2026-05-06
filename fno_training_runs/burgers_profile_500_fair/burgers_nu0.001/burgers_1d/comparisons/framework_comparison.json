@@ -1,0 +1,56 @@
+{
+  "inference_summary": {
+    "num_samples": 5,
+    "input_pytorch_vs_jax": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    "target_pytorch_vs_jax": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    "prediction_pytorch_vs_jax": {
+      "mse": 0.00024398835375905037,
+      "rmse": 0.01562012656027634,
+      "mae": 0.009655378758907318,
+      "max_abs": 0.1547265648841858,
+      "relative_l2": 0.028353553265333176
+    },
+    "pytorch_prediction_vs_target": {
+      "mse": 8.21042267489247e-05,
+      "rmse": 0.009061138270047793,
+      "mae": 0.006143423728644848,
+      "max_abs": 0.09533259272575378,
+      "relative_l2": 0.016497064381837845
+    },
+    "jax_prediction_vs_target": {
+      "mse": 0.00011655492562567815,
+      "rmse": 0.010796060653112234,
+      "mae": 0.006254664622247219,
+      "max_abs": 0.14057296514511108,
+      "relative_l2": 0.019655730575323105
+    },
+    "sample_csv": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/inference_sample_comparison.csv"
+  },
+  "parameter_summary": {
+    "num_parameter_blocks": 34,
+    "num_compared_blocks": 34,
+    "num_values_compared": 320705,
+    "max_abs": 8.004494667053223,
+    "relative_l2": 1.0006984413442568
+  },
+  "inference_summary_path": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/inference_summary.json",
+  "inference_sample_csv": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/inference_sample_comparison.csv",
+  "inference_plot": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/inference_compare_pytorch_jax.png",
+  "parameter_summary_path": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/parameter_summary.json",
+  "parameter_csv": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/parameter_block_comparison.csv",
+  "parameter_plot": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/parameter_block_max_abs.png",
+  "loss_plot": "fno_training_runs/burgers_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/loss_compare_pytorch_jax.png",
+  "aligned_jax_init_with_pytorch": true
+}

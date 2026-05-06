@@ -1,0 +1,106 @@
+./1D_Burgers/continual_train_attack/continual_train_attack.py:14:  python iterative_train_attack_replace.py \\
+./1D_Burgers/continual_train_attack/continual_train_attack.py:15:    --dataset_pt ./datasets/1D/Burgers/pos/dim1d_nx1024_...pt \\
+./1D_Burgers/continual_train_attack/continual_train_attack.py:16:    --rounds 3 --attack_ratio 0.3 \\
+./1D_Burgers/continual_train_attack/continual_train_attack.py:17:    --inputs "2,10,100,0.01" \\
+./1D_Burgers/continual_train_attack/continual_train_attack.py:237:class PDEAttackSystem1D:
+./1D_Burgers/dataset_expansion/data_expand.py:109:class PDEAttackSystem1D:
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/PGD_with_solver_gradient_1d.py:142:    model_path = f"/home/yifeisun/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu{burgers_params['nu']}_t1.0_seed45.pth"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/PGD_with_solver_gradient_1d_new.py:445:    model_path = f"/home/yifeisun/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu{burgers_params['nu']}_t1.0_seed45.pth"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/PGD_with_solver_gradient_1d_new_2.py:280:    model_path = f"/home/yifeisun/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu{burgers_params['nu']}_t1.0_seed45.pth"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/PGD_without_solver_gradient_1d.py:102:    input_path = f"/home/yifeisun/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu{burgers_params['nu']}_t1.0_seed45.pt"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/PGD_without_solver_gradient_1d.py:103:    output_path = f"/home/yifeisun/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu{burgers_params['nu']}_t1.0_seed45.pt"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/PGD_without_solver_gradient_1d.py:109:    model_path = f"/home/yifeisun/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu{burgers_params['nu']}_t1.0_seed45.pth"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/random_1d.py:99:    input_path = "/home/yifeisun/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/inputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.005_t1.0_seed45.pt"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/random_1d.py:100:    output_path = "/home/yifeisun/adversarial_robustness_FNO/perturbation_methods/x_y_dict/1D/Burgers/outputs_dim1d_nx1024_N20000_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.005_t1.0_seed45.pt"
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/random_1d.py:105:    model_path = "/home/yifeisun/adversarial_robustness_FNO/saved_models/1D/modes16_width64_epochs500/burgers_1d_FNO_model_trainedby_dim1d_nx1024_N1500_solver=exponax_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.005_t1.0_seed45.pth"
+./1D_Burgers/solvers/burgers1d_solvers.py:12:class SciPyBurgersSolver1D:
+./1D_Burgers/solvers/burgers1d_solvers.py:71:class SciPySpectralBurgersSolver1D:
+./1D_Burgers/solvers/burgers1d_solvers.py:156:class ExponaxBurgersSolver1D:
+./1D_Burgers/solvers/burgers1d_solvers.py:205:class ExponaxBurgersSolver1D:
+./1D_Burgers/solvers/burgers1d_solvers.py:270:class PhiFlowBurgersSolver1D:
+./1D_Burgers/solvers/heat1d_solvers.py:8:class SciPyHeatSolver1D:
+./1D_Burgers/solvers/heat1d_solvers.py:52:class SciPySpectralHeatSolver1D:
+./1D_Burgers/solvers/heat1d_solvers.py:88:class ExponaxHeatSolver1D:
+./1D_Burgers/solvers/heat1d_solvers.py:121:class PhiFlowHeatSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/burgers1d_solvers.py:12:class SciPyBurgersSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/burgers1d_solvers.py:71:class SciPySpectralBurgersSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/burgers1d_solvers.py:156:class ExponaxBurgersSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/burgers1d_solvers.py:205:class ExponaxBurgersSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/burgers1d_solvers.py:270:class PhiFlowBurgersSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/heat1d_solvers.py:8:class SciPyHeatSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/heat1d_solvers.py:52:class SciPySpectralHeatSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/heat1d_solvers.py:88:class ExponaxHeatSolver1D:
+./1D_Burgers_FNO_generalization/datasets_generation/solvers/heat1d_solvers.py:121:class PhiFlowHeatSolver1D:
+./1D_Burgers_deeponet/solvers/burgers1d_solvers.py:10:class SciPyBurgersSolver1D:
+./1D_Burgers_deeponet/solvers/burgers1d_solvers.py:69:class SciPySpectralBurgersSolver1D:
+./1D_Burgers_deeponet/solvers/burgers1d_solvers.py:153:class ExponaxBurgersSolver1D:
+./1D_Burgers_deeponet/solvers/burgers1d_solvers.py:197:class PhiFlowBurgersSolver1D:
+./1D_Burgers_deeponet/solvers/heat1d_solvers.py:8:class SciPyHeatSolver1D:
+./1D_Burgers_deeponet/solvers/heat1d_solvers.py:52:class SciPySpectralHeatSolver1D:
+./1D_Burgers_deeponet/solvers/heat1d_solvers.py:88:class ExponaxHeatSolver1D:
+./1D_Burgers_deeponet/solvers/heat1d_solvers.py:121:class PhiFlowHeatSolver1D:
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results.py:132:    优先断在 '/' 或 '\\'，其次 '_'、'-'，最后退化为严格居中。
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results.py:141:        ('/\\',),          # 最高优先：路径分隔
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results.py:455:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.py:390:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results.py:132:    优先断在 '/' 或 '\\'，其次 '_'、'-'，最后退化为严格居中。
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results.py:141:        ('/\\',),          # 最高优先：路径分隔
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results.py:455:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.py:390:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/continual_train_attack_3/eval_models/plot_results.py:132:    优先断在 '/' 或 '\\'，其次 '_'、'-'，最后退化为严格居中。
+./2D_NS_FNO2d_recurrent/continual_train_attack_3/eval_models/plot_results.py:141:        ('/\\',),          # 最高优先：路径分隔
+./2D_NS_FNO2d_recurrent/continual_train_attack_3/eval_models/plot_results.py:455:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/continual_train_attack_3/eval_models/plot_results_significance.py:390:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame.py:90:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.py:136:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_generalizability.py:297:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/old_files/VT_NS_gen_all_frame.py:55:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/old_files/VT_NS_gen_all_frame_2.py:55:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/old_files/VT_NS_gen_all_frame_3.py:80:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/old_files/VT_NS_gen_all_frame_4.py:90:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/data_generation/old_files/VT_NS_gen_all_frame_5.py:90:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/datasets/get_datasets_stats.py:69:    p = str(pt_path.resolve()).replace("\\", "/").lower()
+./2D_NS_FNO2d_recurrent/datasets/get_expanded_datasets_stats_delta.py:51:    p = str(pt_path.resolve()).replace("\\", "/").lower()
+./2D_NS_FNO2d_recurrent/eval_models/old_files/plot_results copy.py:132:    优先断在 '/' 或 '\\'，其次 '_'、'-'，最后退化为严格居中。
+./2D_NS_FNO2d_recurrent/eval_models/old_files/plot_results copy.py:141:        ('/\\',),          # 最高优先：路径分隔
+./2D_NS_FNO2d_recurrent/eval_models/old_files/plot_results copy.py:440:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/eval_models/old_files/plot_results.py:88:    "rq": "\\",
+./2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/plot_results.py:133:    seps_priority = [('/\\',), ('_-',)]
+./2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/plot_results.py:440:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/eval_models/plot_results.py:132:    优先断在 '/' 或 '\\'，其次 '_'、'-'，最后退化为严格居中。
+./2D_NS_FNO2d_recurrent/eval_models/plot_results.py:141:        ('/\\',),          # 最高优先：路径分隔
+./2D_NS_FNO2d_recurrent/eval_models/plot_results.py:440:KERNEL_HATCH = {"gaussian": "-", "rbf": ".", "rq": "\\", "matern": "/", "periodic": "x", "other": None}
+./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py:91:class ExponaxVTSolver2D:
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py:545:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.sh:24:MODE_SPEC="${MODE_SPEC:-wwwwwwwwww}"
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_adaptive.py:671:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_adaptive.sh:24:MODE_SPEC="${MODE_SPEC:-wwwwwwwwww}"
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py:283:### CHANGED: 新增 — 用于 per-sample 现算 loss / surrogate_loss
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py:342:    ### CHANGED: 仅此函数逻辑更新 —— 保存 per-sample PKL 时现算每个样本自己的 loss
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py:583:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py:721:            ### CHANGED: 这里传 loss_reduction="sum"
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.sh:25:MODE_SPEC="${MODE_SPEC:-wwwwwwwwww}"
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py:283:### CHANGED: 新增 — 用于 per-sample 现算 loss / surrogate_loss
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py:342:    ### CHANGED: 仅此函数逻辑更新 —— 保存 per-sample PKL 时现算每个样本自己的 loss
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py:583:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py:721:            ### CHANGED: 这里传 loss_reduction="sum"
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adpative.sh:25:MODE_SPEC="${MODE_SPEC:-wwwwwwwwww}"
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_4/solver_1_time/PGD_attack_adam_2.py:511:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_4/solver_1_time/PGD_attack_adam_batch.py:417:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_4/solver_1_time/PGD_attack_adam_batch_2.py:592:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_5/PGD_attack_adam_batch_low_mem_long_time.py:283:### CHANGED: 新增 — 用于 per-sample 现算 loss / surrogate_loss
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_5/PGD_attack_adam_batch_low_mem_long_time.py:342:    ### CHANGED: 仅此函数逻辑更新 —— 保存 per-sample PKL 时现算每个样本自己的 loss
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_5/PGD_attack_adam_batch_low_mem_long_time.py:583:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_5/PGD_attack_adam_batch_low_mem_long_time.py:721:            ### CHANGED: 这里传 loss_reduction="sum"
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_5/PGD_attack_adam_low_mem_long_time.py:545:            if DEBUG_GRAD:
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/conv_kernel_abstracts.py:493:    selected_patterns=["sBands", "ringsLinf", "ringsL1", "isoCircles" , "petals" , "ringsCos"],  # CHANGED: 只跑这三类
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py:381:    # 3D: 画切片 + ratio
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py:513:    # 2D: 直接并排
+./2D_NS_FNO2d_recurrent/training_models_expanded/trainFNO2d_unnormalized_expanded.py:226:        print(f"[SKIP] Both targets exist. ADD: {add_ckpt} | REPLACE: {rep_ckpt}. Nothing to do.")
+./2D_NS_FNO2d_recurrent/training_models_expanded/trainFNO2d_unnormalized_expanded.sh:55:TASK_ID=${SLURM_ARRAY_TASK_ID:-0}    # 0 或 1
+./2D_NS_FNO2d_recurrent/training_models_expanded/trainFNO2d_unnormalized_expanded.sh:68:echo "TASKS: ${TASKS}, TASK_ID: ${TASK_ID}"
+./2D_NS_FNO2d_recurrent_real_initial/data_generation/VT_NS_gen_all_frame.py:91:class ExponaxVTSolver2D:
+./2D_NS_old/2D_NS/initial_to_final/data_generation/VT_NS_gen.py:80:class ExponaxVTSolver2D:
+./2D_NS_old/2D_NS/initial_to_final/data_generation/VT_NS_gen_all_frame.py:80:class ExponaxVTSolver2D:
+./2D_NS_old/2D_NS/initial_to_final/data_generation/old_files/VT_NS_gen_all_frame_2.py:107:class ExponaxVTSolver2D:
+./2D_NS_old/2D_NS_Zongyi_Li/recurrent/data_generation/VT_NS_gen_all_frame.py:14:class ExponaxVTSolver2D:

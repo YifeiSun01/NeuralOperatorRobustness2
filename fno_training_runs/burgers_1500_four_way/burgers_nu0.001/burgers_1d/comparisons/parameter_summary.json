@@ -1,0 +1,23 @@
+{
+  "jax_complex": {
+    "num_parameter_blocks": 34,
+    "num_compared_blocks": 34,
+    "num_values_compared": 320705,
+    "max_abs": 14.565939903259277,
+    "relative_l2": 1.000240546920387
+  },
+  "jax_real_imag": {
+    "num_parameter_blocks": 34,
+    "num_compared_blocks": 34,
+    "num_values_compared": 320705,
+    "max_abs": 0.5754148364067078,
+    "relative_l2": 0.15970306191207134
+  },
+  "jax_conjugate_grad": {
+    "num_parameter_blocks": 34,
+    "num_compared_blocks": 34,
+    "num_values_compared": 320705,
+    "max_abs": 1.2947914600372314,
+    "relative_l2": 1.0010022356289534
+  }
+}

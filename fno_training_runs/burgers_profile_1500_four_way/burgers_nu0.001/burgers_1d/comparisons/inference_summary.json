@@ -1,0 +1,103 @@
+{
+  "num_samples": 5,
+  "prediction_vs_target": {
+    "pytorch": {
+      "mse": 1.8311297026230022e-05,
+      "rmse": 0.004279170132891426,
+      "mae": 0.0022348654456436634,
+      "max_abs": 0.07175081968307495,
+      "relative_l2": 0.007790823932737112
+    },
+    "jax_complex": {
+      "mse": 0.06855472177267075,
+      "rmse": 0.2618295662691109,
+      "mae": 0.2155132293701172,
+      "max_abs": 0.5721108913421631,
+      "relative_l2": 0.47669717669487
+    },
+    "jax_real_imag": {
+      "mse": 2.7740112273022532e-05,
+      "rmse": 0.005266888291299003,
+      "mae": 0.0025185844860970974,
+      "max_abs": 0.06271648406982422,
+      "relative_l2": 0.009589103981852531
+    },
+    "jax_conjugate_grad": {
+      "mse": 0.00016605641576461494,
+      "rmse": 0.012886287897009555,
+      "mae": 0.006330196745693684,
+      "max_abs": 0.16724836826324463,
+      "relative_l2": 0.02346128039062023
+    }
+  },
+  "prediction_vs_pytorch": {
+    "jax_complex": {
+      "mse": 0.06915579736232758,
+      "rmse": 0.2629748987305206,
+      "mae": 0.2162049263715744,
+      "max_abs": 0.5760294198989868,
+      "relative_l2": 0.8047895431518555
+    },
+    "jax_real_imag": {
+      "mse": 1.4796986761211883e-05,
+      "rmse": 0.0038466851653354583,
+      "mae": 0.001970563316717744,
+      "max_abs": 0.0499286949634552,
+      "relative_l2": 0.0069884005934000015
+    },
+    "jax_conjugate_grad": {
+      "mse": 0.00023288822558242828,
+      "rmse": 0.015260675790489368,
+      "mae": 0.007584592793136835,
+      "max_abs": 0.20242589712142944,
+      "relative_l2": 0.028095491230487823
+    }
+  },
+  "input_vs_pytorch": {
+    "jax_complex": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    "jax_real_imag": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    "jax_conjugate_grad": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    }
+  },
+  "target_vs_pytorch": {
+    "jax_complex": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    "jax_real_imag": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    "jax_conjugate_grad": {
+      "mse": 0.0,
+      "rmse": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    }
+  },
+  "sample_csv": "fno_training_runs/burgers_profile_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/inference_sample_comparison.csv"
+}

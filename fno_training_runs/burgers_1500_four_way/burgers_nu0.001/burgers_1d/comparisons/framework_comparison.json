@@ -1,0 +1,140 @@
+{
+  "inference_summary": {
+    "num_samples": 5,
+    "prediction_vs_target": {
+      "pytorch": {
+        "mse": 1.8311297026230022e-05,
+        "rmse": 0.004279170132891426,
+        "mae": 0.0022348654456436634,
+        "max_abs": 0.07175081968307495,
+        "relative_l2": 0.007790823932737112
+      },
+      "jax_complex": {
+        "mse": 0.032129231840372086,
+        "rmse": 0.17924628821923227,
+        "mae": 0.1522272527217865,
+        "max_abs": 0.4096951484680176,
+        "relative_l2": 0.3263428211212158
+      },
+      "jax_real_imag": {
+        "mse": 1.6397236322518438e-05,
+        "rmse": 0.004049350111131222,
+        "mae": 0.0020468812435865402,
+        "max_abs": 0.07219171524047852,
+        "relative_l2": 0.007372405380010605
+      },
+      "jax_conjugate_grad": {
+        "mse": 1.2829434126615524e-05,
+        "rmse": 0.003581819946146864,
+        "mae": 0.0020643987227231264,
+        "max_abs": 0.055660247802734375,
+        "relative_l2": 0.006521201692521572
+      }
+    },
+    "prediction_vs_pytorch": {
+      "jax_complex": {
+        "mse": 0.032316677272319794,
+        "rmse": 0.17976839898135544,
+        "mae": 0.15253877639770508,
+        "max_abs": 0.4136136770248413,
+        "relative_l2": 0.36749035120010376
+      },
+      "jax_real_imag": {
+        "mse": 2.1086543711135164e-05,
+        "rmse": 0.004592008679340139,
+        "mae": 0.002312514465302229,
+        "max_abs": 0.06308585405349731,
+        "relative_l2": 0.008357339538633823
+      },
+      "jax_conjugate_grad": {
+        "mse": 2.693259193620179e-05,
+        "rmse": 0.0051896620252384245,
+        "mae": 0.0026777093298733234,
+        "max_abs": 0.08777451515197754,
+        "relative_l2": 0.009448287077248096
+      }
+    },
+    "input_vs_pytorch": {
+      "jax_complex": {
+        "mse": 0.0,
+        "rmse": 0.0,
+        "mae": 0.0,
+        "max_abs": 0.0,
+        "relative_l2": 0.0
+      },
+      "jax_real_imag": {
+        "mse": 0.0,
+        "rmse": 0.0,
+        "mae": 0.0,
+        "max_abs": 0.0,
+        "relative_l2": 0.0
+      },
+      "jax_conjugate_grad": {
+        "mse": 0.0,
+        "rmse": 0.0,
+        "mae": 0.0,
+        "max_abs": 0.0,
+        "relative_l2": 0.0
+      }
+    },
+    "target_vs_pytorch": {
+      "jax_complex": {
+        "mse": 0.0,
+        "rmse": 0.0,
+        "mae": 0.0,
+        "max_abs": 0.0,
+        "relative_l2": 0.0
+      },
+      "jax_real_imag": {
+        "mse": 0.0,
+        "rmse": 0.0,
+        "mae": 0.0,
+        "max_abs": 0.0,
+        "relative_l2": 0.0
+      },
+      "jax_conjugate_grad": {
+        "mse": 0.0,
+        "rmse": 0.0,
+        "mae": 0.0,
+        "max_abs": 0.0,
+        "relative_l2": 0.0
+      }
+    },
+    "sample_csv": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/inference_sample_comparison.csv"
+  },
+  "parameter_summary": {
+    "jax_complex": {
+      "num_parameter_blocks": 34,
+      "num_compared_blocks": 34,
+      "num_values_compared": 320705,
+      "max_abs": 14.565939903259277,
+      "relative_l2": 1.000240546920387
+    },
+    "jax_real_imag": {
+      "num_parameter_blocks": 34,
+      "num_compared_blocks": 34,
+      "num_values_compared": 320705,
+      "max_abs": 0.5754148364067078,
+      "relative_l2": 0.15970306191207134
+    },
+    "jax_conjugate_grad": {
+      "num_parameter_blocks": 34,
+      "num_compared_blocks": 34,
+      "num_values_compared": 320705,
+      "max_abs": 1.2947914600372314,
+      "relative_l2": 1.0010022356289534
+    }
+  },
+  "inference_summary_path": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/inference_summary.json",
+  "inference_sample_csv": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/inference_sample_comparison.csv",
+  "inference_plot": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/inference_compare_all_frameworks.png",
+  "parameter_summary_path": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/parameter_summary.json",
+  "parameter_csv": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/parameter_block_comparison.csv",
+  "parameter_plots": {
+    "jax_complex": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/parameter_block_max_abs_jax_complex.png",
+    "jax_real_imag": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/parameter_block_max_abs_jax_real_imag.png",
+    "jax_conjugate_grad": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/parameter_block_max_abs_jax_conjugate_grad.png"
+  },
+  "loss_plot": "fno_training_runs/burgers_1500_four_way/burgers_nu0.001/burgers_1d/comparisons/loss_compare_all_frameworks.png",
+  "aligned_jax_init_with_pytorch": true
+}

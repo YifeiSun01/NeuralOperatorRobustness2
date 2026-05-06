@@ -1,0 +1,39 @@
+{
+  "num_samples": 5,
+  "input_pytorch_vs_jax": {
+    "mse": 0.0,
+    "rmse": 0.0,
+    "mae": 0.0,
+    "max_abs": 0.0,
+    "relative_l2": 0.0
+  },
+  "target_pytorch_vs_jax": {
+    "mse": 0.0,
+    "rmse": 0.0,
+    "mae": 0.0,
+    "max_abs": 0.0,
+    "relative_l2": 0.0
+  },
+  "prediction_pytorch_vs_jax": {
+    "mse": 0.00021772077889181674,
+    "rmse": 0.014755364410675079,
+    "mae": 0.009430790320038795,
+    "max_abs": 0.1945963203907013,
+    "relative_l2": 0.026795608922839165
+  },
+  "pytorch_prediction_vs_target": {
+    "mse": 8.21042267489247e-05,
+    "rmse": 0.009061138270047793,
+    "mae": 0.006143423728644848,
+    "max_abs": 0.09533259272575378,
+    "relative_l2": 0.016497064381837845
+  },
+  "jax_prediction_vs_target": {
+    "mse": 0.000162046097102575,
+    "rmse": 0.012729732797768184,
+    "mae": 0.0073839155957102776,
+    "max_abs": 0.1460551619529724,
+    "relative_l2": 0.023176250979304314
+  },
+  "sample_csv": "fno_training_runs/burgers_no_profile_500_fair/burgers_nu0.001/burgers_1d/comparisons/inference_sample_comparison.csv"
+}

@@ -4,15 +4,15 @@ import jax.numpy as jnp
 import exponax as ex
 import torch
 import os
+from pathlib import Path
 from tqdm import tqdm
 import jaxlib
-from jax.lib import xla_bridge
 from torch.utils import dlpack as torch_dlpack
 import jax.dlpack as jax_dlpack
 
 def print_memory_stats():
     try:
-        mem_stats = xla_bridge.get_backend().memory_stats()
+        mem_stats = jax.devices()[0].memory_stats()
         print(f"\n--- JAX Memory Usage ---")
         print(f"Used: {mem_stats['bytes_in_use']/1e9:.1f} GB")
         print(f"Total: {mem_stats['bytes_limit']/1e9:.1f} GB")
@@ -78,14 +78,16 @@ jax.config.update("jax_debug_nans", False)
 
 # Set default device to GPU if available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+DEFAULT_REAL_INITIAL_SOURCE_DIR = PROJECT_DIR / "datasets" / "source_zongyi_real_initial"
 
 def torch_to_jax(tensor):
     """将 PyTorch 张量安全转换为 JAX 数组"""
-    return jax_dlpack.from_dlpack(torch_dlpack.to_dlpack(tensor.contiguous()))
+    return jax_dlpack.from_dlpack(tensor.contiguous())
 
 def jax_to_torch(jax_array):
     """将JAX数组转换为PyTorch张量而不复制数据"""
-    return torch_dlpack.from_dlpack(jax_dlpack.to_dlpack(jax_array))
+    return torch.from_dlpack(jax_array)
 
 class ExponaxVTSolver2D:
     def __init__(self, nx, ny, Lx, Ly, nu, forcing=None, bc='periodic'):
@@ -255,20 +257,25 @@ def spectral_upsample(field, target_size=256):
     return (target_size / H) * upsampled.real
 
 class DatasetGenerator:
-    def __init__(self, base_seed=0, train_test="train"):
+    def __init__(self, base_seed=0, train_test="train", source_dir=None, filename_suffix="", source_limit=None):
         self.global_seed_counter = base_seed
         self.dataset_counter = 0
         self.train_test = train_test
+        self.source_dir = Path(source_dir) if source_dir is not None else None
+        self.filename_suffix = filename_suffix
+        self.source_limit = source_limit
         self.zongyi_dataset = self._load_dataset_to_gpu()
 
     def _load_dataset_to_gpu(self):
-        dataset_path = f'../2D_NS_old/2D_NS_Zongyi_Li/recurrent/datasets/2D/NS/NS_data_zongyi_{self.train_test}_all_frame.pt'
+        filename = f"NS_data_zongyi_{self.train_test}_all_frame{self.filename_suffix}.pt"
+        dataset_path = (self.source_dir or DEFAULT_REAL_INITIAL_SOURCE_DIR) / filename
         print(f"Loading dataset from {dataset_path}...")
         dataset = torch.load(dataset_path, map_location=device, weights_only=False)
         print("Pre-upsampling dataset on GPU...")
+        source_x = dataset['x'][:self.source_limit] if self.source_limit is not None else dataset['x']
         upsampled_data = [
-            spectral_upsample(dataset['x'][i], 256)
-            for i in tqdm(range(len(dataset['x'])), desc="Upsampling", unit="sample")
+            spectral_upsample(source_x[i], 256)
+            for i in tqdm(range(len(source_x)), desc="Upsampling", unit="sample")
         ]
         dataset['x'] = torch.stack(upsampled_data)
         return dataset
@@ -366,19 +373,19 @@ class DatasetGenerator:
 if __name__ == "__main__":
     # 使用示例
     for train_test,nsamples in [("test",50),("train",1150)]:
-        generator = DatasetGenerator(base_seed=0, train_test=train_test)
+        generator = DatasetGenerator(
+            base_seed=0,
+            train_test=train_test,
+            filename_suffix="_real_initial",
+        )
 
         print("Generating dataset:")
-        tfinal = 40
+        tfinal = 20
         path1 = generator.generate_dataset(
             nu_ns=1e-5,
             tfinal=tfinal,
             nsamples=nsamples,
             batch_size=nsamples,
-            ntimepoints=5*tfinal+1,
-            save_dir="./datasets"
+            ntimepoints=tfinal+1,
+            save_dir=str(PROJECT_DIR / "datasets" / "exponax_datasets" / "t20" / "real_initial")
         )
-
-
-
-

@@ -1,0 +1,19 @@
+{
+  "train_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+  "output_root": "gradient_audit/fno1d_burgers_steps_0_9_40_50_100_110",
+  "num_steps": 111,
+  "batch_size": 64,
+  "modes": 16,
+  "width": 64,
+  "num_layers": 4,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "dtype": "float32",
+  "seed": 1234,
+  "device": null,
+  "save_vectors": false,
+  "save_vector_steps": null,
+  "plot_steps": "0-9,40-50,100-110",
+  "plot_max_points": 8000,
+  "plot_top_blocks": 20
+}

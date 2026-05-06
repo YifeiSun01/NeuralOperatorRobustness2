@@ -1,0 +1,160 @@
+./1D_Burgers/attack_result_viz/pgd_viz.sh:20:python ./1D_Burgers/attack_result_viz/pgd_viz.py \
+./1D_Burgers/continual_train_attack/continual_train_attack.sh:21:python -u ./1D_Burgers/continual_train_attack/continual_train_attack.py \
+./1D_Burgers/convert_files/gpu_to_cpu.sh:24:python -u ./convert_files/gpu_to_cpu.py
+./1D_Burgers/data_generation/script_to_run.sh:21:python -u ./1D_Burgers/data_generation/script_to_run.py
+./1D_Burgers/dataset_expansion/data_expand.sh:68:  python "$base_path/1D_Burgers/dataset_expansion/data_expand.py" \
+./1D_Burgers/dataset_expansion/old_files/data_expand.sh:42:    python "$base_path/1D_Burgers/dataset_expansion/data_expand.py" \
+./1D_Burgers/out_of_distr_test/out_of_distr_1d.sh:32:    python -u "$script" "$bool_value"
+./1D_Burgers/perturbation_methods/attack_results/viz_results.sh:21:python -u ./1D_Burgers/perturbation_methods/attack_results/viz_results.py
+./1D_Burgers/perturbation_methods/attack_results/viz_results_gif.sh:21:python -u ./1D_Burgers/perturbation_methods/attack_results/viz_results_gif.py
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/runner1d_shell_script.sh:32:    python -u ./perturbation_methods/runner1d.py \
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/runner1d_shell_script_attack.sh:23:python -u ./perturbation_methods/runner1d_attack.py \
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/runner1d_shell_script_test.sh:23:python -u ./perturbation_methods/runner1d_test_norm2modified_2.py \
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/runner1d_shell_script_test.sh:31:python -u ./perturbation_methods/runner1d_test.py \
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/runner1d_shell_script_test_norm2infmodified.sh:39:python -u ./perturbation_methods/"${file}".py \
+./1D_Burgers/perturbation_methods/old/old_attack_python_files/runner1d_shell_script_test_norm2modified.sh:39:python -u ./perturbation_methods/"${file}".py \
+./1D_Burgers/perturbation_methods/old/old_files/runner1d_shell_script_compare.sh:23:python -u ./perturbation_methods/runner1d_compare.py \
+./1D_Burgers/perturbation_methods/old/old_files/runner1d_shell_script_test_gradient_unclear.sh:23:python -u ./perturbation_methods/runner1d_test_gradient_model_gradient_unclear.py \
+./1D_Burgers/perturbation_methods/old/old_files/runner1d_shell_script_test_gradient_unclear_no_boundary.sh:23:python -u ./perturbation_methods/runner1d_test_gradient_model_gradient_unclear_no_boundary.py \
+./1D_Burgers/perturbation_methods/old/old_files/runner1d_test_nu0.01.sh:26:python -u "./perturbation_methods/runner1d_test_nu${nu_val}.py" \
+./1D_Burgers/perturbation_methods/old/runner1d_compare_old/runner1d_shell_script_compare.sh:23:python -u ./perturbation_methods/runner1d_compare.py \
+./1D_Burgers/perturbation_methods/old/runner1d_test_old/runner1d_shell_script_test_gradient_clear.sh:23:python -u ./perturbation_methods/runner1d_test_gradient_model_gradient_clear.py \
+./1D_Burgers/perturbation_methods/old/runner1d_test_old/runner1d_shell_script_test_gradient_unclear.sh:23:python -u ./perturbation_methods/runner1d_test_gradient_model_gradient_unclear.py \
+./1D_Burgers/perturbation_methods/old/runner1d_test_old/runner1d_shell_script_test_jacobian_clear.sh:23:python -u ./perturbation_methods/runner1d_test_jacobian_model_gradient_clear.py \
+./1D_Burgers/perturbation_methods/old/runner1d_test_old/runner1d_shell_script_test_jacobian_unclear.sh:23:python -u ./perturbation_methods/runner1d_test_jacobian_model_gradient_unclear.py \
+./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005.sh:35:  python -u "./1D_Burgers/perturbation_methods/runner1d_test_nu${nu_val}.py" \
+./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_adaptive.sh:35:  python -u "./1D_Burgers/perturbation_methods/runner1d_test_nu${nu_val}_adaptive.py" \
+./1D_Burgers/perturbation_methods/runner1d_test_nu0.0005_dtw.sh:35:  python -u "./1D_Burgers/perturbation_methods/runner1d_test_nu${nu_val}_dtw.py" \
+./1D_Burgers/perturbation_methods/runner1d_test_nu0.01.sh:35:  python -u "./1D_Burgers/perturbation_methods/runner1d_test_nu${nu_val}.py" \
+./1D_Burgers/perturbation_methods/x_y_dict/gen_x_y_dict.sh:21:python -u ./1D_Burgers/perturbation_methods/x_y_dict/gen_x_y_dict.py
+./1D_Burgers/perturbed_results_as_inputs/old_files/runner1d_shell_script_test_gradient_unclear_perturbed_input.sh:23:python -u ./perturbed_results_as_inputs/runner1d_test_gradient_model_gradient_unclear_perturbed_input.py \
+./1D_Burgers/perturbed_results_as_inputs/runner1d_shell_script_test_gradient_unclear_perturbed_input.sh:23:python -u ./perturbed_results_as_inputs/runner1d_test_gradient_model_gradient_unclear_perturbed_input.py \
+./1D_Burgers/perturbed_results_as_inputs/runner1d_shell_script_test_gradient_unclear_perturbed_input_no_boundary.sh:23:python -u ./perturbed_results_as_inputs/runner1d_test_gradient_model_gradient_unclear_perturbed_input_no_boundary.py \
+./1D_Burgers/training_models/trainingFNO1d_normalized.sh:21:python -u ./1D_Burgers/training_models/trainingFNO1d_normalized.py
+./1D_Burgers/training_models/trainingFNO1d_unnormalized.sh:21:python -u ./1D_Burgers/training_models_expanded/trainingFNO1d_unnormalized.py
+./1D_Burgers/training_models_expanded/trainingFNO1d_unnormalized.sh:21:python -u ./1D_Burgers/training_models_expanded/trainingFNO1d_unnormalized.py \
+./1D_Burgers_FNO_generalization/datasets_generation/data_gen.sh:21:python -u ./1D_Burgers_FNO_generalization/datasets_generation/data_gen.py
+./1D_Burgers_FNO_generalization/eval_models/eval_models.sh:21:python -u ./1D_Burgers_FNO_generalization/eval_models/eval_models.py
+./1D_Burgers_FNO_generalization/saved_models/old_files/run_generalization.sh:21:python -u ./1D_Burgers_FNO_generalization/saved_models/run_generalization.py
+./1D_Burgers_FNO_generalization/saved_models/run_generalization.sh:21:python -u ./1D_Burgers_FNO_generalization/saved_models/run_generalization.py
+./1D_Burgers_FNO_generalization/saved_models/run_test_train.sh:21:python -u ./1D_Burgers_FNO_generalization/saved_models/run_test_train.py
+./1D_Burgers_deeponet/perturbation_methods/PGD_attack_with_detach_approximate.sh:24:python -u ./perturbation_methods/PGD_attack_with_detach_approximate.py \
+./1D_Burgers_deeponet/training_models/train_deeponet1d.sh:21:python -u ./training_models/train_deeponet1d.py
+./1D_Burgers_deeponet/training_models/train_deeponet1d_2.sh:21:python -u ./training_models/train_deeponet1d_2.py
+./1D_Burgers_deeponet/training_models/train_deeponet1d_nodeepxde.sh:21:python -u ./training_models/train_deeponet1d_nodeepxde.py
+./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack.sh:21:python -u ./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack.py \
+./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack_2.sh:21:python -u ./2D_NS_FNO2d_recurrent/continual_train_attack/continual_train_attack_2.py \
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/eval_models.sh:34:python -u "$EVAL_SCRIPT" \
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results.sh:35:python -V
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results.sh:43:python -u "$PLOT_SCRIPT" \
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.sh:35:python -V
+./2D_NS_FNO2d_recurrent/continual_train_attack/eval_models/plot_results_significance.sh:43:python -u "$PLOT_SCRIPT" \
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.sh:21:python -u ./2D_NS_FNO2d_recurrent/continual_train_attack_2/continual_train_attack.py 
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/eval_models.sh:34:python -u "$EVAL_SCRIPT" \
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results.sh:35:python -V
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results.sh:43:python -u "$PLOT_SCRIPT" \
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.sh:35:python -V
+./2D_NS_FNO2d_recurrent/continual_train_attack_2/eval_models/plot_results_significance.sh:43:python -u "$PLOT_SCRIPT" \
+./2D_NS_FNO2d_recurrent/continual_train_attack_3/continual_train_attack.sh:21:python -u ./2D_NS_FNO2d_recurrent/continual_train_attack_3/continual_train_attack.py 
+./2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame.sh:19:python -u ./data_generation/VT_NS_gen_all_frame.py 2>&1
+./2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.sh:19:python -u ./data_generation/VT_NS_gen_all_frame_dict.py 2>&1
+./2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_generalizability.sh:19:python -u ./data_generation/VT_NS_gen_all_frame_generalizability.py 2>&1
+./2D_NS_FNO2d_recurrent/dataset_expansion/PGD_attack_adam_data_expan.sh:39:      srun python -u ./2D_NS_FNO2d_recurrent/dataset_expansion/PGD_attack_adam_data_expan.py \
+./2D_NS_FNO2d_recurrent/dataset_expansion/old_files/PGD_attack_adam_data_expan.sh:60:  srun python -u ./2D_NS_FNO2d_recurrent/dataset_expansion/PGD_attack_adam_data_expan.py \
+./2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/read_data_dict.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/read_data_dict.py
+./2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim_reduct_umap/dim_reduct_umap.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dim_reduct_umap/dim_reduct_umap.py
+./2D_NS_FNO2d_recurrent/datasets/get_datasets_stats.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/get_datasets_stats.py
+./2D_NS_FNO2d_recurrent/datasets/get_expanded_datasets_stats_delta.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/get_expanded_datasets_stats_delta.py
+./2D_NS_FNO2d_recurrent/datasets/old_files/get_datasets_stats_fft.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/get_datasets_stats_fft.py
+./2D_NS_FNO2d_recurrent/datasets/statistics/find_closest_expand_gen.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/statistics/find_closest_expand_gen.py
+./2D_NS_FNO2d_recurrent/datasets/statistics/plot_statistics.sh:21:python -u ./2D_NS_FNO2d_recurrent/datasets/statistics/plot_statistics.py
+./2D_NS_FNO2d_recurrent/eval_models/eval_models.sh:38:python -V
+./2D_NS_FNO2d_recurrent/eval_models/eval_models.sh:45:python -u "$EVAL_SCRIPT" \
+./2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/plot_results.sh:37:python -V
+./2D_NS_FNO2d_recurrent/eval_models/plot_model_performance/plot_results.sh:45:python -u "$PLOT_SCRIPT" \
+./2D_NS_FNO2d_recurrent/eval_models/plot_results.sh:35:python -V
+./2D_NS_FNO2d_recurrent/eval_models/plot_results.sh:43:python -u "$PLOT_SCRIPT" \
+./2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/rmse_frame0diff_scatter.sh:22:python ./2D_NS_FNO2d_recurrent/eval_models/rmse_frame0diff_scatter/discover_and_run_scatter.py \
+./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.sh:19:python -u ./2D_NS_FNO2d_recurrent/external_forcing_patterns/data_generation/VT_NS_gen_all_frame.py 2>&1
+./2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/data_expand.sh:68:    python -u "${ROOT}/dataset_expansion/data_expand.py" \
+./2D_NS_FNO2d_recurrent/external_forcing_patterns/training_models/trainFNO2d_unnormalized.sh:21:python -u ./2D_NS_FNO2d_recurrent/external_forcing_patterns/training_models/trainFNO2d_unnormalized.py
+./2D_NS_FNO2d_recurrent/model_explainability/45degree_forcing_pattern/model_shortened_infer.sh:36:# 建议用 srun 启动 job step（便于资源绑定、日志更一致）
+./2D_NS_FNO2d_recurrent/model_explainability/45degree_forcing_pattern/model_shortened_infer.sh:37:srun -u python ./2D_NS_FNO2d_recurrent/model_explainability/model_shortened_infer.py \
+./2D_NS_FNO2d_recurrent/model_explainability/45degree_forcing_pattern/plot_infer_results.sh:21:srun -u python ./2D_NS_FNO2d_recurrent/model_explainability/plot_infer_results.py
+./2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/model_shortened_infer.sh:35:srun -u python ./2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/model_shortened_infer.py \
+./2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/plot_infer_results.sh:21:srun -u python ./2D_NS_FNO2d_recurrent/model_explainability/other_forcing_patterns/plot_infer_results.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.sh:28:srun python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_adaptive.sh:28:srun python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_adaptive.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.sh:29:srun python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adpative.sh:29:srun python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files/PGD_attack_with_solver.sh:21:python -u ./perturbation_methods/PGD_attack_with_solver.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files/PGD_attack_with_solver_test.sh:21:python -u ./perturbation_methods/PGD_attack_with_solver_test.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_adam.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_approximated.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_approximated.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_constant1to9.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_constant1to9.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached13579.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached13579.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached19.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached19.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to5.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached1to5.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to6.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached1to6.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to7.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached1to7.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to8.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached1to8.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to9.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached1to9.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to9_19.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached1to9_19.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached2468.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached2468.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached5to9.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_detached5to9.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_with_solver.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_with_solver.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_with_solver_paralleled.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_with_solver_paralleled.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_4/solver_1_time/PGD_attack_adam.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py
+./2D_NS_FNO2d_recurrent/perturbation_methods/old_files_4/solver_1_time/PGD_attack_adam_many_tasks.sh:56:    srun python -u ./2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_adam_normal.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_adam_normal.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_alpha.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_alpha.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_detach_withsolver.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_detach_withsolver.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_heatmap.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_heatmap.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_attack_results_short_pic_detach_withsolver.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_attack_results_short_pic_detach_withsolver.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_attack_results_short_pic_detach_withsolver_batch.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_attack_results_short_pic_detach_withsolver_batch.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_heatmap.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_heatmap.py
+./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_heatmap_batch.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver_batch/viz_heatmap_batch.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/adam_attacks_results/viz_attack_results_short_pic_adam_normal.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_pic_adam_normal.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/adam_attacks_results/viz_attack_results_short_pic_alpha.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_pic_alpha.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/adam_attacks_results/viz_attack_results_short_pic_detach_withsolver.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results/viz_attack_results_short_pic_detach_withsolver.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/adam_attacks_results_1solver/viz_attack_results_short_pic_adam_normal.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_adam_normal.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/adam_attacks_results_1solver/viz_attack_results_short_pic_alpha.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_alpha.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/adam_attacks_results_1solver/viz_attack_results_short_pic_detach_withsolver.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/adam_attacks_results_1solver/viz_attack_results_short_pic_detach_withsolver.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/all_attacks_results/viz_attack_results.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/viz_attack_results.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/all_attacks_results/viz_attack_results_short.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/viz_attack_results_short.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/all_attacks_results/viz_attack_results_short_pic.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/all_attacks_results/viz_attack_results_short_pic.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/lr_decay_attacks_results/viz_attack_results_short.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/lr_decay_attacks_results/viz_attack_results_short.py
+./2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/with_solver_attack_results/viz_attack_results.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py
+./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results.py
+./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results_approximated.sh:21:python -u ./2D_NS_FNO2d_recurrent/perturbation_results/viz_attack_results_approximated.py
+./2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/test_generalizability.sh:21:python -u ./2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/test_generalizability.py
+./2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/test_test_train.sh:21:python -u ./2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/test_test_train.py
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/45degree_forcing_pattern/conv_kernel_abstracts.sh:21:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/conv_kernel_abstracts.py
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/45degree_forcing_pattern/plot_kernel_abstracts.sh:16:# ========= 参数区（可在此修改，或提交时用 sbatch --export 覆盖）=========
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/45degree_forcing_pattern/plot_kernel_abstracts.sh:67:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py \
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/45degree_forcing_pattern/plot_kernel_abstracts.sh:79:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py \
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/45degree_forcing_pattern/plot_kernel_abstracts.sh:92:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/plot_kernel_abstracts.py \
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/conv_kernel_abstracts.sh:21:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/conv_kernel_abstracts.py
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.sh:16:# ========= 参数区（可在此修改，或提交时用 sbatch --export 覆盖）=========
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.sh:67:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py \
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.sh:80:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py \
+./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.sh:94:python -u ./2D_NS_FNO2d_recurrent/saved_models_kernel_abstracts/other_forcing_patterns/plot_kernel_abstracts.py \
+./2D_NS_FNO2d_recurrent/super_large_dataset_training/trainFNO2d_unnormalized_expanded.sh:34:python -u ./2D_NS_FNO2d_recurrent/super_large_dataset_training/trainFNO2d_unnormalized_expanded.py \
+./2D_NS_FNO2d_recurrent/training_models/trainFNO2d_unnormalized.sh:21:python -u ./2D_NS_FNO2d_recurrent/training_models/trainFNO2d_unnormalized.py
+./2D_NS_FNO2d_recurrent/training_models_expanded/trainFNO2d_unnormalized_expanded.sh:75:  python -u ./2D_NS_FNO2d_recurrent/training_models_expanded/trainFNO2d_unnormalized_expanded.py \
+./2D_NS_FNO2d_recurrent_real_initial/data_generation/VT_NS_gen_all_frame.sh:19:python -u ./2D_NS_FNO2d_recurrent_real_initial/data_generation/VT_NS_gen_all_frame.py 2>&1
+./2D_NS_FNO2d_recurrent_real_initial/dataset_expansion/PGD_attack_adam_data_expan.sh:64:  srun python -u ./2D_NS_FNO2d_recurrent_real_initial/dataset_expansion/PGD_attack_adam_data_expan.py \
+./2D_NS_FNO2d_recurrent_real_initial/training_models/trainFNO2d_unnormalized.sh:21:python -u ./2D_NS_FNO2d_recurrent_real_initial/training_models/trainFNO2d_unnormalized.py
+./2D_NS_FNO3d/saved_models/3D/no_padding/modes1232_modes36_width40_epochs500_Tin10_T10/read_data.sh:28:python -u "$SCRIPT_DIR/read_data.py"
+./2D_NS_FNO3d/training_models/trainFNO3d_unnormalized.sh:21:python -u ./2D_NS_FNO3d/training_models/trainingFNO3d_unnormalized.py
+./2D_NS_compare/eval_all_models/eval_all_models.sh:34:python -u "$EVAL_SCRIPT" \
+./2D_NS_compare/run_models.sh:21:python -u ./2D_NS_compare/run_models.py \
+./2D_NS_old/2D_NS/initial_to_final/data_generation/VT_NS_gen.sh:19:python -u ./data_generation/VT_NS_gen.py 2>&1
+./2D_NS_old/2D_NS/initial_to_final/data_generation/VT_NS_gen_all_frame.sh:19:python -u ./data_generation/VT_NS_gen_all_frame.py 2>&1
+./2D_NS_old/2D_NS/initial_to_final/training_models/trainFNO2d.sh:21:python -u ./training_models/trainingFNO2d_unnormalized.py
+./2D_NS_old/2D_NS/recurrent/training_models/trainFNO2d_unnormalized.sh:21:python -u ./training_models/trainingFNO2d_unnormalized.py
+./2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/training_models/256_256/trainFNO2d_unnormalized.sh:21:python -u ./training_models/256_256/trainingFNO2d_unnormalized.py
+./2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/training_models/64_64/trainFNO2d_normalized.sh:21:python -u ./training_models/trainingFNO2d_normalized.py
+./2D_NS_old/2D_NS_Zongyi_Li/initial_to_final/training_models/64_64/trainFNO2d_unnormalized.sh:21:python -u ./training_models/trainingFNO2d_unnormalized.py
+./2D_NS_old/2D_NS_Zongyi_Li/recurrent/data_generation/VT_NS_gen_all_frame.sh:20:python -u ./data_generation/VT_NS_gen_all_frame.py 2>&1
+./2D_NS_old/2D_NS_Zongyi_Li/recurrent/training_models/trainFNO2d_unnormalized.sh:21:python -u ./training_models/trainingFNO2d_unnormalized.py
