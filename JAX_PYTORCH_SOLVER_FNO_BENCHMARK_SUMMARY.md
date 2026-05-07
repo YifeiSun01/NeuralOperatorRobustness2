@@ -550,3 +550,435 @@ It is not linearly tied to physical `t_final` in the way the numerical solver is
    - Burgers solver states are small, so solver memory remains low even for inverse.
    - NS has large grid and many time steps, so solver inverse/backward can become very expensive in both time and memory.
 
+## Forward vs Backward/Training Ratios
+
+This section directly compares the cost of:
+
+```text
+FNO inference forward
+FNO training forward/backward
+solver pure forward
+solver inverse forward/backward
+```
+
+The main question is whether backward/inverse cost grows with `t_final`, and whether the behavior differs between FNO and solver.
+
+### FNO: Training vs Inference
+
+For FNO, the physical `t_final` is not the main scaling variable once the architecture is fixed.
+
+For the trained models used here:
+
+```text
+Burgers FNO:
+input: one initial field
+output: one final field
+batch size for fair inference/training comparison: 64
+
+NS recurrent FNO:
+input: 10 frames, y[..., 0:10]
+output: 10 frames, y[..., 10:20]
+batch size for fair inference/training comparison: 8
+```
+
+FNO timing ratios:
+
+| Problem | Framework | Inference Forward | Train Forward | Train Backward | Backward / Inference |
+|---|---|---:|---:|---:|---:|
+| Burgers | PyTorch | 0.003645 s | 0.002747 s | 0.003920 s | 1.08x |
+| Burgers | JAX | 0.001957 s | 0.002002 s | 0.003370 s adjusted | 1.72x |
+| NS | PyTorch | 0.06334 s | 0.05882 s | 0.10854 s | 1.71x |
+| NS | JAX | 0.05402 s | 0.06118 s | 0.08045 s adjusted | 1.49x |
+
+FNO memory ratios:
+
+| Problem | Framework | Inference Memory | Train Forward Memory | Train Backward Memory | Backward / Inference |
+|---|---|---:|---:|---:|---:|
+| Burgers | PyTorch | 140.2 MiB | 505.8 MiB | 505.8 MiB | 3.61x |
+| Burgers | JAX | 717.0 MiB | 2733.0 MiB | 2733.0 MiB | 3.81x |
+| NS | PyTorch | 534.7 MiB | 11664.6 MiB | 11724.0 MiB | 21.93x |
+| NS | JAX | 1533.0 MiB | 30570.3 MiB | 30583.0 MiB | 19.95x |
+
+FNO pattern:
+
+```text
+FNO backward time is usually only about 1.5-1.7x inference forward time.
+FNO training memory is much larger than inference memory.
+Burgers FNO training memory is about 3.6-3.8x inference.
+NS FNO training memory is about 20-22x inference.
+FNO cost is mostly controlled by architecture, grid size, batch size, and output window, not directly by solver t_final.
+```
+
+### Solver: Inverse/Backward vs Pure Forward
+
+For the numerical solver, `t_final` directly controls the number of solver time steps. With fixed `dt`, larger `t_final` means more steps, so both time and backward memory grow.
+
+For NS:
+
+```text
+dt = 0.005
+t_final=2  -> 400 steps
+t_final=5  -> 1000 steps
+t_final=10 -> 2000 steps
+t_final=20 -> 4000 steps
+```
+
+NS solver timing ratios, inverse/backward compared to pure forward:
+
+| t_final | Steps | Framework | Pure Forward | Inverse Forward | Inverse Backward | Inv Fwd / Pure | Inv Bwd / Pure |
+|---:|---:|---|---:|---:|---:|---:|---:|
+| 2 | 400 | PyTorch | 0.510 s | 0.678 s | 0.882 s | 1.33x | 1.73x |
+| 2 | 400 | JAX | 0.183 s | 0.190 s | 0.176 s | 1.04x | 0.96x |
+| 5 | 1000 | PyTorch | 1.328 s | 1.750 s | 2.368 s | 1.32x | 1.78x |
+| 5 | 1000 | JAX | 0.455 s | 0.462 s | 0.420 s | 1.01x | 0.92x |
+| 10 | 2000 | PyTorch | 2.684 s | 3.697 s | 5.084 s | 1.38x | 1.89x |
+| 10 | 2000 | JAX | 0.912 s | 0.925 s | 0.826 s | 1.01x | 0.91x |
+| 20 | 4000 | PyTorch | 5.595 s | 7.929 s | 11.127 s | 1.42x | 1.99x |
+| 20 | 4000 | JAX | 3.689 s* | 1.836 s | 1.665 s | 0.50x* | 0.45x* |
+
+`*` The NS `t_final=20` JAX pure-forward result came from the forward-only script that returned a fuller time sequence, while inverse JAX only returns the final state. Therefore the t=20 JAX pure-forward ratio is not exactly the same measurement scope. The `t=2/5/10` trend is cleaner.
+
+Time pattern:
+
+```text
+Solver forward and backward time grow approximately linearly with t_final.
+PyTorch solver inverse backward is about 1.7-2.0x pure forward.
+JAX adjusted solver backward is roughly comparable to pure forward, often slightly below or around 1x in these logs.
+Total solver inverse step time is roughly forward + backward + small optimizer/update cost.
+```
+
+NS solver memory ratios, inverse/backward compared to pure forward:
+
+| t_final | Steps | Framework | Pure Forward Memory | Inverse Backward Memory | Inverse / Pure |
+|---:|---:|---|---:|---:|---:|
+| 2 | 400 | PyTorch | 29-34 MiB alloc scale | 2170 MiB | about 70x |
+| 2 | 400 | JAX | about 13.6 MiB global delta | 7173 MiB global | about 296x using logged deltas |
+| 5 | 1000 | PyTorch | about 31 MiB alloc | 5394 MiB | about 174x |
+| 5 | 1000 | JAX | about 13.6 MiB global delta | 14849 MiB global | about 589x using logged deltas |
+| 10 | 2000 | PyTorch | about 31 MiB alloc | 10779 MiB | about 344x |
+| 10 | 2000 | JAX | about 12.8 MiB global delta | 29037 MiB global | about 1174x using logged deltas |
+| 20 | 4000 | PyTorch | 33.8 MiB alloc | 21551 MiB | about 637x |
+| 20 | 4000 | JAX | about 45.6 MiB global delta | 57423 MiB global | about 713x using logged deltas |
+
+Memory pattern:
+
+```text
+Pure solver forward memory is small and changes weakly with t_final.
+Solver inverse/backward memory grows strongly with the number of time steps.
+The backward/forward memory ratio can grow from tens of times to hundreds of times.
+This is because forward-only can overwrite intermediate states, while backward/inverse must store or reconstruct the time-step history needed for gradients.
+```
+
+### Solver Backward vs FNO Backward
+
+NS FNO backward, batch 8:
+
+```text
+PyTorch FNO backward: 0.10854 s / batch8
+JAX FNO adjusted backward: 0.08045 s / batch8
+```
+
+NS solver backward compared to FNO backward:
+
+| t_final | Steps | Framework | Solver Backward | Solver / FNO Batch Backward | Solver / FNO Per-Sample Backward |
+|---:|---:|---|---:|---:|---:|
+| 2 | 400 | PyTorch | 0.882 s | 8.12x | 65.0x |
+| 2 | 400 | JAX | 0.176 s | 2.19x | 17.5x |
+| 5 | 1000 | PyTorch | 2.368 s | 21.81x | 174.5x |
+| 5 | 1000 | JAX | 0.420 s | 5.22x | 41.7x |
+| 10 | 2000 | PyTorch | 5.084 s | 46.84x | 374.8x |
+| 10 | 2000 | JAX | 0.826 s | 10.27x | 82.2x |
+| 20 | 4000 | PyTorch | 11.127 s | 102.52x | 820.2x |
+| 20 | 4000 | JAX | 1.665 s | 20.70x | 165.6x |
+
+This is the cleanest time comparison:
+
+```text
+FNO backward is fixed-depth neural-network backward.
+Solver backward is backward-through-time over hundreds to thousands of solver steps.
+Therefore solver backward becomes increasingly slower than FNO backward as t_final increases.
+```
+
+### Solver Backward Memory vs FNO Backward Memory
+
+NS FNO training backward memory:
+
+```text
+PyTorch FNO backward: 11724 MiB = 11.45 GiB
+JAX FNO backward:     30583 MiB = 29.87 GiB
+```
+
+NS solver backward memory compared to FNO backward memory:
+
+| t_final | Steps | Framework | Solver Backward Memory | FNO Backward Memory | Solver / FNO |
+|---:|---:|---|---:|---:|---:|
+| 2 | 400 | PyTorch | 2.12 GiB | 11.45 GiB | 0.19x |
+| 2 | 400 | JAX | 7.00 GiB | 29.87 GiB | 0.23x |
+| 5 | 1000 | PyTorch | 5.27 GiB | 11.45 GiB | 0.46x |
+| 5 | 1000 | JAX | 14.50 GiB | 29.87 GiB | 0.49x |
+| 10 | 2000 | PyTorch | 10.53 GiB | 11.45 GiB | 0.92x |
+| 10 | 2000 | JAX | 28.36 GiB | 29.87 GiB | 0.95x |
+| 20 | 4000 | PyTorch | 21.05 GiB | 11.45 GiB | 1.84x |
+| 20 | 4000 | JAX | 56.08 GiB | 29.87 GiB | 1.88x |
+
+This gives the clearest memory scaling result:
+
+```text
+For short NS horizons, solver backward uses less memory than FNO training.
+At around t_final=10, solver backward and FNO training are similar.
+At t_final=20, solver backward uses about 1.8-1.9x FNO training memory.
+So solver backward memory grows with t_final, while FNO training memory stays roughly fixed for a fixed model architecture.
+```
+
+### Burgers Difference
+
+Burgers is much smaller than NS. The solver state is 1D and cheap.
+
+For Burgers:
+
+| Framework | Solver Forward | Solver Backward | FNO Inference | FNO Training Backward |
+|---|---:|---:|---:|---:|
+| PyTorch time | 0.639 s | 1.384 s | 0.003645 s / batch64 | 0.003920 s / batch64 |
+| JAX time | 0.271 s | 0.142 s adjusted | 0.001957 s / batch64 | 0.003370 s adjusted / batch64 |
+| PyTorch memory | 0.45 MiB forward, 53.5 MiB inverse | 53.5 MiB | 140.2 MiB inference | 505.8 MiB training |
+| JAX memory | about 20 MiB forward delta, 621 MiB inverse | 621 MiB | 717 MiB inference | 2733 MiB training |
+
+Burgers pattern:
+
+```text
+FNO is vastly faster than the Burgers solver.
+But Burgers solver memory remains small, even for inverse/backward.
+So for Burgers, FNO does not provide a memory advantage; it provides a speed advantage.
+```
+
+### Overall Pattern
+
+```text
+FNO:
+  forward/backward time is tied mostly to network architecture and batch size.
+  memory increases strongly from inference to training because training stores activations, gradients, and optimizer state.
+  cost is not directly linear in solver t_final once the architecture and output window are fixed.
+
+Solver:
+  forward/backward time grows approximately linearly with t_final at fixed dt.
+  pure forward memory stays relatively small because intermediate states can be overwritten.
+  inverse/backward memory grows strongly with t_final because gradient computation needs time-step history or equivalent saved/recomputed states.
+
+NS:
+  t_final has a large effect on solver inverse time and memory.
+  FNO cost stays roughly fixed for the fixed Tin/Tout architecture.
+
+Burgers:
+  solver memory is small because the state is small.
+  FNO is much faster but uses more memory than the tiny 1D solver.
+```
+
+## Four-Dimensional Forward/Backward Comparison
+
+This section reorganizes the results by the four dimensions used in discussion:
+
+```text
+Problem:   Burgers vs NS
+Object:    Solver vs FNO
+Framework: PyTorch vs JAX
+Metric:    Time vs Memory
+```
+
+The comparison of interest is:
+
+```text
+Solver: inverse forward/backward compared to pure solver forward
+FNO: training forward/backward compared to pure FNO inference
+```
+
+### NS Solver: Inverse vs Pure Forward Time
+
+| t_final | Steps | Framework | Pure Forward | Inverse Forward | Inverse Backward | Inv Fwd / Pure | Inv Bwd / Pure |
+|---:|---:|---|---:|---:|---:|---:|---:|
+| 2s | 400 | PyTorch | 0.510 s | 0.678 s | 0.882 s | 1.33x | 1.73x |
+| 2s | 400 | JAX | 0.183 s | 0.190 s | 0.176 s | 1.04x | 0.96x |
+| 5s | 1000 | PyTorch | 1.328 s | 1.750 s | 2.368 s | 1.32x | 1.78x |
+| 5s | 1000 | JAX | 0.455 s | 0.462 s | 0.420 s | 1.01x | 0.92x |
+| 10s | 2000 | PyTorch | 2.684 s | 3.697 s | 5.084 s | 1.38x | 1.89x |
+| 10s | 2000 | JAX | 0.912 s | 0.925 s | 0.826 s | 1.01x | 0.91x |
+| 20s | 4000 | PyTorch | 5.595 s | 7.929 s | 11.127 s | 1.42x | 1.99x |
+| 20s | 4000 | JAX | 3.689 s* | 1.836 s | 1.665 s | 0.50x* | 0.45x* |
+
+The `20s` JAX pure-forward value has a slightly different output-scope from the inverse script, so the `2s/5s/10s` JAX rows are cleaner for ratio interpretation.
+
+Key point:
+
+```text
+Solver time grows with t_final because the number of solver steps grows.
+PyTorch solver inverse backward is roughly 1.7-2.0x pure solver forward.
+JAX adjusted solver backward is around the same scale as pure solver forward in the clean t=2/5/10 rows.
+```
+
+### NS Solver: Inverse/Backward Memory vs Pure Forward Memory
+
+This is the comparison that shows the memory effect most clearly.
+
+| t_final | Steps | Framework | Pure Forward Memory | Inverse/Backward Memory | Backward / Pure Forward Memory |
+|---:|---:|---|---:|---:|---:|
+| 2s | 400 | PyTorch | 29.3 MiB | 2170 MiB | 74x |
+| 2s | 400 | JAX | 13.6 MiB delta | 4148 MiB delta | 296x |
+| 5s | 1000 | PyTorch | 31.0 MiB | 5394 MiB | 174x |
+| 5s | 1000 | JAX | 13.6 MiB delta | 8244 MiB delta | 589x |
+| 10s | 2000 | PyTorch | 31.3 MiB | 10779 MiB | 344x |
+| 10s | 2000 | JAX | 12.8 MiB delta | 16436 MiB delta | 1174x |
+| 20s | 4000 | PyTorch | 33.8 MiB | 21551 MiB | 637x |
+| 20s | 4000 | JAX | 45.6 MiB delta | 32810 MiB delta | 713x |
+
+Key point:
+
+```text
+NS solver pure forward memory stays small and changes weakly with t_final.
+NS solver inverse/backward memory grows strongly with t_final.
+Therefore backward / pure-forward memory ratio can grow from tens of times to hundreds or over one thousand times.
+```
+
+Mechanism:
+
+```text
+Pure forward:
+  keep current state, advance to next state, discard old state.
+
+Backward/inverse:
+  need saved or reconstructable time-step history for gradients.
+  more time steps means more memory pressure.
+```
+
+### Burgers Solver: Inverse vs Pure Forward
+
+| Framework | Pure Forward Time | Inverse Forward Time | Inverse Backward Time | Backward / Pure Time | Pure Forward Memory | Inverse Backward Memory | Backward / Pure Memory |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| PyTorch | 0.639 s | 0.894 s | 1.384 s | 2.17x | 0.45 MiB | 53.5 MiB | 119x |
+| JAX | 0.271 s | 0.137 s | 0.142 s adjusted | 0.52x | 19.2 MiB delta | 46 MiB delta | 2.4x |
+
+Key point:
+
+```text
+Burgers is a small 1D problem.
+The solver backward can still be slower than pure forward, but the absolute memory is small.
+FNO is much faster, but FNO memory is not lower than the tiny Burgers solver.
+```
+
+### FNO: Training/Backward vs Inference
+
+| Problem | Framework | Inference Forward | Train Forward | Train Backward | Backward / Inference Time | Inference Memory | Train Backward Memory | Backward / Inference Memory |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| Burgers | PyTorch | 0.00365 s | 0.00275 s | 0.00392 s | 1.08x | 140.2 MiB | 505.8 MiB | 3.61x |
+| Burgers | JAX | 0.00196 s | 0.00200 s | 0.00337 s adjusted | 1.72x | 717 MiB | 2733 MiB | 3.81x |
+| NS | PyTorch | 0.06334 s | 0.05882 s | 0.10854 s | 1.71x | 534.7 MiB | 11724 MiB | 21.93x |
+| NS | JAX | 0.05402 s | 0.06118 s | 0.08045 s adjusted | 1.49x | 1533 MiB | 30583 MiB | 19.95x |
+
+Key point:
+
+```text
+FNO training/backward time is only about 1-2x FNO inference time.
+FNO training memory is much larger than inference memory.
+Burgers FNO training memory is about 3.6-3.8x inference memory.
+NS FNO training memory is about 20-22x inference memory.
+```
+
+### Combined Pattern
+
+| Object | Time Compared To Forward | Memory Compared To Forward | Dependence On t_final |
+|---|---|---|---|
+| FNO | Training/backward is about 1-2x inference forward | Training memory is much larger than inference | Not directly controlled by solver `t_final`; mostly architecture, batch, grid, output window |
+| Solver | Backward time is often 1-2x pure forward, but absolute time grows with t_final | Backward memory can be tens to hundreds or over 1000x pure forward | Strong dependence at fixed `dt`; more `t_final` means more time steps |
+| Burgers solver | Much slower than FNO but memory remains small | Backward memory increases but absolute memory is small | Small 1D state, weaker memory pressure |
+| NS solver | Much slower than FNO and grows with t_final | Backward memory grows strongly with t_final | Strong scaling with time-step count |
+
+One-sentence summary:
+
+```text
+FNO forward/backward cost is relatively stable for a fixed architecture, while solver forward/backward cost grows with physical integration time; the strongest effect is NS solver inverse/backward memory, which grows from tens of times to hundreds or over 1000x pure-forward memory as t_final increases.
+```
+
+## Linear Scaling With `t_final` and Fixed Memory Overhead
+
+For the NS solver, the `t_final=2/5/10/20` experiments were fit with a simple linear model:
+
+```text
+metric = intercept + slope * t_final
+```
+
+The goal was to check whether solver time and memory are truly scaling with physical integration time, and whether there is a fixed overhead term.
+
+### Solver Time Scaling
+
+| Metric | Framework | Values at t=2/5/10/20 | Intercept | Slope per physical second | R² |
+|---|---|---:|---:|---:|---:|
+| inverse forward time | PyTorch | 0.678 / 1.750 / 3.697 / 7.929 s | -0.234 s | 0.405 s/s | 0.99901 |
+| inverse backward time | PyTorch | 0.882 / 2.368 / 5.084 / 11.127 s | -0.434 s | 0.573 s/s | 0.99857 |
+| inverse forward time | JAX | 0.190 / 0.462 / 0.925 / 1.836 s | 0.0067 s | 0.0915 s/s | 0.99999 |
+| inverse backward time | JAX | 0.176 / 0.420 / 0.826 / 1.665 s | 0.0060 s | 0.0828 s/s | 0.99993 |
+
+Time conclusion:
+
+```text
+Solver forward time is approximately linear in t_final.
+Solver backward time is also approximately linear in t_final.
+This is expected because fixed dt means t_final directly determines the number of solver steps.
+```
+
+The negative PyTorch intercepts should not be interpreted physically as negative fixed cost. They just indicate small measurement noise or slight nonlinearity in four measured points. The important point is that R² is essentially 1.
+
+### Solver Memory Scaling
+
+| Metric | Framework | Values at t=2/5/10/20 | Intercept | Slope per physical second | R² |
+|---|---|---:|---:|---:|---:|
+| inverse/backward memory | PyTorch | 2.12 / 5.27 / 10.53 / 21.05 GiB | 0.013 GiB | 1.052 GiB/s | 1.00000 |
+| inverse/backward memory | JAX | 7.00 / 14.50 / 28.36 / 56.08 GiB | 1.14 GiB | 2.74 GiB/s | 0.99977 |
+| pure forward memory | PyTorch | 0.0286 / 0.0303 / 0.0306 / 0.0330 GiB | 0.0286 GiB | 0.00022 GiB/s | 0.94292 |
+| pure forward memory | JAX | 0.0133 / 0.0133 / 0.0125 / 0.0445 GiB | 0.0043 GiB | 0.0018 GiB/s | 0.80823 |
+
+Memory conclusion:
+
+```text
+Solver backward memory is approximately linear in t_final.
+Solver pure forward memory is almost independent of t_final.
+```
+
+Interpretation:
+
+```text
+Pure forward:
+  The solver mostly keeps the current state and temporary work buffers.
+  Old time states can be discarded.
+  Therefore memory is dominated by a fixed/small working set.
+
+Backward/inverse:
+  Gradient computation needs saved or reconstructable information across time steps.
+  More physical time means more time steps.
+  Therefore memory grows approximately linearly with t_final.
+```
+
+This explains why the ratio:
+
+```text
+solver backward memory / solver pure forward memory
+```
+
+becomes very large as `t_final` increases. The forward memory baseline stays small and mostly fixed, while backward memory grows with the number of time steps.
+
+### Four Core Scaling Conclusions
+
+| Quantity | Relation to `t_final` | Reason |
+|---|---|---|
+| Solver forward time | approximately linear growth | more time steps must be advanced |
+| Solver backward time | approximately linear growth | gradients must propagate through more time steps |
+| Solver backward memory | approximately linear growth | more saved/reconstructed time-step history |
+| Solver forward memory | almost no growth | only current state and small work buffers are needed |
+
+Short version:
+
+```text
+Time:
+  both solver forward and solver backward scale approximately linearly with t_final.
+
+Memory:
+  solver backward memory scales approximately linearly with t_final.
+  solver forward memory is mostly fixed and weakly dependent on t_final.
+```
