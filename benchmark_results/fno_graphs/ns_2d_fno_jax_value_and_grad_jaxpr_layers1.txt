@@ -1,0 +1,627 @@
+let _linspace = { lambda ; a:i64[] b:i64[]. let
+    c:f32[] = convert_element_type[new_dtype=float32 weak_type=False] a
+    d:f32[] = convert_element_type[new_dtype=float32 weak_type=False] b
+    e:f32[] = sub d c
+    _:f32[] = div e 7.0:f32[]
+    f:f32[7] = iota[dimension=0 dtype=float32 shape=(7,) sharding=None] 
+    g:f32[7] = div f 7.0:f32[]
+    h:f32[1] = reshape[dimensions=None new_sizes=(1,) sharding=None] c
+    i:f32[7] = sub 1.0:f32[] g
+    j:f32[7] = mul h i
+    k:f32[1] = reshape[dimensions=None new_sizes=(1,) sharding=None] d
+    l:f32[7] = mul k g
+    m:f32[7] = add j l
+    n:f32[1] = broadcast_in_dim d
+    o:f32[8] = concatenate[dimension=0] m n
+  in (o,) } in
+{ lambda ; p:f32[4,4,3,3] q:f32[4,4,3,3] r:f32[4,4,3,3] s:f32[4,4,3,3] t:f32[4] u:f32[4,4,1,1]
+    v:f32[4] w:f32[4,4,1,1] x:f32[4] y:f32[4,12] z:f32[16] ba:f32[16,4,1,1] bb:f32[1]
+    bc:f32[1,16,1,1] bd:f32[4] be:f32[4,4,1,1] bf:f32[1,8,8,10]. let
+    bg:f32[8] = jit[name=_linspace jaxpr=_linspace] 0:i64[] 1:i64[]
+    bh:f32[8] = jit[name=_linspace jaxpr=_linspace] 0:i64[] 1:i64[]
+    bi:f32[1,8,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 8, 1, 1)
+      sharding=None
+    ] bg
+    bj:f32[1,1,8,1,1] = broadcast_in_dim[broadcast_dimensions=(0, 2, 3, 4)] bi
+    bk:f32[1,8,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 8, 1, 1)
+      sharding=None
+    ] bj
+    bl:f32[1,8,1,8,1] = broadcast_in_dim[broadcast_dimensions=(0, 1, 2, 4)] bk
+    bm:f32[1,8,8,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 8, 8, 1)
+      sharding=None
+    ] bl
+    bn:f32[1,1,8,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 1, 8, 1)
+      sharding=None
+    ] bh
+    bo:f32[1,1,1,8,1] = broadcast_in_dim[broadcast_dimensions=(0, 2, 3, 4)] bn
+    bp:f32[1,1,8,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 1, 8, 1)
+      sharding=None
+    ] bo
+    bq:f32[1,1,8,8,1] = broadcast_in_dim[broadcast_dimensions=(0, 1, 3, 4)] bp
+    br:f32[1,8,8,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 8, 8, 1)
+      sharding=None
+    ] bq
+    bs:f32[1,8,8,2] = concatenate[dimension=3] bm br
+    bt:f32[1,8,8,12] = concatenate[dimension=3] bf bs
+    _:f32[1,8,8,2] = broadcast_in_dim 0.0:f32[]
+    bu:f32[1,8,8,4] = dot_general[
+      dimension_numbers=(([3], [1]), ([], []))
+      preferred_element_type=float32
+    ] bt y
+    bv:f32[1,1,1,4] = broadcast_in_dim[broadcast_dimensions=(3,)] x
+    bw:f32[1,8,8,4] = add bu bv
+    bx:f32[1,4,8,8] = transpose[permutation=(0, 3, 1, 2)] bw
+    by:c64[1,4,8,5] = jit[
+      name=fft
+      jaxpr={ lambda ; bx:f32[1,4,8,8]. let
+          by:c64[1,4,8,5] = fft[fft_lengths=(8, 8) fft_type=2] bx
+        in (by,) }
+    ] bx
+    bz:c64[1,4,3,3] = slice[
+      limit_indices=(1, 4, 3, 3)
+      start_indices=(0, 0, 0, 0)
+      strides=None
+    ] by
+    ca:f32[1,4,3,3] = real bz
+    cb:f32[1,4,3,3] = imag bz
+    cc:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] q ca
+    cd:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] cc
+    ce:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] p cb
+    cf:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] ce
+    cg:f32[1,4,3,3] = sub cd cf
+    ch:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] p ca
+    ci:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] ch
+    cj:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] q cb
+    ck:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] cj
+    cl:f32[1,4,3,3] = add ci ck
+    cm:c64[1,4,3,3] = slice[
+      limit_indices=(1, 4, 8, 3)
+      start_indices=(0, 0, 5, 0)
+      strides=None
+    ] by
+    cn:f32[1,4,3,3] = real cm
+    co:f32[1,4,3,3] = imag cm
+    cp:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] s cn
+    cq:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] cp
+    cr:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] r co
+    cs:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] cr
+    ct:f32[1,4,3,3] = sub cq cs
+    cu:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] r cn
+    cv:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] cu
+    cw:f32[3,3,4,1] = dot_general[
+      dimension_numbers=(([0], [1]), ([2, 3], [2, 3]))
+      preferred_element_type=float32
+    ] s co
+    cx:f32[1,4,3,3] = transpose[permutation=(3, 2, 0, 1)] cw
+    cy:f32[1,4,3,3] = add cv cx
+    cz:f32[1,4,8,5] = broadcast_in_dim 0.0:f32[]
+    da:f32[1,4,8,5] = broadcast_in_dim 0.0:f32[]
+    db:i32[1] = broadcast_in_dim 0:i32[]
+    dc:i32[1] = broadcast_in_dim 0:i32[]
+    dd:i32[2] = concatenate[dimension=0] db dc
+    _:f32[1,4,8,5] = broadcast_in_dim 0.0:f32[]
+    de:f32[1,4,8,5] = scatter[
+      dimension_numbers=ScatterDimensionNumbers(update_window_dims=(0, 1, 2, 3), inserted_window_dims=(), scatter_dims_to_operand_dims=(2, 3), operand_batching_dims=(), scatter_indices_batching_dims=())
+      indices_are_sorted=True
+      mode=GatherScatterMode.FILL_OR_DROP
+      unique_indices=True
+      update_consts=()
+      update_jaxpr=None
+    ] cz dd cg
+    df:i32[1] = broadcast_in_dim 0:i32[]
+    dg:i32[1] = broadcast_in_dim 0:i32[]
+    dh:i32[2] = concatenate[dimension=0] df dg
+    _:f32[1,4,8,5] = broadcast_in_dim 0.0:f32[]
+    di:f32[1,4,8,5] = scatter[
+      dimension_numbers=ScatterDimensionNumbers(update_window_dims=(0, 1, 2, 3), inserted_window_dims=(), scatter_dims_to_operand_dims=(2, 3), operand_batching_dims=(), scatter_indices_batching_dims=())
+      indices_are_sorted=True
+      mode=GatherScatterMode.FILL_OR_DROP
+      unique_indices=True
+      update_consts=()
+      update_jaxpr=None
+    ] da dh cl
+    dj:i32[1] = broadcast_in_dim 5:i32[]
+    dk:i32[1] = broadcast_in_dim 0:i32[]
+    dl:i32[2] = concatenate[dimension=0] dj dk
+    dm:f32[1,4,8,5] = scatter[
+      dimension_numbers=ScatterDimensionNumbers(update_window_dims=(0, 1, 2, 3), inserted_window_dims=(), scatter_dims_to_operand_dims=(2, 3), operand_batching_dims=(), scatter_indices_batching_dims=())
+      indices_are_sorted=True
+      mode=GatherScatterMode.FILL_OR_DROP
+      unique_indices=True
+      update_consts=()
+      update_jaxpr=None
+    ] de dl ct
+    dn:i32[1] = broadcast_in_dim 5:i32[]
+    do:i32[1] = broadcast_in_dim 0:i32[]
+    dp:i32[2] = concatenate[dimension=0] dn do
+    dq:f32[1,4,8,5] = scatter[
+      dimension_numbers=ScatterDimensionNumbers(update_window_dims=(0, 1, 2, 3), inserted_window_dims=(), scatter_dims_to_operand_dims=(2, 3), operand_batching_dims=(), scatter_indices_batching_dims=())
+      indices_are_sorted=True
+      mode=GatherScatterMode.FILL_OR_DROP
+      unique_indices=True
+      update_consts=()
+      update_jaxpr=None
+    ] di dp cy
+    dr:c64[1,4,8,5] = convert_element_type[new_dtype=complex64 weak_type=False] dq
+    ds:c64[1,4,8,5] = mul 1j:c64[] dr
+    dt:c64[1,4,8,5] = convert_element_type[new_dtype=complex64 weak_type=False] dm
+    du:c64[1,4,8,5] = add dt ds
+    dv:c64[1,4,8,5] dw:c64[] = jit[
+      name=_pad
+      jaxpr={ lambda ; du:c64[1,4,8,5] dx:i64[]. let
+          dy:c64[] = convert_element_type[new_dtype=complex64 weak_type=False] dx
+          dv:c64[1,4,8,5] = pad[
+            padding_config=((np.int64(0), np.int64(0), 0), (np.int64(0), np.int64(0), 0), (np.int64(0), np.int64(0), 0), (np.int64(0), np.int64(0), 0))
+          ] du dy
+        in (dv, 0j:c64[]) }
+    ] du 0:i64[]
+    dz:f32[1,4,8,8] = jit[
+      name=fft
+      jaxpr={ lambda ; dv:c64[1,4,8,5]. let
+          dz:f32[1,4,8,8] = fft[fft_lengths=(8, 8) fft_type=3] dv
+        in (dz,) }
+    ] dv
+    ea:f32[4,4] = reduce_sum[axes=(2, 3) out_sharding=None] u
+    eb:f32[4,1,8,8] = dot_general[
+      dimension_numbers=(([1], [1]), ([], []))
+      preferred_element_type=float32
+    ] ea dz
+    ec:f32[1,4,8,8] = transpose[permutation=(1, 0, 2, 3)] eb
+    ed:f32[1,4,1,1] = broadcast_in_dim[broadcast_dimensions=(1,)] t
+    ee:f32[1,4,8,8] = add ec ed
+    ef:f32[1,4,8,8] = mul 0.5:f32[] ee
+    eg:f32[1,4,8,8] = neg ee
+    eh:f32[1,4,8,8] = mul eg 0.7071067690849304:f32[]
+    ei:f32[1,4,8,8] = erfc eh
+    ej:f32[1,4,8,8] = square eh
+    ek:f32[1,4,8,8] = neg ej
+    el:f32[1,4,8,8] = exp ek
+    em:f32[1,4,8,8] = mul ef ei
+    en:f32[1,4,8,8] = copy em
+    eo:f32[4,4] = reduce_sum[axes=(2, 3) out_sharding=None] w
+    ep:f32[4,1,8,8] = dot_general[
+      dimension_numbers=(([1], [1]), ([], []))
+      preferred_element_type=float32
+    ] eo en
+    eq:f32[1,4,8,8] = transpose[permutation=(1, 0, 2, 3)] ep
+    er:f32[1,4,1,1] = broadcast_in_dim[broadcast_dimensions=(1,)] v
+    es:f32[1,4,8,8] = add eq er
+    et:f32[4,4] = reduce_sum[axes=(2, 3) out_sharding=None] be
+    eu:f32[4,1,8,8] = dot_general[
+      dimension_numbers=(([1], [1]), ([], []))
+      preferred_element_type=float32
+    ] et bx
+    ev:f32[1,4,8,8] = transpose[permutation=(1, 0, 2, 3)] eu
+    ew:f32[1,4,1,1] = broadcast_in_dim[broadcast_dimensions=(1,)] bd
+    ex:f32[1,4,8,8] = add ev ew
+    ey:f32[1,4,8,8] = add es ex
+    ez:f32[16,4] = reduce_sum[axes=(2, 3) out_sharding=None] ba
+    fa:f32[16,1,8,8] = dot_general[
+      dimension_numbers=(([1], [1]), ([], []))
+      preferred_element_type=float32
+    ] ez ey
+    fb:f32[1,16,8,8] = transpose[permutation=(1, 0, 2, 3)] fa
+    fc:f32[1,16,1,1] = broadcast_in_dim[broadcast_dimensions=(1,)] z
+    fd:f32[1,16,8,8] = add fb fc
+    fe:f32[1,16,8,8] = mul 0.5:f32[] fd
+    ff:f32[1,16,8,8] = neg fd
+    fg:f32[1,16,8,8] = mul ff 0.7071067690849304:f32[]
+    fh:f32[1,16,8,8] = erfc fg
+    fi:f32[1,16,8,8] = square fg
+    fj:f32[1,16,8,8] = neg fi
+    fk:f32[1,16,8,8] = exp fj
+    fl:f32[1,16,8,8] = mul fe fh
+    fm:f32[1,16,8,8] = copy fl
+    fn:f32[1,16] = reduce_sum[axes=(2, 3) out_sharding=None] bc
+    fo:f32[1,1,8,8] = dot_general[
+      dimension_numbers=(([1], [1]), ([], []))
+      preferred_element_type=float32
+    ] fn fm
+    fp:f32[1,1,8,8] = transpose[permutation=(1, 0, 2, 3)] fo
+    fq:f32[1,1,1,1] = broadcast_in_dim[broadcast_dimensions=(1,)] bb
+    fr:f32[1,1,8,8] = add fp fq
+    fs:f32[1,8,8,1] = transpose[permutation=(0, 2, 3, 1)] fr
+    ft:f32[1,8,8,1] = mul fs fs
+    fu:f32[] = reduce_sum[axes=(0, 1, 2, 3) out_sharding=None] ft
+    fv:f32[] = div fu 64.0:f32[]
+    fw:f32[] = div 1.0:f32[] 64.0:f32[]
+    fx:f32[1,8,8,1] = broadcast_in_dim fw
+    fy:f32[1,8,8,1] = mul fs fx
+    fz:f32[1,8,8,1] = mul fx fs
+    ga:f32[1,8,8,1] = add_any fy fz
+    gb:f32[1,1,8,8] = transpose[permutation=(0, 3, 1, 2)] ga
+    gc:f32[1,1] = reduce_sum[axes=(2, 3) out_sharding=None] gb
+    gd:f32[1,1,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 1, 1, 1)
+      sharding=None
+    ] gc
+    ge:f32[] = reduce_sum[axes=(0, 1, 2, 3) out_sharding=None] gd
+    gf:f32[1] = broadcast_in_dim ge
+    gg:f32[1,1,8,8] = transpose[permutation=(1, 0, 2, 3)] gb
+    gh:f32[1,8,8,16] = dot_general[
+      dimension_numbers=(([0], [0]), ([], []))
+      preferred_element_type=float32
+    ] gg fn
+    gi:f32[1,16,8,8] = transpose[permutation=(0, 3, 1, 2)] gh
+    gj:f32[1,16] = dot_general[
+      dimension_numbers=(([1, 2, 3], [0, 2, 3]), ([], []))
+      preferred_element_type=float32
+    ] gg fm
+    gk:f32[1,16,1,1] = broadcast_in_dim[
+      broadcast_dimensions=(np.int64(0), np.int64(1))
+    ] gj
+    gl:f32[1,16,8,8] = copy gi
+    gm:f32[1,16,8,8] = mul fe gl
+    gn:f32[1,16,8,8] = mul gl fh
+    go:f32[1,16,8,8] = mul -1.128379225730896:f32[] gm
+    gp:f32[1,16,8,8] = mul go fk
+    gq:f32[1,16,8,8] = mul gp 0.7071067690849304:f32[]
+    gr:f32[1,16,8,8] = neg gq
+    gs:f32[1,16,8,8] = mul 0.5:f32[] gn
+    gt:f32[1,16,8,8] = add_any gr gs
+    gu:f32[1,16] = reduce_sum[axes=(2, 3) out_sharding=None] gt
+    gv:f32[1,16,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 16, 1, 1)
+      sharding=None
+    ] gu
+    gw:f32[16] = reduce_sum[axes=(0, 2, 3) out_sharding=None] gv
+    gx:f32[16,1,8,8] = transpose[permutation=(1, 0, 2, 3)] gt
+    gy:f32[1,8,8,4] = dot_general[
+      dimension_numbers=(([0], [0]), ([], []))
+      preferred_element_type=float32
+    ] gx ez
+    gz:f32[1,4,8,8] = transpose[permutation=(0, 3, 1, 2)] gy
+    ha:f32[16,4] = dot_general[
+      dimension_numbers=(([1, 2, 3], [0, 2, 3]), ([], []))
+      preferred_element_type=float32
+    ] gx ey
+    hb:f32[16,4,1,1] = broadcast_in_dim[
+      broadcast_dimensions=(np.int64(0), np.int64(1))
+    ] ha
+    hc:f32[1,4] = reduce_sum[axes=(2, 3) out_sharding=None] gz
+    hd:f32[1,4,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 4, 1, 1)
+      sharding=None
+    ] hc
+    he:f32[4] = reduce_sum[axes=(0, 2, 3) out_sharding=None] hd
+    hf:f32[4,1,8,8] = transpose[permutation=(1, 0, 2, 3)] gz
+    hg:f32[1,8,8,4] = dot_general[
+      dimension_numbers=(([0], [0]), ([], []))
+      preferred_element_type=float32
+    ] hf et
+    hh:f32[1,4,8,8] = transpose[permutation=(0, 3, 1, 2)] hg
+    hi:f32[4,4] = dot_general[
+      dimension_numbers=(([1, 2, 3], [0, 2, 3]), ([], []))
+      preferred_element_type=float32
+    ] hf bx
+    hj:f32[4,4,1,1] = broadcast_in_dim[
+      broadcast_dimensions=(np.int64(0), np.int64(1))
+    ] hi
+    hk:f32[1,4] = reduce_sum[axes=(2, 3) out_sharding=None] gz
+    hl:f32[1,4,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 4, 1, 1)
+      sharding=None
+    ] hk
+    hm:f32[4] = reduce_sum[axes=(0, 2, 3) out_sharding=None] hl
+    hn:f32[4,1,8,8] = transpose[permutation=(1, 0, 2, 3)] gz
+    ho:f32[1,8,8,4] = dot_general[
+      dimension_numbers=(([0], [0]), ([], []))
+      preferred_element_type=float32
+    ] hn eo
+    hp:f32[1,4,8,8] = transpose[permutation=(0, 3, 1, 2)] ho
+    hq:f32[4,4] = dot_general[
+      dimension_numbers=(([1, 2, 3], [0, 2, 3]), ([], []))
+      preferred_element_type=float32
+    ] hn en
+    hr:f32[4,4,1,1] = broadcast_in_dim[
+      broadcast_dimensions=(np.int64(0), np.int64(1))
+    ] hq
+    hs:f32[1,4,8,8] = copy hp
+    ht:f32[1,4,8,8] = mul ef hs
+    hu:f32[1,4,8,8] = mul hs ei
+    hv:f32[1,4,8,8] = mul -1.128379225730896:f32[] ht
+    hw:f32[1,4,8,8] = mul hv el
+    hx:f32[1,4,8,8] = mul hw 0.7071067690849304:f32[]
+    hy:f32[1,4,8,8] = neg hx
+    hz:f32[1,4,8,8] = mul 0.5:f32[] hu
+    ia:f32[1,4,8,8] = add_any hy hz
+    ib:f32[1,4] = reduce_sum[axes=(2, 3) out_sharding=None] ia
+    ic:f32[1,4,1,1] = reshape[
+      dimensions=None
+      new_sizes=(1, 4, 1, 1)
+      sharding=None
+    ] ib
+    id:f32[4] = reduce_sum[axes=(0, 2, 3) out_sharding=None] ic
+    ie:f32[4,1,8,8] = transpose[permutation=(1, 0, 2, 3)] ia
+    if:f32[1,8,8,4] = dot_general[
+      dimension_numbers=(([0], [0]), ([], []))
+      preferred_element_type=float32
+    ] ie ea
+    ig:f32[1,4,8,8] = transpose[permutation=(0, 3, 1, 2)] if
+    ih:f32[4,4] = dot_general[
+      dimension_numbers=(([1, 2, 3], [0, 2, 3]), ([], []))
+      preferred_element_type=float32
+    ] ie dz
+    ii:f32[4,4,1,1] = broadcast_in_dim[
+      broadcast_dimensions=(np.int64(0), np.int64(1))
+    ] ih
+    ij:c64[1,4,8,5] = jit[
+      name=fft
+      jaxpr={ lambda ; ig:f32[1,4,8,8]. let
+          ik:c64[1,4,8,5] = jit[
+            name=fft
+            jaxpr={ lambda ; ig:f32[1,4,8,8]. let
+                ik:c64[1,4,8,5] = fft[fft_lengths=(8, 8) fft_type=2] ig
+              in (ik,) }
+          ] ig
+          il:c64[5] = broadcast_in_dim (2+0j):c64[]
+          im:c64[1] = broadcast_in_dim (1+0j):c64[]
+          in:c64[5] = dynamic_update_slice il im 0:i64[]
+          io:c64[1] = broadcast_in_dim (1+0j):c64[]
+          ip:c64[5] = dynamic_update_slice in io 4:i64[]
+          iq:c64[1,1,1,5] = broadcast_in_dim[broadcast_dimensions=(3,)] ip
+          ir:c64[1,1,1,5] = mul (0.015625+0j):c64[] iq
+          is:c64[1,4,8,5] = mul ir ik
+          ij:c64[1,4,8,5] = conj[input_dtype=complex64] is
+        in (ij,) }
+    ] ig
+    it:c64[1,4,8,5] = jit[
+      name=_pad
+      jaxpr={ lambda ; dw:c64[] ij:c64[1,4,8,5]. let
+          iu:c64[1,4,8,5] = pad[
+            padding_config=((np.int64(0), np.int64(0), np.int64(0)), (np.int64(0), np.int64(0), np.int64(0)), (np.int64(0), np.int64(0), np.int64(0)), (np.int64(0), np.int64(0), np.int64(0)))
+          ] ij 0j:c64[]
+          it:c64[1,4,8,5] = slice[
+            limit_indices=(1, 4, 8, 5)
+            start_indices=(np.int64(0), np.int64(0), np.int64(0), np.int64(0))
+            strides=(np.int64(1), np.int64(1), np.int64(1), np.int64(1))
+          ] iu
+        in (it,) }
+    ] dw ij
+    iv:f32[1,4,8,5] = convert_element_type[new_dtype=float32 weak_type=False] it
+    iw:c64[1,4,8,5] = mul 1j:c64[] it
+    ix:f32[1,4,8,5] = convert_element_type[new_dtype=float32 weak_type=False] iw
+    iy:f32[1,4,3,3] = broadcast_in_dim 0.0:f32[]
+    iz:f32[1,4,8,5] = scatter[
+      dimension_numbers=ScatterDimensionNumbers(update_window_dims=(0, 1, 2, 3), inserted_window_dims=(), scatter_dims_to_operand_dims=(2, 3), operand_batching_dims=(), scatter_indices_batching_dims=())
+      indices_are_sorted=True
+      mode=GatherScatterMode.FILL_OR_DROP
+      unique_indices=True
+      update_consts=()
+      update_jaxpr=None
+    ] ix dp iy
+    ja:f32[1,4,3,3] = gather[
+      dimension_numbers=GatherDimensionNumbers(offset_dims=(0, 1, 2, 3), collapsed_slice_dims=(), start_index_map=(2, 3), operand_batching_dims=(), start_indices_batching_dims=())
+      fill_value=0
+      indices_are_sorted=False
+      mode=GatherScatterMode.FILL_OR_DROP
+      slice_sizes=(1, 4, 3, 3)
+      unique_indices=False
+    ] ix dp
+    jb:f32[1,4,3,3] = broadcast_in_dim 0.0:f32[]
+    jc:f32[1,4,8,5] = scatter[
+      dimension_numbers=ScatterDimensionNumbers(update_window_dims=(0, 1, 2, 3), inserted_window_dims=(), scatter_dims_to_operand_dims=(2, 3), operand_batching_dims=(), scatter_indices_batching_dims=())
+      indices_are_sorted=True
+      mode=GatherScatterMode.FILL_OR_DROP
+      unique_indices=True
+      update_consts=()
+      update_jaxpr=None
+    ] iv dl jb
+    jd:f32[1,4,3,3] = gather[
+      dimension_numbers=GatherDimensionNumbers(offset_dims=(0, 1, 2, 3), collapsed_slice_dims=(), start_index_map=(2, 3), operand_batching_dims=(), start_indices_batching_dims=())
+      fill_value=0
+      indices_are_sorted=False
+      mode=GatherScatterMode.FILL_OR_DROP
+      slice_sizes=(1, 4, 3, 3)
+      unique_indices=False
+    ] iv dl
+    je:f32[1,4,3,3] = gather[
+      dimension_numbers=GatherDimensionNumbers(offset_dims=(0, 1, 2, 3), collapsed_slice_dims=(), start_index_map=(2, 3), operand_batching_dims=(), start_indices_batching_dims=())
+      fill_value=0
+      indices_are_sorted=False
+      mode=GatherScatterMode.FILL_OR_DROP
+      slice_sizes=(1, 4, 3, 3)
+      unique_indices=False
+    ] iz dh
+    jf:f32[1,4,3,3] = gather[
+      dimension_numbers=GatherDimensionNumbers(offset_dims=(0, 1, 2, 3), collapsed_slice_dims=(), start_index_map=(2, 3), operand_batching_dims=(), start_indices_batching_dims=())
+      fill_value=0
+      indices_are_sorted=False
+      mode=GatherScatterMode.FILL_OR_DROP
+      slice_sizes=(1, 4, 3, 3)
+      unique_indices=False
+    ] jc dd
+    jg:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] ja
+    jh:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jg s
+    ji:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] jh
+    jj:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jg co
+    jk:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] jj
+    jl:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] ja
+    jm:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jl r
+    jn:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] jm
+    jo:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jl cn
+    jp:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] jo
+    jq:f32[1,4,3,3] = neg jd
+    jr:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] jq
+    js:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jr r
+    jt:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] js
+    ju:f32[1,4,3,3] = add_any ji jt
+    jv:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jr co
+    jw:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] jv
+    jx:f32[4,4,3,3] = add_any jp jw
+    jy:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] jd
+    jz:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jy s
+    ka:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] jz
+    kb:f32[1,4,3,3] = add_any jn ka
+    kc:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] jy cn
+    kd:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] kc
+    ke:f32[4,4,3,3] = add_any jk kd
+    kf:f32[1,4,3,3] = neg ju
+    kg:c64[1,4,3,3] = complex 0.0:f32[] kf
+    kh:c64[1,4,3,3] = complex kb 0.0:f32[]
+    ki:c64[1,4,3,3] = add_any kg kh
+    kj:c64[1,4,8,5] = pad[
+      padding_config=((0, np.int64(0), 0), (0, np.int64(0), 0), (5, np.int64(0), 0), (0, np.int64(2), 0))
+    ] ki 0j:c64[]
+    kk:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] je
+    kl:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] kk q
+    km:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] kl
+    kn:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] kk cb
+    ko:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] kn
+    kp:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] je
+    kq:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] kp p
+    kr:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] kq
+    ks:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] kp ca
+    kt:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] ks
+    ku:f32[1,4,3,3] = neg jf
+    kv:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] ku
+    kw:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] kv p
+    kx:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] kw
+    ky:f32[1,4,3,3] = add_any km kx
+    kz:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] kv cb
+    la:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] kz
+    lb:f32[4,4,3,3] = add_any kt la
+    lc:f32[3,3,4,1] = transpose[permutation=(2, 3, 1, 0)] jf
+    ld:f32[3,3,1,4] = dot_general[
+      dimension_numbers=(([2], [1]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] lc q
+    le:f32[1,4,3,3] = transpose[permutation=(2, 3, 0, 1)] ld
+    lf:f32[1,4,3,3] = add_any kr le
+    lg:f32[3,3,4,4] = dot_general[
+      dimension_numbers=(([3], [0]), ([0, 1], [2, 3]))
+      preferred_element_type=float32
+    ] lc ca
+    lh:f32[4,4,3,3] = transpose[permutation=(3, 2, 0, 1)] lg
+    li:f32[4,4,3,3] = add_any ko lh
+    lj:f32[1,4,3,3] = neg ky
+    lk:c64[1,4,3,3] = complex 0.0:f32[] lj
+    ll:c64[1,4,3,3] = complex lf 0.0:f32[]
+    lm:c64[1,4,3,3] = add_any lk ll
+    ln:c64[1,4,8,5] = pad[
+      padding_config=((0, np.int64(0), 0), (0, np.int64(0), 0), (0, np.int64(5), 0), (0, np.int64(2), 0))
+    ] lm 0j:c64[]
+    lo:c64[1,4,8,5] = add_any kj ln
+    lp:f32[1,4,8,8] = jit[
+      name=fft
+      jaxpr={ lambda ; lo:c64[1,4,8,5]. let
+          lp:f32[1,4,8,8] = jit[
+            name=_rfft_transpose
+            jaxpr={ lambda ; lo:c64[1,4,8,5]. let
+                lq:c64[5] = broadcast_in_dim (2+0j):c64[]
+                lr:c64[1] = broadcast_in_dim (1+0j):c64[]
+                ls:c64[5] = dynamic_update_slice lq lr 0:i64[]
+                lt:c64[1] = broadcast_in_dim (1+0j):c64[]
+                lu:c64[5] = dynamic_update_slice ls lt 4:i64[]
+                lv:c64[1,1,1,5] = broadcast_in_dim[broadcast_dimensions=(3,)] lu
+                lw:c64[1,4,8,5] = conj[input_dtype=complex64] lo
+                lx:c64[1,4,8,5] = div lw lv
+                ly:f32[1,4,8,8] = jit[
+                  name=fft
+                  jaxpr={ lambda ; lx:c64[1,4,8,5]. let
+                      ly:f32[1,4,8,8] = fft[fft_lengths=(8, 8) fft_type=3] lx
+                    in (ly,) }
+                ] lx
+                lp:f32[1,4,8,8] = mul 64.0:f32[] ly
+              in (lp,) }
+          ] lo
+        in (lp,) }
+    ] lo
+    lz:f32[1,4,8,8] = add_any hh lp
+    ma:f32[1,8,8,4] = transpose[permutation=(0, 2, 3, 1)] lz
+    mb:f32[1,4] = reduce_sum[axes=(1, 2) out_sharding=None] ma
+    mc:f32[1,1,1,4] = reshape[
+      dimensions=None
+      new_sizes=(1, 1, 1, 4)
+      sharding=None
+    ] mb
+    md:f32[4] = reduce_sum[axes=(0, 1, 2) out_sharding=None] mc
+    me:f32[4,12] = dot_general[
+      dimension_numbers=(([0, 1, 2], [0, 1, 2]), ([], []))
+      preferred_element_type=float32
+    ] ma bt
+    mf:f32[1,8,8,12] = dot_general[
+      dimension_numbers=(([3], [0]), ([], []))
+      preferred_element_type=float32
+    ] ma y
+    mg:f32[1,8,8,10] _:f32[1,8,8,2] = split[axis=3 sizes=(10, 2)] mf
+  in (fv, lb, li, jx, ke, id, ii, hm, hr, md, me, gw, hb, gf, gk, he, hj, mg) }

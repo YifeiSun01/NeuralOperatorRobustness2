@@ -982,3 +982,978 @@ Memory:
   solver backward memory scales approximately linearly with t_final.
   solver forward memory is mostly fixed and weakly dependent on t_final.
 ```
+
+## Backward Through a Spectral PDE Solver: Memory, Jacobians, and Saved Intermediates
+
+### Problem Setting
+
+The PDE solver can be viewed as a long time-unrolled computation graph. Given an initial condition, the solver repeatedly advances the state by a small time step `dt` until it reaches `t_final`. The loss is computed at the final condition, and the gradient is propagated back to the initial condition.
+
+The goal is not to train the solver parameters. The goal is to compute:
+
+```text
+dL / du0
+```
+
+or, for the 2D Navier-Stokes vorticity solver:
+
+```text
+dL / dOmega0
+```
+
+For example, with:
+
+```text
+t_final = 20
+dt = 0.005
+```
+
+the number of time steps is:
+
+```text
+N = 20 / 0.005 = 4000
+```
+
+Therefore, differentiating through the solver is equivalent to backpropagating through a 4000-layer time-unrolled network.
+
+### Forward Map
+
+One solver step can be written abstractly as:
+
+```text
+u_{n+1} = Phi_dt(u_n)
+```
+
+The full rollout is:
+
+```text
+u_N = Phi_dt o Phi_dt o ... o Phi_dt(u_0)
+```
+
+The loss is:
+
+```text
+L = L(u_N)
+```
+
+For the vorticity-form Navier-Stokes solver:
+
+```text
+Omega_{n+1} = Phi_dt(Omega_n)
+```
+
+and the desired gradient is:
+
+```text
+dL / dOmega0
+```
+
+### Backward Recurrence
+
+Define the adjoint variable:
+
+```text
+lambda_n = dL / du_n
+```
+
+At the final state:
+
+```text
+lambda_N = dL / du_N
+```
+
+For one time step, define the local Jacobian:
+
+```text
+J_n = d u_{n+1} / d u_n = D Phi_dt(u_n)
+```
+
+Reverse-mode differentiation propagates:
+
+```text
+lambda_n = J_n^T lambda_{n+1}
+```
+
+Therefore:
+
+```text
+dL / du0 = lambda_0
+         = J_0^T J_1^T ... J_{N-1}^T lambda_N
+```
+
+Equivalently, the full forward Jacobian is:
+
+```text
+d u_N / d u_0 = J_{N-1} J_{N-2} ... J_1 J_0
+```
+
+and:
+
+```text
+dL / du0 = (d u_N / d u_0)^T dL/du_N
+```
+
+The transposed product appears in reverse order during backpropagation.
+
+### The Jacobian Is Not Built Explicitly
+
+Although the math is written using `J_n`, PyTorch and JAX do not explicitly construct the full Jacobian matrix.
+
+For a `256 x 256` state, the flattened dimension is:
+
+```text
+256 * 256 = 65536
+```
+
+A single dense Jacobian would have shape:
+
+```text
+65536 x 65536
+```
+
+This is far too large to materialize. In practice, the frameworks compute vector-Jacobian products:
+
+```text
+J_n^T lambda_{n+1}
+```
+
+The backward pass therefore evolves:
+
+```text
+lambda_N -> lambda_{N-1} -> ... -> lambda_0
+```
+
+without ever forming the full Jacobian matrix.
+
+### Why Backward Needs Forward States or Residuals
+
+The local Jacobian is evaluated at the forward state:
+
+```text
+J_n = D Phi_dt(u_n)
+```
+
+If the solver step were linear:
+
+```text
+u_{n+1} = A u_n
+```
+
+then:
+
+```text
+J_n = A
+```
+
+and the Jacobian would not depend on the current state. But Burgers and Navier-Stokes are nonlinear. Their nonlinear terms include expressions such as:
+
+```text
+u * u_x
+u * Omega_x + v * Omega_y
+```
+
+Thus:
+
+```text
+J_n = J(u_n)
+```
+
+or:
+
+```text
+J_n = J(Omega_n)
+```
+
+This means that the backward step at time `n` needs information from the forward pass at time `n`. If those values were saved during forward, backward can use them directly. If they were not saved, they must be recomputed. This is the core tradeoff behind checkpointing, rematerialization, and recomputation.
+
+### Simple Euler Example
+
+For a simple explicit Euler step:
+
+```text
+u_{n+1} = u_n + dt * f(u_n)
+```
+
+the local Jacobian is:
+
+```text
+J_n = I + dt * df(u_n)/du_n
+```
+
+The backward update is:
+
+```text
+lambda_n = (I + dt * df(u_n)/du_n)^T lambda_{n+1}
+```
+
+This explicitly depends on the forward state `u_n`.
+
+### Burgers Nonlinearity
+
+The 1D Burgers equation is:
+
+```text
+u_t + u u_x = nu u_xx
+```
+
+or:
+
+```text
+u_t = -u u_x + nu u_xx
+```
+
+After spatial discretization:
+
+```text
+f(u) = -u * D_x u + nu * D_xx u
+```
+
+For an Euler step:
+
+```text
+u_{n+1} = u_n + dt * (-u_n * D_x u_n + nu * D_xx u_n)
+```
+
+For a perturbation `delta u_n`:
+
+```text
+delta u_{n+1}
+  = delta u_n
+  + dt * (
+      -delta u_n * D_x u_n
+      -u_n * D_x delta u_n
+      +nu * D_xx delta u_n
+    )
+```
+
+Therefore, the local Jacobian-vector product needs both:
+
+```text
+u_n
+D_x u_n
+```
+
+This is why backward needs either saved forward intermediates or recomputed forward intermediates.
+
+### Navier-Stokes Vorticity Solver Step
+
+The 2D Navier-Stokes solver uses the vorticity state:
+
+```text
+Omega_n
+```
+
+In the PyTorch code, one step is:
+
+```python
+omega_hat = self.fft(omega)
+omega_next_hat = self.integrator.step_fourier(omega_hat)
+omega_next = self.ifft(omega_next_hat)
+```
+
+Mathematically:
+
+```text
+z_n = F(Omega_n)
+z_{n+1} = Psi_dt(z_n)
+Omega_{n+1} = F^{-1}(z_{n+1})
+```
+
+Therefore:
+
+```text
+Omega_{n+1} = F^{-1}(Psi_dt(F(Omega_n)))
+```
+
+The local Jacobian has the form:
+
+```text
+J_n = D F^{-1} * D Psi_dt(z_n) * D F
+```
+
+Because FFT and inverse FFT are linear maps, the complicated part is:
+
+```text
+D Psi_dt(z_n)
+```
+
+### ETDRK4 Forward Structure
+
+Let:
+
+```text
+z = z_n = F(Omega_n)
+```
+
+The ETDRK4 step uses four nonlinear evaluations:
+
+```text
+K0 = N(z)
+A  = E_half z + q K0
+K1 = N(A)
+B  = E_half z + q K1
+K2 = N(B)
+C  = E_half A + q (2 K2 - K0)
+K3 = N(C)
+```
+
+The final spectral state is:
+
+```text
+z_plus = E z + f1 K0 + 2 f2 (K1 + K2) + f3 K3
+```
+
+This corresponds to the code in `ETDRK4.step_fourier`.
+
+### ETDRK4 Jacobian-Vector Product
+
+For a perturbation:
+
+```text
+z -> z + delta z
+```
+
+the Jacobian-vector product is obtained by linearizing every stage:
+
+```text
+delta K0 = DN(z) delta z
+delta A  = E_half delta z + q delta K0
+delta K1 = DN(A) delta A
+delta B  = E_half delta z + q delta K1
+delta K2 = DN(B) delta B
+delta C  = E_half delta A + q (2 delta K2 - delta K0)
+delta K3 = DN(C) delta C
+```
+
+and:
+
+```text
+delta z_plus
+  = E delta z
+  + f1 delta K0
+  + 2 f2 (delta K1 + delta K2)
+  + f3 delta K3
+```
+
+This is the ETDRK4 Jacobian-vector product. Reverse-mode AD computes the corresponding vector-Jacobian products without explicitly forming the Jacobian.
+
+### Navier-Stokes Nonlinear Function
+
+Given Fourier-space vorticity:
+
+```text
+z = hat(Omega)
+```
+
+the nonlinear function performs:
+
+```text
+z_d = M z
+psi_hat = Laplace^{-1} z_d
+u_hat = D_y psi_hat
+v_hat = -D_x psi_hat
+Omega_x_hat = D_x z_d
+Omega_y_hat = D_y z_d
+```
+
+Then it transforms to physical space:
+
+```text
+u       = F^{-1}(M u_hat)
+v       = F^{-1}(M v_hat)
+Omega_x = F^{-1}(M Omega_x_hat)
+Omega_y = F^{-1}(M Omega_y_hat)
+```
+
+The convection term is:
+
+```text
+C = u * Omega_x + v * Omega_y
+```
+
+and:
+
+```text
+N(z) = -alpha * F(C) + forcing_hat
+```
+
+Since the forcing term does not depend on `z`, its derivative is zero.
+
+For a perturbation `delta z`, the linearized nonlinear function is:
+
+```text
+DN(z) delta z
+  = -alpha * F(
+      delta u * Omega_x
+      + u * delta Omega_x
+      + delta v * Omega_y
+      + v * delta Omega_y
+    )
+```
+
+This expression shows why the backward pass needs forward quantities such as:
+
+```text
+u, v, Omega_x, Omega_y
+```
+
+These are not trainable parameters, but they are residuals needed to compute the gradient.
+
+### How Many Large Intermediates Exist Per Step
+
+One call to `nonlinear_fun` contains many large tensors, including:
+
+```text
+z_d
+psi_hat
+u_hat
+v_hat
+Omega_x_hat
+Omega_y_hat
+u
+v
+Omega_x
+Omega_y
+C
+F(C)
+N(z)
+```
+
+This is roughly 12 to 13 full-field or spectral-field sized tensors.
+
+ETDRK4 calls the nonlinear function four times:
+
+```text
+N(z), N(A), N(B), N(C)
+```
+
+Therefore, the nonlinear part alone can involve roughly:
+
+```text
+4 * (12 to 13) = 48 to 52
+```
+
+large tensor-scale intermediates per time step.
+
+The ETDRK4 stage values add more large tensors:
+
+```text
+z, K0, A, K1, B, K2, C, K3, z_plus
+```
+
+This does not mean that every Python variable is necessarily saved as a persistent activation. Autograd saves only the residuals required by backward, and frameworks may reuse buffers or avoid saving constants. However, the step contains enough state-dependent operations that the saved-residual count can be large.
+
+### Why the Minimal Estimate Is Too Small
+
+If we only stored one `256 x 256` float32 field per time step, the memory would be:
+
+```text
+4000 * 256 * 256 * 4 bytes
+  = 1,048,576,000 bytes
+  approximately 1.05 GB
+```
+
+This estimate assumes only one `Omega_n` is stored per step. It is a lower bound, not a realistic estimate for autograd through ETDRK4 spectral Navier-Stokes.
+
+A more realistic scaling is:
+
+```text
+memory ~= N * H * W * 4 bytes * K
+```
+
+where `K` is the number of full-field-equivalent residuals saved per step.
+
+### Residual Count Inferred From Benchmarks
+
+For the NS solver at:
+
+```text
+t_final = 20
+dt = 0.005
+N = 4000
+```
+
+the measured backward memory was approximately:
+
+```text
+PyTorch: 21.05 GiB
+JAX:     56.08 GiB
+```
+
+For PyTorch:
+
+```text
+21.05 * 1024 / 4000 = 5.39 MiB per step
+```
+
+A single `256 x 256` float32 field is:
+
+```text
+256 * 256 * 4 bytes = 0.25 MiB
+```
+
+So PyTorch stores roughly:
+
+```text
+5.39 / 0.25 = 21.6
+```
+
+full-field-equivalent tensors per step.
+
+For JAX:
+
+```text
+56.08 * 1024 / 4000 = 14.36 MiB per step
+14.36 / 0.25 = 57.4
+```
+
+So JAX stores roughly:
+
+```text
+57 full-field-equivalent tensors per step
+```
+
+This agrees with the qualitative code-level estimate that each ETDRK4 spectral NS step can involve tens of large residuals.
+
+### Why JAX Uses More Memory Here
+
+The measured JAX memory is higher than PyTorch for this benchmark. Several factors can contribute:
+
+```text
+1. Different memory accounting.
+   PyTorch allocator peak and nvidia-smi global memory are not identical measurements.
+
+2. XLA may keep more buffers for speed.
+   Compiled buffers, fusion temporaries, residual buffers, and preallocated pools can raise memory.
+
+3. JAX may save more residuals or choose a different rematerialization strategy by default.
+```
+
+The benchmark trend was consistent:
+
+```text
+JAX is usually faster.
+JAX usually uses more GPU memory.
+```
+
+For NS solver inverse at `t_final=20`, this appears as:
+
+```text
+PyTorch backward memory: about 21.05 GiB
+JAX backward memory:     about 56.08 GiB
+```
+
+### Why Pure Forward Memory Is Small
+
+Pure forward inference does not need gradients. It can repeatedly update:
+
+```text
+Omega_n -> Omega_{n+1}
+```
+
+and discard old states. Therefore, pure forward only needs:
+
+```text
+current state
+next state
+FFT/IFFT temporary buffers
+small solver work arrays
+framework overhead
+```
+
+It does not need the full time history. This is why pure forward memory is nearly independent of `t_final`.
+
+Backward/inverse is different. It needs:
+
+```text
+J_0^T J_1^T ... J_{N-1}^T lambda_N
+```
+
+and each local vector-Jacobian product needs the corresponding forward residuals from that time step. Therefore, backward memory grows with the number of time steps unless rematerialization or checkpointing is used.
+
+### Are 20 GiB and 50 GiB Reasonable?
+
+Yes. The measured numbers are reasonable for this solver.
+
+The rough scaling is:
+
+```text
+memory ~= 4000 * (20 to 60) * 256 * 256 * 4 bytes
+```
+
+This lands in the tens-of-GiB range.
+
+The benchmark-derived estimates are:
+
+```text
+PyTorch: about 20+ full-field-equivalent tensors per step -> about 21 GiB
+JAX:     about 50+ full-field-equivalent tensors per step -> about 56 GiB
+```
+
+Therefore, the large memory usage is not an anomaly. It reflects the fact that the computation is differentiating through thousands of spectral ETDRK4 time steps, each with many nonlinear intermediates.
+
+### Does Every Variable Have To Be Saved?
+
+Not literally. PyTorch and JAX do not necessarily preserve every Python variable name as a distinct persistent tensor. They save the residuals required by the backward rules.
+
+Constants such as the following generally do not need to be saved as per-step activations:
+
+```text
+D_x, D_y, inverse Laplacian, dealiasing mask
+E, E_half, q, f1, f2, f3
+```
+
+They are fixed solver operators or coefficients.
+
+State-dependent quantities are different. Examples include:
+
+```text
+z, K0, A, K1, B, K2, C, K3, z_plus
+u, v, Omega_x, Omega_y, convection, F(convection)
+```
+
+These are tied to the current time step and are needed, directly or indirectly, to compute:
+
+```text
+J_n^T lambda_{n+1}
+```
+
+### Checkpointing, Rematerialization, and Recomputation
+
+There is no free way to avoid the information requirement. The backward pass needs the forward trajectory information in one of two forms:
+
+```text
+1. saved in memory
+2. recomputed during backward
+```
+
+Default reverse-mode AD usually saves many residuals:
+
+```text
+forward:
+  save residuals
+
+backward:
+  reuse saved residuals
+```
+
+This is memory-heavy but faster.
+
+Checkpointing/rematerialization changes the strategy:
+
+```text
+forward:
+  save only selected checkpoints
+
+backward:
+  recompute local forward segments from the nearest checkpoint
+```
+
+For example, one could save every 100th state:
+
+```text
+Omega_0, Omega_100, Omega_200, ..., Omega_4000
+```
+
+When backward needs states inside the interval `2600..2700`, it recomputes that local segment from `Omega_2600`.
+
+More advanced schemes, such as Revolve/binomial checkpointing, choose checkpoint schedules more intelligently to reduce recomputation cost for a given memory budget.
+
+### Discrete Adjoint vs Continuous Adjoint
+
+If the goal is the exact gradient of the actual discrete solver output:
+
+```text
+d L(discrete_solver(u0)) / d u0
+```
+
+then the appropriate options are:
+
+```text
+default reverse-mode AD
+checkpointed reverse-mode AD
+hand-written discrete adjoint
+```
+
+These compute gradients of the actual discrete computation.
+
+Continuous adjoint methods can reduce memory, but they solve an adjoint equation at the continuous-equation level and then discretize it. This may not match the exact gradient of the discrete solver implementation. For adversarial attacks and inverse problems where the gradient should correspond exactly to the implemented solver, the safer choice is:
+
+```text
+checkpointed reverse-mode AD or a hand-written discrete adjoint
+```
+
+### Final Interpretation
+
+The key interpretation is:
+
+```text
+Pure forward:
+  Memory is small because old time states can be discarded.
+  Memory is dominated by the current state, work buffers, FFT buffers, and framework overhead.
+
+Backward/inverse:
+  Memory is large because gradient computation needs the forward residuals for many time steps.
+  With default reverse-mode AD, memory grows approximately linearly with the number of time steps.
+
+Checkpoint/remat:
+  Memory can be reduced, but the missing states/intermediates must be recomputed during backward.
+  This trades extra runtime for lower GPU memory.
+```
+
+In one sentence:
+
+```text
+The 20 GiB / 50 GiB memory usage is reasonable because the solver is not merely saving 4000 single Omega fields; it is saving or accounting for the residuals needed to differentiate through 4000 complex ETDRK4 spectral Navier-Stokes steps, each of which contains several stages, FFT/IFFT operations, nonlinear products, and state-dependent intermediates.
+```
+
+## Trainable Parameters vs Intermediate Computational Values
+
+A useful way to compare FNO models and PDE solvers is to separate three different concepts:
+
+```text
+1. Trainable parameters
+2. Fixed solver operators / coefficients
+3. Intermediate computational values generated during forward/backward
+```
+
+FNO has trainable parameters. A PDE solver mostly does not. However, the solver can still generate and process a very large number of intermediate values because it advances the state through many small time steps.
+
+Therefore, the better comparison is not only:
+
+```text
+How many trainable parameters does the model have?
+```
+
+but also:
+
+```text
+How many scalar values are generated, transformed, or needed internally to map the input to the output?
+```
+
+This quantity can be described as:
+
+```text
+intermediate scalar values
+forward computational state volume
+time-unrolled intermediate values
+```
+
+These are not trainable parameters, but they strongly affect runtime, memory traffic, and backward memory.
+
+### FNO Trainable Parameter Counts
+
+The trained FNO configurations used in the benchmarks are:
+
+```text
+Burgers FNO1d:
+  nx = 1024
+  modes = 16
+  width = 64
+  layers = 4
+
+NS FNO2d:
+  nx = 256
+  input channels = 10
+  modes = 12 x 12
+  width = 20
+  layers = 4
+```
+
+The PyTorch model parameter counts are:
+
+| Model | Layers | Tensor parameter count | Real-scalar equivalent | Parameter memory |
+|---|---:|---:|---:|---:|
+| Burgers FNO1d | 4 | 320,705 | 582,849 | 2.22 MiB |
+| Burgers FNO1d | 1 | 86,657 | 152,193 | 0.58 MiB |
+| NS FNO2d | 4 | 467,861 | 928,661 | 3.54 MiB |
+| NS FNO2d | 1 | 118,481 | 233,681 | 0.89 MiB |
+
+The "real-scalar equivalent" column counts each complex Fourier parameter as two real scalar values.
+
+### Solver Time-Unrolled State Counts
+
+The solver does not have comparable trainable parameters, but it has a large time-unrolled trajectory. If we only count one physical state per time step, the raw state volume is:
+
+```text
+steps * grid_size
+```
+
+For the solver cases:
+
+| Solver case | Grid state size | Steps | Raw trajectory grid values |
+|---|---:|---:|---:|
+| Burgers, `nx=1024`, `t=1`, `dt=0.001` | 1,024 | 1,000 | 1,024,000 |
+| NS, `nx=256`, `t=2`, `dt=0.005` | 65,536 | 400 | 26,214,400 |
+| NS, `nx=256`, `t=5`, `dt=0.005` | 65,536 | 1,000 | 65,536,000 |
+| NS, `nx=256`, `t=10`, `dt=0.005` | 65,536 | 2,000 | 131,072,000 |
+| NS, `nx=256`, `t=20`, `dt=0.005` | 65,536 | 4,000 | 262,144,000 |
+
+This table only counts one state per time step. It is a lower bound. The actual solver step also creates spectral states, ETDRK4 stage values, nonlinear terms, FFT/IFFT buffers, velocity fields, derivatives, and convection terms.
+
+### Forward Intermediate Values: FNO vs Solver
+
+The more relevant comparison is the number of intermediate scalar values involved in the forward computation.
+
+For the NS FNO with:
+
+```text
+nx = 256
+input channels = 10
+width = 20
+modes = 12 x 12
+layers = 4
+```
+
+the input contains:
+
+```text
+256 * 256 * 10 = 655,360 values
+```
+
+After lifting to width 20:
+
+```text
+256 * 256 * 20 = 1,310,720 values
+```
+
+Each FNO layer contains:
+
+```text
+FFT over width channels
+low-mode spectral multiplication
+inverse FFT
+MLP branch
+1x1 convolution branch
+residual add
+GELU, except after the final layer
+```
+
+A rough operation-level accounting gives the NS FNO forward pass roughly:
+
+```text
+50M - 60M intermediate scalar-equivalent values
+```
+
+For the NS spectral ETDRK4 solver at:
+
+```text
+nx = 256
+t_final = 20
+dt = 0.005
+steps = 4000
+```
+
+the raw state trajectory alone is:
+
+```text
+4000 * 256 * 256 = 262,144,000 values
+```
+
+But each ETDRK4 step includes:
+
+```text
+4 nonlinear_fun evaluations
+FFT / IFFT operations
+velocity reconstruction
+Omega_x / Omega_y derivatives
+convection terms
+ETDRK4 stage variables K0, A, K1, B, K2, C, K3
+spectral coefficient multiplications
+```
+
+A rough code-level estimate gives one NS solver step about:
+
+```text
+~4.1M real-scalar-equivalent intermediate values per step
+```
+
+Across 4000 steps:
+
+```text
+4.1M * 4000 ~= 16.6B real-scalar-equivalent intermediate values
+```
+
+So a useful forward-volume comparison is:
+
+| Case | Approximate forward intermediate values |
+|---|---:|
+| NS FNO2d, 4 layers | ~58M |
+| NS solver, `t=20`, `dt=0.005` | ~16.6B |
+
+This gives:
+
+```text
+NS solver forward intermediate value volume / NS FNO forward intermediate value volume
+  ~= 16.6B / 58M
+  ~= 280x
+```
+
+For Burgers, using the trained FNO setup and the dataset solver setup:
+
+| Case | Approximate forward intermediate values |
+|---|---:|
+| Burgers FNO1d, 4 layers | ~2.6M |
+| Burgers solver, `t=1`, `dt=0.001` | ~40M |
+| Burgers solver, `t=20`, `dt=0.001` | ~800M |
+
+Therefore:
+
+```text
+Burgers solver t=1 / Burgers FNO ~= 15x
+Burgers solver t=20 / Burgers FNO ~= 300x
+```
+
+These numbers are approximate. They are intended to give the correct order of magnitude, not an exact FLOP count or exact memory allocation count.
+
+### Interpretation
+
+FNO behaves like a learned operator:
+
+```text
+u_final ~= F_theta(u_initial)
+```
+
+The complexity is stored partly in trainable parameters `theta` and partly in a small number of neural-network layers. For NS:
+
+```text
+NS FNO trainable real-scalar equivalent parameters: ~0.93M
+NS FNO forward intermediate scalar-equivalent values: ~58M
+```
+
+The PDE solver behaves like a physical time-stepper:
+
+```text
+u_0 -> u_1 -> u_2 -> ... -> u_N
+```
+
+The complexity is not in learned parameters. It is in the long trajectory and in the numerical work inside each time step. For NS at `t=20`:
+
+```text
+NS solver trainable parameters: essentially none
+NS solver raw trajectory states: ~262M values
+NS solver estimated forward intermediate values: ~16.6B values
+```
+
+So the correct conceptual contrast is:
+
+```text
+FNO:
+  More trainable parameters.
+  Shorter computation depth.
+  Intermediate values scale mainly with grid size, width, modes, and number of FNO layers.
+
+Solver:
+  Almost no trainable parameters.
+  Very long time-unrolled computation.
+  Intermediate values scale mainly with grid size, step complexity, and t_final / dt.
+```
+
+This explains why solver pure forward can have small peak memory but still perform an enormous amount of numerical work. It also explains why solver backward is expensive: the backward pass needs the trajectory information or must recompute it.
+
+Short version:
+
+```text
+FNO complexity mainly lives in learned parameters and a shallow learned computation graph.
+Solver complexity mainly lives in the long physical trajectory and the large number of intermediate numerical values generated across time steps.
+```

@@ -1,0 +1,15 @@
+{
+  "framework": "jax",
+  "case": "ns_2d",
+  "time_steps": 2,
+  "nx": 8,
+  "node_type_counts": {
+    "mul": 86,
+    "jit": 58,
+    "convert_element_type": 42,
+    "add": 20,
+    "neg": 12,
+    "input 0: Var(id=140692114786624):float32[8,8]": 1,
+    "sub": 1
+  }
+}

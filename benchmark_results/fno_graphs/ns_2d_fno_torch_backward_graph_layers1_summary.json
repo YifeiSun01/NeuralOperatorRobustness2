@@ -1,0 +1,28 @@
+{
+  "framework": "pytorch",
+  "case": "ns_2d",
+  "time_steps": 1,
+  "nx": 0,
+  "node_type_counts": {
+    "AccumulateGrad": 15,
+    "PermuteBackward0": 12,
+    "ViewBackward0": 6,
+    "ConvolutionBackward0": 5,
+    "UnsqueezeBackward0": 4,
+    "SliceBackward0": 4,
+    "GeluBackward0": 2,
+    "CopySlices": 2,
+    "BmmBackward0": 2,
+    "UnsafeViewBackward0": 2,
+    "CloneBackward0": 2,
+    "ReshapeAliasBackward0": 2,
+    "MeanBackward0": 1,
+    "MulBackward0": 1,
+    "AddBackward0": 1,
+    "FftC2RBackward0": 1,
+    "FftR2CBackward0": 1,
+    "AddmmBackward0": 1,
+    "CatBackward0": 1,
+    "TBackward0": 1
+  }
+}

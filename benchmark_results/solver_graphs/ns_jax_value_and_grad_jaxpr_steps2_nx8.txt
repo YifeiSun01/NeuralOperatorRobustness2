@@ -1,0 +1,659 @@
+let fft = { lambda ; a:f32[8,8]. let
+    b:c64[8,5] = fft[fft_lengths=(8, 8) fft_type=2] a
+  in (b,) } in
+let _pad = { lambda ; c:c64[8,5] d:i32[]. let
+    e:c64[] = convert_element_type[new_dtype=complex64 weak_type=False] d
+    f:c64[8,5] = pad[
+      padding_config=((np.int64(0), np.int64(0), 0), (np.int64(0), np.int64(0), 0))
+    ] c e
+  in (f, 0j:c64[]) } in
+let fft1 = { lambda ; g:c64[8,5]. let
+    h:f32[8,8] = fft[fft_lengths=(8, 8) fft_type=3] g
+  in (h,) } in
+let fft2 = { lambda ; i:f32[8,8]. let
+    j:c64[8,5] = jit[
+      name=fft
+      jaxpr={ lambda ; i:f32[8,8]. let
+          j:c64[8,5] = fft[fft_lengths=(8, 8) fft_type=2] i
+        in (j,) }
+    ] i
+    k:c64[5] = broadcast_in_dim (2+0j):c64[]
+    l:c64[1] = broadcast_in_dim (1+0j):c64[]
+    m:c64[5] = dynamic_update_slice k l 0:i32[]
+    n:c64[1] = broadcast_in_dim (1+0j):c64[]
+    o:c64[5] = dynamic_update_slice m n 4:i32[]
+    p:c64[1,5] = broadcast_in_dim[broadcast_dimensions=(1,)] o
+    q:c64[1,5] = mul (0.015625+0j):c64[] p
+    r:c64[8,5] = mul q j
+    s:c64[8,5] = conj[input_dtype=complex64] r
+  in (s,) } in
+let _pad1 = { lambda ; t:c64[] u:c64[8,5]. let
+    v:c64[8,5] = pad[
+      padding_config=((np.int64(0), np.int64(0), np.int64(0)), (np.int64(0), np.int64(0), np.int64(0)))
+    ] u 0j:c64[]
+    w:c64[8,5] = slice[
+      limit_indices=(8, 5)
+      start_indices=(np.int64(0), np.int64(0))
+      strides=(np.int64(1), np.int64(1))
+    ] v
+  in (w,) } in
+let fft3 = { lambda ; x:c64[8,5]. let
+    y:f32[8,8] = jit[
+      name=_rfft_transpose
+      jaxpr={ lambda ; x:c64[8,5]. let
+          z:c64[5] = broadcast_in_dim (2+0j):c64[]
+          ba:c64[1] = broadcast_in_dim (1+0j):c64[]
+          bb:c64[5] = dynamic_update_slice z ba 0:i32[]
+          bc:c64[1] = broadcast_in_dim (1+0j):c64[]
+          bd:c64[5] = dynamic_update_slice bb bc 4:i32[]
+          be:c64[1,5] = broadcast_in_dim[broadcast_dimensions=(1,)] bd
+          bf:c64[8,5] = conj[input_dtype=complex64] x
+          bg:c64[8,5] = div bf be
+          bh:f32[8,8] = jit[
+            name=fft
+            jaxpr={ lambda ; bg:c64[8,5]. let
+                bh:f32[8,8] = fft[fft_lengths=(8, 8) fft_type=3] bg
+              in (bh,) }
+          ] bg
+          y:f32[8,8] = mul 64.0:f32[] bh
+        in (y,) }
+    ] x
+  in (y,) } in
+let fft4 = { lambda ; i:f32[8,8]. let
+    j:c64[8,5] = fft[fft_lengths=(8, 8) fft_type=2] i
+  in (j,) } in
+let _rfft_transpose = { lambda ; x:c64[8,5]. let
+    z:c64[5] = broadcast_in_dim (2+0j):c64[]
+    ba:c64[1] = broadcast_in_dim (1+0j):c64[]
+    bb:c64[5] = dynamic_update_slice z ba 0:i32[]
+    bc:c64[1] = broadcast_in_dim (1+0j):c64[]
+    bd:c64[5] = dynamic_update_slice bb bc 4:i32[]
+    be:c64[1,5] = broadcast_in_dim[broadcast_dimensions=(1,)] bd
+    bf:c64[8,5] = conj[input_dtype=complex64] x
+    bg:c64[8,5] = div bf be
+    bh:f32[8,8] = jit[
+      name=fft
+      jaxpr={ lambda ; bg:c64[8,5]. let
+          bh:f32[8,8] = fft[fft_lengths=(8, 8) fft_type=3] bg
+        in (bh,) }
+    ] bg
+    y:f32[8,8] = mul 64.0:f32[] bh
+  in (y,) } in
+let fft5 = { lambda ; bg:c64[8,5]. let
+    bh:f32[8,8] = fft[fft_lengths=(8, 8) fft_type=3] bg
+  in (bh,) } in
+{ lambda bi:bool[8,5] bj:f32[8,5] bk:c64[1,5] bl:c64[8,1] bm:c64[8,5] bn:f32[8,5]
+    bo:c64[8,5] bp:f32[8,5] bq:c64[8,5] br:c64[8,5] bs:c64[8,5]; bt:f32[8,8]. let
+    bu:c64[8,5] = jit[name=fft jaxpr=fft] bt
+    bv:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    bw:c64[8,5] = mul bu bv
+    bx:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    by:c64[8,5] = mul bx bw
+    bz:c64[8,5] = mul bk by
+    ca:c64[8,1] = neg bl
+    cb:c64[8,5] = mul ca by
+    cc:c64[8,5] = mul bl bw
+    cd:c64[8,5] = mul bk bw
+    ce:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    cf:c64[8,5] = mul bz ce
+    cg:c64[8,5] ch:c64[] = jit[name=_pad jaxpr=_pad] cf 0:i32[]
+    ci:f32[8,8] = jit[name=fft jaxpr=fft1] cg
+    cj:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ck:c64[8,5] = mul cb cj
+    cl:c64[8,5] cm:c64[] = jit[name=_pad jaxpr=_pad] ck 0:i32[]
+    cn:f32[8,8] = jit[name=fft jaxpr=fft1] cl
+    co:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    cp:c64[8,5] = mul cc co
+    cq:c64[8,5] cr:c64[] = jit[name=_pad jaxpr=_pad] cp 0:i32[]
+    cs:f32[8,8] = jit[name=fft jaxpr=fft1] cq
+    ct:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    cu:c64[8,5] = mul cd ct
+    cv:c64[8,5] cw:c64[] = jit[name=_pad jaxpr=_pad] cu 0:i32[]
+    cx:f32[8,8] = jit[name=fft jaxpr=fft1] cv
+    cy:f32[8,8] = mul ci cs
+    cz:f32[8,8] = mul cn cx
+    da:f32[8,8] = add cy cz
+    db:c64[8,5] = jit[name=fft jaxpr=fft] da
+    dc:c64[8,5] = neg db
+    dd:c64[8,5] = add dc bm
+    de:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bn
+    df:c64[8,5] = mul de bu
+    dg:c64[8,5] = mul bo dd
+    dh:c64[8,5] = add df dg
+    di:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    dj:c64[8,5] = mul dh di
+    dk:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    dl:c64[8,5] = mul dk dj
+    dm:c64[8,5] = mul bk dl
+    dn:c64[8,1] = neg bl
+    do:c64[8,5] = mul dn dl
+    dp:c64[8,5] = mul bl dj
+    dq:c64[8,5] = mul bk dj
+    dr:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ds:c64[8,5] = mul dm dr
+    dt:c64[8,5] du:c64[] = jit[name=_pad jaxpr=_pad] ds 0:i32[]
+    dv:f32[8,8] = jit[name=fft jaxpr=fft1] dt
+    dw:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    dx:c64[8,5] = mul do dw
+    dy:c64[8,5] dz:c64[] = jit[name=_pad jaxpr=_pad] dx 0:i32[]
+    ea:f32[8,8] = jit[name=fft jaxpr=fft1] dy
+    eb:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ec:c64[8,5] = mul dp eb
+    ed:c64[8,5] ee:c64[] = jit[name=_pad jaxpr=_pad] ec 0:i32[]
+    ef:f32[8,8] = jit[name=fft jaxpr=fft1] ed
+    eg:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    eh:c64[8,5] = mul dq eg
+    ei:c64[8,5] ej:c64[] = jit[name=_pad jaxpr=_pad] eh 0:i32[]
+    ek:f32[8,8] = jit[name=fft jaxpr=fft1] ei
+    el:f32[8,8] = mul dv ef
+    em:f32[8,8] = mul ea ek
+    en:f32[8,8] = add el em
+    eo:c64[8,5] = jit[name=fft jaxpr=fft] en
+    ep:c64[8,5] = neg eo
+    eq:c64[8,5] = add ep bm
+    er:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bn
+    es:c64[8,5] = mul er bu
+    et:c64[8,5] = mul bo eq
+    eu:c64[8,5] = add es et
+    ev:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ew:c64[8,5] = mul eu ev
+    ex:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    ey:c64[8,5] = mul ex ew
+    ez:c64[8,5] = mul bk ey
+    fa:c64[8,1] = neg bl
+    fb:c64[8,5] = mul fa ey
+    fc:c64[8,5] = mul bl ew
+    fd:c64[8,5] = mul bk ew
+    fe:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ff:c64[8,5] = mul ez fe
+    fg:c64[8,5] fh:c64[] = jit[name=_pad jaxpr=_pad] ff 0:i32[]
+    fi:f32[8,8] = jit[name=fft jaxpr=fft1] fg
+    fj:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    fk:c64[8,5] = mul fb fj
+    fl:c64[8,5] fm:c64[] = jit[name=_pad jaxpr=_pad] fk 0:i32[]
+    fn:f32[8,8] = jit[name=fft jaxpr=fft1] fl
+    fo:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    fp:c64[8,5] = mul fc fo
+    fq:c64[8,5] fr:c64[] = jit[name=_pad jaxpr=_pad] fp 0:i32[]
+    fs:f32[8,8] = jit[name=fft jaxpr=fft1] fq
+    ft:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    fu:c64[8,5] = mul fd ft
+    fv:c64[8,5] fw:c64[] = jit[name=_pad jaxpr=_pad] fu 0:i32[]
+    fx:f32[8,8] = jit[name=fft jaxpr=fft1] fv
+    fy:f32[8,8] = mul fi fs
+    fz:f32[8,8] = mul fn fx
+    ga:f32[8,8] = add fy fz
+    gb:c64[8,5] = jit[name=fft jaxpr=fft] ga
+    gc:c64[8,5] = neg gb
+    gd:c64[8,5] = add gc bm
+    ge:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bn
+    gf:c64[8,5] = mul ge dh
+    gg:c64[8,5] = mul (2+0j):c64[] gd
+    gh:c64[8,5] = sub gg dd
+    gi:c64[8,5] = mul bo gh
+    gj:c64[8,5] = add gf gi
+    gk:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    gl:c64[8,5] = mul gj gk
+    gm:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    gn:c64[8,5] = mul gm gl
+    go:c64[8,5] = mul bk gn
+    gp:c64[8,1] = neg bl
+    gq:c64[8,5] = mul gp gn
+    gr:c64[8,5] = mul bl gl
+    gs:c64[8,5] = mul bk gl
+    gt:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    gu:c64[8,5] = mul go gt
+    gv:c64[8,5] gw:c64[] = jit[name=_pad jaxpr=_pad] gu 0:i32[]
+    gx:f32[8,8] = jit[name=fft jaxpr=fft1] gv
+    gy:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    gz:c64[8,5] = mul gq gy
+    ha:c64[8,5] hb:c64[] = jit[name=_pad jaxpr=_pad] gz 0:i32[]
+    hc:f32[8,8] = jit[name=fft jaxpr=fft1] ha
+    hd:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    he:c64[8,5] = mul gr hd
+    hf:c64[8,5] hg:c64[] = jit[name=_pad jaxpr=_pad] he 0:i32[]
+    hh:f32[8,8] = jit[name=fft jaxpr=fft1] hf
+    hi:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    hj:c64[8,5] = mul gs hi
+    hk:c64[8,5] hl:c64[] = jit[name=_pad jaxpr=_pad] hj 0:i32[]
+    hm:f32[8,8] = jit[name=fft jaxpr=fft1] hk
+    hn:f32[8,8] = mul gx hh
+    ho:f32[8,8] = mul hc hm
+    hp:f32[8,8] = add hn ho
+    hq:c64[8,5] = jit[name=fft jaxpr=fft] hp
+    hr:c64[8,5] = neg hq
+    hs:c64[8,5] = add hr bm
+    ht:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bp
+    hu:c64[8,5] = mul ht bu
+    hv:c64[8,5] = mul bq dd
+    hw:c64[8,5] = add hu hv
+    hx:c64[8,5] = mul br (2+0j):c64[]
+    hy:c64[8,5] = add eq gd
+    hz:c64[8,5] = mul hx hy
+    ia:c64[8,5] = add hw hz
+    ib:c64[8,5] = mul bs hs
+    ic:c64[8,5] = add ia ib
+    id:c64[8,5] ie:c64[] = jit[name=_pad jaxpr=_pad] ic 0:i32[]
+    if:f32[8,8] = jit[name=fft jaxpr=fft1] id
+    ig:c64[8,5] = jit[name=fft jaxpr=fft] if
+    ih:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ii:c64[8,5] = mul ig ih
+    ij:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    ik:c64[8,5] = mul ij ii
+    il:c64[8,5] = mul bk ik
+    im:c64[8,1] = neg bl
+    in:c64[8,5] = mul im ik
+    io:c64[8,5] = mul bl ii
+    ip:c64[8,5] = mul bk ii
+    iq:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ir:c64[8,5] = mul il iq
+    is:c64[8,5] it:c64[] = jit[name=_pad jaxpr=_pad] ir 0:i32[]
+    iu:f32[8,8] = jit[name=fft jaxpr=fft1] is
+    iv:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    iw:c64[8,5] = mul in iv
+    ix:c64[8,5] iy:c64[] = jit[name=_pad jaxpr=_pad] iw 0:i32[]
+    iz:f32[8,8] = jit[name=fft jaxpr=fft1] ix
+    ja:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    jb:c64[8,5] = mul io ja
+    jc:c64[8,5] jd:c64[] = jit[name=_pad jaxpr=_pad] jb 0:i32[]
+    je:f32[8,8] = jit[name=fft jaxpr=fft1] jc
+    jf:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    jg:c64[8,5] = mul ip jf
+    jh:c64[8,5] ji:c64[] = jit[name=_pad jaxpr=_pad] jg 0:i32[]
+    jj:f32[8,8] = jit[name=fft jaxpr=fft1] jh
+    jk:f32[8,8] = mul iu je
+    jl:f32[8,8] = mul iz jj
+    jm:f32[8,8] = add jk jl
+    jn:c64[8,5] = jit[name=fft jaxpr=fft] jm
+    jo:c64[8,5] = neg jn
+    jp:c64[8,5] = add jo bm
+    jq:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bn
+    jr:c64[8,5] = mul jq ig
+    js:c64[8,5] = mul bo jp
+    jt:c64[8,5] = add jr js
+    ju:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    jv:c64[8,5] = mul jt ju
+    jw:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    jx:c64[8,5] = mul jw jv
+    jy:c64[8,5] = mul bk jx
+    jz:c64[8,1] = neg bl
+    ka:c64[8,5] = mul jz jx
+    kb:c64[8,5] = mul bl jv
+    kc:c64[8,5] = mul bk jv
+    kd:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ke:c64[8,5] = mul jy kd
+    kf:c64[8,5] kg:c64[] = jit[name=_pad jaxpr=_pad] ke 0:i32[]
+    kh:f32[8,8] = jit[name=fft jaxpr=fft1] kf
+    ki:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    kj:c64[8,5] = mul ka ki
+    kk:c64[8,5] kl:c64[] = jit[name=_pad jaxpr=_pad] kj 0:i32[]
+    km:f32[8,8] = jit[name=fft jaxpr=fft1] kk
+    kn:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ko:c64[8,5] = mul kb kn
+    kp:c64[8,5] kq:c64[] = jit[name=_pad jaxpr=_pad] ko 0:i32[]
+    kr:f32[8,8] = jit[name=fft jaxpr=fft1] kp
+    ks:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    kt:c64[8,5] = mul kc ks
+    ku:c64[8,5] kv:c64[] = jit[name=_pad jaxpr=_pad] kt 0:i32[]
+    kw:f32[8,8] = jit[name=fft jaxpr=fft1] ku
+    kx:f32[8,8] = mul kh kr
+    ky:f32[8,8] = mul km kw
+    kz:f32[8,8] = add kx ky
+    la:c64[8,5] = jit[name=fft jaxpr=fft] kz
+    lb:c64[8,5] = neg la
+    lc:c64[8,5] = add lb bm
+    ld:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bn
+    le:c64[8,5] = mul ld ig
+    lf:c64[8,5] = mul bo lc
+    lg:c64[8,5] = add le lf
+    lh:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    li:c64[8,5] = mul lg lh
+    lj:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    lk:c64[8,5] = mul lj li
+    ll:c64[8,5] = mul bk lk
+    lm:c64[8,1] = neg bl
+    ln:c64[8,5] = mul lm lk
+    lo:c64[8,5] = mul bl li
+    lp:c64[8,5] = mul bk li
+    lq:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    lr:c64[8,5] = mul ll lq
+    ls:c64[8,5] lt:c64[] = jit[name=_pad jaxpr=_pad] lr 0:i32[]
+    lu:f32[8,8] = jit[name=fft jaxpr=fft1] ls
+    lv:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    lw:c64[8,5] = mul ln lv
+    lx:c64[8,5] ly:c64[] = jit[name=_pad jaxpr=_pad] lw 0:i32[]
+    lz:f32[8,8] = jit[name=fft jaxpr=fft1] lx
+    ma:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    mb:c64[8,5] = mul lo ma
+    mc:c64[8,5] md:c64[] = jit[name=_pad jaxpr=_pad] mb 0:i32[]
+    me:f32[8,8] = jit[name=fft jaxpr=fft1] mc
+    mf:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    mg:c64[8,5] = mul lp mf
+    mh:c64[8,5] mi:c64[] = jit[name=_pad jaxpr=_pad] mg 0:i32[]
+    mj:f32[8,8] = jit[name=fft jaxpr=fft1] mh
+    mk:f32[8,8] = mul lu me
+    ml:f32[8,8] = mul lz mj
+    mm:f32[8,8] = add mk ml
+    mn:c64[8,5] = jit[name=fft jaxpr=fft] mm
+    mo:c64[8,5] = neg mn
+    mp:c64[8,5] = add mo bm
+    mq:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bn
+    mr:c64[8,5] = mul mq jt
+    ms:c64[8,5] = mul (2+0j):c64[] mp
+    mt:c64[8,5] = sub ms jp
+    mu:c64[8,5] = mul bo mt
+    mv:c64[8,5] = add mr mu
+    mw:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    mx:c64[8,5] = mul mv mw
+    my:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bj
+    mz:c64[8,5] = mul my mx
+    na:c64[8,5] = mul bk mz
+    nb:c64[8,1] = neg bl
+    nc:c64[8,5] = mul nb mz
+    nd:c64[8,5] = mul bl mx
+    ne:c64[8,5] = mul bk mx
+    nf:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    ng:c64[8,5] = mul na nf
+    nh:c64[8,5] ni:c64[] = jit[name=_pad jaxpr=_pad] ng 0:i32[]
+    nj:f32[8,8] = jit[name=fft jaxpr=fft1] nh
+    nk:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    nl:c64[8,5] = mul nc nk
+    nm:c64[8,5] nn:c64[] = jit[name=_pad jaxpr=_pad] nl 0:i32[]
+    no:f32[8,8] = jit[name=fft jaxpr=fft1] nm
+    np:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    nq:c64[8,5] = mul nd np
+    nr:c64[8,5] ns:c64[] = jit[name=_pad jaxpr=_pad] nq 0:i32[]
+    nt:f32[8,8] = jit[name=fft jaxpr=fft1] nr
+    nu:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bi
+    nv:c64[8,5] = mul ne nu
+    nw:c64[8,5] nx:c64[] = jit[name=_pad jaxpr=_pad] nv 0:i32[]
+    ny:f32[8,8] = jit[name=fft jaxpr=fft1] nw
+    nz:f32[8,8] = mul nj nt
+    oa:f32[8,8] = mul no ny
+    ob:f32[8,8] = add nz oa
+    oc:c64[8,5] = jit[name=fft jaxpr=fft] ob
+    od:c64[8,5] = neg oc
+    oe:c64[8,5] = add od bm
+    of:c64[8,5] = convert_element_type[new_dtype=complex64 weak_type=False] bp
+    og:c64[8,5] = mul of ig
+    oh:c64[8,5] = mul bq jp
+    oi:c64[8,5] = add og oh
+    oj:c64[8,5] = mul br (2+0j):c64[]
+    ok:c64[8,5] = add lc mp
+    ol:c64[8,5] = mul oj ok
+    om:c64[8,5] = add oi ol
+    on:c64[8,5] = mul bs oe
+    oo:c64[8,5] = add om on
+    op:c64[8,5] oq:c64[] = jit[name=_pad jaxpr=_pad] oo 0:i32[]
+    or:f32[8,8] = jit[name=fft jaxpr=fft1] op
+    os:f32[8,8] = mul or or
+    ot:f32[] = reduce_sum[axes=(0, 1) out_sharding=None] os
+    ou:f32[] = div ot 64.0:f32[]
+    ov:f32[] = div 1.0:f32[] 64.0:f32[]
+    ow:f32[8,8] = broadcast_in_dim ov
+    ox:f32[8,8] = mul or ow
+    oy:f32[8,8] = mul ow or
+    oz:f32[8,8] = add_any ox oy
+    pa:c64[8,5] = jit[name=fft jaxpr=fft2] oz
+    pb:c64[8,5] = jit[name=_pad jaxpr=_pad1] oq pa
+    pc:c64[8,5] = mul bs pb
+    pd:c64[8,5] = mul oj pb
+    pe:c64[8,5] = mul bq pb
+    pf:c64[8,5] = mul of pb
+    pg:c64[8,5] = neg pc
+    ph:f32[8,8] = jit[name=fft jaxpr=fft3] pg
+    pi:f32[8,8] = mul no ph
+    pj:f32[8,8] = mul ph ny
+    pk:f32[8,8] = mul nj ph
+    pl:f32[8,8] = mul ph nt
+    pm:c64[8,5] = jit[name=fft jaxpr=fft2] pi
+    pn:c64[8,5] = jit[name=_pad jaxpr=_pad1] nx pm
+    po:c64[8,5] = mul pn nu
+    pp:c64[8,5] = jit[name=fft jaxpr=fft2] pk
+    pq:c64[8,5] = jit[name=_pad jaxpr=_pad1] ns pp
+    pr:c64[8,5] = mul pq np
+    ps:c64[8,5] = jit[name=fft jaxpr=fft2] pj
+    pt:c64[8,5] = jit[name=_pad jaxpr=_pad1] nn ps
+    pu:c64[8,5] = mul pt nk
+    pv:c64[8,5] = jit[name=fft jaxpr=fft2] pl
+    pw:c64[8,5] = jit[name=_pad jaxpr=_pad1] ni pv
+    px:c64[8,5] = mul pw nf
+    py:c64[8,5] = mul bk po
+    pz:c64[8,5] = mul bl pr
+    qa:c64[8,5] = add_any py pz
+    qb:c64[8,5] = mul nb pu
+    qc:c64[8,5] = mul bk px
+    qd:c64[8,5] = add_any qb qc
+    qe:c64[8,5] = mul my qd
+    qf:c64[8,5] = add_any qa qe
+    qg:c64[8,5] = mul qf mw
+    qh:c64[8,5] = mul bo qg
+    qi:c64[8,5] = neg qh
+    qj:c64[8,5] = add_any pe qi
+    qk:c64[8,5] = mul (2+0j):c64[] qh
+    ql:c64[8,5] = add_any pd qk
+    qm:c64[8,5] = mul mq qg
+    qn:c64[8,5] = neg ql
+    qo:f32[8,8] = jit[name=fft jaxpr=fft3] qn
+    qp:f32[8,8] = mul lz qo
+    qq:f32[8,8] = mul qo mj
+    qr:f32[8,8] = mul lu qo
+    qs:f32[8,8] = mul qo me
+    qt:c64[8,5] = jit[name=fft jaxpr=fft2] qp
+    qu:c64[8,5] = jit[name=_pad jaxpr=_pad1] mi qt
+    qv:c64[8,5] = mul qu mf
+    qw:c64[8,5] = jit[name=fft jaxpr=fft2] qr
+    qx:c64[8,5] = jit[name=_pad jaxpr=_pad1] md qw
+    qy:c64[8,5] = mul qx ma
+    qz:c64[8,5] = jit[name=fft jaxpr=fft2] qq
+    ra:c64[8,5] = jit[name=_pad jaxpr=_pad1] ly qz
+    rb:c64[8,5] = mul ra lv
+    rc:c64[8,5] = jit[name=fft jaxpr=fft2] qs
+    rd:c64[8,5] = jit[name=_pad jaxpr=_pad1] lt rc
+    re:c64[8,5] = mul rd lq
+    rf:c64[8,5] = mul bk qv
+    rg:c64[8,5] = mul bl qy
+    rh:c64[8,5] = add_any rf rg
+    ri:c64[8,5] = mul lm rb
+    rj:c64[8,5] = mul bk re
+    rk:c64[8,5] = add_any ri rj
+    rl:c64[8,5] = mul lj rk
+    rm:c64[8,5] = add_any rh rl
+    rn:c64[8,5] = mul rm lh
+    ro:c64[8,5] = mul bo rn
+    rp:c64[8,5] = add_any pd ro
+    rq:c64[8,5] = mul ld rn
+    rr:c64[8,5] = add_any pf rq
+    rs:c64[8,5] = neg rp
+    rt:f32[8,8] = jit[name=fft jaxpr=fft3] rs
+    ru:f32[8,8] = mul km rt
+    rv:f32[8,8] = mul rt kw
+    rw:f32[8,8] = mul kh rt
+    rx:f32[8,8] = mul rt kr
+    ry:c64[8,5] = jit[name=fft jaxpr=fft2] ru
+    rz:c64[8,5] = jit[name=_pad jaxpr=_pad1] kv ry
+    sa:c64[8,5] = mul rz ks
+    sb:c64[8,5] = jit[name=fft jaxpr=fft2] rw
+    sc:c64[8,5] = jit[name=_pad jaxpr=_pad1] kq sb
+    sd:c64[8,5] = mul sc kn
+    se:c64[8,5] = jit[name=fft jaxpr=fft2] rv
+    sf:c64[8,5] = jit[name=_pad jaxpr=_pad1] kl se
+    sg:c64[8,5] = mul sf ki
+    sh:c64[8,5] = jit[name=fft jaxpr=fft2] rx
+    si:c64[8,5] = jit[name=_pad jaxpr=_pad1] kg sh
+    sj:c64[8,5] = mul si kd
+    sk:c64[8,5] = mul bk sa
+    sl:c64[8,5] = mul bl sd
+    sm:c64[8,5] = add_any sk sl
+    sn:c64[8,5] = mul jz sg
+    so:c64[8,5] = mul bk sj
+    sp:c64[8,5] = add_any sn so
+    sq:c64[8,5] = mul jw sp
+    sr:c64[8,5] = add_any sm sq
+    ss:c64[8,5] = mul sr ju
+    st:c64[8,5] = add_any qm ss
+    su:c64[8,5] = mul bo st
+    sv:c64[8,5] = add_any qj su
+    sw:c64[8,5] = mul jq st
+    sx:c64[8,5] = add_any rr sw
+    sy:c64[8,5] = neg sv
+    sz:f32[8,8] = jit[name=fft jaxpr=fft3] sy
+    ta:f32[8,8] = mul iz sz
+    tb:f32[8,8] = mul sz jj
+    tc:f32[8,8] = mul iu sz
+    td:f32[8,8] = mul sz je
+    te:c64[8,5] = jit[name=fft jaxpr=fft2] ta
+    tf:c64[8,5] = jit[name=_pad jaxpr=_pad1] ji te
+    tg:c64[8,5] = mul tf jf
+    th:c64[8,5] = jit[name=fft jaxpr=fft2] tc
+    ti:c64[8,5] = jit[name=_pad jaxpr=_pad1] jd th
+    tj:c64[8,5] = mul ti ja
+    tk:c64[8,5] = jit[name=fft jaxpr=fft2] tb
+    tl:c64[8,5] = jit[name=_pad jaxpr=_pad1] iy tk
+    tm:c64[8,5] = mul tl iv
+    tn:c64[8,5] = jit[name=fft jaxpr=fft2] td
+    to:c64[8,5] = jit[name=_pad jaxpr=_pad1] it tn
+    tp:c64[8,5] = mul to iq
+    tq:c64[8,5] = mul bk tg
+    tr:c64[8,5] = mul bl tj
+    ts:c64[8,5] = add_any tq tr
+    tt:c64[8,5] = mul im tm
+    tu:c64[8,5] = mul bk tp
+    tv:c64[8,5] = add_any tt tu
+    tw:c64[8,5] = mul ij tv
+    tx:c64[8,5] = add_any ts tw
+    ty:c64[8,5] = mul tx ih
+    tz:c64[8,5] = add_any sx ty
+    ua:f32[8,8] = jit[name=fft jaxpr=fft3] tz
+    ub:c64[8,5] = jit[name=fft jaxpr=fft2] ua
+    uc:c64[8,5] = jit[name=_pad jaxpr=_pad1] ie ub
+    ud:c64[8,5] = mul bs uc
+    ue:c64[8,5] = mul hx uc
+    uf:c64[8,5] = mul bq uc
+    ug:c64[8,5] = mul ht uc
+    uh:c64[8,5] = neg ud
+    ui:f32[8,8] = jit[name=fft jaxpr=fft3] uh
+    uj:f32[8,8] = mul hc ui
+    uk:f32[8,8] = mul ui hm
+    ul:f32[8,8] = mul gx ui
+    um:f32[8,8] = mul ui hh
+    un:c64[8,5] = jit[name=fft jaxpr=fft2] uj
+    uo:c64[8,5] = jit[name=_pad jaxpr=_pad1] hl un
+    up:c64[8,5] = mul uo hi
+    uq:c64[8,5] = jit[name=fft jaxpr=fft2] ul
+    ur:c64[8,5] = jit[name=_pad jaxpr=_pad1] hg uq
+    us:c64[8,5] = mul ur hd
+    ut:c64[8,5] = jit[name=fft jaxpr=fft2] uk
+    uu:c64[8,5] = jit[name=_pad jaxpr=_pad1] hb ut
+    uv:c64[8,5] = mul uu gy
+    uw:c64[8,5] = jit[name=fft jaxpr=fft2] um
+    ux:c64[8,5] = jit[name=_pad jaxpr=_pad1] gw uw
+    uy:c64[8,5] = mul ux gt
+    uz:c64[8,5] = mul bk up
+    va:c64[8,5] = mul bl us
+    vb:c64[8,5] = add_any uz va
+    vc:c64[8,5] = mul gp uv
+    vd:c64[8,5] = mul bk uy
+    ve:c64[8,5] = add_any vc vd
+    vf:c64[8,5] = mul gm ve
+    vg:c64[8,5] = add_any vb vf
+    vh:c64[8,5] = mul vg gk
+    vi:c64[8,5] = mul bo vh
+    vj:c64[8,5] = neg vi
+    vk:c64[8,5] = add_any uf vj
+    vl:c64[8,5] = mul (2+0j):c64[] vi
+    vm:c64[8,5] = add_any ue vl
+    vn:c64[8,5] = mul ge vh
+    vo:c64[8,5] = neg vm
+    vp:f32[8,8] = jit[name=fft jaxpr=fft3] vo
+    vq:f32[8,8] = mul fn vp
+    vr:f32[8,8] = mul vp fx
+    vs:f32[8,8] = mul fi vp
+    vt:f32[8,8] = mul vp fs
+    vu:c64[8,5] = jit[name=fft jaxpr=fft2] vq
+    vv:c64[8,5] = jit[name=_pad jaxpr=_pad1] fw vu
+    vw:c64[8,5] = mul vv ft
+    vx:c64[8,5] = jit[name=fft jaxpr=fft2] vs
+    vy:c64[8,5] = jit[name=_pad jaxpr=_pad1] fr vx
+    vz:c64[8,5] = mul vy fo
+    wa:c64[8,5] = jit[name=fft jaxpr=fft2] vr
+    wb:c64[8,5] = jit[name=_pad jaxpr=_pad1] fm wa
+    wc:c64[8,5] = mul wb fj
+    wd:c64[8,5] = jit[name=fft jaxpr=fft2] vt
+    we:c64[8,5] = jit[name=_pad jaxpr=_pad1] fh wd
+    wf:c64[8,5] = mul we fe
+    wg:c64[8,5] = mul bk vw
+    wh:c64[8,5] = mul bl vz
+    wi:c64[8,5] = add_any wg wh
+    wj:c64[8,5] = mul fa wc
+    wk:c64[8,5] = mul bk wf
+    wl:c64[8,5] = add_any wj wk
+    wm:c64[8,5] = mul ex wl
+    wn:c64[8,5] = add_any wi wm
+    wo:c64[8,5] = mul wn ev
+    wp:c64[8,5] = mul bo wo
+    wq:c64[8,5] = add_any ue wp
+    wr:c64[8,5] = mul er wo
+    ws:c64[8,5] = add_any ug wr
+    wt:c64[8,5] = neg wq
+    wu:f32[8,8] = jit[name=fft jaxpr=fft3] wt
+    wv:f32[8,8] = mul ea wu
+    ww:f32[8,8] = mul wu ek
+    wx:f32[8,8] = mul dv wu
+    wy:f32[8,8] = mul wu ef
+    wz:c64[8,5] = jit[name=fft jaxpr=fft2] wv
+    xa:c64[8,5] = jit[name=_pad jaxpr=_pad1] ej wz
+    xb:c64[8,5] = mul xa eg
+    xc:c64[8,5] = jit[name=fft jaxpr=fft2] wx
+    xd:c64[8,5] = jit[name=_pad jaxpr=_pad1] ee xc
+    xe:c64[8,5] = mul xd eb
+    xf:c64[8,5] = jit[name=fft jaxpr=fft2] ww
+    xg:c64[8,5] = jit[name=_pad jaxpr=_pad1] dz xf
+    xh:c64[8,5] = mul xg dw
+    xi:c64[8,5] = jit[name=fft jaxpr=fft2] wy
+    xj:c64[8,5] = jit[name=_pad jaxpr=_pad1] du xi
+    xk:c64[8,5] = mul xj dr
+    xl:c64[8,5] = mul bk xb
+    xm:c64[8,5] = mul bl xe
+    xn:c64[8,5] = add_any xl xm
+    xo:c64[8,5] = mul dn xh
+    xp:c64[8,5] = mul bk xk
+    xq:c64[8,5] = add_any xo xp
+    xr:c64[8,5] = mul dk xq
+    xs:c64[8,5] = add_any xn xr
+    xt:c64[8,5] = mul xs di
+    xu:c64[8,5] = add_any vn xt
+    xv:c64[8,5] = mul bo xu
+    xw:c64[8,5] = add_any vk xv
+    xx:c64[8,5] = mul de xu
+    xy:c64[8,5] = add_any ws xx
+    xz:c64[8,5] = neg xw
+    ya:f32[8,8] = jit[name=fft jaxpr=fft3] xz
+    yb:f32[8,8] = mul cn ya
+    yc:f32[8,8] = mul ya cx
+    yd:f32[8,8] = mul ci ya
+    ye:f32[8,8] = mul ya cs
+    yf:c64[8,5] = jit[name=fft jaxpr=fft2] yb
+    yg:c64[8,5] = jit[name=_pad jaxpr=_pad1] cw yf
+    yh:c64[8,5] = mul yg ct
+    yi:c64[8,5] = jit[name=fft jaxpr=fft2] yd
+    yj:c64[8,5] = jit[name=_pad jaxpr=_pad1] cr yi
+    yk:c64[8,5] = mul yj co
+    yl:c64[8,5] = jit[name=fft jaxpr=fft2] yc
+    ym:c64[8,5] = jit[name=_pad jaxpr=_pad1] cm yl
+    yn:c64[8,5] = mul ym cj
+    yo:c64[8,5] = jit[name=fft jaxpr=fft2] ye
+    yp:c64[8,5] = jit[name=_pad jaxpr=_pad1] ch yo
+    yq:c64[8,5] = mul yp ce
+    yr:c64[8,5] = mul bk yh
+    ys:c64[8,5] = mul bl yk
+    yt:c64[8,5] = add_any yr ys
+    yu:c64[8,5] = mul ca yn
+    yv:c64[8,5] = mul bk yq
+    yw:c64[8,5] = add_any yu yv
+    yx:c64[8,5] = mul bx yw
+    yy:c64[8,5] = add_any yt yx
+    yz:c64[8,5] = mul yy bv
+    za:c64[8,5] = add_any xy yz
+    zb:f32[8,8] = jit[name=fft jaxpr=fft3] za
+  in (ou, zb) }

@@ -1,0 +1,37 @@
+{
+  "framework": "pytorch",
+  "case": "burgers_1d",
+  "num_layers": 4,
+  "input_shape": [
+    1,
+    16,
+    1
+  ],
+  "output_shape": [
+    1,
+    16,
+    1
+  ],
+  "node_count": 134,
+  "edge_count": 138,
+  "node_type_counts": {
+    "AccumulateGrad": 35,
+    "PermuteBackward0": 22,
+    "ConvolutionBackward0": 14,
+    "ViewBackward0": 10,
+    "GeluBackward0": 8,
+    "ReshapeAliasBackward0": 8,
+    "UnsqueezeBackward0": 8,
+    "AddBackward0": 4,
+    "FftC2RBackward0": 4,
+    "CopySlices": 4,
+    "BmmBackward0": 4,
+    "SliceBackward0": 4,
+    "FftR2CBackward0": 4,
+    "MeanBackward0": 1,
+    "MulBackward0": 1,
+    "AddmmBackward0": 1,
+    "CatBackward0": 1,
+    "TBackward0": 1
+  }
+}

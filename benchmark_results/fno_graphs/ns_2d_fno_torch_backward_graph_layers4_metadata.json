@@ -1,0 +1,41 @@
+{
+  "framework": "pytorch",
+  "case": "ns_2d",
+  "num_layers": 4,
+  "input_shape": [
+    1,
+    8,
+    8,
+    10
+  ],
+  "output_shape": [
+    1,
+    8,
+    8,
+    1
+  ],
+  "node_count": 210,
+  "edge_count": 218,
+  "node_type_counts": {
+    "PermuteBackward0": 42,
+    "AccumulateGrad": 39,
+    "ViewBackward0": 18,
+    "UnsqueezeBackward0": 16,
+    "SliceBackward0": 16,
+    "ConvolutionBackward0": 14,
+    "GeluBackward0": 8,
+    "CopySlices": 8,
+    "BmmBackward0": 8,
+    "UnsafeViewBackward0": 8,
+    "CloneBackward0": 8,
+    "ReshapeAliasBackward0": 8,
+    "AddBackward0": 4,
+    "FftC2RBackward0": 4,
+    "FftR2CBackward0": 4,
+    "MeanBackward0": 1,
+    "MulBackward0": 1,
+    "AddmmBackward0": 1,
+    "CatBackward0": 1,
+    "TBackward0": 1
+  }
+}

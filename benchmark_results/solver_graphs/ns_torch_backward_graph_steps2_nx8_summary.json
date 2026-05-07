@@ -1,0 +1,16 @@
+{
+  "framework": "pytorch",
+  "case": "ns_2d",
+  "time_steps": 2,
+  "nx": 8,
+  "node_type_counts": {
+    "MulBackward0": 126,
+    "FftC2RBackward0": 34,
+    "AddBackward0": 30,
+    "FftR2CBackward0": 10,
+    "SubBackward0": 3,
+    "MeanBackward0": 1,
+    "PowBackward0": 1,
+    "AccumulateGrad": 1
+  }
+}
