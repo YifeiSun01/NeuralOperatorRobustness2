@@ -1,0 +1,150 @@
+{
+  "settings": {
+    "output_root": "benchmark_results/fno_inference_ns_trainbatch8_0507",
+    "cases": [
+      "ns_2d"
+    ],
+    "frameworks": [
+      "pytorch",
+      "jax_real_imag"
+    ],
+    "batch_sizes": [
+      8
+    ],
+    "repeats": 20,
+    "seed": 20260507,
+    "visualize_samples": 5
+  },
+  "workers": [
+    {
+      "case": "ns_2d",
+      "framework": "pytorch",
+      "checkpoint": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/checkpoints/fno2d_pytorch.pt",
+      "data_path": "2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt",
+      "model_loaded_global_gpu_mib": 429.0,
+      "prediction_paths": {
+        "batch8": "benchmark_results/fno_inference_ns_trainbatch8_0507/workers/predictions/ns_2d_pytorch_batch8.npz"
+      }
+    },
+    {
+      "case": "ns_2d",
+      "framework": "jax_real_imag",
+      "checkpoint": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/checkpoints/fno2d_jax_real_imag.pkl",
+      "data_path": "2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt",
+      "model_loaded_global_gpu_mib": 435.0,
+      "prediction_paths": {
+        "batch8": "benchmark_results/fno_inference_ns_trainbatch8_0507/workers/predictions/ns_2d_jax_real_imag_batch8.npz"
+      }
+    }
+  ],
+  "by_case_framework_batch": {
+    "ns_2d/jax_real_imag/batch8": {
+      "first_forward_seconds": 7.646910054027103,
+      "steady_forward_seconds": {
+        "count": 20,
+        "mean": 0.05402330079814419,
+        "min": 0.05321440193802118,
+        "max": 0.058228638023138046,
+        "total": 1.0804660159628838
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 20,
+        "mean": 1533.0,
+        "min": 1533.0,
+        "max": 1533.0,
+        "total": 30660.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 20,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "relative_l2": {
+        "count": 21,
+        "mean": 0.12870360910892487,
+        "min": 0.12870360910892487,
+        "max": 0.12870360910892487,
+        "total": 2.702775791287422
+      },
+      "mse": {
+        "count": 21,
+        "mean": 0.03939966484904289,
+        "min": 0.03939966484904289,
+        "max": 0.03939966484904289,
+        "total": 0.8273929618299007
+      }
+    },
+    "ns_2d/pytorch/batch8": {
+      "first_forward_seconds": 0.29657116101589054,
+      "steady_forward_seconds": {
+        "count": 20,
+        "mean": 0.0633433892566245,
+        "min": 0.0608189650811255,
+        "max": 0.06625838903710246,
+        "total": 1.26686778513249
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 20,
+        "mean": 1241.0,
+        "min": 1241.0,
+        "max": 1241.0,
+        "total": 24820.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 20,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 20,
+        "mean": 534.67919921875,
+        "min": 534.67919921875,
+        "max": 534.67919921875,
+        "total": 10693.583984375
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 20,
+        "mean": 724.0,
+        "min": 724.0,
+        "max": 724.0,
+        "total": 14480.0
+      },
+      "relative_l2": {
+        "count": 21,
+        "mean": 0.12830591201782227,
+        "min": 0.12830591201782227,
+        "max": 0.12830591201782227,
+        "total": 2.6944241523742676
+      },
+      "mse": {
+        "count": 21,
+        "mean": 0.0391530767083168,
+        "min": 0.0391530767083168,
+        "max": 0.0391530767083168,
+        "total": 0.8222146108746529
+      }
+    }
+  },
+  "csv": "benchmark_results/fno_inference_ns_trainbatch8_0507/inference_metrics.csv",
+  "visualizations": [
+    "benchmark_results/fno_inference_ns_trainbatch8_0507/visualizations/ns_2d_batch8_first5_comparison.png"
+  ]
+}

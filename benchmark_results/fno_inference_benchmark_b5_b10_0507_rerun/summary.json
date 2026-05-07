@@ -1,0 +1,468 @@
+{
+  "settings": {
+    "output_root": "benchmark_results/fno_inference_benchmark_b5_b10_0507_rerun",
+    "cases": [
+      "burgers_1d",
+      "ns_2d"
+    ],
+    "frameworks": [
+      "pytorch",
+      "jax_real_imag"
+    ],
+    "batch_sizes": [
+      5,
+      10
+    ],
+    "repeats": 10,
+    "seed": 20260507
+  },
+  "workers": [
+    {
+      "case": "burgers_1d",
+      "framework": "pytorch",
+      "checkpoint": "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+      "data_path": "1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+      "model_loaded_global_gpu_mib": 427.0
+    },
+    {
+      "case": "burgers_1d",
+      "framework": "jax_real_imag",
+      "checkpoint": "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/jax_real_imag_fno1d_500.pkl",
+      "data_path": "1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+      "model_loaded_global_gpu_mib": 435.0
+    },
+    {
+      "case": "ns_2d",
+      "framework": "pytorch",
+      "checkpoint": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/checkpoints/fno2d_pytorch.pt",
+      "data_path": "2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt",
+      "model_loaded_global_gpu_mib": 429.0
+    },
+    {
+      "case": "ns_2d",
+      "framework": "jax_real_imag",
+      "checkpoint": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/checkpoints/fno2d_jax_real_imag.pkl",
+      "data_path": "2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt",
+      "model_loaded_global_gpu_mib": 435.0
+    }
+  ],
+  "by_case_framework_batch": {
+    "burgers_1d/jax_real_imag/batch5": {
+      "first_forward_seconds": 2.020964751020074,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.0010251090163365007,
+        "min": 0.0008737090975046158,
+        "max": 0.00171825906727463,
+        "total": 0.010251090163365006
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 589.0,
+        "min": 589.0,
+        "max": 589.0,
+        "total": 5890.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.015242110006511211,
+        "min": 0.015242110006511211,
+        "max": 0.015242110006511211,
+        "total": 0.16766321007162333
+      },
+      "mse": {
+        "count": 11,
+        "mean": 7.567364809801802e-05,
+        "min": 7.567364809801802e-05,
+        "max": 7.567364809801802e-05,
+        "total": 0.0008324101290781982
+      }
+    },
+    "burgers_1d/jax_real_imag/batch10": {
+      "first_forward_seconds": 2.1101590070175007,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.0010921288980171085,
+        "min": 0.0009127190569415689,
+        "max": 0.0012192189460620284,
+        "total": 0.010921288980171084
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 593.0,
+        "min": 593.0,
+        "max": 593.0,
+        "total": 5930.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.020657263696193695,
+        "min": 0.020657263696193695,
+        "max": 0.020657263696193695,
+        "total": 0.22722990065813065
+      },
+      "mse": {
+        "count": 11,
+        "mean": 0.00010288476187270135,
+        "min": 0.00010288476187270135,
+        "max": 0.00010288476187270135,
+        "total": 0.0011317323805997148
+      }
+    },
+    "burgers_1d/pytorch/batch5": {
+      "first_forward_seconds": 0.20668383606243879,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.003883876092731953,
+        "min": 0.0031353069934993982,
+        "max": 0.005036815069615841,
+        "total": 0.03883876092731953
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 543.0,
+        "min": 543.0,
+        "max": 543.0,
+        "total": 5430.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 10,
+        "mean": 21.42041015625,
+        "min": 21.42041015625,
+        "max": 21.42041015625,
+        "total": 214.2041015625
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 10,
+        "mean": 26.0,
+        "min": 26.0,
+        "max": 26.0,
+        "total": 260.0
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.014436332508921623,
+        "min": 0.014436332508921623,
+        "max": 0.014436332508921623,
+        "total": 0.15879965759813786
+      },
+      "mse": {
+        "count": 11,
+        "mean": 6.046380804036744e-05,
+        "min": 6.046380804036744e-05,
+        "max": 6.046380804036744e-05,
+        "total": 0.0006651018884440418
+      }
+    },
+    "burgers_1d/pytorch/batch10": {
+      "first_forward_seconds": 0.006981972022913396,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.004228595388121903,
+        "min": 0.0031616860069334507,
+        "max": 0.005310973967425525,
+        "total": 0.04228595388121903
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 563.0,
+        "min": 563.0,
+        "max": 563.0,
+        "total": 5630.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 10,
+        "mean": 32.11376953125,
+        "min": 32.11376953125,
+        "max": 32.11376953125,
+        "total": 321.1376953125
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 10,
+        "mean": 46.0,
+        "min": 46.0,
+        "max": 46.0,
+        "total": 460.0
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.020326171070337296,
+        "min": 0.020326171070337296,
+        "max": 0.020326171070337296,
+        "total": 0.22358788177371025
+      },
+      "mse": {
+        "count": 11,
+        "mean": 9.565323125571012e-05,
+        "min": 9.565323125571012e-05,
+        "max": 9.565323125571012e-05,
+        "total": 0.0010521855438128114
+      }
+    },
+    "ns_2d/jax_real_imag/batch5": {
+      "first_forward_seconds": 7.009674294968136,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.034985724685247986,
+        "min": 0.034378403914161026,
+        "max": 0.03845871007069945,
+        "total": 0.3498572468524799
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 1005.0,
+        "min": 1005.0,
+        "max": 1005.0,
+        "total": 10050.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.13516953587532043,
+        "min": 0.13516953587532043,
+        "max": 0.13516953587532043,
+        "total": 1.4868648946285248
+      },
+      "mse": {
+        "count": 11,
+        "mean": 0.03336521238088608,
+        "min": 0.03336521238088608,
+        "max": 0.03336521238088608,
+        "total": 0.36701733618974686
+      }
+    },
+    "ns_2d/jax_real_imag/batch10": {
+      "first_forward_seconds": 7.072580103063956,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.06711393891600892,
+        "min": 0.06687459000386298,
+        "max": 0.06755867903120816,
+        "total": 0.6711393891600892
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 1527.0,
+        "min": 1527.0,
+        "max": 1527.0,
+        "total": 15270.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.16629520058631897,
+        "min": 0.16629520058631897,
+        "max": 0.16629520058631897,
+        "total": 1.8292472064495087
+      },
+      "mse": {
+        "count": 11,
+        "mean": 0.05809728801250458,
+        "min": 0.05809728801250458,
+        "max": 0.05809728801250458,
+        "total": 0.6390701681375504
+      }
+    },
+    "ns_2d/pytorch/batch5": {
+      "first_forward_seconds": 0.27265071601141244,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.04273112957598642,
+        "min": 0.04246428608894348,
+        "max": 0.04308502399362624,
+        "total": 0.42731129575986415
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 987.0,
+        "min": 987.0,
+        "max": 987.0,
+        "total": 9870.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 10,
+        "mean": 343.07919921875,
+        "min": 342.17919921875,
+        "max": 343.17919921875,
+        "total": 3430.7919921875
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 10,
+        "mean": 470.0,
+        "min": 470.0,
+        "max": 470.0,
+        "total": 4700.0
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.13755397498607635,
+        "min": 0.13755397498607635,
+        "max": 0.13755397498607635,
+        "total": 1.51309372484684
+      },
+      "mse": {
+        "count": 11,
+        "mean": 0.03450188413262367,
+        "min": 0.03450188413262367,
+        "max": 0.03450188413262367,
+        "total": 0.3795207254588604
+      }
+    },
+    "ns_2d/pytorch/batch10": {
+      "first_forward_seconds": 0.08308786305133253,
+      "steady_forward_seconds": {
+        "count": 10,
+        "mean": 0.07993885109899565,
+        "min": 0.07940597692504525,
+        "max": 0.08060746593400836,
+        "total": 0.7993885109899566
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 10,
+        "mean": 1697.0,
+        "min": 1697.0,
+        "max": 1697.0,
+        "total": 16970.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 10,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 10,
+        "mean": 668.17919921875,
+        "min": 668.17919921875,
+        "max": 668.17919921875,
+        "total": 6681.7919921875
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 10,
+        "mean": 1180.0,
+        "min": 1180.0,
+        "max": 1180.0,
+        "total": 11800.0
+      },
+      "relative_l2": {
+        "count": 11,
+        "mean": 0.16972635686397552,
+        "min": 0.16972635686397552,
+        "max": 0.16972635686397552,
+        "total": 1.8669899255037308
+      },
+      "mse": {
+        "count": 11,
+        "mean": 0.06052975729107857,
+        "min": 0.06052975729107857,
+        "max": 0.06052975729107857,
+        "total": 0.6658273302018642
+      }
+    }
+  },
+  "csv": "benchmark_results/fno_inference_benchmark_b5_b10_0507_rerun/inference_metrics.csv"
+}

@@ -1,0 +1,72 @@
+{
+  "num_sample_rows": 10801,
+  "num_phase_rows": 13,
+  "max_process_gpu_memory_mib": NaN,
+  "max_gpu_memory_used_mib": 30651.0,
+  "sampled_whole_run_peak_process_gpu_memory_mib": NaN,
+  "sampled_whole_run_peak_gpu_memory_used_mib": 30651.0,
+  "sampled_whole_run_seconds": 12112.73061941599,
+  "profiled_train_peak_mib": 30597.0,
+  "profiled_inference_peak_mib": 30651.0,
+  "profiled_backward_to_forward_peak_ratio": 1.0,
+  "profiled_backward_to_forward_mean_time_ratio": 2.796835925067629,
+  "scopes": {
+    "inference": {
+      "num_rows": 1,
+      "max_memory_mib": 30651.0,
+      "mean_seconds": 7.825530310044996,
+      "max_seconds": 7.825530310044996,
+      "total_seconds": 7.825530310044996
+    },
+    "train": {
+      "num_rows": 12,
+      "max_memory_mib": 30597.0,
+      "mean_seconds": 2.524067831400316,
+      "max_seconds": 21.367139724898152,
+      "total_seconds": 30.288813976803795
+    }
+  },
+  "phases": {
+    "backward": {
+      "num_rows": 4,
+      "max_memory_mib": 30597.0,
+      "mean_memory_mib": 30565.5,
+      "mean_seconds": 5.448007061728276,
+      "max_seconds": 21.367139724898152,
+      "min_seconds": 0.12218788801692426,
+      "total_seconds": 21.792028246913105
+    },
+    "forward": {
+      "num_rows": 4,
+      "max_memory_mib": 30597.0,
+      "mean_memory_mib": 26453.0,
+      "mean_seconds": 1.9479180072376039,
+      "max_seconds": 7.608138455892913,
+      "min_seconds": 0.0543460730696097,
+      "total_seconds": 7.7916720289504156
+    },
+    "inference_forward": {
+      "num_rows": 1,
+      "max_memory_mib": 30651.0,
+      "mean_memory_mib": 30651.0,
+      "mean_seconds": 7.825530310044996,
+      "max_seconds": 7.825530310044996,
+      "min_seconds": 7.825530310044996,
+      "total_seconds": 7.825530310044996
+    },
+    "optimizer_step": {
+      "num_rows": 4,
+      "max_memory_mib": 30597.0,
+      "mean_memory_mib": 30566.0,
+      "mean_seconds": 0.17627842523506843,
+      "max_seconds": 0.694680774002336,
+      "min_seconds": 0.0029320160392671824,
+      "total_seconds": 0.7051137009402737
+    }
+  },
+  "profile_outputs_enabled": true,
+  "samples_csv": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/memory/gpu_samples_jax_real_imag.csv",
+  "phases_csv": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/memory/memory_phases_jax_real_imag.csv",
+  "samples_plot": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/memory/gpu_memory_curve_jax_real_imag.png",
+  "phases_plot": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/memory/phase_memory_peaks_jax_real_imag.png"
+}

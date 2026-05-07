@@ -1,0 +1,150 @@
+{
+  "settings": {
+    "output_root": "benchmark_results/fno_inference_burgers_trainbatch64_0507",
+    "cases": [
+      "burgers_1d"
+    ],
+    "frameworks": [
+      "pytorch",
+      "jax_real_imag"
+    ],
+    "batch_sizes": [
+      64
+    ],
+    "repeats": 20,
+    "seed": 20260507,
+    "visualize_samples": 5
+  },
+  "workers": [
+    {
+      "case": "burgers_1d",
+      "framework": "pytorch",
+      "checkpoint": "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+      "data_path": "1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+      "model_loaded_global_gpu_mib": 427.0,
+      "prediction_paths": {
+        "batch64": "benchmark_results/fno_inference_burgers_trainbatch64_0507/workers/predictions/burgers_1d_pytorch_batch64.npz"
+      }
+    },
+    {
+      "case": "burgers_1d",
+      "framework": "jax_real_imag",
+      "checkpoint": "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/jax_real_imag_fno1d_500.pkl",
+      "data_path": "1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+      "model_loaded_global_gpu_mib": 435.0,
+      "prediction_paths": {
+        "batch64": "benchmark_results/fno_inference_burgers_trainbatch64_0507/workers/predictions/burgers_1d_jax_real_imag_batch64.npz"
+      }
+    }
+  ],
+  "by_case_framework_batch": {
+    "burgers_1d/jax_real_imag/batch64": {
+      "first_forward_seconds": 3.2866155630908906,
+      "steady_forward_seconds": {
+        "count": 20,
+        "mean": 0.0019573120516724885,
+        "min": 0.0017462789546698332,
+        "max": 0.002240497968159616,
+        "total": 0.03914624103344977
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 20,
+        "mean": 717.0,
+        "min": 717.0,
+        "max": 717.0,
+        "total": 14340.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 20,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "total": null
+      },
+      "relative_l2": {
+        "count": 21,
+        "mean": 0.017024166882038116,
+        "min": 0.017024166882038116,
+        "max": 0.017024166882038116,
+        "total": 0.35750750452280045
+      },
+      "mse": {
+        "count": 21,
+        "mean": 8.087977766990662e-05,
+        "min": 8.087977766990662e-05,
+        "max": 8.087977766990662e-05,
+        "total": 0.001698475331068039
+      }
+    },
+    "burgers_1d/pytorch/batch64": {
+      "first_forward_seconds": 0.20305205089971423,
+      "steady_forward_seconds": {
+        "count": 20,
+        "mean": 0.003644977684598416,
+        "min": 0.0025334269739687443,
+        "max": 0.004877664963714778,
+        "total": 0.07289955369196832
+      },
+      "steady_global_gpu_peak_mib": {
+        "count": 20,
+        "mean": 747.0,
+        "min": 747.0,
+        "max": 747.0,
+        "total": 14940.0
+      },
+      "steady_global_gpu_peak_delta_mib": {
+        "count": 20,
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "total": 0.0
+      },
+      "steady_torch_peak_allocated_mib": {
+        "count": 20,
+        "mean": 140.22705078125,
+        "min": 140.22705078125,
+        "max": 140.22705078125,
+        "total": 2804.541015625
+      },
+      "steady_torch_peak_reserved_mib": {
+        "count": 20,
+        "mean": 230.0,
+        "min": 230.0,
+        "max": 230.0,
+        "total": 4600.0
+      },
+      "relative_l2": {
+        "count": 21,
+        "mean": 0.018055494874715805,
+        "min": 0.018055494874715805,
+        "max": 0.018055494874715805,
+        "total": 0.3791653923690319
+      },
+      "mse": {
+        "count": 21,
+        "mean": 9.580756886862218e-05,
+        "min": 9.580756886862218e-05,
+        "max": 9.580756886862218e-05,
+        "total": 0.002011958946241066
+      }
+    }
+  },
+  "csv": "benchmark_results/fno_inference_burgers_trainbatch64_0507/inference_metrics.csv",
+  "visualizations": [
+    "benchmark_results/fno_inference_burgers_trainbatch64_0507/visualizations/burgers_1d_batch64_first5_comparison.png"
+  ]
+}

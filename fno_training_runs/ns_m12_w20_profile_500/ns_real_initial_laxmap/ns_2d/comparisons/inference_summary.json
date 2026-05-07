@@ -1,0 +1,39 @@
+{
+  "num_samples": 5,
+  "input_pytorch_vs_jax": {
+    "mse": 0.0,
+    "rmse": 0.0,
+    "mae": 0.0,
+    "max_abs": 0.0,
+    "relative_l2": 0.0
+  },
+  "target_pytorch_vs_jax": {
+    "mse": 0.0,
+    "rmse": 0.0,
+    "mae": 0.0,
+    "max_abs": 0.0,
+    "relative_l2": 0.0
+  },
+  "prediction_pytorch_vs_jax": {
+    "mse": 0.0006370662013068795,
+    "rmse": 0.025240170389814715,
+    "mae": 0.014408043585717678,
+    "max_abs": 0.38577935099601746,
+    "relative_l2": 0.017363175749778748
+  },
+  "pytorch_prediction_vs_target": {
+    "mse": 0.04459989070892334,
+    "rmse": 0.2111868620651468,
+    "mae": 0.12701258063316345,
+    "max_abs": 2.9050791263580322,
+    "relative_l2": 0.14425700902938843
+  },
+  "jax_prediction_vs_target": {
+    "mse": 0.04536480829119682,
+    "rmse": 0.21299016008068736,
+    "mae": 0.12856954336166382,
+    "max_abs": 2.8655505180358887,
+    "relative_l2": 0.14548882842063904
+  },
+  "sample_csv": "fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/comparisons/inference_sample_comparison.csv"
+}

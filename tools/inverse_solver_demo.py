@@ -68,6 +68,29 @@ def sync_torch(torch_module) -> None:
         torch_module.cuda.synchronize()
 
 
+def progress_iter(args: argparse.Namespace, desc: str):
+    steps = range(args.opt_steps + 1)
+    if getattr(args, "no_progress", False):
+        return steps
+    try:
+        from tqdm.auto import tqdm
+    except Exception:
+        return steps
+    return tqdm(steps, desc=desc, unit="step", dynamic_ncols=True)
+
+
+def set_progress(progress: Any, **values: Any) -> None:
+    if not hasattr(progress, "set_postfix"):
+        return
+    formatted: dict[str, Any] = {}
+    for key, value in values.items():
+        if isinstance(value, float):
+            formatted[key] = f"{value:.4g}" if math.isfinite(value) else "nan"
+        else:
+            formatted[key] = value
+    progress.set_postfix(formatted, refresh=True)
+
+
 def smooth_burgers_initial(nx: int, seed: int, domain_extent: float = 2.0) -> np.ndarray:
     rng = np.random.default_rng(seed)
     x = np.linspace(0.0, domain_extent, nx, endpoint=False, dtype=np.float32)
@@ -136,10 +159,16 @@ def run_torch_burgers(args: argparse.Namespace, target_np: np.ndarray, initial_n
     total_start = time.perf_counter()
     global_start = global_gpu_used_mib()
 
-    for step in range(args.opt_steps + 1):
+    desc = (
+        f"case=burgers_1d framework=pytorch nx={args.burgers_nx} "
+        f"t_final={args.burgers_t_final} dt={args.burgers_dt} steps={args.opt_steps}"
+    )
+    progress = progress_iter(args, desc)
+    for step in progress:
         if torch.cuda.is_available():
             torch.cuda.reset_peak_memory_stats()
         mem_before = global_gpu_used_mib()
+        set_progress(progress, phase="forward", step=step, gpu_mib=mem_before)
         forward_start = time.perf_counter()
         pred = solve_burgers_final_batch(
             u,
@@ -168,6 +197,7 @@ def run_torch_burgers(args: argparse.Namespace, target_np: np.ndarray, initial_n
             opt.zero_grad(set_to_none=True)
             if torch.cuda.is_available():
                 torch.cuda.reset_peak_memory_stats()
+            set_progress(progress, phase="backward", step=step, loss=float(loss.detach().cpu().item()))
             backward_start = time.perf_counter()
             loss.backward()
             sync_torch(torch)
@@ -176,18 +206,30 @@ def run_torch_burgers(args: argparse.Namespace, target_np: np.ndarray, initial_n
                 float(torch.cuda.max_memory_allocated() / 1024**2) if torch.cuda.is_available() else float("nan")
             )
             grad_norm = float(torch.linalg.vector_norm(u.grad.detach()).item())
+            set_progress(progress, phase="optimizer", step=step, grad=grad_norm)
             update_start = time.perf_counter()
             opt.step()
             sync_torch(torch)
             update_seconds = time.perf_counter() - update_start
 
         mem_after = global_gpu_used_mib()
+        loss_value = float(loss.detach().cpu().item())
+        set_progress(
+            progress,
+            phase="done",
+            step=step,
+            loss=loss_value,
+            fwd_s=forward_seconds,
+            bwd_s=backward_seconds,
+            opt_s=update_seconds,
+            gpu_mib=mem_after,
+        )
         rows.append(
             {
                 "case": "burgers_1d",
                 "framework": "pytorch",
                 "step": step,
-                "loss": float(loss.detach().cpu().item()),
+                "loss": loss_value,
                 "forward_seconds": forward_seconds,
                 "backward_seconds": backward_seconds,
                 "update_seconds": update_seconds,
@@ -219,10 +261,16 @@ def run_torch_ns(args: argparse.Namespace, target_np: np.ndarray, initial_np: np
     total_start = time.perf_counter()
     global_start = global_gpu_used_mib()
 
-    for step in range(args.opt_steps + 1):
+    desc = (
+        f"case=ns_2d framework=pytorch nx={args.ns_nx} "
+        f"t_final={args.ns_t_final} dt={args.ns_dt} steps={args.opt_steps}"
+    )
+    progress = progress_iter(args, desc)
+    for step in progress:
         if torch.cuda.is_available():
             torch.cuda.reset_peak_memory_stats()
         mem_before = global_gpu_used_mib()
+        set_progress(progress, phase="forward", step=step, gpu_mib=mem_before)
         forward_start = time.perf_counter()
         seq = solve_ns_zongyi_rollout_batch(
             u,
@@ -253,6 +301,7 @@ def run_torch_ns(args: argparse.Namespace, target_np: np.ndarray, initial_np: np
             opt.zero_grad(set_to_none=True)
             if torch.cuda.is_available():
                 torch.cuda.reset_peak_memory_stats()
+            set_progress(progress, phase="backward", step=step, loss=float(loss.detach().cpu().item()))
             backward_start = time.perf_counter()
             loss.backward()
             sync_torch(torch)
@@ -261,18 +310,30 @@ def run_torch_ns(args: argparse.Namespace, target_np: np.ndarray, initial_np: np
                 float(torch.cuda.max_memory_allocated() / 1024**2) if torch.cuda.is_available() else float("nan")
             )
             grad_norm = float(torch.linalg.vector_norm(u.grad.detach()).item())
+            set_progress(progress, phase="optimizer", step=step, grad=grad_norm)
             update_start = time.perf_counter()
             opt.step()
             sync_torch(torch)
             update_seconds = time.perf_counter() - update_start
 
         mem_after = global_gpu_used_mib()
+        loss_value = float(loss.detach().cpu().item())
+        set_progress(
+            progress,
+            phase="done",
+            step=step,
+            loss=loss_value,
+            fwd_s=forward_seconds,
+            bwd_s=backward_seconds,
+            opt_s=update_seconds,
+            gpu_mib=mem_after,
+        )
         rows.append(
             {
                 "case": "ns_2d",
                 "framework": "pytorch",
                 "step": step,
-                "loss": float(loss.detach().cpu().item()),
+                "loss": loss_value,
                 "forward_seconds": forward_seconds,
                 "backward_seconds": backward_seconds,
                 "update_seconds": update_seconds,
@@ -401,9 +462,21 @@ def run_jax_case(
     total_start = time.perf_counter()
     global_start = global_gpu_used_mib()
 
-    for step in range(args.opt_steps + 1):
+    if case == "burgers_1d":
+        desc = (
+            f"case=burgers_1d framework=jax_exponax nx={args.burgers_nx} "
+            f"t_final={args.burgers_t_final} dt={args.burgers_dt} steps={args.opt_steps}"
+        )
+    else:
+        desc = (
+            f"case=ns_2d framework=jax_exponax nx={args.ns_nx} "
+            f"t_final={args.ns_t_final} dt={args.ns_dt} steps={args.opt_steps}"
+        )
+    progress = progress_iter(args, desc)
+    for step in progress:
         mem_before = global_gpu_used_mib()
 
+        set_progress(progress, phase="forward", step=step, gpu_mib=mem_before)
         forward_start = time.perf_counter()
         pred = forward(u)
         pred.block_until_ready()
@@ -418,6 +491,7 @@ def run_jax_case(
         update_seconds = 0.0
         grad_norm = float("nan")
         if step < args.opt_steps:
+            set_progress(progress, phase="value_and_grad", step=step, loss=loss_forward)
             value_grad_start = time.perf_counter()
             loss_vg, grad = value_and_grad(u)
             grad.block_until_ready()
@@ -425,6 +499,7 @@ def run_jax_case(
             backward_estimate_seconds = max(0.0, value_grad_seconds - forward_seconds)
             grad_norm = float(jnp.linalg.norm(grad))
 
+            set_progress(progress, phase="optimizer", step=step, grad=grad_norm)
             update_start = time.perf_counter()
             u, m, v = adam_update(u, grad, m, v, step)
             u.block_until_ready()
@@ -434,6 +509,17 @@ def run_jax_case(
             loss_value = loss_forward
 
         mem_after = global_gpu_used_mib()
+        set_progress(
+            progress,
+            phase="done",
+            step=step,
+            loss=loss_value,
+            fwd_s=forward_seconds,
+            vg_s=value_grad_seconds,
+            bwd_est_s=backward_estimate_seconds,
+            opt_s=update_seconds,
+            gpu_mib=mem_after,
+        )
         rows.append(
             {
                 "case": case,
@@ -705,6 +791,7 @@ def main() -> int:
     parser.add_argument("--max-gif-frames", type=int, default=31)
     parser.add_argument("--seed", type=int, default=31415)
     parser.add_argument("--cpu", action="store_true")
+    parser.add_argument("--no-progress", action="store_true", help="Disable tqdm progress bars.")
 
     parser.add_argument("--burgers-nx", type=int, default=512)
     parser.add_argument("--burgers-t-final", type=float, default=1.0)

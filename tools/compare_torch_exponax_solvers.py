@@ -938,6 +938,11 @@ def main() -> int:
     parser.add_argument("--output-md", type=Path, default=DEFAULT_OUTPUT_MD)
     parser.add_argument("--output-csv", type=Path, default=DEFAULT_OUTPUT_CSV)
     parser.add_argument("--plot-dir", type=Path, default=DEFAULT_PLOT_DIR)
+    parser.add_argument(
+        "--cases",
+        default="burgers_1d,ns_2d",
+        help="Comma-separated cases to run: burgers_1d,ns_2d.",
+    )
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--num-seeds", type=int, default=1)
     parser.add_argument("--seeds", type=str, default=None, help="Comma-separated explicit seed list.")
@@ -964,6 +969,11 @@ def main() -> int:
         return run_worker(args)
 
     seeds = parse_seed_list(args.seeds, args.seed, args.num_seeds)
+    requested_cases = [case.strip() for case in args.cases.split(",") if case.strip()]
+    valid_cases = {"burgers_1d", "ns_2d"}
+    unknown_cases = sorted(set(requested_cases) - valid_cases)
+    if unknown_cases:
+        raise ValueError(f"Unknown cases: {unknown_cases}")
     args.plot_dir.mkdir(parents=True, exist_ok=True)
     settings = {
         "seed": args.seed,
@@ -989,12 +999,12 @@ def main() -> int:
         },
     }
     results: dict[str, Any] = {"settings": settings, "cases": {}}
-    conditions_by_case: dict[str, list[dict[str, Any]]] = {"burgers_1d": [], "ns_2d": []}
+    conditions_by_case: dict[str, list[dict[str, Any]]] = {case: [] for case in requested_cases}
 
     with tempfile.TemporaryDirectory(prefix="torch_vs_exponax_") as tmp:
         tmpdir = Path(tmp)
         for condition_index, seed in enumerate(seeds):
-            for case in ["burgers_1d", "ns_2d"]:
+            for case in requested_cases:
                 case_runs = {}
                 output_paths = {}
                 for framework in ["pytorch_solvers_py", "jax_exponax"]:
