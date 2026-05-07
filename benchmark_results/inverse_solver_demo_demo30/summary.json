@@ -1,0 +1,215 @@
+{
+  "settings": {
+    "output_root": "benchmark_results/inverse_solver_demo_demo30",
+    "cases": [
+      "burgers",
+      "ns"
+    ],
+    "opt_steps": 30,
+    "seed": 31415,
+    "burgers": {
+      "nx": 512,
+      "t_final": 1.0,
+      "dt": 0.001,
+      "nu": 0.001,
+      "lr": 0.08
+    },
+    "ns": {
+      "nx": 64,
+      "t_final": 2,
+      "dt": 0.005,
+      "nu": 1e-05,
+      "lr": 0.03
+    }
+  },
+  "cases": {
+    "burgers_1d": {
+      "pytorch": {
+        "initial_loss": 0.38328978419303894,
+        "final_loss": 0.13116778433322906,
+        "loss_reduction_factor": 2.9221335569662372,
+        "loss_reduction_percent": 65.7784293392051,
+        "total_seconds": 69.66709920600988,
+        "global_gpu_start_mib": 13451.0,
+        "global_gpu_end_mib": 13565.0,
+        "global_gpu_delta_total_mib": 114.0,
+        "forward_seconds": {
+          "count": 30,
+          "mean": 0.8655626525520347,
+          "std": 0.08193395911736452,
+          "min": 0.7916667780373245,
+          "max": 1.196208207984455
+        },
+        "backward_seconds": {
+          "count": 30,
+          "mean": 1.2824258544986757,
+          "std": 0.04608024488503554,
+          "min": 1.2289258500095457,
+          "max": 1.4344892470398918
+        },
+        "torch_forward_peak_allocated_mib": {
+          "count": 30,
+          "mean": 26.963639322916666,
+          "std": 0.037921469228754286,
+          "min": 26.90283203125,
+          "max": 27.041015625
+        },
+        "torch_backward_peak_allocated_mib": {
+          "count": 30,
+          "mean": 26.95,
+          "std": 0.03883825721629561,
+          "min": 26.8955078125,
+          "max": 27.029296875
+        },
+        "global_gpu_delta_mib": {
+          "count": 30,
+          "mean": 3.8,
+          "std": 20.813457185196317,
+          "min": 0.0,
+          "max": 114.0
+        }
+      },
+      "jax_exponax": {
+        "initial_loss": 0.38329005241394043,
+        "final_loss": 0.1311413049697876,
+        "loss_reduction_factor": 2.9227256241063255,
+        "loss_reduction_percent": 65.78536172700893,
+        "total_seconds": 28.05559390306007,
+        "global_gpu_start_mib": 13575.0,
+        "global_gpu_end_mib": 13619.0,
+        "global_gpu_delta_total_mib": 44.0,
+        "forward_seconds": {
+          "count": 30,
+          "mean": 0.25661036480062954,
+          "std": 0.04980068595343257,
+          "min": 0.23274073493666947,
+          "max": 0.5132882760372013
+        },
+        "backward_seconds": {
+          "count": 30,
+          "mean": 0.28557213775347917,
+          "std": 0.04557224482076501,
+          "min": 0.22613513201940805,
+          "max": 0.4998963710386306
+        },
+        "torch_forward_peak_allocated_mib": {
+          "count": 0,
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null
+        },
+        "torch_backward_peak_allocated_mib": {
+          "count": 0,
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null
+        },
+        "global_gpu_delta_mib": {
+          "count": 30,
+          "mean": 1.4666666666666666,
+          "std": 8.033264176742435,
+          "min": 0.0,
+          "max": 44.0
+        }
+      },
+      "gif": "benchmark_results/inverse_solver_demo_demo30/burgers_1d/visualizations/burgers_inverse_optimization.gif",
+      "loss_png": "benchmark_results/inverse_solver_demo_demo30/burgers_1d/visualizations/burgers_1d_loss_curve.png"
+    },
+    "ns_2d": {
+      "pytorch": {
+        "initial_loss": 0.3268272876739502,
+        "final_loss": 0.05545175448060036,
+        "loss_reduction_factor": 5.893903461400663,
+        "loss_reduction_percent": 83.03331558534971,
+        "total_seconds": 57.903909778920934,
+        "global_gpu_start_mib": 13619.0,
+        "global_gpu_end_mib": 13731.0,
+        "global_gpu_delta_total_mib": 112.0,
+        "forward_seconds": {
+          "count": 30,
+          "mean": 0.7559078517680367,
+          "std": 0.09970856317713926,
+          "min": 0.6960984379984438,
+          "max": 1.100489588920027
+        },
+        "backward_seconds": {
+          "count": 30,
+          "mean": 1.0047710782343833,
+          "std": 0.026996163599005925,
+          "min": 0.9341918979771435,
+          "max": 1.0645997000392526
+        },
+        "torch_forward_peak_allocated_mib": {
+          "count": 30,
+          "mean": 136.68763020833333,
+          "std": 0.6925022060213996,
+          "min": 135.765625,
+          "max": 138.1259765625
+        },
+        "torch_backward_peak_allocated_mib": {
+          "count": 30,
+          "mean": 136.59109700520833,
+          "std": 0.6897001867635029,
+          "min": 135.72998046875,
+          "max": 138.02734375
+        },
+        "global_gpu_delta_mib": {
+          "count": 30,
+          "mean": 3.7333333333333334,
+          "std": 20.07388650810375,
+          "min": 0.0,
+          "max": 110.0
+        }
+      },
+      "jax_exponax": {
+        "initial_loss": 0.3268272578716278,
+        "final_loss": 0.05530707538127899,
+        "loss_reduction_factor": 5.90932092537036,
+        "loss_reduction_percent": 83.07758179612954,
+        "total_seconds": 33.60785947891418,
+        "global_gpu_start_mib": 13731.0,
+        "global_gpu_end_mib": 13987.0,
+        "global_gpu_delta_total_mib": 256.0,
+        "forward_seconds": {
+          "count": 30,
+          "mean": 0.3480594282853417,
+          "std": 0.12197290500186547,
+          "min": 0.31152011593803763,
+          "max": 0.9917283329414204
+        },
+        "backward_seconds": {
+          "count": 30,
+          "mean": 0.28664255288119117,
+          "std": 0.1443755127229918,
+          "min": 0.21979061083402485,
+          "max": 1.0421174360672012
+        },
+        "torch_forward_peak_allocated_mib": {
+          "count": 0,
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null
+        },
+        "torch_backward_peak_allocated_mib": {
+          "count": 0,
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null
+        },
+        "global_gpu_delta_mib": {
+          "count": 30,
+          "mean": 8.533333333333333,
+          "std": 46.738991573774165,
+          "min": 0.0,
+          "max": 256.0
+        }
+      },
+      "gif": "benchmark_results/inverse_solver_demo_demo30/ns_2d/visualizations/ns_inverse_optimization.gif",
+      "loss_png": "benchmark_results/inverse_solver_demo_demo30/ns_2d/visualizations/ns_2d_loss_curve.png"
+    }
+  }
+}

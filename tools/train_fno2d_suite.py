@@ -66,6 +66,64 @@ DEFAULT_TEST_PATH = (
 )
 DEFAULT_OUTPUT_ROOT = PROJECT_ROOT / "fno_training_runs" / "default"
 
+JAX_FRAMEWORK_SPECS = {
+    "jax": {
+        "module_name": "repo_fno2d_jax",
+        "module_path": PROJECT_ROOT / "2D_NS_FNO2d_recurrent" / "models" / "FNO2d_jax.py",
+        "display_name": "FNO2d JAX",
+    },
+    "jax_real_imag": {
+        "module_name": "repo_fno2d_jax_real_imag",
+        "module_path": PROJECT_ROOT / "2D_NS_FNO2d_recurrent" / "models" / "FNO2d_jax_real_imag.py",
+        "display_name": "FNO2d JAX real/imag",
+    },
+}
+
+FRAMEWORK_ALIASES = {
+    "torch": "pytorch",
+    "pt": "pytorch",
+    "jax_ri": "jax_real_imag",
+    "jax-real-imag": "jax_real_imag",
+    "real_imag": "jax_real_imag",
+    "real-image": "jax_real_imag",
+    "real_image": "jax_real_imag",
+}
+
+
+def canonical_frameworks(raw: str) -> list[str]:
+    frameworks = []
+    for item in raw.split(","):
+        key = item.strip().lower()
+        if not key:
+            continue
+        key = FRAMEWORK_ALIASES.get(key, key)
+        if key != "pytorch" and key not in JAX_FRAMEWORK_SPECS:
+            supported = ", ".join(["pytorch", *JAX_FRAMEWORK_SPECS])
+            raise ValueError(f"Unsupported framework {item!r}; supported: {supported}")
+        if key not in frameworks:
+            frameworks.append(key)
+    return frameworks
+
+
+def convert_complex_spectral_params_to_real_imag(params: dict) -> dict:
+    converted = {
+        "p": params["p"],
+        "conv_layers": [],
+        "mlp_layers": params["mlp_layers"],
+        "w_layers": params["w_layers"],
+        "q": params["q"],
+    }
+    for layer in params["conv_layers"]:
+        converted["conv_layers"].append(
+            {
+                "weights1_real": np.real(layer["weights1"]),
+                "weights1_imag": np.imag(layer["weights1"]),
+                "weights2_real": np.real(layer["weights2"]),
+                "weights2_imag": np.imag(layer["weights2"]),
+            }
+        )
+    return converted
+
 
 class NSTrajectoryDataset(Dataset):
     def __init__(
@@ -174,8 +232,16 @@ def flatten_jax_fno2d_params(params: dict) -> dict[str, np.ndarray]:
         "p.bias": np.asarray(params["p"]["bias"]),
     }
     for i, layer in enumerate(params["conv_layers"]):
-        flat[f"conv_layers.{i}.weights1"] = np.asarray(layer["weights1"])
-        flat[f"conv_layers.{i}.weights2"] = np.asarray(layer["weights2"])
+        if "weights1" in layer:
+            flat[f"conv_layers.{i}.weights1"] = np.asarray(layer["weights1"])
+            flat[f"conv_layers.{i}.weights2"] = np.asarray(layer["weights2"])
+        else:
+            flat[f"conv_layers.{i}.weights1"] = np.asarray(layer["weights1_real"]) + 1j * np.asarray(
+                layer["weights1_imag"]
+            )
+            flat[f"conv_layers.{i}.weights2"] = np.asarray(layer["weights2_real"]) + 1j * np.asarray(
+                layer["weights2_imag"]
+            )
     for i, layer in enumerate(params["mlp_layers"]):
         flat[f"mlp_layers.{i}.conv0.weight"] = np.asarray(layer["conv0"]["weight"])
         flat[f"mlp_layers.{i}.conv0.bias"] = np.asarray(layer["conv0"]["bias"])
@@ -259,6 +325,7 @@ def save_torch_inference(
 
 def save_jax_inference(
     args,
+    framework: str,
     predict_fn,
     params,
     compare_x,
@@ -267,7 +334,7 @@ def save_jax_inference(
     dtype,
     memory_phase_rows: list[dict],
 ) -> tuple[Path, dict]:
-    path = output_dir / "inference" / "jax_samples.npz"
+    path = output_dir / "inference" / f"{framework}_samples.npz"
     if int(compare_x.shape[0]) <= 0:
         return path, {}
     np_dtype = np.float64 if args.dtype == "float64" else np.float32
@@ -284,7 +351,7 @@ def save_jax_inference(
         memory_phase_rows.append(
             make_memory_phase_row(
                 problem="ns_2d",
-                framework="jax",
+                framework=framework,
                 scope="inference",
                 phase="inference_forward",
                 epoch="inference",
@@ -561,8 +628,19 @@ def loader_to_numpy(loader: DataLoader, dtype: np.dtype):
         yield xb.numpy().astype(dtype, copy=False), yb.numpy().astype(dtype, copy=False)
 
 
-def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, initial_params: dict | None = None) -> dict:
-    fno_mod = load_module("repo_fno2d_jax", PROJECT_ROOT / "2D_NS_FNO2d_recurrent" / "models" / "FNO2d_jax.py")
+def train_jax(
+    args,
+    train_ds,
+    test_ds,
+    compare_x,
+    compare_y,
+    output_dir: Path,
+    initial_params: dict | None = None,
+    *,
+    framework: str = "jax",
+) -> dict:
+    spec = JAX_FRAMEWORK_SPECS[framework]
+    fno_mod = load_module(spec["module_name"], spec["module_path"])
     dtype = jnp.float64 if args.dtype == "float64" else jnp.float32
     np_dtype = np.float64 if args.dtype == "float64" else np.float32
     model = fno_mod.FNO2dJAX(
@@ -575,6 +653,8 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
         seed=args.seed,
     )
     if initial_params is not None:
+        if framework == "jax_real_imag":
+            initial_params = convert_complex_spectral_params_to_real_imag(initial_params)
         initial_params = jax.tree_util.tree_map(jnp.asarray, initial_params)
         model.params = fno_mod.cast_fno2d_params(initial_params, dtype=dtype)
     init_fn, update_fn, get_params = optimizers.adam(args.lr)
@@ -646,14 +726,14 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
     step_idx = 0
     sampler = GpuMemorySampler(
         problem="ns_2d",
-        framework="jax",
+        framework=framework,
         scope="train_and_inference",
         interval_seconds=args.memory_sample_interval,
         enabled=args.memory_profile,
     )
     sampler.start()
     start_time = time.perf_counter()
-    for epoch in tqdm(range(1, args.epochs + 1), desc="FNO2d JAX"):
+    for epoch in tqdm(range(1, args.epochs + 1), desc=spec["display_name"]):
         epoch_start = time.perf_counter()
         train_loader = make_loader(train_ds, args.batch_size, shuffle=True, seed=args.seed + epoch)
         train_loss_sum = 0.0
@@ -672,7 +752,7 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
                 memory_phase_rows.append(
                     make_memory_phase_row(
                         problem="ns_2d",
-                        framework="jax",
+                        framework=framework,
                         scope="train",
                         phase="forward",
                         epoch=epoch,
@@ -696,7 +776,7 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
                 memory_phase_rows.append(
                     make_memory_phase_row(
                         problem="ns_2d",
-                        framework="jax",
+                        framework=framework,
                         scope="train",
                         phase="backward",
                         epoch=epoch,
@@ -720,7 +800,7 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
                 memory_phase_rows.append(
                     make_memory_phase_row(
                         problem="ns_2d",
-                        framework="jax",
+                        framework=framework,
                         scope="train",
                         phase="optimizer_step",
                         epoch=epoch,
@@ -748,7 +828,7 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
         loss_rows.append(
             {
                 "epoch": epoch,
-                "framework": "jax",
+                "framework": framework,
                 "train_relative_l2": train_loss_sum / max(1, train_n),
                 "test_relative_l2": test_metrics["relative_l2"],
                 "train_mse": train_mse_sum / max(1, train_n),
@@ -760,7 +840,7 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
     params_final = get_params(opt_state)
     final_train = evaluate(params_final, train_ds, args.eval_batch_size)
     final_test = evaluate(params_final, test_ds, args.eval_batch_size)
-    checkpoint_path = output_dir / "checkpoints" / "fno2d_jax.pkl"
+    checkpoint_path = output_dir / "checkpoints" / f"fno2d_{framework}.pkl"
     ensure_dir(checkpoint_path.parent)
     with checkpoint_path.open("wb") as f:
         pickle.dump(
@@ -773,32 +853,32 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
             f,
     )
     parameter_arrays = flatten_jax_fno2d_params(jax.device_get(params_final))
-    parameter_npz = save_parameter_npz(output_dir / "parameters" / "jax_parameters.npz", parameter_arrays)
+    parameter_npz = save_parameter_npz(output_dir / "parameters" / f"{framework}_parameters.npz", parameter_arrays)
     inference_npz, inference_metrics = save_jax_inference(
-        args, predict, params_final, compare_x, compare_y, output_dir, dtype, memory_phase_rows
+        args, framework, predict, params_final, compare_x, compare_y, output_dir, dtype, memory_phase_rows
     )
     sampler.stop()
     memory_summary = (
         write_memory_profile_outputs(
             output_dir,
             problem="ns_2d",
-            framework="jax",
+            framework=framework,
             sample_rows=sampler.rows,
             phase_rows=memory_phase_rows,
         )
         if should_write_profile_outputs(args)
         else empty_profile_summary()
     )
-    loss_csv = output_dir / "losses_jax.csv"
+    loss_csv = output_dir / f"losses_{framework}.csv"
     write_csv_rows(loss_csv, loss_rows)
-    plot_loss_curves(loss_rows, output_dir / "plots" / "loss_jax.png", "FNO2d JAX")
+    plot_loss_curves(loss_rows, output_dir / "plots" / f"loss_{framework}.png", spec["display_name"])
     return {
-        "framework": "jax",
+        "framework": framework,
         "checkpoint_path": str(checkpoint_path),
         "parameter_npz": str(parameter_npz),
         "inference_npz": str(inference_npz),
         "loss_csv": str(loss_csv),
-        "plot_path": str(output_dir / "plots" / "loss_jax.png"),
+        "plot_path": str(output_dir / "plots" / f"loss_{framework}.png"),
         "train_metrics": final_train,
         "test_metrics": final_test,
         "inference_metrics": inference_metrics,
@@ -811,12 +891,15 @@ def train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir: Path, i
 
 def run_framework_comparison(args, results: list[dict], output_dir: Path) -> dict | None:
     by_framework = {result["framework"]: result for result in results}
-    if "pytorch" not in by_framework or "jax" not in by_framework:
+    if "pytorch" not in by_framework:
+        return None
+    jax_framework = next((result["framework"] for result in results if result["framework"] != "pytorch"), None)
+    if jax_framework is None:
         return None
 
     comparison_dir = ensure_dir(output_dir / "comparisons")
     pt_npz = np.load(by_framework["pytorch"]["inference_npz"])
-    jax_npz = np.load(by_framework["jax"]["inference_npz"])
+    jax_npz = np.load(by_framework[jax_framework]["inference_npz"])
     pt_pred = pt_npz["pred"]
     jax_pred = jax_npz["pred"]
     target = pt_npz["target"]
@@ -835,12 +918,12 @@ def run_framework_comparison(args, results: list[dict], output_dir: Path) -> dic
     }
     inference_json = comparison_dir / "inference_summary.json"
     write_json(inference_json, inference_summary)
-    inference_plot = comparison_dir / "inference_compare_pytorch_jax.png"
+    inference_plot = comparison_dir / f"inference_compare_pytorch_{jax_framework}.png"
     plot_2d_prediction_comparison(target, pt_pred, jax_pred, inference_plot)
 
     parameter_rows, parameter_summary = compare_named_arrays(
         by_framework["pytorch"]["parameter_arrays"],
-        by_framework["jax"]["parameter_arrays"],
+        by_framework[jax_framework]["parameter_arrays"],
     )
     parameter_csv = comparison_dir / "parameter_block_comparison.csv"
     write_csv_rows(parameter_csv, parameter_rows)
@@ -849,11 +932,11 @@ def run_framework_comparison(args, results: list[dict], output_dir: Path) -> dic
     parameter_plot = comparison_dir / "parameter_block_max_abs.png"
     plot_parameter_block_differences(parameter_rows, parameter_plot, "FNO2d PyTorch vs JAX parameter blocks")
 
-    loss_plot = comparison_dir / "loss_compare_pytorch_jax.png"
+    loss_plot = comparison_dir / f"loss_compare_pytorch_{jax_framework}.png"
     plot_framework_loss_comparison(
         {result["framework"]: result.get("loss_rows", []) for result in results},
         loss_plot,
-        "FNO2d PyTorch vs JAX loss",
+        f"FNO2d PyTorch vs {jax_framework} loss",
     )
 
     comparison = {
@@ -867,6 +950,7 @@ def run_framework_comparison(args, results: list[dict], output_dir: Path) -> dic
         "parameter_plot": str(parameter_plot),
         "loss_plot": str(loss_plot),
         "aligned_jax_init_with_pytorch": bool(args.align_jax_init_with_pytorch),
+        "jax_framework": jax_framework,
     }
     write_json(comparison_dir / "framework_comparison.json", comparison)
     return comparison
@@ -886,7 +970,7 @@ def main() -> int:
     parser.add_argument("--test-path", type=Path, default=DEFAULT_TEST_PATH)
     parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT)
     parser.add_argument("--run-name", default="fno2d_ns")
-    parser.add_argument("--frameworks", default="pytorch,jax")
+    parser.add_argument("--frameworks", default="pytorch,jax_real_imag")
     parser.add_argument("--epochs", type=int, default=500)
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--eval-batch-size", type=int, default=4)
@@ -936,15 +1020,28 @@ def main() -> int:
     compare_x, compare_y = first_dataset_samples(test_ds, args.compare_samples)
 
     results = []
-    frameworks = [f.strip().lower() for f in args.frameworks.split(",") if f.strip()]
+    frameworks = canonical_frameworks(args.frameworks)
     pytorch_initial_params = None
     if "pytorch" in frameworks:
         pytorch_result = train_pytorch(args, train_ds, test_ds, compare_x, compare_y, output_dir)
         pytorch_initial_params = pytorch_result.get("initial_jax_params")
         results.append(pytorch_result)
-    if "jax" in frameworks:
+    for framework in frameworks:
+        if framework == "pytorch":
+            continue
         initial_params = pytorch_initial_params if args.align_jax_init_with_pytorch else None
-        results.append(train_jax(args, train_ds, test_ds, compare_x, compare_y, output_dir, initial_params))
+        results.append(
+            train_jax(
+                args,
+                train_ds,
+                test_ds,
+                compare_x,
+                compare_y,
+                output_dir,
+                initial_params,
+                framework=framework,
+            )
+        )
 
     comparison = run_framework_comparison(args, results, output_dir)
 
