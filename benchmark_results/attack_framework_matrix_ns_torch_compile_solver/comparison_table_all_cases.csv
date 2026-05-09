@@ -1,0 +1,3 @@
+PDE Case,Solver,Model,Avg Step Time,Peak Memory,Peak Memory GiB,Final True Loss,Final Input L2 vs Reference,Max Input L2 vs Reference,Combo
+NS / Stokes,TORCH,TORCH,14.423282394018024,22257.0,21.7353515625,2.3415127112738365,0.0,0.0,torch_solver_torch_model
+NS / Stokes,TORCH,JAX,15.182253610803746,22915.0,22.3779296875,2.335618259383091,24.688209190121334,24.688209190121334,torch_solver_jax_model

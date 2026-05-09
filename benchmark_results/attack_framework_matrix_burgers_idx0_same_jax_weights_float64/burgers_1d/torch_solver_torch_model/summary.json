@@ -1,0 +1,155 @@
+{
+  "initial_loss": 0.00010471493324136232,
+  "final_loss": 0.05700446224345067,
+  "final_true_loss": 0.05700446224345067,
+  "loss_growth_factor": 544.3775828234396,
+  "total_seconds": 228.32426672498696,
+  "avg_step_time_seconds": {
+    "count": 100,
+    "mean": 2.1142547240841667,
+    "std": 0.27786796316872825,
+    "min": 1.7958537900121883,
+    "max": 2.8277686709770933
+  },
+  "forward_total_seconds": {
+    "count": 100,
+    "mean": 0.7107984653988387,
+    "std": 0.1685177896387751,
+    "min": 0.5682136210380122,
+    "max": 0.9486364100594074
+  },
+  "model_forward_seconds": {
+    "count": 100,
+    "mean": 0.004193174991523847,
+    "std": 0.01446736336584853,
+    "min": 0.0024435650557279587,
+    "max": 0.14741444308310747
+  },
+  "solver_forward_seconds": {
+    "count": 100,
+    "mean": 0.7063478374038823,
+    "std": 0.1681156574803121,
+    "min": 0.5652841000119224,
+    "max": 0.9459403590299189
+  },
+  "loss_seconds": {
+    "count": 100,
+    "mean": 0.0002574530034326017,
+    "std": 1.9494344960611545e-05,
+    "min": 0.00022648589219897985,
+    "max": 0.0003826910397037864
+  },
+  "backward_seconds": {
+    "count": 100,
+    "mean": 0.9492787630239036,
+    "std": 0.01973272489335712,
+    "min": 0.9303038519574329,
+    "max": 1.0207624579779804
+  },
+  "projection_seconds": {
+    "count": 100,
+    "mean": 0.0003568291291594505,
+    "std": 0.0012314600574972066,
+    "min": 0.0002007379662245512,
+    "max": 0.012545400066301227
+  },
+  "forward_peak_gpu_mib": {
+    "count": 100,
+    "mean": 131.52751953125,
+    "std": 0.8136718749999994,
+    "min": 123.47216796875,
+    "max": 131.60888671875
+  },
+  "backward_peak_gpu_mib": {
+    "count": 100,
+    "mean": 131.5094921875,
+    "std": 0.8132812500000004,
+    "min": 123.4580078125,
+    "max": 131.5908203125
+  },
+  "peak_memory_mib": 703.0,
+  "model_forward_peak_global_gpu_mib": {
+    "count": 100,
+    "mean": 592.86,
+    "std": 1.4000000000000001,
+    "min": 579.0,
+    "max": 593.0
+  },
+  "solver_forward_peak_global_gpu_mib": {
+    "count": 100,
+    "mean": 702.9,
+    "std": 1.0,
+    "min": 693.0,
+    "max": 703.0
+  },
+  "loss_peak_global_gpu_mib": {
+    "count": 100,
+    "mean": 702.9,
+    "std": 1.0,
+    "min": 693.0,
+    "max": 703.0
+  },
+  "backward_peak_global_gpu_mib": {
+    "count": 100,
+    "mean": 703.0,
+    "std": 0.0,
+    "min": 703.0,
+    "max": 703.0
+  },
+  "projection_peak_global_gpu_mib": {
+    "count": 100,
+    "mean": 703.0,
+    "std": 0.0,
+    "min": 703.0,
+    "max": 703.0
+  },
+  "global_gpu_after_forward_mib": {
+    "count": 100,
+    "mean": 702.9,
+    "std": 1.0,
+    "min": 693.0,
+    "max": 703.0
+  },
+  "global_gpu_after_backward_mib": {
+    "count": 100,
+    "mean": 703.0,
+    "std": 0.0,
+    "min": 703.0,
+    "max": 703.0
+  },
+  "conversion_forward_torch_to_jax_seconds": {
+    "count": 100,
+    "mean": 0.0,
+    "std": 0.0,
+    "min": 0.0,
+    "max": 0.0
+  },
+  "conversion_forward_jax_to_torch_seconds": {
+    "count": 100,
+    "mean": 0.0,
+    "std": 0.0,
+    "min": 0.0,
+    "max": 0.0
+  },
+  "conversion_backward_torch_to_jax_seconds": {
+    "count": 100,
+    "mean": 0.0,
+    "std": 0.0,
+    "min": 0.0,
+    "max": 0.0
+  },
+  "conversion_backward_jax_to_torch_seconds": {
+    "count": 100,
+    "mean": 0.0,
+    "std": 0.0,
+    "min": 0.0,
+    "max": 0.0
+  },
+  "conversion_backward_jax_vjp_seconds": {
+    "count": 100,
+    "mean": 0.0,
+    "std": 0.0,
+    "min": 0.0,
+    "max": 0.0
+  }
+}

@@ -279,6 +279,23 @@ def solve_burgers_final_batch(
     return solver.repeat(u0_batch, steps)
 
 
+def solve_burgers_final_batch_with_solver(
+    u0_batch: torch.Tensor,
+    solver: Burgers1DETDRK4,
+    steps: int,
+    step_fn=None,
+) -> torch.Tensor:
+    # Input shape: (B, N). Output shape: (B, N).
+    if u0_batch.ndim != 2:
+        raise ValueError(f"Expected u0_batch shape (B, N), got {tuple(u0_batch.shape)}")
+
+    u = u0_batch.to(device=solver.device, dtype=solver.dtype)
+    advance = step_fn if step_fn is not None else solver.step
+    for _ in range(int(steps)):
+        u = advance(u)
+    return u
+
+
 @dataclass
 class NavierStokesVorticity2DZongyiETDRK4:
     num_points: int
@@ -472,6 +489,56 @@ def solve_ns_zongyi_rollout_batch(
     if apply_exponax_orientation_transform:
         # The modified Exponax Zongyi generator swaps the two spatial axes
         # before saving sparse integer-second frames.
+        seq = torch.swapaxes(seq, -1, -2)
+
+    if return_time_last:
+        seq = seq.permute(0, 2, 3, 1).contiguous()
+
+    return seq
+
+
+def solve_ns_zongyi_rollout_batch_with_solver(
+    u0_batch: torch.Tensor,
+    solver: NavierStokesVorticity2DZongyiETDRK4,
+    t_final: int = 20,
+    fixed_step: float = 0.005,
+    apply_exponax_orientation_transform: bool = True,
+    return_time_last: bool = True,
+    step_fn=None,
+) -> torch.Tensor:
+    # Input shape: (B, N, N).
+    # If return_time_last=True, output shape: (B, N, N, t_final + 1).
+    # If return_time_last=False, output shape: (B, t_final + 1, N, N).
+    if u0_batch.ndim != 3:
+        raise ValueError(f"Expected u0_batch shape (B, N, N), got {tuple(u0_batch.shape)}")
+
+    num_points = u0_batch.shape[-1]
+
+    if u0_batch.shape[-2] != num_points:
+        raise ValueError(f"Expected square input, got {tuple(u0_batch.shape)}")
+
+    if abs(round(1.0 / fixed_step) - (1.0 / fixed_step)) > 1e-12:
+        raise ValueError("fixed_step must divide one second exactly.")
+
+    steps_per_second = int(round(1.0 / fixed_step))
+
+    u = u0_batch.to(device=solver.device, dtype=solver.dtype)
+
+    if apply_exponax_orientation_transform:
+        u = torch.rot90(torch.flip(u, dims=(-2,)), k=3, dims=(-2, -1))
+
+    frames = [u]
+    advance = step_fn if step_fn is not None else solver.step
+
+    for _ in range(int(t_final)):
+        for _ in range(steps_per_second):
+            u = advance(u)
+
+        frames.append(u)
+
+    seq = torch.stack(frames, dim=1)
+
+    if apply_exponax_orientation_transform:
         seq = torch.swapaxes(seq, -1, -2)
 
     if return_time_last:
