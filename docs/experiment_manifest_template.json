@@ -1,0 +1,60 @@
+{
+  "experiment_name": "three_loss_batch100_example",
+  "git": {
+    "repository": "https://github.com/YifeiSun01/NeuralOperatorRobustness2",
+    "branch": "vast-ai",
+    "commit": "PUT_GIT_COMMIT_HASH_HERE"
+  },
+  "code_entrypoint": {
+    "command": "OUT_PREFIX=... LOG_DIR=... bash tools/run_three_loss_batch100_full_loss3_sweep.sh",
+    "working_directory": "/workspace/NeuralOperatorRobustness2"
+  },
+  "r2": {
+    "remote_root": "r2://YOUR_BUCKET/NeuralOperatorRobustness2",
+    "dataset_paths": [
+      "r2://YOUR_BUCKET/NeuralOperatorRobustness2/1D_Burgers/datasets"
+    ],
+    "checkpoint_paths": [
+      "r2://YOUR_BUCKET/NeuralOperatorRobustness2/1D_Burgers/trained_models",
+      "r2://YOUR_BUCKET/NeuralOperatorRobustness2/deeponet_training_runs"
+    ],
+    "result_paths": [
+      "r2://YOUR_BUCKET/NeuralOperatorRobustness2/results/PUT_RESULT_DIR_HERE"
+    ],
+    "log_paths": [
+      "r2://YOUR_BUCKET/NeuralOperatorRobustness2/logs/PUT_LOG_DIR_HERE"
+    ]
+  },
+  "local_paths": {
+    "datasets": [
+      "1D_Burgers/datasets"
+    ],
+    "checkpoints": [
+      "1D_Burgers/trained_models",
+      "deeponet_training_runs"
+    ],
+    "results": [
+      "results/PUT_RESULT_DIR_HERE"
+    ],
+    "logs": [
+      "logs/PUT_LOG_DIR_HERE"
+    ]
+  },
+  "parameters": {
+    "model_kind": "fno",
+    "batch_size": 100,
+    "start_index": 0,
+    "losses": [
+      "loss1",
+      "loss2",
+      "loss3"
+    ],
+    "epsilon": "PUT_EPSILON_HERE",
+    "alpha": "PUT_ALPHA_HERE",
+    "steps": 100,
+    "p": 2,
+    "q": 2,
+    "seed": 0
+  },
+  "notes": "Short description of what this experiment tested."
+}

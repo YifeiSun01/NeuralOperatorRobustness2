@@ -26,6 +26,13 @@ def main() -> None:
     parser.add_argument("--loss1-initial-delta", choices=["zero", "random", "both"], default="random")
     parser.add_argument("--random-start-scale", type=float, default=1e-6)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--model-kind", choices=["fno", "deeponet"], default="fno")
+    parser.add_argument("--model-label", default=None)
+    parser.add_argument("--burgers-test-path", type=Path, default=None)
+    parser.add_argument("--burgers-torch-checkpoint", type=Path, default=None)
+    parser.add_argument("--deeponet-checkpoint", type=Path, default=None)
+    parser.add_argument("--deeponet-output-transform-stats", type=Path, default=None)
+    parser.add_argument("--burgers-nu", type=float, default=None)
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--skip-attack", action="store_true")
     args = parser.parse_args()
@@ -64,7 +71,20 @@ def main() -> None:
             str(args.random_start_scale),
             "--device",
             args.device,
+            "--model-kind",
+            args.model_kind,
         ]
+        optional_args = [
+            ("--model-label", args.model_label),
+            ("--burgers-test-path", args.burgers_test_path),
+            ("--burgers-torch-checkpoint", args.burgers_torch_checkpoint),
+            ("--deeponet-checkpoint", args.deeponet_checkpoint),
+            ("--deeponet-output-transform-stats", args.deeponet_output_transform_stats),
+            ("--burgers-nu", args.burgers_nu),
+        ]
+        for flag, value in optional_args:
+            if value is not None:
+                attack_cmd.extend([flag, str(value)])
         print("[run]", " ".join(attack_cmd), flush=True)
         subprocess.run(attack_cmd, check=True)
 
@@ -91,6 +111,17 @@ def main() -> None:
     ]
     print("[run]", " ".join(index_plot_cmd), flush=True)
     subprocess.run(index_plot_cmd, check=True)
+
+    delta_plot_cmd = [
+        args.python,
+        "tools/plot_batch_final_delta_comparison.py",
+        "--root",
+        str(args.out_root),
+        "--losses",
+        *args.losses,
+    ]
+    print("[run]", " ".join(delta_plot_cmd), flush=True)
+    subprocess.run(delta_plot_cmd, check=True)
 
 
 if __name__ == "__main__":

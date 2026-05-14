@@ -128,6 +128,10 @@ def load_regularization_c(root: Path) -> float:
 
 
 def infer_model_name(config: dict[str, Any]) -> str:
+    if config.get("model_label"):
+        return str(config["model_label"])
+    if config.get("model_kind") == "deeponet":
+        return "DeepONet/default net"
     checkpoint = str(config.get("burgers_torch_checkpoint", "")).lower()
     if "deeponet" in checkpoint:
         return "DeepONet"
@@ -145,12 +149,18 @@ def format_config_summary(config: dict[str, Any]) -> str:
     p = config.get("p_order", config.get("p", "?"))
     q = config.get("q_order", config.get("q", "?"))
     model = infer_model_name(config)
-    return (
-        f"model={model}, solver=JAX Burgers, batch={batch}, index={start}-{end}, "
-        f"steps={config.get('steps', '?')}, p={p}, q={q}, "
-        f"epsilon={config.get('epsilon', '?')}, alpha={config.get('alpha', '?')}, "
-        f"eta={config.get('eta', '?')}, C={config.get('regularization_c', '?')}, "
-        f"loss1_delta0={config.get('loss1_initial_delta', '?')}"
+    checkpoint_key = "deeponet_checkpoint" if config.get("model_kind") == "deeponet" else "burgers_torch_checkpoint"
+    checkpoint_name = Path(str(config.get(checkpoint_key, ""))).name or "?"
+    stats_name = Path(str(config.get("deeponet_output_transform_stats", ""))).name
+    stats_text = f", stats={stats_name}" if config.get("model_kind") == "deeponet" and stats_name else ""
+    return "\n".join(
+        [
+            f"model={model}, checkpoint={checkpoint_name}{stats_text}, solver=JAX Burgers, nu={config.get('burgers_nu', '?')}",
+            f"batch={batch}, index={start}-{end}, steps={config.get('steps', '?')}, p={p}, q={q}",
+            f"epsilon={config.get('epsilon', '?')}, alpha={config.get('alpha', '?')}, "
+            f"eta={config.get('eta', '?')}, C={config.get('regularization_c', '?')}, "
+            f"loss1_delta0={config.get('loss1_initial_delta', '?')}",
+        ]
     )
 
 
@@ -159,6 +169,57 @@ def final_delta_pnorm_mean(rows: list[dict[str, Any]], optimized_loss: str, regu
     original = float(final[f"{optimized_loss}_original_mean"])
     regularized = float(final[f"{optimized_loss}_regularized_mean"])
     return max((original - regularized) / regularization_c, 0.0)
+
+
+def finite_float(value: Any) -> float | None:
+    try:
+        converted = float(value)
+    except (TypeError, ValueError):
+        return None
+    return converted if np.isfinite(converted) else None
+
+
+def summary_float(summary: dict[str, Any], key: str, fallback: Any) -> float | None:
+    value = finite_float(summary.get(key))
+    if value is not None:
+        return value
+    return finite_float(fallback)
+
+
+def row_float(row: dict[str, Any], key: str, default: float = float("nan")) -> float:
+    value = finite_float(row.get(key))
+    return default if value is None else value
+
+
+def format_metric(value: float | None) -> str:
+    return "n/a" if value is None else f"{value:.4g}"
+
+
+def finite_mask(*arrays: np.ndarray) -> np.ndarray:
+    mask = np.ones_like(arrays[0], dtype=bool)
+    for arr in arrays:
+        mask &= np.isfinite(arr)
+    return mask
+
+
+def label_with_nonfinite_note(
+    label: str,
+    k: np.ndarray,
+    mask: np.ndarray,
+    nonfinite_count: np.ndarray | None = None,
+) -> str:
+    if nonfinite_count is not None:
+        bad = np.isfinite(nonfinite_count) & (nonfinite_count > 0)
+        if bad.any():
+            bad_indices = np.flatnonzero(bad)
+            max_bad = int(np.nanmax(nonfinite_count[bad]))
+            return f"{label} (nonfinite samples after k={k[bad_indices[0]]:g}, max n={max_bad})"
+    if mask.all():
+        return label
+    bad = np.flatnonzero(~mask)
+    if bad.size:
+        return f"{label} (NaN after k={k[bad[0]]:g})"
+    return label
 
 
 def final_delta_title(
@@ -172,26 +233,53 @@ def final_delta_title(
     delta_parts = []
     current_loss_parts = []
     boundary_loss_parts = []
+    runtime_parts = []
+    memory_parts = []
     for method in METHODS:
         key = (optimized_loss, variant, method, initial_delta)
         rows = runs.get(key)
         if rows:
             summary = final_summaries.get(key, {})
-            delta_value = float(summary.get("final_delta_pnorm_mean", final_delta_pnorm_mean(rows, optimized_loss, regularization_c)))
-            current_value = float(summary.get(f"final_{optimized_loss}_original_mean", rows[-1][f"{optimized_loss}_original_mean"]))
-            boundary_value = float(summary.get(f"boundary_{optimized_loss}_original_mean", current_value))
-            delta_parts.append(f"{METHOD_SHORT_LABELS[method]}={delta_value:.4g}")
-            current_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={current_value:.4g}")
-            boundary_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={boundary_value:.4g}")
+            delta_fallback = None
+            try:
+                delta_fallback = final_delta_pnorm_mean(rows, optimized_loss, regularization_c)
+            except (KeyError, TypeError, ValueError, ZeroDivisionError):
+                pass
+            delta_value = summary_float(summary, "final_delta_pnorm_mean", delta_fallback)
+            current_value = summary_float(
+                summary,
+                f"final_{optimized_loss}_original_mean",
+                rows[-1].get(f"{optimized_loss}_original_mean"),
+            )
+            boundary_value = summary_float(
+                summary,
+                f"boundary_{optimized_loss}_original_mean",
+                current_value,
+            )
+            delta_text = f"{METHOD_SHORT_LABELS[method]}={format_metric(delta_value)}"
+            delta_bad = finite_float(summary.get("final_delta_pnorm_nonfinite_count"))
+            if delta_bad is not None and delta_bad > 0:
+                delta_text += f" ({int(delta_bad)} nonfinite)"
+            delta_parts.append(delta_text)
+            current_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={format_metric(current_value)}")
+            boundary_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={format_metric(boundary_value)}")
+            runtime_value = finite_float(summary.get("runtime_seconds"))
+            if runtime_value is not None:
+                runtime_parts.append(f"{METHOD_SHORT_LABELS[method]}={runtime_value:.1f}s")
+            memory_value = finite_float(summary.get("torch_peak_allocated_mib"))
+            if memory_value is not None:
+                memory_parts.append(f"{METHOD_SHORT_LABELS[method]}={memory_value:.0f}MiB")
     return (
         r"final $\|\delta\|_p$ mean: "
         + ", ".join(delta_parts)
         + "\n"
         + rf"current $L_{{{optimized_loss[-1]}}}$ mean: "
         + ", ".join(current_loss_parts)
-        + " | "
+        + "\n"
         + rf"boundary $L_{{{optimized_loss[-1]}}}$ mean: "
         + ", ".join(boundary_loss_parts)
+        + ("\nattack runtime: " + ", ".join(runtime_parts) if runtime_parts else "")
+        + ("\ntorch peak allocated: " + ", ".join(memory_parts) if memory_parts else "")
     )
 
 
@@ -225,13 +313,35 @@ def plot_loss(
             rows = runs.get((optimized_loss, variant, method, initial_delta))
             if not rows:
                 continue
-            k = np.asarray([float(row["k"]) for row in rows], dtype=np.float64)
-            mean = np.asarray([float(row[f"{y_key}_mean"]) for row in rows], dtype=np.float64)
-            std = np.asarray([float(row[f"{y_key}_std"]) for row in rows], dtype=np.float64)
+            k = np.asarray([row_float(row, "k") for row in rows], dtype=np.float64)
+            mean = np.asarray([row_float(row, f"{y_key}_mean") for row in rows], dtype=np.float64)
+            std = np.asarray([row_float(row, f"{y_key}_std") for row in rows], dtype=np.float64)
+            nonfinite_count = np.asarray(
+                [row_float(row, f"{y_key}_nonfinite_count", 0.0) for row in rows],
+                dtype=np.float64,
+            )
             color = COLORS[method]
+            mask = finite_mask(mean, std)
+            if not mask.any():
+                continue
+            masked_mean = np.ma.masked_where(~mask, mean)
             any_line = True
-            ax.plot(k, mean, color=color, linewidth=2.35, label=METHOD_LABELS[method])
-            ax.fill_between(k, mean - std, mean + std, color=color, alpha=0.22, linewidth=0)
+            ax.plot(
+                k,
+                masked_mean,
+                color=color,
+                linewidth=2.35,
+                label=label_with_nonfinite_note(METHOD_LABELS[method], k, mask, nonfinite_count),
+            )
+            ax.fill_between(k, mean - std, mean + std, where=mask, color=color, alpha=0.22, linewidth=0)
+            bad_count = np.isfinite(nonfinite_count) & (nonfinite_count > 0)
+            if bad_count.any():
+                first_bad_count = np.flatnonzero(bad_count)[0]
+                if mask[first_bad_count]:
+                    ax.scatter(k[first_bad_count], mean[first_bad_count], color=color, marker="x", s=42, zorder=4)
+            if not mask.all():
+                last_good = np.flatnonzero(mask)[-1]
+                ax.scatter(k[last_good], mean[last_good], color=color, marker="x", s=42, zorder=4)
 
         variant_title = VARIANT_LABELS[variant]
         if optimized_loss == "loss1":
@@ -252,7 +362,7 @@ def plot_loss(
         ax.legend(loc="best", fontsize=10, frameon=True)
 
     axes[-1].set_xlabel("optimization step k", fontsize=12)
-    fig.tight_layout(rect=(0, 0, 1, 0.86))
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
     if not any_line:
         raise RuntimeError(f"No curves found for {optimized_loss} initial_delta={initial_delta} under {root}")
     output_dir.mkdir(parents=True, exist_ok=True)

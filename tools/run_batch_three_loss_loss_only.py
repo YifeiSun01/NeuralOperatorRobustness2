@@ -23,6 +23,7 @@ from pathlib import Path
 from typing import Any
 
 os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
+os.environ.setdefault("DDE_BACKEND", "pytorch")
 
 import numpy as np
 
@@ -41,6 +42,17 @@ from tools.attack_framework_matrix import (
 from loss_attack_common import save_json
 
 
+DEFAULT_DEEPONET_RUN_DIR = PROJECT_ROOT / "deeponet_training_runs" / "burgers_nu0p01_deeponet_lu_ref_50k"
+DEFAULT_DEEPONET_TEST = (
+    PROJECT_ROOT
+    / "1D_Burgers"
+    / "datasets"
+    / "1D"
+    / "Burgers"
+    / "batched_exponax_splits"
+    / "dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45"
+    / "dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45_test.pt"
+)
 LOSSES = ("loss1", "loss2", "loss3")
 VARIANTS = ("original", "increment_ratio", "regularized")
 METHODS = ("pgd", "lp_steepest_pgd", "generalized_power")
@@ -61,6 +73,30 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def finite_mean_std(values: Any) -> tuple[float, float, int, int]:
+    arr = np.asarray(values, dtype=np.float64)
+    total_count = int(arr.size)
+    finite = np.isfinite(arr)
+    finite_count = int(np.count_nonzero(finite))
+    if finite_count == 0:
+        return float("nan"), float("nan"), finite_count, total_count
+    finite_values = arr[finite]
+    return (
+        float(np.mean(finite_values)),
+        float(np.std(finite_values, ddof=0)),
+        finite_count,
+        total_count,
+    )
+
+
+def add_finite_summary(summary: dict[str, Any], prefix: str, values: Any) -> None:
+    mean, std, finite_count, total_count = finite_mean_std(values)
+    summary[f"{prefix}_mean"] = mean
+    summary[f"{prefix}_std"] = std
+    summary[f"{prefix}_finite_count"] = finite_count
+    summary[f"{prefix}_nonfinite_count"] = total_count - finite_count
 
 
 def parse_norm(value: str) -> float:
@@ -103,6 +139,12 @@ def project_delta(delta, epsilon: float, p: float):
     norms = torch.linalg.vector_norm(flat, ord=p, dim=1, keepdim=True).clamp_min(EPS)
     scale = torch.clamp(float(epsilon) / norms, max=1.0)
     return (flat * scale).reshape_as(delta)
+
+
+def sanitize_tensor(x):
+    import torch
+
+    return torch.nan_to_num(x, nan=0.0, posinf=0.0, neginf=0.0)
 
 
 def rescale_delta_to_boundary(delta, epsilon: float, p: float):
@@ -154,6 +196,62 @@ def load_burgers_batch(path: Path, start: int, batch_size: int) -> np.ndarray:
     return x[..., None].astype(np.float32)
 
 
+def format_model_label(model_kind: str) -> str:
+    return "DeepONet/default net" if model_kind == "deeponet" else "FNO"
+
+
+class DeepONetBurgersModel:
+    def __init__(self, checkpoint_path: Path, stats_path: Path, device, domain: float):
+        import deepxde as dde
+        import torch
+
+        from train_burgers_deeponet_deepxde import make_grid, periodic_features_torch
+
+        payload = torch.load(checkpoint_path, map_location=device, weights_only=False)
+        config = payload.get("config", {})
+        branch_layers = list(config.get("branch_layers", [1024, 128, 128, 128, 128]))
+        trunk_layers = list(config.get("trunk_layers", [4, 128, 128, 128]))
+        activation = config.get("activation", "tanh")
+        kernel_initializer = config.get("kernel_initializer", "Glorot normal")
+
+        self.net = dde.nn.DeepONetCartesianProd(branch_layers, trunk_layers, activation, kernel_initializer).to(device)
+        if config.get("periodic_trunk", True):
+            self.net.apply_feature_transform(lambda x: periodic_features_torch(x, domain))
+
+        if config.get("output_transform", True):
+            stats = np.load(stats_path)
+            y_mean_t = torch.as_tensor(stats["y_mean"], device=device, dtype=torch.float32)
+            y_std_t = torch.as_tensor(stats["y_std"], device=device, dtype=torch.float32)
+
+            def output_transform(_inputs: tuple[torch.Tensor, torch.Tensor], outputs: torch.Tensor) -> torch.Tensor:
+                return outputs * y_std_t.to(outputs.device) + y_mean_t.to(outputs.device)
+
+            self.net.apply_output_transform(output_transform)
+
+        self.net.load_state_dict(payload["model_state_dict"])
+        self.net.eval()
+        for param in self.net.parameters():
+            param.requires_grad_(False)
+
+        nx = int(config.get("nx", branch_layers[0]))
+        trunk = make_grid(nx, float(config.get("domain", domain)))
+        self.trunk = torch.as_tensor(trunk, device=device, dtype=torch.float32)
+
+    def __call__(self, x):
+        import torch
+
+        y = self.net((x[..., 0].to(dtype=torch.float32), self.trunk))
+        return y[..., None].to(dtype=x.dtype)
+
+
+def load_model(args: argparse.Namespace, device):
+    if args.model_kind == "fno":
+        return load_burgers_torch_model(args.burgers_torch_checkpoint, device)
+    if args.model_kind == "deeponet":
+        return DeepONetBurgersModel(args.deeponet_checkpoint, args.deeponet_output_transform_stats, device, args.burgers_domain)
+    raise ValueError(args.model_kind)
+
+
 class BatchProblem:
     def __init__(self, args: argparse.Namespace):
         import torch
@@ -163,7 +261,7 @@ class BatchProblem:
         self.bridge = make_jax_torch_bridge()
         x_np = load_burgers_batch(args.burgers_test_path, args.start_index, args.batch_size)
         self.x0 = torch.as_tensor(x_np, device=self.device, dtype=torch.float32)
-        self.model = load_burgers_torch_model(args.burgers_torch_checkpoint, self.device)
+        self.model = load_model(args, self.device)
         self.jax_solver = make_burgers_jax_solver(args)
         self.f0 = self.model_forward(self.x0).detach()
         self.g0 = self.solver_forward(self.x0, allow_grad=False).detach()
@@ -245,6 +343,8 @@ def save_final_delta_diagnostics(
     boundary_norm_np = boundary_norm.detach().cpu().numpy().astype(np.float32)
     boundary_scale_np = boundary_scale.detach().cpu().numpy().astype(np.float32)
     boundary_valid_np = boundary_valid.detach().cpu().numpy().astype(bool)
+    final_delta_np = final_delta.detach().cpu().numpy().astype(np.float32)
+    boundary_delta_np = boundary_delta.detach().cpu().numpy().astype(np.float32)
 
     rows: list[dict[str, Any]] = []
     for i in range(problem.args.batch_size):
@@ -279,6 +379,17 @@ def save_final_delta_diagnostics(
         **{f"final_{key}": value for key, value in final_values.items()},
         **{f"boundary_{key}": value for key, value in boundary_values.items()},
     )
+    np.savez_compressed(
+        out_dir / "final_delta.npz",
+        sample_position=np.arange(problem.args.batch_size, dtype=np.int64),
+        dataset_index=np.arange(problem.args.start_index, problem.args.start_index + problem.args.batch_size, dtype=np.int64),
+        final_delta=final_delta_np,
+        boundary_delta=boundary_delta_np,
+        final_delta_pnorm=final_norm_np,
+        boundary_delta_pnorm=boundary_norm_np,
+        boundary_rescale_factor=boundary_scale_np,
+        boundary_rescale_valid=boundary_valid_np,
+    )
 
     summary: dict[str, Any] = {
         "tag": tag,
@@ -287,19 +398,14 @@ def save_final_delta_diagnostics(
         "attack_method": method,
         "initial_delta": initial_delta,
         "epsilon": problem.args.epsilon,
-        "final_delta_pnorm_mean": float(np.mean(final_norm_np)),
-        "final_delta_pnorm_std": float(np.std(final_norm_np, ddof=0)),
-        "boundary_delta_pnorm_mean": float(np.mean(boundary_norm_np)),
-        "boundary_delta_pnorm_std": float(np.std(boundary_norm_np, ddof=0)),
-        "boundary_rescale_factor_mean": float(np.mean(boundary_scale_np)),
-        "boundary_rescale_factor_std": float(np.std(boundary_scale_np, ddof=0)),
         "boundary_rescale_valid_count": int(np.count_nonzero(boundary_valid_np)),
     }
+    add_finite_summary(summary, "final_delta_pnorm", final_norm_np)
+    add_finite_summary(summary, "boundary_delta_pnorm", boundary_norm_np)
+    add_finite_summary(summary, "boundary_rescale_factor", boundary_scale_np)
     for key in EVAL_KEYS:
-        summary[f"final_{key}_mean"] = float(np.mean(final_values[key]))
-        summary[f"final_{key}_std"] = float(np.std(final_values[key], ddof=0))
-        summary[f"boundary_{key}_mean"] = float(np.mean(boundary_values[key]))
-        summary[f"boundary_{key}_std"] = float(np.std(boundary_values[key], ddof=0))
+        add_finite_summary(summary, f"final_{key}", final_values[key])
+        add_finite_summary(summary, f"boundary_{key}", boundary_values[key])
     save_json(out_dir / "final_delta_summary.json", summary)
     return summary
 
@@ -324,8 +430,11 @@ def summarize_step(
     }
     for key in EVAL_KEYS:
         arr = values_np[key].astype(np.float64)
-        row[f"{key}_mean"] = float(np.mean(arr))
-        row[f"{key}_std"] = float(np.std(arr, ddof=0))
+        mean, std, finite_count, total_count = finite_mean_std(arr)
+        row[f"{key}_mean"] = mean
+        row[f"{key}_std"] = std
+        row[f"{key}_finite_count"] = finite_count
+        row[f"{key}_nonfinite_count"] = total_count - finite_count
     return row
 
 
@@ -343,8 +452,12 @@ def run_one(problem: BatchProblem, optimized_loss: str, variant: str, method: st
 
     rows: list[dict[str, Any]] = []
     per_sample: dict[str, list[np.ndarray]] = {key: [] for key in EVAL_KEYS}
+    if torch.cuda.is_available() and problem.device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats(problem.device)
+        torch.cuda.synchronize(problem.device)
     start = time.perf_counter()
     for k in range(args.steps + 1):
+        delta = sanitize_tensor(delta)
         x_adv = (problem.x0 + delta).detach().requires_grad_(k < args.steps)
         objective = optimized_objective(problem, x_adv, optimized_loss, variant)
         losses = raw_losses(problem, x_adv, allow_solver_grad_for_loss3=False)
@@ -369,9 +482,9 @@ def run_one(problem: BatchProblem, optimized_loss: str, variant: str, method: st
         # Sum keeps each sample's gradient scale identical to running the same
         # attack on that sample alone.  A mean would divide raw PGD gradients by
         # batch_size and artificially slow projected gradient descent.
-        batch_objective = objective.sum()
+        batch_objective = sanitize_tensor(objective).sum()
         batch_objective.backward()
-        grad = x_adv.grad.detach()
+        grad = sanitize_tensor(x_adv.grad.detach())
         with torch.no_grad():
             if method == "pgd":
                 direction = grad
@@ -384,6 +497,15 @@ def run_one(problem: BatchProblem, optimized_loss: str, variant: str, method: st
                 delta = project_delta(args.epsilon * direction, args.epsilon, args.p_order)
             else:
                 raise ValueError(method)
+            delta = sanitize_tensor(delta)
+
+    sync_torch(torch, problem.device)
+    runtime_seconds = time.perf_counter() - start
+    torch_peak_allocated_mib = float("nan")
+    torch_peak_reserved_mib = float("nan")
+    if torch.cuda.is_available() and problem.device.type == "cuda":
+        torch_peak_allocated_mib = float(torch.cuda.max_memory_allocated(problem.device) / 1024**2)
+        torch_peak_reserved_mib = float(torch.cuda.max_memory_reserved(problem.device) / 1024**2)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     final_diagnostics = save_final_delta_diagnostics(
@@ -404,6 +526,8 @@ def run_one(problem: BatchProblem, optimized_loss: str, variant: str, method: st
     )
     summary = {
         "tag": tag,
+        "model_kind": args.model_kind,
+        "model_label": args.model_label,
         "optimized_loss": optimized_loss,
         "objective_variant": variant,
         "attack_method": method,
@@ -417,15 +541,28 @@ def run_one(problem: BatchProblem, optimized_loss: str, variant: str, method: st
         "q": norm_name(args.q_order),
         "eta": args.eta,
         "regularization_c": args.regularization_c,
+        "burgers_nu": args.burgers_nu,
+        "burgers_test_path": args.burgers_test_path,
+        "burgers_torch_checkpoint": args.burgers_torch_checkpoint,
+        "deeponet_checkpoint": args.deeponet_checkpoint,
+        "deeponet_output_transform_stats": args.deeponet_output_transform_stats,
         "loss1_initial_delta": args.loss1_initial_delta,
         "loss1_random_start_scale": args.loss1_random_start_scale,
         "final_delta_pnorm_mean": final_diagnostics["final_delta_pnorm_mean"],
         "final_delta_pnorm_std": final_diagnostics["final_delta_pnorm_std"],
+        "final_delta_pnorm_finite_count": final_diagnostics["final_delta_pnorm_finite_count"],
+        "final_delta_pnorm_nonfinite_count": final_diagnostics["final_delta_pnorm_nonfinite_count"],
         "boundary_delta_pnorm_mean": final_diagnostics["boundary_delta_pnorm_mean"],
         "boundary_delta_pnorm_std": final_diagnostics["boundary_delta_pnorm_std"],
+        "boundary_delta_pnorm_finite_count": final_diagnostics["boundary_delta_pnorm_finite_count"],
+        "boundary_delta_pnorm_nonfinite_count": final_diagnostics["boundary_delta_pnorm_nonfinite_count"],
         "boundary_rescale_factor_mean": final_diagnostics["boundary_rescale_factor_mean"],
         "boundary_rescale_factor_std": final_diagnostics["boundary_rescale_factor_std"],
-        "runtime_seconds": time.perf_counter() - start,
+        "boundary_rescale_factor_finite_count": final_diagnostics["boundary_rescale_factor_finite_count"],
+        "boundary_rescale_factor_nonfinite_count": final_diagnostics["boundary_rescale_factor_nonfinite_count"],
+        "runtime_seconds": runtime_seconds,
+        "torch_peak_allocated_mib": torch_peak_allocated_mib,
+        "torch_peak_reserved_mib": torch_peak_reserved_mib,
         "generalized_power_radius": "fixed_epsilon",
     }
     save_json(out_dir / "summary.json", summary)
@@ -450,8 +587,12 @@ def main() -> None:
     parser.add_argument("--loss1-original-random-start-scale", type=float, default=None, help=argparse.SUPPRESS)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--model-kind", choices=["fno", "deeponet"], default="fno")
+    parser.add_argument("--model-label", default=None)
     parser.add_argument("--burgers-test-path", type=Path, default=DEFAULT_BURGERS_TEST)
     parser.add_argument("--burgers-torch-checkpoint", type=Path, default=DEFAULT_BURGERS_MODEL_DIR / "checkpoints" / "pytorch_fno1d_500.pt")
+    parser.add_argument("--deeponet-checkpoint", type=Path, default=DEFAULT_DEEPONET_RUN_DIR / "checkpoints" / "deeponet_burgers_nu0p01.pt")
+    parser.add_argument("--deeponet-output-transform-stats", type=Path, default=DEFAULT_DEEPONET_RUN_DIR / "training_logs" / "output_transform_stats.npz")
     parser.add_argument("--burgers-nx", type=int, default=1024)
     parser.add_argument("--burgers-nu", type=float, default=0.001)
     parser.add_argument("--burgers-t-final", type=float, default=1.0)
@@ -461,6 +602,8 @@ def main() -> None:
     args = parser.parse_args()
     if args.loss1_original_random_start_scale is not None:
         args.loss1_random_start_scale = args.loss1_original_random_start_scale
+    if args.model_label is None:
+        args.model_label = format_model_label(args.model_kind)
     args.p_order = parse_norm(args.p)
     args.q_order = parse_norm(args.q)
 

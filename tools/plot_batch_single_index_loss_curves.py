@@ -58,6 +58,10 @@ def load_config(root: Path) -> dict[str, Any]:
 
 
 def infer_model_name(config: dict[str, Any]) -> str:
+    if config.get("model_label"):
+        return str(config["model_label"])
+    if config.get("model_kind") == "deeponet":
+        return "DeepONet/default net"
     checkpoint = str(config.get("burgers_torch_checkpoint", "")).lower()
     if "deeponet" in checkpoint:
         return "DeepONet"
@@ -75,13 +79,38 @@ def format_config_summary(config: dict[str, Any]) -> str:
     p = config.get("p_order", config.get("p", "?"))
     q = config.get("q_order", config.get("q", "?"))
     model = infer_model_name(config)
-    return (
-        f"model={model}, solver=JAX Burgers, batch={batch}, index={start}-{end}, "
-        f"steps={config.get('steps', '?')}, p={p}, q={q}, "
-        f"epsilon={config.get('epsilon', '?')}, alpha={config.get('alpha', '?')}, "
-        f"eta={config.get('eta', '?')}, C={config.get('regularization_c', '?')}, "
-        f"loss1_delta0={config.get('loss1_initial_delta', '?')}"
+    checkpoint_key = "deeponet_checkpoint" if config.get("model_kind") == "deeponet" else "burgers_torch_checkpoint"
+    checkpoint_name = Path(str(config.get(checkpoint_key, ""))).name or "?"
+    stats_name = Path(str(config.get("deeponet_output_transform_stats", ""))).name
+    stats_text = f", stats={stats_name}" if config.get("model_kind") == "deeponet" and stats_name else ""
+    return "\n".join(
+        [
+            f"model={model}, checkpoint={checkpoint_name}{stats_text}, solver=JAX Burgers, nu={config.get('burgers_nu', '?')}",
+            f"batch={batch}, index={start}-{end}, steps={config.get('steps', '?')}, p={p}, q={q}",
+            f"epsilon={config.get('epsilon', '?')}, alpha={config.get('alpha', '?')}, "
+            f"eta={config.get('eta', '?')}, C={config.get('regularization_c', '?')}, "
+            f"loss1_delta0={config.get('loss1_initial_delta', '?')}",
+        ]
     )
+
+
+def finite_float(value: Any) -> float | None:
+    try:
+        converted = float(value)
+    except (TypeError, ValueError):
+        return None
+    return converted if np.isfinite(converted) else None
+
+
+def format_metric(value: float | None) -> str:
+    return "n/a" if value is None else f"{value:.4g}"
+
+
+def label_with_nonfinite_note(label: str, k: np.ndarray, y: np.ndarray) -> str:
+    bad = np.flatnonzero(~np.isfinite(y))
+    if bad.size:
+        return f"{label} (NaN after k={k[bad[0]]:g})"
+    return label
 
 
 def run_initial_delta(run_dir: Path, fallback: str) -> str:
@@ -185,17 +214,23 @@ def plot_loss(
             if sample_position >= values.shape[1]:
                 raise IndexError(f"sample_position={sample_position} outside batch size {values.shape[1]}")
             y = values[:, sample_position].astype(np.float64)
+            mask = np.isfinite(y)
+            if not mask.any():
+                continue
             any_line = True
-            delta_parts.append(f"{METHOD_SHORT_LABELS[method]}={delta_pnorm:.4g}")
-            current_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={current_original:.4g}")
-            boundary_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={boundary_original:.4g}")
+            delta_parts.append(f"{METHOD_SHORT_LABELS[method]}={format_metric(finite_float(delta_pnorm))}")
+            current_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={format_metric(finite_float(current_original))}")
+            boundary_loss_parts.append(f"{METHOD_SHORT_LABELS[method]}={format_metric(finite_float(boundary_original))}")
             ax.plot(
                 k,
-                y,
+                np.ma.masked_where(~mask, y),
                 linewidth=2.4,
                 color=METHOD_COLORS[method],
-                label=METHOD_LABELS[method],
+                label=label_with_nonfinite_note(METHOD_LABELS[method], k, y),
             )
+            if not mask.all():
+                last_good = np.flatnonzero(mask)[-1]
+                ax.scatter(k[last_good], y[last_good], color=METHOD_COLORS[method], marker="x", s=42, zorder=4)
 
         title = VARIANT_TITLES[variant]
         if optimized_loss == "loss1":
@@ -208,7 +243,7 @@ def plot_loss(
                 + "\n"
                 + rf"current $L_{{{optimized_loss[-1]}}}$ index: "
                 + ", ".join(current_loss_parts)
-                + " | "
+                + "\n"
                 + rf"boundary $L_{{{optimized_loss[-1]}}}$ index: "
                 + ", ".join(boundary_loss_parts)
             )
@@ -220,7 +255,7 @@ def plot_loss(
         ax.legend(loc="best", fontsize=10, frameon=True)
 
     axes[-1].set_xlabel("optimization step k", fontsize=12)
-    fig.tight_layout(rect=(0, 0, 1, 0.86))
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
     if not any_line:
         raise RuntimeError(f"No curves found for {optimized_loss}")
 

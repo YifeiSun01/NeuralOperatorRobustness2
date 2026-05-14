@@ -1,0 +1,13 @@
+.git/**
+.git.broken*/**
+.git.fetch_failed*/**
+adv_robust/**
+.venv/**
+venv/**
+env/**
+__pycache__/**
+*.pyc
+.pytest_cache/**
+.mypy_cache/**
+.ruff_cache/**
+.ipynb_checkpoints/**
