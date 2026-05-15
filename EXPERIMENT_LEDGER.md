@@ -5,6 +5,33 @@ Last updated: 2026-05-15 UTC
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
 
+## 2026-05-15 FNO nu=0.001 Loss-Gradient Path Result
+
+Result note added:
+
+- `docs/fno_nu0p001_loss_gradient_path_result_20260515.md`
+
+Postprocess script added:
+
+- `tools/analyze_loss_gradient_path_results.py`
+
+Analyzed run:
+
+- `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631`
+- 150 points: 5 initial conditions x 3 attack losses x 10 saved steps
+  (`k=5,10,...,50`).
+
+Key result:
+
+- `grad loss1` and `grad loss2` are nearly aligned: mean cosine `0.9904`,
+  mean angle `3.91 deg`.
+- `grad loss3` is substantially different from both: mean angles about
+  `56.5 deg` vs `loss1` and `57.2 deg` vs `loss2`.
+- The `loss3` difference is strongest early (`~75 deg` at `k=5`) and decreases
+  but remains large by `k=50` (`~47 deg`).
+- At final `k=50`, direct `loss3` optimization gives the largest mean final
+  `loss3` (`4.617`), but not uniformly for every individual index.
+
 ## 2026-05-15 Built-In Runtime Compatibility Patch
 
 Code updated:
