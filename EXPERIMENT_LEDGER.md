@@ -5,6 +5,23 @@ Last updated: 2026-05-15 UTC
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
 
+## 2026-05-15 FNO nu=0.001 Loss-Gradient Detailed Data Table
+
+Detailed data note added:
+
+- `docs/fno_nu0p001_loss_gradient_path_detailed_data_20260515.md`
+
+Contents:
+
+- overall 150-point gradient-angle/loss/gradient-norm summary;
+- aggregation by optimized attack loss;
+- aggregation by saved step `k`;
+- aggregation by attack loss and saved step;
+- aggregation by initial-condition index and attack loss;
+- final `k=50` per-index table;
+- pointer to the full 150-row CSV at
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/per_point_loss_gradient_angles.csv`.
+
 ## 2026-05-15 FNO nu=0.001 Loss-Gradient Path Result
 
 Result note added:
