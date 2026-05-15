@@ -241,6 +241,64 @@ cos(grad_exact_loss3, g3_lin)
 
 This separates clean local-linear behavior from nonlinear path effects.
 
+#### C. Fixed-Radius Affine Local Optimum Directions
+
+The one-step gradients above are not the same as the constrained optimum of the
+local affine objective at a fixed radius.  To cover the earlier question fully,
+also compute the `b`-aware affine optimum directions:
+
+```text
+v_loss2_out = normalize(J_f^T b)
+v_loss3_out = normalize(J_e^T b)
+
+v_loss2_rho = argmax_{||v||_2=1} ||b + rho J_f v||_2
+v_loss3_rho = argmax_{||v||_2=1} ||b + rho J_e v||_2
+```
+
+Use radii:
+
+```text
+rho = 0+              # represented by v_loss2_out / v_loss3_out
+rho = ||delta_k||_2   # radius matched to each saved attack step
+rho = epsilon         # full-budget local affine optimum
+```
+
+This explicitly tests the transition:
+
+```text
+small rho: direction is controlled by J^T b
+large rho: direction can move toward top singular-vector structure
+middle rho: direction mixes the linear outward term and the quadratic gain term
+```
+
+These directions answer a third question:
+
+```text
+If the clean local affine model were optimized at a fixed radius, which input
+direction would it choose?
+```
+
+This is distinct from both:
+
+```text
+SVD direction:       argmax ||J v||
+one-step gradient:  grad at the current delta_k
+```
+
+For `p=q=2`, solve `v_loss*_rho` by a small multi-start projected-gradient or
+normalized-gradient routine on the unit sphere using the explicit saved
+Jacobians.  Store the optimizer convergence residual and final objective value
+so that this local affine solve is auditable.
+
+Compare these fixed-radius affine directions to:
+
+```text
+v_f, v_j, v_e
+g1(delta_k), g2(delta_k), g3(delta_k)
+delta_k / ||delta_k||
+final PGD directions from loss1/loss2/loss3
+```
+
 ## Metrics
 
 For each sample, trajectory source, and step `k`, record:
@@ -302,6 +360,38 @@ rough2
 This will show whether gradient directions become smoother or more jagged as
 the attack proceeds.
 
+### Direction-Source Objective Evaluation
+
+For a common radius `rho`, evaluate every candidate direction under every local
+objective:
+
+```text
+candidate directions:
+  v_f
+  v_j
+  v_e
+  v_loss2_out
+  v_loss3_out
+  v_loss2_rho
+  v_loss3_rho
+  g1(delta_k)
+  g2(delta_k)
+  g3(delta_k)
+  delta_k / ||delta_k||
+
+local objectives:
+  ||J_f rho v||
+  ||b + rho J_f v||
+  ||b + rho J_e v||
+  ||J_e rho v||
+```
+
+This avoids misleading labels such as "loss2's `v_f`."  The correct language is:
+
+```text
+evaluate the loss2 local objective along the candidate direction v_f
+```
+
 ## Plots
 
 Make figures with no standard-deviation shading.  Use individual sample lines
@@ -316,6 +406,8 @@ Suggested plots:
 5. Selected-step line plots of normalized `g1`, `g2`, `g3` for
    `k = 0, 10, 20, 30, 40, 50, 100`.
 6. Fourier spectra of `g1`, `g2`, `g3` at selected steps.
+7. Fixed-radius affine optimum direction comparison: `v_loss2_rho` and `v_loss3_rho` versus `rho`.
+8. Objective-evaluation heatmaps: candidate direction by local objective.
 
 ## Expected Output Files
 
@@ -334,6 +426,8 @@ linear_quadratic_decomposition.csv
 svd_alignment_by_step.csv
 frequency_metrics_by_step.csv
 exact_vs_clean_jacobian_gradient_cosines.csv
+affine_radius_direction_comparison.csv
+direction_source_objective_evaluation.csv
 summary.md
 plots/
 ```

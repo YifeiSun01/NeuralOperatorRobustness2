@@ -472,3 +472,8 @@ Created `docs/loss_gradient_direction_vs_svd_direction_20260515.md` to record th
 ## 2026-05-15 FNO nu=0.001 Loss-Gradient Path Experiment Plan
 
 Created `docs/fno_nu0p001_loss_gradient_path_experiment_plan_20260515.md`.  This is a plan only; the experiment has not been run yet.  The proposed diagnostic uses FNO/Burgers `nu=0.001`, `epsilon=8.0`, `alpha=0.3`, `steps=100`, and indices `0, 7, 40, 47, 115`.  It will save attack trajectories with `--save_trajectory --save_every 1`, then compare one-step gradient directions of `loss1`, `loss2`, and `loss3` along the attack path.  The clean-Jacobian diagnostics are `g1(k)=J_f^T J_f delta_k`, `g2(k)=J_f^T b + J_f^T J_f delta_k`, and `g3(k)=J_e^T b + J_e^T J_e delta_k`; exact autograd gradients should also be computed at selected steps to separate local-linear behavior from nonlinear path effects.  Main outputs should include gradient cosine curves, SVD-alignment curves, linear-vs-quadratic decomposition, frequency metrics, and selected-step line plots.
+
+
+## 2026-05-15 FNO Loss-Gradient Plan Amendment
+
+Updated `docs/fno_nu0p001_loss_gradient_path_experiment_plan_20260515.md` to explicitly include the fixed-radius `b`-aware affine optimum directions that were missing from the first plan draft: `v_loss2_out=normalize(J_f^T b)`, `v_loss3_out=normalize(J_e^T b)`, `v_loss2_rho=argmax ||b+rho J_f v||`, and `v_loss3_rho=argmax ||b+rho J_e v||`.  The plan now covers three distinct objects: SVD gain directions, one-step gradients at `delta_k`, and fixed-radius local affine optimum directions.  It also adds direction-source objective evaluation so candidate directions such as `v_f`, `v_j`, and `v_e` are evaluated under `loss1/loss2/loss3` without incorrectly calling them loss-specific directions.
