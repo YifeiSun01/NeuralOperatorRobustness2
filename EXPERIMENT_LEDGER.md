@@ -347,6 +347,61 @@ No-std plot variant:
   samples and metrics but without standard-deviation shading in aggregate line
   plots.
 
+
+## 2026-05-15 FNO nu=0.01 vs Solver and DeepONet nu=0.01 SVD Diagnostics
+
+Status: completed and recorded.
+
+Purpose:
+
+- Repeat the local Jacobian/SVD analysis for FNO at matched `nu=0.01`.
+- Compare FNO `nu=0.01`, solver `nu=0.01`, DeepONet/default-net `nu=0.01`, and
+  their error Jacobians on the same five sample indices `0, 7, 40, 47, 115`.
+- Regenerate the dense line/FFT/heatmap plot set without standard-deviation
+  shading.
+
+Recovered input:
+
+- FNO `nu=0.01` checkpoint restored from R2 selected backup:
+  `fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/checkpoints/fno1d_pytorch.pt`.
+- The older `tmp_old_runner_inputs_b01/...nu0.01...pth` file was not present and
+  was not tracked by Git because `*.pth` is ignored.
+
+Added / generated:
+
+- `tools/analyze_fno_solver_jacobian_similarity.py` now supports
+  `--reuse-solver` and `--reuse-solver-root`.
+- `tools/plot_fno_deeponet_nu0p01_svd_diagnostics.py`
+- `docs/fno_nu0p01_solver_jacobian_status_20260515.md`
+- `docs/fno_deeponet_nu0p01_comprehensive_svd_diagnostics_result_20260515.md`
+- `forensics/fno_nu0p01_solver_jacobian_similarity_20260515/`
+- `forensics/fno_deeponet_nu0p01_comprehensive_svd_diagnostics_20260515_no_std/`
+
+Key observed results:
+
+- FNO `nu=0.01` model and solver are very tightly aligned locally:
+  model-vs-solver `k=1` mean principal angle `2.32 deg`, `k=8` mean principal
+  angle `1.82 deg`, and model-direction response cosine mean `0.9993`.
+- FNO `nu=0.01` model top-1 right singular vector is extremely low-frequency:
+  mean `hi128` `2.82e-09`, mean zero crossings `0.40`.
+- FNO `nu=0.01` residual/error Jacobian is small in spectral norm:
+  model top-1 sigma `1.379`, solver top-1 sigma `1.373`, error top-1 sigma
+  `0.0373`.
+- DeepONet/default-net `nu=0.01` remains high-frequency and solver-misaligned:
+  model-vs-solver `k=1` mean principal angle `82.83 deg`, model top-1 `hi128`
+  `0.7614`, and model top-1 zero crossings `507.20`.
+- DeepONet/default-net error remains close to the model subspace:
+  model-vs-error `k=1` mean principal angle `10.01 deg`; FNO model-vs-error
+  `k=1` mean principal angle is `62.53 deg`.
+
+Grounded conclusion:
+
+- At matched `nu=0.01`, FNO behaves even more solver-like than in the earlier
+  mixed-`nu` comparison. Its model and solver Jacobians have almost the same
+  leading singular values and nearly the same leading right-singular subspace.
+- DeepONet/default-net is still dominated by high-frequency, solver-misaligned
+  local directions, so its error directions are close to the model directions.
+
 ## Next Actions
 
 1. If the exact original FNO-vs-DeepONet/default-net artifacts from the old

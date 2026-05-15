@@ -1,0 +1,4550 @@
+{
+  "results": [
+    {
+      "framework": "pytorch",
+      "checkpoint_path": "fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/checkpoints/fno1d_pytorch.pt",
+      "parameter_npz": "fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/parameters/pytorch_parameters.npz",
+      "inference_npz": "fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/inference/pytorch_samples.npz",
+      "loss_csv": "fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/losses_pytorch.csv",
+      "plot_path": "fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/plots/loss_pytorch.png",
+      "train_metrics": {
+        "mse": 9.213173819902026e-06,
+        "rmse": 0.0030353210406647312,
+        "mae": 0.0024596891203826224,
+        "relative_l2": 0.005972154005258172
+      },
+      "test_metrics": {
+        "mse": 9.643603286046225e-06,
+        "rmse": 0.003105415155183961,
+        "mae": 0.0025108816443632047,
+        "relative_l2": 0.006054633843402068
+      },
+      "inference_metrics": {
+        "mse": 7.666812962270342e-06,
+        "rmse": 0.0027689010387282427,
+        "mae": 0.0022281105630099773,
+        "max_abs": 0.006422877311706543,
+        "relative_l2": 0.005137147381901741
+      },
+      "memory_summary": {
+        "profile_outputs_enabled": false,
+        "summary_json": null,
+        "samples_csv": null,
+        "phases_csv": null,
+        "samples_plot": null,
+        "phases_plot": null,
+        "sampled_whole_run_peak_gpu_memory_used_mib": NaN,
+        "sampled_whole_run_seconds": NaN,
+        "profiled_train_peak_mib": NaN,
+        "profiled_inference_peak_mib": NaN,
+        "profiled_backward_to_forward_peak_ratio": NaN,
+        "profiled_backward_to_forward_mean_time_ratio": NaN,
+        "phases": {}
+      },
+      "seconds_total": 110.36747077899054,
+      "loss_rows": [
+        {
+          "epoch": 1,
+          "framework": "pytorch",
+          "train_relative_l2": 0.42500679113246775,
+          "test_relative_l2": 0.2924525276819865,
+          "train_mse": 0.06121975932408262,
+          "test_mse": 0.024981878697872162,
+          "seconds": 1.194166529981885
+        },
+        {
+          "epoch": 2,
+          "framework": "pytorch",
+          "train_relative_l2": 0.2371839549144109,
+          "test_relative_l2": NaN,
+          "train_mse": 0.016329661856094996,
+          "test_mse": NaN,
+          "seconds": 0.22390369995264336
+        },
+        {
+          "epoch": 3,
+          "framework": "pytorch",
+          "train_relative_l2": 0.16215218508685075,
+          "test_relative_l2": NaN,
+          "train_mse": 0.007999963196753352,
+          "test_mse": NaN,
+          "seconds": 0.22705327201401815
+        },
+        {
+          "epoch": 4,
+          "framework": "pytorch",
+          "train_relative_l2": 0.10587430587521306,
+          "test_relative_l2": NaN,
+          "train_mse": 0.0038735297349868,
+          "test_mse": NaN,
+          "seconds": 0.21940393396653235
+        },
+        {
+          "epoch": 5,
+          "framework": "pytorch",
+          "train_relative_l2": 0.04068890247080061,
+          "test_relative_l2": NaN,
+          "train_mse": 0.000499958173820266,
+          "test_mse": NaN,
+          "seconds": 0.2194001500029117
+        },
+        {
+          "epoch": 6,
+          "framework": "pytorch",
+          "train_relative_l2": 0.031984177590520295,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00030095830029394063,
+          "test_mse": NaN,
+          "seconds": 0.2120712689938955
+        },
+        {
+          "epoch": 7,
+          "framework": "pytorch",
+          "train_relative_l2": 0.03969925362754751,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00046731584196634316,
+          "test_mse": NaN,
+          "seconds": 0.22134107403689995
+        },
+        {
+          "epoch": 8,
+          "framework": "pytorch",
+          "train_relative_l2": 0.022200536171871205,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00015579207451621725,
+          "test_mse": NaN,
+          "seconds": 0.21978351497091353
+        },
+        {
+          "epoch": 9,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01563702256867179,
+          "test_relative_l2": NaN,
+          "train_mse": 7.014717731012583e-05,
+          "test_mse": NaN,
+          "seconds": 0.21131333499215543
+        },
+        {
+          "epoch": 10,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01605373689421901,
+          "test_relative_l2": 0.031244447405139604,
+          "train_mse": 9.023117940631454e-05,
+          "test_mse": 0.00028385801706463096,
+          "seconds": 0.22690066799987108
+        },
+        {
+          "epoch": 11,
+          "framework": "pytorch",
+          "train_relative_l2": 0.020742334406133052,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00014783880968159926,
+          "test_mse": NaN,
+          "seconds": 0.21766762202605605
+        },
+        {
+          "epoch": 12,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013917929897153819,
+          "test_relative_l2": NaN,
+          "train_mse": 5.876779707183165e-05,
+          "test_mse": NaN,
+          "seconds": 0.2176480300258845
+        },
+        {
+          "epoch": 13,
+          "framework": "pytorch",
+          "train_relative_l2": 0.023194831990533404,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00016239573308094232,
+          "test_mse": NaN,
+          "seconds": 0.21945159503957257
+        },
+        {
+          "epoch": 14,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01906324331407194,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00011893689139267533,
+          "test_mse": NaN,
+          "seconds": 0.21437398303532973
+        },
+        {
+          "epoch": 15,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011556976669364505,
+          "test_relative_l2": NaN,
+          "train_mse": 4.020979435558224e-05,
+          "test_mse": NaN,
+          "seconds": 0.21531921299174428
+        },
+        {
+          "epoch": 16,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012116226774674875,
+          "test_relative_l2": NaN,
+          "train_mse": 4.5086026021400124e-05,
+          "test_mse": NaN,
+          "seconds": 0.2125899459933862
+        },
+        {
+          "epoch": 17,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01170087848065628,
+          "test_relative_l2": NaN,
+          "train_mse": 4.069346879852539e-05,
+          "test_mse": NaN,
+          "seconds": 0.21796070400159806
+        },
+        {
+          "epoch": 18,
+          "framework": "pytorch",
+          "train_relative_l2": 0.015745195670536272,
+          "test_relative_l2": NaN,
+          "train_mse": 8.613617247007184e-05,
+          "test_mse": NaN,
+          "seconds": 0.2152969300514087
+        },
+        {
+          "epoch": 19,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012619235079597543,
+          "test_relative_l2": NaN,
+          "train_mse": 4.777858591060741e-05,
+          "test_mse": NaN,
+          "seconds": 0.21657894999952987
+        },
+        {
+          "epoch": 20,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01529480057872004,
+          "test_relative_l2": 0.017902282997965813,
+          "train_mse": 8.170084224763774e-05,
+          "test_mse": 9.177297964924946e-05,
+          "seconds": 0.2258445500046946
+        },
+        {
+          "epoch": 21,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01578074835240841,
+          "test_relative_l2": NaN,
+          "train_mse": 7.405449146905017e-05,
+          "test_mse": NaN,
+          "seconds": 0.21531829802552238
+        },
+        {
+          "epoch": 22,
+          "framework": "pytorch",
+          "train_relative_l2": 0.02018508015131509,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00011683819398361569,
+          "test_mse": NaN,
+          "seconds": 0.21214654203504324
+        },
+        {
+          "epoch": 23,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01878775125300443,
+          "test_relative_l2": NaN,
+          "train_mse": 0.0001086832857927894,
+          "test_mse": NaN,
+          "seconds": 0.2138710449798964
+        },
+        {
+          "epoch": 24,
+          "framework": "pytorch",
+          "train_relative_l2": 0.015345943857122351,
+          "test_relative_l2": NaN,
+          "train_mse": 7.861388412021808e-05,
+          "test_mse": NaN,
+          "seconds": 0.21170633501606062
+        },
+        {
+          "epoch": 25,
+          "framework": "pytorch",
+          "train_relative_l2": 0.018972756089987577,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00010411173236746066,
+          "test_mse": NaN,
+          "seconds": 0.21065365499816835
+        },
+        {
+          "epoch": 26,
+          "framework": "pytorch",
+          "train_relative_l2": 0.018069232051019315,
+          "test_relative_l2": NaN,
+          "train_mse": 9.426166092183579e-05,
+          "test_mse": NaN,
+          "seconds": 0.2117735130013898
+        },
+        {
+          "epoch": 27,
+          "framework": "pytorch",
+          "train_relative_l2": 0.017061663060276597,
+          "test_relative_l2": NaN,
+          "train_mse": 8.487910343791116e-05,
+          "test_mse": NaN,
+          "seconds": 0.21182190801482648
+        },
+        {
+          "epoch": 28,
+          "framework": "pytorch",
+          "train_relative_l2": 0.017636322290809067,
+          "test_relative_l2": NaN,
+          "train_mse": 8.814487524365109e-05,
+          "test_mse": NaN,
+          "seconds": 0.213861080002971
+        },
+        {
+          "epoch": 29,
+          "framework": "pytorch",
+          "train_relative_l2": 0.016031843699790813,
+          "test_relative_l2": NaN,
+          "train_mse": 7.897619173120432e-05,
+          "test_mse": NaN,
+          "seconds": 0.2114427339984104
+        },
+        {
+          "epoch": 30,
+          "framework": "pytorch",
+          "train_relative_l2": 0.016479730484662232,
+          "test_relative_l2": 0.021543122927347818,
+          "train_mse": 8.195809253030112e-05,
+          "test_mse": 0.00013538858018970738,
+          "seconds": 0.22045178996631876
+        },
+        {
+          "epoch": 31,
+          "framework": "pytorch",
+          "train_relative_l2": 0.015153173762891027,
+          "test_relative_l2": NaN,
+          "train_mse": 6.904729115949185e-05,
+          "test_mse": NaN,
+          "seconds": 0.21326556103304029
+        },
+        {
+          "epoch": 32,
+          "framework": "pytorch",
+          "train_relative_l2": 0.016660007241147537,
+          "test_relative_l2": NaN,
+          "train_mse": 8.341881752669535e-05,
+          "test_mse": NaN,
+          "seconds": 0.214516326028388
+        },
+        {
+          "epoch": 33,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010266731384175795,
+          "test_relative_l2": NaN,
+          "train_mse": 3.819585499446408e-05,
+          "test_mse": NaN,
+          "seconds": 0.22195639699930325
+        },
+        {
+          "epoch": 34,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008893283048161754,
+          "test_relative_l2": NaN,
+          "train_mse": 2.356348983960709e-05,
+          "test_mse": NaN,
+          "seconds": 0.22431185300229117
+        },
+        {
+          "epoch": 35,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01630029566999939,
+          "test_relative_l2": NaN,
+          "train_mse": 7.851326096527002e-05,
+          "test_mse": NaN,
+          "seconds": 0.2177174979588017
+        },
+        {
+          "epoch": 36,
+          "framework": "pytorch",
+          "train_relative_l2": 0.018188627639578448,
+          "test_relative_l2": NaN,
+          "train_mse": 0.00010367182576037184,
+          "test_mse": NaN,
+          "seconds": 0.21000371099216864
+        },
+        {
+          "epoch": 37,
+          "framework": "pytorch",
+          "train_relative_l2": 0.015005397818706653,
+          "test_relative_l2": NaN,
+          "train_mse": 6.646924098108516e-05,
+          "test_mse": NaN,
+          "seconds": 0.21009930898435414
+        },
+        {
+          "epoch": 38,
+          "framework": "pytorch",
+          "train_relative_l2": 0.015539772513288039,
+          "test_relative_l2": NaN,
+          "train_mse": 7.018450950487966e-05,
+          "test_mse": NaN,
+          "seconds": 0.21117341000353917
+        },
+        {
+          "epoch": 39,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014711341228750016,
+          "test_relative_l2": NaN,
+          "train_mse": 6.415427524458478e-05,
+          "test_mse": NaN,
+          "seconds": 0.21095123200211674
+        },
+        {
+          "epoch": 40,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011380748379009742,
+          "test_relative_l2": 0.01264427779863278,
+          "train_mse": 4.052341773381664e-05,
+          "test_mse": 4.270499669170628e-05,
+          "seconds": 0.22054974001366645
+        },
+        {
+          "epoch": 41,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008278350289911031,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9987262022806572e-05,
+          "test_mse": NaN,
+          "seconds": 0.21101632399950176
+        },
+        {
+          "epoch": 42,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008238868891364999,
+          "test_relative_l2": NaN,
+          "train_mse": 1.972283361721094e-05,
+          "test_mse": NaN,
+          "seconds": 0.21129899204242975
+        },
+        {
+          "epoch": 43,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013746806206526579,
+          "test_relative_l2": NaN,
+          "train_mse": 5.64394270595922e-05,
+          "test_mse": NaN,
+          "seconds": 0.2111097770393826
+        },
+        {
+          "epoch": 44,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009088132951270651,
+          "test_relative_l2": NaN,
+          "train_mse": 2.408645595736474e-05,
+          "test_mse": NaN,
+          "seconds": 0.2129591060220264
+        },
+        {
+          "epoch": 45,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012284075961344771,
+          "test_relative_l2": NaN,
+          "train_mse": 4.9361236936723195e-05,
+          "test_mse": NaN,
+          "seconds": 0.20905160997062922
+        },
+        {
+          "epoch": 46,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01541835359953068,
+          "test_relative_l2": NaN,
+          "train_mse": 6.8774643942662e-05,
+          "test_mse": NaN,
+          "seconds": 0.20927987399045378
+        },
+        {
+          "epoch": 47,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01322244937773104,
+          "test_relative_l2": NaN,
+          "train_mse": 5.4723274597900283e-05,
+          "test_mse": NaN,
+          "seconds": 0.20873906096676365
+        },
+        {
+          "epoch": 48,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014238497803884524,
+          "test_relative_l2": NaN,
+          "train_mse": 6.01628561842652e-05,
+          "test_mse": NaN,
+          "seconds": 0.20879362698178738
+        },
+        {
+          "epoch": 49,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014405524532000225,
+          "test_relative_l2": NaN,
+          "train_mse": 6.247921725002083e-05,
+          "test_mse": NaN,
+          "seconds": 0.20926192397018895
+        },
+        {
+          "epoch": 50,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014732680279347632,
+          "test_relative_l2": 0.015876473387082417,
+          "train_mse": 6.152021047590231e-05,
+          "test_mse": 7.217581063741819e-05,
+          "seconds": 0.22442337399115786
+        },
+        {
+          "epoch": 51,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014495718644724952,
+          "test_relative_l2": NaN,
+          "train_mse": 5.976973077782464e-05,
+          "test_mse": NaN,
+          "seconds": 0.2162843449623324
+        },
+        {
+          "epoch": 52,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013407048414702768,
+          "test_relative_l2": NaN,
+          "train_mse": 5.4815896653087326e-05,
+          "test_mse": NaN,
+          "seconds": 0.21298222901532426
+        },
+        {
+          "epoch": 53,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01596749588571213,
+          "test_relative_l2": NaN,
+          "train_mse": 7.746446035862728e-05,
+          "test_mse": NaN,
+          "seconds": 0.21650268096709624
+        },
+        {
+          "epoch": 54,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013471469959175145,
+          "test_relative_l2": NaN,
+          "train_mse": 5.6729951487526435e-05,
+          "test_mse": NaN,
+          "seconds": 0.21161695197224617
+        },
+        {
+          "epoch": 55,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010213585331070203,
+          "test_relative_l2": NaN,
+          "train_mse": 3.4539944673370984e-05,
+          "test_mse": NaN,
+          "seconds": 0.21550554898567498
+        },
+        {
+          "epoch": 56,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00627823155787256,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1691433514729228e-05,
+          "test_mse": NaN,
+          "seconds": 0.21452129300450906
+        },
+        {
+          "epoch": 57,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007096916323320733,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5905477879035366e-05,
+          "test_mse": NaN,
+          "seconds": 0.21820826904149726
+        },
+        {
+          "epoch": 58,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012017216301626629,
+          "test_relative_l2": NaN,
+          "train_mse": 4.3538253537715517e-05,
+          "test_mse": NaN,
+          "seconds": 0.21402853704057634
+        },
+        {
+          "epoch": 59,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014593903295419835,
+          "test_relative_l2": NaN,
+          "train_mse": 6.366762524487933e-05,
+          "test_mse": NaN,
+          "seconds": 0.21416482096537948
+        },
+        {
+          "epoch": 60,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014140277671869154,
+          "test_relative_l2": 0.01149126502374808,
+          "train_mse": 5.701030234275903e-05,
+          "test_mse": 3.723643210832961e-05,
+          "seconds": 0.2327110969927162
+        },
+        {
+          "epoch": 61,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01370248152150048,
+          "test_relative_l2": NaN,
+          "train_mse": 5.497054300913415e-05,
+          "test_mse": NaN,
+          "seconds": 0.21589956601383165
+        },
+        {
+          "epoch": 62,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013481345734110585,
+          "test_relative_l2": NaN,
+          "train_mse": 5.4231867996147935e-05,
+          "test_mse": NaN,
+          "seconds": 0.21487457503098994
+        },
+        {
+          "epoch": 63,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013348257847958142,
+          "test_relative_l2": NaN,
+          "train_mse": 5.1725557908260575e-05,
+          "test_mse": NaN,
+          "seconds": 0.21440817101392895
+        },
+        {
+          "epoch": 64,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010639693797738464,
+          "test_relative_l2": NaN,
+          "train_mse": 3.364078497893556e-05,
+          "test_mse": NaN,
+          "seconds": 0.22096980997594073
+        },
+        {
+          "epoch": 65,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01322818647104281,
+          "test_relative_l2": NaN,
+          "train_mse": 5.378924526330256e-05,
+          "test_mse": NaN,
+          "seconds": 0.21936780301621184
+        },
+        {
+          "epoch": 66,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012963702048140544,
+          "test_relative_l2": NaN,
+          "train_mse": 4.982577022962721e-05,
+          "test_mse": NaN,
+          "seconds": 0.21814854303374887
+        },
+        {
+          "epoch": 67,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012229233440701608,
+          "test_relative_l2": NaN,
+          "train_mse": 4.517832094010103e-05,
+          "test_mse": NaN,
+          "seconds": 0.22587628802284598
+        },
+        {
+          "epoch": 68,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012757413918497386,
+          "test_relative_l2": NaN,
+          "train_mse": 4.9939970405022096e-05,
+          "test_mse": NaN,
+          "seconds": 0.2102925319923088
+        },
+        {
+          "epoch": 69,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013050185658589557,
+          "test_relative_l2": NaN,
+          "train_mse": 5.0810343244746844e-05,
+          "test_mse": NaN,
+          "seconds": 0.21129753103014082
+        },
+        {
+          "epoch": 70,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012867565927682099,
+          "test_relative_l2": 0.025755024005969365,
+          "train_mse": 5.213236462656857e-05,
+          "test_mse": 0.0001728654227918014,
+          "seconds": 0.2239574379636906
+        },
+        {
+          "epoch": 71,
+          "framework": "pytorch",
+          "train_relative_l2": 0.014455400123778316,
+          "test_relative_l2": NaN,
+          "train_mse": 6.309782449399656e-05,
+          "test_mse": NaN,
+          "seconds": 0.213890160957817
+        },
+        {
+          "epoch": 72,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012633864892025788,
+          "test_relative_l2": NaN,
+          "train_mse": 4.578935302561149e-05,
+          "test_mse": NaN,
+          "seconds": 0.21632934000808746
+        },
+        {
+          "epoch": 73,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012769025933963282,
+          "test_relative_l2": NaN,
+          "train_mse": 4.7106539703370935e-05,
+          "test_mse": NaN,
+          "seconds": 0.2169830309576355
+        },
+        {
+          "epoch": 74,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012881177906636839,
+          "test_relative_l2": NaN,
+          "train_mse": 4.748903915579258e-05,
+          "test_mse": NaN,
+          "seconds": 0.2108268670272082
+        },
+        {
+          "epoch": 75,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013353716136404762,
+          "test_relative_l2": NaN,
+          "train_mse": 5.1302248612046244e-05,
+          "test_mse": NaN,
+          "seconds": 0.21080188499763608
+        },
+        {
+          "epoch": 76,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012438388411645535,
+          "test_relative_l2": NaN,
+          "train_mse": 4.4202311411801797e-05,
+          "test_mse": NaN,
+          "seconds": 0.21154617599677294
+        },
+        {
+          "epoch": 77,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01225042817907201,
+          "test_relative_l2": NaN,
+          "train_mse": 4.63371185846713e-05,
+          "test_mse": NaN,
+          "seconds": 0.21092064800905064
+        },
+        {
+          "epoch": 78,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012218809914257792,
+          "test_relative_l2": NaN,
+          "train_mse": 4.40431831790462e-05,
+          "test_mse": NaN,
+          "seconds": 0.2109359489986673
+        },
+        {
+          "epoch": 79,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00895851119455916,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6375055093484222e-05,
+          "test_mse": NaN,
+          "seconds": 0.21155264001572505
+        },
+        {
+          "epoch": 80,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011609721749469086,
+          "test_relative_l2": 0.010506602538128695,
+          "train_mse": 4.110398799336205e-05,
+          "test_mse": 2.9548423117375933e-05,
+          "seconds": 0.26403028500499204
+        },
+        {
+          "epoch": 81,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011957711599491262,
+          "test_relative_l2": NaN,
+          "train_mse": 4.2210639588086416e-05,
+          "test_mse": NaN,
+          "seconds": 0.2164038760238327
+        },
+        {
+          "epoch": 82,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012465984128691533,
+          "test_relative_l2": NaN,
+          "train_mse": 4.59353715888466e-05,
+          "test_mse": NaN,
+          "seconds": 0.21999000798678026
+        },
+        {
+          "epoch": 83,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012223258349630568,
+          "test_relative_l2": NaN,
+          "train_mse": 4.6572065475629646e-05,
+          "test_mse": NaN,
+          "seconds": 0.21802528598345816
+        },
+        {
+          "epoch": 84,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012682269781276031,
+          "test_relative_l2": NaN,
+          "train_mse": 4.701433313635385e-05,
+          "test_mse": NaN,
+          "seconds": 0.2167971630115062
+        },
+        {
+          "epoch": 85,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012023742427980459,
+          "test_relative_l2": NaN,
+          "train_mse": 4.342841068541424e-05,
+          "test_mse": NaN,
+          "seconds": 0.21534338599303737
+        },
+        {
+          "epoch": 86,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012565700994045645,
+          "test_relative_l2": NaN,
+          "train_mse": 4.58875771329514e-05,
+          "test_mse": NaN,
+          "seconds": 0.21724394301418215
+        },
+        {
+          "epoch": 87,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011634925904649275,
+          "test_relative_l2": NaN,
+          "train_mse": 4.020274723491942e-05,
+          "test_mse": NaN,
+          "seconds": 0.21326469001360238
+        },
+        {
+          "epoch": 88,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011075312717369308,
+          "test_relative_l2": NaN,
+          "train_mse": 3.725675140837362e-05,
+          "test_mse": NaN,
+          "seconds": 0.21574027003953233
+        },
+        {
+          "epoch": 89,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011529870977004369,
+          "test_relative_l2": NaN,
+          "train_mse": 4.059492020772908e-05,
+          "test_mse": NaN,
+          "seconds": 0.2153491629869677
+        },
+        {
+          "epoch": 90,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012159418890045749,
+          "test_relative_l2": 0.008199550559123357,
+          "train_mse": 4.507083435008233e-05,
+          "test_mse": 1.8533036394122366e-05,
+          "seconds": 0.22798855998553336
+        },
+        {
+          "epoch": 91,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011552212163805961,
+          "test_relative_l2": NaN,
+          "train_mse": 4.214003429903338e-05,
+          "test_mse": NaN,
+          "seconds": 0.21894458500901237
+        },
+        {
+          "epoch": 92,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01199528680079513,
+          "test_relative_l2": NaN,
+          "train_mse": 4.155620838800031e-05,
+          "test_mse": NaN,
+          "seconds": 0.21053961099823937
+        },
+        {
+          "epoch": 93,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011628104416584528,
+          "test_relative_l2": NaN,
+          "train_mse": 4.047380849779411e-05,
+          "test_mse": NaN,
+          "seconds": 0.21157893299823627
+        },
+        {
+          "epoch": 94,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011901440289285447,
+          "test_relative_l2": NaN,
+          "train_mse": 4.26709125760546e-05,
+          "test_mse": NaN,
+          "seconds": 0.2138168750097975
+        },
+        {
+          "epoch": 95,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011951983285446962,
+          "test_relative_l2": NaN,
+          "train_mse": 4.2434872205679616e-05,
+          "test_mse": NaN,
+          "seconds": 0.21291538700461388
+        },
+        {
+          "epoch": 96,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011596102611058288,
+          "test_relative_l2": NaN,
+          "train_mse": 4.282199585793057e-05,
+          "test_mse": NaN,
+          "seconds": 0.21213032602099702
+        },
+        {
+          "epoch": 97,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011940729314530338,
+          "test_relative_l2": NaN,
+          "train_mse": 4.3003180473061986e-05,
+          "test_mse": NaN,
+          "seconds": 0.22149030200671405
+        },
+        {
+          "epoch": 98,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010719727157718606,
+          "test_relative_l2": NaN,
+          "train_mse": 3.44453117846839e-05,
+          "test_mse": NaN,
+          "seconds": 0.21122867800295353
+        },
+        {
+          "epoch": 99,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011424681756783414,
+          "test_relative_l2": NaN,
+          "train_mse": 3.8885593013320535e-05,
+          "test_mse": NaN,
+          "seconds": 0.20956596301402897
+        },
+        {
+          "epoch": 100,
+          "framework": "pytorch",
+          "train_relative_l2": 0.013639367200710155,
+          "test_relative_l2": 0.010257146507501601,
+          "train_mse": 5.887233944290697e-05,
+          "test_mse": 3.590344761808713e-05,
+          "seconds": 0.22156272601569071
+        },
+        {
+          "epoch": 101,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006669473094106824,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4209384098649024e-05,
+          "test_mse": NaN,
+          "seconds": 0.22876423102570698
+        },
+        {
+          "epoch": 102,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01069143948731599,
+          "test_relative_l2": NaN,
+          "train_mse": 3.421272049039275e-05,
+          "test_mse": NaN,
+          "seconds": 0.2117341209668666
+        },
+        {
+          "epoch": 103,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007253282100514129,
+          "test_relative_l2": NaN,
+          "train_mse": 1.518519990053459e-05,
+          "test_mse": NaN,
+          "seconds": 0.21245531202293932
+        },
+        {
+          "epoch": 104,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007172475142611398,
+          "test_relative_l2": NaN,
+          "train_mse": 1.526721457291084e-05,
+          "test_mse": NaN,
+          "seconds": 0.2134305380168371
+        },
+        {
+          "epoch": 105,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00735823340162083,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5736392559591438e-05,
+          "test_mse": NaN,
+          "seconds": 0.21472493599867448
+        },
+        {
+          "epoch": 106,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012097151831344322,
+          "test_relative_l2": NaN,
+          "train_mse": 4.46061227099832e-05,
+          "test_mse": NaN,
+          "seconds": 0.21284825197653845
+        },
+        {
+          "epoch": 107,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007475909507936902,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7232189068939382e-05,
+          "test_mse": NaN,
+          "seconds": 0.2159619739977643
+        },
+        {
+          "epoch": 108,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005966036488750466,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0325000772287172e-05,
+          "test_mse": NaN,
+          "seconds": 0.21726479305652902
+        },
+        {
+          "epoch": 109,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006095442469749186,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0582337169951104e-05,
+          "test_mse": NaN,
+          "seconds": 0.2147690129932016
+        },
+        {
+          "epoch": 110,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006014004317284734,
+          "test_relative_l2": 0.011367209255695343,
+          "train_mse": 1.0576537610581404e-05,
+          "test_mse": 3.406086521863472e-05,
+          "seconds": 0.2249267300358042
+        },
+        {
+          "epoch": 111,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0068168004243462175,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4629993281603135e-05,
+          "test_mse": NaN,
+          "seconds": 0.2222165780258365
+        },
+        {
+          "epoch": 112,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009073193113285083,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6267969741537753e-05,
+          "test_mse": NaN,
+          "seconds": 0.21191442298004404
+        },
+        {
+          "epoch": 113,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010807727996121954,
+          "test_relative_l2": NaN,
+          "train_mse": 3.6756468150458576e-05,
+          "test_mse": NaN,
+          "seconds": 0.21961358602857217
+        },
+        {
+          "epoch": 114,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012622179159963573,
+          "test_relative_l2": NaN,
+          "train_mse": 4.659559651002012e-05,
+          "test_mse": NaN,
+          "seconds": 0.20892853802070022
+        },
+        {
+          "epoch": 115,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012332716211676597,
+          "test_relative_l2": NaN,
+          "train_mse": 4.401092732290703e-05,
+          "test_mse": NaN,
+          "seconds": 0.20859595702495426
+        },
+        {
+          "epoch": 116,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01187302293324912,
+          "test_relative_l2": NaN,
+          "train_mse": 4.105068469976282e-05,
+          "test_mse": NaN,
+          "seconds": 0.20896050694864243
+        },
+        {
+          "epoch": 117,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011448145279729809,
+          "test_relative_l2": NaN,
+          "train_mse": 3.892559480542938e-05,
+          "test_mse": NaN,
+          "seconds": 0.21192233701003715
+        },
+        {
+          "epoch": 118,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011011122879054812,
+          "test_relative_l2": NaN,
+          "train_mse": 3.767721883142022e-05,
+          "test_mse": NaN,
+          "seconds": 0.21155346202431247
+        },
+        {
+          "epoch": 119,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011713458233409458,
+          "test_relative_l2": NaN,
+          "train_mse": 4.0104247481967497e-05,
+          "test_mse": NaN,
+          "seconds": 0.2128820630023256
+        },
+        {
+          "epoch": 120,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011291915582561934,
+          "test_relative_l2": 0.0062812127855916815,
+          "train_mse": 3.7413858215721256e-05,
+          "test_mse": 1.2076427689559447e-05,
+          "seconds": 0.2238911190070212
+        },
+        {
+          "epoch": 121,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011143810623497875,
+          "test_relative_l2": NaN,
+          "train_mse": 3.76412413067926e-05,
+          "test_mse": NaN,
+          "seconds": 0.21269936102908105
+        },
+        {
+          "epoch": 122,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011003748174342845,
+          "test_relative_l2": NaN,
+          "train_mse": 3.556024658286737e-05,
+          "test_mse": NaN,
+          "seconds": 0.21345869899960235
+        },
+        {
+          "epoch": 123,
+          "framework": "pytorch",
+          "train_relative_l2": 0.012157908275171563,
+          "test_relative_l2": NaN,
+          "train_mse": 4.858703158485393e-05,
+          "test_mse": NaN,
+          "seconds": 0.21402178099378943
+        },
+        {
+          "epoch": 124,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01101656929348354,
+          "test_relative_l2": NaN,
+          "train_mse": 3.880539291357208e-05,
+          "test_mse": NaN,
+          "seconds": 0.21262416196987033
+        },
+        {
+          "epoch": 125,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011573141360724414,
+          "test_relative_l2": NaN,
+          "train_mse": 3.7714632549236906e-05,
+          "test_mse": NaN,
+          "seconds": 0.21281436400022358
+        },
+        {
+          "epoch": 126,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011527192007612298,
+          "test_relative_l2": NaN,
+          "train_mse": 3.824969583581185e-05,
+          "test_mse": NaN,
+          "seconds": 0.21523935499135405
+        },
+        {
+          "epoch": 127,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011208347159403342,
+          "test_relative_l2": NaN,
+          "train_mse": 3.607031551332006e-05,
+          "test_mse": NaN,
+          "seconds": 0.21517467498779297
+        },
+        {
+          "epoch": 128,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011066110047201316,
+          "test_relative_l2": NaN,
+          "train_mse": 3.885949241790782e-05,
+          "test_mse": NaN,
+          "seconds": 0.21542157797375694
+        },
+        {
+          "epoch": 129,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01115041211799339,
+          "test_relative_l2": NaN,
+          "train_mse": 3.597308718276003e-05,
+          "test_mse": NaN,
+          "seconds": 0.21389572700718418
+        },
+        {
+          "epoch": 130,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011178844618024649,
+          "test_relative_l2": 0.009953884271283945,
+          "train_mse": 3.567222620606319e-05,
+          "test_mse": 2.608334274555091e-05,
+          "seconds": 0.22004894295241684
+        },
+        {
+          "epoch": 131,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010932193129426903,
+          "test_relative_l2": NaN,
+          "train_mse": 3.464709570700372e-05,
+          "test_mse": NaN,
+          "seconds": 0.2188542860094458
+        },
+        {
+          "epoch": 132,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008416627943515777,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1679339007715936e-05,
+          "test_mse": NaN,
+          "seconds": 0.21327632298925892
+        },
+        {
+          "epoch": 133,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01062156059951694,
+          "test_relative_l2": NaN,
+          "train_mse": 3.3926402360925245e-05,
+          "test_mse": NaN,
+          "seconds": 0.21309890400152653
+        },
+        {
+          "epoch": 134,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011291071629082714,
+          "test_relative_l2": NaN,
+          "train_mse": 3.633964599834548e-05,
+          "test_mse": NaN,
+          "seconds": 0.21551685902522877
+        },
+        {
+          "epoch": 135,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010952111519873142,
+          "test_relative_l2": NaN,
+          "train_mse": 3.416154609617984e-05,
+          "test_mse": NaN,
+          "seconds": 0.21464372804621235
+        },
+        {
+          "epoch": 136,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010232181944366958,
+          "test_relative_l2": NaN,
+          "train_mse": 3.138648527830675e-05,
+          "test_mse": NaN,
+          "seconds": 0.21279532200424
+        },
+        {
+          "epoch": 137,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0110494177898875,
+          "test_relative_l2": NaN,
+          "train_mse": 3.615896797984735e-05,
+          "test_mse": NaN,
+          "seconds": 0.21861791698029265
+        },
+        {
+          "epoch": 138,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010535799864403627,
+          "test_relative_l2": NaN,
+          "train_mse": 3.307488966028258e-05,
+          "test_mse": NaN,
+          "seconds": 0.22288011998170987
+        },
+        {
+          "epoch": 139,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007000287115159962,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4807624072461666e-05,
+          "test_mse": NaN,
+          "seconds": 0.21285233000526205
+        },
+        {
+          "epoch": 140,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0061881330816282165,
+          "test_relative_l2": 0.004576997098823388,
+          "train_mse": 1.1328345153069002e-05,
+          "test_mse": 5.878991814824986e-06,
+          "seconds": 0.22246685298159719
+        },
+        {
+          "epoch": 141,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00635063214296544,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1958410333911026e-05,
+          "test_mse": NaN,
+          "seconds": 0.21332669298863038
+        },
+        {
+          "epoch": 142,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008922543694023732,
+          "test_relative_l2": NaN,
+          "train_mse": 2.8013995755895007e-05,
+          "test_mse": NaN,
+          "seconds": 0.2150322840316221
+        },
+        {
+          "epoch": 143,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010694924096266429,
+          "test_relative_l2": NaN,
+          "train_mse": 3.569833901969509e-05,
+          "test_mse": NaN,
+          "seconds": 0.21440365602029487
+        },
+        {
+          "epoch": 144,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01083944565858002,
+          "test_relative_l2": NaN,
+          "train_mse": 3.5628835709455114e-05,
+          "test_mse": NaN,
+          "seconds": 0.21698513097362593
+        },
+        {
+          "epoch": 145,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010824467767443922,
+          "test_relative_l2": NaN,
+          "train_mse": 3.4488075179979205e-05,
+          "test_mse": NaN,
+          "seconds": 0.21407726197503507
+        },
+        {
+          "epoch": 146,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01116502250234286,
+          "test_relative_l2": NaN,
+          "train_mse": 3.9134391850826365e-05,
+          "test_mse": NaN,
+          "seconds": 0.21408428600989282
+        },
+        {
+          "epoch": 147,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007494257827875791,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7049192257992992e-05,
+          "test_mse": NaN,
+          "seconds": 0.21474423201289028
+        },
+        {
+          "epoch": 148,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007047556976753253,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4748662903945876e-05,
+          "test_mse": NaN,
+          "seconds": 0.21712063398445025
+        },
+        {
+          "epoch": 149,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010368584996020353,
+          "test_relative_l2": NaN,
+          "train_mse": 3.260173990080754e-05,
+          "test_mse": NaN,
+          "seconds": 0.2174345439998433
+        },
+        {
+          "epoch": 150,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010130343995988368,
+          "test_relative_l2": 0.00628597766160965,
+          "train_mse": 3.106673286108869e-05,
+          "test_mse": 1.1889012190901364e-05,
+          "seconds": 0.2336835140013136
+        },
+        {
+          "epoch": 151,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005793666150420904,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0122547111542964e-05,
+          "test_mse": NaN,
+          "seconds": 0.21564478299114853
+        },
+        {
+          "epoch": 152,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008870025728311803,
+          "test_relative_l2": NaN,
+          "train_mse": 2.503976683968816e-05,
+          "test_mse": NaN,
+          "seconds": 0.2118305229814723
+        },
+        {
+          "epoch": 153,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006269008440000039,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1564971719053575e-05,
+          "test_mse": NaN,
+          "seconds": 0.2178608580143191
+        },
+        {
+          "epoch": 154,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006316066782369658,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1515791703897304e-05,
+          "test_mse": NaN,
+          "seconds": 0.21316093602217734
+        },
+        {
+          "epoch": 155,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008706832326672695,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2014050164553165e-05,
+          "test_mse": NaN,
+          "seconds": 0.21381621499313042
+        },
+        {
+          "epoch": 156,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008620835948321554,
+          "test_relative_l2": NaN,
+          "train_mse": 2.201303769079796e-05,
+          "test_mse": NaN,
+          "seconds": 0.22093667095759884
+        },
+        {
+          "epoch": 157,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011331669867590622,
+          "test_relative_l2": NaN,
+          "train_mse": 3.711367526395609e-05,
+          "test_mse": NaN,
+          "seconds": 0.22242181497858837
+        },
+        {
+          "epoch": 158,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011259267705458181,
+          "test_relative_l2": NaN,
+          "train_mse": 3.623611854251336e-05,
+          "test_mse": NaN,
+          "seconds": 0.21085429599042982
+        },
+        {
+          "epoch": 159,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00953975208448591,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0792184691866475e-05,
+          "test_mse": NaN,
+          "seconds": 0.21353287802776322
+        },
+        {
+          "epoch": 160,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009950629307164087,
+          "test_relative_l2": 0.008579148488740126,
+          "train_mse": 3.0181347640420965e-05,
+          "test_mse": 1.9720106865861454e-05,
+          "seconds": 0.22312371397856623
+        },
+        {
+          "epoch": 161,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011233111694455147,
+          "test_relative_l2": NaN,
+          "train_mse": 3.8620678134504015e-05,
+          "test_mse": NaN,
+          "seconds": 0.21301076497184113
+        },
+        {
+          "epoch": 162,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010681629299565598,
+          "test_relative_l2": NaN,
+          "train_mse": 3.399051874886802e-05,
+          "test_mse": NaN,
+          "seconds": 0.21297896996838972
+        },
+        {
+          "epoch": 163,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011062805166950932,
+          "test_relative_l2": NaN,
+          "train_mse": 3.644620100978365e-05,
+          "test_mse": NaN,
+          "seconds": 0.2132774269557558
+        },
+        {
+          "epoch": 164,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010273084290049694,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0264849451163578e-05,
+          "test_mse": NaN,
+          "seconds": 0.21297879598569125
+        },
+        {
+          "epoch": 165,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011106195303576963,
+          "test_relative_l2": NaN,
+          "train_mse": 3.587917117261828e-05,
+          "test_mse": NaN,
+          "seconds": 0.21309267298784107
+        },
+        {
+          "epoch": 166,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010530853169383826,
+          "test_relative_l2": NaN,
+          "train_mse": 3.281655338165971e-05,
+          "test_mse": NaN,
+          "seconds": 0.21256990201072767
+        },
+        {
+          "epoch": 167,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010560557148246854,
+          "test_relative_l2": NaN,
+          "train_mse": 3.290970650225602e-05,
+          "test_mse": NaN,
+          "seconds": 0.21273338195169345
+        },
+        {
+          "epoch": 168,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010434818345087546,
+          "test_relative_l2": NaN,
+          "train_mse": 3.2023551229266796e-05,
+          "test_mse": NaN,
+          "seconds": 0.21657905000029132
+        },
+        {
+          "epoch": 169,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010499847603064997,
+          "test_relative_l2": NaN,
+          "train_mse": 3.1883099926980555e-05,
+          "test_mse": NaN,
+          "seconds": 0.214885724009946
+        },
+        {
+          "epoch": 170,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010464044046346788,
+          "test_relative_l2": 0.009763537707428138,
+          "train_mse": 3.3092876078121155e-05,
+          "test_mse": 2.6698933749382073e-05,
+          "seconds": 0.22908371896483004
+        },
+        {
+          "epoch": 171,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010521572989722092,
+          "test_relative_l2": NaN,
+          "train_mse": 3.207614751267506e-05,
+          "test_mse": NaN,
+          "seconds": 0.21957346005365252
+        },
+        {
+          "epoch": 172,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010163349742414774,
+          "test_relative_l2": NaN,
+          "train_mse": 3.040068689356472e-05,
+          "test_mse": NaN,
+          "seconds": 0.21677154896315187
+        },
+        {
+          "epoch": 173,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010079600359830592,
+          "test_relative_l2": NaN,
+          "train_mse": 3.1638113671053565e-05,
+          "test_mse": NaN,
+          "seconds": 0.2390900809550658
+        },
+        {
+          "epoch": 174,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005162977873589153,
+          "test_relative_l2": NaN,
+          "train_mse": 7.838100332096305e-06,
+          "test_mse": NaN,
+          "seconds": 0.2207173050264828
+        },
+        {
+          "epoch": 175,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008564277305095284,
+          "test_relative_l2": NaN,
+          "train_mse": 2.315361108264403e-05,
+          "test_mse": NaN,
+          "seconds": 0.21325823199003935
+        },
+        {
+          "epoch": 176,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010465351532178896,
+          "test_relative_l2": NaN,
+          "train_mse": 3.189377070628796e-05,
+          "test_mse": NaN,
+          "seconds": 0.21749555302085355
+        },
+        {
+          "epoch": 177,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010381606630980969,
+          "test_relative_l2": NaN,
+          "train_mse": 3.222318443780144e-05,
+          "test_mse": NaN,
+          "seconds": 0.2269707540399395
+        },
+        {
+          "epoch": 178,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0072259167340342646,
+          "test_relative_l2": NaN,
+          "train_mse": 1.641631463253698e-05,
+          "test_mse": NaN,
+          "seconds": 0.2149869609856978
+        },
+        {
+          "epoch": 179,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008799972045752738,
+          "test_relative_l2": NaN,
+          "train_mse": 2.243931859589389e-05,
+          "test_mse": NaN,
+          "seconds": 0.21757060097297654
+        },
+        {
+          "epoch": 180,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01096748432903378,
+          "test_relative_l2": 0.007422804484764735,
+          "train_mse": 3.6760449918936634e-05,
+          "test_mse": 1.7594144082977436e-05,
+          "seconds": 0.22617178899236023
+        },
+        {
+          "epoch": 181,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009680731332412472,
+          "test_relative_l2": NaN,
+          "train_mse": 2.885265687601296e-05,
+          "test_mse": NaN,
+          "seconds": 0.21586149599170312
+        },
+        {
+          "epoch": 182,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011061169378183506,
+          "test_relative_l2": NaN,
+          "train_mse": 3.5445623003330115e-05,
+          "test_mse": NaN,
+          "seconds": 0.2148883519694209
+        },
+        {
+          "epoch": 183,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010239698450874399,
+          "test_relative_l2": NaN,
+          "train_mse": 3.000364389326596e-05,
+          "test_mse": NaN,
+          "seconds": 0.21673457499127835
+        },
+        {
+          "epoch": 184,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01026601105928421,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0543660182889586e-05,
+          "test_mse": NaN,
+          "seconds": 0.21829395095119253
+        },
+        {
+          "epoch": 185,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01037470715051448,
+          "test_relative_l2": NaN,
+          "train_mse": 3.328871055230222e-05,
+          "test_mse": NaN,
+          "seconds": 0.21693333896109834
+        },
+        {
+          "epoch": 186,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0068023173455838805,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3547519047952611e-05,
+          "test_mse": NaN,
+          "seconds": 0.20742262300336733
+        },
+        {
+          "epoch": 187,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005504429871561351,
+          "test_relative_l2": NaN,
+          "train_mse": 9.144880175342594e-06,
+          "test_mse": NaN,
+          "seconds": 0.20697911799652502
+        },
+        {
+          "epoch": 188,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005963903387525568,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0651356436331602e-05,
+          "test_mse": NaN,
+          "seconds": 0.21256949997041374
+        },
+        {
+          "epoch": 189,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008738062007835617,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5069964208847117e-05,
+          "test_mse": NaN,
+          "seconds": 0.21782846003770828
+        },
+        {
+          "epoch": 190,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010279426571947557,
+          "test_relative_l2": 0.009702740187446277,
+          "train_mse": 3.086929096348791e-05,
+          "test_mse": 2.4978827859740704e-05,
+          "seconds": 0.2167791620013304
+        },
+        {
+          "epoch": 191,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010202753607321669,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0188788390390714e-05,
+          "test_mse": NaN,
+          "seconds": 0.21311840001726523
+        },
+        {
+          "epoch": 192,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01037160837057012,
+          "test_relative_l2": NaN,
+          "train_mse": 3.09306580095802e-05,
+          "test_mse": NaN,
+          "seconds": 0.2123046640190296
+        },
+        {
+          "epoch": 193,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010041621847561112,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0762323213922275e-05,
+          "test_mse": NaN,
+          "seconds": 0.21127206302480772
+        },
+        {
+          "epoch": 194,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010017233532336023,
+          "test_relative_l2": NaN,
+          "train_mse": 2.9551854728466693e-05,
+          "test_mse": NaN,
+          "seconds": 0.21212586999172345
+        },
+        {
+          "epoch": 195,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006818291004747152,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5465378486691473e-05,
+          "test_mse": NaN,
+          "seconds": 0.2110605100169778
+        },
+        {
+          "epoch": 196,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004801766940013126,
+          "test_relative_l2": NaN,
+          "train_mse": 6.814965358730492e-06,
+          "test_mse": NaN,
+          "seconds": 0.21143349801423028
+        },
+        {
+          "epoch": 197,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006880105725593037,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4178790044280943e-05,
+          "test_mse": NaN,
+          "seconds": 0.21152653801254928
+        },
+        {
+          "epoch": 198,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009982546794193763,
+          "test_relative_l2": NaN,
+          "train_mse": 2.9029249325739565e-05,
+          "test_mse": NaN,
+          "seconds": 0.21144911600276828
+        },
+        {
+          "epoch": 199,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006719044641488129,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3515458410472127e-05,
+          "test_mse": NaN,
+          "seconds": 0.21118270402075723
+        },
+        {
+          "epoch": 200,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010280450490061883,
+          "test_relative_l2": 0.010789576346675555,
+          "train_mse": 3.075205699402701e-05,
+          "test_mse": 3.294840721840349e-05,
+          "seconds": 0.220846516021993
+        },
+        {
+          "epoch": 201,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010277138299964092,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0165262756377664e-05,
+          "test_mse": NaN,
+          "seconds": 0.2111559830373153
+        },
+        {
+          "epoch": 202,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009856199061980955,
+          "test_relative_l2": NaN,
+          "train_mse": 2.967604939368795e-05,
+          "test_mse": NaN,
+          "seconds": 0.21199310495285317
+        },
+        {
+          "epoch": 203,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010341926799328239,
+          "test_relative_l2": NaN,
+          "train_mse": 3.112344576813349e-05,
+          "test_mse": NaN,
+          "seconds": 0.21188536705449224
+        },
+        {
+          "epoch": 204,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010028998570309745,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0975105613901245e-05,
+          "test_mse": NaN,
+          "seconds": 0.2112458699848503
+        },
+        {
+          "epoch": 205,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008487925405303636,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4431873005394463e-05,
+          "test_mse": NaN,
+          "seconds": 0.21116297401022166
+        },
+        {
+          "epoch": 206,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005012061866690163,
+          "test_relative_l2": NaN,
+          "train_mse": 7.218182502213124e-06,
+          "test_mse": NaN,
+          "seconds": 0.21158081997418776
+        },
+        {
+          "epoch": 207,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005117679248667425,
+          "test_relative_l2": NaN,
+          "train_mse": 7.542384845254236e-06,
+          "test_mse": NaN,
+          "seconds": 0.21294962998945266
+        },
+        {
+          "epoch": 208,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005260793368711516,
+          "test_relative_l2": NaN,
+          "train_mse": 7.964906416654465e-06,
+          "test_mse": NaN,
+          "seconds": 0.21210970100946724
+        },
+        {
+          "epoch": 209,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005637321789507513,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0176810620342385e-05,
+          "test_mse": NaN,
+          "seconds": 0.21677383698988706
+        },
+        {
+          "epoch": 210,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006311329223767475,
+          "test_relative_l2": 0.006247575220962366,
+          "train_mse": 1.1753851094572045e-05,
+          "test_mse": 1.1112996932448974e-05,
+          "seconds": 0.2233707210398279
+        },
+        {
+          "epoch": 211,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006073167819391798,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0856142335224259e-05,
+          "test_mse": NaN,
+          "seconds": 0.21470362902618945
+        },
+        {
+          "epoch": 212,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005250212999957579,
+          "test_relative_l2": NaN,
+          "train_mse": 8.124047744786368e-06,
+          "test_mse": NaN,
+          "seconds": 0.2128953270148486
+        },
+        {
+          "epoch": 213,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005731629903117816,
+          "test_relative_l2": NaN,
+          "train_mse": 9.737959375747273e-06,
+          "test_mse": NaN,
+          "seconds": 0.21615076501620933
+        },
+        {
+          "epoch": 214,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005701915107115551,
+          "test_relative_l2": NaN,
+          "train_mse": 9.496005931632007e-06,
+          "test_mse": NaN,
+          "seconds": 0.21831731998827308
+        },
+        {
+          "epoch": 215,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005781672631424886,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0409529517077048e-05,
+          "test_mse": NaN,
+          "seconds": 0.2164658160181716
+        },
+        {
+          "epoch": 216,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009368116873557921,
+          "test_relative_l2": NaN,
+          "train_mse": 2.641519958463808e-05,
+          "test_mse": NaN,
+          "seconds": 0.21723922400269657
+        },
+        {
+          "epoch": 217,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010988585773717474,
+          "test_relative_l2": NaN,
+          "train_mse": 3.6150574262676485e-05,
+          "test_mse": NaN,
+          "seconds": 0.2157865900080651
+        },
+        {
+          "epoch": 218,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010661147007787669,
+          "test_relative_l2": NaN,
+          "train_mse": 3.4388200157856635e-05,
+          "test_mse": NaN,
+          "seconds": 0.21564392000436783
+        },
+        {
+          "epoch": 219,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01053114660429182,
+          "test_relative_l2": NaN,
+          "train_mse": 3.288291418559513e-05,
+          "test_mse": NaN,
+          "seconds": 0.21517368499189615
+        },
+        {
+          "epoch": 220,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009944264407235164,
+          "test_relative_l2": 0.00764810036867857,
+          "train_mse": 3.154036176393102e-05,
+          "test_mse": 1.5834553450986278e-05,
+          "seconds": 0.22761972196167335
+        },
+        {
+          "epoch": 221,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006247361324451588,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1612975210516231e-05,
+          "test_mse": NaN,
+          "seconds": 0.2166862700250931
+        },
+        {
+          "epoch": 222,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007634236217924842,
+          "test_relative_l2": NaN,
+          "train_mse": 1.754141988284472e-05,
+          "test_mse": NaN,
+          "seconds": 0.21438706503249705
+        },
+        {
+          "epoch": 223,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009859788257766653,
+          "test_relative_l2": NaN,
+          "train_mse": 2.868256511714275e-05,
+          "test_mse": NaN,
+          "seconds": 0.22779234300833195
+        },
+        {
+          "epoch": 224,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007902480089278133,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0203231274704363e-05,
+          "test_mse": NaN,
+          "seconds": 0.21995598200010136
+        },
+        {
+          "epoch": 225,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006114328878897208,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0985742321483688e-05,
+          "test_mse": NaN,
+          "seconds": 0.22396476700669155
+        },
+        {
+          "epoch": 226,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009086213873492347,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5894029499290305e-05,
+          "test_mse": NaN,
+          "seconds": 0.2141154549899511
+        },
+        {
+          "epoch": 227,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008339023567322228,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1306824381571022e-05,
+          "test_mse": NaN,
+          "seconds": 0.2142269280157052
+        },
+        {
+          "epoch": 228,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00856984432786703,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2901067649298865e-05,
+          "test_mse": NaN,
+          "seconds": 0.2216034639859572
+        },
+        {
+          "epoch": 229,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010255277780471025,
+          "test_relative_l2": NaN,
+          "train_mse": 3.097927532508038e-05,
+          "test_mse": NaN,
+          "seconds": 0.21874203998595476
+        },
+        {
+          "epoch": 230,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00862692043185234,
+          "test_relative_l2": 0.006448784961054723,
+          "train_mse": 2.286009369897699e-05,
+          "test_mse": 1.2356695842754561e-05,
+          "seconds": 0.23412682698108256
+        },
+        {
+          "epoch": 231,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005265128400728659,
+          "test_relative_l2": NaN,
+          "train_mse": 7.82704958746089e-06,
+          "test_mse": NaN,
+          "seconds": 0.22336141200503334
+        },
+        {
+          "epoch": 232,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008377387970685959,
+          "test_relative_l2": NaN,
+          "train_mse": 2.193449162101994e-05,
+          "test_mse": NaN,
+          "seconds": 0.21793821500614285
+        },
+        {
+          "epoch": 233,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01116915960692697,
+          "test_relative_l2": NaN,
+          "train_mse": 3.93525381244857e-05,
+          "test_mse": NaN,
+          "seconds": 0.21827522298553959
+        },
+        {
+          "epoch": 234,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010518461614847183,
+          "test_relative_l2": NaN,
+          "train_mse": 3.104575333526117e-05,
+          "test_mse": NaN,
+          "seconds": 0.2180351060233079
+        },
+        {
+          "epoch": 235,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007130054645240307,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7162411783189144e-05,
+          "test_mse": NaN,
+          "seconds": 0.21822462999261916
+        },
+        {
+          "epoch": 236,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004916357436665782,
+          "test_relative_l2": NaN,
+          "train_mse": 7.210247412903873e-06,
+          "test_mse": NaN,
+          "seconds": 0.21676308597670868
+        },
+        {
+          "epoch": 237,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006485359265848443,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3638501361667835e-05,
+          "test_mse": NaN,
+          "seconds": 0.22011097194626927
+        },
+        {
+          "epoch": 238,
+          "framework": "pytorch",
+          "train_relative_l2": 0.011262312076157993,
+          "test_relative_l2": NaN,
+          "train_mse": 3.8538492258845105e-05,
+          "test_mse": NaN,
+          "seconds": 0.21260876097949222
+        },
+        {
+          "epoch": 239,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010407209241831744,
+          "test_relative_l2": NaN,
+          "train_mse": 3.038578521766424e-05,
+          "test_mse": NaN,
+          "seconds": 0.21624157996848226
+        },
+        {
+          "epoch": 240,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010349004199659383,
+          "test_relative_l2": 0.011859983019530774,
+          "train_mse": 3.1246872581336734e-05,
+          "test_mse": 3.6968692826728025e-05,
+          "seconds": 0.230172588955611
+        },
+        {
+          "epoch": 241,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010217580246152701,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0326016715628577e-05,
+          "test_mse": NaN,
+          "seconds": 0.2378235770156607
+        },
+        {
+          "epoch": 242,
+          "framework": "pytorch",
+          "train_relative_l2": 0.010647130934176621,
+          "test_relative_l2": NaN,
+          "train_mse": 3.4383376370425575e-05,
+          "test_mse": NaN,
+          "seconds": 0.2248345129773952
+        },
+        {
+          "epoch": 243,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00988099289023214,
+          "test_relative_l2": NaN,
+          "train_mse": 3.0002571158412912e-05,
+          "test_mse": NaN,
+          "seconds": 0.2220830830046907
+        },
+        {
+          "epoch": 244,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0098792162137451,
+          "test_relative_l2": NaN,
+          "train_mse": 2.9956559180088032e-05,
+          "test_mse": NaN,
+          "seconds": 0.21412242797669023
+        },
+        {
+          "epoch": 245,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008004188809405875,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9855582105702964e-05,
+          "test_mse": NaN,
+          "seconds": 0.21504909702343866
+        },
+        {
+          "epoch": 246,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007418276422001697,
+          "test_relative_l2": NaN,
+          "train_mse": 1.617991648985211e-05,
+          "test_mse": NaN,
+          "seconds": 0.2161239089909941
+        },
+        {
+          "epoch": 247,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00893200082635438,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4236331265894005e-05,
+          "test_mse": NaN,
+          "seconds": 0.2171722640050575
+        },
+        {
+          "epoch": 248,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009416790692894547,
+          "test_relative_l2": NaN,
+          "train_mse": 2.703601313610475e-05,
+          "test_mse": NaN,
+          "seconds": 0.22432418999960646
+        },
+        {
+          "epoch": 249,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009968244279562324,
+          "test_relative_l2": NaN,
+          "train_mse": 2.9050227558063516e-05,
+          "test_mse": NaN,
+          "seconds": 0.23432403500191867
+        },
+        {
+          "epoch": 250,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009470092979846178,
+          "test_relative_l2": 0.011913372886677582,
+          "train_mse": 2.70343435867862e-05,
+          "test_mse": 3.846493821280698e-05,
+          "seconds": 0.23249642696464434
+        },
+        {
+          "epoch": 251,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00951316522779288,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6699544935211264e-05,
+          "test_mse": NaN,
+          "seconds": 0.21670424798503518
+        },
+        {
+          "epoch": 252,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009741572147166288,
+          "test_relative_l2": NaN,
+          "train_mse": 2.720611413544113e-05,
+          "test_mse": NaN,
+          "seconds": 0.21602744702249765
+        },
+        {
+          "epoch": 253,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00985459510512926,
+          "test_relative_l2": NaN,
+          "train_mse": 2.8222101005936835e-05,
+          "test_mse": NaN,
+          "seconds": 0.21465851098764688
+        },
+        {
+          "epoch": 254,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009126750211472865,
+          "test_relative_l2": NaN,
+          "train_mse": 2.621757822150054e-05,
+          "test_mse": NaN,
+          "seconds": 0.22072490601567551
+        },
+        {
+          "epoch": 255,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007872358555733054,
+          "test_relative_l2": NaN,
+          "train_mse": 1.980428720411577e-05,
+          "test_mse": NaN,
+          "seconds": 0.2156695129815489
+        },
+        {
+          "epoch": 256,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00944974006946992,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6920542684954988e-05,
+          "test_mse": NaN,
+          "seconds": 0.21558409102726728
+        },
+        {
+          "epoch": 257,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006451670908265644,
+          "test_relative_l2": NaN,
+          "train_mse": 1.2666975364684024e-05,
+          "test_mse": NaN,
+          "seconds": 0.2157116589951329
+        },
+        {
+          "epoch": 258,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009323649042182499,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6242165574027847e-05,
+          "test_mse": NaN,
+          "seconds": 0.2149332920089364
+        },
+        {
+          "epoch": 259,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009732243189657175,
+          "test_relative_l2": NaN,
+          "train_mse": 2.839676630780256e-05,
+          "test_mse": NaN,
+          "seconds": 0.21774053300032392
+        },
+        {
+          "epoch": 260,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009009418432359343,
+          "test_relative_l2": 0.007421285932262739,
+          "train_mse": 2.4864563108874587e-05,
+          "test_mse": 1.5066309412456273e-05,
+          "seconds": 0.22546724998392165
+        },
+        {
+          "epoch": 261,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00931745115874542,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5820142722363082e-05,
+          "test_mse": NaN,
+          "seconds": 0.21470639196923003
+        },
+        {
+          "epoch": 262,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00756946826422656,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9170227280011642e-05,
+          "test_mse": NaN,
+          "seconds": 0.2203144269878976
+        },
+        {
+          "epoch": 263,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0053155465575831905,
+          "test_relative_l2": NaN,
+          "train_mse": 8.585527074400387e-06,
+          "test_mse": NaN,
+          "seconds": 0.2185277109965682
+        },
+        {
+          "epoch": 264,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006725443906530186,
+          "test_relative_l2": NaN,
+          "train_mse": 1.382474623689497e-05,
+          "test_mse": NaN,
+          "seconds": 0.21443871001247317
+        },
+        {
+          "epoch": 265,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009456146409114201,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6134887421331197e-05,
+          "test_mse": NaN,
+          "seconds": 0.2259528359863907
+        },
+        {
+          "epoch": 266,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009263692295385732,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5541632300398002e-05,
+          "test_mse": NaN,
+          "seconds": 0.2200961400521919
+        },
+        {
+          "epoch": 267,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008989113027712813,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5252540115077326e-05,
+          "test_mse": NaN,
+          "seconds": 0.21735514100873843
+        },
+        {
+          "epoch": 268,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009603911222269139,
+          "test_relative_l2": NaN,
+          "train_mse": 2.678861121509086e-05,
+          "test_mse": NaN,
+          "seconds": 0.21161655196920037
+        },
+        {
+          "epoch": 269,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008518952772849135,
+          "test_relative_l2": NaN,
+          "train_mse": 2.187481436757716e-05,
+          "test_mse": NaN,
+          "seconds": 0.21247837599366903
+        },
+        {
+          "epoch": 270,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004791552806618037,
+          "test_relative_l2": 0.006614906191825867,
+          "train_mse": 6.990585584221494e-06,
+          "test_mse": 1.1770418786909431e-05,
+          "seconds": 0.22175972897093743
+        },
+        {
+          "epoch": 271,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005457625031057331,
+          "test_relative_l2": NaN,
+          "train_mse": 8.832687875568539e-06,
+          "test_mse": NaN,
+          "seconds": 0.21140853594988585
+        },
+        {
+          "epoch": 272,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00777105335008215,
+          "test_relative_l2": NaN,
+          "train_mse": 1.865237824623128e-05,
+          "test_mse": NaN,
+          "seconds": 0.21498631802387536
+        },
+        {
+          "epoch": 273,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00834711652180111,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2088264497007778e-05,
+          "test_mse": NaN,
+          "seconds": 0.2148112819995731
+        },
+        {
+          "epoch": 274,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009407877541250652,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6638480862688824e-05,
+          "test_mse": NaN,
+          "seconds": 0.2118964460096322
+        },
+        {
+          "epoch": 275,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007727957082291444,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8622051146748063e-05,
+          "test_mse": NaN,
+          "seconds": 0.21223357802955434
+        },
+        {
+          "epoch": 276,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008553936020643622,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1914003602298046e-05,
+          "test_mse": NaN,
+          "seconds": 0.21418361400719732
+        },
+        {
+          "epoch": 277,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009674018882215023,
+          "test_relative_l2": NaN,
+          "train_mse": 2.623660396407272e-05,
+          "test_mse": NaN,
+          "seconds": 0.2112059710198082
+        },
+        {
+          "epoch": 278,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009006901765587154,
+          "test_relative_l2": NaN,
+          "train_mse": 2.3921057603459942e-05,
+          "test_mse": NaN,
+          "seconds": 0.21172402298543602
+        },
+        {
+          "epoch": 279,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009112393440747702,
+          "test_relative_l2": NaN,
+          "train_mse": 2.484119773456499e-05,
+          "test_mse": NaN,
+          "seconds": 0.21527664799941704
+        },
+        {
+          "epoch": 280,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009265000149607659,
+          "test_relative_l2": 0.009238780116041501,
+          "train_mse": 2.4496727446266623e-05,
+          "test_mse": 2.319571258946477e-05,
+          "seconds": 0.23266582103678957
+        },
+        {
+          "epoch": 281,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0091004721654786,
+          "test_relative_l2": NaN,
+          "train_mse": 2.3820999281101482e-05,
+          "test_mse": NaN,
+          "seconds": 0.2230996360303834
+        },
+        {
+          "epoch": 282,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009249782778874591,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4844398016015204e-05,
+          "test_mse": NaN,
+          "seconds": 0.22318269300740212
+        },
+        {
+          "epoch": 283,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008511315531752727,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2497191535809113e-05,
+          "test_mse": NaN,
+          "seconds": 0.22121416998561472
+        },
+        {
+          "epoch": 284,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009216287737643276,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4835276301557855e-05,
+          "test_mse": NaN,
+          "seconds": 0.22231156699126586
+        },
+        {
+          "epoch": 285,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009231266162047783,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5020653041860054e-05,
+          "test_mse": NaN,
+          "seconds": 0.2194309280021116
+        },
+        {
+          "epoch": 286,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007991699815072395,
+          "test_relative_l2": NaN,
+          "train_mse": 1.973076310133803e-05,
+          "test_mse": NaN,
+          "seconds": 0.22183365799719468
+        },
+        {
+          "epoch": 287,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00899275611948084,
+          "test_relative_l2": NaN,
+          "train_mse": 2.373160566397322e-05,
+          "test_mse": NaN,
+          "seconds": 0.2163499559974298
+        },
+        {
+          "epoch": 288,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009086740015557518,
+          "test_relative_l2": NaN,
+          "train_mse": 2.3973418005711952e-05,
+          "test_mse": NaN,
+          "seconds": 0.21775890799472108
+        },
+        {
+          "epoch": 289,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0076840115711092945,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7980040070984546e-05,
+          "test_mse": NaN,
+          "seconds": 0.2149159599794075
+        },
+        {
+          "epoch": 290,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008904832524281961,
+          "test_relative_l2": 0.011284391582012176,
+          "train_mse": 2.3113227168020482e-05,
+          "test_mse": 3.729919078371798e-05,
+          "seconds": 0.2283320989808999
+        },
+        {
+          "epoch": 291,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009123105641316484,
+          "test_relative_l2": NaN,
+          "train_mse": 2.394070338427641e-05,
+          "test_mse": NaN,
+          "seconds": 0.218241186987143
+        },
+        {
+          "epoch": 292,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008805327808001527,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2916453117095107e-05,
+          "test_mse": NaN,
+          "seconds": 0.21825593401445076
+        },
+        {
+          "epoch": 293,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008835123061305947,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2586302120880983e-05,
+          "test_mse": NaN,
+          "seconds": 0.21676075301365927
+        },
+        {
+          "epoch": 294,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0073167249663836425,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6760490737700214e-05,
+          "test_mse": NaN,
+          "seconds": 0.21713061700575054
+        },
+        {
+          "epoch": 295,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00755607966195654,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7072929332681707e-05,
+          "test_mse": NaN,
+          "seconds": 0.2230621309718117
+        },
+        {
+          "epoch": 296,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0052748554944992065,
+          "test_relative_l2": NaN,
+          "train_mse": 8.443832156006936e-06,
+          "test_mse": NaN,
+          "seconds": 0.21793630300089717
+        },
+        {
+          "epoch": 297,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00536232135982977,
+          "test_relative_l2": NaN,
+          "train_mse": 8.455755397099657e-06,
+          "test_mse": NaN,
+          "seconds": 0.2162523900042288
+        },
+        {
+          "epoch": 298,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004439313423440412,
+          "test_relative_l2": NaN,
+          "train_mse": 5.825796305779712e-06,
+          "test_mse": NaN,
+          "seconds": 0.2266126799513586
+        },
+        {
+          "epoch": 299,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004509454072901496,
+          "test_relative_l2": NaN,
+          "train_mse": 5.920341734761476e-06,
+          "test_mse": NaN,
+          "seconds": 0.22011440701317042
+        },
+        {
+          "epoch": 300,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009100081710903733,
+          "test_relative_l2": 0.008183049478878577,
+          "train_mse": 2.398464525295249e-05,
+          "test_mse": 1.887150775777021e-05,
+          "seconds": 0.22746445203665644
+        },
+        {
+          "epoch": 301,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008687528904389452,
+          "test_relative_l2": NaN,
+          "train_mse": 2.421865840679621e-05,
+          "test_mse": NaN,
+          "seconds": 0.21531565400073305
+        },
+        {
+          "epoch": 302,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008563377037644386,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2582456046991327e-05,
+          "test_mse": NaN,
+          "seconds": 0.21521751396358013
+        },
+        {
+          "epoch": 303,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008658951813424074,
+          "test_relative_l2": NaN,
+          "train_mse": 2.3103140540317528e-05,
+          "test_mse": NaN,
+          "seconds": 0.21738700603600591
+        },
+        {
+          "epoch": 304,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00909284214178721,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4630521819980695e-05,
+          "test_mse": NaN,
+          "seconds": 0.2172057419666089
+        },
+        {
+          "epoch": 305,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00851789816800091,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2764868508265527e-05,
+          "test_mse": NaN,
+          "seconds": 0.2281439839862287
+        },
+        {
+          "epoch": 306,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0070773838860569175,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5802916443337585e-05,
+          "test_mse": NaN,
+          "seconds": 0.2534776729880832
+        },
+        {
+          "epoch": 307,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005887923929840326,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0099625186638959e-05,
+          "test_mse": NaN,
+          "seconds": 0.2688170750043355
+        },
+        {
+          "epoch": 308,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004796595812809688,
+          "test_relative_l2": NaN,
+          "train_mse": 6.628874341711505e-06,
+          "test_mse": NaN,
+          "seconds": 0.25992244598455727
+        },
+        {
+          "epoch": 309,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005070087966267709,
+          "test_relative_l2": NaN,
+          "train_mse": 7.683664109747581e-06,
+          "test_mse": NaN,
+          "seconds": 0.2539532670052722
+        },
+        {
+          "epoch": 310,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0093147047802254,
+          "test_relative_l2": 0.007067185534785191,
+          "train_mse": 2.6980207611039213e-05,
+          "test_mse": 1.3688587447783599e-05,
+          "seconds": 0.24161109799752012
+        },
+        {
+          "epoch": 311,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00930099682709961,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6865039009054373e-05,
+          "test_mse": NaN,
+          "seconds": 0.2275309870019555
+        },
+        {
+          "epoch": 312,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0064028398761594735,
+          "test_relative_l2": NaN,
+          "train_mse": 1.2161905919869983e-05,
+          "test_mse": NaN,
+          "seconds": 0.22892107797088102
+        },
+        {
+          "epoch": 313,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009214225313453762,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5163858927381053e-05,
+          "test_mse": NaN,
+          "seconds": 0.23276095499750227
+        },
+        {
+          "epoch": 314,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009137726801413077,
+          "test_relative_l2": NaN,
+          "train_mse": 2.401266633737746e-05,
+          "test_mse": NaN,
+          "seconds": 0.23009505699155852
+        },
+        {
+          "epoch": 315,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009223503327618043,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4384907921086307e-05,
+          "test_mse": NaN,
+          "seconds": 0.23131324403220788
+        },
+        {
+          "epoch": 316,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009250902997812739,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4023213764950115e-05,
+          "test_mse": NaN,
+          "seconds": 0.22836835001362488
+        },
+        {
+          "epoch": 317,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009044526667782554,
+          "test_relative_l2": NaN,
+          "train_mse": 2.321646878651033e-05,
+          "test_mse": NaN,
+          "seconds": 0.23297604598337784
+        },
+        {
+          "epoch": 318,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008622998028165765,
+          "test_relative_l2": NaN,
+          "train_mse": 2.331049498968275e-05,
+          "test_mse": NaN,
+          "seconds": 0.2251885459991172
+        },
+        {
+          "epoch": 319,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008597550902653623,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1794503220546716e-05,
+          "test_mse": NaN,
+          "seconds": 0.24243754899362102
+        },
+        {
+          "epoch": 320,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0059089957705388465,
+          "test_relative_l2": 0.006554240410526594,
+          "train_mse": 1.1675785165236987e-05,
+          "test_mse": 1.1908698058202086e-05,
+          "seconds": 0.2384096750174649
+        },
+        {
+          "epoch": 321,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004976355948106006,
+          "test_relative_l2": NaN,
+          "train_mse": 7.157297866932048e-06,
+          "test_mse": NaN,
+          "seconds": 0.22970581997651607
+        },
+        {
+          "epoch": 322,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006845363542713501,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3994495896406954e-05,
+          "test_mse": NaN,
+          "seconds": 0.2191900880425237
+        },
+        {
+          "epoch": 323,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007359281752120565,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7233320151582896e-05,
+          "test_mse": NaN,
+          "seconds": 0.23541478998959064
+        },
+        {
+          "epoch": 324,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005293927333421177,
+          "test_relative_l2": NaN,
+          "train_mse": 8.388264725201427e-06,
+          "test_mse": NaN,
+          "seconds": 0.22841622901614755
+        },
+        {
+          "epoch": 325,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004389580737247511,
+          "test_relative_l2": NaN,
+          "train_mse": 5.674050995636477e-06,
+          "test_mse": NaN,
+          "seconds": 0.23013389599509537
+        },
+        {
+          "epoch": 326,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005835027228350992,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0270776835602225e-05,
+          "test_mse": NaN,
+          "seconds": 0.22723242902429774
+        },
+        {
+          "epoch": 327,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009091810270867966,
+          "test_relative_l2": NaN,
+          "train_mse": 2.39077404290179e-05,
+          "test_mse": NaN,
+          "seconds": 0.22505046700825915
+        },
+        {
+          "epoch": 328,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01507276436245,
+          "test_relative_l2": NaN,
+          "train_mse": 7.290358299037001e-05,
+          "test_mse": NaN,
+          "seconds": 0.22186961001716554
+        },
+        {
+          "epoch": 329,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009482126435333933,
+          "test_relative_l2": NaN,
+          "train_mse": 2.7316777246866237e-05,
+          "test_mse": NaN,
+          "seconds": 0.22201408201362938
+        },
+        {
+          "epoch": 330,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004914798227794192,
+          "test_relative_l2": 0.0036761781852692366,
+          "train_mse": 7.028736483200057e-06,
+          "test_mse": 3.907966223171874e-06,
+          "seconds": 0.23790897097205743
+        },
+        {
+          "epoch": 331,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004603036502031264,
+          "test_relative_l2": NaN,
+          "train_mse": 6.352722478671543e-06,
+          "test_mse": NaN,
+          "seconds": 0.22347057098522782
+        },
+        {
+          "epoch": 332,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005169552819872344,
+          "test_relative_l2": NaN,
+          "train_mse": 8.261469553905987e-06,
+          "test_mse": NaN,
+          "seconds": 0.22252717899391428
+        },
+        {
+          "epoch": 333,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009030832467531716,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4264364334090647e-05,
+          "test_mse": NaN,
+          "seconds": 0.22053663595579565
+        },
+        {
+          "epoch": 334,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008591184883757874,
+          "test_relative_l2": NaN,
+          "train_mse": 2.24838998811147e-05,
+          "test_mse": NaN,
+          "seconds": 0.22261667397106066
+        },
+        {
+          "epoch": 335,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006006284701051535,
+          "test_relative_l2": NaN,
+          "train_mse": 1.13917121591469e-05,
+          "test_mse": NaN,
+          "seconds": 0.22175953397527337
+        },
+        {
+          "epoch": 336,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008499563161145758,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1771245417228246e-05,
+          "test_mse": NaN,
+          "seconds": 0.21828873199410737
+        },
+        {
+          "epoch": 337,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008453894884636005,
+          "test_relative_l2": NaN,
+          "train_mse": 2.162903853416167e-05,
+          "test_mse": NaN,
+          "seconds": 0.22208593401592225
+        },
+        {
+          "epoch": 338,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005716424408127313,
+          "test_relative_l2": NaN,
+          "train_mse": 9.60661425543313e-06,
+          "test_mse": NaN,
+          "seconds": 0.21893026999896392
+        },
+        {
+          "epoch": 339,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004346465973390473,
+          "test_relative_l2": NaN,
+          "train_mse": 5.398004985990055e-06,
+          "test_mse": NaN,
+          "seconds": 0.22390295896911994
+        },
+        {
+          "epoch": 340,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00455077343792827,
+          "test_relative_l2": 0.007635689837237199,
+          "train_mse": 6.71403711344788e-06,
+          "test_mse": 1.535822263880012e-05,
+          "seconds": 0.2289537779870443
+        },
+        {
+          "epoch": 341,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005113683779620462,
+          "test_relative_l2": NaN,
+          "train_mse": 7.77863034474851e-06,
+          "test_mse": NaN,
+          "seconds": 0.23334237100789323
+        },
+        {
+          "epoch": 342,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0058389184982688335,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0476262991519266e-05,
+          "test_mse": NaN,
+          "seconds": 0.22703015699516982
+        },
+        {
+          "epoch": 343,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009340844452381133,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4949548781107834e-05,
+          "test_mse": NaN,
+          "seconds": 0.22042243997566402
+        },
+        {
+          "epoch": 344,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008859987921184963,
+          "test_relative_l2": NaN,
+          "train_mse": 2.364432334649825e-05,
+          "test_mse": NaN,
+          "seconds": 0.21814062097109854
+        },
+        {
+          "epoch": 345,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009068072703149584,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4201399390693512e-05,
+          "test_mse": NaN,
+          "seconds": 0.22889375500380993
+        },
+        {
+          "epoch": 346,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009271800999564154,
+          "test_relative_l2": NaN,
+          "train_mse": 2.36908813045981e-05,
+          "test_mse": NaN,
+          "seconds": 0.21792944299522787
+        },
+        {
+          "epoch": 347,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0093453977988274,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6924213366833606e-05,
+          "test_mse": NaN,
+          "seconds": 0.2112118590157479
+        },
+        {
+          "epoch": 348,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00749727216894152,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7029634616308074e-05,
+          "test_mse": NaN,
+          "seconds": 0.2079531269846484
+        },
+        {
+          "epoch": 349,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004777140951266995,
+          "test_relative_l2": NaN,
+          "train_mse": 6.659561006893421e-06,
+          "test_mse": NaN,
+          "seconds": 0.20876325899735093
+        },
+        {
+          "epoch": 350,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004395039647955586,
+          "test_relative_l2": 0.0041748895309865475,
+          "train_mse": 5.586415077400657e-06,
+          "test_mse": 4.989456501789391e-06,
+          "seconds": 0.22242620796896517
+        },
+        {
+          "epoch": 351,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004645909720134956,
+          "test_relative_l2": NaN,
+          "train_mse": 6.4450344133446276e-06,
+          "test_mse": NaN,
+          "seconds": 0.21657901699654758
+        },
+        {
+          "epoch": 352,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004893971556038768,
+          "test_relative_l2": NaN,
+          "train_mse": 6.8790585673586635e-06,
+          "test_mse": NaN,
+          "seconds": 0.21245478698983788
+        },
+        {
+          "epoch": 353,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005022886087083154,
+          "test_relative_l2": NaN,
+          "train_mse": 7.329002428041012e-06,
+          "test_mse": NaN,
+          "seconds": 0.21285541797988117
+        },
+        {
+          "epoch": 354,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007474037428145055,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7103352718684754e-05,
+          "test_mse": NaN,
+          "seconds": 0.21364783198805526
+        },
+        {
+          "epoch": 355,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009328878919283549,
+          "test_relative_l2": NaN,
+          "train_mse": 2.7692419944624243e-05,
+          "test_mse": NaN,
+          "seconds": 0.2247679799911566
+        },
+        {
+          "epoch": 356,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007011168909569581,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4640699147195038e-05,
+          "test_mse": NaN,
+          "seconds": 0.23864786798367277
+        },
+        {
+          "epoch": 357,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008924368157706879,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4059606372180428e-05,
+          "test_mse": NaN,
+          "seconds": 0.21568058402044699
+        },
+        {
+          "epoch": 358,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008965040010710558,
+          "test_relative_l2": NaN,
+          "train_mse": 2.4292952056620613e-05,
+          "test_mse": NaN,
+          "seconds": 0.2124617180088535
+        },
+        {
+          "epoch": 359,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009190293097937549,
+          "test_relative_l2": NaN,
+          "train_mse": 2.626757584814051e-05,
+          "test_mse": NaN,
+          "seconds": 0.21197637199657038
+        },
+        {
+          "epoch": 360,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008876127493050364,
+          "test_relative_l2": 0.009622386073072751,
+          "train_mse": 2.3493322522780445e-05,
+          "test_mse": 3.284500300651416e-05,
+          "seconds": 0.21960370504530147
+        },
+        {
+          "epoch": 361,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008580821443487097,
+          "test_relative_l2": NaN,
+          "train_mse": 2.286516430710132e-05,
+          "test_mse": NaN,
+          "seconds": 0.21167500800220296
+        },
+        {
+          "epoch": 362,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009097612163534871,
+          "test_relative_l2": NaN,
+          "train_mse": 2.5531399970296426e-05,
+          "test_mse": NaN,
+          "seconds": 0.21435363101772964
+        },
+        {
+          "epoch": 363,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007500138779481252,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6913445832432006e-05,
+          "test_mse": NaN,
+          "seconds": 0.21230409195413813
+        },
+        {
+          "epoch": 364,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008524550189850507,
+          "test_relative_l2": NaN,
+          "train_mse": 2.165677334738171e-05,
+          "test_mse": NaN,
+          "seconds": 0.21345827699406072
+        },
+        {
+          "epoch": 365,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00805670430538831,
+          "test_relative_l2": NaN,
+          "train_mse": 2.024434095127853e-05,
+          "test_mse": NaN,
+          "seconds": 0.21360541001195088
+        },
+        {
+          "epoch": 366,
+          "framework": "pytorch",
+          "train_relative_l2": 0.01000294595611868,
+          "test_relative_l2": NaN,
+          "train_mse": 3.1687457548859705e-05,
+          "test_mse": NaN,
+          "seconds": 0.21259836299577728
+        },
+        {
+          "epoch": 367,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008840605652442685,
+          "test_relative_l2": NaN,
+          "train_mse": 2.3444479458568687e-05,
+          "test_mse": NaN,
+          "seconds": 0.21091072499984875
+        },
+        {
+          "epoch": 368,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008356019985620623,
+          "test_relative_l2": NaN,
+          "train_mse": 2.112038931820145e-05,
+          "test_mse": NaN,
+          "seconds": 0.21075970499077812
+        },
+        {
+          "epoch": 369,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008701121567024125,
+          "test_relative_l2": NaN,
+          "train_mse": 2.214675711002201e-05,
+          "test_mse": NaN,
+          "seconds": 0.21070728404447436
+        },
+        {
+          "epoch": 370,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008806603343950378,
+          "test_relative_l2": 0.006446524976442257,
+          "train_mse": 2.2279052011274165e-05,
+          "test_mse": 1.2528988020979644e-05,
+          "seconds": 0.22158174798823893
+        },
+        {
+          "epoch": 371,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008681491376073273,
+          "test_relative_l2": NaN,
+          "train_mse": 2.2557535289875147e-05,
+          "test_mse": NaN,
+          "seconds": 0.21129333303542808
+        },
+        {
+          "epoch": 372,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006229272222974234,
+          "test_relative_l2": NaN,
+          "train_mse": 1.259502285258215e-05,
+          "test_mse": NaN,
+          "seconds": 0.21033481101039797
+        },
+        {
+          "epoch": 373,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008604301956516725,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1492060345567383e-05,
+          "test_mse": NaN,
+          "seconds": 0.20943015301600099
+        },
+        {
+          "epoch": 374,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008046524995179088,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0475516741027134e-05,
+          "test_mse": NaN,
+          "seconds": 0.20961705298395827
+        },
+        {
+          "epoch": 375,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004383512035840088,
+          "test_relative_l2": NaN,
+          "train_mse": 5.650659206569091e-06,
+          "test_mse": NaN,
+          "seconds": 0.20948461501393467
+        },
+        {
+          "epoch": 376,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007262132888038953,
+          "test_relative_l2": NaN,
+          "train_mse": 1.64301890590987e-05,
+          "test_mse": NaN,
+          "seconds": 0.20948027295526117
+        },
+        {
+          "epoch": 377,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008463041420888018,
+          "test_relative_l2": NaN,
+          "train_mse": 2.037422027906696e-05,
+          "test_mse": NaN,
+          "seconds": 0.20937072503147647
+        },
+        {
+          "epoch": 378,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008514005845343625,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0455149685774273e-05,
+          "test_mse": NaN,
+          "seconds": 0.2095102129969746
+        },
+        {
+          "epoch": 379,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005587380656075698,
+          "test_relative_l2": NaN,
+          "train_mse": 1.010508809014465e-05,
+          "test_mse": NaN,
+          "seconds": 0.21611116197891533
+        },
+        {
+          "epoch": 380,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0075717619296025345,
+          "test_relative_l2": 0.008624756559729576,
+          "train_mse": 1.805261899587802e-05,
+          "test_mse": 2.617103105876595e-05,
+          "seconds": 0.23013005399843678
+        },
+        {
+          "epoch": 381,
+          "framework": "pytorch",
+          "train_relative_l2": 0.009189116293909373,
+          "test_relative_l2": NaN,
+          "train_mse": 2.6854922417206345e-05,
+          "test_mse": NaN,
+          "seconds": 0.22481519798748195
+        },
+        {
+          "epoch": 382,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008331636953409072,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0394211363357804e-05,
+          "test_mse": NaN,
+          "seconds": 0.21342590497806668
+        },
+        {
+          "epoch": 383,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008462612880048929,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0213941291634303e-05,
+          "test_mse": NaN,
+          "seconds": 0.21413914998993278
+        },
+        {
+          "epoch": 384,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00812284043541661,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9432669828852845e-05,
+          "test_mse": NaN,
+          "seconds": 0.2127242760034278
+        },
+        {
+          "epoch": 385,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008409001262927497,
+          "test_relative_l2": NaN,
+          "train_mse": 1.999078123912181e-05,
+          "test_mse": NaN,
+          "seconds": 0.22403176000807434
+        },
+        {
+          "epoch": 386,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008351233819568598,
+          "test_relative_l2": NaN,
+          "train_mse": 2.1680536138538393e-05,
+          "test_mse": NaN,
+          "seconds": 0.21305148798273876
+        },
+        {
+          "epoch": 387,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004311483488590629,
+          "test_relative_l2": NaN,
+          "train_mse": 5.702897909671905e-06,
+          "test_mse": NaN,
+          "seconds": 0.21077440201770514
+        },
+        {
+          "epoch": 388,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005962208721924711,
+          "test_relative_l2": NaN,
+          "train_mse": 1.040605843526363e-05,
+          "test_mse": NaN,
+          "seconds": 0.21355028601828963
+        },
+        {
+          "epoch": 389,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006369624248257389,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3089727579224726e-05,
+          "test_mse": NaN,
+          "seconds": 0.21177607699064538
+        },
+        {
+          "epoch": 390,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00416017213249924,
+          "test_relative_l2": 0.004144886427869399,
+          "train_mse": 4.9090316834163215e-06,
+          "test_mse": 5.268130559367516e-06,
+          "seconds": 0.22248983499594033
+        },
+        {
+          "epoch": 391,
+          "framework": "pytorch",
+          "train_relative_l2": 0.003995953324009423,
+          "test_relative_l2": NaN,
+          "train_mse": 4.757265453547545e-06,
+          "test_mse": NaN,
+          "seconds": 0.22592676698695868
+        },
+        {
+          "epoch": 392,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004766108824147118,
+          "test_relative_l2": NaN,
+          "train_mse": 6.830701325573803e-06,
+          "test_mse": NaN,
+          "seconds": 0.21252422302495688
+        },
+        {
+          "epoch": 393,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005146707220485917,
+          "test_relative_l2": NaN,
+          "train_mse": 8.195238942452879e-06,
+          "test_mse": NaN,
+          "seconds": 0.2181550829554908
+        },
+        {
+          "epoch": 394,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006470436564888115,
+          "test_relative_l2": NaN,
+          "train_mse": 1.2089858449784245e-05,
+          "test_mse": NaN,
+          "seconds": 0.21584077697480097
+        },
+        {
+          "epoch": 395,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0076570997256095764,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7417785840936834e-05,
+          "test_mse": NaN,
+          "seconds": 0.20854313403833658
+        },
+        {
+          "epoch": 396,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008198615494701597,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9281226812853235e-05,
+          "test_mse": NaN,
+          "seconds": 0.2066907580010593
+        },
+        {
+          "epoch": 397,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00830693288533776,
+          "test_relative_l2": NaN,
+          "train_mse": 2.096796315594542e-05,
+          "test_mse": NaN,
+          "seconds": 0.20707396301440895
+        },
+        {
+          "epoch": 398,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008216238735174691,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0368586643868454e-05,
+          "test_mse": NaN,
+          "seconds": 0.21521102398401126
+        },
+        {
+          "epoch": 399,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008499625852262532,
+          "test_relative_l2": NaN,
+          "train_mse": 2.0660157412445795e-05,
+          "test_mse": NaN,
+          "seconds": 0.2101107049966231
+        },
+        {
+          "epoch": 400,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008213438499304983,
+          "test_relative_l2": 0.008220092318952084,
+          "train_mse": 1.9351991763364316e-05,
+          "test_mse": 1.8156932516527982e-05,
+          "seconds": 0.22016861999873072
+        },
+        {
+          "epoch": 401,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008638716562202683,
+          "test_relative_l2": NaN,
+          "train_mse": 2.3045711207453645e-05,
+          "test_mse": NaN,
+          "seconds": 0.21560799097642303
+        },
+        {
+          "epoch": 402,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008137837606999609,
+          "test_relative_l2": NaN,
+          "train_mse": 2.15732907404513e-05,
+          "test_mse": NaN,
+          "seconds": 0.21886857599020004
+        },
+        {
+          "epoch": 403,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0048811283348887055,
+          "test_relative_l2": NaN,
+          "train_mse": 6.970738541322471e-06,
+          "test_mse": NaN,
+          "seconds": 0.21279405802488327
+        },
+        {
+          "epoch": 404,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004319660980254412,
+          "test_relative_l2": NaN,
+          "train_mse": 5.260307015204388e-06,
+          "test_mse": NaN,
+          "seconds": 0.21301327500259504
+        },
+        {
+          "epoch": 405,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004294861127380972,
+          "test_relative_l2": NaN,
+          "train_mse": 5.526096383282156e-06,
+          "test_mse": NaN,
+          "seconds": 0.21167059399886057
+        },
+        {
+          "epoch": 406,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0078122216076762585,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8342640772364878e-05,
+          "test_mse": NaN,
+          "seconds": 0.21333962900098413
+        },
+        {
+          "epoch": 407,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008613949873381191,
+          "test_relative_l2": NaN,
+          "train_mse": 2.090835425877702e-05,
+          "test_mse": NaN,
+          "seconds": 0.21332878997782245
+        },
+        {
+          "epoch": 408,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007749689353836907,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8799385272561468e-05,
+          "test_mse": NaN,
+          "seconds": 0.21447693702066317
+        },
+        {
+          "epoch": 409,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007796334916794742,
+          "test_relative_l2": NaN,
+          "train_mse": 1.869778740203603e-05,
+          "test_mse": NaN,
+          "seconds": 0.2187485260074027
+        },
+        {
+          "epoch": 410,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007673346505120949,
+          "test_relative_l2": 0.005963018996020158,
+          "train_mse": 1.8067337304172625e-05,
+          "test_mse": 9.68701854920558e-06,
+          "seconds": 0.22694074601167813
+        },
+        {
+          "epoch": 411,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007947572197213216,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9122011016642555e-05,
+          "test_mse": NaN,
+          "seconds": 0.21480351401260123
+        },
+        {
+          "epoch": 412,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00817449101143413,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9387614310188736e-05,
+          "test_mse": NaN,
+          "seconds": 0.21436007297597826
+        },
+        {
+          "epoch": 413,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005661124433218329,
+          "test_relative_l2": NaN,
+          "train_mse": 1.0501428834551782e-05,
+          "test_mse": NaN,
+          "seconds": 0.21600728598423302
+        },
+        {
+          "epoch": 414,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004809195588653286,
+          "test_relative_l2": NaN,
+          "train_mse": 6.8051785735776694e-06,
+          "test_mse": NaN,
+          "seconds": 0.21238410600926727
+        },
+        {
+          "epoch": 415,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0048797479823783595,
+          "test_relative_l2": NaN,
+          "train_mse": 7.028339174144936e-06,
+          "test_mse": NaN,
+          "seconds": 0.23129190900363028
+        },
+        {
+          "epoch": 416,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006090636502399489,
+          "test_relative_l2": NaN,
+          "train_mse": 1.073634810988248e-05,
+          "test_mse": NaN,
+          "seconds": 0.21184979798272252
+        },
+        {
+          "epoch": 417,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006792601333172233,
+          "test_relative_l2": NaN,
+          "train_mse": 1.382388891080929e-05,
+          "test_mse": NaN,
+          "seconds": 0.2150484449812211
+        },
+        {
+          "epoch": 418,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007225316076504964,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5736291558520558e-05,
+          "test_mse": NaN,
+          "seconds": 0.2152493800385855
+        },
+        {
+          "epoch": 419,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006164458162254758,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1314583451301721e-05,
+          "test_mse": NaN,
+          "seconds": 0.21130879095289856
+        },
+        {
+          "epoch": 420,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007840456465880077,
+          "test_relative_l2": 0.008981811267634233,
+          "train_mse": 1.865748172012563e-05,
+          "test_mse": 2.3746095248498022e-05,
+          "seconds": 0.22392317501362413
+        },
+        {
+          "epoch": 421,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008197032789941187,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9960329410861488e-05,
+          "test_mse": NaN,
+          "seconds": 0.2180147860199213
+        },
+        {
+          "epoch": 422,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007954259956324542,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9170194551676375e-05,
+          "test_mse": NaN,
+          "seconds": 0.21542377502191812
+        },
+        {
+          "epoch": 423,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008409576647811466,
+          "test_relative_l2": NaN,
+          "train_mse": 2.015578586940171e-05,
+          "test_mse": NaN,
+          "seconds": 0.21385670796735212
+        },
+        {
+          "epoch": 424,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008180209032639309,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9904288567852713e-05,
+          "test_mse": NaN,
+          "seconds": 0.21316899795783684
+        },
+        {
+          "epoch": 425,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0082293818615101,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8930934952718585e-05,
+          "test_mse": NaN,
+          "seconds": 0.21267495001666248
+        },
+        {
+          "epoch": 426,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007570501694248782,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7833196606834125e-05,
+          "test_mse": NaN,
+          "seconds": 0.21101817401358858
+        },
+        {
+          "epoch": 427,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008195992559194565,
+          "test_relative_l2": NaN,
+          "train_mse": 1.970713759806973e-05,
+          "test_mse": NaN,
+          "seconds": 0.21128508099354804
+        },
+        {
+          "epoch": 428,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007720793894043675,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8006337308583574e-05,
+          "test_mse": NaN,
+          "seconds": 0.21043007401749492
+        },
+        {
+          "epoch": 429,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007819522544741631,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7722260591755105e-05,
+          "test_mse": NaN,
+          "seconds": 0.2149736689752899
+        },
+        {
+          "epoch": 430,
+          "framework": "pytorch",
+          "train_relative_l2": 0.008063937776066638,
+          "test_relative_l2": 0.00855232714364926,
+          "train_mse": 1.9334465129456172e-05,
+          "test_mse": 2.0248120611843965e-05,
+          "seconds": 0.22264906897908077
+        },
+        {
+          "epoch": 431,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007977862636800165,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8289380793619246e-05,
+          "test_mse": NaN,
+          "seconds": 0.22686918603722006
+        },
+        {
+          "epoch": 432,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007829456957126106,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8446616148274325e-05,
+          "test_mse": NaN,
+          "seconds": 0.22819357697153464
+        },
+        {
+          "epoch": 433,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007648146886516501,
+          "test_relative_l2": NaN,
+          "train_mse": 1.703210190801959e-05,
+          "test_mse": NaN,
+          "seconds": 0.21520272199995816
+        },
+        {
+          "epoch": 434,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007763375667855144,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8048369383905083e-05,
+          "test_mse": NaN,
+          "seconds": 0.21795556199504063
+        },
+        {
+          "epoch": 435,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007894799872129052,
+          "test_relative_l2": NaN,
+          "train_mse": 1.9112421583418768e-05,
+          "test_mse": NaN,
+          "seconds": 0.22707021899987012
+        },
+        {
+          "epoch": 436,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006281953923128269,
+          "test_relative_l2": NaN,
+          "train_mse": 1.153110999978337e-05,
+          "test_mse": NaN,
+          "seconds": 0.2261241149972193
+        },
+        {
+          "epoch": 437,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007811212098156964,
+          "test_relative_l2": NaN,
+          "train_mse": 1.780217932213822e-05,
+          "test_mse": NaN,
+          "seconds": 0.21431758400285617
+        },
+        {
+          "epoch": 438,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006369386431243684,
+          "test_relative_l2": NaN,
+          "train_mse": 1.2161365088508723e-05,
+          "test_mse": NaN,
+          "seconds": 0.21515331097180024
+        },
+        {
+          "epoch": 439,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007989528056372095,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8253018766969305e-05,
+          "test_mse": NaN,
+          "seconds": 0.2146443120436743
+        },
+        {
+          "epoch": 440,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0077650270204025285,
+          "test_relative_l2": 0.00948149561882019,
+          "train_mse": 1.7737178359648506e-05,
+          "test_mse": 2.8889840468764305e-05,
+          "seconds": 0.24771312100347131
+        },
+        {
+          "epoch": 441,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007766602613307812,
+          "test_relative_l2": NaN,
+          "train_mse": 1.828827734681437e-05,
+          "test_mse": NaN,
+          "seconds": 0.21393812005408108
+        },
+        {
+          "epoch": 442,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007736869472320433,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6901848734791943e-05,
+          "test_mse": NaN,
+          "seconds": 0.2146438110503368
+        },
+        {
+          "epoch": 443,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0075352723648150766,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7338408247774672e-05,
+          "test_mse": NaN,
+          "seconds": 0.21556701097870246
+        },
+        {
+          "epoch": 444,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007620177307614574,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8413651033134322e-05,
+          "test_mse": NaN,
+          "seconds": 0.2166956040309742
+        },
+        {
+          "epoch": 445,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007843373152944777,
+          "test_relative_l2": NaN,
+          "train_mse": 1.757022906396607e-05,
+          "test_mse": NaN,
+          "seconds": 0.21454683499177918
+        },
+        {
+          "epoch": 446,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007165641410759201,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5573347530638177e-05,
+          "test_mse": NaN,
+          "seconds": 0.21481675299583003
+        },
+        {
+          "epoch": 447,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007691577111405355,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7109992849226626e-05,
+          "test_mse": NaN,
+          "seconds": 0.21636618103366345
+        },
+        {
+          "epoch": 448,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007222548241692561,
+          "test_relative_l2": NaN,
+          "train_mse": 1.539920035240896e-05,
+          "test_mse": NaN,
+          "seconds": 0.21504176000598818
+        },
+        {
+          "epoch": 449,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007789946751048168,
+          "test_relative_l2": NaN,
+          "train_mse": 1.871310898557702e-05,
+          "test_mse": NaN,
+          "seconds": 0.2154103810316883
+        },
+        {
+          "epoch": 450,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0076883453047937814,
+          "test_relative_l2": 0.005320334136486054,
+          "train_mse": 1.7922888668922326e-05,
+          "test_mse": 9.590570977403938e-06,
+          "seconds": 0.22453692700946704
+        },
+        {
+          "epoch": 451,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007594289132566364,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6746817405132955e-05,
+          "test_mse": NaN,
+          "seconds": 0.21648608200484887
+        },
+        {
+          "epoch": 452,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006620681027157439,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3649640610243228e-05,
+          "test_mse": NaN,
+          "seconds": 0.21353018004447222
+        },
+        {
+          "epoch": 453,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004930656436416838,
+          "test_relative_l2": NaN,
+          "train_mse": 7.073848398620073e-06,
+          "test_mse": NaN,
+          "seconds": 0.21349428198300302
+        },
+        {
+          "epoch": 454,
+          "framework": "pytorch",
+          "train_relative_l2": 0.003725277505539082,
+          "test_relative_l2": NaN,
+          "train_mse": 4.07218706540233e-06,
+          "test_mse": NaN,
+          "seconds": 0.21467745600966737
+        },
+        {
+          "epoch": 455,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007416215037444124,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6401839880186514e-05,
+          "test_mse": NaN,
+          "seconds": 0.21357451402582228
+        },
+        {
+          "epoch": 456,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007671097238996514,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7500763537504502e-05,
+          "test_mse": NaN,
+          "seconds": 0.22165046801092103
+        },
+        {
+          "epoch": 457,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00787073519218851,
+          "test_relative_l2": NaN,
+          "train_mse": 1.952801445306115e-05,
+          "test_mse": NaN,
+          "seconds": 0.21432218101108447
+        },
+        {
+          "epoch": 458,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007707872886072707,
+          "test_relative_l2": NaN,
+          "train_mse": 1.812846527711911e-05,
+          "test_mse": NaN,
+          "seconds": 0.2149463029927574
+        },
+        {
+          "epoch": 459,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00592934685172858,
+          "test_relative_l2": NaN,
+          "train_mse": 1.1824893350354547e-05,
+          "test_mse": NaN,
+          "seconds": 0.21436339302454144
+        },
+        {
+          "epoch": 460,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005365164537948591,
+          "test_relative_l2": 0.007196079318722089,
+          "train_mse": 9.280295535400337e-06,
+          "test_mse": 1.5519873195444233e-05,
+          "seconds": 0.22902989102294669
+        },
+        {
+          "epoch": 461,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007580052898437889,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6458190883794384e-05,
+          "test_mse": NaN,
+          "seconds": 0.21486352995270863
+        },
+        {
+          "epoch": 462,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007696395026588881,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7018415868127097e-05,
+          "test_mse": NaN,
+          "seconds": 0.21008659800281748
+        },
+        {
+          "epoch": 463,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007550581032065329,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7236200968640064e-05,
+          "test_mse": NaN,
+          "seconds": 0.2102480040048249
+        },
+        {
+          "epoch": 464,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007829210104213821,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6904580991616023e-05,
+          "test_mse": NaN,
+          "seconds": 0.21512899204390123
+        },
+        {
+          "epoch": 465,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0069221357394147805,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5189310199477607e-05,
+          "test_mse": NaN,
+          "seconds": 0.21325526299187914
+        },
+        {
+          "epoch": 466,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006663775325373367,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3305209492197416e-05,
+          "test_mse": NaN,
+          "seconds": 0.21380174002842978
+        },
+        {
+          "epoch": 467,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004347813410891427,
+          "test_relative_l2": NaN,
+          "train_mse": 5.475216299196796e-06,
+          "test_mse": NaN,
+          "seconds": 0.21365995903033763
+        },
+        {
+          "epoch": 468,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004554078526518963,
+          "test_relative_l2": NaN,
+          "train_mse": 5.790374389444305e-06,
+          "test_mse": NaN,
+          "seconds": 0.21209213003749028
+        },
+        {
+          "epoch": 469,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004458351229765901,
+          "test_relative_l2": NaN,
+          "train_mse": 5.708390712647492e-06,
+          "test_mse": NaN,
+          "seconds": 0.21064418298192322
+        },
+        {
+          "epoch": 470,
+          "framework": "pytorch",
+          "train_relative_l2": 0.003828148005737199,
+          "test_relative_l2": 0.0052933772404988606,
+          "train_mse": 4.225098383122478e-06,
+          "test_mse": 9.056655932605887e-06,
+          "seconds": 0.2192309740348719
+        },
+        {
+          "epoch": 471,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004066434423956606,
+          "test_relative_l2": NaN,
+          "train_mse": 4.904349543384914e-06,
+          "test_mse": NaN,
+          "seconds": 0.20998995599802583
+        },
+        {
+          "epoch": 472,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0061475865211751725,
+          "test_relative_l2": NaN,
+          "train_mse": 1.2405784719804716e-05,
+          "test_mse": NaN,
+          "seconds": 0.2098117530113086
+        },
+        {
+          "epoch": 473,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007886030366299328,
+          "test_relative_l2": NaN,
+          "train_mse": 1.8369875720559825e-05,
+          "test_mse": NaN,
+          "seconds": 0.21640274894889444
+        },
+        {
+          "epoch": 474,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007899814458494936,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7566333629441e-05,
+          "test_mse": NaN,
+          "seconds": 0.21557461703196168
+        },
+        {
+          "epoch": 475,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007542460701531834,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7035703966501857e-05,
+          "test_mse": NaN,
+          "seconds": 0.21532629302237183
+        },
+        {
+          "epoch": 476,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007830359255550085,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7319355279647022e-05,
+          "test_mse": NaN,
+          "seconds": 0.21460870001465082
+        },
+        {
+          "epoch": 477,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0075771095996929536,
+          "test_relative_l2": NaN,
+          "train_mse": 1.740690129534212e-05,
+          "test_mse": NaN,
+          "seconds": 0.21499593905173242
+        },
+        {
+          "epoch": 478,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007450426656890798,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7151688454625267e-05,
+          "test_mse": NaN,
+          "seconds": 0.21447637403616682
+        },
+        {
+          "epoch": 479,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006420402761410784,
+          "test_relative_l2": NaN,
+          "train_mse": 1.2780144377891837e-05,
+          "test_mse": NaN,
+          "seconds": 0.22358728398103267
+        },
+        {
+          "epoch": 480,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0073892459521691005,
+          "test_relative_l2": 0.006404353411247333,
+          "train_mse": 1.6054076894997032e-05,
+          "test_mse": 1.0908292218421896e-05,
+          "seconds": 0.2256400299957022
+        },
+        {
+          "epoch": 481,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00782246378077953,
+          "test_relative_l2": NaN,
+          "train_mse": 1.7627631526987964e-05,
+          "test_mse": NaN,
+          "seconds": 0.2142017639707774
+        },
+        {
+          "epoch": 482,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007511371447256318,
+          "test_relative_l2": NaN,
+          "train_mse": 1.660590325223489e-05,
+          "test_mse": NaN,
+          "seconds": 0.21357917203567922
+        },
+        {
+          "epoch": 483,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007091222684140559,
+          "test_relative_l2": NaN,
+          "train_mse": 1.5348516454752017e-05,
+          "test_mse": NaN,
+          "seconds": 0.2153420650283806
+        },
+        {
+          "epoch": 484,
+          "framework": "pytorch",
+          "train_relative_l2": 0.007792098503559827,
+          "test_relative_l2": NaN,
+          "train_mse": 1.716517567628115e-05,
+          "test_mse": NaN,
+          "seconds": 0.21592749404953793
+        },
+        {
+          "epoch": 485,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0075460098166432645,
+          "test_relative_l2": NaN,
+          "train_mse": 1.798614193157172e-05,
+          "test_mse": NaN,
+          "seconds": 0.2155612859642133
+        },
+        {
+          "epoch": 486,
+          "framework": "pytorch",
+          "train_relative_l2": 0.006474330644985592,
+          "test_relative_l2": NaN,
+          "train_mse": 1.3422695823532261e-05,
+          "test_mse": NaN,
+          "seconds": 0.21205024397931993
+        },
+        {
+          "epoch": 487,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004218999040140598,
+          "test_relative_l2": NaN,
+          "train_mse": 5.180977527574955e-06,
+          "test_mse": NaN,
+          "seconds": 0.21431435202248394
+        },
+        {
+          "epoch": 488,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004222897850321951,
+          "test_relative_l2": NaN,
+          "train_mse": 5.065692767958454e-06,
+          "test_mse": NaN,
+          "seconds": 0.2106464029639028
+        },
+        {
+          "epoch": 489,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0035578671656548975,
+          "test_relative_l2": NaN,
+          "train_mse": 3.8072502401418105e-06,
+          "test_mse": NaN,
+          "seconds": 0.20906572096282616
+        },
+        {
+          "epoch": 490,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0038852439310263706,
+          "test_relative_l2": 0.004107148563489318,
+          "train_mse": 4.508076216788376e-06,
+          "test_mse": 5.171290279880243e-06,
+          "seconds": 0.2231972679728642
+        },
+        {
+          "epoch": 491,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0037509204129929897,
+          "test_relative_l2": NaN,
+          "train_mse": 4.250566210733572e-06,
+          "test_mse": NaN,
+          "seconds": 0.21387241000775248
+        },
+        {
+          "epoch": 492,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004012762231200381,
+          "test_relative_l2": NaN,
+          "train_mse": 4.750707100053356e-06,
+          "test_mse": NaN,
+          "seconds": 0.21301589300855994
+        },
+        {
+          "epoch": 493,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0044045615830907115,
+          "test_relative_l2": NaN,
+          "train_mse": 5.668492493795282e-06,
+          "test_mse": NaN,
+          "seconds": 0.21250103099737316
+        },
+        {
+          "epoch": 494,
+          "framework": "pytorch",
+          "train_relative_l2": 0.005264136925063751,
+          "test_relative_l2": NaN,
+          "train_mse": 8.133873462038873e-06,
+          "test_mse": NaN,
+          "seconds": 0.2130566539708525
+        },
+        {
+          "epoch": 495,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00763472706079483,
+          "test_relative_l2": NaN,
+          "train_mse": 1.6659446797954538e-05,
+          "test_mse": NaN,
+          "seconds": 0.21229863702319562
+        },
+        {
+          "epoch": 496,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00657041499460185,
+          "test_relative_l2": NaN,
+          "train_mse": 1.4315487374174322e-05,
+          "test_mse": NaN,
+          "seconds": 0.21389186702435836
+        },
+        {
+          "epoch": 497,
+          "framework": "pytorch",
+          "train_relative_l2": 0.00477068078600698,
+          "test_relative_l2": NaN,
+          "train_mse": 6.595773175595915e-06,
+          "test_mse": NaN,
+          "seconds": 0.21118949400261045
+        },
+        {
+          "epoch": 498,
+          "framework": "pytorch",
+          "train_relative_l2": 0.003980455155725832,
+          "test_relative_l2": NaN,
+          "train_mse": 4.71011809269031e-06,
+          "test_mse": NaN,
+          "seconds": 0.21789246302796528
+        },
+        {
+          "epoch": 499,
+          "framework": "pytorch",
+          "train_relative_l2": 0.0039236319051296625,
+          "test_relative_l2": NaN,
+          "train_mse": 4.390218445796226e-06,
+          "test_mse": NaN,
+          "seconds": 0.21281456400174648
+        },
+        {
+          "epoch": 500,
+          "framework": "pytorch",
+          "train_relative_l2": 0.004191498502537056,
+          "test_relative_l2": 0.006054633843402068,
+          "train_mse": 5.2139872578091284e-06,
+          "test_mse": 9.643603286046225e-06,
+          "seconds": 0.21809292800026014
+        }
+      ]
+    }
+  ],
+  "comparison": null
+}

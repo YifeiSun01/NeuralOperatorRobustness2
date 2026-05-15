@@ -1,0 +1,4 @@
+{
+  "solver_jacobian_seconds": 0.0,
+  "solver_source": "forensics/deeponet_solver_jacobian_similarity_20260515/index_040/solver/solver_index40_jacobian_svd.npz"
+}

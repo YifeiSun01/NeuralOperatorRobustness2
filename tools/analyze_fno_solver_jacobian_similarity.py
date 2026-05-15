@@ -47,6 +47,7 @@ DEFAULT_OUT_ROOT = PROJECT_ROOT / "forensics" / "fno_solver_jacobian_similarity_
 DEFAULT_REUSE_FNO_ROOT = (
     PROJECT_ROOT / "forensics" / "local_jacobian_frequency_20260514" / "01_explicit_jacobian_multi_index"
 )
+DEFAULT_REUSE_SOLVER_ROOT = PROJECT_ROOT / "forensics" / "deeponet_solver_jacobian_similarity_20260515"
 EPS = 1e-12
 
 
@@ -141,6 +142,20 @@ def load_or_compute_fno_jacobian(index: int, args: argparse.Namespace, device: t
     if device.type == "cuda":
         torch.cuda.empty_cache()
     return J
+
+
+def reusable_solver_path(reuse_root: Path, index: int) -> Path:
+    return reuse_root / f"index_{index:03d}" / "solver" / f"solver_index{index}_jacobian_svd.npz"
+
+
+def load_or_compute_solver_jacobian(index: int, args: argparse.Namespace, device: torch.device, sample: np.ndarray) -> tuple[np.ndarray, float, str]:
+    path = reusable_solver_path(args.reuse_solver_root, index)
+    if args.reuse_solver and path.exists():
+        print(f"[reuse] loading solver Jacobian for index={index} from {path}", flush=True)
+        return np.load(path)["jacobian"].astype(np.float32), 0.0, str(path)
+    start = time.perf_counter()
+    J = compute_solver_jacobian(sample, args, device, progress_prefix=f"solver_index{index}")
+    return J, time.perf_counter() - start, "computed"
 
 
 def load_svd(npz_path: Path) -> dict[str, np.ndarray]:
@@ -471,6 +486,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-root", type=Path, default=DEFAULT_OUT_ROOT)
     parser.add_argument("--reuse-fno-root", type=Path, default=DEFAULT_REUSE_FNO_ROOT)
     parser.add_argument("--reuse-fno", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--reuse-solver-root", type=Path, default=DEFAULT_REUSE_SOLVER_ROOT)
+    parser.add_argument("--reuse-solver", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--top-k", type=int, default=32)
     parser.add_argument("--fno-test-path", type=Path, default=DEFAULT_BURGERS_TEST)
@@ -501,6 +518,8 @@ def main() -> None:
             "device": str(device),
             "reuse_fno": args.reuse_fno,
             "reuse_fno_root": str(args.reuse_fno_root),
+            "reuse_solver": args.reuse_solver,
+            "reuse_solver_root": str(args.reuse_solver_root),
             "fno_test_path": str(args.fno_test_path),
             "fno_checkpoint": str(args.fno_checkpoint),
             "burgers_nx": args.burgers_nx,
@@ -526,9 +545,7 @@ def main() -> None:
         sample = load_sample(args.fno_test_path, index)
 
         Jf = load_or_compute_fno_jacobian(index, args, device, sample)
-        start = time.perf_counter()
-        Jj = compute_solver_jacobian(sample, args, device, progress_prefix=f"solver_index{index}")
-        solver_seconds = time.perf_counter() - start
+        Jj, solver_seconds, solver_source = load_or_compute_solver_jacobian(index, args, device, sample)
         Je = Jf.astype(np.float64) - Jj.astype(np.float64)
 
         svds = {
@@ -536,7 +553,7 @@ def main() -> None:
             "solver": save_standard_svd("solver", Jj, index_dir, index),
             "error": save_standard_svd("error", Je, index_dir, index),
         }
-        save_json(index_dir / "runtime.json", {"solver_jacobian_seconds": solver_seconds})
+        save_json(index_dir / "runtime.json", {"solver_jacobian_seconds": solver_seconds, "solver_source": solver_source})
 
         top_k = min(args.top_k, Jf.shape[0])
         sv_rows = singular_value_rows(index, svds, top_k)
