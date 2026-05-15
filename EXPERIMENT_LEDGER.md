@@ -239,6 +239,41 @@ Grounded conclusion:
 - The dominant residual/error Jacobian is essentially the DeepONet
   high-frequency response that the solver does not share.
 
+## 2026-05-15 Top-4 Singular Vector Shape/Fourier Comparison
+
+Status: completed and recorded.
+
+Purpose:
+
+- Directly visualize the top 4 right singular vectors rather than only their
+  scalar frequency metrics.
+- Compare FNO `nu=0.001`, solver `nu=0.001`, DeepONet `nu=0.01`, and solver
+  `nu=0.01` on the same sample indices `0, 7, 40, 47, 115`.
+
+Added / generated:
+
+- `tools/plot_top_singular_vector_comparison.py`
+- `forensics/top_singular_vector_comparison_20260515/`
+- `docs/top_singular_vector_comparison_result_20260515.md`
+
+Intermediate local-only raw SVD artifacts generated for plotting:
+
+- `forensics/local_jacobian_frequency_20260514/01_explicit_jacobian_multi_index/`
+  for FNO top singular vectors.
+- `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/` for the
+  `nu=0.001` solver top singular vectors.
+
+Grounded conclusion:
+
+- FNO top right singular vectors and the `nu=0.001` solver top right singular
+  vectors are smooth/low-frequency.
+- DeepONet `nu=0.01` top right singular vectors are visibly high-frequency and
+  jagged.
+- The `nu=0.01` solver top right singular vectors remain smooth/low-frequency.
+- Therefore the direct plots support the numeric conclusion: FNO's dominant
+  local modes resemble solver modes, while DeepONet's dominant local modes are
+  high-frequency modes that the solver does not share.
+
 ## Next Actions
 
 1. Recover the missing original artifacts from the old Vast.ai instance or a

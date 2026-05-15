@@ -1,0 +1,44 @@
+{
+  "sample_indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "top_k": 4,
+  "operator_columns": [
+    "FNO nu=0.001",
+    "solver nu=0.001",
+    "DeepONet nu=0.01",
+    "solver nu=0.01"
+  ],
+  "note": "Right singular vectors are sign-aligned for display and scaled by max absolute value; singular values are shown in subplot labels.",
+  "samples": [
+    {
+      "line_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_000/index_000_top4_right_singular_vectors_lines.png",
+      "fft_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_000/index_000_top4_right_singular_vectors_fft.png",
+      "overlay_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_000/index_000_top4_right_singular_vectors_overlay.png"
+    },
+    {
+      "line_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_007/index_007_top4_right_singular_vectors_lines.png",
+      "fft_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_007/index_007_top4_right_singular_vectors_fft.png",
+      "overlay_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_007/index_007_top4_right_singular_vectors_overlay.png"
+    },
+    {
+      "line_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_040/index_040_top4_right_singular_vectors_lines.png",
+      "fft_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_040/index_040_top4_right_singular_vectors_fft.png",
+      "overlay_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_040/index_040_top4_right_singular_vectors_overlay.png"
+    },
+    {
+      "line_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_047/index_047_top4_right_singular_vectors_lines.png",
+      "fft_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_047/index_047_top4_right_singular_vectors_fft.png",
+      "overlay_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_047/index_047_top4_right_singular_vectors_overlay.png"
+    },
+    {
+      "line_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_115/index_115_top4_right_singular_vectors_lines.png",
+      "fft_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_115/index_115_top4_right_singular_vectors_fft.png",
+      "overlay_plot": "/workspace/NeuralOperatorRobustness2/forensics/top_singular_vector_comparison_20260515/index_115/index_115_top4_right_singular_vectors_overlay.png"
+    }
+  ]
+}
