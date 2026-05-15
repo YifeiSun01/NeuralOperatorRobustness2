@@ -251,6 +251,59 @@ OBJECTIVE_VARIANTS = ("original", "increment_ratio", "regularized")
 FINITE_EPS = 1e-30
 
 
+def _path_entries() -> list[str]:
+    return [entry for entry in os.environ.get("PATH", "").split(os.pathsep) if entry]
+
+
+def _find_venv_ptxas_dir() -> Path | None:
+    """Find a virtualenv-local ptxas before falling back to system CUDA.
+
+    Vast V100 images may expose CUDA 13 in /usr/local/cuda, while the copied
+    project environment carries a CUDA 12.x ptxas through Triton. JAX compilation
+    on V100 is more reliable when that environment-local ptxas is first in PATH.
+    """
+    roots: list[Path] = []
+    for candidate in (os.environ.get("VIRTUAL_ENV"), sys.prefix, PROJECT_ROOT / "adv_robust"):
+        if not candidate:
+            continue
+        root = Path(candidate).expanduser().resolve()
+        if root not in roots:
+            roots.append(root)
+
+    for root in roots:
+        for ptxas in sorted(root.glob("lib/python*/site-packages/triton/backends/nvidia/bin/ptxas")):
+            if ptxas.is_file():
+                return ptxas.parent
+    return None
+
+
+def configure_runtime_workarounds(args: argparse.Namespace) -> None:
+    """Apply local runtime workarounds before constructing model/solver objects."""
+    args.runtime_ptxas_dir = None
+    args.runtime_cudnn_enabled = None
+    if not args.runtime_workarounds:
+        print("[runtime] runtime workarounds disabled", flush=True)
+        return
+
+    if args.prepend_env_ptxas:
+        ptxas_dir = _find_venv_ptxas_dir()
+        if ptxas_dir is not None:
+            ptxas_dir_text = str(ptxas_dir)
+            entries = [entry for entry in _path_entries() if entry != ptxas_dir_text]
+            os.environ["PATH"] = os.pathsep.join([ptxas_dir_text, *entries])
+            print(f"[runtime] using virtualenv ptxas dir first: {ptxas_dir_text}", flush=True)
+            args.runtime_ptxas_dir = ptxas_dir_text
+        else:
+            print("[runtime] no virtualenv ptxas found; leaving PATH unchanged", flush=True)
+
+    if args.disable_cudnn:
+        import torch
+
+        torch.backends.cudnn.enabled = False
+        args.runtime_cudnn_enabled = bool(torch.backends.cudnn.enabled)
+        print("[runtime] torch.backends.cudnn.enabled=False", flush=True)
+
+
 def parse_norm_order(value: str | float | int) -> float:
     text = str(value).lower()
     if text in {"inf", "linf", "infinity"}:
@@ -1228,6 +1281,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--cleanup_png", action="store_true")
     parser.add_argument("--device", default=None)
     parser.add_argument("--cpu", action="store_true")
+    parser.add_argument(
+        "--runtime-workarounds",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=(
+            "Apply local Vast/V100 runtime workarounds before model/solver setup. "
+            "Use --no-runtime-workarounds to leave CUDA/JAX/PyTorch behavior untouched."
+        ),
+    )
+    parser.add_argument(
+        "--disable-cudnn",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=(
+            "Disable torch.backends.cudnn for this run. This keeps GPU/CUDA enabled, "
+            "but avoids cuDNN convolution-backward failures seen on this V100 instance."
+        ),
+    )
+    parser.add_argument(
+        "--prepend-env-ptxas",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=(
+            "Prepend a virtualenv-local Triton/NVIDIA ptxas directory to PATH when found, "
+            "so JAX does not accidentally use an incompatible system CUDA ptxas."
+        ),
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--no-progress", action="store_true")
     parser.add_argument("--random_start", action="store_true", help="Initialize PGD inside the perturbation ball instead of delta=0.")
@@ -1256,6 +1336,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    configure_runtime_workarounds(args)
     if args.attack_method == "generalized_power":
         args.attack_method = "power_iteration"
     args.input_p_order = parse_norm_order(args.input_p if args.input_p is not None else args.norm)

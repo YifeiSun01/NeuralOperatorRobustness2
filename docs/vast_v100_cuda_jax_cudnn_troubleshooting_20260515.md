@@ -30,6 +30,68 @@ logs/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631
 At the time it was checked, `index=0` had completed all three losses and the
 run was continuing on later indices.
 
+
+## Code Compatibility Update
+
+`run_three_loss_objective_attack.py` now has built-in runtime workarounds for
+this issue. By default it will:
+
+- look for a virtualenv-local Triton/NVIDIA `ptxas` and move that directory to
+  the front of `PATH`;
+- set `torch.backends.cudnn.enabled = False` before constructing the model and
+  solver objects;
+- record the resolved runtime settings in each run's `config.json` via
+  `runtime_ptxas_dir` and `runtime_cudnn_enabled`.
+
+The compatibility controls are:
+
+```bash
+--runtime-workarounds / --no-runtime-workarounds
+--disable-cudnn / --no-disable-cudnn
+--prepend-env-ptxas / --no-prepend-env-ptxas
+```
+
+For this Vast V100 instance, the recommended default is to leave these
+workarounds enabled. On a cleaner CUDA stack, such as a different GPU image,
+`--no-runtime-workarounds` can be used to restore the raw PyTorch/JAX behavior.
+
+Verified probe after this code change:
+
+```bash
+source adv_robust/bin/activate
+python run_three_loss_objective_attack.py \
+  --case burgers \
+  --loss_type loss1 \
+  --objective_variant original \
+  --attack_method pgd \
+  --norm 2 \
+  --input_p 2 \
+  --output_q 2 \
+  --epsilon 8.0 \
+  --alpha 0.3 \
+  --steps 1 \
+  --index 0 \
+  --burgers-nu 0.001 \
+  --burgers-t-final 1.0 \
+  --burgers-dt 0.001 \
+  --burgers-domain 2.0 \
+  --random_start \
+  --random_start_scale 1e-6 \
+  --seed 0 \
+  --save_trajectory \
+  --save_every 1 \
+  --output_dir /tmp/fno_path_probe_builtin_workarounds \
+  --no-progress
+```
+
+Observed success:
+
+```text
+[runtime] using virtualenv ptxas dir first: .../adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin
+[runtime] torch.backends.cudnn.enabled=False
+[done] saved /tmp/fno_path_probe_builtin_workarounds in 0.86s
+```
+
 ## Problem 1: SSH Login Exited Immediately
 
 Observed symptom:
@@ -313,24 +375,10 @@ Use this setup before launching the FNO `nu=0.001` trajectory experiment:
 ```bash
 cd /workspace/NeuralOperatorRobustness2
 source adv_robust/bin/activate
-
-export PATH=/workspace/NeuralOperatorRobustness2/adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin:$PATH
-
-run_attack_gpu_nocudnn() {
-  python - "$@" <<'PY2'
-import runpy
-import sys
-import torch
-
-torch.backends.cudnn.enabled = False
-sys.argv = ["run_three_loss_objective_attack.py", *sys.argv[1:]]
-runpy.run_path("run_three_loss_objective_attack.py", run_name="__main__")
-PY2
-}
+python run_three_loss_objective_attack.py ...
 ```
 
-Then call `run_attack_gpu_nocudnn` instead of `python
-run_three_loss_objective_attack.py`.
+The script now applies the ptxas PATH and no-cuDNN workarounds by default. The old `run_attack_gpu_nocudnn` wrapper is no longer required for this script, but the wrapper remains a useful emergency fallback for older checkouts.
 
 ## Interpretation For Future Runs
 

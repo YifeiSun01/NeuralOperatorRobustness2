@@ -5,6 +5,29 @@ Last updated: 2026-05-15 UTC
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
 
+## 2026-05-15 Built-In Runtime Compatibility Patch
+
+Code updated:
+
+- `run_three_loss_objective_attack.py`
+
+Behavior added:
+
+- default runtime workaround setup before model/solver construction;
+- virtualenv-local Triton/NVIDIA `ptxas` is moved to the front of `PATH` when found;
+- cuDNN is disabled by default for this attack script while keeping CUDA/GPU enabled;
+- command-line controls are available via `--no-runtime-workarounds`,
+  `--no-disable-cudnn`, and `--no-prepend-env-ptxas`;
+- resolved settings are saved in `config.json` as `runtime_ptxas_dir` and
+  `runtime_cudnn_enabled`.
+
+Verification:
+
+- `python3 -m py_compile run_three_loss_objective_attack.py`
+- 1-step GPU probe with plain `python run_three_loss_objective_attack.py ...`
+  succeeded without the external wrapper and saved
+  `/tmp/fno_path_probe_builtin_workarounds` in about 0.86 seconds.
+
 ## 2026-05-15 Vast.ai V100 Runtime Troubleshooting
 
 Operational note added:
@@ -25,11 +48,9 @@ Recorded issues:
 Stable workaround for this instance:
 
 - activate `adv_robust`;
-- prepend
-  `adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin` to
-  `PATH`;
-- run the attack script through a Python wrapper that sets
-  `torch.backends.cudnn.enabled = False` before executing the script.
+- use the updated `run_three_loss_objective_attack.py`, which now applies the
+  ptxas PATH and no-cuDNN workarounds by default;
+- the older wrapper approach is only an emergency fallback for older checkouts.
 
 ## Critical Correction
 
