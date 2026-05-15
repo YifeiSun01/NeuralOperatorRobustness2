@@ -1,0 +1,20 @@
+{
+  "model": "solver",
+  "sample_index": 115,
+  "shape": [
+    1024,
+    1024
+  ],
+  "fro_norm": 5.663227081298828,
+  "spectral_norm": 4.084113863035816,
+  "smallest_singular_value": 8.618260171074252e-18,
+  "condition_number": 4.738907600797967e+17,
+  "effective_rank": 5.198285223454216,
+  "top1_right_hi128": 3.0066604993750835e-15,
+  "top1_right_hi256": 1.0449871784290748e-15,
+  "top8_right_hi128_mean": 1.3443035546801079e-14,
+  "top8_right_hi256_mean": 8.337265725995871e-16,
+  "top8_right_rough2_mean": 0.001024251121584882,
+  "top8_right_zero_crossings_mean": 21.75,
+  "svd_seconds": 71.60829201003071
+}

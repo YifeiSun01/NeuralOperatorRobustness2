@@ -1,0 +1,20 @@
+{
+  "model": "error",
+  "sample_index": 0,
+  "shape": [
+    1024,
+    1024
+  ],
+  "fro_norm": 1.897444725036621,
+  "spectral_norm": 1.205772992555179,
+  "smallest_singular_value": 0.00014298167529607847,
+  "condition_number": 8433.059621509761,
+  "effective_rank": 8.29908292632812,
+  "top1_right_hi128": 0.00034809300405387876,
+  "top1_right_hi256": 1.4582163688986465e-07,
+  "top8_right_hi128_mean": 0.0006975247872996494,
+  "top8_right_hi256_mean": 1.2033000586588794e-06,
+  "top8_right_rough2_mean": 0.025629299629237434,
+  "top8_right_zero_crossings_mean": 21.5,
+  "svd_seconds": 65.39705134998076
+}

@@ -1,0 +1,20 @@
+{
+  "model": "fno",
+  "sample_index": 115,
+  "shape": [
+    1024,
+    1024
+  ],
+  "fro_norm": 5.242366790771484,
+  "spectral_norm": 3.7076576434409114,
+  "smallest_singular_value": 0.00017985456604952777,
+  "condition_number": 20614.754047555893,
+  "effective_rank": 5.550074123995712,
+  "top1_right_hi128": 2.910977272822813e-09,
+  "top1_right_hi256": 3.9849035465056036e-10,
+  "top8_right_hi128_mean": 6.819053325056715e-09,
+  "top8_right_hi256_mean": 2.6906950906775276e-09,
+  "top8_right_rough2_mean": 0.000857495376999019,
+  "top8_right_zero_crossings_mean": 12.5,
+  "svd_seconds": 72.12690168200061
+}
