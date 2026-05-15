@@ -274,13 +274,75 @@ Grounded conclusion:
   local modes resemble solver modes, while DeepONet's dominant local modes are
   high-frequency modes that the solver does not share.
 
+## 2026-05-15 Comprehensive SVD Shape/Fourier/Angle Diagnostics
+
+Status: completed and recorded.
+
+Purpose:
+
+- Produce the dense plot set requested for comparing FNO, solver, DeepONet,
+  and error Jacobian SVDs.
+- Plot top-8 right singular vectors for each of the five initial-condition
+  indices `0, 7, 40, 47, 115`.
+- Plot both per-index figures and aggregate figures averaged across the five
+  indices after Fourier transform.
+- Compute cross-operator pairwise vector cosines, top-k principal angles,
+  singular value spectra, and within-SVD orthogonality checks.
+
+Added / generated:
+
+- `tools/plot_comprehensive_svd_diagnostics.py`
+- `forensics/comprehensive_svd_diagnostics_20260515/`
+- `docs/comprehensive_svd_diagnostics_result_20260515.md`
+
+Generated plot families:
+
+- per-index six-row top-8 right-singular-vector line grids;
+- per-index six-row top-8 Fourier-energy grids;
+- per-index pairwise right-vector cosine heatmaps;
+- per-index top-k principal-angle curves;
+- per-index singular-value spectra;
+- per-index within-SVD orthogonality-error heatmaps;
+- aggregate mean shape, FFT, cosine-heatmap, principal-angle, singular-spectrum,
+  and orthogonality figures.
+
+Key observed results:
+
+- FNO model-vs-solver leading right-singular subspaces are close:
+  `k=1` mean principal angle `4.86 deg`, `k=8` mean principal angle `7.01 deg`.
+- DeepONet model-vs-solver leading right-singular subspaces are far apart:
+  `k=1` mean principal angle `82.83 deg`, `k=8` mean principal angle
+  `80.19 deg`.
+- DeepONet model-vs-error leading right-singular subspaces are close:
+  `k=1` mean principal angle `10.01 deg`.
+- FNO model top-1 right singular vector is low-frequency:
+  mean `hi128` `2.23e-07`, mean zero crossings `13.6`.
+- DeepONet model top-1 right singular vector is high-frequency:
+  mean `hi128` `0.761`, mean zero crossings `507.2`.
+- DeepONet error top-1 right singular vector is also high-frequency:
+  mean `hi128` `0.803`, mean zero crossings `516.0`.
+
+Orthogonality check:
+
+- Within a single SVD, top-8 right singular vectors are mutually orthogonal up
+  to numerical error. Max off-diagonal Gram errors are about `1e-09` to
+  `3e-09`.
+- This is expected from SVD and is mainly a sanity check. The scientifically
+  useful comparisons are cross-operator vector/subspace alignments, especially
+  model-vs-solver and model-vs-error principal angles.
+
+Grounded conclusion:
+
+- FNO's dominant local right-singular directions resemble the solver's
+  low-frequency directions.
+- DeepONet's dominant local right-singular directions are high-frequency and
+  resemble the DeepONet-vs-solver error directions, not the solver directions.
+
 ## Next Actions
 
-1. Recover the missing original artifacts from the old Vast.ai instance or a
-   fuller R2 artifact bundle, especially
-   `forensics/local_jacobian_frequency_20260514/`.
-2. If the old artifacts cannot be recovered, repair/install the Python
-   environment and reconstruct `tools/analyze_local_jacobian_fno_deeponet.py`
-   from the surviving FNO-vs-solver script.
-3. Rerun the FNO vs DeepONet local Jacobian/SVD/frequency analysis for the same
-   sample indices, then write a dedicated result file under `docs/`.
+1. If the exact original FNO-vs-DeepONet/default-net artifacts from the old
+   Vast.ai instance are still needed, recover that full artifact directory and
+   compare it against the reconstructed results.
+2. For every new experiment, add a dedicated result note under `docs/`, update
+   this ledger, and commit the scripts plus lightweight CSV/PNG/Markdown
+   outputs. Keep large raw `.npz` artifacts local unless explicitly requested.
