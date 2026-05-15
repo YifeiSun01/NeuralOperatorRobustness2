@@ -5,6 +5,25 @@ Last updated: 2026-05-15 UTC
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
 
+## 2026-05-15 Loss-Gradient Direction Interpretation Clarification
+
+Clarification added to:
+
+- `docs/fno_nu0p001_loss_gradient_path_result_20260515.md`
+- `docs/fno_nu0p001_loss_gradient_path_detailed_data_20260515.md`
+
+Interpretation:
+
+- The three losses do not form three equally different update directions.
+- `loss1` and `loss2` are nearly parallel in this FNO `nu=0.001` run.
+- `loss3` is the distinct direction: roughly `56-57 deg` away overall from
+  `loss1/loss2`.
+- The `loss3` direction becomes more similar as `delta_k` grows, decreasing from
+  about `75 deg` at `k=5` to about `47 deg` at `k=50`, but remains clearly
+  different.
+- Reported angles are averages of per-point angles, not angles of averaged
+  gradients.
+
 ## 2026-05-15 FNO nu=0.001 Loss-Gradient Detailed Data Table
 
 Detailed data note added:
@@ -19,7 +38,8 @@ Contents:
 - aggregation by attack loss and saved step;
 - aggregation by initial-condition index and attack loss;
 - final `k=50` per-index table;
-- pointer to the full 150-row CSV at
+- full raw 150-row per-point CSV embedded directly in the Markdown file;
+- pointer to the source CSV at
   `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/per_point_loss_gradient_angles.csv`.
 
 ## 2026-05-15 FNO nu=0.001 Loss-Gradient Path Result

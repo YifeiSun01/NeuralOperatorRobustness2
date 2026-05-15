@@ -126,6 +126,44 @@ Interpretation:
   (`0.764` instead of `1.0`), because raw-gradient PGD with `alpha=0.3` did not
   always drive the perturbation to the boundary for `loss3`.
 
+## Direction Interpretation And Averaging Convention
+
+The correct interpretation is not that all three losses have three mutually
+unrelated update directions. The actual pattern is more specific:
+
+```text
+loss1 direction ~= loss2 direction
+loss3 direction != loss1/loss2 direction
+```
+
+For this run, `loss1` and `loss2` are almost the same optimization direction:
+across all 150 analyzed points, `angle(g1,g2) = 3.91 deg` on average, with mean
+cosine `0.9904`. Along the `loss1` and `loss2` attack paths specifically, their
+mean angle is only about `1 deg`.
+
+By contrast, `loss3` is a genuinely different update direction. Across all 150
+points:
+
+- `angle(g1,g3) = 56.51 deg` on average;
+- `angle(g2,g3) = 57.23 deg` on average.
+
+The difference is strongest early and shrinks as the perturbation grows:
+
+| k | angle `g1,g3` | angle `g2,g3` | interpretation |
+| ---: | ---: | ---: | --- |
+| 5 | `74.24 deg` | `76.43 deg` | small-`delta` regime, affine/bias term is very important |
+| 25 | `54.48 deg` | `55.09 deg` | intermediate regime |
+| 50 | `46.81 deg` | `47.23 deg` | directions are more similar, but still clearly different |
+
+So, as `delta_k` grows, the update directions become more similar overall. But
+even at `k=50`, `loss3` is not reduced to `loss1/loss2`; it still differs by
+roughly `47 deg` on average.
+
+The reported angles are computed as `mean(angle(point))`, not as
+`angle(mean gradient)`. For example, the `k=50` row averages the angles from 15
+separate points: 5 initial conditions times 3 attack trajectories. The final
+`k=50 by attack loss` table averages 5 angles, one for each initial condition.
+
 ## What This Teaches
 
 The cleanest conclusion is:
