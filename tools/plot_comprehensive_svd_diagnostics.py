@@ -482,9 +482,10 @@ def plot_aggregate_fft(args: argparse.Namespace, all_loaded: dict[int, dict[str,
             std = E.std(axis=0)
             ax = axes[row, rank]
             ax.semilogy(k[1:], mean[1:] + EPS, lw=1.0, color=spec.color)
-            lower = np.maximum(mean - std, EPS)
-            upper = np.minimum(mean + std, 1.0)
-            ax.fill_between(k[1:], lower[1:], upper[1:], color=spec.color, alpha=0.18, lw=0)
+            if not args.no_std_shading:
+                lower = np.maximum(mean - std, EPS)
+                upper = np.minimum(mean + std, 1.0)
+                ax.fill_between(k[1:], lower[1:], upper[1:], color=spec.color, alpha=0.18, lw=0)
             ax.axvline(128, lw=0.6, color="0.35", ls="--")
             ax.grid(alpha=0.2)
             if row == 0:
@@ -537,7 +538,8 @@ def plot_aggregate_shapes(args: argparse.Namespace, all_loaded: dict[int, dict[s
             std = S.std(axis=0)
             ax = axes[row, rank]
             ax.plot(x, mean, lw=1.0, color=spec.color)
-            ax.fill_between(x, np.maximum(mean - std, -1.05), np.minimum(mean + std, 1.05), color=spec.color, alpha=0.18, lw=0)
+            if not args.no_std_shading:
+                ax.fill_between(x, np.maximum(mean - std, -1.05), np.minimum(mean + std, 1.05), color=spec.color, alpha=0.18, lw=0)
             ax.axhline(0.0, lw=0.45, color="0.78")
             ax.set_ylim(-1.08, 1.08)
             if row == 0:
@@ -606,7 +608,8 @@ def plot_aggregate_principal(args: argparse.Namespace, principal_rows: list[dict
             means_arr = np.asarray(means)
             stds_arr = np.asarray(stds)
             ax.plot(ks, means_arr, marker="o", lw=1.4, color=color, label=label)
-            ax.fill_between(ks, means_arr - stds_arr, means_arr + stds_arr, color=color, alpha=0.15, lw=0)
+            if not args.no_std_shading:
+                ax.fill_between(ks, means_arr - stds_arr, means_arr + stds_arr, color=color, alpha=0.15, lw=0)
         ax.set_title(family)
         ax.set_xlabel("top-k subspace")
         ax.set_xticks(range(1, args.top_k + 1))
@@ -638,7 +641,8 @@ def plot_aggregate_singular_spectra(args: argparse.Namespace, all_loaded: dict[i
             std = arr.std(axis=0)
             x = np.arange(1, len(mean) + 1)
             ax.semilogy(x, mean + EPS, lw=1.3, color=spec.color, label=f"{spec.role}, mean sigma1={mean[0]:.3g}")
-            ax.fill_between(x, np.maximum(mean - std, EPS), mean + std, color=spec.color, alpha=0.15, lw=0)
+            if not args.no_std_shading:
+                ax.fill_between(x, np.maximum(mean - std, EPS), mean + std, color=spec.color, alpha=0.15, lw=0)
         ax.set_title(title)
         ax.set_xlabel("rank")
         ax.grid(alpha=0.25)
@@ -711,6 +715,8 @@ def write_summary(args: argparse.Namespace, aggregate_metrics: list[dict[str, An
         "",
         "Columns are right singular vector ranks. Right singular vectors are input perturbation directions.",
         "",
+        f"Std shading in aggregate line plots: {'disabled' if args.no_std_shading else 'enabled'}.",
+        "",
         "## Key Aggregate Readout",
         "",
         "| quantity | FNO side | DeepONet side |",
@@ -739,10 +745,10 @@ def write_summary(args: argparse.Namespace, aggregate_metrics: list[dict[str, An
         "",
         "Aggregate across five samples:",
         "",
-        "- `aggregate_mean_top8_fft_energy_grid.png`: mean Fourier spectrum after Fourier transform, with shaded sample variability.",
+        "- `aggregate_mean_top8_fft_energy_grid.png`: mean Fourier spectrum after Fourier transform.",
         "- `aggregate_mean_top8_shape_grid.png`: display-aligned mean vector shapes; useful visually but less invariant than spectra/subspaces.",
         "- `aggregate_mean_pairwise_right_vector_cosine_heatmaps_top8.png`: mean cross-operator vector cosine heatmaps.",
-        "- `aggregate_principal_angle_curves_top8.png`: mean top-k principal angles with variability.",
+        "- `aggregate_principal_angle_curves_top8.png`: mean top-k principal angles.",
         "- `aggregate_singular_value_spectra_rank64.png`: mean singular spectra.",
         "- `aggregate_orthogonality_error_heatmaps_top8.png`: mean numerical orthogonality errors.",
         "",
@@ -764,6 +770,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fno-raw-root", type=Path, default=DEFAULT_FNO_RAW_ROOT)
     parser.add_argument("--deeponet-root", type=Path, default=DEFAULT_DEEPONET_ROOT)
     parser.add_argument("--out-root", type=Path, default=DEFAULT_OUT_ROOT)
+    parser.add_argument("--no-std-shading", action="store_true", help="Draw aggregate mean curves without standard-deviation shading.")
     return parser.parse_args()
 
 
@@ -779,6 +786,7 @@ def main() -> None:
         "sample_indices": args.sample_indices,
         "top_k": args.top_k,
         "spectrum_max_rank": args.spectrum_max_rank,
+        "no_std_shading": args.no_std_shading,
         "fno_raw_root": str(args.fno_raw_root),
         "deeponet_root": str(args.deeponet_root),
         "out_root": str(args.out_root),

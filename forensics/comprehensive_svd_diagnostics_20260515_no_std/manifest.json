@@ -1,0 +1,83 @@
+{
+  "sample_indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "top_k": 8,
+  "spectrum_max_rank": 64,
+  "no_std_shading": true,
+  "fno_raw_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+  "deeponet_root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+  "out_root": "forensics/comprehensive_svd_diagnostics_20260515_no_std",
+  "operators": [
+    {
+      "key": "fno_model",
+      "family": "FNO nu=0.001",
+      "role": "model",
+      "label": "FNO model nu=0.001",
+      "short_label": "FNO model",
+      "color": "#1f77b4",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+      "subdir": "fno",
+      "filename_prefix": "fno"
+    },
+    {
+      "key": "fno_solver",
+      "family": "FNO nu=0.001",
+      "role": "solver",
+      "label": "solver nu=0.001",
+      "short_label": "solver 0.001",
+      "color": "#2ca02c",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+      "subdir": "solver",
+      "filename_prefix": "solver"
+    },
+    {
+      "key": "fno_error",
+      "family": "FNO nu=0.001",
+      "role": "error",
+      "label": "FNO error J_m-J_s",
+      "short_label": "FNO error",
+      "color": "#ff7f0e",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+      "subdir": "error",
+      "filename_prefix": "error"
+    },
+    {
+      "key": "deeponet_model",
+      "family": "DeepONet nu=0.01",
+      "role": "model",
+      "label": "DeepONet model nu=0.01",
+      "short_label": "DeepONet model",
+      "color": "#d62728",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+      "subdir": "deeponet",
+      "filename_prefix": "deeponet"
+    },
+    {
+      "key": "deeponet_solver",
+      "family": "DeepONet nu=0.01",
+      "role": "solver",
+      "label": "solver nu=0.01",
+      "short_label": "solver 0.01",
+      "color": "#9467bd",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+      "subdir": "solver",
+      "filename_prefix": "solver"
+    },
+    {
+      "key": "deeponet_error",
+      "family": "DeepONet nu=0.01",
+      "role": "error",
+      "label": "DeepONet error J_m-J_s",
+      "short_label": "DeepONet error",
+      "color": "#8c564b",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+      "subdir": "error",
+      "filename_prefix": "error"
+    }
+  ]
+}

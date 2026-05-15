@@ -338,6 +338,15 @@ Grounded conclusion:
 - DeepONet's dominant local right-singular directions are high-frequency and
   resemble the DeepONet-vs-solver error directions, not the solver directions.
 
+No-std plot variant:
+
+- `tools/plot_comprehensive_svd_diagnostics.py` now supports
+  `--no-std-shading`.
+- A second copy of the plot set was generated under
+  `forensics/comprehensive_svd_diagnostics_20260515_no_std/` with the same
+  samples and metrics but without standard-deviation shading in aggregate line
+  plots.
+
 ## Next Actions
 
 1. If the exact original FNO-vs-DeepONet/default-net artifacts from the old

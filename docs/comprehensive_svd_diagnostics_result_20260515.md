@@ -175,6 +175,31 @@ DeepONet model vs error. Individual singular vectors can be unstable when
 singular values are close, so top-k subspace angles are usually more robust
 than rank-by-rank vector angles.
 
+## No-Std Plot Variant
+
+A second copy of the same diagnostics was generated without standard-deviation
+shading in the aggregate line plots:
+
+```text
+forensics/comprehensive_svd_diagnostics_20260515_no_std/
+```
+
+It was generated with:
+
+```bash
+PYTHONPATH=adv_robust/lib/python3.12/site-packages \
+python3 tools/plot_comprehensive_svd_diagnostics.py \
+  --sample-indices 0 7 40 47 115 \
+  --top-k 8 \
+  --spectrum-max-rank 64 \
+  --out-root forensics/comprehensive_svd_diagnostics_20260515_no_std \
+  --no-std-shading
+```
+
+Use this directory when the shaded variability bands make the mean curves hard
+to read. The numeric CSV values are the same aggregation as the shaded version;
+only the aggregate line-plot rendering changes.
+
 ## Main Conclusion
 
 The comprehensive plots support the mechanism-level interpretation:
