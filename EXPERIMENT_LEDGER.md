@@ -5,6 +5,34 @@ Last updated: 2026-05-15 UTC
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
 
+## 2026-05-15 FNO nu=0.001 Loss-Gradient Figures And Target-Loss Table
+
+Added visual and tabular summaries for the saved 50-step attack trajectories.
+
+Files added/updated:
+
+- `docs/fno_nu0p001_loss_gradient_path_result_20260515.md`
+- `docs/fno_nu0p001_loss_gradient_path_target_loss3_table_20260515.md`
+- `docs/figures/fno_nu0p001_loss_gradient_path_dashboard_20260515.png`
+- `docs/figures/fno_nu0p001_loss_gradient_path_target_vs_loss3_20260515.png`
+- `docs/figures/fno_nu0p001_loss_gradient_path_angles_by_attack_20260515.png`
+- `tools/plot_loss_gradient_path_figures.py`
+- `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/target_vs_loss3_by_attack_loss_and_k.csv`
+
+What the new table shows:
+
+- Each row is averaged over the five initial conditions.
+- For the `loss1` path, the table reports the optimized `loss1` value and the
+  same-delta `loss3` value.
+- For the `loss2` path, the table reports the optimized `loss2` value and the
+  same-delta `loss3` value.
+- For the `loss3` path, the table reports direct `loss3`.
+- Early and middle steps are affected by unequal budget use: `loss1`/`loss2`
+  often use much more L2 budget than `loss3`, so their same-delta `loss3` can be
+  larger early.
+- At `k=50`, direct `loss3` is largest on average: `4.6171` vs `4.0678` on the
+  `loss1` path and `3.6982` on the `loss2` path.
+
 ## 2026-05-15 Loss-Gradient Direction Interpretation Clarification
 
 Clarification added to:

@@ -103,6 +103,20 @@ Interpretation:
   strongly affected by affine/bias terms such as `J^T b`, while later behavior
   is more influenced by the larger perturbation and nonlinear trajectory.
 
+## Figures
+
+The following figures were generated from the same postprocessed CSV files:
+
+- `docs/figures/fno_nu0p001_loss_gradient_path_dashboard_20260515.png`
+- `docs/figures/fno_nu0p001_loss_gradient_path_target_vs_loss3_20260515.png`
+- `docs/figures/fno_nu0p001_loss_gradient_path_angles_by_attack_20260515.png`
+
+![FNO nu=0.001 loss-gradient path dashboard](figures/fno_nu0p001_loss_gradient_path_dashboard_20260515.png)
+
+![FNO nu=0.001 target objective versus same-delta loss3](figures/fno_nu0p001_loss_gradient_path_target_vs_loss3_20260515.png)
+
+![FNO nu=0.001 gradient angles by attack path](figures/fno_nu0p001_loss_gradient_path_angles_by_attack_20260515.png)
+
 ## Final Step Results
 
 At `k=50`, averaged over the five initial conditions:
@@ -125,6 +139,32 @@ Interpretation:
 - The `loss3` attack also uses less of the L2 budget on average at step 50
   (`0.764` instead of `1.0`), because raw-gradient PGD with `alpha=0.3` did not
   always drive the perturbation to the boundary for `loss3`.
+
+## Target Objective And Same-Delta Loss3
+
+This table answers the specific question: when an attack optimizes `loss1` or
+`loss2`, what is the target loss at that step, and what `loss3` does the same
+`delta_k` produce? Rows are averaged over the five initial conditions.
+
+| k | optimize loss1: target loss1 (same-delta loss3, budget) | optimize loss2: target loss2 (same-delta loss3, budget) | optimize loss3: direct loss3 (budget) | direct loss3 - loss1-path loss3 | direct loss3 - loss2-path loss3 |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 5 | `4.9209 (L3=0.7918, b=0.323)` | `4.9880 (L3=0.2769, b=0.317)` | `0.3438 (b=0.036)` | `-0.4480` | `+0.0669` |
+| 10 | `7.0218 (L3=1.6062, b=0.538)` | `6.9869 (L3=0.6956, b=0.530)` | `0.5438 (b=0.092)` | `-1.0624` | `-0.1518` |
+| 15 | `8.8332 (L3=2.4386, b=0.734)` | `8.6381 (L3=1.5486, b=0.722)` | `0.9348 (b=0.171)` | `-1.5037` | `-0.6138` |
+| 20 | `10.2920 (L3=3.2480, b=0.904)` | `9.9641 (L3=2.4301, b=0.892)` | `1.5692 (b=0.269)` | `-1.6788` | `-0.8609` |
+| 25 | `10.9582 (L3=3.6986, b=0.992)` | `10.7516 (L3=3.1638, b=0.999)` | `2.1124 (b=0.365)` | `-1.5862` | `-1.0513` |
+| 30 | `11.0809 (L3=3.8242, b=1.000)` | `10.8192 (L3=3.2967, b=1.000)` | `2.6134 (b=0.459)` | `-1.2108` | `-0.6833` |
+| 35 | `11.1273 (L3=3.8887, b=1.000)` | `10.8617 (L3=3.4127, b=1.000)` | `3.1326 (b=0.554)` | `-0.7561` | `-0.2801` |
+| 40 | `11.1638 (L3=3.9494, b=1.000)` | `10.8954 (L3=3.5186, b=1.000)` | `3.6236 (b=0.632)` | `-0.3258` | `+0.1050` |
+| 45 | `11.1935 (L3=4.0084, b=1.000)` | `10.9228 (L3=3.6137, b=1.000)` | `4.1999 (b=0.708)` | `+0.1915` | `+0.5861` |
+| 50 | `11.2179 (L3=4.0678, b=1.000)` | `10.9451 (L3=3.6982, b=1.000)` | `4.6171 (b=0.764)` | `+0.5493` | `+0.9188` |
+
+This does not show that `loss1`/`loss2` always produce lower `loss3`. Early and
+middle steps are confounded by budget usage: the `loss1` and `loss2` paths use
+much more L2 budget, so their same-delta `loss3` can be larger than the
+under-budget direct `loss3` path. At the final saved step, direct `loss3`
+optimization gives the largest mean `loss3`: `4.6171`, compared with `4.0678`
+on the `loss1` path and `3.6982` on the `loss2` path.
 
 ## Direction Interpretation And Averaging Convention
 
@@ -209,3 +249,9 @@ Practical consequence:
 - `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/summary_by_attack_loss_and_k.csv`
 - `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/final_k_summary_by_attack_loss.csv`
 - `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/summary.md`
+- `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/target_vs_loss3_by_attack_loss_and_k.csv`
+- `docs/fno_nu0p001_loss_gradient_path_target_loss3_table_20260515.md`
+- `docs/figures/fno_nu0p001_loss_gradient_path_dashboard_20260515.png`
+- `docs/figures/fno_nu0p001_loss_gradient_path_target_vs_loss3_20260515.png`
+- `docs/figures/fno_nu0p001_loss_gradient_path_angles_by_attack_20260515.png`
+- `tools/plot_loss_gradient_path_figures.py`
