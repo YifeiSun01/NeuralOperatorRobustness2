@@ -5,6 +5,32 @@ Last updated: 2026-05-15 UTC
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
 
+## 2026-05-15 Vast.ai V100 Runtime Troubleshooting
+
+Operational note added:
+
+- `docs/vast_v100_cuda_jax_cudnn_troubleshooting_20260515.md`
+
+Recorded issues:
+
+- Vast auto-tmux login can exit with `no sessions` before any experiment starts.
+- Vast may auto-activate `/venv/main`, while the usable repo environment is
+  `adv_robust`.
+- JAX/Exponax GPU compilation can fail if it finds the system CUDA 13 `ptxas`
+  before the `adv_robust` CUDA 12.4 `ptxas`.
+- `run_three_loss_objective_attack.py` can fail on this V100 during FNO
+  backward through cuDNN; the Jacobian scripts avoided this because they already
+  disable cuDNN internally.
+
+Stable workaround for this instance:
+
+- activate `adv_robust`;
+- prepend
+  `adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin` to
+  `PATH`;
+- run the attack script through a Python wrapper that sets
+  `torch.backends.cudnn.enabled = False` before executing the script.
+
 ## Critical Correction
 
 The current user question is about the FNO vs DeepONet/default-net **local
