@@ -448,3 +448,7 @@ Grounded conclusion:
 2. For every new experiment, add a dedicated result note under `docs/`, update
    this ledger, and commit the scripts plus lightweight CSV/PNG/Markdown
    outputs. Keep large raw `.npz` artifacts local unless explicitly requested.
+## 2026-05-15 Nine-Row SVD Interpretation Summary
+
+Created `docs/nine_row_fno001_fno01_deeponet01_svd_interpretation_20260515.md` and `forensics/fno_nu0p001_nu0p01_deeponet_nu0p01_ninerow_svd_diagnostics_20260515_no_std/aggregate_model_vs_model_subspace_angles.csv`.  The summary consolidates FNO `nu=0.001`, FNO `nu=0.01`, and DeepONet `nu=0.01` local Jacobian SVD diagnostics: singular values, model top-8 response, high-frequency/zero-crossing metrics, model-vs-solver/model-vs-error subspace angles, model-vs-model subspace angles, and top-8 orthogonality.  Main conclusion: FNO is locally solver-like and its error Jacobian is a small residual, while DeepONet is dominated by high-frequency model directions and its error Jacobian is almost the DeepONet Jacobian itself.
+
