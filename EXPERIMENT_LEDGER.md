@@ -402,6 +402,44 @@ Grounded conclusion:
 - DeepONet/default-net is still dominated by high-frequency, solver-misaligned
   local directions, so its error directions are close to the model directions.
 
+
+## 2026-05-15 Nine-Row FNO/DeepONet Local SVD Comparison
+
+Status: completed and recorded.
+
+Purpose:
+
+- Put FNO `nu=0.001`, FNO `nu=0.01`, and DeepONet/default-net `nu=0.01` into
+  the same figure layout.
+- Use nine rows: each family has `model`, `solver`, and `error` rows.
+- Generate per-index and aggregate line/FFT/heatmap/spectrum/angle plots without
+  standard-deviation shading.
+
+Added / generated:
+
+- `tools/plot_fno001_fno01_deeponet01_ninerow_svd_diagnostics.py`
+- `docs/fno001_fno01_deeponet01_ninerow_svd_diagnostics_result_20260515.md`
+- `forensics/fno_nu0p001_nu0p01_deeponet_nu0p01_ninerow_svd_diagnostics_20260515_no_std/`
+
+Key observed results:
+
+- FNO `nu=0.001` model-vs-solver remains aligned: `k=1` angle `4.86 deg`,
+  `k=8` angle `7.01 deg`; model top-1 `hi128` `2.231e-07`.
+- FNO `nu=0.01` is even more tightly solver-aligned: `k=1` angle `2.32 deg`,
+  `k=8` angle `1.82 deg`; model top-1 `hi128` `2.82e-09`.
+- DeepONet/default-net `nu=0.01` remains solver-misaligned and high-frequency:
+  model-vs-solver `k=1` angle `82.83 deg`, `k=8` angle `80.19 deg`, model
+  top-1 `hi128` `0.7614`, and model top-1 zero crossings `507.20`.
+- DeepONet/default-net error remains close to the model subspace:
+  model-vs-error `k=1` angle `10.01 deg`, while FNO error directions are much
+  less aligned with the FNO model directions.
+
+Grounded conclusion:
+
+- The nine-row figures make the contrast visually direct: both FNO variants have
+  solver-like dominant local modes, while DeepONet/default-net has dominant
+  high-frequency local modes that align with its error rather than the solver.
+
 ## Next Actions
 
 1. If the exact original FNO-vs-DeepONet/default-net artifacts from the old

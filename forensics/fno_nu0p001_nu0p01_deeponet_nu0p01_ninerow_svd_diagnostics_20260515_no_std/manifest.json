@@ -1,0 +1,116 @@
+{
+  "sample_indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "top_k": 8,
+  "spectrum_max_rank": 64,
+  "out_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_nu0p001_nu0p01_deeponet_nu0p01_ninerow_svd_diagnostics_20260515_no_std",
+  "fno_0001_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+  "fno_001_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_nu0p01_solver_jacobian_similarity_20260515",
+  "deeponet_001_root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+  "operators": [
+    {
+      "key": "fno0001_model",
+      "family": "FNO nu=0.001",
+      "role": "model",
+      "label": "FNO model nu=0.001",
+      "short_label": "FNO .001 model",
+      "color": "#1f77b4",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+      "subdir": "fno",
+      "filename_prefix": "fno"
+    },
+    {
+      "key": "fno0001_solver",
+      "family": "FNO nu=0.001",
+      "role": "solver",
+      "label": "solver nu=0.001",
+      "short_label": "solver .001",
+      "color": "#2ca02c",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+      "subdir": "solver",
+      "filename_prefix": "solver"
+    },
+    {
+      "key": "fno0001_error",
+      "family": "FNO nu=0.001",
+      "role": "error",
+      "label": "FNO error nu=0.001",
+      "short_label": "FNO .001 error",
+      "color": "#ff7f0e",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+      "subdir": "error",
+      "filename_prefix": "error"
+    },
+    {
+      "key": "fno001_model",
+      "family": "FNO nu=0.01",
+      "role": "model",
+      "label": "FNO model nu=0.01",
+      "short_label": "FNO .01 model",
+      "color": "#17becf",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_nu0p01_solver_jacobian_similarity_20260515",
+      "subdir": "fno",
+      "filename_prefix": "fno"
+    },
+    {
+      "key": "fno001_solver",
+      "family": "FNO nu=0.01",
+      "role": "solver",
+      "label": "solver nu=0.01",
+      "short_label": "solver .01",
+      "color": "#98df8a",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_nu0p01_solver_jacobian_similarity_20260515",
+      "subdir": "solver",
+      "filename_prefix": "solver"
+    },
+    {
+      "key": "fno001_error",
+      "family": "FNO nu=0.01",
+      "role": "error",
+      "label": "FNO error nu=0.01",
+      "short_label": "FNO .01 error",
+      "color": "#ffbb78",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/fno_nu0p01_solver_jacobian_similarity_20260515",
+      "subdir": "error",
+      "filename_prefix": "error"
+    },
+    {
+      "key": "deeponet001_model",
+      "family": "DeepONet nu=0.01",
+      "role": "model",
+      "label": "DeepONet model nu=0.01",
+      "short_label": "DeepONet model",
+      "color": "#d62728",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+      "subdir": "deeponet",
+      "filename_prefix": "deeponet"
+    },
+    {
+      "key": "deeponet001_solver",
+      "family": "DeepONet nu=0.01",
+      "role": "solver",
+      "label": "solver nu=0.01",
+      "short_label": "solver .01",
+      "color": "#9467bd",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+      "subdir": "solver",
+      "filename_prefix": "solver"
+    },
+    {
+      "key": "deeponet001_error",
+      "family": "DeepONet nu=0.01",
+      "role": "error",
+      "label": "DeepONet error nu=0.01",
+      "short_label": "DeepONet error",
+      "color": "#8c564b",
+      "root": "/workspace/NeuralOperatorRobustness2/forensics/deeponet_solver_jacobian_similarity_20260515",
+      "subdir": "error",
+      "filename_prefix": "error"
+    }
+  ]
+}
