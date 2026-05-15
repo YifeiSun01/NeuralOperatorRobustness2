@@ -1,0 +1,197 @@
+# Experiment Ledger
+
+Last updated: 2026-05-15 UTC
+
+This is the fixed entry point for experiment status. It must separate observed
+evidence from inference. Chat history is not a durable experiment record.
+
+## Critical Correction
+
+The current user question is about the FNO vs DeepONet/default-net **local
+Jacobian / SVD / frequency** experiment, not the FNO-vs-DeepONet attack-ratio
+tables.
+
+Do not present the attack-ratio tables as the answer to the local-Jacobian
+question. A previously created ratio-focused note was removed because it did
+not answer the user's question.
+
+## 2026-05-15 Recovery Actions
+
+Observed from Git/GitHub:
+
+- Branch `vast-ai` is at commit `20b689a2c385a700aa8dea91ae1b069adc6d4a77`
+  (`Add loss3 mechanism diagnostics`).
+- The current branch and `origin/vast-ai` point to that commit after fetch.
+- `docs/`, `tools/`, `loss_attack_common.py`, DeepONet runner scripts, and
+  the FNO-vs-solver forensics directory were restored from `HEAD`.
+- A git-history path search did not find committed paths named
+  `tools/analyze_local_jacobian_fno_deeponet.py` or
+  `forensics/local_jacobian_frequency_20260514/`.
+
+Observed from the selected R2 artifact prefix:
+
+- The prefix contains `docs/`, `tools/`, `results/`, `forensics/`,
+  `deeponet_training_runs/`, `fno_training_runs/`, datasets, and other
+  artifacts.
+- The selected `forensics/` prefix contains
+  `fno_solver_jacobian_similarity_20260514/`.
+- Searches under the selected prefix did not find
+  `forensics/local_jacobian_frequency_20260514/` or
+  `tools/analyze_local_jacobian_fno_deeponet.py`.
+- Only small, relevant artifacts were restored/downloaded: result summaries,
+  FNO-vs-solver forensics, and DeepONet checkpoints/logs for `nu=0.001` and
+  `nu=0.01`.
+
+Observed from the local Python environment:
+
+- System `python3` does not have a usable `torch`.
+- The copied `adv_robust` virtual environment has `site-packages/torch`, but
+  that directory is empty; importing it yields a namespace module without
+  `torch.load`.
+- Therefore no new local-Jacobian recomputation has been run in this recovered
+  checkout yet.
+
+
+## 2026-05-15 Git Forensics For Missing Local-Jacobian Script
+
+Observed from `origin/vast-ai`:
+
+- Current local branch `vast-ai` tracks `origin/vast-ai` at commit
+  `20b689a2c385a700aa8dea91ae1b069adc6d4a77`.
+- `origin/vast-ai:tools/` contains `analyze_main_objective_mechanism.py`,
+  `analyze_fno_solver_jacobian_similarity.py`, and
+  `summarize_main_objective_mechanism.py`, but not
+  `analyze_local_jacobian_fno_deeponet.py`.
+- `git log --all --name-status -- tools` shows that commit `20b689a` added
+  only those three analysis/summarization files under `tools/`.
+- `git grep` in commit `20b689a` finds only indirect references to the missing
+  FNO/DeepONet local-Jacobian experiment: the docs mention it, the FNO-vs-solver
+  config points to `forensics/local_jacobian_frequency_20260514/...`, and the
+  FNO-vs-solver script imports the missing helper.
+- `git fsck --full --no-reflogs --unreachable` produced no unreachable commits
+  or blobs in this checkout.
+
+Interpretation:
+
+- In this recovered checkout, there is no evidence that the missing helper or
+  original DeepONet SVD outputs were ever committed to the visible GitHub
+  branch.
+- The most likely explanations are: the file/result directory existed only as
+  an untracked generated artifact on the previous machine, it lived under a
+  different path/name that has not been found yet, or a local commit was made on
+  the previous machine but was not pushed and was not included in this recovered
+  `.git` object database.
+
+## Experiment Status
+
+| Experiment | Status | Current evidence | What not to claim |
+| --- | --- | --- | --- |
+| FNO vs DeepONet/default-net local Jacobian/SVD/frequency | Partially evidenced, original outputs missing | `docs/main_objective_mechanism_experiment1_result_20260514.md` says an existing FNO/DeepONet Jacobian experiment computed `J_f`; `forensics/fno_solver_jacobian_similarity_20260514/config.json` points to `forensics/local_jacobian_frequency_20260514/01_explicit_jacobian_multi_index`; `tools/analyze_fno_solver_jacobian_similarity.py` imports the missing helper script | Do not claim the exact DeepONet high/low-frequency singular-vector conclusion from current files |
+| FNO vs solver local Jacobian/SVD/frequency | Available and recorded | `docs/fno_solver_jacobian_similarity_result_20260514.md`; `forensics/fno_solver_jacobian_similarity_20260514/` | Do not confuse this with FNO vs DeepONet |
+| FNO vs DeepONet/default-net attack-ratio tables | Available as old ratio evidence | `results/burgers_loss3_clean_recomputed_summary.md`; `results/clean_recomputed_summary/method_ratio_best_vs_second_tests.md`; `.csv` | Do not use this as the Jacobian/SVD answer |
+| FNO vs solver tracking-discount / mechanism diagnostics | Available and recorded | `docs/main_objective_mechanism_experiment1_result_20260514.md` and referenced mechanism summary tables | Do not use this as DeepONet evidence |
+
+## FNO vs DeepONet Local Jacobian/SVD Evidence
+
+Observed evidence that the experiment existed:
+
+- `docs/main_objective_mechanism_experiment1_result_20260514.md` explicitly
+  refers to an existing FNO/DeepONet Jacobian experiment.
+- `forensics/fno_solver_jacobian_similarity_20260514/config.json` reuses FNO
+  outputs from
+  `forensics/local_jacobian_frequency_20260514/01_explicit_jacobian_multi_index`.
+- `tools/analyze_fno_solver_jacobian_similarity.py` imports
+  `tools.analyze_local_jacobian_fno_deeponet`, so the follow-up script depended
+  on a local helper that is absent now.
+
+Observed missing artifacts:
+
+- `tools/analyze_local_jacobian_fno_deeponet.py`
+- `forensics/local_jacobian_frequency_20260514/`
+- DeepONet per-index files such as `index_*/deeponet/*jacobian_svd.npz`
+- DeepONet frequency tables such as `*_top_singular_vector_metrics.csv` or
+  `*_frequency_gain_by_k.csv`
+
+Current grounded conclusion:
+
+- The FNO-vs-DeepONet local-Jacobian experiment almost certainly existed as a
+  generated/local artifact on the previous machine.
+- The exact DeepONet SVD/frequency side is not currently recovered.
+- The FNO side is partially recoverable from the later FNO-vs-solver forensics:
+  in the recorded samples `0, 7, 40, 47, 115`, the leading FNO right singular
+  vectors are low-frequency dominated.
+
+## Restored / Downloaded Small Artifacts
+
+Restored from git `HEAD`:
+
+- `docs/main_objective_mechanism_experiment1_result_20260514.md`
+- `docs/fno_solver_jacobian_similarity_result_20260514.md`
+- `tools/analyze_fno_solver_jacobian_similarity.py`
+- `forensics/fno_solver_jacobian_similarity_20260514/`
+- `results/burgers_loss3_clean_recomputed_summary.md`
+- `results/clean_recomputed_summary/method_ratio_best_vs_second_tests.md`
+- `results/clean_recomputed_summary/method_ratio_best_vs_second_tests.csv`
+
+Selected R2 downloads:
+
+- `deeponet_training_runs/burgers_nu0p001_deeponet_lu_ref_50k/checkpoints/deeponet_burgers_nu0.001.pt`
+- `deeponet_training_runs/burgers_nu0p001_deeponet_lu_ref_50k/training_logs/config.json`
+- `deeponet_training_runs/burgers_nu0p001_deeponet_lu_ref_50k/training_logs/dataset_info.json`
+- `deeponet_training_runs/burgers_nu0p001_deeponet_lu_ref_50k/training_logs/summary.json`
+- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/checkpoints/deeponet_burgers_nu0p01.pt`
+- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/config.json`
+- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/dataset_info.json`
+- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz`
+- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/summary.json`
+
+
+## 2026-05-15 Reconstructed Missing FNO/DeepONet Local-Jacobian Helper
+
+Status: code reconstructed and committed candidate prepared.
+
+Added:
+
+- `tools/analyze_local_jacobian_fno_deeponet.py`
+
+Purpose:
+
+- restore the helper imported by `tools/analyze_fno_solver_jacobian_similarity.py`;
+- provide standalone FNO-vs-DeepONet/default-net explicit local Jacobian/SVD
+  analysis;
+- save per-index artifacts under
+  `forensics/local_jacobian_frequency_20260514/01_explicit_jacobian_multi_index/`
+  with the file layout expected by the FNO-vs-solver follow-up:
+  `index_*/fno/fno_index*_jacobian_svd.npz` and
+  `index_*/deeponet/deeponet_index*_jacobian_svd.npz`.
+
+Implemented interfaces used by the FNO-vs-solver script:
+
+- `load_sample`
+- `make_model`
+- `compute_explicit_jacobian`
+- `analyze_jacobian`
+- `frequency_gains`
+
+Verification performed in the recovered checkout:
+
+- `python3 -m py_compile tools/analyze_local_jacobian_fno_deeponet.py tools/analyze_fno_solver_jacobian_similarity.py`
+- `python3 -c "import tools.analyze_local_jacobian_fno_deeponet as m; ..."`
+- a small 8x8 smoke test for `analyze_jacobian`, confirming NPZ/CSV/JSON
+  outputs are written.
+
+Not yet run:
+
+- full 1024 x 1024 FNO-vs-DeepONet recomputation, because the copied Python
+  environment currently has an empty/broken `torch` package.
+
+## Next Actions
+
+1. Recover the missing original artifacts from the old Vast.ai instance or a
+   fuller R2 artifact bundle, especially
+   `forensics/local_jacobian_frequency_20260514/`.
+2. If the old artifacts cannot be recovered, repair/install the Python
+   environment and reconstruct `tools/analyze_local_jacobian_fno_deeponet.py`
+   from the surviving FNO-vs-solver script.
+3. Rerun the FNO vs DeepONet local Jacobian/SVD/frequency analysis for the same
+   sample indices, then write a dedicated result file under `docs/`.
