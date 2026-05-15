@@ -1,0 +1,23 @@
+{
+  "sample_indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "device": "cuda",
+  "reuse_deeponet": false,
+  "reuse_deeponet_root": "/workspace/NeuralOperatorRobustness2/forensics/local_jacobian_frequency_20260514/01_explicit_jacobian_multi_index",
+  "deeponet_test_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45_test.pt",
+  "deeponet_train_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45_train.pt",
+  "deeponet_checkpoint": "/workspace/NeuralOperatorRobustness2/deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/checkpoints/deeponet_burgers_nu0p01.pt",
+  "deeponet_output_transform_stats": "/workspace/NeuralOperatorRobustness2/deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz",
+  "burgers_nx": 1024,
+  "burgers_nu": 0.01,
+  "burgers_t_final": 1.0,
+  "burgers_dt": 0.001,
+  "burgers_domain": 2.0,
+  "burgers_jax_solver_dtype": "float64",
+  "top_k": 32
+}

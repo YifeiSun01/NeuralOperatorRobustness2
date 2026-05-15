@@ -148,7 +148,8 @@ Selected R2 downloads:
 
 ## 2026-05-15 Reconstructed Missing FNO/DeepONet Local-Jacobian Helper
 
-Status: code reconstructed and committed candidate prepared.
+Status: code reconstructed and committed; one DeepONet torch import bug was
+fixed during the DeepONet-vs-solver run preparation.
 
 Added:
 
@@ -180,10 +181,63 @@ Verification performed in the recovered checkout:
 - a small 8x8 smoke test for `analyze_jacobian`, confirming NPZ/CSV/JSON
   outputs are written.
 
-Not yet run:
+Not yet run in this recovered checkout:
 
 - full 1024 x 1024 FNO-vs-DeepONet recomputation, because the copied Python
-  environment currently has an empty/broken `torch` package.
+  environment initially had an empty/broken `torch` package. The environment
+  was later patched enough to run the DeepONet-vs-solver Jacobian experiment
+  below, but the full FNO-vs-DeepONet recomputation remains separate.
+
+## 2026-05-15 DeepONet vs Solver Local Jacobian/SVD/Frequency
+
+Status: completed and recorded.
+
+Purpose:
+
+- Recreate the FNO-vs-solver local-Jacobian comparison for DeepONet/default-net.
+- Use the same five initial conditions as the FNO-vs-solver run:
+  `0, 7, 40, 47, 115`.
+- Use the DeepONet model setting `nu=0.01` instead of the FNO-side `nu=0.001`.
+
+Added / generated:
+
+- `tools/analyze_deeponet_solver_jacobian_similarity.py`
+- `forensics/deeponet_solver_jacobian_similarity_20260515/`
+- `docs/deeponet_solver_jacobian_similarity_result_20260515.md`
+
+Observed setting from the run config:
+
+- DeepONet checkpoint:
+  `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/checkpoints/deeponet_burgers_nu0p01.pt`
+- DeepONet output transform:
+  `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz`
+- Test split:
+  `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.01_t1.0_seed45/..._test.pt`
+- Solver: JAX/Exponax Burgers, `nx=1024`, `nu=0.01`, `t_final=1.0`,
+  `dt=0.001`, `domain=2.0`, solver dtype `float64`.
+
+Key observed results:
+
+- DeepONet spectral norm mean: `7.202`; solver spectral norm mean: `1.373`;
+  residual/error spectral norm mean: `7.100`.
+- DeepONet top-1 right singular vectors are high-frequency:
+  `hi128` mean `0.761`, zero crossings mean `507.2`.
+- Solver top-1 right singular vectors are low-frequency/smooth:
+  `hi128` mean `1.70e-17`, zero crossings mean `0.0`.
+- Error top-1 right singular vectors track DeepONet:
+  `hi128` mean `0.803`, zero crossings mean `516.0`.
+- DeepONet-vs-solver top-k right subspaces are nearly orthogonal:
+  mean principal cosine at `k=1` is `0.125`, and at `k=8` is `0.170`.
+- DeepONet-vs-error leading subspaces are almost identical:
+  mean principal cosine at `k=1` is `0.985`, and at `k=8` is `0.981`.
+
+Grounded conclusion:
+
+- For this `nu=0.01` DeepONet/default-net model, the dominant local model
+  directions are high-frequency and jagged, while the physical solver's
+  dominant local directions are smooth/low-frequency.
+- The dominant residual/error Jacobian is essentially the DeepONet
+  high-frequency response that the solver does not share.
 
 ## Next Actions
 

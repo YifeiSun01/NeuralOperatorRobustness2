@@ -1,0 +1,19 @@
+{
+  "model": "deeponet",
+  "sample_index": 7,
+  "jacobian_shape": [
+    1024,
+    1024
+  ],
+  "spectral_norm": 7.362612275975397,
+  "fro_norm": 12.096889907120714,
+  "effective_rank": 7.379919488232776,
+  "top8_energy": 0.9444151203445186,
+  "top32_energy": 0.999999645313123,
+  "largest_singular_value": 7.362612275975397,
+  "smallest_singular_value": 1.1756748523233804e-11,
+  "top1_right_hi128": 0.7566455212259713,
+  "top1_right_zero_crossings": 507,
+  "top8_right_zero_crossings_mean": 506.125,
+  "svd_seconds": 2.3096937260124832
+}

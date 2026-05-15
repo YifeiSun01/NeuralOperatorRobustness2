@@ -1,0 +1,19 @@
+{
+  "model": "solver",
+  "sample_index": 7,
+  "jacobian_shape": [
+    1024,
+    1024
+  ],
+  "spectral_norm": 1.3757678243240508,
+  "fro_norm": 2.215754114163345,
+  "effective_rank": 4.951885316696597,
+  "top8_energy": 0.9938971423740446,
+  "top32_energy": 0.9999999999997957,
+  "largest_singular_value": 1.3757678243240508,
+  "smallest_singular_value": 6.083429362906416e-15,
+  "top1_right_hi128": 9.735637724249534e-18,
+  "top1_right_zero_crossings": 0,
+  "top8_right_zero_crossings_mean": 4.0,
+  "svd_seconds": 2.193273476092145
+}

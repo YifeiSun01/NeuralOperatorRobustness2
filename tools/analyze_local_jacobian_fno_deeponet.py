@@ -202,6 +202,8 @@ class DeepONetBurgersModel:
         self.config = config
 
     def __call__(self, x):
+        import torch
+
         y = self.net((x[..., 0].to(dtype=torch.float32), self.trunk))
         return y[..., None].to(dtype=x.dtype)
 
