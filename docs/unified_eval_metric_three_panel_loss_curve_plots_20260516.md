@@ -193,3 +193,179 @@ uploaded_bytes=24657968
 
 The script and this Markdown record should be tracked in GitHub; the generated
 PNG files should stay in R2/local results, not Git history.
+
+## Cross-Metric Conclusions From The Raw Trajectory Data
+
+This section records the interpretation of the canonical 27-run data in:
+
+```text
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/
+```
+
+The important rule is that the optimized objective and the final evaluation metric must be separated. The old figures were easy to misread because each panel showed the objective being optimized in that panel. The corrected shared-y figures and the raw `loss_stats.csv` / `loss_values.npz` data instead answer the cleaner question:
+
+```text
+After optimizing objective A, what value does evaluation metric B reach?
+```
+
+### If The Target Metric Is `loss3_original`
+
+If the scientific target is endpoint solver-level residual error,
+
+```text
+loss3_original(delta) = || f(x + delta) - g(x + delta) ||
+```
+
+then directly optimizing the `loss3_original` family is the strongest choice. The top final batch means at step 100 are:
+
+| optimized run | final `loss3_original` mean | std |
+|---|---:|---:|
+| `loss3_original_generalized_power` | 6.8573 | 1.4292 |
+| `loss3_original_lp_steepest_pgd` | 6.3782 | 2.2875 |
+| `loss3_original_pgd` | 5.3949 | 2.7480 |
+| `loss3_increment_ratio_lp_steepest_pgd` | 4.5685 | 2.6801 |
+| `loss2_original_pgd` | 4.3717 | - |
+| `loss2_original_lp_steepest_pgd` | 4.3487 | - |
+| `loss1_original_pgd` | 4.3401 | - |
+| `loss1_original_lp_steepest_pgd` | 4.3193 | - |
+| `loss2_original_generalized_power` | 4.2428 | - |
+| `loss3_increment_ratio_pgd` | 4.1478 | - |
+
+The speed evidence points in the same direction. For evaluation metric `loss3_original`, `loss3_original_generalized_power` reaches most of its final value in the first few steps:
+
+| step | `loss3_original_generalized_power` evaluated by `loss3_original` |
+|---:|---:|
+| 0 | 0.298 |
+| 1 | 2.721 |
+| 2 | 4.683 |
+| 5 | 6.581 |
+| 10 | 6.680 |
+| 20 | 6.826 |
+| 50 | 6.816 |
+| 100 | 6.857 |
+
+Other `loss3_original` optimizers grow more slowly but still beat the increment-ratio and regularized objectives on endpoint `loss3_original`:
+
+| optimized run | k=1 | k=5 | k=20 | k=50 | k=100 |
+|---|---:|---:|---:|---:|---:|
+| `loss3_original_lp_steepest_pgd` | 0.384 | 0.942 | 3.399 | 5.712 | 6.378 |
+| `loss3_original_pgd` | 0.324 | 0.564 | 1.955 | 4.087 | 5.395 |
+| `loss3_increment_ratio_lp_steepest_pgd` | 0.384 | 0.808 | 2.204 | 3.839 | 4.568 |
+| `loss3_increment_ratio_pgd` | 2.721 | 2.801 | 3.073 | - | 4.148 |
+
+Paired per-sample comparisons support the same main conclusion:
+
+| comparison on final `loss3_original` | mean A | mean B | mean diff A-B | diff std | A wins |
+|---|---:|---:|---:|---:|---:|
+| `loss3_original_generalized_power` vs `loss3_increment_ratio_lp_steepest_pgd` | 6.8573 | 4.5685 | 2.2888 | 2.9380 | 65/100 |
+| `loss3_original_lp_steepest_pgd` vs `loss3_original_pgd` | 6.3782 | 5.3949 | 0.9833 | 1.5063 | 94/100 |
+
+Conclusion: for endpoint solver-relative error, directly optimizing `loss3_original` is the right baseline and the strongest attack family in this data. Increment-ratio and regularized objectives are not endpoint-stronger surrogates for `loss3_original`.
+
+### If The Target Metric Is `loss3_increment_ratio`
+
+For the ratio metric,
+
+```text
+loss3_increment_ratio(delta) =
+  (loss3_original(delta) - loss3_original(0)) / (||delta|| + eta)
+```
+
+the result is more subtle. The batch mean ranking is:
+
+| optimized run | final `loss3_increment_ratio` mean | std |
+|---|---:|---:|
+| `loss3_original_generalized_power` | 0.8199 | 0.1767 |
+| `loss3_increment_ratio_lp_steepest_pgd` | 0.7634 | 0.3117 |
+| `loss3_original_lp_steepest_pgd` | 0.7601 | 0.2828 |
+| `loss3_original_pgd` | 0.6463 | 0.3301 |
+| `loss2_original_pgd` | 0.5092 | - |
+| `loss2_original_lp_steepest_pgd` | 0.5064 | - |
+| `loss1_original_pgd` | 0.5053 | - |
+| `loss1_original_lp_steepest_pgd` | 0.5027 | - |
+| `loss2_original_generalized_power` | 0.4931 | - |
+| `loss3_increment_ratio_pgd` | 0.4922 | - |
+
+At the batch-mean level, `loss3_original_generalized_power` even beats direct `loss3_increment_ratio_lp_steepest_pgd`. But the per-sample view says the ratio objective is still often more consistent:
+
+| comparison on final `loss3_increment_ratio` | mean A | mean B | mean diff A-B | diff std | A wins |
+|---|---:|---:|---:|---:|---:|
+| `loss3_original_generalized_power` vs `loss3_increment_ratio_lp_steepest_pgd` | 0.8199 | 0.7634 | 0.0566 | 0.2716 | 41/100 |
+| `loss3_original_lp_steepest_pgd` vs `loss3_increment_ratio_lp_steepest_pgd` | 0.7601 | 0.7634 | -0.0033 | 0.1574 | 22/100 |
+
+Conclusion: it is fair to say that `loss3_original_generalized_power` has the largest batch-mean `loss3_increment_ratio`, but it is not fair to say direct `loss3_original` wins every sample on the ratio metric. Direct `loss3_increment_ratio_lp_steepest_pgd` is more often better per sample, while the original-objective generalized-power run has the larger mean due to larger wins on some cases.
+
+### If The Target Metric Is `loss1_original` Or `loss2_original`
+
+For `loss1_original`, the top final values are:
+
+| optimized run | final `loss1_original` mean | std |
+|---|---:|---:|
+| `loss2_original_lp_steepest_pgd` | 11.3031 | 0.9793 |
+| `loss2_original_pgd` | 11.2952 | 0.9892 |
+| `loss1_original_pgd` | 11.1718 | 0.9174 |
+| `loss2_original_generalized_power` | 11.1579 | 0.9319 |
+| `loss1_original_lp_steepest_pgd` | 11.1493 | 0.9279 |
+| `loss1_original_generalized_power` | 11.0143 | 0.8804 |
+| `loss3_original_generalized_power` | 8.5263 | - |
+
+For `loss2_original`, the top final values are:
+
+| optimized run | final `loss2_original` mean | std |
+|---|---:|---:|
+| `loss2_original_lp_steepest_pgd` | 11.3812 | 1.0010 |
+| `loss2_original_pgd` | 11.3734 | 1.0111 |
+| `loss2_original_generalized_power` | 11.2360 | - |
+| `loss1_original_pgd` | 11.1674 | - |
+| `loss1_original_lp_steepest_pgd` | 11.1457 | - |
+| `loss3_original_generalized_power` | 8.4910 | - |
+
+Paired checks:
+
+| comparison | evaluated metric | mean A | mean B | A wins |
+|---|---|---:|---:|---:|
+| `loss1_original_pgd` vs `loss3_original_generalized_power` | `loss1_original` | 11.1718 | 8.5263 | 95/100 |
+| `loss2_original_lp_steepest_pgd` vs `loss3_original_generalized_power` | `loss2_original` | 11.3812 | 8.4910 | 98/100 |
+| `loss2_original_lp_steepest_pgd` vs `loss1_original_pgd` | `loss1_original` | 11.3031 | 11.1718 | 52/100 |
+
+Conclusion: `loss1`/`loss2` original objectives are strongly coupled with each other and optimize their own endpoint metrics well. `loss3_original` is not a good surrogate for maximizing `loss1_original` or `loss2_original`.
+
+### Increment-Ratio Objectives For Loss1/Loss2
+
+Increment-ratio objectives do work when the evaluation metric is the matching ratio metric for `loss1` or `loss2`:
+
+| evaluation metric | best optimized run | final mean |
+|---|---|---:|
+| `loss1_increment_ratio` | `loss1_increment_ratio_lp_steepest_pgd` | 3.4909 |
+| `loss2_increment_ratio` | `loss2_increment_ratio_lp_steepest_pgd` | 3.0512 |
+
+So the correct conclusion is not that ratio objectives are useless. The correct conclusion is narrower: ratio objectives capture perturbation-efficient or local-growth behavior, but they are not the best way to maximize endpoint `loss3_original`.
+
+### Regularized Objectives
+
+Regularized objectives keep the perturbation cost in the objective, so they can win their own regularized metric while producing small endpoint original loss. For `loss3_regularized`, the top final means are:
+
+| optimized run | final `loss3_regularized` mean | std |
+|---|---:|---:|
+| `loss3_regularized_lp_steepest_pgd` | 0.2633 | 0.2205 |
+| `loss3_regularized_pgd` | 0.1910 | 0.2285 |
+| `loss1_increment_ratio_lp_steepest_pgd` | -0.0708 | - |
+| `loss2_increment_ratio_lp_steepest_pgd` | -0.1178 | - |
+| `loss3_increment_ratio_lp_steepest_pgd` | -0.9161 | - |
+
+Conclusion: regularized objectives are useful for studying net gain after a perturbation penalty, but they should not be presented as the strongest finite-radius endpoint attacks.
+
+### Overall Interpretation
+
+The main scientific conclusion from the unified-evaluation plots and raw trajectory data is:
+
+```text
+The optimized objective and the final evaluation metric must be separated.
+For endpoint solver-level error, directly optimizing loss3_original is the
+strongest and fastest baseline. Ratio and regularized objectives describe
+local or perturbation-efficient behavior, but they do not generally produce
+the largest finite-radius loss3_original error.
+```
+
+This also explains why the corrected shared-y figures are necessary: only figures with a common evaluation metric on the y-axis can answer which optimized objective actually produces the largest value of that metric.
+

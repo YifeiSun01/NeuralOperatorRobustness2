@@ -1,5 +1,16 @@
 # Experiment Ledger
 
+## 2026-05-16 Unified Eval-Metric Raw-Data Interpretation
+
+Status: completed from the canonical 27-run saved trajectory data; no attack was rerun.
+
+Key conclusions recorded in `docs/unified_eval_metric_three_panel_loss_curve_plots_20260516.md`:
+
+- For endpoint solver-level `loss3_original`, directly optimizing the `loss3_original` family is strongest: `loss3_original_generalized_power` reaches final mean `6.8573`, followed by `loss3_original_lp_steepest_pgd` at `6.3782` and `loss3_original_pgd` at `5.3949`.
+- For `loss3_increment_ratio`, the batch-mean winner is also `loss3_original_generalized_power` at `0.8199`, but per-sample comparisons are subtler: direct `loss3_increment_ratio_lp_steepest_pgd` wins more individual samples against the original-objective runs.
+- For `loss1_original` and `loss2_original`, direct `loss1/loss2` original objectives remain best; `loss3_original` is not a reliable surrogate for them.
+- Increment-ratio and regularized objectives are meaningful for perturbation-efficient or penalty-aware behavior, but they are not the strongest endpoint `loss3_original` attacks.
+
 ## 2026-05-16 Unified Eval-Metric Curves Shared-Y-Zero Correction
 
 Status: completed after reviewing the first unified-evaluation replots.
