@@ -1,5 +1,31 @@
 # Experiment Ledger
 
+## 2026-05-16 Normal-Protocol Experiment 4 Batch-100 Ray Profile
+
+Status: completed on GPU for FNO / Burgers `nu=0.001`. This is the requested old-style protocol check: no best-over-steps, no multi-restart, single initialization per attack objective, and final step direction only.
+
+Files:
+
+- `tools/run_loss3_ray_profile_normal_batch.py`
+- `docs/loss3_ray_profile_normal_fno_nu0p001_gpu_batch100_plan_20260516.md`
+- `docs/loss3_ray_profile_normal_fno_nu0p001_gpu_batch100_result_20260516.md`
+- `forensics/loss3_ray_profile_normal_20260516/fno_nu0p001_gpu_v100_batch100/`
+
+Run settings and hardware:
+
+- Samples: `0..99` batch size 100.
+- Endpoint radius: `epsilon=8.0`; 45 radii in the ray profile.
+- Attack protocol: 50 Adam steps, learning rate `0.3`, final step only.
+- Runtime: Tesla V100-SXM2-32GB, torch `2.8.0+cu126`, CUDA `12.6`, JAX backend `gpu`, `sm_70` verified.
+- Runtime: 278.71 seconds.
+
+Key result under this exact normal protocol:
+
+- Endpoint winner counts at `r=8`: `loss3_increment_ratio_final` 47/100, `loss3_regularized_final` 43/100, `local_residual_movement` 7/100, `loss3_residual_increment_ratio_final` 2/100, `loss3_original_final` 1/100.
+- Small-radius norm-growth winner: `local_outward_growth` 100/100.
+- Small-radius residual-increment winner: `local_residual_movement` 100/100.
+- Interpretation: batch size 100 does not make final-step `loss3_original` best under the old protocol. The ray curves clearly support the local-to-global mismatch: local directions have the steepest small-radius slope, but finite-radius optimized directions dominate at large radius.
+
 
 ## 2026-05-16 Corrected Experiment 4 Ray Profile Batch-20 GPU Run
 

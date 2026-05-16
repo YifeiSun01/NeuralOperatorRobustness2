@@ -951,6 +951,10 @@ Current count:
 | Experiment 5: Boundary-Rescaled Comparison | Done | The boundary-rescaling diagnostic has been run and interpreted. The observed behavior is that ratio / regularized objectives can penalize \(\delta\), so their final perturbations may not reach the boundary. After rescaling those directions to radius \(\epsilon\), their `loss1`, `loss2`, and `loss3` values still do not necessarily beat the directions found by directly optimizing the corresponding original objective. | No immediate rerun is required. This result should be used as evidence that local or cost-aware directions do not automatically become best finite-radius directions after rescaling. |
 | Experiment 6: Direction Rotation Along Path | Partially done | Related trajectory-gradient evidence exists: true nonlinear gradient angles along saved attack paths were computed, and they show that the difference between objectives can remain substantial for many steps. This supports the idea that finite-radius behavior is not fully captured by a single clean-point linearization. | The exact planned experiment is still missing: along \(x_t=x+t\delta^*\), re-estimate \(v_e^*(x_t)=\arg\max_{\|v\|_p=1}\|J_e(x_t)v\|_q\), then record \(\cos(v_e^*(x_t),v_e^*(x_0))\) and adjacent-direction cosines. This should be run after the ray-profile experiment unless the path-rotation claim becomes central. |
 
+
+
+Additional note, 2026-05-16: A normal-protocol batch-100 Ray Profile rerun was also completed without best-over-steps or multi-restart selection. Under that old-style single-init/final-step protocol, endpoint winners at `r=8` were mostly `loss3_increment_ratio_final` and `loss3_regularized_final`, while `local_outward_growth` won small-radius norm-growth in 100/100 samples and `local_residual_movement` won small-radius residual-increment in 100/100 samples. This auxiliary run strengthens the ray-profile interpretation: local slope winners are not generally endpoint winners along the same ray. See `docs/loss3_ray_profile_normal_fno_nu0p001_gpu_batch100_result_20260516.md`.
+
 Recommended next order:
 
 1. Complete Experiment 6: Direction Rotation Along Path.
