@@ -76,7 +76,7 @@ Existing matrix figures are saved at:
 results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves/png/
 ```
 
-## New Three-Panel Unified-Evaluation Figures
+## Corrected Shared-Y-Zero Three-Panel Unified-Evaluation Figures
 
 The new script added for the old three-panel layout is:
 
@@ -93,7 +93,9 @@ It keeps the old visual structure:
   PGD, LP-steepest PGD, generalized power iteration.
 
 The difference is that each figure fixes one shared evaluation metric on the
-y-axis. For example:
+y-axis. The corrected `shared_y_zero` version also forces all three panels to
+use the same y-axis range, starting at 0 and ending at the same upper bound for
+that evaluation metric. For example:
 
 ```text
 loss3_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
@@ -124,7 +126,7 @@ optimization targets using the same evaluation loss.
 ## New Output Directory
 
 ```text
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/
 ```
 
 The run generated 27 batch mean/std figures:
@@ -138,32 +140,55 @@ The run generated 27 batch mean/std figures:
 Key files for the `loss3` story:
 
 ```text
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/loss3_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/loss3_evaluated_by_loss3_increment_ratio_init_zero_three_panel_mean_std.png
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/loss3_evaluated_by_loss3_regularized_init_zero_three_panel_mean_std.png
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/loss3_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/loss3_evaluated_by_loss3_increment_ratio_init_zero_three_panel_mean_std.png
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/loss3_evaluated_by_loss3_regularized_init_zero_three_panel_mean_std.png
 ```
 
 Key cross-evaluation files:
 
 ```text
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/loss1_evaluated_by_loss3_original_init_random_three_panel_mean_std.png
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/loss2_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
-results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/loss3_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/loss1_evaluated_by_loss3_original_init_random_three_panel_mean_std.png
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/loss2_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/loss3_evaluated_by_loss3_original_init_zero_three_panel_mean_std.png
+```
+
+## Superseded Output
+
+The earlier directory below was generated before enforcing a global shared y-axis across all figures that use the same evaluation metric:
+
+```text
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/
+```
+
+Do not use that directory for presentation. Use the corrected `shared_y_zero` directory instead.
+
+The older 3x3 matrix directory below is also superseded for shared-y presentation:
+
+```text
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves/png/
+```
+
+Use this corrected matrix directory instead:
+
+```text
+results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves_shared_y_zero/png/
 ```
 
 ## R2 Sync
 
-The new three-panel PNG directory was synced to:
+The corrected shared-y-zero PNG directories were synced to:
 
 ```text
-s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/
+s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/
+s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves_shared_y_zero/
 ```
 
 Sync summary:
 
 ```text
-uploaded_files=27
-uploaded_bytes=14315408
+uploaded_files=45
+uploaded_bytes=24657968
 ```
 
 The script and this Markdown record should be tracked in GitHub; the generated

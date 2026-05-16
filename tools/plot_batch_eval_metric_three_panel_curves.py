@@ -153,33 +153,37 @@ def row_array(rows: list[dict[str, Any]], key: str, default: float = float("nan"
     return np.asarray([finite_float(row.get(key), default) for row in rows], dtype=np.float64)
 
 
-def get_ylim(
+def get_shared_ylim(
     runs: dict[tuple[str, str, str, str], list[dict[str, Any]]],
-    optimized_loss: str,
     eval_key: str,
-    initial_delta: str,
+    zero_ymin: bool = True,
 ) -> tuple[float, float]:
+    """Return one y-range for every figure/panel using the same eval_key."""
     lows: list[np.ndarray] = []
     highs: list[np.ndarray] = []
-    for variant in VARIANTS:
-        for method in METHODS:
-            rows = runs.get((optimized_loss, variant, method, initial_delta))
-            if not rows:
-                continue
-            mean = row_array(rows, f"{eval_key}_mean")
-            std = row_array(rows, f"{eval_key}_std")
-            mask = np.isfinite(mean) & np.isfinite(std)
-            if mask.any():
-                lows.append(mean[mask] - std[mask])
-                highs.append(mean[mask] + std[mask])
+    for rows in runs.values():
+        mean = row_array(rows, f"{eval_key}_mean")
+        std = row_array(rows, f"{eval_key}_std")
+        mask = np.isfinite(mean) & np.isfinite(std)
+        if mask.any():
+            lows.append(mean[mask] - std[mask])
+            highs.append(mean[mask] + std[mask])
     if not lows:
-        raise RuntimeError(f"No finite data for {optimized_loss=} {eval_key=} {initial_delta=}")
-    y_min = float(np.min(np.concatenate(lows)))
-    y_max = float(np.max(np.concatenate(highs)))
+        raise RuntimeError(f"No finite data for {eval_key=}")
+    raw_min = float(np.min(np.concatenate(lows)))
+    raw_max = float(np.max(np.concatenate(highs)))
+    if zero_ymin:
+        y_min = 0.0
+        y_max = raw_max
+    else:
+        y_min = raw_min
+        y_max = raw_max
     if y_min == y_max:
         pad = max(abs(y_min) * 0.05, 1.0)
     else:
         pad = 0.05 * (y_max - y_min)
+    if zero_ymin:
+        return 0.0, y_max + pad
     return y_min - pad, y_max + pad
 
 
@@ -232,11 +236,12 @@ def plot_three_panel(
     initial_delta: str,
     output_dir: Path,
     dpi: int,
+    y_limits: tuple[float, float],
 ) -> Path:
     runs = load_runs(root)
     if not runs:
         raise RuntimeError(f"No loss_stats.csv files found under {root}")
-    y_min, y_max = get_ylim(runs, optimized_loss, eval_key, initial_delta)
+    y_min, y_max = y_limits
     fig, axes = plt.subplots(3, 1, figsize=(14.5, 15.0), sharex=True, sharey=True)
     fig.suptitle(
         f"{optimized_loss.upper()} Attack Trajectories Evaluated By {eval_key}\n"
@@ -315,19 +320,33 @@ def main() -> None:
     parser.add_argument("--eval-keys", nargs="+", default=["loss3_original"])
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--dpi", type=int, default=170)
+    parser.add_argument(
+        "--allow-negative-ymin",
+        action="store_true",
+        help="Use the true global lower bound instead of forcing the shared y-axis to start at 0.",
+    )
     args = parser.parse_args()
 
     optimized_losses = parse_choices(args.optimized_losses, LOSSES, "optimized loss")
     eval_keys = parse_choices(args.eval_keys, EVAL_KEYS, "eval key")
-    output_dir = args.output_dir or args.root / "figures" / "eval_metric_three_panel" / "png"
+    output_dir = args.output_dir or args.root / "figures" / "eval_metric_three_panel_shared_y_zero" / "png"
     runs = load_runs(args.root)
+    shared_y_limits = {eval_key: get_shared_ylim(runs, eval_key, zero_ymin=not args.allow_negative_ymin) for eval_key in eval_keys}
 
     count = 0
     for optimized_loss in optimized_losses:
         for initial_delta in available_initial_modes(runs, optimized_loss):
             for eval_key in eval_keys:
                 count += 1
-                out = plot_three_panel(args.root, optimized_loss, eval_key, initial_delta, output_dir, args.dpi)
+                out = plot_three_panel(
+                    args.root,
+                    optimized_loss,
+                    eval_key,
+                    initial_delta,
+                    output_dir,
+                    args.dpi,
+                    shared_y_limits[eval_key],
+                )
                 print(f"[{count}] {out}")
 
 

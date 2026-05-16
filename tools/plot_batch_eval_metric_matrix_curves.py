@@ -143,11 +143,58 @@ def mask_label(label: str, k: np.ndarray, mask: np.ndarray, nonfinite_count: np.
     return f"{label} (NaN after k={k[bad[0]]:g})" if bad.size else label
 
 
-def plot_mean_matrix(root: Path, eval_key: str, output_dir: Path, dpi: int) -> Path:
+
+def shared_mean_ylim(runs: dict[tuple[str, str, str], list[dict[str, Any]]], eval_key: str, zero_ymin: bool = True) -> tuple[float, float]:
+    lows: list[np.ndarray] = []
+    highs: list[np.ndarray] = []
+    for rows in runs.values():
+        mean = np.asarray([finite_float(row.get(f"{eval_key}_mean")) for row in rows], dtype=np.float64)
+        std = np.asarray([finite_float(row.get(f"{eval_key}_std")) for row in rows], dtype=np.float64)
+        mask = np.isfinite(mean) & np.isfinite(std)
+        if mask.any():
+            lows.append(mean[mask] - std[mask])
+            highs.append(mean[mask] + std[mask])
+    if not lows:
+        raise RuntimeError(f"No finite data found for eval_key={eval_key}")
+    y_min = 0.0 if zero_ymin else float(np.min(np.concatenate(lows)))
+    y_max = float(np.max(np.concatenate(highs)))
+    pad = max(0.05 * (y_max - y_min), 1.0 if y_min == y_max else 0.0)
+    return (0.0, y_max + pad) if zero_ymin else (y_min - pad, y_max + pad)
+
+
+def shared_index_ylim(root: Path, eval_key: str, dataset_index: int, zero_ymin: bool = True) -> tuple[float, float]:
+    config = load_config(root)
+    start = int(config.get("start_index", 0))
+    sample_position = dataset_index - start
+    lows: list[np.ndarray] = []
+    highs: list[np.ndarray] = []
+    for optimized_loss in LOSSES:
+        for variant in VARIANTS:
+            for method in METHODS:
+                loaded = load_npz_run(root, optimized_loss, variant, method)
+                if loaded is None:
+                    continue
+                _, data = loaded
+                if eval_key not in data or sample_position >= data[eval_key].shape[1]:
+                    continue
+                y = data[eval_key][:, sample_position].astype(np.float64)
+                mask = np.isfinite(y)
+                if mask.any():
+                    lows.append(y[mask])
+                    highs.append(y[mask])
+    if not lows:
+        raise RuntimeError(f"No finite data found for eval_key={eval_key}, dataset_index={dataset_index}")
+    y_min = 0.0 if zero_ymin else float(np.min(np.concatenate(lows)))
+    y_max = float(np.max(np.concatenate(highs)))
+    pad = max(0.05 * (y_max - y_min), 1.0 if y_min == y_max else 0.0)
+    return (0.0, y_max + pad) if zero_ymin else (y_min - pad, y_max + pad)
+
+def plot_mean_matrix(root: Path, eval_key: str, output_dir: Path, dpi: int, zero_ymin: bool = True) -> Path:
     runs = load_runs(root)
     if not runs:
         raise RuntimeError(f"No loss_stats.csv files found under {root}")
-    fig, axes = plt.subplots(3, 3, figsize=(18, 13.5), sharex=True)
+    y_min, y_max = shared_mean_ylim(runs, eval_key, zero_ymin=zero_ymin)
+    fig, axes = plt.subplots(3, 3, figsize=(18, 13.5), sharex=True, sharey=True)
     fig.suptitle(
         f"All 27 attack trajectories evaluated by {eval_key}\n"
         f"{EVAL_LABELS[eval_key]}\n"
@@ -189,6 +236,7 @@ def plot_mean_matrix(root: Path, eval_key: str, output_dir: Path, dpi: int) -> P
             ax.spines["right"].set_visible(False)
             if col_idx == 0:
                 ax.set_ylabel(eval_key)
+            ax.set_ylim(y_min, y_max)
             if row_idx == 2:
                 ax.set_xlabel("optimization step k")
             ax.legend(loc="best", fontsize=8, frameon=True)
@@ -202,13 +250,14 @@ def plot_mean_matrix(root: Path, eval_key: str, output_dir: Path, dpi: int) -> P
     return out
 
 
-def plot_index_matrix(root: Path, eval_key: str, dataset_index: int, output_dir: Path, dpi: int) -> Path:
+def plot_index_matrix(root: Path, eval_key: str, dataset_index: int, output_dir: Path, dpi: int, zero_ymin: bool = True) -> Path:
     config = load_config(root)
     start = int(config.get("start_index", 0))
     sample_position = dataset_index - start
     if sample_position < 0:
         raise ValueError(f"dataset_index={dataset_index} is before start_index={start}")
-    fig, axes = plt.subplots(3, 3, figsize=(18, 13.5), sharex=True)
+    y_min, y_max = shared_index_ylim(root, eval_key, dataset_index, zero_ymin=zero_ymin)
+    fig, axes = plt.subplots(3, 3, figsize=(18, 13.5), sharex=True, sharey=True)
     fig.suptitle(
         f"All 27 attack trajectories evaluated by {eval_key} | dataset index {dataset_index}\n"
         f"{EVAL_LABELS[eval_key]}\n"
@@ -279,15 +328,21 @@ def main() -> None:
     parser.add_argument("--dataset-indices", nargs="*", type=int, default=[0])
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--dpi", type=int, default=170)
+    parser.add_argument(
+        "--allow-negative-ymin",
+        action="store_true",
+        help="Use the true global lower bound instead of forcing the shared y-axis to start at 0.",
+    )
     args = parser.parse_args()
 
     eval_keys = parse_eval_keys(args.eval_keys)
-    base = args.output_dir or args.root / "figures" / "eval_metric_curves"
+    base = args.output_dir or args.root / "figures" / "eval_metric_curves_shared_y_zero"
+    zero_ymin = not args.allow_negative_ymin
     for eval_key in eval_keys:
-        mean_path = plot_mean_matrix(args.root, eval_key, base / "png", args.dpi)
+        mean_path = plot_mean_matrix(args.root, eval_key, base / "png", args.dpi, zero_ymin=zero_ymin)
         print(mean_path)
         for dataset_index in args.dataset_indices:
-            index_path = plot_index_matrix(args.root, eval_key, dataset_index, base / "index_png", args.dpi)
+            index_path = plot_index_matrix(args.root, eval_key, dataset_index, base / "index_png", args.dpi, zero_ymin=zero_ymin)
             print(index_path)
 
 

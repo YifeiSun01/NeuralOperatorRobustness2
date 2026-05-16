@@ -1,5 +1,37 @@
 # Experiment Ledger
 
+## 2026-05-16 Unified Eval-Metric Curves Shared-Y-Zero Correction
+
+Status: completed after reviewing the first unified-evaluation replots.
+
+Correction:
+
+- The first three-panel replots fixed the y-axis metric within each figure, but did not enforce one global y-axis range across every figure that uses the same evaluation metric.
+- The corrected output now uses `shared_y_zero`: same evaluation metric, same y-axis min/max, y-axis starts at `0`.
+- The 3x3 matrix script was also corrected so all nine subplots share the same y-axis when they are evaluated by the same metric.
+
+Corrected scripts and docs:
+
+- `tools/plot_batch_eval_metric_three_panel_curves.py`
+- `tools/plot_batch_eval_metric_matrix_curves.py`
+- `docs/unified_eval_metric_three_panel_loss_curve_plots_20260516.md`
+
+Corrected local outputs:
+
+- `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel_shared_y_zero/png/`
+- `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves_shared_y_zero/png/`
+- `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves_shared_y_zero/index_png/`
+
+R2 upload:
+
+- Uploaded `45` corrected PNG files, `24657968` bytes.
+- R2 prefixes: `.../figures/eval_metric_three_panel_shared_y_zero/` and `.../figures/eval_metric_curves_shared_y_zero/`.
+
+Path clarification:
+
+- Use the complete 27-run source directory `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`.
+- The `20260516_..._local_repro` directory is only a small local reproduction of the loss3 subset, not the canonical full 27-run dataset.
+
 ## 2026-05-16 Unified Eval-Metric Three-Panel Loss Curve Replots
 
 Status: completed from existing saved trajectory data; no attack was rerun.
