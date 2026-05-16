@@ -2,6 +2,46 @@
 
 Status: GPU run completed for FNO / 1D Burgers `nu=0.001`, batch size 100.
 
+## Final One-Figure Conclusion
+
+The strongest conclusion from this corrected Ray experiment is:
+
+```text
+Directions that are locally fastest near the clean point do not necessarily remain strongest after following the same straight ray to the finite radius r=8.
+Local optimality and finite-radius endpoint optimality are different.
+```
+
+If only one figure is used to summarize the experiment, use this one:
+
+```text
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_full_r_grid.png
+```
+
+This figure plots the fixed-ray profiles for multiple directions. For each direction `v`, it evaluates:
+
+```text
+x(r) = x + r v
+```
+
+and shows how `loss1`, `loss2`, `loss3`, and the ratio diagnostics change as `r` increases.
+
+Key data support:
+
+| direction | local diagnostic result | endpoint `loss3` at `r=8` | endpoint wins |
+| --- | --- | ---: | ---: |
+| `local_outward_growth` | small norm-growth wins `100/100` | 2.720 | 0/100 |
+| `local_residual_movement` | small residual-increment wins `100/100` | 4.139 | 31/100 |
+| `loss3_original_final` | small local wins `0/100` | 5.447 | 58/100 among all directions |
+| `loss3_original_final` among finite attack objectives | direct `loss3` PGD attack | 5.447 | 81/100 among the three finite attack objectives |
+
+Interpretation by direction:
+
+- `local_outward_growth`: locally maximizes residual norm growth, but is weak at the finite endpoint.
+- `local_residual_movement`: locally maximizes residual field movement and transfers better than `local_outward_growth`, but is still not the overall finite-radius winner.
+- `loss3_original_final`: is not the fastest local direction, but is the strongest endpoint `loss3` direction at `r=8`.
+
+Therefore this experiment provides direct evidence for the nonlinear local-to-global gap: the local direction is genuinely locally strong, but the endpoint winner changes as the ray moves far from the clean point.
+
 ## Important Protocol Note
 
 This run intentionally does not use best-over-steps and does not use multi-restart selection. Each attack objective uses one initialization, runs `pgd` to the final step, and the final direction is the ray direction.
@@ -77,6 +117,8 @@ Interpretation: values larger than 1 mean the endpoint winner has larger `loss3`
 - `manifest.json`: GPU/runtime metadata.
 
 ## Visualizations
+
+![normal_batch100_all_metrics_by_direction_full_r_grid](../forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_full_r_grid.png)
 
 ![normal_batch100_mean_loss3_vs_r](../forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_mean_loss3_vs_r.png)
 
