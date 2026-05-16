@@ -1,6 +1,8 @@
 # Loss3 Experiment 4 Ray Profile Result - 2026-05-16
 
-Status: completed for FNO / 1D Burgers `nu=0.001` with GPU-only execution.
+> Superseded note, 2026-05-16: this five-sample result document is retained as historical output, but its endpoint-winner interpretation is superseded by `docs/loss3_ray_profile_corrected_fno_nu0p001_gpu_batch20_result_20260516.md`. The corrected batch-20 run uses best-over-steps and multi-restart `loss3_original` PGD, including restarts from ratio/regularized boundary directions; under that fair comparison, direct `loss3_original_pgd_best` wins endpoint `r=8` in 20/20 samples.
+
+Status: historical/superseded for FNO / 1D Burgers `nu=0.001` with GPU-only execution.
 
 ## Scope And Settings
 

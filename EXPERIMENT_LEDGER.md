@@ -1,9 +1,43 @@
 # Experiment Ledger
 
 
+## 2026-05-16 Corrected Experiment 4 Ray Profile Batch-20 GPU Run
+
+Status: completed for FNO / 1D Burgers `nu=0.001` with GPU-only execution. This entry supersedes the earlier five-sample Ray Profile endpoint-winner interpretation.
+
+Corrected files:
+
+- `tools/run_loss3_ray_profile_corrected.py`
+- `docs/loss3_ray_profile_corrected_fno_nu0p001_gpu_batch20_plan_20260516.md`
+- `docs/loss3_ray_profile_corrected_fno_nu0p001_gpu_batch20_result_20260516.md`
+- `docs/loss3_ray_profile_fno_nu0p001_gpu_result_20260516.md` marked historical/superseded
+- `docs/loss3_original_theory_experiment_plan.md` Experiment 4 row updated
+
+Run evidence:
+
+- Batch samples: `0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 40, 47, 115`.
+- Endpoint radius: `epsilon=8.0`; 41 ray radii.
+- Attack steps: 100 per restart; learning rate `0.3`; update mode `raw`.
+- Runtime: Tesla V100-SXM2-32GB, torch `2.8.0+cu126`, CUDA `12.6`, JAX backend `gpu`, `sm_70` verified.
+- Output directory: `forensics/loss3_ray_profile_corrected_20260516/fno_nu0p001_gpu_v100_batch20/`.
+
+Corrected conclusion:
+
+- Finite-radius endpoint `loss3_original` winner at `r=8`: `loss3_original_pgd_best` in 20/20 samples.
+- Small-radius clean residual norm-growth winners: mostly `loss3_regularized_pgd_best` / `local_outward_growth`; these are numerically tied or near-tied because regularized PGD collapses toward the local outward-growth direction in this setting.
+- Small-radius residual-increment winners: `loss3_residual_increment_ratio_pgd_best` in 18/20 samples and `local_residual_movement` in 2/20 samples.
+- Interpretation: Experiment 4 is a Ray diagnostic for nonlinearity. Local/ratio directions describe the clean-point small-radius slopes, but direct `loss3_original` PGD is the fair large-radius endpoint attack. The mismatch is the intended local-to-global gap.
+
+Raw artifacts recorded:
+
+- `ray_profile.csv`, `ray_profile_aggregate_curves.csv`, `ray_direction_summary.csv`, `ray_direction_aggregate.csv`, `ray_winner_summary.csv`, `attack_trace.csv`, `attack_best_by_sample.csv`, `direction_alignment.csv`, `directions.npz`, `deltas.npz`, figures, and `manifest.json`.
+
+
 ## 2026-05-16 Experiment 4 Ray Profile Status Updated To Complete
 
-Status: completed for the current FNO / 1D Burgers `nu=0.001` scope. This entry
+Status: historical/superseded by the corrected batch-20 GPU run above. The raw five-sample artifacts are retained, but the endpoint-winner interpretation is not the final conclusion.
+
+Previous status: completed for the current FNO / 1D Burgers `nu=0.001` scope. This entry
 supersedes earlier notes that described Experiment 4 as not yet fully run.
 
 Updated durable status files:
@@ -30,9 +64,10 @@ Completion evidence:
   `ray_winner_summary.csv`, `attack_trace.csv`, `directions.npz`, figures, and
   `manifest.json`.
 
-Key conclusions now recorded:
+Historical conclusions from that superseded five-sample run:
 
-- The experiment directly shows the nonlinear local-to-global gap.
+- This old five-sample run was useful for raw curve inspection, but its endpoint-winner interpretation is superseded by the corrected batch-20 run above.
+- The old run suggested a nonlinear local-to-global gap.
 - Small-radius clean residual norm growth winner: `local_outward_growth` in 5/5
   samples.
 - Small-radius residual-increment winner: `local_error_svd` in 5/5 samples.
