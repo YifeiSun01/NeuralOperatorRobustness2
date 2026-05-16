@@ -1,54 +1,54 @@
-# Loss3 Original 作为回归对抗主目标的理论与实验计划
+# Theory and Experiment Plan for `loss3_original` as the Main Regression Attack Objective
 
-## 0. 中心目标
+## 0. Central Goal
 
-本文档围绕一个核心问题组织：
+This document is organized around one core question:
 
-> 为什么在神经算子 / 回归鲁棒性问题里，`loss3_original`
+> Why is `loss3_original`
 > \[
 > \max_{\|\delta\|_p\le \varepsilon}
 > \|f(x+\delta)-j(x+\delta)\|_q
 > \]
-> 才是最合适的 finite-radius regression attack objective？
+> the most appropriate finite-radius regression attack objective for neural operator / regression robustness?
 
-这里：
+Here:
 
-- \(f\) 是模型。
-- \(j\) 是真实 solver / oracle。
-- \(e(x)=f(x)-j(x)\) 是误差场。
-- \(b=e(x)\) 是 clean input 上已有的 residual。
-- \(\Delta f=f(x+\delta)-f(x)\)。
-- \(\Delta j=j(x+\delta)-j(x)\)。
-- \(\Delta e=e(x+\delta)-e(x)=\Delta f-\Delta j\)。
+- \(f\) is the model.
+- \(j\) is the true solver / oracle.
+- \(e(x)=f(x)-j(x)\) is the error field.
+- \(b=e(x)\) is the existing residual at the clean input.
+- \(\Delta f=f(x+\delta)-f(x)\).
+- \(\Delta j=j(x+\delta)-j(x)\).
+- \(\Delta e=e(x+\delta)-e(x)=\Delta f-\Delta j\).
 
-主结论：
+Main conclusion:
 
-> 回归稳健性不是要求 \(f\) 不变，而是要求 \(f\) 跟着 \(j\) 一起正确地变。  
-> 因此真正危险的方向不是 high model sensitivity direction，而是 high mismatch direction between \(f\) and \(j\)。
+> Regression robustness does not mean requiring \(f\) to be invariant. It means requiring \(f\) to co-vary correctly with \(j\).
+> Therefore, the truly dangerous directions are not high model sensitivity directions, but high mismatch directions between \(f\) and \(j\).
 
-也就是说：
-
-\[
-\|f(x+\delta)-f(x)\|_q \text{ 大}
-\]
-
-并不推出：
+In other words:
 
 \[
-\|f(x+\delta)-j(x+\delta)\|_q \text{ 大}.
+\|f(x+\delta)-f(x)\|_q \text{ is large}
 \]
 
-因为真实 solver \(j\) 也会随输入扰动变化。
+does not imply:
 
-## 1. 整体证明路线
+\[
+\|f(x+\delta)-j(x+\delta)\|_q \text{ is large}.
+\]
 
-整条逻辑分成五步。
+The true solver \(j\) also changes when the input is perturbed.
+
+## 1. Overall Proof Route
+
+The argument has five steps.
 
 ### Step 1: Oracle Consistency
 
-先证明真实回归攻击必须比较 \(f(x+\delta)\) 和 \(j(x+\delta)\)。
+First, show that a true regression attack must compare \(f(x+\delta)\) with \(j(x+\delta)\).
 
-真实目标：
+The true objective is:
 
 \[
 L_3^{orig}(\delta)
@@ -58,43 +58,43 @@ L_3^{orig}(\delta)
 \|e(x+\delta)\|_q.
 \]
 
-反例：
+Counterexample:
 
-如果模型完美，
+If the model is perfect,
 
 \[
 f=j,
 \]
 
-那么任意扰动下真实回归误差都应该为：
+then the true regression error under any perturbation should be:
 
 \[
 f(x+\delta)-j(x+\delta)=0.
 \]
 
-所以合理的回归攻击 loss 应该为 0。
+So a reasonable regression attack loss should be 0.
 
-但：
+However:
 
 \[
 L_1(\delta)=\|f(x+\delta)-f(x)\|_q
 \]
 
-和：
+and:
 
 \[
 L_2(\delta)=\|f(x+\delta)-j(x)\|_q
 \]
 
-仍然可能很大，因为真实 PDE / solver 本身可能对输入敏感。
+can still be large, because the true PDE / solver itself may be sensitive to the input.
 
-结论：
+Conclusion:
 
-> `loss1` 和 `loss2` 可以产生 false alert：模型完全正确时，它们仍然会报出大的攻击效果。
+> `loss1` and `loss2` can produce false alerts: even when the model is exactly correct, they may still report a large attack effect.
 
-### Step 2: Surrogate Loss 的偏差来源
+### Step 2: Sources of Bias in Surrogate Losses
 
-三个基础 loss：
+The three base losses are:
 
 \[
 L_1(\delta)=\|f(x+\delta)-f(x)\|_q=\|\Delta f\|_q.
@@ -109,23 +109,23 @@ L_3(\delta)=\|f(x+\delta)-j(x+\delta)\|_q
 =\|b+\Delta f-\Delta j\|_q.
 \]
 
-三者的含义：
+Their meanings are:
 
-- `loss1`: 模型输出自己变了多少。
-- `loss2`: 模型扰动后输出离 clean solver target 多远。
-- `loss3`: 扰动输入下模型和真实 solver 的真实回归误差。
+- `loss1`: how much the model output changes by itself.
+- `loss2`: how far the perturbed model output is from the clean solver target.
+- `loss3`: the true regression error under the perturbed input.
 
-`loss1` 丢掉了 \(j\) 的响应。  
-`loss2` 冻结了 oracle，丢掉了 \(j(x+\delta)-j(x)\)。  
-`loss3` 才保留了 perturbed-input oracle。
+`loss1` drops the response of \(j\).
+`loss2` freezes the oracle and drops \(j(x+\delta)-j(x)\).
+`loss3` keeps the perturbed-input oracle.
 
-结论：
+Conclusion:
 
-> 如果 \(j(x+\delta)-j(x)\) 不可忽略，那么 `loss1` / `loss2` 不是 `loss3` 的可靠 surrogate。
+> If \(j(x+\delta)-j(x)\) is not negligible, then `loss1` / `loss2` are not reliable surrogates for `loss3`.
 
-### Step 3: 局部线性化解释差异
+### Step 3: Local Linearization Explains the Difference
 
-在 \(x\) 附近做局部展开：
+Use a local expansion around \(x\):
 
 \[
 \Delta f \approx J_f(x)\delta.
@@ -142,19 +142,19 @@ L_3(\delta)=\|f(x+\delta)-j(x+\delta)\|_q
 (J_f(x)-J_j(x))\delta.
 \]
 
-令：
+Let:
 
 \[
 A=J_f(x)-J_j(x).
 \]
 
-则：
+Then:
 
 \[
 e(x+\delta)\approx b+A\delta.
 \]
 
-三个局部敏感性：
+The three local sensitivities are:
 
 \[
 L_f=\|J_f\|_{p\to q}.
@@ -168,33 +168,33 @@ L_j=\|J_j\|_{p\to q}.
 L_e=\|J_f-J_j\|_{p\to q}.
 \]
 
-解释：
+Interpretation:
 
-- \(L_f\): 模型自身对输入扰动有多敏感。
-- \(L_j\): 真实 solver 自身对输入扰动有多敏感。
-- \(L_e\): 模型和 solver 的局部响应差别有多大。
+- \(L_f\): how sensitive the model itself is to input perturbations.
+- \(L_j\): how sensitive the true solver itself is to input perturbations.
+- \(L_e\): how different the local responses of the model and solver are.
 
-关键情况：
-
-\[
-L_f \text{ 大},\quad L_j \text{ 大},\quad L_e \text{ 小}.
-\]
-
-这说明 \(f\) 和 \(j\) 都变化很快，但变化方向和幅度相近，因此误差场不敏感。
-
-结论：
-
-> \(f\) 平滑不等于回归稳健；真正重要的是 \(f-j\) 的误差场是否稳定。
-
-### Step 4: 区分三种不同的“变化”
-
-在局部仿射模型：
+Key case:
 
 \[
-e(x+\delta)\approx b+A\delta
+L_f \text{ is large},\quad L_j \text{ is large},\quad L_e \text{ is small}.
 \]
 
-下，有三种不同对象。
+This means both \(f\) and \(j\) change rapidly, but they change with similar directions and magnitudes, so the error field is not sensitive.
+
+Conclusion:
+
+> Smoothness of \(f\) is not the same as regression robustness. What matters is whether the error field \(f-j\) is stable.
+
+### Step 4: Separate Three Different Notions of Change
+
+Under the local affine model:
+
+\[
+e(x+\delta)\approx b+A\delta,
+\]
+
+there are three different objects.
 
 #### 4.1 Error Field Movement
 
@@ -204,17 +204,17 @@ e(x+\delta)\approx b+A\delta
 \frac{\|A\delta\|_q}{\|\delta\|_p}.
 \]
 
-它研究：
+This asks:
 
-> 误差向量本身移动得多快？
+> How quickly does the error vector itself move?
 
-局部极限对应：
+The local limit corresponds to:
 
 \[
 \|A\|_{p\to q}=\|J_f-J_j\|_{p\to q}.
 \]
 
-这是 residual increment ratio 的意义。
+This is the meaning of the residual increment ratio.
 
 #### 4.2 Error Norm Growth
 
@@ -224,17 +224,17 @@ e(x+\delta)\approx b+A\delta
 \frac{\|b+A\delta\|_q-\|b\|_q}{\|\delta\|_p}.
 \]
 
-它研究：
+This asks:
 
-> 当前误差范数是否被单位扰动往外推大？
+> Does the current error norm get pushed outward per unit perturbation?
 
-当 \(q=2\) 且 \(b\neq 0\)，对二范数做一阶 Taylor 展开：
+When \(q=2\) and \(b\neq 0\), a first-order Taylor expansion of the two-norm gives:
 
 \[
 \nabla_z\|z\|_2\big|_{z=b}=\frac{b}{\|b\|_2}.
 \]
 
-因此：
+Therefore:
 
 \[
 \|b+A\delta\|_2-\|b\|_2
@@ -245,7 +245,7 @@ A\delta
 \right\rangle.
 \]
 
-如果 \(\delta=\|\delta\|_p v\)，则：
+If \(\delta=\|\delta\|_p v\), then:
 
 \[
 \frac{\|b+A\delta\|_2-\|b\|_2}{\|\delta\|_p}
@@ -256,11 +256,11 @@ Av
 \right\rangle.
 \]
 
-解释：
+Interpretation:
 
-> norm increment ratio 不看 \(A\delta\) 有多长，而看它在当前误差方向 \(b\) 上的 outward component 有多大。
+> The norm increment ratio does not ask how long \(A\delta\) is. It asks how large the outward component of \(A\delta\) is along the current error direction \(b\).
 
-所以它不是 Lipschitz norm，而是 local outward risk growth。
+So it is not a Lipschitz norm. It is local outward risk growth.
 
 #### 4.3 Final Error
 
@@ -268,56 +268,56 @@ Av
 \|e(x+\delta)\|_q=\|b+A\delta\|_q.
 \]
 
-它研究：
+This asks:
 
-> 扰动后最终误差有多大？
+> How large is the final error after perturbation?
 
-真实 finite-radius attack 就是：
+The true finite-radius attack is:
 
 \[
 \max_{\|\delta\|_p\le \varepsilon}
 \|e(x+\delta)\|_q.
 \]
 
-这是 `loss3_original` 的意义。
+This is the meaning of `loss3_original`.
 
-#### 4.4 关键区分
+#### 4.4 Key Distinction
 
-Error field can move without increasing risk.
+The error field can move without increasing risk.
 
-例如：
+For example:
 
 \[
 b=(1,0),\quad A\delta=(-2,0).
 \]
 
-则：
+Then:
 
 \[
 \|A\delta\|=2
 \]
 
-很大，但：
+is large, but:
 
 \[
 \|b+A\delta\|=\|(-1,0)\|=1=\|b\|.
 \]
 
-误差向量移动很大，但误差范数没有增长。
+The error vector moves a lot, but the error norm does not grow.
 
-结论：
+Conclusion:
 
-> local Lipschitz-large direction 不一定是 adversarial-risk-increasing direction。
+> A locally Lipschitz-large direction is not necessarily an adversarial-risk-increasing direction.
 
-### Step 5: 局部和全局用路径积分连接
+### Step 5: Connect Local and Global Behavior Through a Path Integral
 
-令路径：
+Let the path be:
 
 \[
 \gamma(t)=x+t\delta,\quad t\in[0,1].
 \]
 
-由微积分基本定理：
+By the fundamental theorem of calculus:
 
 \[
 e(x+\delta)-e(x)
@@ -326,7 +326,7 @@ e(x+\delta)-e(x)
 J_e(x+t\delta)\delta\,dt.
 \]
 
-所以：
+So:
 
 \[
 e(x+\delta)
@@ -336,7 +336,7 @@ b+
 J_e(x+t\delta)\delta\,dt.
 \]
 
-进一步：
+Furthermore:
 
 \[
 \|e(x+\delta)-e(x)\|_q
@@ -352,21 +352,21 @@ J_e(x+t\delta)\delta\,dt.
 \|J_e(x+t\delta)\|_{p\to q}\,dt.
 \]
 
-解释：
+Interpretation:
 
-- 局部 Lipschitz 看的是瞬时放大率 \(J_e(x)\)。
-- finite-radius attack 看的是整条路径上 \(J_e(x+t\delta)\) 的累计效果。
+- Local Lipschitz analysis looks at the instantaneous amplification rate \(J_e(x)\).
+- A finite-radius attack depends on the accumulated effect along the entire path \(J_e(x+t\delta)\).
 
-结论：
+Conclusion:
 
-> local Lipschitz controls possible instantaneous growth, but does not equal finite-radius attack loss.
+> Local Lipschitz behavior controls possible instantaneous growth, but it is not equal to finite-radius attack loss.
 
-一个方向可以局部斜率很大，但沿路径变弯、饱和、旋转，终点误差不大。  
-另一个方向初始斜率未必最大，但沿路径累计后终点最大。
+One direction may have a large local slope but then bend, saturate, or rotate along the path, producing a small endpoint error.
+Another direction may not have the largest initial slope, but may accumulate the largest endpoint error along the path.
 
-## 2. 九种 Objective 的语言含义
+## 2. Meanings of the Nine Objectives
 
-每个基础 loss 有三种 objective variant。
+Each base loss has three objective variants.
 
 ### 2.1 Original Objective
 
@@ -374,9 +374,9 @@ J_e(x+t\delta)\delta\,dt.
 L(\delta).
 \]
 
-问：
+Question:
 
-> 终点值多大？
+> How large is the endpoint value?
 
 ### 2.2 Increment Ratio
 
@@ -384,11 +384,11 @@ L(\delta).
 \frac{L(\delta)-L(0)}{\|\delta\|_p+\eta}.
 \]
 
-问：
+Question:
 
-> 单位扰动带来的增长效率多大？
+> How much growth is obtained per unit perturbation?
 
-它适合作为 local diagnostic，不适合作为大半径 finite-radius 主攻击 loss。
+It is suitable as a local diagnostic. It is not suitable as the main large-radius finite-radius attack loss.
 
 ### 2.3 Regularized Objective
 
@@ -396,63 +396,63 @@ L(\delta).
 L(\delta)-C\|\delta\|_p.
 \]
 
-问：
+Question:
 
-> 增长收益减去扰动代价后是否划算？
+> After subtracting perturbation cost, is the growth worthwhile?
 
-它可能选择内部半径，不一定使用完整 \(\varepsilon\) budget。
+It may choose an interior radius and may not use the full \(\varepsilon\) budget.
 
-### 2.4 3 by 3 总表
+### 2.4 3 by 3 Summary Table
 
-| Objective | 数学形式 | 含义 | 适合用途 |
+| Objective | Mathematical form | Meaning | Suitable use |
 |---|---|---|---|
-| loss1_original | \(\|\Delta f\|\) | 模型输出自己变了多少 | surrogate baseline / false alert 对照 |
-| loss1_increment_ratio | \(\|\Delta f\|/\|\delta\|\) | 模型自身局部敏感性 | 估计 \(J_f\) 的局部响应 |
-| loss1_regularized | \(\|\Delta f\|-C\|\delta\|\) | 模型变化收益减扰动代价 | cost-aware surrogate 对照 |
-| loss2_original | \(\|b+\Delta f\|\) | fixed clean target error | fixed-target surrogate 对照 |
-| loss2_increment_ratio | \((\|b+\Delta f\|-\|b\|)/\|\delta\|\) | fixed-target error 的局部 outward growth | 局部诊断 |
-| loss2_regularized | \(\|b+\Delta f\|-C\|\delta\|\) | fixed-target 增长收益减扰动代价 | cost-aware surrogate 对照 |
-| loss3_original | \(\|b+\Delta f-\Delta j\|\) | perturbed-input regression error | 主 finite-radius attack objective |
-| loss3_increment_ratio | \((\|b+\Delta f-\Delta j\|-\|b\|)/\|\delta\|\) | 真实误差范数的局部 outward growth | local diagnostic |
-| loss3_regularized | \(\|b+\Delta f-\Delta j\|-C\|\delta\|\) | 真实误差收益减扰动代价 | cost-aware 对照 |
+| loss1_original | \(\|\Delta f\|\) | How much the model output changes by itself | Surrogate baseline / false-alert control |
+| loss1_increment_ratio | \(\|\Delta f\|/\|\delta\|\) | Local sensitivity of the model itself | Estimate the local response of \(J_f\) |
+| loss1_regularized | \(\|\Delta f\|-C\|\delta\|\) | Model-change gain minus perturbation cost | Cost-aware surrogate control |
+| loss2_original | \(\|b+\Delta f\|\) | Fixed clean-target error | Fixed-target surrogate control |
+| loss2_increment_ratio | \((\|b+\Delta f\|-\|b\|)/\|\delta\|\) | Local outward growth of fixed-target error | Local diagnostic |
+| loss2_regularized | \(\|b+\Delta f\|-C\|\delta\|\) | Fixed-target gain minus perturbation cost | Cost-aware surrogate control |
+| loss3_original | \(\|b+\Delta f-\Delta j\|\) | Perturbed-input regression error | Main finite-radius attack objective |
+| loss3_increment_ratio | \((\|b+\Delta f-\Delta j\|-\|b\|)/\|\delta\|\) | Local outward growth of true error norm | Local diagnostic |
+| loss3_regularized | \(\|b+\Delta f-\Delta j\|-C\|\delta\|\) | True-error gain minus perturbation cost | Cost-aware control |
 
-另外建议新增：
+Also recommended:
 
-| Objective | 数学形式 | 含义 | 适合用途 |
+| Objective | Mathematical form | Meaning | Suitable use |
 |---|---|---|---|
-| loss3_residual_increment_ratio | \(\|\Delta f-\Delta j\|/\|\delta\|\) | error field movement | \(J_f-J_j\) 局部 Lipschitz / mismatch |
+| loss3_residual_increment_ratio | \(\|\Delta f-\Delta j\|/\|\delta\|\) | Error field movement | Local Lipschitz / mismatch of \(J_f-J_j\) |
 
 ## 3. Method-Objective Matching
 
-不同优化方法适合不同数学结构。
+Different optimization methods match different mathematical structures.
 
 ### 3.1 Generalized Power Iteration
 
-适合局部齐次 operator norm：
+This is suitable for local homogeneous operator norms:
 
 \[
 \max_{\|v\|_p=1}\|Av\|_q.
 \]
 
-其中 \(A=J_f-J_j\) 或 \(J_f\)。
+where \(A=J_f-J_j\) or \(J_f\).
 
-它适合：
+It is suitable for:
 
-- residual increment ratio；
-- small-\(\varepsilon\) 局部 Lipschitz 分析；
-- local mechanism。
+- residual increment ratio;
+- small-\(\varepsilon\) local Lipschitz analysis;
+- local mechanism analysis.
 
-不适合作为大半径 finite-radius attack 的唯一方法，因为全局目标非线性、非齐次、路径相关。
+It is not suitable as the only method for large-radius finite-radius attacks, because the global objective is nonlinear, non-homogeneous, and path dependent.
 
 ### 3.2 PGD / LP-Steepest PGD
 
-适合 finite-radius 非线性攻击：
+These are suitable for finite-radius nonlinear attacks:
 
 \[
 \max_{\|\delta\|_p\le\varepsilon}\|e(x+\delta)\|_q.
 \]
 
-LP-steepest PGD 每一步选择：
+LP-steepest PGD chooses at each step:
 
 \[
 s_k=
@@ -460,83 +460,83 @@ s_k=
 \langle \nabla_\delta L(\delta_k),s\rangle.
 \]
 
-它比普通 Euclidean gradient 更匹配 \(p\)-ball 几何，尤其当 \(p\neq 2\)。
+It is better matched to \(p\)-ball geometry than a plain Euclidean gradient step, especially when \(p\neq 2\).
 
-结论：
+Conclusion:
 
-> GPI / ratio 适合局部诊断；PGD / LP-steepest on loss3_original 适合 finite-radius attack。
+> GPI / ratio objectives are suitable for local diagnostics. PGD / LP-steepest PGD on `loss3_original` are suitable for finite-radius attacks.
 
-## 4. 需要验证的核心 Claims
+## 4. Core Claims to Validate
 
-### Claim 1: loss3_original 是 oracle-consistent 的主攻击目标
+### Claim 1: `loss3_original` Is the Oracle-Consistent Main Attack Objective
 
-只有 `loss3_original` 直接度量：
+Only `loss3_original` directly measures:
 
 \[
 f(x+\delta)-j(x+\delta).
 \]
 
-`loss1` / `loss2` 是 surrogate。
+`loss1` / `loss2` are surrogates.
 
-### Claim 2: loss1 / loss2 会产生 false alert
+### Claim 2: `loss1` / `loss2` Can Produce False Alerts
 
-它们可能找到 high model sensitivity direction，但这不等于 high regression error。
+They may find a high model sensitivity direction, but that is not the same as high regression error.
 
-### Claim 3: 大多数方向上 \(f\) 和 \(j\) 可能同向变化
+### Claim 3: In Many Directions, \(f\) and \(j\) May Co-Vary
 
-因此 \(f\) 变化大不一定是错误，可能是真实 solver 也应该变化。
+Therefore, a large change in \(f\) is not necessarily an error. The true solver may be changing in the same way.
 
-### Claim 4: 真正危险的是 high mismatch direction
+### Claim 4: The Dangerous Directions Are High Mismatch Directions
 
-危险方向满足：
-
-\[
-\Delta f-\Delta j \text{ 大}
-\]
-
-或者：
+Dangerous directions satisfy:
 
 \[
-\cos(\Delta f,\Delta j) \text{ 低或为负}.
+\Delta f-\Delta j \text{ is large}
 \]
 
-### Claim 5: ratio / regularized 是局部或 cost-aware 诊断，不是主全局攻击目标
+or:
 
-它们可以解释局部机制，但不能替代：
+\[
+\cos(\Delta f,\Delta j) \text{ is low or negative}.
+\]
+
+### Claim 5: Ratio / Regularized Objectives Are Local or Cost-Aware Diagnostics, Not the Main Global Attack Objective
+
+They can explain local mechanisms, but they cannot replace:
 
 \[
 \max_{\|\delta\|\le\varepsilon}\|e(x+\delta)\|.
 \]
 
-### Claim 6: 局部最优方向不等于 finite-radius 全局终点最优方向
+### Claim 6: A Locally Optimal Direction Is Not the Same as a Finite-Radius Global Endpoint-Optimal Direction
 
-由路径积分和非线性路径效应解释。
+This follows from the path-integral view and nonlinear path effects.
 
-## 5. 实验计划
+## 5. Experiment Plan
 
-实验目标不是堆满 27 个组合，而是每组实验服务一个 claim。
+The goal of these experiments is not to exhaustively run 27 combinations. Instead, each experiment should support a specific claim.
 
 ### Experiment 1: Main Objective Comparison
 
-#### 目的
+#### Purpose
 
-验证：
+Validate:
 
-> `loss1_original` / `loss2_original` 不是 `loss3_original` 的可靠替代。
+> `loss1_original` / `loss2_original` are not reliable substitutes for `loss3_original`.
 
-#### 比较对象
+#### Objects to Compare
 
 - `loss1_original`
 - `loss2_original`
 - `loss3_original`
 
-#### 方法
+#### Method
 
-对同一 batch、同一 \(\varepsilon\)、同一 attack method，例如 PGD / LP-steepest，分别优化三种 original objective。
+On the same batch, with the same \(\varepsilon\), and using the same attack method, for example PGD / LP-steepest, separately optimize the three original objectives.
 
-#### 记录指标
+#### Metrics to Record
 
-对每个 final delta 记录：
+For each final delta, record:
 
 \[
 \|\Delta f\|_q
@@ -562,14 +562,14 @@ f(x+\delta)-j(x+\delta).
 \cos(\Delta f,\Delta j)
 \]
 
-tracking discount：
+tracking discount:
 
 \[
 D_f(\delta)=
 \frac{\|\Delta f-\Delta j\|_q}{\|\Delta f\|_q+\eta}.
 \]
 
-对称版本：
+Symmetric version:
 
 \[
 D_{sym}(\delta)=
@@ -577,23 +577,23 @@ D_{sym}(\delta)=
 {\|\Delta f\|_q+\|\Delta j\|_q+\eta}.
 \]
 
-#### 预期现象
+#### Expected Pattern
 
-`loss1_original` 方向：
+For the `loss1_original` direction:
 
-- \(\|\Delta f\|\) 大；
-- 但 \(\|e(x+\delta)\|\) 不一定最大；
-- \(\cos(\Delta f,\Delta j)\) 可能高；
-- \(D_f\) 可能小。
+- \(\|\Delta f\|\) is large;
+- \(\|e(x+\delta)\|\) is not necessarily maximal;
+- \(\cos(\Delta f,\Delta j)\) may be high;
+- \(D_f\) may be small.
 
-`loss3_original` 方向：
+For the `loss3_original` direction:
 
-- \(\|\Delta f\|\) 不一定最大；
-- 但 \(\|e(x+\delta)\|\) 最大；
-- \(\|\Delta f-\Delta j\|\) 更大；
-- \(\cos(\Delta f,\Delta j)\) 更低。
+- \(\|\Delta f\|\) is not necessarily maximal;
+- \(\|e(x+\delta)\|\) is maximal;
+- \(\|\Delta f-\Delta j\|\) is larger;
+- \(\cos(\Delta f,\Delta j)\) is lower.
 
-#### 支撑 Claim
+#### Claims Supported
 
 - Claim 1
 - Claim 2
@@ -601,15 +601,15 @@ D_{sym}(\delta)=
 
 ### Experiment 2: Local Response Decomposition Table
 
-#### 目的
+#### Purpose
 
-验证局部上：
+Validate the local statement:
 
-> \(L_f,L_j,L_e\) 的大小和方向都不同；高 \(L_f\) 不等于高 \(L_e\)。
+> The magnitude and direction of \(L_f,L_j,L_e\) are different; high \(L_f\) does not imply high \(L_e\).
 
-#### 方向
+#### Directions
 
-估计以下方向：
+Estimate the following directions:
 
 \[
 v_f^*=\arg\max_{\|v\|_p=1}\|J_fv\|_q.
@@ -623,7 +623,7 @@ v_j^*=\arg\max_{\|v\|_p=1}\|J_jv\|_q.
 v_e^*=\arg\max_{\|v\|_p=1}\|(J_f-J_j)v\|_q.
 \]
 
-局部 outward growth 方向：
+Local outward growth direction:
 
 \[
 v_{growth}^*
@@ -635,11 +635,11 @@ v_{growth}^*
 \right\rangle
 \]
 
-仅在 \(q=2\) 且 \(e(x)\neq0\) 时使用。
+Use this only when \(q=2\) and \(e(x)\neq0\).
 
-再加 random directions。
+Also include random directions.
 
-#### 记录表
+#### Table to Record
 
 | direction | \(\|\Delta f\|/\epsilon\) | \(\|\Delta j\|/\epsilon\) | \(\|\Delta f-\Delta j\|/\epsilon\) | \(\cos(\Delta f,\Delta j)\) | \(D_f\) |
 |---|---:|---:|---:|---:|---:|
@@ -649,29 +649,29 @@ v_{growth}^*
 | \(v_{growth}^*\) | | | | | |
 | random mean | | | | | |
 
-#### 预期现象
+#### Expected Pattern
 
-如果 \(v_f^*\) 上：
+If along \(v_f^*\):
 
-- \(\|\Delta f\|/\epsilon\) 大；
-- \(\|\Delta j\|/\epsilon\) 也大；
-- \(\cos(\Delta f,\Delta j)\) 高；
-- \(\|\Delta f-\Delta j\|/\epsilon\) 相对小；
+- \(\|\Delta f\|/\epsilon\) is large;
+- \(\|\Delta j\|/\epsilon\) is also large;
+- \(\cos(\Delta f,\Delta j)\) is high;
+- \(\|\Delta f-\Delta j\|/\epsilon\) is relatively small;
 
-则说明：
+then:
 
-> loss1 的最坏方向可能是 false alert：模型变大，但 solver 也跟着变。
+> The worst direction for `loss1` may be a false alert: the model changes a lot, but the solver changes with it.
 
-如果 \(v_e^*\) 或 \(v_{growth}^*\) 上：
+If along \(v_e^*\) or \(v_{growth}^*\):
 
-- \(\|\Delta f-\Delta j\|/\epsilon\) 大；
-- \(\cos(\Delta f,\Delta j)\) 低或负；
+- \(\|\Delta f-\Delta j\|/\epsilon\) is large;
+- \(\cos(\Delta f,\Delta j)\) is low or negative;
 
-则说明：
+then:
 
-> 这些方向才是真正的 high mismatch direction。
+> These are the true high mismatch directions.
 
-#### 支撑 Claim
+#### Claims Supported
 
 - Claim 2
 - Claim 3
@@ -679,17 +679,17 @@ v_{growth}^*
 
 ### Experiment 3: Small-Epsilon Sweep
 
-#### 目的
+#### Purpose
 
-验证 increment / residual ratio 是否确实刻画局部结构。
+Validate whether increment / residual ratios really characterize local structure.
 
-#### 半径
+#### Radii
 
 \[
 \epsilon\in\{10^{-4},10^{-3},10^{-2},10^{-1}\}.
 \]
 
-#### 估计量
+#### Estimators
 
 \[
 L_f(\epsilon)\approx
@@ -709,7 +709,7 @@ L_e(\epsilon)\approx
 \frac{\|e(x+\epsilon v)-e(x)\|_q}{\epsilon}.
 \]
 
-以及 norm growth：
+Also measure norm growth:
 
 \[
 G_e(\epsilon)\approx
@@ -717,36 +717,36 @@ G_e(\epsilon)\approx
 \frac{\|e(x+\epsilon v)\|_q-\|e(x)\|_q}{\epsilon}.
 \]
 
-#### 记录
+#### Records
 
-- 数值是否随 \(\epsilon\) 稳定。
-- 最坏方向 \(v^*(\epsilon)\) 是否稳定。
-- 不同 \(\epsilon\) 下方向 cosine：
+- Whether the values are stable across \(\epsilon\).
+- Whether the worst direction \(v^*(\epsilon)\) is stable.
+- Direction cosines across different \(\epsilon\) values:
 
 \[
 \cos(v^*(\epsilon_i),v^*(\epsilon_j)).
 \]
 
-#### 预期现象
+#### Expected Pattern
 
-如果小 \(\epsilon\) 下数值和方向稳定，则 ratio objective 确实刻画局部结构。
+If the values and directions are stable at small \(\epsilon\), then the ratio objective indeed characterizes local structure.
 
-如果 \(\epsilon\) 变大后数值和方向漂移，则说明非线性路径效应出现。
+If the values and directions drift as \(\epsilon\) grows, then nonlinear path effects are appearing.
 
-#### 支撑 Claim
+#### Claims Supported
 
 - Claim 5
 - Claim 6
 
 ### Experiment 4: Ray Profile / Local-to-Global Profile
 
-#### 目的
+#### Purpose
 
-验证：
+Validate:
 
-> 局部好方向不等于 finite-radius endpoint 好方向。
+> A locally good direction is not necessarily a good finite-radius endpoint direction.
 
-#### 方向来源
+#### Direction Sources
 
 - `loss3_original` final direction
 - `loss3_increment_ratio` final direction
@@ -754,21 +754,21 @@ G_e(\epsilon)\approx
 - `loss3_regularized` final direction
 - random direction
 
-将每个 final delta 归一化：
+Normalize each final delta:
 
 \[
 v=\frac{\delta}{\|\delta\|_p}.
 \]
 
-#### 曲线
+#### Curves
 
-对：
+For:
 
 \[
-r\in[0,\varepsilon]
+r\in[0,\varepsilon],
 \]
 
-画：
+plot:
 
 \[
 r\mapsto \|e(x+rv)\|_q.
@@ -784,79 +784,79 @@ r\mapsto
 \frac{\|e(x+rv)-e(x)\|_q}{r+\eta}.
 \]
 
-#### 预期现象
+#### Expected Pattern
 
-increment ratio 方向：
+For an increment-ratio direction:
 
-- 小 \(r\) 下增长率高；
-- 大 \(r\) 下可能饱和或变弯；
-- \(r=\varepsilon\) 终点不一定最大。
+- the growth rate is high for small \(r\);
+- the curve may saturate or bend for large \(r\);
+- the endpoint at \(r=\varepsilon\) is not necessarily maximal.
 
-original direction：
+For an original-objective direction:
 
-- 小 \(r\) 初始斜率未必最大；
-- 但 \(r=\varepsilon\) 的 \(\|e(x+rv)\|\) 最大。
+- the initial slope at small \(r\) is not necessarily maximal;
+- but \(\|e(x+rv)\|\) at \(r=\varepsilon\) is maximal.
 
-#### 支撑 Claim
+#### Claims Supported
 
 - Claim 5
 - Claim 6
 
 ### Experiment 5: Boundary-Rescaled Comparison
 
-#### 目的
+#### Purpose
 
-验证：
+Validate:
 
-> ratio / regularized 找到的方向，即使缩放到同样 \(\varepsilon\)，也不一定最大化 `loss3_original`。
+> Even after rescaling the directions found by ratio / regularized objectives to the same \(\varepsilon\), those directions do not necessarily maximize `loss3_original`.
 
-#### 方法
+#### Method
 
-对每个 final delta：
+For each final delta:
 
 \[
 v=\frac{\delta}{\|\delta\|_p}.
 \]
 
-构造：
+Construct:
 
 \[
 \delta_{bdry}=\varepsilon v.
 \]
 
-比较：
+Compare:
 
-- final delta 上的 `loss3_original`
-- boundary-rescaled delta 上的 `loss3_original`
-- final delta 上的 `loss3_increment_ratio`
-- boundary-rescaled delta 上的 `loss3_increment_ratio`
+- `loss3_original` on the final delta;
+- `loss3_original` on the boundary-rescaled delta;
+- `loss3_increment_ratio` on the final delta;
+- `loss3_increment_ratio` on the boundary-rescaled delta.
 
-#### 预期现象
+#### Expected Pattern
 
-- regularized 的 final delta 可能很小。
-- 放大到 boundary 后 loss 可能增加，但仍未必达到 original attack 方向。
-- increment ratio 方向可能单位增长率高，但 endpoint loss 不最大。
+- The final delta from the regularized objective may be small.
+- Scaling it to the boundary may increase the loss, but still may not reach the original-attack direction.
+- The increment-ratio direction may have high unit growth, but may not maximize endpoint loss.
 
-#### 支撑 Claim
+#### Claims Supported
 
 - Claim 5
 - Claim 6
 
 ### Experiment 6: Direction Rotation Along Path
 
-#### 目的
+#### Purpose
 
-验证 finite-radius attack 的路径相关性。
+Validate the path dependence of finite-radius attacks.
 
-#### 方法
+#### Method
 
-取一个 original attack direction \(\delta^*\)，定义：
+Take an original attack direction \(\delta^*\), and define:
 
 \[
 x_t=x+t\delta^*,\quad t\in[0,1].
 \]
 
-在每个 \(x_t\) 重新估计：
+At each \(x_t\), re-estimate:
 
 \[
 v_e^*(x_t)
@@ -865,31 +865,61 @@ v_e^*(x_t)
 \|J_e(x_t)v\|_q.
 \]
 
-记录：
+Record:
 
 \[
 \cos(v_e^*(x_t),v_e^*(x_0)).
 \]
 
-也可以记录相邻方向：
+Also optionally record adjacent-direction similarity:
 
 \[
 \cos(v_e^*(x_t),v_e^*(x_{t+\Delta t})).
 \]
 
-#### 预期现象
+#### Expected Pattern
 
-如果 cosine 明显下降或震荡，说明：
+If the cosine drops substantially or oscillates, then:
 
-> 局部最坏方向沿路径旋转，单点局部 ratio 不能代表整个 finite-radius attack。
+> The local worst direction rotates along the path, so a single-point local ratio cannot represent the whole finite-radius attack.
 
-#### 支撑 Claim
+#### Claims Supported
 
 - Claim 6
 
-## 6. 已有结果可如何解释
 
-已有代表性结果：
+## 5.1 Current Completion Status for the Minimal Six Experiments - 2026-05-16
+
+This status note is for planning the next round of work. The current intended
+scope is **FNO / Burgers with `nu=0.001` only**. Broader extensions such as
+`nu=0.01` or default-architecture sweeps are intentionally not counted as
+required for this immediate plan because they would make the next round too
+expensive.
+
+Current count:
+
+- Done: 3 experiments.
+- Partially done: 2 experiments.
+- Not yet done as a full experiment: 1 experiment.
+
+| Experiment | Current Status | What Is Already Done | What Still Needs Work |
+|---|---|---|---|
+| Experiment 1: Main Objective Comparison | Done | The `loss1_original`, `loss2_original`, and `loss3_original` comparison has been run and interpreted. The existing results support that `loss1` / `loss2` are surrogate objectives and that `loss3_original` gives a different true oracle-relative endpoint error. The later native gradient-angle analysis also directly supports that, at the same \(\delta_k\), the `loss3_original` optimization direction can differ strongly from the `loss1_original` / `loss2_original` directions. | No immediate rerun is required for the `nu=0.001` story. |
+| Experiment 2: Local Response Decomposition Table | Done for the current `nu=0.001` scope | The decomposition has been completed with \(v_f^*\), \(v_j^*\), \(v_e^*\), random directions, and the previously missing outward-growth direction based on \(A^Tb\). The key result is that the direction maximizing error-field movement, \(\|Av\|\), is not the same as the direction maximizing immediate outward growth of the current residual norm. Finite-difference checks also support the local interpretation. | No immediate rerun is required for `nu=0.001`. If the paper later wants a broader claim, repeat this for additional model / solver settings. |
+| Experiment 3: Small-Epsilon Sweep | Partially done | The outward-growth work already checked local behavior at small finite-difference radii such as \(\rho=10^{-4}\), \(10^{-3}\), and \(10^{-2}\), and the finite-difference values matched the predicted local outward growth. This supports the local Taylor explanation. | Still needs the full planned sweep over \(\epsilon\in\{10^{-4},10^{-3},10^{-2},10^{-1}\}\), with systematic records for \(L_f(\epsilon)\), \(L_j(\epsilon)\), \(L_e(\epsilon)\), \(G_e(\epsilon)\), direction stability, and cross-\(\epsilon\) direction cosine tables. |
+| Experiment 4: Ray Profile / Local-to-Global Profile | Not yet done as a full experiment | The ray-profile idea has been designed and located in the plan, but the full ray-profile curves have not yet been produced as the main evidence. | This should be the top priority for the next run. For final directions from `loss3_original`, `loss3_increment_ratio`, `loss3_residual_increment_ratio`, `loss3_regularized`, and random directions, record curves for \(r\mapsto\|e(x+rv)\|_q\), norm increment ratio, and residual increment ratio over \(r\in[0,\epsilon]\). This is the cleanest experiment for showing that a locally good direction need not be the finite-radius endpoint-best direction. |
+| Experiment 5: Boundary-Rescaled Comparison | Done | The boundary-rescaling diagnostic has been run and interpreted. The observed behavior is that ratio / regularized objectives can penalize \(\delta\), so their final perturbations may not reach the boundary. After rescaling those directions to radius \(\epsilon\), their `loss1`, `loss2`, and `loss3` values still do not necessarily beat the directions found by directly optimizing the corresponding original objective. | No immediate rerun is required. This result should be used as evidence that local or cost-aware directions do not automatically become best finite-radius directions after rescaling. |
+| Experiment 6: Direction Rotation Along Path | Partially done | Related trajectory-gradient evidence exists: true nonlinear gradient angles along saved attack paths were computed, and they show that the difference between objectives can remain substantial for many steps. This supports the idea that finite-radius behavior is not fully captured by a single clean-point linearization. | The exact planned experiment is still missing: along \(x_t=x+t\delta^*\), re-estimate \(v_e^*(x_t)=\arg\max_{\|v\|_p=1}\|J_e(x_t)v\|_q\), then record \(\cos(v_e^*(x_t),v_e^*(x_0))\) and adjacent-direction cosines. This should be run after the ray-profile experiment unless the path-rotation claim becomes central. |
+
+Recommended next order:
+
+1. Run Experiment 4: Ray Profile / Local-to-Global Profile.
+2. Complete Experiment 3: Small-Epsilon Sweep.
+3. Complete Experiment 6: Direction Rotation Along Path.
+
+## 6. How Existing Results Can Be Interpreted
+
+Representative results recorded in the original plan:
 
 ```text
 loss1_increment_ratio_generalized_power:
@@ -903,60 +933,60 @@ loss3_increment_ratio_generalized_power:
     L3_orig = 3.507
 ```
 
-解释：
+Interpretation:
 
-- `loss1` 方向让模型 \(f\) 自己变化快。
-- 但真实误差增长率低，说明 \(j\) 也可能同向变化。
-- `loss3` 方向让模型自变化稍小，但让 \(f\) 和 \(j\) 的 mismatch 更大。
+- The `loss1` direction makes the model \(f\) itself change quickly.
+- But the true error growth rate is low, suggesting that \(j\) may also be changing in the same direction.
+- The `loss3` direction produces a slightly smaller model-only change, but a larger mismatch between \(f\) and \(j\).
 
-结论：
+Conclusion:
 
-> 高模型敏感性方向不等于高回归误差增长方向。
+> A high model sensitivity direction is not the same as a high regression error growth direction.
 
-另一个代表性结果：
+Another representative result:
 
 ```text
 loss1_original_pgd:
-    L1_orig ≈ 11.17
-    L3_orig ≈ 4.34
+    L1_orig ~= 11.17
+    L3_orig ~= 4.34
 
 loss3_original_generalized_power:
-    L1_orig ≈ 8.53
-    L3_orig ≈ 6.86
+    L1_orig ~= 8.53
+    L3_orig ~= 6.86
 ```
 
-解释：
+Interpretation:
 
-- `loss1` attack 让 \(f\) 动得更大。
-- 但 `loss3` attack 让真实 oracle-relative error 更大。
+- The `loss1` attack makes \(f\) move more.
+- But the `loss3` attack produces a larger true oracle-relative error.
 
-结论：
+Conclusion:
 
-> 模型输出变化大，不代表相对于真实 solver 的误差大。
+> A large change in model output does not imply a large error relative to the true solver.
 
-## 7. 最终论文叙事建议
+## 7. Recommended Paper Narrative
 
-### 主线
+### Main Line
 
 ```text
 We aim to justify loss3_original as the primary adversarial objective for operator regression.
 ```
 
-中文：
+Restated:
 
-> 我们的目标不是提出一堆等价 loss，而是论证 `loss3_original` 是回归 / 神经算子有限半径对抗攻击中最直接、最正确的主目标。
+> The goal is not to present many equivalent losses. The goal is to argue that `loss3_original` is the most direct and correct main objective for finite-radius adversarial attacks in regression / neural operator settings.
 
-### 角色分配
+### Role Assignment
 
-- `loss3_original`: 主 finite-radius regression attack objective。
-- `loss1_original`, `loss2_original`: surrogate baseline，用来说明简化目标的偏差。
-- `loss3_increment_ratio`: local outward risk growth diagnostic。
-- `loss3_residual_increment_ratio`: local error-field Lipschitz / mismatch diagnostic。
-- `loss3_regularized`: cost-aware / interior-solution 对照。
-- GPI: local homogeneous operator norm 的工具。
-- PGD / LP-steepest PGD: finite-radius nonlinear attack 的工具。
+- `loss3_original`: main finite-radius regression attack objective.
+- `loss1_original`, `loss2_original`: surrogate baselines used to expose the bias of simplified objectives.
+- `loss3_increment_ratio`: local outward risk growth diagnostic.
+- `loss3_residual_increment_ratio`: local error-field Lipschitz / mismatch diagnostic.
+- `loss3_regularized`: cost-aware / interior-solution control.
+- GPI: tool for local homogeneous operator norms.
+- PGD / LP-steepest PGD: tools for finite-radius nonlinear attacks.
 
-### 最终核心结论
+### Final Core Conclusions
 
 1. Regression robustness is not invariance of \(f\); it is co-variation of \(f\) with \(j\).
 
@@ -977,34 +1007,34 @@ We aim to justify loss3_original as the primary adversarial objective for operat
 
 ## 8. Recommended Minimal Experiment Set
 
-如果需要精简，不建议继续主打 27 个组合。推荐最小但有解释力的实验集：
+If the plan needs to be simplified, it is not recommended to continue centering the narrative on all 27 combinations. The recommended minimal but explanatory experiment set is:
 
 1. `loss1_original` vs `loss2_original` vs `loss3_original`
-   - 用于证明 surrogate bias / false alert。
+   - Used to demonstrate surrogate bias / false alerts.
 
 2. `loss3_original` vs `loss3_increment_ratio` vs `loss3_residual_increment_ratio` vs `loss3_regularized`
-   - 用于解释主攻击、局部 outward growth、局部 Lipschitz、cost-aware objective 的区别。
+   - Used to explain the distinction between the main attack, local outward growth, local Lipschitz behavior, and cost-aware objectives.
 
 3. local response decomposition table
-   - 用于证明 \(f\) 和 \(j\) 多数方向同向变化，危险方向是 mismatch。
+   - Used to show that \(f\) and \(j\) co-vary in many directions, and that dangerous directions are mismatch directions.
 
 4. small-\(\epsilon\) sweep
-   - 用于证明 ratio objective 只在局部半径下有稳定意义。
+   - Used to show that ratio objectives have stable meaning only at local radii.
 
 5. ray profile
-   - 用于证明局部最优方向不等于 finite-radius endpoint 最优方向。
+   - Used to show that a locally optimal direction is not the same as a finite-radius endpoint-optimal direction.
 
 6. boundary-rescaled comparison
-   - 用于证明同一 budget 下 ratio / regularized 方向仍不一定最大化 `loss3_original`。
+   - Used to show that, even under the same budget, ratio / regularized directions still do not necessarily maximize `loss3_original`.
 
 7. direction rotation
-   - 用于证明有限半径攻击是路径相关的非线性问题。
+   - Used to show that finite-radius attacks are path-dependent nonlinear problems.
 
-## 9. 一句话摘要
+## 9. One-Sentence Summary
 
-> `loss3_original` is the primary attack loss because it is the only objective among the considered losses that directly measures perturbed-input oracle-relative regression error.  
+> `loss3_original` is the primary attack loss because it is the only objective among the considered losses that directly measures perturbed-input oracle-relative regression error.
 > Other objectives are useful as surrogate baselines or local diagnostics, but they should not be interpreted as equivalent finite-radius attack objectives.
 
-中文：
+Restated:
 
-> `loss3_original` 是主攻击 loss，因为它直接度量扰动输入上的真实回归误差；其他 loss 可以作为对照或局部机制分析工具，但不能替代有限半径真实攻击目标。
+> `loss3_original` is the main attack loss because it directly measures the true regression error on the perturbed input; the other losses can be used as controls or local mechanism diagnostics, but they cannot replace the true finite-radius attack objective.

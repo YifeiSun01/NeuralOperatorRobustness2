@@ -39,7 +39,7 @@ Current local sizes:
 | `results/dictionaries` | 426M | Attack dictionaries, including N=200, 2000, 20000 |
 | `1D_Burgers/trained_models` | 5.4M | Attack-ready FNO nu=0.001 model and logs |
 | `fno_training_runs/burgers_nu0p01_fno1d_500` | 2.5M | FNO nu=0.01 model and logs |
-| `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k` | 2.5M | DeepONet nu=0.01 checkpoint, logs, and required output-transform stats |
+| `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k` | 2.5M | DeepONet nu=0.01 model and logs |
 | `tmp_old_runner_inputs_b01` | 0 | Compatibility symlink path for old FNO attack parser |
 | `results/burgers_loss3_18setting_batch100_random100_losses_parallel6` | 105M | Completed and partial attack results |
 
@@ -52,7 +52,6 @@ Found and validated locally:
 | FNO, nu=0.001 | present | `1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt` |
 | FNO, nu=0.01 | present | `fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/checkpoints/fno1d_pytorch.pt` |
 | DeepONet, nu=0.01 | present | `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/checkpoints/deeponet_burgers_nu0p01.pt` |
-| DeepONet, nu=0.01 output transform stats | present, must back up | `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz` |
 | DeepONet, nu=0.001 | not required for current plan | no required checkpoint recorded |
 | Burgers N=1500, nu=0.001 | regenerated and split | `1D_Burgers/datasets/1D/Burgers/batched_exponax` and `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits` |
 | Burgers N=1500, nu=0.01 | regenerated and split | `1D_Burgers/datasets/1D/Burgers/batched_exponax` and `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits` |
@@ -170,11 +169,8 @@ DeepONet nu=0.01 checkpoint is already present. If it must be regenerated, use t
 deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/config.json
 deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/dataset_info.json
 deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/losses.csv
-deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz
 deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/summary.json
 ```
-
-`output_transform_stats.npz` is a required artifact for DeepONet nu=0.01. It stores the per-grid `y_mean` and `y_std` vectors used to convert raw DeepONet output back to the physical solution scale. If this file is missing, DeepONet attack loss/inference can compare raw network output against solver output on the wrong scale and invalidate new DeepONet attack results.
 
 The recorded training setup is DeepONet, nu=0.01, LU Burgers reference, 50000 iterations, full-batch training, tanh activation, periodic trunk features, output transform, and inverse-time LR decay.
 
@@ -329,7 +325,7 @@ results/burgers_future_loss3_bad_search_batch100_random100_sequential/FINAL_22_S
 - mean ratio, ratio standard deviation, mean increase, and mean final true loss for all 7 methods
 - per-setting runtime/status records
 
-Estimated runtime for all 22 settings on the current machine: roughly `80-120 minutes`, with a conservative upper range of `2-3 hours` if the GPU is busy or some settings run slower. This estimate is based on existing batch100 `nu=0.01` FNO and DeepONet progress logs, which mostly finish one setting in about `212-223 seconds` plus summary overhead. The script is restartable because it skips settings that already have completed summaries.
+Estimated runtime for all 22 settings on the current machine: roughly `8-16 hours`, depending on GPU load and whether DeepONet settings run slower than the FNO settings. The script is restartable because it skips settings that already have completed summaries.
 
 ## First Completed New Setting
 

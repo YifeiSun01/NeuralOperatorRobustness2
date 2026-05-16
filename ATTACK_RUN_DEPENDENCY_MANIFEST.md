@@ -180,10 +180,7 @@ DeepONet nu=0.01 config/log files:
 
 - `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/config.json`
 - `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/dataset_info.json`
-- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz`
 - `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/summary.json`
-
-`output_transform_stats.npz` is required, not optional. It stores the per-grid `y_mean` and `y_std` output transform for DeepONet nu=0.01; without it, attack loss/inference may run on the raw normalized DeepONet output scale and produce invalid DeepONet attack results.
 
 Current status:
 
@@ -400,7 +397,6 @@ Validated models:
 
 - `fno_training_runs/burgers_nu0p01_fno1d_500/burgers_1d/checkpoints/fno1d_pytorch.pt`
 - `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/checkpoints/deeponet_burgers_nu0p01.pt`
-- `deeponet_training_runs/burgers_nu0p01_deeponet_lu_ref_50k/training_logs/output_transform_stats.npz`
 - `1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt`
 
 Compatibility symlink created for FNO `nu=0.01`:

@@ -1,9 +1,1579 @@
 # Experiment Ledger
 
-Last updated: 2026-05-15 UTC
+## 2026-05-16 GitHub Script Sync And R2 Artifact Upload
+
+Status: backup / publication step in progress. Generated artifacts were uploaded to R2; Markdown/Python/Shell files are being prepared for GitHub commit and push.
+
+Source files and artifact roots:
+- Markdown / source files in the repository working tree.
+- `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/`
+- `forensics/local_jacobian_frequency_20260514/`
+- `forensics/outward_growth_direction_20260515/`
+- `forensics/three_loss_pairwise_gradients_20260516/`
+- `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/split_summary.json`
+
+Output locations:
+- GitHub branch target: `YifeiSun01/NeuralOperatorRobustness2`, branch `vast-ai`.
+- R2 prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+
+Observed from local status before staging:
+- The working tree contains many tracked experiment artifacts marked deleted under `benchmark_results/`, `fno_training_runs/`, `gradient_audit/`, `path_audit/`, and `results/`. These deletions were not staged for GitHub.
+- Existing local generated artifact directories were uploaded to the R2 `forensics/` prefix.
+- No credential strings were found in the Markdown/Python/Shell commit candidates by the pre-commit `rg` scan, except a placeholder Cloudflare endpoint example.
+
+Inference:
+- GitHub should receive lightweight script/documentation files only.
+- R2 should hold the generated numerical artifacts and plots.
+
+Remaining work:
+- Commit and push the staged Markdown/Python/Shell files to GitHub.
+- Verify final Git status for the affected files after push.
+
+## 2026-05-16 Loss3 Minimal Six Experiment Status Added To Plan
+
+Status: documentation update only; no numerical experiment was run in this turn.
+
+Source files:
+- `docs/loss3_original_theory_experiment_plan.md`
+- Prior completion notes in the conversation and existing audit/result docs.
+
+Output files:
+- `docs/loss3_original_theory_experiment_plan.md`
+
+Key settings / scope:
+- Current next-round scope is FNO / Burgers `nu=0.001` only.
+- Broader `nu=0.01` or default-architecture sweeps are explicitly not required for the immediate next plan.
+
+Observed from the existing records and user-confirmed notes:
+- Done: Experiment 1, Experiment 2, Experiment 5.
+- Partially done: Experiment 3 and Experiment 6.
+- Not yet done as a full experiment: Experiment 4.
+
+Inference from the current status:
+- Next priority should be Ray Profile / Local-to-Global Profile.
+- Then complete the full Small-Epsilon Sweep.
+- Then complete the exact Direction Rotation Along Path experiment with recomputed `v_e*(x_t)`.
+
+Remaining work:
+- Run Experiment 4 ray-profile curves.
+- Complete Experiment 3 with systematic `L_f`, `L_j`, `L_e`, `G_e`, and direction-cosine tables.
+- Complete Experiment 6 with pathwise recomputed local top residual directions.
+
+Last updated: 2026-05-16 UTC
 
 This is the fixed entry point for experiment status. It must separate observed
 evidence from inference. Chat history is not a durable experiment record.
+
+
+## 2026-05-16 Chat Angle Tables Saved To Markdown
+
+Status:
+
+- No new numerical experiment was run.
+- Appended the chat-presented numeric angle tables to
+  `docs/angle_experiment_inventory_20260516.md` under `Chat-Presented Numeric Tables`.
+
+Observed evidence summarized:
+
+- Saved the overall 4-batch / 7-angle-definition table.
+- Saved clean-point candidate direction angle means/stds.
+- Saved endpoint-vs-movement loss3-path local-affine versus true nonlinear every-5-step table.
+- Saved native L1/L2/L3 pairwise gradient angle summary and loss3-trajectory every-5-step table.
+
+Inference:
+
+- This was documentation of existing recorded data, not a new experiment.
+
+
+## 2026-05-16 Angle Inventory Tables Presented In Chat
+
+Status:
+
+- No new numerical experiment was run.
+- Presented the angle experiment inventory and headline numeric tables in the chat.
+
+Source files:
+
+- `docs/angle_experiment_inventory_20260516.md`
+- `docs/angle_diagnostic_raw_tables_20260516.md`
+- `docs/three_loss_pairwise_gradient_angles_result_20260516.md`
+- `docs/outward_growth_direction_result_20260515.md`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_similarity_table.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_summary_by_attack_k.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack_k.csv`
+- `forensics/three_loss_pairwise_gradients_20260516/fno_nu0p001/summary_by_delta_source_k.csv`
+
+Observed evidence summarized:
+
+- Presented 4 angle diagnostic batches and 7 angle definitions.
+- Parentheses in presented tables are standard deviations in degrees, not variances.
+- Step-indexed values are saved every 5 PGD steps: `k = 0, 5, ..., 50`.
+
+Inference:
+
+- This turn is a presentation of existing recorded evidence only.
+
+
+## 2026-05-16 Angle Experiment Inventory Created
+
+Status:
+
+- No new numerical experiment was run.
+- Created `docs/angle_experiment_inventory_20260516.md` to summarize all angle-related
+  diagnostics and their headline results.
+
+Observed evidence summarized:
+
+- Current records contain 4 angle-related diagnostic batches and 7 distinct angle
+  definitions.
+- The clean-point candidate-direction table has 135 CSV rows.
+- The local-affine same-delta table has 165 rows and contains two angle definitions:
+  endpoint-vs-movement and bias-vs-movement.
+- The true nonlinear endpoint-vs-movement table has 165 rows.
+- The native pairwise loss-gradient table has 165 rows and contains three angle
+  definitions: L1-L2, L1-L3, and L2-L3.
+- Headline native pairwise result for `k>=5`: `L1-L2 = 3.91 (7.06) deg`,
+  `L1-L3 = 56.51 (18.41) deg`, `L2-L3 = 57.23 (18.41) deg`.
+
+Inference:
+
+- The angle diagnostics should be separated into endpoint-vs-movement/residual geometry
+  diagnostics and native pairwise objective-gradient diagnostics.
+- Only the native pairwise loss-gradient experiment directly proves that `loss3_original`
+  has a different update direction from native `loss1_original` and `loss2_original`.
+
+
+## 2026-05-16 Pairwise Gradient Angle Aggregation Clarified
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/three_loss_pairwise_gradient_angles_result_20260516.md` to clarify
+  saved-step cadence and mean/std aggregation.
+
+Observed evidence summarized:
+
+- Saved trajectory steps are every 5 PGD steps: `k = 0, 5, ..., 50`.
+- Parentheses in the tables are standard deviations, not variances.
+- The script computes population standard deviation with `np.std(..., ddof=0)`.
+- `all k>=5` aggregates `150` rows = `5 samples x 3 delta sources x 10 saved nonzero k values`.
+- Each per-trajectory `k>=5` summary aggregates `50` rows.
+- A single `k=50` per-trajectory entry aggregates `5` rows, one per sample.
+
+Inference:
+
+- The reported angle summaries describe saved every-5-step trajectory points, not every
+  internal PGD update step.
+
+
+## 2026-05-16 b-plus-Adelta Versus Adelta Evidence Documented
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/outward_growth_direction_result_20260515.md` with a section named
+  `Where The Evidence Shows b+A delta And A delta Are Different`.
+
+Observed evidence summarized:
+
+- The endpoint residual objective keeps the clean residual term:
+  `||f(x+delta)-j(x+delta)|| ~= ||b + A delta||`.
+- The residual-movement objective subtracts the clean residual away:
+  `||(f-j)(x+delta)-(f-j)(x)|| ~= ||A delta||`.
+- Direction-response evidence: `error_top` top-8 has larger mismatch gain
+  `0.412169` than `outward_growth` `0.368053`, but far smaller outward component
+  `0.0140571` versus `0.166514`.
+- Rank-1 `error` direction has mismatch gain `0.868217` but outward component
+  `-0.00677836`.
+- Direction-angle evidence: `outward_growth` versus `error` top-8 angle mean is
+  `84.68 deg`; versus `error` rank-1 angle mean is `90.87 deg`.
+- Finite-difference evidence: `outward_growth` predicted growth `0.166514` matches
+  actual growth `0.167286` at `rho=1e-4` and `0.166668` at `rho=1e-3`.
+
+Inference:
+
+- The existing outward-growth experiment directly supports the claim that the local
+  direction for `||A delta||` and the local direction for `||b + A delta||` are not the
+  same.
+- This should be described as endpoint residual versus residual increment, not as native
+  `loss1`, because native `loss1 = ||f(x+delta)-f(x)||` linearizes with `J_f`, not
+  `A = J_f - J_j`.
+
+
+## 2026-05-16 Three-Loss Pairwise Gradient Angle Experiment
+
+Status:
+
+- Completed new GPU post-processing experiment requested by the user.
+- Created `tools/analyze_three_loss_pairwise_gradients.py`.
+- Created `docs/three_loss_pairwise_gradient_angles_result_20260516.md`.
+
+Source files / inputs:
+
+- `tools/analyze_three_loss_pairwise_gradients.py`
+- `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_*/loss*_original_pgd/trajectory.npz`
+- `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_000/loss1_original_pgd/config.json` and matching per-index configs.
+
+Output files:
+
+- `forensics/three_loss_pairwise_gradients_20260516/fno_nu0p001/pairwise_three_loss_gradients.csv`
+- `forensics/three_loss_pairwise_gradients_20260516/fno_nu0p001/summary_by_delta_source_k.csv`
+- `forensics/three_loss_pairwise_gradients_20260516/fno_nu0p001/summary_by_k.csv`
+- `forensics/three_loss_pairwise_gradients_20260516/fno_nu0p001/summary_by_delta_source.csv`
+- `forensics/three_loss_pairwise_gradients_20260516/fno_nu0p001/manifest.json`
+- `docs/three_loss_pairwise_gradient_angles_result_20260516.md`
+
+Key settings:
+
+- Device: `cuda`.
+- Samples: `0, 7, 40, 47, 115`.
+- Delta sources: `loss1_original_pgd`, `loss2_original_pgd`, `loss3_original_pgd`.
+- Saved steps: `0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50`.
+- Compared native original objectives: `loss1`, `loss2`, `loss3`.
+
+Observed evidence:
+
+- Raw output has `165` rows = `5 samples x 3 delta sources x 11 saved steps`.
+- For `k >= 5`, aggregate pairwise gradient angles are: `L1-L2 = 3.91 (7.06)` deg,
+  `L1-L3 = 56.51 (18.41)` deg, `L2-L3 = 57.23 (18.41)` deg.
+- For `k >= 5` along the `loss3_original_pgd` delta source, angles are:
+  `L1-L2 = 9.60 (10.04)` deg, `L1-L3 = 61.30 (20.48)` deg,
+  `L2-L3 = 63.05 (20.16)` deg.
+- At `k=50` along the `loss3_original_pgd` delta source, mean angles are:
+  `L1-L2 = 4.41 (1.54)` deg, `L1-L3 = 47.80 (20.31)` deg,
+  `L2-L3 = 48.55 (20.04)` deg.
+
+Inference:
+
+- Native `loss1` and `loss2` gradients are usually close after nonzero attack progress.
+- Native `loss3_original` gradients remain substantially different from both `loss1`
+  and `loss2`, because `loss3` differentiates through the perturbed solver target
+  `j(x + delta)`.
+- This is the direct same-delta objective-gradient evidence that was missing from
+  the earlier outward-growth experiment.
+
+Remaining work:
+
+- Optional: plot the three pairwise angle curves versus `k` for each delta source.
+
+
+## 2026-05-16 Outward-Growth Experiment Reset Clarified
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/outward_growth_direction_result_20260515.md` with a reset section
+  explaining what the original outward-growth experiment actually ran.
+
+Observed evidence summarized:
+
+- The original outward-growth experiment used `A = J_f - J_j` and `b = f(x) - j(x)`.
+- It compared the pure residual-field movement direction, which maximizes `||A v||`,
+  with the clean-residual outward-growth direction `normalize(A^T b)`.
+- It did not compute native pairwise gradient angles among `loss1`, `loss2`, and
+  `loss3` at the same `delta_k` points.
+
+Inference:
+
+- The existing experiment directly supports the distinction between residual movement
+  and endpoint residual growth inside the `loss3` residual geometry.
+- It is conceptually related to the `loss1` versus `loss3` question, but it should not
+  be described as a native `loss1` angle experiment because `loss1` uses `J_f`, not
+  `J_f - J_j`.
+- A separate pairwise objective-gradient diagnostic is needed to directly show that
+  native `loss1_original`, `loss2_original`, and `loss3_original` have different
+  local update directions.
+
+
+## 2026-05-16 Angle Column Labels Reclassified As Delta Sources
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/angle_diagnostic_raw_tables_20260516.md` to state explicitly that
+  `loss1`, `loss2`, and `loss3` table columns are delta-source labels, not native
+  angle objectives.
+
+Observed evidence summarized:
+
+- The true nonlinear angle formula compares two `loss3` residual-field gradients.
+- The local-affine formulas use `A = J_f - J_j` and `b = f(x) - j(x)`.
+- Therefore the reported `loss1` and `loss2` columns do not represent native
+  `loss1` or `loss2` angle formulas; they only identify that `delta_k` came from
+  the `loss1_original_pgd` or `loss2_original_pgd` saved trajectory.
+
+Inference:
+
+- The current angle tables should not be used to claim anything about intrinsic
+  `loss1` gradient geometry, because `loss1` does not include the perturbed oracle
+  `j(x + delta)`.
+- A direct `loss1/loss2/loss3` gradient-angle experiment would need to compute
+  `grad L1`, `grad L2`, and `grad L3` at the same fixed `delta_k` points.
+
+
+## 2026-05-16 Angle Table Pairwise-Gradient Clarification
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/angle_diagnostic_raw_tables_20260516.md` to clarify that the
+  current endpoint-vs-movement angle tables are not pairwise `loss1/loss2/loss3`
+  gradient-angle tables.
+
+Observed evidence summarized:
+
+- The current true nonlinear endpoint-vs-movement table compares two `loss3`-related
+  gradients at saved points `z_k = x + delta_k`.
+- It does not compute pairwise angles among `grad L1(delta_k)`, `grad L2(delta_k)`,
+  and `grad L3(delta_k)`.
+
+Inference:
+
+- The existing tables support a statement about `loss3_original` endpoint-error
+  geometry versus residual-movement geometry, especially along the `loss3` trajectory.
+- A separate pairwise-gradient diagnostic is needed to directly claim that
+  `loss1_original`, `loss2_original`, and `loss3_original` have different update
+  directions at the same `delta_k`.
+
+
+## 2026-05-16 Angle Table Wording Simplified
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/angle_diagnostic_raw_tables_20260516.md` to remove the ambiguous
+  phrase `trajectory probe` from the angle-table interpretation.
+
+Observed evidence summarized:
+
+- The tables report angles, not loss-growth curves.
+- The `loss1`, `loss2`, and `loss3` column labels identify the trajectory that
+  supplied the saved point `delta_k` where an angle was computed.
+- For the true nonlinear table, the angle itself is still between two `loss3`
+  residual-field gradients.
+
+Inference:
+
+- For the current theory claim, the `loss3` trajectory column is the cleanest one
+  to emphasize. The `loss1` and `loss2` columns are secondary context only.
+
+
+## 2026-05-16 Angle Table Interpretation Corrected
+
+Status:
+
+- No new numerical experiment was run.
+- Updated `docs/angle_diagnostic_raw_tables_20260516.md` with an interpretation
+  correction for the angle tables.
+
+Source files:
+
+- `docs/angle_diagnostic_raw_tables_20260516.md`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack_k.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_summary_by_attack_k.csv`
+
+Observed evidence summarized:
+
+- The `loss1`, `loss2`, and `loss3` columns in the step-indexed angle tables name
+  the trajectory that supplied `delta_k`.
+- The true nonlinear endpoint-vs-movement angle compares two gradients of the
+  `loss3` residual field, even when the evaluated point came from a `loss1` or
+  `loss2` trajectory.
+- The local-affine endpoint-vs-movement and bias-vs-movement tables use
+  `A = J_f - J_j` and `b = f(x) - j(x)`, so they are also local `loss3` residual
+  geometry diagnostics evaluated along different trajectories.
+
+Inference:
+
+- The `loss3` columns have the cleanest interpretation for the current theoretical
+  question because both the trajectory and compared gradients concern `loss3`.
+- The `loss1` and `loss2` columns should be described only as angles computed at
+  points reached by the `loss1` or `loss2` trajectories, not as intrinsic
+  gradient-angle diagnostics for the `loss1` or `loss2` objectives.
+- The bias-vs-movement table is a decomposition check inside the clean-point
+  affine model, not a finite-radius attack comparison.
+
+Remaining work:
+
+- Optional: if intrinsic `loss1` or `loss2` gradient-angle diagnostics are needed,
+  define separate endpoint/movement pairs for those objectives and compute them
+  explicitly.
+
+
+## 2026-05-16 Angle Mean/Std Tables Presented In Chat
+
+Status:
+
+- No new numerical experiment was run.
+- Presented the recorded step-indexed angle mean/std tables in the chat response.
+
+Source files:
+
+- `docs/angle_diagnostic_raw_tables_20260516.md`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack_k.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_summary_by_attack_k.csv`
+
+Observed evidence summarized:
+
+- Three step-indexed angle families were presented: true nonlinear endpoint-vs-movement,
+  local-affine endpoint-vs-movement, and local-affine bias-vs-movement.
+- Tables use `mean (std)` in degrees over five samples: indices `0, 7, 40, 47, 115`.
+- Saved steps are `k = 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50`.
+
+Inference:
+
+- This was a presentation/record clarification only; no new empirical result was
+  introduced.
+
+
+## 2026-05-16 Angle Count And Mean/Std Tables Clarified
+
+Status:
+
+- Added `Count Summary And Mean/Std Tables` to
+  `docs/angle_diagnostic_raw_tables_20260516.md`.
+- No new numerical experiment was run for this entry.
+
+Observed evidence summarized:
+
+- Step-indexed angle diagnostics have three angle families: local-affine
+  endpoint-vs-movement, local-affine bias-vs-movement, and true nonlinear
+  endpoint-vs-movement.
+- Each step-indexed family has `11` saved steps and `3` attack trajectories, giving
+  `33` mean/std entries per family and `99` mean/std entries total.
+- Each mean/std entry is aggregated over five samples: indices `0, 7, 40, 47, 115`.
+- The clean-point `A^T b` versus top singular vector angle is not step-indexed; it is
+  a local candidate-direction comparison at the clean point.
+
+Inference:
+
+- The clean-point outward-growth/SVD angle should not be described as a per-step
+  optimizer-direction angle. It would become step-indexed only in a separate
+  experiment that recomputes `A`, `b`, and SVD at each `x + delta_k`.
+
+Remaining work:
+
+- Optional: run a separate along-trajectory SVD/outward-growth recomputation if a
+  per-step `A(z_k)^T b(z_k)` versus top singular vector angle is needed.
+
+
+## 2026-05-16 Every-5-Step Angle Raw Tables Recorded
+
+Status:
+
+- Reran `tools/analyze_true_nonlinear_endpoint_vs_movement_gradients.py` with
+  `--sample-ks 0 5 10 15 20 25 30 35 40 45 50` to include `k=0`.
+- Created `docs/angle_diagnostic_raw_tables_20260516.md`.
+- Added `Raw Every-5-Step Angle Tables` cross-reference to
+  `docs/outward_growth_direction_result_20260515.md`.
+
+Source files / inputs:
+
+- `tools/analyze_true_nonlinear_endpoint_vs_movement_gradients.py`
+- Trajectories:
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_*/loss*_original_pgd/trajectory.npz`
+- Existing local-affine summary:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_summary_by_attack_k.csv`
+
+Output files:
+
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack_k.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/true_nonlinear_endpoint_vs_movement_gradients.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack.csv`
+- `docs/angle_diagnostic_raw_tables_20260516.md`
+
+Observed evidence summarized:
+
+- The true nonlinear summary now has `34` lines: header plus `3` attacks times `11`
+  saved k values.
+- Saved k values are `0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50`.
+- Angle families recorded in the Markdown: local candidate-direction angles,
+  local-affine endpoint-vs-movement, local-affine bias-vs-movement, and true
+  nonlinear endpoint-vs-movement.
+- `k=0` is a near-zero initialization point: mean L2 delta norm is about
+  `8.0046e-06`, budget ratio about `1.0006e-06`.
+
+Inference:
+
+- The every-5-step raw tables make explicit that the clean-point local-affine angles
+  and true nonlinear same-point angles differ substantially, especially for the
+  `loss3_original_pgd` path.
+- `k=0` should be treated as a near-zero diagnostic, not as a stable finite update
+  step, because movement-style gradients can be degenerate at exactly zero radius.
+
+Remaining work:
+
+- Optional: plot all three trajectory angle families versus `k`.
+
+
+## 2026-05-16 Nonlinear Gradient Run Key Takeaways Recorded
+
+Status:
+
+- Added `Additional Key Takeaways From The Nonlinear Gradient Run` to
+  `docs/outward_growth_direction_result_20260515.md`.
+- No new numerical experiment was run for this entry; it summarizes existing
+  nonlinear-gradient diagnostic outputs.
+
+Observed evidence summarized:
+
+- Source CSV:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack_k.csv`.
+- For `loss3_original_pgd`, true nonlinear endpoint-vs-movement gradient angle
+  decreases from `45.06 deg` at `k=5` to `36.36 deg` at `k=10`, `22.33 deg` at
+  `k=25`, and `8.15 deg` at `k=50`.
+- The corresponding `loss3_original_pgd` delta budget ratios are `0.0359`,
+  `0.0924`, `0.3649`, and `0.7637`.
+- The local-affine same-delta angles for the same path are much smaller:
+  `21.07 deg`, `11.28 deg`, `4.22 deg`, and `1.40 deg`.
+- For `loss3_original_pgd`, endpoint loss and movement loss become closer over the
+  path: endpoint/movement means are `0.3438/0.1243` at `k=5`, `2.1124/2.0150` at
+  `k=25`, and `4.6171/4.5728` at `k=50`.
+- Movement-to-endpoint gradient norm ratio on `loss3_original_pgd` decreases from
+  `2.7067` at `k=5` to `1.0486` at `k=50`.
+
+Inference:
+
+- The nonlinear diagnostic supports the narrative that different losses have
+  substantially different local gradient geometry, especially early in optimization.
+- Clean-point local-affine gradients understate the true nonlinear angle gap when
+  `delta_k` is finite.
+- As the residual increment grows and begins to dominate the clean residual, endpoint
+  and movement objectives become more aligned, but they remain conceptually distinct.
+
+Remaining work:
+
+- Optional: plot angle, budget ratio, endpoint/movement loss, and gradient-norm ratio
+  against `k` for the three trajectories.
+
+
+## 2026-05-16 Angle Diagnostic Validity Summary Recorded
+
+Status:
+
+- Added `Angle Diagnostic Summary: Which Comparisons Are Valid` to
+  `docs/outward_growth_direction_result_20260515.md`.
+- No new numerical experiment was run for this entry; it summarizes existing angle
+  diagnostics and their valid interpretation.
+
+Observed evidence summarized:
+
+- Local candidate-direction angles: `outward_growth` versus `error` top-8 angle mean
+  `84.68 deg`, and versus `error` rank-1 angle mean `90.87 deg`.
+- Same-delta local-affine gradient angles comparing
+  `A^T b + A^T A delta_k` versus `A^T A delta_k`: for `loss3_original_pgd`,
+  `21.07 deg` at `k=5`, `11.28 deg` at `k=10`, `4.22 deg` at `k=25`, and
+  `1.40 deg` at `k=50`.
+- True nonlinear same-point gradient angles comparing
+  `grad_z ||f(z_k)-j(z_k)||_2` versus
+  `grad_z ||(f(z_k)-j(z_k))-(f(x)-j(x))||_2`: for `loss3_original_pgd`,
+  `45.06 deg` at `k=5`, `36.36 deg` at `k=10`, `22.33 deg` at `k=25`, and
+  `8.15 deg` at `k=50`.
+
+Inference:
+
+- The first angle set is valid only for comparing local candidate diagnostics, not
+  final optimizer directions or same-iterate gradients.
+- The second angle set is valid inside the clean-point local-affine Taylor model but
+  can understate finite-delta nonlinear effects.
+- The third angle set is the preferred finite-saved-point comparison because it uses
+  actual nonlinear autograd at `z_k = x + delta_k`.
+- The user's concern is correct: `A^T b + A^T A delta_k` is not wrong as a local
+  approximation, but it should not be used as the final finite-radius geometry when
+  `delta_k` is not tiny.
+
+Remaining work:
+
+- Optional: add plots comparing local-affine and true nonlinear angle curves over
+  `k` for each trajectory.
+
+
+## 2026-05-16 Analytic-Solution Hierarchy For Delta Objectives Recorded
+
+Status:
+
+- Created `docs/analytic_solution_hierarchy_for_delta_objectives_20260516.md`.
+- Added a cross-reference section, `Analytic-Solution Hierarchy Note`, to
+  `docs/outward_growth_direction_result_20260515.md`.
+- No new numerical experiment was run for this entry.
+
+Purpose:
+
+- Record the analytic-solution distinction requested by the user:
+  pure residual movement, local affine endpoint error, and true nonlinear
+  finite-radius attack are different optimization levels.
+
+Observed record:
+
+- The dedicated Markdown records that
+  `max_{||delta|| <= epsilon} ||A delta||^2` has the simple top-right singular
+  vector solution of `A` in the L2 case.
+- It records that
+  `max_{||delta|| <= epsilon} ||b + A delta||^2` has a KKT / implicit
+  trust-region characterization, with stationarity
+  `A^T A delta + A^T b = mu delta`, but is not generally a simple singular-vector
+  solution.
+- It records that the true nonlinear attack
+  `max_{||delta|| <= epsilon} ||f(x + delta) - j(x + delta)||` has no general
+  closed-form analytic solution and should be studied through iterative
+  optimization, actual trajectories, final deltas, and same-point nonlinear
+  gradients.
+
+Inference:
+
+- This entry is a theory/documentation update, not new empirical evidence.
+- The recorded hierarchy clarifies when `delta` can be treated as infinitesimal:
+  only in local linearization diagnostics such as `e(x+delta) approx b + A delta`.
+  Finite-radius attacks require direct nonlinear evaluation or optimization.
+
+Remaining work:
+
+- None for this documentation request.
+
+
+## 2026-05-15 True Nonlinear Same-Point Endpoint-vs-Movement Gradient Diagnostic Completed
+
+Status:
+
+- Added `tools/analyze_true_nonlinear_endpoint_vs_movement_gradients.py`.
+- Ran it on existing saved FNO `nu=0.001` GPU attack trajectories; no attack rerun
+  was needed.
+- Added `True Nonlinear Same-Point Gradient Comparison` to
+  `docs/outward_growth_direction_result_20260515.md`.
+- `adv_robust/bin/python -m py_compile tools/analyze_true_nonlinear_endpoint_vs_movement_gradients.py`
+  passed.
+
+Purpose:
+
+- Address the finite-`delta` limitation of the fixed-clean-Jacobian diagnostic.
+- Instead of comparing `A^T b + A^T A delta_k` with `A^T A delta_k`, directly
+  differentiate the actual nonlinear losses at each saved finite point
+  `z_k = x + delta_k`.
+
+Source files / inputs:
+
+- Script: `tools/analyze_true_nonlinear_endpoint_vs_movement_gradients.py`
+- Result root:
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/`
+- Trajectories:
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_*/loss*_original_pgd/trajectory.npz`
+- Configs:
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_*/loss1_original_pgd/config.json`
+
+Output files:
+
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/manifest.json`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/true_nonlinear_endpoint_vs_movement_gradients.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack_k.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/true_nonlinear_endpoint_vs_movement_gradients/summary_by_attack.csv`
+
+Key settings:
+
+- Indices: `0, 7, 40, 47, 115`.
+- Attack trajectories: `loss1_original_pgd`, `loss2_original_pgd`,
+  `loss3_original_pgd`.
+- Saved steps summarized: originally `k = 5, 10, 15, 20, 25, 30, 35, 40, 45, 50`; later rerun also includes `k = 0`.
+- Compared gradients:
+  `grad_z ||f(z_k)-j(z_k)||_2` versus
+  `grad_z ||(f(z_k)-j(z_k))-(f(x)-j(x))||_2`.
+
+Observed evidence summarized:
+
+- For `loss1_original_pgd`, mean nonlinear gradient angle was `13.48 deg` at
+  `k=5`, `1.48 deg` at `k=25`, and `0.55 deg` at `k=50`.
+- For `loss2_original_pgd`, mean nonlinear gradient angle was `37.33 deg` at
+  `k=5`, `1.67 deg` at `k=25`, and `0.82 deg` at `k=50`.
+- For `loss3_original_pgd`, mean nonlinear gradient angle was `45.06 deg` at
+  `k=5`, `36.36 deg` at `k=10`, `22.33 deg` at `k=25`, and `8.15 deg` at
+  `k=50`.
+- Mean `loss3_original_pgd` delta budget ratios at those same steps were
+  `0.0359`, `0.0924`, `0.3649`, and `0.7637`, respectively.
+
+Inference:
+
+- The user's objection was correct: the fixed-clean-point `A=J_f(x)-J_j(x)`
+  diagnostic is only local-affine and should not be treated as the final answer
+  when `delta_k` is finite.
+- Direct nonlinear autograd shows that endpoint-error and residual-movement
+  gradients can differ substantially at the same finite point, especially along
+  the `loss3_original_pgd` trajectory.
+- The corrected layered interpretation is: local residual movement, local
+  clean-error outward growth, true finite-point nonlinear endpoint gradient, and
+  final finite-radius attack direction are distinct objects.
+
+Remaining work:
+
+- Optional: plot the nonlinear gradient-angle curves over `k`.
+- Optional: compare these exact nonlinear gradients against the actual projected
+  PGD update directions after L2 projection/clipping.
+
+
+## 2026-05-15 Same-Delta Local Gradient-Angle Diagnostic Completed
+
+Status:
+
+- Added `tools/analyze_same_delta_local_gradient_angles.py`.
+- Ran the script using existing saved FNO `nu=0.001` attack trajectories and
+  existing explicit error Jacobians; no GPU attack rerun and no Jacobian
+  recomputation were needed.
+- Added `Same-Delta Gradient Diagnostic Results` to
+  `docs/outward_growth_direction_result_20260515.md`.
+
+Source files / inputs:
+
+- `tools/analyze_same_delta_local_gradient_angles.py`
+- Trajectories:
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_*/loss*_original_pgd/trajectory.npz`
+- Error Jacobians:
+  `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_*/error/*_jacobian_svd.npz`
+- Clean residuals:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/index_*/clean_residual.npy`
+
+Output files:
+
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/manifest.json`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_diagnostics.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_summary_by_attack_k.csv`
+
+Observed evidence summarized:
+
+- The diagnostic compares, at the same saved `delta_k`,
+  `A^T b + A^T A delta_k` versus `A^T A delta_k`.
+- For `loss1_original_pgd`: at `k=5`, cosine `0.999347`, angle `1.95 deg`,
+  `||A^T b|| / ||A^T A delta_k|| = 0.0347`; at `k=50`, cosine `0.999915`,
+  angle `0.71 deg`, ratio `0.0125`.
+- For `loss2_original_pgd`: at `k=5`, cosine `0.999345`, angle `1.97 deg`,
+  ratio `0.0354`; at `k=50`, cosine `0.999926`, angle `0.67 deg`, ratio
+  `0.0121`.
+- For `loss3_original_pgd`: at `k=5`, cosine `0.930281`, angle `21.07 deg`,
+  ratio `0.8561`; at `k=10`, angle `11.28 deg`, ratio `0.3738`; at `k=25`,
+  angle `4.22 deg`, ratio `0.1175`; at `k=50`, cosine `0.999478`, angle
+  `1.40 deg`, ratio `0.0321`.
+- `adv_robust/bin/python -m py_compile tools/analyze_same_delta_local_gradient_angles.py`
+  passed.
+
+Inference:
+
+- This is the apples-to-apples same-current-perturbation comparison requested by
+  the user.
+- Along `loss1` and `loss2` trajectories, the clean-residual term is already small
+  relative to `A^T A delta_k` by `k=5`, so endpoint and movement local squared
+  gradients are nearly aligned.
+- Along the `loss3` trajectory, the clean-residual term matters strongly early
+  because the perturbation is small; its influence decays as `delta_k` grows and
+  `A^T A delta_k` dominates.
+- The result supports the corrected layered interpretation: `A^T b` is important
+  as a zero-radius / early-step term, not as a claim about a different final
+  finite-radius optimizer direction.
+
+Remaining work:
+
+- Optional: visualize same-delta gradient angle and norm-ratio curves over `k`.
+
+
+## 2026-05-15 Outward-Growth Angle Coverage / Rerun Need Inspected
+
+Status:
+
+- Inspected existing outward-growth angle records and added
+  `Existing Angle Records And Whether A Rerun Is Needed` to
+  `docs/outward_growth_direction_result_20260515.md`.
+
+Observed evidence summarized:
+
+- Existing angle table:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_similarity_table.csv`.
+- Existing saved attack trajectories:
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_*/loss*_original_pgd/trajectory.npz`.
+- Existing Jacobian source:
+  `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_*/error/*_jacobian_svd.npz`.
+- `all_direction_similarity_table.csv` already records `dot`, `abs_dot`,
+  `angle_deg`, `subspace_projection_l2`, `max_abs_dot`, and `mean_abs_dot`
+  between `outward_growth` and the top singular directions/subspaces of
+  `fno`, `solver`, and `error`.
+- Observed summaries from that table: `outward_growth` vs `error` top-8 angle
+  mean `84.68 deg`, abs-dot mean `0.246550`; vs `error` rank-1 angle mean
+  `90.87 deg`, abs-dot mean `0.125291`; `error_top8_subspace` projection mean
+  `0.925912`.
+
+Inference:
+
+- The original outward-growth run does not need to be rerun to recover existing
+  candidate-direction angle data; those records already exist.
+- The original run did not record same-`delta_k` gradient comparisons such as
+  `cos(A^T b + A^T A delta_k, A^T A delta_k)`,
+  `||A^T b|| / ||A^T A delta_k||`, or
+  `cos(A^T b, A^T A delta_k)`.
+- The precise apples-to-apples optimizer-step question needs a new post-processing
+  diagnostic using saved attack trajectories and existing Jacobians, not a full
+  rerun of the expensive attack/Jacobian experiment.
+
+Remaining work:
+
+- Implement and run the same-`delta_k` gradient-angle post-processing diagnostic
+  if this comparison is needed for the paper narrative.
+
+
+## 2026-05-15 Outward-Growth Correction: Not Apples-to-Apples Optimizer Comparison
+
+Status:
+
+- Added `Correction: This Is Not An Apples-To-Apples Optimizer Comparison` to
+  `docs/outward_growth_direction_result_20260515.md`.
+
+Observed evidence summarized:
+
+- The existing outward-growth experiment compares `error_top`, a top singular-vector
+  direction of `A=J_f-J_j`, with `outward_growth`, the clean-point first-order
+  direction `A^T b` for the local endpoint objective.
+- Therefore it mixes two levels: the final/global direction of the pure local
+  residual-movement quadratic and the zero-radius first-step direction of the
+  endpoint objective.
+
+Inference:
+
+- The current experiment should be interpreted only as a local diagnostic showing
+  that residual movement `||A v||` and zero-radius clean-residual outward growth
+  `<b/||b||, A v>` are different quantities.
+- It should not be described as a fair comparison of two final optimizer directions
+  or two same-iterate gradient directions.
+- Apples-to-apples follow-ups are: same-`delta_k` gradient comparison
+  `A^T b + A^T A delta_k` versus `A^T A delta_k`; finite-radius local affine
+  optimizer comparison for `||A delta||^2` versus `||b + A delta||^2`; and true
+  nonlinear optimizer comparison from matched starts.
+
+Remaining work:
+
+- Optional: implement the same-`delta_k` gradient diagnostic using saved attack
+  trajectories.
+
+
+## 2026-05-15 Outward-Growth Number-Comparison Clarification
+
+Status:
+
+- Added `Are These Number Comparisons Valid?` to
+  `docs/outward_growth_direction_result_20260515.md`.
+- Rechecked the source CSVs to clarify the exact meaning of the headline numbers.
+
+Observed evidence summarized:
+
+- Source aggregate table:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/aggregate_direction_response_summary.csv`.
+- Source per-direction table:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_response_table.csv`.
+- `error_top` aggregate row has `n_rows=40`, i.e. 5 samples times top-8
+  right singular directions of `A=J_f-J_j`; it is a top-8 group mean, not a
+  rank-1-only mean.
+- `outward_growth` aggregate row has `n_rows=5`, i.e. one `A^T b` direction per
+  sample.
+- Observed top-8 group means: `error_top` mismatch gain `0.412169`, outward
+  component `0.0140571`; `outward_growth` mismatch gain `0.368053`, outward
+  component `0.166514`.
+- Rank-1-only check from `all_direction_response_table.csv`: `error` rank-1
+  mismatch gain mean `0.868217`, outward component mean `-0.00677836`; `fno`
+  rank-1 mismatch gain mean `0.674167`, outward component mean `0.00326582`;
+  `solver` rank-1 mismatch gain mean `0.680574`, outward component mean
+  `0.00304161`.
+
+Inference:
+
+- It is valid to compare `mismatch_gain` values with other `mismatch_gain`
+  values and `outward_component` values with other `outward_component` values.
+- It is not valid to infer large outward clean-error growth from large
+  `mismatch_gain` alone.
+- The rank-1-only check strengthens the interpretation: the strongest residual
+  movement direction has even larger `||A v||` but does not push the current
+  residual outward on average.
+
+Remaining work:
+
+- Optional same-`delta_k` gradient comparison remains separate.
+
+
+## 2026-05-15 Outward-Growth Layered Theory/Data Interpretation Added
+
+Status:
+
+- Added `Layered Interpretation: What Is Actually Being Compared` to
+  `docs/outward_growth_direction_result_20260515.md`.
+- The section consolidates the theory, formulas, observed data, current
+  experiment scope, and the distinction between local candidate directions,
+  same-`delta` gradients, finite-radius local affine objectives, and true
+  nonlinear attack trajectories.
+
+Observed evidence summarized:
+
+- Source result doc: `docs/outward_growth_direction_result_20260515.md`.
+- Numeric sources remain the existing outward-growth outputs:
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/aggregate_direction_response_summary.csv`
+  and
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/finite_difference_growth_summary.csv`.
+- Observed data recorded in the new section include:
+  `error_top` mismatch gain mean `0.412169`, `error_top` outward component mean
+  `0.0140571`, `outward_growth` mismatch gain mean `0.368053`,
+  `outward_growth` outward component mean `0.166514`, `fno_top` outward
+  component mean `0.00218766`, `solver_top` outward component mean
+  `-0.00819025`, and finite-difference checks `0.167286` at `rho=1e-4` and
+  `0.166668` at `rho=1e-3` versus predicted `0.166514`.
+
+Inference:
+
+- The current experiment is a local candidate-direction diagnostic: it compares
+  the pure residual-movement/SVD direction with the clean-point outward-growth
+  direction `A^T b`.
+- It is not a same-`delta_k` optimizer-gradient comparison between
+  `A^T b + A^T A delta_k` and `A^T A delta_k`, and it is not a final nonlinear
+  `loss3_original` optimizer-direction result.
+- The layered interpretation records the correct role of each object:
+  `loss3_original` for finite-radius attack, `||b + A delta||` for local affine
+  endpoint approximation, `A^T b` for clean-point outward growth,
+  `||A delta||` and the top right singular vector of `A` for local residual
+  movement, and same-iterate gradient cosines as a separate follow-up.
+
+Remaining work:
+
+- Optional follow-up: compute same-trajectory gradient diagnostics from saved
+  attack iterates `delta_k`, including
+  `cos(A^T b + A^T A delta_k, A^T A delta_k)`,
+  `||A^T b|| / ||A^T A delta_k||`, and
+  `cos(A^T b, A^T A delta_k)`.
+
+
+## 2026-05-15 Outward-Growth Limitation: Not Same-Delta Gradient Comparison
+
+Status:
+
+- Added `Important Limitation: Not A Same-Delta Gradient Comparison` to
+  `docs/outward_growth_direction_result_20260515.md`.
+
+Observed evidence summarized:
+
+- Inspection of `tools/analyze_outward_growth_direction.py` confirms that
+  `error_top` directions are loaded from saved right singular vectors of
+  `A = J_f - J_j`.
+- The same script constructs `outward_growth` from the clean residual direction,
+  i.e. normalized `A^T b` / clean outward-growth direction.
+- The script evaluates candidate directions by metrics such as `||A v||` and
+  `<b/||b||, A v>`; it does not compute same-`delta_k` gradient comparisons
+  between `A^T b + A^T A delta_k` and `A^T A delta_k`.
+
+Inference:
+
+- The outward-growth experiment compares local mechanism directions:
+  top residual-movement/SVD direction versus clean-point first-order outward
+  direction.
+- It should not be described as a comparison of two per-step optimizer gradients
+  along the same attack trajectory.
+- A direct same-`delta` follow-up would compute cosines and norm ratios for
+  `A^T b + A^T A delta_k` versus `A^T A delta_k` at saved attack iterates.
+
+Remaining work:
+
+- Optional follow-up: use saved attack iterates to compute same-`delta_k`
+  gradient comparisons for the local squared endpoint and residual-movement
+  objectives.
+
+
+## 2026-05-15 Outward-Growth Direction Type / Analytic Solution Clarification
+
+Status:
+
+- Added a section to `docs/outward_growth_direction_result_20260515.md` clarifying
+  that the outward-growth experiment compares local analytic directions, not final
+  nonlinear attack trajectories.
+
+Observed evidence summarized:
+
+- The computed `error_top` direction is the top right singular direction of
+  `A = J_f - J_j`, i.e. the analytic local L2 solution of
+  `max_{||v||_2=1} ||A v||_2`.
+- The computed `outward_growth` direction is the normalized `A^T b` direction,
+  i.e. the analytic first-order L2 solution of maximizing
+  `<b/||b||, A v>` at `delta=0`.
+
+Inference:
+
+- The experiment compares local mechanism directions: pure residual movement
+  versus current-clean-residual outward growth.
+- For the affine finite-radius local endpoint problem
+  `max_{||delta||_2 <= epsilon} ||b + A delta||_2^2`, one can write a KKT/eigen
+  characterization using `Q=A^T A` and `c=A^T b`, but the answer is generally
+  neither exactly the top singular vector nor exactly `A^T b`.
+- For the true nonlinear neural-operator attack objective, there is no general
+  closed-form final optimizer direction; PGD/LP-steepest are iterative methods.
+
+Remaining work:
+
+- None for this clarification.
+
+
+## 2026-05-15 Outward-Growth Interpretation: Bias Term Versus Residual Movement
+
+Status:
+
+- Added a clarification section to `docs/outward_growth_direction_result_20260515.md`
+  explaining why the outward-growth result supports keeping the clean residual
+  bias term in `loss3_original` rather than replacing the objective by pure
+  residual movement.
+
+Observed evidence summarized:
+
+- From the outward-growth result table, `error_top` has mismatch gain mean
+  `0.412169` but outward component mean only `0.0140571`.
+- `outward_growth` has mismatch gain mean `0.368053` but outward component mean
+  `0.166514`.
+- The finite-difference check measured `loss3_original` growth `0.167286` at
+  `rho=1e-4` and `0.166668` at `rho=1e-3`, matching predicted outward growth
+  `0.166514`.
+
+Inference:
+
+- Locally, `loss3_original(delta) ~= ||b + A delta||`, while the residual
+  movement objective is `||e(x+delta)-e(x)|| ~= ||A delta||`.
+- The residual movement objective removes the clean residual `b`, so its SVD/top
+  singular-vector direction can maximize `||A v||` without strongly increasing
+  the current clean error norm.
+- The result supports using `loss3_original` as the primary regression attack
+  target and using residual movement/SVD directions as local diagnostics only.
+- This remains a local first-order conclusion; finite-radius `loss3_original`
+  still requires iterative nonlinear optimization.
+
+Remaining work:
+
+- None for this clarification.
+
+
+## 2026-05-15 Delta/Loss Formula Taxonomy Across Markdown
+
+Status:
+
+- Created `docs/delta_loss_formula_taxonomy_20260515.md` to summarize the
+  attack-related formulas, losses, objective variants, and meanings of `delta`
+  across repository Markdown notes.
+
+Source files / commands:
+
+- Markdown source discovery used `rg --files -g '*.md'`.
+- Formula/loss/delta evidence search used
+  `rg -n --glob '*.md' '(delta|Delta|\\delta|\\Delta|epsilon|\\epsilon|loss1|loss2|loss3|increment_ratio|regularized|A\^T|A\\delta|finite-radius|local)'`.
+- Main source notes recorded in the dedicated doc include
+  `three_loss_objective_experiment_plan.md`,
+  `docs/loss3_original_theory_experiment_plan.md`,
+  `BATCH_LOSS_ONLY_OPTIMIZATION_METHODS.md`,
+  `THREE_LOSS_BATCH100_FULL_LOSS3_SWEEP.md`,
+  `LOSS1_ZERO_DELTA_GRADIENT_CHECK.md`,
+  `LP_STEEPEST_DIRECTION_CHECK.md`,
+  `docs/local_jacobian_svd_direction_taxonomy_20260515.md`,
+  `docs/loss_gradient_direction_vs_svd_direction_20260515.md`,
+  `docs/outward_growth_direction_result_20260515.md`, and the FNO
+  `nu=0.001` loss-gradient path result docs.
+
+Output files:
+
+- `docs/delta_loss_formula_taxonomy_20260515.md`
+
+Observed evidence summarized:
+
+- The Markdown notes repeatedly define the three base losses
+  `loss1`, `loss2`, and `loss3`, plus objective variants `original`,
+  `increment_ratio`, and `regularized`.
+- The notes define local Jacobian formulas such as
+  `Delta f ~= J_f delta`, `Delta j ~= J_j delta`, and
+  `e(x + delta) ~= b + (J_f - J_j) delta`.
+- The notes also define finite-radius attack formulas such as
+  `max_{||delta||_p <= epsilon} O(delta)`, PGD / LP-steepest updates,
+  ray profiles, and boundary-rescaled final deltas.
+- `git status --short` currently shows many deleted tracked generated artifacts
+  under `benchmark_results/`, `fno_training_runs/`, `gradient_audit/`,
+  `path_audit/`, and `results/`. The taxonomy does not interpret those deleted
+  artifacts as current local evidence.
+
+Inference:
+
+- `delta` has two different roles in the notes: an infinitesimal/local diagnostic
+  variable for Jacobians, SVD directions, residual increment ratios, and
+  outward-growth derivatives; and a finite adversarial perturbation for PGD,
+  LP-steepest PGD, final deltas, boundary rescaling, and real `loss3_original`
+  attack evaluation.
+- The practical rule recorded in the doc is: formulas involving clean-input
+  Jacobians or `delta -> 0` are local; formulas involving `||delta|| <= epsilon`,
+  attack iterates, final deltas, or ray endpoints are finite-radius and should
+  not drop higher-order/path effects.
+
+Remaining work:
+
+- None for this summary note. If future Markdown files introduce new objectives
+  or solver-gradient conventions, update `docs/delta_loss_formula_taxonomy_20260515.md`.
+
+
+## 2026-05-15 Squared-Loss Gradient Clarification Added
+
+Status:
+
+- Added a clarification section to `docs/outward_growth_direction_result_20260515.md`
+  explaining the exact squared local endpoint-error gradient.
+
+Inference recorded:
+
+- For residual movement, `M(delta)=||A delta||^2` has gradient
+  `2 A^T A delta`.
+- For squared endpoint error, `S(delta)=||b + A delta||^2` expands exactly as
+  `||b||^2 + 2 b^T A delta + delta^T A^T A delta`, with exact local-model
+  gradient `2 A^T b + 2 A^T A delta`.
+- `A^T b` is the first-step / infinitesimal-radius gradient at `delta=0`, not a
+  full finite-radius replacement for `loss3_original`.
+
+
+## 2026-05-15 Outward-Growth Metric Glossary Added
+
+Status:
+
+- Added a glossary for the four key outward-growth numbers to
+  `docs/outward_growth_direction_result_20260515.md`.
+
+Observed evidence summarized:
+
+- `0.412169`: `error_top` mismatch gain mean, i.e. mean `||A v||_2`.
+- `0.368053`: `outward_growth` mismatch gain mean, i.e. mean
+  `||A v_growth||_2`.
+- `0.0140571`: `error_top` outward component mean, i.e. mean
+  `<b/||b||, A v>`.
+- `0.166514`: `outward_growth` outward component mean, i.e. mean
+  `<b/||b||, A v_growth>`.
+
+Inference:
+
+- The first pair compares raw residual movement; the second pair compares local
+  growth of the current clean error norm.
+
+
+## 2026-05-15 Outward-Growth Direction Interpretation
+
+Status:
+
+- Interpretation of the completed FNO `nu=0.001` outward-growth experiment was
+  added to `docs/outward_growth_direction_result_20260515.md`.
+
+Observed evidence summarized:
+
+- `outward_growth` outward component mean: `0.166514`.
+- `error_top` mismatch-gain mean: `0.412169`, but outward component mean:
+  `0.0140571`.
+- `fno_top` outward component mean: `0.00218766`; `solver_top` outward component
+  mean: `-0.00819025`; `random_best_by_outward_component` outward component
+  mean: `0.0114951`.
+- Finite-difference actual `loss3` growth for `outward_growth`: `0.167286` at
+  `rho=1e-4` and `0.166668` at `rho=1e-3`, versus linear prediction
+  `0.166514`.
+
+Inference:
+
+- This experiment supports a local conceptual distinction, not a finite-radius
+  optimality claim. It shows that maximizing residual movement `||A v||` and
+  maximizing first-order outward growth of the current error norm are different
+  diagnostics.
+- The completed `A^T b` row explains local outward clean-risk growth; the final
+  finite-radius adversarial objective remains `loss3_original` endpoint error.
+
+
+## 2026-05-15 FNO nu=0.001 Outward-Growth Direction Completed
+
+Status:
+
+- Completed on GPU for FNO `nu=0.001`, indices `0 7 40 47 115`.
+- Dedicated result note updated: `docs/outward_growth_direction_result_20260515.md`.
+
+Observed output files:
+
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/manifest.json`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/summary.md`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_response_table.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/aggregate_direction_response_summary.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_similarity_table.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/finite_difference_growth_table.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/finite_difference_growth_summary.csv`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/index_*/manifest.json`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/index_*/clean_model_output.npy`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/index_*/clean_solver_output.npy`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/index_*/clean_residual.npy`
+- `forensics/outward_growth_direction_20260515/fno_nu0p001/index_*/outward_growth_direction.npy`
+
+Observed key metrics:
+
+- From `aggregate_direction_response_summary.csv`: `outward_growth` outward
+  component mean `0.166514`, mismatch-gain mean `0.368053`, and `D_f` mean
+  `0.355948`.
+- From `aggregate_direction_response_summary.csv`: `error_top` mismatch-gain
+  mean `0.412169` but outward component mean only `0.0140571`.
+- From `aggregate_direction_response_summary.csv`: `fno_top` outward component
+  mean `0.00218766`; `solver_top` outward component mean `-0.00819025`;
+  `random_best_by_outward_component` outward component mean `0.0114951`.
+- From `finite_difference_growth_summary.csv`: for `outward_growth`, actual
+  loss3 growth mean is `0.167286` at `rho=1e-4`, `0.166668` at `rho=1e-3`, and
+  `0.167548` at `rho=1e-2`, versus predicted `0.166514`.
+- From `finite_difference_growth_summary.csv`: for `negative_outward_growth`,
+  actual loss3 growth mean is approximately the opposite sign, e.g. `-0.165528`
+  at `rho=1e-4`, versus predicted `-0.166514`.
+- From `manifest.json`: all five samples completed with nondegenerate outward
+  directions; per-index clean residual norms are recorded in `per_index_metadata`.
+
+Inference:
+
+- The missing Experiment 2 `A^T b` / `v_growth*` row is completed for FNO
+  `nu=0.001`.
+- The result separates residual movement from outward clean-risk growth: the
+  `error_top` directions move the residual field more, but `outward_growth` is
+  the direction that most increases the current clean error norm at first order.
+- Small-radius finite differences validate the local linear prediction for the
+  outward-growth direction.
+
+Remaining work:
+
+- Use these tables in the Experiment 2 writeup.
+- Do not rerun FNO `nu=0.01` or DeepONet/default-net unless a later paper
+  question specifically requires the broader architecture comparison.
+
+
+## 2026-05-15 FNO nu=0.001 Outward-Growth Run Status Check
+
+Status:
+
+- User-launched production command is running on GPU.
+- No process was stopped or restarted during this check.
+
+Observed evidence:
+
+- Running process observed via `ps`: PID `192081`, command
+  `adv_robust/bin/python tools/analyze_outward_growth_direction.py ... --device cuda`.
+- Output root exists: `forensics/outward_growth_direction_20260515/fno_nu0p001/`.
+- `index_000/manifest.json` exists and records
+  `clean_residual_norm_l2 = 0.33239443448801387`,
+  `At_b_unit_norm_l2 = 0.20492601962861828`,
+  `error_jacobian_consistency_l2 = 1.8676534473603818e-08`, and
+  `seconds = 19.056603444973007`.
+- `index_000/finite_difference_growth_table.csv` had 85 lines, matching header
+  plus 84 finite-difference rows for 28 directions x 3 radii.
+- `index_007/finite_difference_growth_table.csv` also had 85 lines at the time
+  of the check, indicating the second sample's finite-difference table had been
+  written or nearly completed.
+
+Inference:
+
+- The startup CUDA/JAX messages are not fatal for this run; output is being
+  produced on GPU.
+- The production command is progressing past index 0.
+
+Remaining work:
+
+- Let the command finish through indices `40`, `47`, and `115`.
+- After completion, inspect `manifest.json`, aggregate CSVs, `summary.md`, and
+  `docs/outward_growth_direction_result_20260515.md`, then update this ledger
+  with final observed metrics and conclusions.
+
+
+## 2026-05-15 FNO nu=0.001 Outward-Growth Script Prepared
+
+Source files added/updated:
+
+- `tools/analyze_outward_growth_direction.py`
+- `docs/outward_growth_direction_experiment_plan_20260515.md`
+
+Status:
+
+- Script prepared for the FNO `nu=0.001` outward-growth direction experiment.
+- Production five-index experiment has not been run in this turn.
+- GPU smoke tests were run only to validate the script path.
+
+Observed from GPU smoke validation:
+
+- Command path used `--device cuda` and the script prepended the virtualenv
+  `ptxas` directory before constructing the JAX solver.
+- Smoke output directories: `/tmp/outward_growth_smoke` and
+  `/tmp/outward_growth_fd_smoke`.
+- `/tmp/outward_growth_fd_smoke/manifest.json` records source paths for the FNO
+  checkpoint, Burgers test set, and index-0 Jacobian/SVD files.
+- Index 0 smoke values, observed from `/tmp/outward_growth_fd_smoke/manifest.json`:
+  `clean_residual_norm_l2 = 0.33239443448801387`,
+  `At_b_unit_norm_l2 = 0.20492601962861828`,
+  `error_jacobian_consistency_l2 = 1.8676534473603818e-08`.
+- `/tmp/outward_growth_fd_smoke/all_direction_response_table.csv` includes rows
+  for `fno`, `solver`, `error`, `outward_growth`,
+  `negative_outward_growth`, random directions, and random-best controls.
+- `/tmp/outward_growth_fd_smoke/finite_difference_growth_table.csv` includes
+  actual/predicted loss3 growth, residual movement, model movement, solver
+  movement, and response cosine columns.
+
+Inference:
+
+- The script is ready to run the requested FNO `nu=0.001` five-index
+  experiment on GPU.
+- The `ptxas` workaround keeps the run on GPU; it only changes PATH so JAX does
+  not use the incompatible system CUDA assembler.
+
+Remaining work:
+
+- Run the full command over indices `0 7 40 47 115`.
+- Inspect `forensics/outward_growth_direction_20260515/fno_nu0p001/summary.md`,
+  CSVs, JSON manifests, and `docs/outward_growth_direction_result_20260515.md`
+  after completion.
+- Update this ledger with final observed metrics and conclusions after the full
+  run.
+
+
+## 2026-05-15 Outward-Growth Direction Experiment Plan
+
+Plan note added:
+
+- `docs/outward_growth_direction_experiment_plan_20260515.md`
+
+Status:
+
+- Experiment plan only.
+- No numerical experiment was run.
+
+Observed evidence used to create the plan:
+
+- `docs/loss3_original_theory_experiment_plan.md` defines the missing
+  `v_growth*` row in Experiment 2.
+- `docs/local_jacobian_svd_direction_taxonomy_20260515.md` records the local
+  `loss3_original` decomposition into an outward term `A^T b` and quadratic
+  gain term `A^T A delta`.
+- Existing direction-comovement tables such as
+  `forensics/fno_solver_jacobian_similarity_20260514/all_direction_comovement_table.csv`
+  already include model, solver, error, and random direction rows.
+- Existing reusable Jacobian/SVD sources include
+  `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/`,
+  `forensics/fno_nu0p01_solver_jacobian_similarity_20260515/`, and
+  `forensics/deeponet_solver_jacobian_similarity_20260515/`.
+
+Inference:
+
+- The missing Experiment 2 component should be a focused postprocess that loads
+  existing Jacobians, computes `v_growth = normalize((J_f-J_j)^T b/||b||)`, and
+  adds outward-growth rows to the same response table structure.
+- This should not be treated as a finite-radius attack. It is a local
+  first-order diagnostic separating residual movement `||A v||` from outward
+  error-norm growth `<b/||b||, A v>`.
+
+Remaining work:
+
+- Implement `tools/analyze_outward_growth_direction.py` or equivalent.
+- Run the FNO `nu=0.001` phase first, then FNO `nu=0.01` and DeepONet
+  `nu=0.01`.
+- Add `docs/outward_growth_direction_result_20260515.md` after running, with
+  exact source paths, output tables, observed metrics, and conclusions.
+
+
+## 2026-05-15 R2 Loss3 Original Plan Completion Audit
+
+Audit note added:
+
+- `docs/loss3_original_plan_r2_completion_audit_20260515.md`
+
+Status:
+
+- Remote R2 documentation/results audit completed.
+- No numerical experiment was run.
+- R2 credentials were used for read-only listing / small JSON reads and were not
+  written to repository files.
+
+Observed evidence from R2:
+
+- R2 contains `docs/main_objective_mechanism_experiment1_result_20260514.md`,
+  `results/main_objective_mechanism_summary_20260514/`, and
+  `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`,
+  supporting Experiment 1.
+- R2 contains local Jacobian/SVD forensics including
+  `forensics/fno_solver_jacobian_similarity_20260514/`,
+  `forensics/fno_nu0p01_solver_jacobian_similarity_20260515/`,
+  `forensics/fno_deeponet_nu0p01_comprehensive_svd_diagnostics_20260515_no_std/`,
+  and
+  `forensics/fno_nu0p001_nu0p01_deeponet_nu0p01_ninerow_svd_diagnostics_20260515_no_std/`,
+  supporting most of Experiment 2.
+- R2 contains `results/three_loss_objective_round1_l2_eps8_alpha0p3/`, with the
+  27-run grid for three losses x three objective variants x three optimizers.
+- R2 contains six `results/three_loss_batch100_full_loss3_delta_rerun_20260514_*_final_boundary/`
+  directories and many `final_delta_summary.json`,
+  `final_delta_diagnostics.csv`, and `final_delta_diagnostics.npz` files, so
+  Experiment 5 Boundary-Rescaled Comparison is completed on R2.
+- Selected R2 JSON values for
+  `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`:
+  `loss3_original_pgd` boundary `loss3_original_mean = 5.4525`;
+  `loss3_increment_ratio_pgd` boundary `loss3_original_mean = 4.2225`;
+  `loss3_regularized_pgd` final `||delta||_2` mean `0.3018`, boundary
+  `loss3_original_mean = 2.0995`; `loss2_increment_ratio_pgd` boundary
+  `loss3_original_mean = 3.1936`; `loss2_regularized_pgd` boundary
+  `loss3_original_mean = 3.6531`.
+
+Inference:
+
+- The R2 evidence updates the prior local-only audit: Boundary-Rescaled
+  Comparison was completed historically and exists on R2, even though the
+  current local working tree lacks those result directories.
+- The boundary-rescaled results support the conclusion that increment-ratio and
+  regularized objectives can find interior or locally efficient directions, but
+  scaling those directions to the full epsilon boundary does not necessarily
+  match direct `loss3_original` endpoint optimization. This supports the
+  nonlinear local-to-global interpretation.
+- Still not observed as completed on R2 as specified: Ray Profile /
+  Local-to-Global Profile, planned Small-Epsilon Sweep with `L_f`, `L_j`,
+  `L_e`, `G_e`, and exact Direction Rotation Along Path via recomputed
+  `v_e*(x_t)`.
+
+Remaining work:
+
+- Run Ray Profile curves.
+- Run the planned local Small-Epsilon Sweep.
+- Run exact path direction rotation using `v_e*(x_t)`.
+- Optionally add `A^T b` outward-growth direction to the local response table.
+- Optionally make a compact paper-ready table from the R2 boundary JSON files.
+
+
+## 2026-05-15 Loss3 Original Plan Completion Audit
+
+Audit note added:
+
+- `docs/loss3_original_plan_completion_audit_20260515.md`
+
+Status:
+
+- Documentation/results audit completed.
+- No numerical experiment was run.
+
+Observed evidence:
+
+- `docs/main_objective_mechanism_experiment1_result_20260514.md` documents
+  Experiment 1: Main Objective Comparison for FNO/Burgers `nu=0.001`, batch
+  100, `epsilon=8`, `alpha=0.3`, `steps=100`, with PGD, LP-steepest PGD, and
+  generalized power. It records model movement, solver movement, mismatch,
+  final true error, response cosine, `D_f`, and `D_sym`.
+- Current local Jacobian/SVD outputs exist under paths including
+  `forensics/fno_solver_jacobian_similarity_20260514/`,
+  `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/`, and
+  `forensics/deeponet_solver_jacobian_similarity_20260515/`. These support the
+  local response decomposition for top model, solver, error, and random
+  directions, but not the explicit outward-growth `A^T b` direction.
+- `docs/fno_nu0p001_loss_gradient_path_result_20260515.md` and
+  `results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/gradient_direction_analysis/summary.md`
+  provide related path-gradient evidence, but not the planned recomputation of
+  `v_e*(x_t)` along the path.
+- `THREE_LOSS_BATCH100_FULL_LOSS3_SWEEP.md` documents scripts and final-boundary
+  diagnostic design, and related scripts exist under `tools/`, but no current
+  local `results/three_loss_batch100_full_loss3*` directories or
+  `final_delta_summary.json` files were found during this audit.
+- `docs/ray_profile_markdown_lookup_20260515.md` is only a lookup note for the
+  Ray Profile section, not a Ray Profile result.
+- `results/burgers_loss3_clean_recomputed_summary.md` contains older
+  small-epsilon attack rows, but not the planned local small-epsilon sweep over
+  `{1e-4, 1e-3, 1e-2, 1e-1}` with `L_f`, `L_j`, `L_e`, `G_e`, and direction
+  cosine stability.
+
+Inference:
+
+- Completed or strongest documented evidence: Experiment 1 and most of
+  Experiment 2's SVD/Jacobian response decomposition.
+- Partial or related evidence: three-loss variant/boundary diagnostics in design
+  form, older small-epsilon attack summaries, and loss-gradient path analysis.
+- Not completed as specified: Small-Epsilon Sweep, Ray Profile,
+  Boundary-Rescaled Comparison with current local numeric outputs, and
+  Direction Rotation via recomputed `v_e*(x_t)`.
+
+Remaining work:
+
+- Restore/fetch or rerun missing three-loss boundary outputs.
+- Run Ray Profile curves.
+- Run Small-Epsilon Sweep with direction stability.
+- Add outward-growth `A^T b` to the local response table.
+- Run the full path direction-rotation experiment.
+
+Working-tree note:
+
+- `git status --short` showed many deleted tracked experiment artifacts under
+  paths including `benchmark_results/`, `fno_training_runs/`,
+  `gradient_audit/`, `path_audit/`, and `results/`. These deleted files were
+  not interpreted as current local result evidence.
+
+
+## 2026-05-15 English Translation of Loss3 Original Theory Plan
+
+Files updated:
+
+- `docs/loss3_original_theory_experiment_plan.md`
+- `EXPERIMENT_LEDGER.md`
+
+Status:
+
+- Documentation translation completed.
+- No numerical experiment was run.
+
+Observed evidence:
+
+- The source Markdown file existed locally at
+  `docs/loss3_original_theory_experiment_plan.md` and contained the Chinese
+  theory and experiment plan for `loss3_original` as the main regression attack
+  objective.
+- The translated file preserves the original structure: central goal, five-step
+  proof route, nine-objective table, method-objective matching, six claims, six
+  proposed experiments, interpretation of representative recorded results,
+  recommended paper narrative, minimal experiment set, and one-sentence summary.
+
+Inference:
+
+- This change is a language/clarity update only. It does not add new empirical
+  evidence and does not change the planned experimental conclusions.
+
+Remaining work:
+
+- If the plan is executed later, record the exact scripts, output directories,
+  generated numeric tables, metrics, and conclusions in a separate result note.
+
+Working-tree note:
+
+- Before this translation, `git status --short docs/loss3_original_theory_experiment_plan.md EXPERIMENT_LEDGER.md`
+  showed `EXPERIMENT_LEDGER.md` as modified and did not show the plan file as
+  modified. This translation modifies the plan file and appends this ledger
+  entry.
+
+## 2026-05-15 Ray Profile Markdown Location Lookup
+
+Lookup note added:
+
+- `docs/ray_profile_markdown_lookup_20260515.md`
+
+Observed from local Markdown search:
+
+- Markdown search for whole-word `ray` / `ray profile` / `ray experiment`
+  reported Ray-related Markdown hits in
+  `docs/loss3_original_theory_experiment_plan.md`.
+- The main hit is `Experiment 4: Ray Profile / Local-to-Global Profile` at
+  `docs/loss3_original_theory_experiment_plan.md:741`.
+- The compact experiment list also names `ray profile` at
+  `docs/loss3_original_theory_experiment_plan.md:994`.
+- `stat` reported
+  `2026-05-15 15:04:45.684671694 +0000 docs/loss3_original_theory_experiment_plan.md`;
+  the file was not observed locally as a May 14 file by filesystem mtime at
+  lookup time.
+
+Inference:
+
+- The requested Markdown file is most likely
+  `docs/loss3_original_theory_experiment_plan.md`.
+- The Ray-profile experiment is a planned direction/radius diagnostic, not an
+  observed numerical result from this lookup.
+
+Remaining work:
+
+- No experiment was run in this lookup.
+- If executed later, record the script, output directory, numeric tables, and
+  conclusions separately.
+
+Working-tree note:
+
+- `git status --short` showed many deleted tracked experiment artifacts under
+  paths including `benchmark_results/`, `fno_training_runs/`,
+  `gradient_audit/`, `path_audit/`, and `results/`. These were not interpreted
+  as current local results for the Ray-profile plan.
 
 ## 2026-05-15 FNO nu=0.001 Loss-Gradient Figures And Target-Loss Table
 
