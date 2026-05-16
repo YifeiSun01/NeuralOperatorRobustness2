@@ -1,0 +1,9 @@
+{
+  "candidate_count": 178,
+  "clean_residual_norm_l2": 0.26841970560920864,
+  "jacobian_consistency_l2": 1.1995483528454812e-08,
+  "jacobian_consistency_max_abs": 1.6957377724224898e-09,
+  "outward_available": true,
+  "sample_index": 40,
+  "seconds": 3.008362264954485
+}

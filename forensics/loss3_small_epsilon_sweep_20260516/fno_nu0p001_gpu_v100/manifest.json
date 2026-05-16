@@ -1,0 +1,152 @@
+{
+  "burgers_domain": 2.0,
+  "burgers_dt": 0.001,
+  "burgers_jax_solver_dtype": "float64",
+  "burgers_nu": 0.001,
+  "burgers_nx": 1024,
+  "burgers_t_final": 1.0,
+  "device": "cuda:0",
+  "epsilons": [
+    0.0001,
+    0.001,
+    0.01,
+    0.1
+  ],
+  "eval_batch_size": 64,
+  "experiment": "loss3_small_epsilon_sweep_fno_nu0p001",
+  "fno_checkpoint": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+  "fno_test_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+  "gpu_runtime": {
+    "device": "cuda:0",
+    "jax_default_backend": "gpu",
+    "jax_devices": [
+      "cuda:0"
+    ],
+    "jax_gpu_devices": [
+      "cuda:0"
+    ],
+    "policy": "gpu_only_no_cpu_fallback",
+    "required_torch_arch": "sm_70",
+    "torch_cuda_available": true,
+    "torch_cuda_sanity_value": 1.0,
+    "torch_cuda_version": "12.6",
+    "torch_device_capability": [
+      7,
+      0
+    ],
+    "torch_device_name": "Tesla V100-SXM2-32GB",
+    "torch_supported_arches": [
+      "sm_50",
+      "sm_60",
+      "sm_70",
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90"
+    ],
+    "torch_version": "2.8.0+cu126"
+  },
+  "jacobian_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+  "output_dir": "forensics/loss3_small_epsilon_sweep_20260516/fno_nu0p001_gpu_v100",
+  "output_files": [
+    "candidate_metrics.csv",
+    "best_by_objective_epsilon_index.csv",
+    "aggregate_best_by_objective_epsilon.csv",
+    "local_reference_by_index.csv",
+    "local_reference_summary.csv",
+    "direction_stability.csv",
+    "direction_stability_summary.csv",
+    "best_direction_source_counts.csv",
+    "manifest.json",
+    "figures/small_epsilon_best_values.png",
+    "figures/small_epsilon_local_reference_ratio.png",
+    "figures/small_epsilon_direction_stability_heatmap.png",
+    "figures/small_epsilon_best_direction_sources.png"
+  ],
+  "outward_root": "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001",
+  "per_index": [
+    {
+      "candidate_count": 178,
+      "clean_residual_norm_l2": 0.33239443448801387,
+      "jacobian_consistency_l2": 1.8676534473603818e-08,
+      "jacobian_consistency_max_abs": 9.313225746154785e-10,
+      "outward_available": true,
+      "sample_index": 0,
+      "seconds": 3.7884913630550727
+    },
+    {
+      "candidate_count": 178,
+      "clean_residual_norm_l2": 0.296186386006848,
+      "jacobian_consistency_l2": 1.8286536792610628e-08,
+      "jacobian_consistency_max_abs": 2.919932740041986e-09,
+      "outward_available": true,
+      "sample_index": 7,
+      "seconds": 2.9915812959661707
+    },
+    {
+      "candidate_count": 178,
+      "clean_residual_norm_l2": 0.26841970560920864,
+      "jacobian_consistency_l2": 1.1995483528454812e-08,
+      "jacobian_consistency_max_abs": 1.6957377724224898e-09,
+      "outward_available": true,
+      "sample_index": 40,
+      "seconds": 3.008362264954485
+    },
+    {
+      "candidate_count": 178,
+      "clean_residual_norm_l2": 0.29071136736217074,
+      "jacobian_consistency_l2": 1.5394953469929953e-08,
+      "jacobian_consistency_max_abs": 9.313225746154785e-10,
+      "outward_available": true,
+      "sample_index": 47,
+      "seconds": 2.9945910399546847
+    },
+    {
+      "candidate_count": 178,
+      "clean_residual_norm_l2": 0.21990090521088498,
+      "jacobian_consistency_l2": 1.1931960721993533e-08,
+      "jacobian_consistency_max_abs": 4.656612873077393e-10,
+      "outward_available": true,
+      "sample_index": 115,
+      "seconds": 2.9970903190551326
+    }
+  ],
+  "random_directions": 128,
+  "result_doc": "docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md",
+  "runtime_cudnn_enabled": false,
+  "runtime_ptxas_dir": "/workspace/NeuralOperatorRobustness2/adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin",
+  "runtime_workarounds": true,
+  "sample_indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "scope": "FNO / 1D Burgers / nu=0.001 only",
+  "seconds": 20.395548735978082,
+  "seed": 20260516,
+  "source_paths": [
+    "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/error/error_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/fno/fno_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/solver/solver_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/error/error_index7_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/fno/fno_index7_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/solver/solver_index7_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/error/error_index40_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/fno/fno_index40_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/solver/solver_index40_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/error/error_index47_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/fno/fno_index47_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/solver/solver_index47_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/error/error_index115_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/fno/fno_index115_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/solver/solver_index115_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001"
+  ],
+  "status": "completed",
+  "top_k": 8
+}

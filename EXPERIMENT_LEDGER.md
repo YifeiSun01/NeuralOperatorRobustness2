@@ -1,5 +1,153 @@
 # Experiment Ledger
 
+
+## 2026-05-16 Experiment 4 Ray Profile Status Updated To Complete
+
+Status: completed for the current FNO / 1D Burgers `nu=0.001` scope. This entry
+supersedes earlier notes that described Experiment 4 as not yet fully run.
+
+Updated durable status files:
+
+- `docs/loss3_original_theory_experiment_plan.md`
+- `docs/loss3_ray_profile_fno_nu0p001_gpu_plan_20260516.md`
+- `docs/loss3_ray_profile_fno_nu0p001_gpu_result_20260516.md`
+- `EXPERIMENT_LEDGER.md`
+
+Completion evidence:
+
+- Full GPU-only ray-profile run completed on Tesla V100-SXM2-32GB with
+  `torch==2.8.0+cu126`, CUDA `12.6`, JAX backend `gpu`, and required torch arch
+  `sm_70` verified in the manifest.
+- Samples: `0, 7, 40, 47, 115`; endpoint radius `epsilon=8.0`; 45 ray radii;
+  50 Adam ascent steps per regenerated finite-radius direction.
+- Direction sources: `loss3_original`, `loss3_increment_ratio`,
+  `loss3_residual_increment_ratio`, `loss3_regularized`, `local_error_svd`,
+  `local_outward_growth`, and `random`.
+- Output directory:
+  `forensics/loss3_ray_profile_20260516/fno_nu0p001_gpu_v100/`.
+- Recorded `ray_profile.csv`, `ray_profile_aggregate_curves.csv`,
+  `ray_direction_summary.csv`, `ray_direction_aggregate.csv`,
+  `ray_winner_summary.csv`, `attack_trace.csv`, `directions.npz`, figures, and
+  `manifest.json`.
+
+Key conclusions now recorded:
+
+- The experiment directly shows the nonlinear local-to-global gap.
+- Small-radius clean residual norm growth winner: `local_outward_growth` in 5/5
+  samples.
+- Small-radius residual-increment winner: `local_error_svd` in 5/5 samples.
+- Finite endpoint `r=8` winner: `loss3_regularized` in 3/5 samples and
+  `loss3_increment_ratio` in 2/5 samples.
+- Therefore the local directions are real local diagnostics, but they are not
+  the finite-radius endpoint-best attack directions.
+
+Remaining work for Experiment 4:
+
+- None for the current `nu=0.001` scope. Future repetitions for other
+  viscosities, models, or endpoint radii should be treated as extension
+  experiments, not blockers for marking Experiment 4 complete.
+
+## 2026-05-16 Experiment 3 Small-Epsilon Sweep Status Updated To Complete
+
+Status: completed for the current FNO / 1D Burgers `nu=0.001` scope. This entry
+supersedes earlier same-day notes that described Experiment 3 as only partially
+done before the GPU runs were completed.
+
+Updated durable status files:
+
+- `docs/loss3_original_theory_experiment_plan.md`
+- `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`
+- `docs/loss3_gradient_direction_optimization_fno_nu0p001_gpu_steps12_result_20260516.md`
+- `EXPERIMENT_LEDGER.md`
+
+Completion evidence:
+
+- Candidate-bank small-epsilon sweep completed on GPU with epsilons
+  `{1e-4, 1e-3, 1e-2, 1e-1}` for indices `0, 7, 40, 47, 115`.
+- Recorded `L_f`, `L_j`, `L_e`, `G_e`, direction source counts, direction
+  stability, local-reference ratios, figures, CSV tables, and a GPU manifest in
+  `forensics/loss3_small_epsilon_sweep_20260516/fno_nu0p001_gpu_v100/`.
+- Second version completed on GPU with projected gradient ascent on the unit
+  direction `v`, recorded in
+  `forensics/loss3_gradient_direction_optimization_20260516/fno_nu0p001_gpu_v100_steps12/`.
+- The gradient version confirms that the candidate-bank directions were not just
+  arbitrary picks: for small epsilon, optimized directions and values recover the
+  same clean local Jacobian / outward-growth references.
+
+Key conclusions now recorded:
+
+- For `epsilon <= 1e-2`, the finite-difference ratios and directions are stable
+  and match the clean local structure. This is the intended epsilon-refinement /
+  local-convergence result.
+- At `epsilon=0.1`, finite-radius drift becomes visible, especially in `L_e` and
+  `G_e`, so that radius should not be described as purely local.
+- `L_f` and `L_j` are much larger than `L_e`, showing that FNO and solver can be
+  sensitive while still co-moving locally.
+- `G_e` is much smaller than `L_e`, so residual-field movement and outward growth
+  of the current clean residual are different diagnostics.
+- The `L_j/idx47` direction-angle caveat is explained by a near-degenerate
+  solver top-2 singular subspace (`sigma2/sigma1 = 0.977468`); top-2 subspace
+  alignment is the correct diagnostic there.
+
+Remaining work for Experiment 3:
+
+- None for the current `nu=0.001` scope. Future repetitions for other viscosities
+  or model families should be treated as extension experiments, not blockers for
+  marking Experiment 3 complete.
+
+## 2026-05-16 Loss3 Small-Epsilon Sweep Requirements And R2 Artifact Sync
+
+Status: superseded pre-run requirements / artifact sync note. No numerical small-epsilon sweep
+was run in that earlier turn, but Experiment 3 was later completed on GPU; see
+`2026-05-16 Experiment 3 Small-Epsilon Sweep Status Updated To Complete`.
+
+Source files and artifact roots:
+- `docs/loss3_original_theory_experiment_plan.md`
+- `docs/loss3_original_plan_r2_completion_audit_20260515.md`
+- R2 prefix:
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`
+- Local model checkpoint:
+  `1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt`
+
+Output files / synced artifacts:
+- `docs/loss3_small_epsilon_sweep_requirements_r2_sync_20260516.md`
+- `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/`
+- `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/`
+- `forensics/outward_growth_direction_20260515/`
+- `results/burgers_corrected_oldstyle_5loss_nu0p001_small_eps_only/`
+
+Key settings:
+- Experiment 3 target scope: FNO / 1D Burgers `nu=0.001`.
+- Planned epsilon list: `{1e-4, 1e-3, 1e-2, 1e-1}`.
+- Quantities still to estimate systematically: `L_f(epsilon)`,
+  `L_j(epsilon)`, `L_e(epsilon)`, `G_e(epsilon)`, and cross-epsilon direction
+  cosines.
+- Existing local diagnostic indices from SVD/outward-growth artifacts:
+  `[0, 7, 40, 47, 115]`.
+
+Observed from local verification:
+- The restored train split loads with `x=(1350, 1024)`, `y=(1350, 1024)`.
+- The restored test split loads with `x=(150, 1024)`, `y=(150, 1024)`.
+- The FNO checkpoint exists locally.
+- `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/` contains
+  15 raw `*_jacobian_svd.npz` files, covering FNO, solver, and error SVD arrays
+  for five indices.
+- `forensics/outward_growth_direction_20260515/` contains partial small-radius
+  finite-difference evidence at radii `1e-4`, `1e-3`, and `1e-2`.
+- `results/burgers_corrected_oldstyle_5loss_nu0p001_small_eps_only/` contains
+  older attack summaries for `Linf` epsilon `0.01` and `0.1`, but not the
+  planned local operator/risk-growth sweep.
+
+Inference:
+- The required data/model/artifact prerequisites for implementing and running
+  the planned Small-Epsilon Sweep are now present locally.
+- Superseded: at the time of this requirements-sync note, Experiment 3 was only
+  partially done. It was later completed on GPU with the systematic sweep and
+  direction-stability analysis.
+
+Remaining work from this pre-run note: superseded by the completed GPU sweep and
+gradient-optimization follow-up.
+
 ## 2026-05-16 GitHub Script Sync And R2 Artifact Upload
 
 Status: completed. Generated artifacts were uploaded to R2, and Markdown/Python files were committed and pushed to GitHub branch `vast-ai`.
@@ -52,19 +200,19 @@ Key settings / scope:
 - Broader `nu=0.01` or default-architecture sweeps are explicitly not required for the immediate next plan.
 
 Observed from the existing records and user-confirmed notes:
-- Done: Experiment 1, Experiment 2, Experiment 5.
-- Partially done: Experiment 3 and Experiment 6.
-- Not yet done as a full experiment: Experiment 4.
+- Superseded later on 2026-05-16: Experiment 3 was completed after this status
+  note. Current status is Done: Experiments 1, 2, 3, and 5; Partially done:
+  Experiment 6; Not yet done as a full experiment: Experiment 4.
 
 Inference from the current status:
 - Next priority should be Ray Profile / Local-to-Global Profile.
-- Then complete the full Small-Epsilon Sweep.
 - Then complete the exact Direction Rotation Along Path experiment with recomputed `v_e*(x_t)`.
+- The full Small-Epsilon Sweep was later completed and is no longer a blocker.
 
 Remaining work:
 - Run Experiment 4 ray-profile curves.
-- Complete Experiment 3 with systematic `L_f`, `L_j`, `L_e`, `G_e`, and direction-cosine tables.
 - Complete Experiment 6 with pathwise recomputed local top residual directions.
+- Superseded: Experiment 3 was later completed with systematic `L_f`, `L_j`, `L_e`, `G_e`, and direction-cosine tables.
 
 Last updated: 2026-05-16 UTC
 
@@ -2193,3 +2341,302 @@ Created `docs/fno_nu0p001_loss_gradient_path_experiment_plan_20260515.md`.  This
 ## 2026-05-15 FNO Loss-Gradient Plan Amendment
 
 Updated `docs/fno_nu0p001_loss_gradient_path_experiment_plan_20260515.md` to explicitly include the fixed-radius `b`-aware affine optimum directions that were missing from the first plan draft: `v_loss2_out=normalize(J_f^T b)`, `v_loss3_out=normalize(J_e^T b)`, `v_loss2_rho=argmax ||b+rho J_f v||`, and `v_loss3_rho=argmax ||b+rho J_e v||`.  The plan now covers three distinct objects: SVD gain directions, one-step gradients at `delta_k`, and fixed-radius local affine optimum directions.  It also adds direction-source objective evaluation so candidate directions such as `v_f`, `v_j`, and `v_e` are evaluated under `loss1/loss2/loss3` without incorrectly calling them loss-specific directions.
+
+## 2026-05-16 Neural Operator Robustness Research Directions
+
+Status: planning note created; no numerical experiment was run for this entry.
+
+Created `docs/neural_operator_robustness_research_directions_20260516.md` to
+organize five future work directions:
+
+- cross-framework solver/model combinations for 1D Burgers and 2D
+  Stokes/Navier-Stokes;
+- comparison of attack losses with unified true solver-level evaluation;
+- perturbation-size-aware attack objectives;
+- PGD versus power-iteration-like optimization methods;
+- structure-aware error metrics beyond pointwise `L2`.
+
+Observed evidence:
+
+- This entry records only the Markdown planning document created from the
+  user requested research directions.
+
+Inference:
+
+- The suggested execution order in the note prioritizes existing 1D
+  Burgers/FNO loss experiments before broader cross-framework and
+  structure-aware extensions.
+
+Remaining work:
+
+- Turn each direction into a concrete experiment plan before running numerical
+  experiments.
+- Record datasets, model checkpoints, solver versions, attack hyperparameters,
+  tables, figures, and conclusions for each future run.
+
+## 2026-05-16 Loss3 Experiment 3 Small-Epsilon Sweep - FNO nu=0.001 GPU Run
+
+Status: completed on GPU. No CPU fallback was used for the official run.
+
+User constraint recorded:
+
+- Official neural-operator robustness experiments must use GPU. If CUDA, JAX
+  GPU, or PyTorch GPU architecture support fails, stop and repair the
+  environment rather than switching to CPU.
+
+Environment repair and persistence:
+
+- Added the GPU-only rule to `AGENTS.md`.
+- Added `docs/gpu_only_experiment_policy_20260516.md`.
+- Replaced the unsupported `torch==2.11.0+cu128` wheel with
+  `torch==2.8.0+cu126` in `adv_robust`; the verified arch list includes
+  `sm_70` for Tesla V100.
+- Regenerated `requirements.txt` with the `cu126` PyTorch wheel index and
+  `torch==2.8.0+cu126`, so future environment rebuilds do not reinstall the
+  broken V100-incompatible wheel.
+- Verified PyTorch CUDA matmul on `Tesla V100-SXM2-32GB`; verified JAX backend
+  `gpu` and JAX GPU matmul; `pip check` reported no broken requirements.
+
+Source files and inputs:
+
+- Experiment script: `tools/run_loss3_small_epsilon_sweep.py`.
+- Plan: `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_plan_20260516.md`.
+- Result: `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`.
+- Dataset: `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/test.pt`.
+- Model checkpoint: `fno_training_runs/burgers_nu0p001_fno1d_500/burgers_1d/checkpoints/pytorch_fno1d_500.pt`.
+- Local Jacobian/SVD artifacts: `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/`.
+- Outward-growth artifacts: `forensics/outward_growth_direction_20260515/fno_nu0p001/`.
+
+Key settings:
+
+- Scope: FNO / 1D Burgers / `nu=0.001` only.
+- Sample indices: `0, 7, 40, 47, 115`.
+- Epsilons: `1e-4, 1e-3, 1e-2, 1e-1`.
+- Direction bank: top-8 right singular directions of `J_f`, `J_j`, and
+  `J_e`, both signs; outward-growth direction; 128 seeded random controls.
+- Evaluation batch size: `64`.
+- Runtime evidence from `manifest.json`: device `cuda:0`, GPU
+  `Tesla V100-SXM2-32GB`, required arch `sm_70`, PyTorch `2.8.0+cu126`,
+  JAX backend `gpu`, policy `gpu_only_no_cpu_fallback`, runtime `20.40` s.
+
+Output files:
+
+- Output directory:
+  `forensics/loss3_small_epsilon_sweep_20260516/fno_nu0p001_gpu_v100/`.
+- Tables: `candidate_metrics.csv`, `best_by_objective_epsilon_index.csv`,
+  `aggregate_best_by_objective_epsilon.csv`, `local_reference_by_index.csv`,
+  `local_reference_summary.csv`, `direction_stability.csv`,
+  `direction_stability_summary.csv`, `best_direction_source_counts.csv`.
+- Manifest: `manifest.json`.
+- Figures: `figures/small_epsilon_best_values.png`,
+  `figures/small_epsilon_local_reference_ratio.png`,
+  `figures/small_epsilon_direction_stability_heatmap.png`,
+  `figures/small_epsilon_best_direction_sources.png`.
+
+Observed key metrics from `aggregate_best_by_objective_epsilon.csv`:
+
+- Local reference means: `L_f=3.895`, `L_j=4.095`, `L_e=0.8682`,
+  `G_e=0.1665`.
+- At `epsilon=1e-4`: `L_f=3.897`, `L_j=4.094`, `L_e=0.8685`,
+  `G_e=0.1658`.
+- At `epsilon=1e-1`: `L_f=3.856`, `L_j=4.036`, `L_e=0.8309`,
+  `G_e=0.1763`.
+- Best/local ratios stay near `1` for small epsilons. At `epsilon=1e-1`,
+  ratios are approximately `L_f=0.990`, `L_j=0.985`, `L_e=0.961`,
+  `G_e=1.058`.
+- Best direction source counts: `L_f` selected FNO directions in `20/20`
+  cases; `L_j` selected solver directions in `20/20`; `L_e` selected
+  residual/error directions in `20/20`; `G_e` selected outward-growth in
+  `20/20`.
+
+Observed conclusion:
+
+- The small-epsilon candidate sweep matches the clean local Jacobian references
+  for `epsilon <= 1e-2`, supporting the claim that these ratio-style metrics
+  represent local structure in this FNO `nu=0.001` setting.
+- Model and solver sensitivities are much larger than residual sensitivity
+  (`L_f` and `L_j` around `4`, `L_e` around `0.87`), consistent with FNO
+  co-moving with the solver locally.
+- `G_e` is much smaller than `L_e` (`0.166` versus `0.868` locally), confirming
+  that outward clean-residual growth and residual-field movement are different
+  diagnostics.
+- Selected directions are stable up to sign across epsilon; `G_e` keeps the same
+  outward-growth sign.
+
+Inference:
+
+- For FNO `nu=0.001`, Experiment 3 supports using very small epsilons as a
+  local-structure diagnostic, but it should not be confused with a finite-radius
+  attack objective. The local residual map can move at rate `L_e` without
+  increasing the clean residual norm at the same rate, which is why `G_e` is
+  the stricter outward-growth diagnostic.
+
+Remaining work:
+
+- If this result needs to be compared against PGD endpoint attacks, run a
+  separate finite-radius attack experiment under the same GPU-only rule.
+- Keep generated large arrays local/R2 unless explicitly asked to commit or
+  upload them.
+
+## 2026-05-16 CUDA/GPU Wheel Compatibility Documentation
+
+Status: documentation update; no numerical experiment was run for this entry.
+
+Created `docs/cuda_gpu_wheel_compatibility_notes_20260516.md` and linked it
+from `AGENTS.md` plus `docs/gpu_only_experiment_policy_20260516.md`. The note
+records why the previous V100 run failed with `torch==2.11.0+cu128`: the wheel
+could see CUDA but did not include the V100 architecture `sm_70`, causing
+`no kernel image is available for execution on the device`. It also records the
+second compatibility issue observed during repair: `torch==2.6.0+cu126` made
+PyTorch CUDA work on V100 but pulled cuDNN `9.5.1`, while JAX `0.10.0` needed
+cuDNN `9.8.0` or newer.
+
+Observed working environment at documentation time:
+
+- GPU: Tesla V100-SXM2-32GB, compute capability `(7, 0)` / `sm_70`.
+- PyTorch: `2.8.0+cu126`; `torch.cuda.get_arch_list()` includes `sm_70`.
+- JAX backend: `gpu`; JAX devices include `CudaDevice(id=0)`.
+
+Remaining rule:
+
+- Before any official experiment, verify the active GPU architecture, PyTorch
+  arch list, real PyTorch CUDA operation, JAX GPU backend, real JAX GPU
+  operation, and `pip check`. Do not use CPU fallback for official runs.
+
+## 2026-05-16 Loss3 Small-Epsilon Result Explanation Clarification
+
+Status: documentation clarification; no new numerical experiment was run.
+
+Updated `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`
+to make the experiment logic explicit. The clarified note now states that the
+run is a candidate-bank direction maximization, not PGD and not model training.
+It records what was optimized (`L_f`, `L_j`, `L_e`, and `G_e` over candidate
+directions), how the 178-direction bank was constructed, the GPU-only run
+conditions, the 3560 FNO/solver candidate evaluations, and the key
+epsilon-refinement conclusion.
+
+Observed clarification from existing CSV files:
+
+- For `epsilon <= 1e-2`, best/local ratios remain near `1`, so the
+  finite-epsilon ratios match the clean local Jacobian references.
+- At `epsilon=0.1`, values begin to drift (`L_e` about `0.961` of local
+  reference and `G_e` about `1.058`), indicating finite-radius effects.
+- Best direction sources remain stable in `20/20` sample-epsilon cases for each
+  objective: FNO for `L_f`, solver for `L_j`, residual/error for `L_e`, and
+  outward-growth for `G_e`.
+
+Inference now stated explicitly:
+
+- This is analogous to an epsilon-refinement/local-convergence check: once the
+  perturbation radius is small enough, shrinking it further does not materially
+  change the measured local direction or local ratio.
+
+## 2026-05-16 GPU-Aware adv_robust Setup Script
+
+Status: environment automation added; no numerical experiment was run for this
+entry.
+
+Created `tools/setup_adv_robust_gpu_env.py` as the project entry point for
+creating or verifying `adv_robust`. The script detects the visible GPU compute
+capability with `nvidia-smi`, creates `adv_robust` when missing, installs the
+pinned `requirements.txt`, and refuses to pass unless PyTorch and JAX both run
+real GPU matrix operations. It also verifies that the PyTorch wheel contains the
+required `sm_*` architecture for the active GPU, currently `sm_70` on V100, and
+runs `pip check`.
+
+Verified on the current machine with:
+
+- command: `tools/setup_adv_robust_gpu_env.py --verify-only`;
+- GPU: Tesla V100-SXM2-32GB;
+- required architecture: `sm_70`;
+- PyTorch: `2.8.0+cu126`;
+- JAX backend: `gpu`;
+- result: PyTorch CUDA matmul passed, JAX GPU matmul passed, and `pip check`
+  reported no broken requirements.
+
+Updated `AGENTS.md`, `docs/cuda_gpu_wheel_compatibility_notes_20260516.md`,
+`ENVIRONMENT_SETUP_REPRODUCTION_GUIDE.md`, and `ENVIRONMENT_RUN_GUIDE.md` so
+future environment rebuilds use this script rather than raw manual installation.
+
+## 2026-05-16 Loss3 Gradient Direction Optimization - FNO nu=0.001 GPU Run
+
+Status: completed on GPU with no CPU fallback.
+
+Purpose:
+
+- Address the limitation of the earlier candidate-bank sweep by directly
+  optimizing perturbation directions with projected gradient ascent.
+- Compare gradient-optimized directions against candidate-bank selections,
+  pullback eigenvectors of `J_f^T J_f`, `J_j^T J_j`, `J_e^T J_e`, and the
+  clean residual outward-growth direction.
+
+Source files and inputs:
+
+- Script: `tools/run_loss3_gradient_direction_optimization.py`.
+- Result doc:
+  `docs/loss3_gradient_direction_optimization_fno_nu0p001_gpu_steps12_result_20260516.md`.
+- Output directory:
+  `forensics/loss3_gradient_direction_optimization_20260516/fno_nu0p001_gpu_v100_steps12/`.
+- Previous candidate sweep used for comparison:
+  `forensics/loss3_small_epsilon_sweep_20260516/fno_nu0p001_gpu_v100/`.
+- Same FNO `nu=0.001`, dataset, checkpoint, Jacobian/SVD artifacts, and
+  outward-growth artifacts as the previous small-epsilon experiment.
+
+Key settings:
+
+- Samples: `0, 7, 40, 47, 115`.
+- Epsilons: `1e-4, 1e-3, 1e-2, 1e-1`.
+- Objectives: `L_f`, `L_j`, `L_e`, `G_e`.
+- Optimization: Adam ascent on unit direction `v`, projected/renormalized after
+  each step.
+- Starts per case: analytic plus, analytic minus, and one random start.
+- Steps per start: `12`; learning rate: `0.2`.
+- Runtime: `1117.48` seconds.
+- GPU evidence from manifest: device `cuda:0`, `Tesla V100-SXM2-32GB`, required
+  arch `sm_70`, PyTorch `2.8.0+cu126`, JAX backend `gpu`.
+
+Output files:
+
+- `gradient_run_summary.csv`
+- `gradient_trajectory.csv`
+- `gradient_best_by_case.csv`
+- `gradient_summary_by_objective_epsilon.csv`
+- `pullback_eigen_summary.csv`
+- `manifest.json`
+- figures: `gradient_vs_candidate_value_ratio.png`,
+  `gradient_direction_alignment.png`, `random_start_alignment.png`
+
+Observed results:
+
+- Gradient-optimized values nearly match candidate-bank values: aggregate
+  `grad/candidate` ratios are around `0.999-1.010`.
+- `L_f` optimized directions align with the FNO pullback/SVD direction with mean
+  absolute cosine about `0.996-0.999`.
+- `L_e` optimized directions align with the residual/error pullback/SVD
+  direction for `epsilon <= 1e-2` with mean absolute cosine about `0.998-0.999`;
+  at `epsilon=0.1`, the mean is about `0.973`.
+- `G_e` optimized directions align with the outward-growth direction with mean
+  absolute cosine about `0.999` for `epsilon <= 1e-2` and about `0.991` at
+  `epsilon=0.1`.
+- `L_j` optimized values match the candidate values, but direction alignment is
+  weaker than for the other objectives: mean absolute cosine is about `0.982`
+  for small epsilons and about `0.969` at `epsilon=0.1`; the worst case is
+  index `47`, `epsilon=0.1`, cosine about `0.849` with value still `0.999` of
+  candidate maximum.
+- Pullback eigenvector checks: for `L_f`, `L_j`, and `L_e`, the largest
+  eigenvector of `J^T J` matches the saved top right singular vector with
+  absolute cosine `1.0` for all checked samples.
+- Outward-growth check: `normalize(J_e^T e(x)/||e(x)||)` matches the saved
+  outward-growth direction with absolute cosine `1.0`; this is not a top
+  eigenvector of `J_e^T J_e`.
+
+Conclusion:
+
+- The second version confirms that the previous candidate-bank directions were
+  not arbitrary. For small epsilons, actual gradient ascent recovers essentially
+  the same directions and values.
+- The correct local linear algebra is: `L_f/L_j/L_e` use pullback matrices
+  `J^T J`; `G_e` uses the clean residual outward gradient `J_e^T e/||e||`.
+- At `epsilon=0.1`, finite-radius drift appears, so exact direction equality
+  should not be overclaimed even when the scalar objective value remains near
+  the candidate maximum.

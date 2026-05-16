@@ -1,5 +1,18 @@
 # Current GPU Environment Run Guide
 
+## Official Experiment GPU Rule
+
+For official neural-operator robustness experiments, do not allow CPU fallback.
+Before running experiments, verify the environment with:
+
+```bash
+cd /workspace/NeuralOperatorRobustness2
+tools/setup_adv_robust_gpu_env.py --verify-only
+```
+
+If this verification fails, repair the GPU environment first. Do not run the
+experiment on CPU and report it as an official result.
+
 This repository was originally written for a Slurm HPC cluster, but the
 current workspace is a direct GPU instance, such as a VastAI rental.
 
@@ -7,7 +20,7 @@ Current observed workspace:
 
 - Project root: `/workspace/NeuralOperatorRobustness2`
 - Runtime style: direct single-machine GPU execution
-- Current visible GPU: `GPU 0: NVIDIA A100-SXM4-80GB`
+- Current visible GPU: `GPU 0: Tesla V100-SXM2-32GB`
 - Slurm commands: not available here (`sbatch` / `srun` are not installed)
 - Conda: not available here
 - Local Python environment: `adv_robust/`
@@ -50,12 +63,15 @@ export OMP_NUM_THREADS=4
 python path/to/your_script.py
 ```
 
-For a PyTorch script, the code should choose CUDA with something like:
+For official PyTorch experiment scripts, require CUDA explicitly instead of
+silently falling back to CPU:
 
 ```python
 import torch
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if not torch.cuda.is_available():
+    raise RuntimeError("CUDA is required for this official experiment")
+device = torch.device("cuda")
 model = model.to(device)
 x = x.to(device)
 ```

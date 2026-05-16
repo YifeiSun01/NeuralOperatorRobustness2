@@ -1,0 +1,67 @@
+{
+  "burgers_domain": 2.0,
+  "burgers_dt": 0.001,
+  "burgers_jax_solver_dtype": "float64",
+  "burgers_nu": 0.001,
+  "burgers_nx": 1024,
+  "burgers_t_final": 1.0,
+  "device": "cpu",
+  "epsilons": [
+    0.0001
+  ],
+  "eval_batch_size": 8,
+  "experiment": "loss3_small_epsilon_sweep_fno_nu0p001",
+  "fno_checkpoint": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+  "fno_test_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+  "jacobian_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+  "output_dir": "forensics/loss3_small_epsilon_sweep_20260516/smoke_fno_nu0p001",
+  "output_files": [
+    "candidate_metrics.csv",
+    "best_by_objective_epsilon_index.csv",
+    "aggregate_best_by_objective_epsilon.csv",
+    "local_reference_by_index.csv",
+    "local_reference_summary.csv",
+    "direction_stability.csv",
+    "direction_stability_summary.csv",
+    "best_direction_source_counts.csv",
+    "manifest.json",
+    "figures/small_epsilon_best_values.png",
+    "figures/small_epsilon_local_reference_ratio.png",
+    "figures/small_epsilon_direction_stability_heatmap.png",
+    "figures/small_epsilon_best_direction_sources.png"
+  ],
+  "outward_root": "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001",
+  "per_index": [
+    {
+      "candidate_count": 18,
+      "clean_residual_norm_l2": 0.3323960035854265,
+      "jacobian_consistency_l2": 1.8676534473603818e-08,
+      "jacobian_consistency_max_abs": 9.313225746154785e-10,
+      "outward_available": true,
+      "sample_index": 0,
+      "seconds": 3.328189483960159
+    }
+  ],
+  "random_directions": 4,
+  "result_doc": "docs/loss3_small_epsilon_sweep_smoke_20260516.md",
+  "runtime_cudnn_enabled": false,
+  "runtime_ptxas_dir": "/workspace/NeuralOperatorRobustness2/adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin",
+  "runtime_workarounds": true,
+  "sample_indices": [
+    0
+  ],
+  "scope": "FNO / 1D Burgers / nu=0.001 only",
+  "seconds": 8.324722378049046,
+  "seed": 20260516,
+  "source_paths": [
+    "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/error/error_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/fno/fno_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/solver/solver_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001"
+  ],
+  "status": "completed",
+  "top_k": 2
+}

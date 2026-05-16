@@ -1,0 +1,50 @@
+{
+  "trajectory_root": "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631",
+  "jacobian_root": "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+  "outward_root": "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001",
+  "output_dir": "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics",
+  "indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "attacks": [
+    "loss1_original_pgd",
+    "loss2_original_pgd",
+    "loss3_original_pgd"
+  ],
+  "epsilon": 8.0,
+  "source_paths": [
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/error/error_index0_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/error/error_index7_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/error/error_index40_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/error/error_index47_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/error/error_index115_jacobian_svd.npz",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/index_000/clean_residual.npy",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/index_007/clean_residual.npy",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/index_040/clean_residual.npy",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/index_047/clean_residual.npy",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/index_115/clean_residual.npy",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_000/loss1_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_000/loss2_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_000/loss3_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_007/loss1_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_007/loss2_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_007/loss3_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_040/loss1_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_040/loss2_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_040/loss3_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_047/loss1_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_047/loss2_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_047/loss3_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_115/loss1_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_115/loss2_original_pgd/trajectory.npz",
+    "/workspace/NeuralOperatorRobustness2/results/fno_nu0p001_loss_gradient_path_steps50_save5_gpu_nocudnn_20260515_200631/index_115/loss3_original_pgd/trajectory.npz"
+  ],
+  "output_files": [
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_diagnostics.csv",
+    "/workspace/NeuralOperatorRobustness2/forensics/outward_growth_direction_20260515/fno_nu0p001/same_delta_gradient_diagnostics/same_delta_gradient_summary_by_attack_k.csv"
+  ]
+}

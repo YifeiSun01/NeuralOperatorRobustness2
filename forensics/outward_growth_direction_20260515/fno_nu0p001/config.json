@@ -1,0 +1,35 @@
+{
+  "burgers_domain": 2.0,
+  "burgers_dt": 0.001,
+  "burgers_jax_solver_dtype": "float64",
+  "burgers_nu": 0.001,
+  "burgers_nx": 1024,
+  "burgers_t_final": 1.0,
+  "device": "cuda",
+  "eta": 1e-06,
+  "finite_difference": true,
+  "finite_difference_rhos": [
+    0.0001,
+    0.001,
+    0.01
+  ],
+  "finite_difference_top_k": 8,
+  "fno_checkpoint": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+  "fno_test_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+  "jacobian_root": "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+  "output_dir": "forensics/outward_growth_direction_20260515/fno_nu0p001",
+  "prepend_env_ptxas": true,
+  "random_directions": 64,
+  "runtime_cudnn_enabled": false,
+  "runtime_ptxas_dir": "/workspace/NeuralOperatorRobustness2/adv_robust/lib/python3.12/site-packages/triton/backends/nvidia/bin",
+  "runtime_workarounds": true,
+  "sample_indices": [
+    0,
+    7,
+    40,
+    47,
+    115
+  ],
+  "seed": 0,
+  "top_k": 8
+}

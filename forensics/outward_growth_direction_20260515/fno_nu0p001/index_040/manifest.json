@@ -1,0 +1,20 @@
+{
+  "At_b_unit_norm_l2": 0.11796038755763169,
+  "clean_input_path": "forensics/outward_growth_direction_20260515/fno_nu0p001/index_040/clean_input.npy",
+  "clean_model_output_path": "forensics/outward_growth_direction_20260515/fno_nu0p001/index_040/clean_model_output.npy",
+  "clean_residual_degenerate": false,
+  "clean_residual_norm_l2": 0.26841970560920864,
+  "clean_residual_path": "forensics/outward_growth_direction_20260515/fno_nu0p001/index_040/clean_residual.npy",
+  "clean_solver_output_path": "forensics/outward_growth_direction_20260515/fno_nu0p001/index_040/clean_solver_output.npy",
+  "error_jacobian_consistency_l2": 1.1995483528454812e-08,
+  "error_jacobian_consistency_max_abs": 1.6957377724224898e-09,
+  "jacobian_sources": {
+    "error": "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/error/error_index40_jacobian_svd.npz",
+    "fno": "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/fno/fno_index40_jacobian_svd.npz",
+    "solver": "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/solver/solver_index40_jacobian_svd.npz"
+  },
+  "outward_growth_degenerate": false,
+  "outward_growth_direction_path": "forensics/outward_growth_direction_20260515/fno_nu0p001/index_040/outward_growth_direction.npy",
+  "sample_index": 40,
+  "seconds": 16.838529477012344
+}

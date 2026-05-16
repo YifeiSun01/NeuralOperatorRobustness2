@@ -1,0 +1,2 @@
+sample_index,best_endpoint_loss3_direction,best_small_norm_growth_direction,best_small_residual_increment_direction
+0,local_outward_growth,local_outward_growth,local_error_svd

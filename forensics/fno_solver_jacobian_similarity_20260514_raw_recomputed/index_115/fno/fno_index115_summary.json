@@ -1,0 +1,19 @@
+{
+  "model": "fno",
+  "sample_index": 115,
+  "jacobian_shape": [
+    1024,
+    1024
+  ],
+  "spectral_norm": 3.7076576434409114,
+  "fro_norm": 5.242498537918061,
+  "effective_rank": 5.550074118312297,
+  "top8_energy": 0.946786921248796,
+  "top32_energy": 0.9951109641225767,
+  "largest_singular_value": 3.7076576434409114,
+  "smallest_singular_value": 0.00017985456604952777,
+  "top1_right_hi128": 1.7409925568217682e-09,
+  "top1_right_zero_crossings": 12,
+  "top8_right_zero_crossings_mean": 12.5,
+  "svd_seconds": 2.2614544929238036
+}

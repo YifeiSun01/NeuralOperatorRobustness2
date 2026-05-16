@@ -1,0 +1,5 @@
+sample_index,epsilon,objective,best_value,local_reference_value,best_to_local_ratio,direction_id,direction_source,rank,sign,selected_abs_cos_to_local_reference,selected_cos_to_local_reference,clean_residual_norm_l2
+0,0.0001,L_f,4.504457709607155,4.504386304347574,1.0000158523836005,fno_r1_plus,fno,1,1,1.0,1.0,0.33239443448801387
+0,0.0001,L_j,4.872845499881878,4.875140865644955,0.9995291693458025,solver_r1_minus,solver,1,-1,1.0,-1.0,0.33239443448801387
+0,0.0001,L_e,1.206077972223242,1.205772992555179,1.0002529329068954,error_r1_plus,error,1,1,1.0,1.0,0.33239443448801387
+0,0.0001,G_e,0.2019014643056538,0.20492601962861828,0.9852407452775114,outward_growth_r1_plus,outward_growth,1,1,1.0,1.0,0.33239443448801387

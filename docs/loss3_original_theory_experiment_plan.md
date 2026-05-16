@@ -738,6 +738,46 @@ If the values and directions drift as \(\epsilon\) grows, then nonlinear path ef
 - Claim 5
 - Claim 6
 
+#### Completion Update - 2026-05-16
+
+Status: **completed for the current FNO / Burgers `nu=0.001` scope**.
+
+The planned sweep over
+\(\epsilon\in\{10^{-4},10^{-3},10^{-2},10^{-1}\}\) has been run on GPU and
+recorded in `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`.
+It records `L_f`, `L_j`, `L_e`, `G_e`, direction source counts, direction
+stability, local-reference ratios, figures, and a GPU manifest. A second
+version using projected gradient ascent on the direction `v` was also completed
+and recorded in
+`docs/loss3_gradient_direction_optimization_fno_nu0p001_gpu_steps12_result_20260516.md`.
+
+Observed conclusion:
+
+- For `epsilon <= 1e-2`, the finite-difference ratios and optimized directions
+  are stable and agree with the clean local Jacobian / outward-growth
+  references. This supports the intended epsilon-refinement interpretation: once
+  epsilon is small enough, shrinking it further does not materially change the
+  measured local structure.
+- At `epsilon=0.1`, finite-radius drift appears, especially for `L_e` and
+  `G_e`, showing that this larger radius is no longer purely local.
+- `L_f` and `L_j` are around `4`, while `L_e` is around `0.87`, so the model and
+  solver locally co-move; high model/solver sensitivity does not automatically
+  mean high residual sensitivity.
+- `G_e` is much smaller than `L_e` locally, around `0.166` versus `0.868`, so
+  residual-field movement and outward growth of the current clean residual are
+  distinct diagnostics.
+- The gradient-optimization version confirms that the candidate-bank directions
+  were not arbitrary. For small epsilon, projected gradient ascent recovers
+  essentially the same local directions and values.
+- The only notable direction-angle caveat is `L_j` at `idx47`: the first two
+  solver singular values are nearly tied (`sigma2/sigma1 = 0.977468`), creating
+  a flat top-2 subspace. In that near-degenerate case, top-2 subspace alignment
+  is a better diagnostic than top-1 vector angle.
+
+Current action item: no immediate rerun is needed for Experiment 3 in the
+`nu=0.001` story. Broader model/viscosity sweeps would be separate extension
+work, not required to mark this experiment complete.
+
 ### Experiment 4: Ray Profile / Local-to-Global Profile
 
 #### Purpose
@@ -898,24 +938,23 @@ expensive.
 
 Current count:
 
-- Done: 3 experiments.
-- Partially done: 2 experiments.
-- Not yet done as a full experiment: 1 experiment.
+- Done: 5 experiments.
+- Partially done: 1 experiment.
+- Not yet done as a full experiment: 0 experiments.
 
 | Experiment | Current Status | What Is Already Done | What Still Needs Work |
 |---|---|---|---|
 | Experiment 1: Main Objective Comparison | Done | The `loss1_original`, `loss2_original`, and `loss3_original` comparison has been run and interpreted. The existing results support that `loss1` / `loss2` are surrogate objectives and that `loss3_original` gives a different true oracle-relative endpoint error. The later native gradient-angle analysis also directly supports that, at the same \(\delta_k\), the `loss3_original` optimization direction can differ strongly from the `loss1_original` / `loss2_original` directions. | No immediate rerun is required for the `nu=0.001` story. |
 | Experiment 2: Local Response Decomposition Table | Done for the current `nu=0.001` scope | The decomposition has been completed with \(v_f^*\), \(v_j^*\), \(v_e^*\), random directions, and the previously missing outward-growth direction based on \(A^Tb\). The key result is that the direction maximizing error-field movement, \(\|Av\|\), is not the same as the direction maximizing immediate outward growth of the current residual norm. Finite-difference checks also support the local interpretation. | No immediate rerun is required for `nu=0.001`. If the paper later wants a broader claim, repeat this for additional model / solver settings. |
-| Experiment 3: Small-Epsilon Sweep | Partially done | The outward-growth work already checked local behavior at small finite-difference radii such as \(\rho=10^{-4}\), \(10^{-3}\), and \(10^{-2}\), and the finite-difference values matched the predicted local outward growth. This supports the local Taylor explanation. | Still needs the full planned sweep over \(\epsilon\in\{10^{-4},10^{-3},10^{-2},10^{-1}\}\), with systematic records for \(L_f(\epsilon)\), \(L_j(\epsilon)\), \(L_e(\epsilon)\), \(G_e(\epsilon)\), direction stability, and cross-\(\epsilon\) direction cosine tables. |
-| Experiment 4: Ray Profile / Local-to-Global Profile | Not yet done as a full experiment | The ray-profile idea has been designed and located in the plan, but the full ray-profile curves have not yet been produced as the main evidence. | This should be the top priority for the next run. For final directions from `loss3_original`, `loss3_increment_ratio`, `loss3_residual_increment_ratio`, `loss3_regularized`, and random directions, record curves for \(r\mapsto\|e(x+rv)\|_q\), norm increment ratio, and residual increment ratio over \(r\in[0,\epsilon]\). This is the cleanest experiment for showing that a locally good direction need not be the finite-radius endpoint-best direction. |
+| Experiment 3: Small-Epsilon Sweep | Done for the current `nu=0.001` scope | The full GPU sweep over \(\epsilon\in\{10^{-4},10^{-3},10^{-2},10^{-1}\}\) has been completed for five samples, recording \(L_f(\epsilon)\), \(L_j(\epsilon)\), \(L_e(\epsilon)\), \(G_e(\epsilon)\), direction source counts, direction stability, local-reference ratios, and figures. The second gradient-optimization version directly optimized \(v\) and confirmed that the small-epsilon directions agree with the clean Jacobian / outward-growth references. Key conclusion: for \(\epsilon\le 10^{-2}\), the ratios and directions are stable; at \(\epsilon=0.1\), finite-radius drift appears. | No immediate rerun is required for the `nu=0.001` story. If broader claims are needed later, repeat the same sweep for other viscosities/models. |
+| Experiment 4: Ray Profile / Local-to-Global Profile | Done for the current `nu=0.001` scope | The full GPU ray-profile run has been completed for samples `0, 7, 40, 47, 115`, with regenerated finite-radius directions for `loss3_original`, `loss3_increment_ratio`, `loss3_residual_increment_ratio`, and `loss3_regularized`, plus `local_error_svd`, `local_outward_growth`, and random references. The run recorded `r -> ||e(x+r v)||`, norm-growth ratio, residual-increment ratio, model/solver movement ratios, winner summaries, CSV tables, manifest, and plots. Key conclusion: small-radius winners and finite-radius endpoint winners systematically differ, which confirms the intended nonlinear local-to-global gap. | No immediate rerun is required for the `nu=0.001` story. If broader claims are needed later, repeat the ray-profile experiment for other viscosities/models or alternative epsilon values. |
 | Experiment 5: Boundary-Rescaled Comparison | Done | The boundary-rescaling diagnostic has been run and interpreted. The observed behavior is that ratio / regularized objectives can penalize \(\delta\), so their final perturbations may not reach the boundary. After rescaling those directions to radius \(\epsilon\), their `loss1`, `loss2`, and `loss3` values still do not necessarily beat the directions found by directly optimizing the corresponding original objective. | No immediate rerun is required. This result should be used as evidence that local or cost-aware directions do not automatically become best finite-radius directions after rescaling. |
 | Experiment 6: Direction Rotation Along Path | Partially done | Related trajectory-gradient evidence exists: true nonlinear gradient angles along saved attack paths were computed, and they show that the difference between objectives can remain substantial for many steps. This supports the idea that finite-radius behavior is not fully captured by a single clean-point linearization. | The exact planned experiment is still missing: along \(x_t=x+t\delta^*\), re-estimate \(v_e^*(x_t)=\arg\max_{\|v\|_p=1}\|J_e(x_t)v\|_q\), then record \(\cos(v_e^*(x_t),v_e^*(x_0))\) and adjacent-direction cosines. This should be run after the ray-profile experiment unless the path-rotation claim becomes central. |
 
 Recommended next order:
 
-1. Run Experiment 4: Ray Profile / Local-to-Global Profile.
-2. Complete Experiment 3: Small-Epsilon Sweep.
-3. Complete Experiment 6: Direction Rotation Along Path.
+1. Complete Experiment 6: Direction Rotation Along Path.
+2. Treat Experiments 3 and 4 as complete for `nu=0.001`; only rerun them for broader model/viscosity extensions.
 
 ## 6. How Existing Results Can Be Interpreted
 

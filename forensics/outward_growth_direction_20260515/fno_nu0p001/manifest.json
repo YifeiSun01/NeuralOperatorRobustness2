@@ -1,0 +1,79 @@
+{
+  "experiment": "outward_growth_direction_fno_nu0p001",
+  "output_paths": [
+    "forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_response_table.csv",
+    "forensics/outward_growth_direction_20260515/fno_nu0p001/aggregate_direction_response_summary.csv",
+    "forensics/outward_growth_direction_20260515/fno_nu0p001/all_direction_similarity_table.csv",
+    "forensics/outward_growth_direction_20260515/fno_nu0p001/finite_difference_growth_table.csv",
+    "forensics/outward_growth_direction_20260515/fno_nu0p001/finite_difference_growth_summary.csv",
+    "forensics/outward_growth_direction_20260515/fno_nu0p001/summary.md"
+  ],
+  "per_index_metadata": [
+    {
+      "At_b_unit_norm_l2": 0.20492601962861828,
+      "clean_residual_norm_l2": 0.33239443448801387,
+      "error_jacobian_consistency_l2": 1.8676534473603818e-08,
+      "error_jacobian_consistency_max_abs": 9.313225746154785e-10,
+      "outward_growth_degenerate": false,
+      "sample_index": 0,
+      "seconds": 19.056827778927982
+    },
+    {
+      "At_b_unit_norm_l2": 0.19509758862503476,
+      "clean_residual_norm_l2": 0.296186386006848,
+      "error_jacobian_consistency_l2": 1.8286536792610628e-08,
+      "error_jacobian_consistency_max_abs": 2.919932740041986e-09,
+      "outward_growth_degenerate": false,
+      "sample_index": 7,
+      "seconds": 19.059180447016843
+    },
+    {
+      "At_b_unit_norm_l2": 0.11796038755763169,
+      "clean_residual_norm_l2": 0.26841970560920864,
+      "error_jacobian_consistency_l2": 1.1995483528454812e-08,
+      "error_jacobian_consistency_max_abs": 1.6957377724224898e-09,
+      "outward_growth_degenerate": false,
+      "sample_index": 40,
+      "seconds": 16.838725372916088
+    },
+    {
+      "At_b_unit_norm_l2": 0.183953974262822,
+      "clean_residual_norm_l2": 0.29071136736217074,
+      "error_jacobian_consistency_l2": 1.5394953469929953e-08,
+      "error_jacobian_consistency_max_abs": 9.313225746154785e-10,
+      "outward_growth_degenerate": false,
+      "sample_index": 47,
+      "seconds": 19.592032589018345
+    },
+    {
+      "At_b_unit_norm_l2": 0.13063354517551623,
+      "clean_residual_norm_l2": 0.21990090521088498,
+      "error_jacobian_consistency_l2": 1.1931960721993533e-08,
+      "error_jacobian_consistency_max_abs": 4.656612873077393e-10,
+      "outward_growth_degenerate": false,
+      "sample_index": 115,
+      "seconds": 18.8170331439469
+    }
+  ],
+  "source_paths": [
+    "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/error/error_index0_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/fno/fno_index0_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_000/solver/solver_index0_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/error/error_index7_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/fno/fno_index7_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_007/solver/solver_index7_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/error/error_index40_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/fno/fno_index40_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_040/solver/solver_index40_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/error/error_index47_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/fno/fno_index47_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_047/solver/solver_index47_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/error/error_index115_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/fno/fno_index115_jacobian_svd.npz",
+    "forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/index_115/solver/solver_index115_jacobian_svd.npz"
+  ],
+  "status": "completed"
+}

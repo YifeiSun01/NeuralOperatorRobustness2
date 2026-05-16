@@ -1,19 +1,45 @@
 # Environment Setup Reproduction Guide
 
+## 2026-05-16 GPU-Aware Setup Rule
+
+Do not rebuild `adv_robust` by hand for official experiment work. Use the
+project setup script instead:
+
+```bash
+cd /workspace/NeuralOperatorRobustness2
+python3 tools/setup_adv_robust_gpu_env.py
+```
+
+For an already-created environment, verify it with:
+
+```bash
+tools/setup_adv_robust_gpu_env.py --verify-only
+```
+
+This script installs the pinned requirements and refuses to pass unless PyTorch
+and JAX both execute on the visible GPU. On the current V100 machine, it also
+checks that the PyTorch wheel contains `sm_70`. This avoids the previous failure
+mode where `torch.cuda.is_available()` was true but the wheel could not launch
+kernels on V100.
+
 This note is the clean, reproducible setup path for the Vast AI / direct-GPU
 environment used by this repository. It intentionally removes the older detours
 from the first setup attempts: Slurm/HPC paths, conda paths under `/blue`,
 untracked local package experiments, and installing the public upstream Exponax.
 
-The current working environment was verified on 2026-05-09 in:
+The environment was originally verified on an A100 instance on 2026-05-09.
+The current GPU-aware setup path was updated and verified on 2026-05-16 for the
+current V100 instance:
 
 ```text
 repo root: /workspace/NeuralOperatorRobustness2
 branch:    vast-ai
 remote:    https://github.com/YifeiSun01/NeuralOperatorRobustness2.git
 venv:      adv_robust/
-GPU:       NVIDIA A100 80GB PCIe
-driver:    565.57.01
+GPU:       Tesla V100-SXM2-32GB
+arch:      sm_70
+PyTorch:   2.8.0+cu126
+JAX:       gpu backend verified
 ```
 
 ## Non-Negotiable Exponax Detail
@@ -39,8 +65,8 @@ the wrong solver behavior or missing APIs.
 ## Clean Setup
 
 Start from a fresh GPU machine with Git, Python 3.12, and a recent NVIDIA driver.
-The current verified environment uses CUDA 12 PyTorch/JAX wheels and works on an
-A100 80GB GPU.
+The current verified environment uses CUDA 12 PyTorch/JAX wheels and is
+validated by `tools/setup_adv_robust_gpu_env.py` on the visible GPU before use.
 
 ```bash
 git clone https://github.com/YifeiSun01/NeuralOperatorRobustness2.git
@@ -48,15 +74,17 @@ cd NeuralOperatorRobustness2
 git checkout vast-ai
 ```
 
-Create the local virtual environment. The repo convention is to keep it inside
-the project as `adv_robust/`; it is ignored by Git.
+Create the local virtual environment with the GPU-aware project setup script.
+The repo convention is to keep it inside the project as `adv_robust/`; it is
+ignored by Git.
 
 ```bash
-python3.12 -m venv adv_robust
-source adv_robust/bin/activate
-python -m pip install --upgrade pip setuptools wheel
-python -m pip install -r requirements.txt
+python3 tools/setup_adv_robust_gpu_env.py
 ```
+
+The script creates `adv_robust/` if needed, installs `requirements.txt`, and
+then runs strict PyTorch/JAX GPU verification. Do not treat the environment as
+ready until this script passes.
 
 If `python3.12` is not available on the machine, install Python 3.12 first or use
 a Python 3.12 provider such as conda/mamba. The current environment reports:
@@ -95,8 +123,8 @@ The current environment passes `pip check` with no broken requirements.
 Key package versions:
 
 ```text
-torch        2.11.0+cu128
-torch cuda   12.8
+torch        2.8.0+cu126
+torch cuda   12.6
 jax          0.10.0
 jaxlib       0.10.0
 numpy        2.4.4
@@ -118,7 +146,15 @@ The CUDA runtime libraries are installed through Python wheels in
 
 ## Smoke Tests
 
-Run these immediately after installation.
+Run this immediately after installation. It includes `nvidia-smi`, PyTorch GPU
+architecture validation, real PyTorch CUDA matmul, JAX GPU validation, real JAX
+GPU matmul, and `pip check`.
+
+```bash
+tools/setup_adv_robust_gpu_env.py --verify-only
+```
+
+Additional manual checks, if needed:
 
 ```bash
 nvidia-smi
@@ -359,4 +395,3 @@ If an experiment hangs or gets killed:
    long compile time, fallback, slower execution, or different numerical attack
    trajectories. The detailed observations are recorded in
    [ATTACK_FRAMEWORK_MATRIX_OBSERVATIONS.md](/workspace/NeuralOperatorRobustness2/ATTACK_FRAMEWORK_MATRIX_OBSERVATIONS.md:1).
-

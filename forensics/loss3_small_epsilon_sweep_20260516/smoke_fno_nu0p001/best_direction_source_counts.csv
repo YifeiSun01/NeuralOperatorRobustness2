@@ -1,0 +1,5 @@
+objective,epsilon,direction_source,count
+G_e,0.0001,outward_growth,1
+L_e,0.0001,error,1
+L_f,0.0001,fno,1
+L_j,0.0001,solver,1
