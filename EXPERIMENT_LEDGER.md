@@ -2,7 +2,7 @@
 
 ## 2026-05-16 GitHub Script Sync And R2 Artifact Upload
 
-Status: backup / publication step in progress. Generated artifacts were uploaded to R2; Markdown/Python/Shell files are being prepared for GitHub commit and push.
+Status: completed. Generated artifacts were uploaded to R2, and Markdown/Python files were committed and pushed to GitHub branch `vast-ai`.
 
 Source files and artifact roots:
 - Markdown / source files in the repository working tree.
@@ -13,21 +13,28 @@ Source files and artifact roots:
 - `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/split_summary.json`
 
 Output locations:
-- GitHub branch target: `YifeiSun01/NeuralOperatorRobustness2`, branch `vast-ai`.
+- GitHub repository: `YifeiSun01/NeuralOperatorRobustness2`, branch `vast-ai`.
+- GitHub commit with docs/tools: `6e4d37e` (`Record loss3 diagnostics and analysis scripts`).
 - R2 prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+- R2 artifact prefixes:
+  - `forensics/fno_solver_jacobian_similarity_20260514_raw_recomputed/`
+  - `forensics/local_jacobian_frequency_20260514/`
+  - `forensics/outward_growth_direction_20260515/`
+  - `forensics/three_loss_pairwise_gradients_20260516/`
+  - `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/split_summary.json`
 
-Observed from local status before staging:
-- The working tree contains many tracked experiment artifacts marked deleted under `benchmark_results/`, `fno_training_runs/`, `gradient_audit/`, `path_audit/`, and `results/`. These deletions were not staged for GitHub.
-- Existing local generated artifact directories were uploaded to the R2 `forensics/` prefix.
-- No credential strings were found in the Markdown/Python/Shell commit candidates by the pre-commit `rg` scan, except a placeholder Cloudflare endpoint example.
+Observed from command output:
+- R2 `forensics/` listing after upload included all four uploaded artifact directories.
+- GitHub push output reported `36c5e30..6e4d37e  vast-ai -> vast-ai`.
+- The staged GitHub commit contained existing Markdown/Python files only; deleted generated-result artifacts were not staged.
+- No credential strings were found in the staged Markdown/Python files by the pre-commit scan.
 
 Inference:
-- GitHub should receive lightweight script/documentation files only.
-- R2 should hold the generated numerical artifacts and plots.
+- GitHub now has the lightweight script/documentation update.
+- R2 now has the current local generated numerical artifacts and plots under the selected machine-sync prefix.
 
 Remaining work:
-- Commit and push the staged Markdown/Python/Shell files to GitHub.
-- Verify final Git status for the affected files after push.
+- The working tree still contains many pre-existing tracked generated artifacts marked deleted, plus non-script generated/untracked artifacts. These were intentionally not committed to GitHub.
 
 ## 2026-05-16 Loss3 Minimal Six Experiment Status Added To Plan
 
