@@ -1,5 +1,31 @@
 # Experiment Ledger
 
+## 2026-05-16 Unified Eval-Metric Three-Panel Loss Curve Replots
+
+Status: completed from existing saved trajectory data; no attack was rerun.
+
+Purpose:
+
+- Replot the old three-panel `LOSS1/LOSS2/LOSS3 Objective Curves` layout so all three panels in one figure use the same evaluation metric on the y-axis.
+- This fixes the ambiguity in the older figures, where each panel plotted its own optimized objective.
+- The new figures keep original / increment-ratio / regularized as the three panels and PGD / LP-steepest PGD / generalized power iteration as the curves.
+- Each new figure shares one y-axis min/max range across its three panels.
+
+Data and scripts:
+
+- Source data: `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`.
+- Old script: `tools/plot_batch_three_loss_loss_only.py`.
+- Existing 3x3 unified script: `tools/plot_batch_eval_metric_matrix_curves.py`.
+- New three-panel unified script: `tools/plot_batch_eval_metric_three_panel_curves.py`.
+- Documentation: `docs/unified_eval_metric_three_panel_loss_curve_plots_20260516.md`.
+
+Outputs:
+
+- Local PNG directory: `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/`.
+- Generated 27 batch mean/std figures: 3 optimized-loss families times 9 shared evaluation metrics.
+- R2 prefix: `s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_three_panel/png/`.
+- R2 upload summary: `uploaded_files=27`, `uploaded_bytes=14315408`.
+
 ## 2026-05-16 Final RI / Ray Profile Report And R2 Backup
 
 Status: completed and cleaned for FNO / Burgers `nu=0.001`. The final report is `docs/loss3_ray_profile_ri_final_report_fno_nu0p001_20260516.md`. The final valid data directory is `forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/`.
