@@ -1,5 +1,39 @@
 # Experiment Ledger
 
+## 2026-05-16 Final RI / Ray Profile Report And R2 Backup
+
+Status: completed and cleaned for FNO / Burgers `nu=0.001`. The final report is `docs/loss3_ray_profile_ri_final_report_fno_nu0p001_20260516.md`. The final valid data directory is `forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/`.
+
+Final conclusion:
+
+- Ray / RI experiment succeeds as a local-to-global nonlinear diagnostic. Clean-point local directions win the small-radius diagnostics, but they do not remain endpoint-best after following the same fixed ray to `r=8`.
+- `local_outward_growth` wins small norm-growth `100/100`, but endpoint `loss3` mean at `r=8` is `2.720` with `0/100` endpoint wins.
+- `local_residual_movement` wins small residual-increment `100/100`, endpoint `loss3` mean is `4.139`, and endpoint wins are `31/100`.
+- `loss3_original_final` has small local wins `0/100`, but endpoint `loss3` mean is `5.447`; it wins `58/100` among all directions and `81/100` among the three finite PGD attack objectives.
+
+Crossover evidence:
+
+- Mean `loss3_original_final` crosses `local_outward_growth` at approximately `r=0.823321`.
+- Mean `loss3_original_final` crosses `loss3_increment_ratio_final` at approximately `r=0.929778`.
+- No below-then-above crossing against `local_residual_movement` appears by `r=1` or `r=2` in the dense scan.
+
+Final figures:
+
+- `/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to8_formula_labeled_std.png`
+- `/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to0p5_formula_labeled_std.png`
+- `/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to1p0_formula_labeled_std.png`
+
+R2 backup:
+
+- `s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/`
+- Upload manifest: `forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/r2_upload_manifest_20260516.txt`
+- Manifest summary: `file_count=58`, `bytes_total=97423607`, `deleted_wrong_non_fixedsign_objects=0`.
+- Full related-artifact sync manifest: `docs/r2_sync_manifest_ray_profile_20260516.md`; broader Ray-profile artifact sync uploaded `198` files and `145207187` bytes.
+
+Bug note:
+
+- Earlier non-fixed-sign manual PGD output is invalid. That wrapper backpropagated `-objective` and then updated `delta += alpha * grad`, which is descent for the target objective. The corrected PGD result uses `objective.backward()`, ascent update, and projection.
+
 ## 2026-05-16 Normal-Protocol Experiment 4 Batch-100 Ray Profile
 
 Status: completed on GPU for FNO / Burgers `nu=0.001`. This is the requested old-style protocol check: no best-over-steps, no multi-restart, single initialization per attack objective, and final step direction only.

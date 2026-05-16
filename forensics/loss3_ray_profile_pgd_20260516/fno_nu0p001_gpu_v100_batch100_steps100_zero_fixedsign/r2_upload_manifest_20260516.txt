@@ -1,0 +1,7 @@
+Ray Profile fixedsign R2 upload manifest - 2026-05-16
+bucket=neural-operator-robustness
+prefix=machine-sync/NeuralOperatorRobustness2-selected/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/
+local_dir=forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign
+file_count=58
+bytes_total=97423607
+deleted_wrong_non_fixedsign_objects=0

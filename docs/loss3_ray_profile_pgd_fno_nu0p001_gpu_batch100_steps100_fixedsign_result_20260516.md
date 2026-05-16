@@ -14,10 +14,10 @@ Local optimality and finite-radius endpoint optimality are different.
 If only one figure is used to summarize the experiment, use this one:
 
 ```text
-/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_full_r_grid.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to8_formula_labeled_std.png
 ```
 
-This figure plots the fixed-ray profiles for multiple directions. For each direction `v`, it evaluates:
+This final figure plots the fixed-ray profiles for multiple directions with line labels, shaded sample standard-deviation bands, and direction/loss formulas in the title area. For each direction `v`, it evaluates:
 
 ```text
 x(r) = x + r v
@@ -41,6 +41,12 @@ Interpretation by direction:
 - `loss3_original_final`: is not the fastest local direction, but is the strongest endpoint `loss3` direction at `r=8`.
 
 Therefore this experiment provides direct evidence for the nonlinear local-to-global gap: the local direction is genuinely locally strong, but the endpoint winner changes as the ray moves far from the clean point.
+
+The shorter final report for this cleaned RI/Ray result is:
+
+```text
+docs/loss3_ray_profile_ri_final_report_fno_nu0p001_20260516.md
+```
 
 ## Important Protocol Note
 
@@ -116,9 +122,63 @@ Interpretation: values larger than 1 mean the endpoint winner has larger `loss3`
 - `attack_final_by_sample.csv`: final attack values per sample.
 - `manifest.json`: GPU/runtime metadata.
 
+## Final Formula/Labeled/Std Figures
+
+These are the final cleaned figures requested for presentation. They use the corrected fixed-sign data only and include line names plus standard-deviation shading across the 100 samples.
+
+Full multi-metric ray profile grids:
+
+```text
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to0p1_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to0p5_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to1_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to2_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to8_formula_labeled_std.png
+```
+
+Loss3 crossover zoom figures:
+
+```text
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to0p1_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to0p5_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to1p0_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to2p0_formula_labeled_std.png
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_loss3_crossover_zoom_0to8p0_formula_labeled_std.png
+```
+
+Dense crossover summary:
+
+```text
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/ray_profile_loss3_crossover_summary_formula_ranges.csv
+```
+
+## R2 Backup
+
+Large data and images are backed up to Cloudflare R2 at:
+
+```text
+s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/
+```
+
+Upload manifest:
+
+```text
+/workspace/NeuralOperatorRobustness2/forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/r2_upload_manifest_20260516.txt
+```
+
+The R2 upload manifest records `file_count=58` and `bytes_total=97423607`.
+
+Full related-artifact sync manifest:
+
+```text
+/workspace/NeuralOperatorRobustness2/docs/r2_sync_manifest_ray_profile_20260516.md
+```
+
+The broader Ray-profile artifact sync uploaded `198` files and `145207187` bytes under the same R2 base prefix.
+
 ## Visualizations
 
-![normal_batch100_all_metrics_by_direction_full_r_grid](../forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_full_r_grid.png)
+![normal_batch100_all_metrics_by_direction_0to8_formula_labeled_std](../forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_all_metrics_by_direction_0to8_formula_labeled_std.png)
 
 ![normal_batch100_mean_loss3_vs_r](../forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/figures/normal_batch100_mean_loss3_vs_r.png)
 
