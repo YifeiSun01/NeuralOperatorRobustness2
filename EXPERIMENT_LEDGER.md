@@ -2744,3 +2744,34 @@ Conclusion:
 - The user's expectation is confirmed under the historical PGD protocol: direct `loss3_original` PGD gives the strongest endpoint mean loss3.
 - The earlier contradictory PGD Ray result was an implementation bug, not evidence against the historical conclusion.
 - The Ray experiment still supports the intended nonlinear story: the clean local directions win tiny-radius slope diagnostics, but direct finite-radius `loss3_original` PGD gives the strongest large-radius endpoint behavior on average.
+
+
+## 2026-05-16 - Unified Evaluation-Metric Loss Curve Replots
+
+Status: completed from existing saved trajectory data. No attack was rerun.
+
+Purpose:
+
+- Replot the historical 27-run three-loss attack setting with a fixed y-axis evaluation metric, instead of plotting each trajectory's own optimized objective.
+- This answers questions such as: among all 27 optimized trajectories, how do they compare when every curve is evaluated by `loss3_original` or `loss3_increment_ratio`?
+
+Data source:
+
+- Restored from R2: `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`.
+- This directory contains all 27 trajectories: 3 optimized losses x 3 objective variants x 3 optimization methods.
+- Each trajectory already includes all 9 recorded evaluation metrics in `loss_stats.csv` and `loss_values.npz`.
+
+New script:
+
+- `tools/plot_batch_eval_metric_matrix_curves.py`.
+- Layout: 3-by-3 matrix with rows for optimized loss (`loss1`, `loss2`, `loss3`), columns for objective variant (`original`, `increment_ratio`, `regularized`), and method curves inside each panel.
+
+Generated plots:
+
+- Batch mean/std figures: `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves/png/`.
+- Single-index figures for dataset index `0`: `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/figures/eval_metric_curves/index_png/`.
+- All nine evaluation metrics were generated, including the key loss3 views: `loss3_original_all_27_mean_std.png`, `loss3_increment_ratio_all_27_mean_std.png`, `loss3_regularized_all_27_mean_std.png`, and corresponding `index0` plots.
+
+Documentation:
+
+- `docs/unified_eval_metric_loss_curve_plots_20260516.md`.
