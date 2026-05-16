@@ -2775,3 +2775,31 @@ Generated plots:
 Documentation:
 
 - `docs/unified_eval_metric_loss_curve_plots_20260516.md`.
+
+
+## 2026-05-16 - Adam vs Ordinary PGD Loss3 Original Parameter Control
+
+Status: completed on GPU with no CPU fallback.
+
+Purpose:
+
+- Test whether Adam systematically gives smaller direct `loss3_original` attack values than ordinary PGD under two additional `(epsilon, alpha)` settings.
+- Keep objective fixed to direct `loss3_original`, batch fixed to 100 samples, and steps fixed to 50.
+
+Script and outputs:
+
+- Script: `tools/compare_adam_pgd_loss3_original_params.py`.
+- Result doc: `docs/adam_vs_pgd_loss3_original_param_control_20260516.md`.
+- Output directory: `forensics/adam_vs_pgd_loss3_original_params_20260516/fno_nu0p001_batch100_steps50_eps4_eps12/`.
+
+Settings and results:
+
+- `epsilon=4.0`, `alpha=0.15`: boundary `loss3_original` mean was Adam `1.6712` vs PGD `2.3290`; paired PGD-Adam mean difference `+0.6578`, p-value `1.487e-09`.
+- `epsilon=12.0`, `alpha=0.45`: boundary `loss3_original` mean was Adam `8.1319` vs PGD `7.2865`; paired PGD-Adam mean difference `-0.8454`, p-value `2.612e-02`.
+
+Conclusion:
+
+- The added settings do not support a universal claim that Adam always makes direct `loss3_original` smaller.
+- At smaller radius (`epsilon=4`), PGD is significantly stronger at the boundary endpoint.
+- At larger radius (`epsilon=12`) and fixed 50 steps, Adam is stronger; Adam reaches the boundary immediately, while PGD's final norm mean is about `8.66` before boundary rescaling.
+- The robust conclusion is that Adam changes the constrained optimizer dynamics substantially; the relative ranking depends on epsilon, alpha, step count, and boundary reach.
