@@ -6,7 +6,7 @@ multi-restart attack selection. It reproduces the original ray-profile attack
 protocol at larger batch size:
 
 - one initialization per attack objective;
-- Adam ascent for a fixed number of steps;
+- either Adam ascent or ordinary PGD for a fixed number of steps;
 - use the final step direction only;
 - then fix that ray direction and profile x + r v for r in [0, epsilon].
 
@@ -149,6 +149,8 @@ def format_float(value: float) -> str:
 
 def init_delta_for_attack(source: str, local_dirs: dict[str, torch.Tensor], args: argparse.Namespace) -> tuple[torch.Tensor, str]:
     radius = min(float(args.initial_radius), float(args.epsilon))
+    if args.attack_init == "zero":
+        return torch.zeros_like(local_dirs["local_outward_growth"]), "zero_delta"
     if source == "loss3_residual_increment_ratio_final":
         return radius * local_dirs["local_residual_movement"], "initial_radius_times_local_residual_movement"
     if source in {"loss3_original_final", "loss3_increment_ratio_final", "loss3_regularized_final"}:
@@ -235,61 +237,122 @@ def optimize_attack_final(
     args: argparse.Namespace,
 ) -> tuple[torch.Tensor, list[dict[str, Any]], list[dict[str, Any]], str]:
     init_delta, init_note = init_delta_for_attack(source, local_dirs, args)
-    delta = torch.nn.Parameter(project_l2(init_delta.detach().clone(), args.epsilon))
-    opt = torch.optim.Adam([delta], lr=args.attack_lr)
     rows: list[dict[str, Any]] = []
     final_rows: list[dict[str, Any]] = []
     start = time.perf_counter()
     last_q: dict[str, torch.Tensor] | None = None
     last_obj: torch.Tensor | None = None
-    for step in range(args.attack_steps + 1):
-        with torch.no_grad():
-            delta.copy_(project_l2(sanitize(delta), args.epsilon))
-        q = raw_quantities(
-            model=model,
-            bridge=bridge,
-            solver_fn=solver_fn,
-            x0=x0,
-            f0=f0,
-            j0=j0,
-            e0=e0,
-            delta=delta,
-            eta=args.eta,
-            allow_solver_grad=True,
-            label=f"normal_{source}_step{step}",
-        )
-        obj = objective_from_quantities(q, objective_name, args.regularization_c)
-        last_q = q
-        last_obj = obj
-        if step % args.save_every == 0 or step == args.attack_steps:
-            rows.append(
-                {
-                    "direction_source": source,
-                    "objective_name": objective_name,
-                    "step": step,
-                    "objective_mean": float(obj.detach().mean().cpu()),
-                    "objective_min": float(obj.detach().min().cpu()),
-                    "objective_max": float(obj.detach().max().cpu()),
-                    "loss3_mean": float(q["loss3"].detach().mean().cpu()),
-                    "norm_growth_ratio_mean": float(q["norm_growth_ratio"].detach().mean().cpu()),
-                    "residual_increment_ratio_mean": float(q["residual_increment_ratio"].detach().mean().cpu()),
-                    "delta_norm_mean": float(q["delta_norm"].detach().mean().cpu()),
-                    "seconds_since_source_start": float(time.perf_counter() - start),
-                    "selection_rule": "final_step_only_single_init",
-                    "init_note": init_note,
-                }
+    optimizer_name = str(args.attack_optimizer)
+    if optimizer_name == "adam":
+        delta_param = torch.nn.Parameter(project_l2(init_delta.detach().clone(), args.epsilon))
+        opt = torch.optim.Adam([delta_param], lr=args.attack_lr)
+        for step in range(args.attack_steps + 1):
+            with torch.no_grad():
+                delta_param.copy_(project_l2(sanitize(delta_param), args.epsilon))
+            q = raw_quantities(
+                model=model,
+                bridge=bridge,
+                solver_fn=solver_fn,
+                x0=x0,
+                f0=f0,
+                j0=j0,
+                e0=e0,
+                delta=delta_param,
+                eta=args.eta,
+                allow_solver_grad=True,
+                label=f"normal_{source}_{optimizer_name}_step{step}",
             )
-        if step >= args.attack_steps:
-            break
-        loss = -torch.nan_to_num(obj, nan=0.0, posinf=0.0, neginf=0.0).sum()
-        opt.zero_grad(set_to_none=True)
-        loss.backward()
-        if delta.grad is None:
-            raise RuntimeError(f"PGD gradient is None for {source} at step {step}")
-        delta.grad = sanitize(delta.grad)
-        opt.step()
-    with torch.no_grad():
-        final_delta = project_l2(sanitize(delta.detach()), args.epsilon)
+            obj = objective_from_quantities(q, objective_name, args.regularization_c)
+            last_q = q
+            last_obj = obj
+            if step % args.save_every == 0 or step == args.attack_steps:
+                rows.append(
+                    {
+                        "direction_source": source,
+                        "objective_name": objective_name,
+                        "step": step,
+                        "optimizer": optimizer_name,
+                        "objective_mean": float(obj.detach().mean().cpu()),
+                        "objective_min": float(obj.detach().min().cpu()),
+                        "objective_max": float(obj.detach().max().cpu()),
+                        "loss3_mean": float(q["loss3"].detach().mean().cpu()),
+                        "norm_growth_ratio_mean": float(q["norm_growth_ratio"].detach().mean().cpu()),
+                        "residual_increment_ratio_mean": float(q["residual_increment_ratio"].detach().mean().cpu()),
+                        "delta_norm_mean": float(q["delta_norm"].detach().mean().cpu()),
+                        "seconds_since_source_start": float(time.perf_counter() - start),
+                        "selection_rule": "final_step_only_single_init",
+                        "init_note": init_note,
+                    }
+                )
+            if step >= args.attack_steps:
+                break
+            loss = -torch.nan_to_num(obj, nan=0.0, posinf=0.0, neginf=0.0).sum()
+            opt.zero_grad(set_to_none=True)
+            loss.backward()
+            if delta_param.grad is None:
+                raise RuntimeError(f"Adam gradient is None for {source} at step {step}")
+            delta_param.grad = sanitize(delta_param.grad)
+            opt.step()
+        with torch.no_grad():
+            final_delta = project_l2(sanitize(delta_param.detach()), args.epsilon)
+    elif optimizer_name == "pgd":
+        delta_current = project_l2(init_delta.detach().clone(), args.epsilon)
+        final_delta = delta_current.detach()
+        for step in range(args.attack_steps + 1):
+            delta_current = project_l2(sanitize(delta_current.detach()), args.epsilon)
+            delta_var = delta_current.detach().clone().requires_grad_(step < args.attack_steps)
+            q = raw_quantities(
+                model=model,
+                bridge=bridge,
+                solver_fn=solver_fn,
+                x0=x0,
+                f0=f0,
+                j0=j0,
+                e0=e0,
+                delta=delta_var,
+                eta=args.eta,
+                allow_solver_grad=True,
+                label=f"normal_{source}_{optimizer_name}_step{step}",
+            )
+            obj = objective_from_quantities(q, objective_name, args.regularization_c)
+            last_q = q
+            last_obj = obj
+            if step % args.save_every == 0 or step == args.attack_steps:
+                rows.append(
+                    {
+                        "direction_source": source,
+                        "objective_name": objective_name,
+                        "step": step,
+                        "optimizer": optimizer_name,
+                        "objective_mean": float(obj.detach().mean().cpu()),
+                        "objective_min": float(obj.detach().min().cpu()),
+                        "objective_max": float(obj.detach().max().cpu()),
+                        "loss3_mean": float(q["loss3"].detach().mean().cpu()),
+                        "norm_growth_ratio_mean": float(q["norm_growth_ratio"].detach().mean().cpu()),
+                        "residual_increment_ratio_mean": float(q["residual_increment_ratio"].detach().mean().cpu()),
+                        "delta_norm_mean": float(q["delta_norm"].detach().mean().cpu()),
+                        "seconds_since_source_start": float(time.perf_counter() - start),
+                        "selection_rule": "final_step_only_single_init",
+                        "init_note": init_note,
+                    }
+                )
+            final_delta = delta_var.detach()
+            if step >= args.attack_steps:
+                break
+            # Manual PGD uses the objective gradient directly for ascent.
+            # Adam above minimizes -objective, but here we update delta by
+            # delta += alpha * grad, matching run_batch_three_loss_loss_only.py.
+            ascent_objective = torch.nan_to_num(obj, nan=0.0, posinf=0.0, neginf=0.0).sum()
+            ascent_objective.backward()
+            if delta_var.grad is None:
+                raise RuntimeError(f"PGD gradient is None for {source} at step {step}")
+            grad = sanitize(delta_var.grad.detach())
+            with torch.no_grad():
+                delta_current = project_l2(delta_var.detach() + float(args.attack_lr) * grad, args.epsilon)
+        with torch.no_grad():
+            final_delta = project_l2(sanitize(final_delta.detach()), args.epsilon)
+    else:
+        raise ValueError(f"Unknown attack optimizer: {optimizer_name}")
     if last_q is None or last_obj is None:
         raise RuntimeError(f"No final objective for {source}")
     obj_np = last_obj.detach().cpu().numpy()
@@ -311,6 +374,7 @@ def optimize_attack_final(
                 "final_residual_increment_ratio": float(residual_ratio_np[pos]),
                 "final_delta_norm_l2": float(delta_norm_np[pos]),
                 "selection_rule": "final_step_only_single_init",
+                "optimizer": optimizer_name,
                 "init_note": init_note,
             }
         )
@@ -482,8 +546,10 @@ def write_plan_doc(path: Path, args: argparse.Namespace) -> None:
         f"- Sample count: `{len(args.sample_indices)}`.",
         f"- Sample indices: `{args.sample_indices}`.",
         f"- Epsilon: `{args.epsilon}`.",
+        f"- Attack optimizer: `{args.attack_optimizer}`.",
+        f"- Attack initialization: `{args.attack_init}`.",
         f"- Attack steps: `{args.attack_steps}`.",
-        f"- Attack learning rate: `{args.attack_lr}`.",
+        f"- Attack learning rate / PGD alpha: `{args.attack_lr}`.",
         f"- Local residual steps: `{args.local_residual_steps}`.",
         "- Official run must use GPU; CPU fallback is refused.",
     ]
@@ -527,14 +593,16 @@ def write_result_doc(
         "",
         "## Important Protocol Note",
         "",
-        "This run intentionally does not use best-over-steps and does not use multi-restart selection. Each attack objective uses one initialization, runs to the final Adam step, and the final direction is the ray direction.",
+        f"This run intentionally does not use best-over-steps and does not use multi-restart selection. Each attack objective uses one initialization, runs `{args.attack_optimizer}` to the final step, and the final direction is the ray direction.",
         "",
         "## Scope And Settings",
         "",
         f"- Samples: `{args.sample_indices}`.",
         f"- Epsilon: `{args.epsilon}`.",
+        f"- Attack optimizer: `{args.attack_optimizer}`.",
+        f"- Attack initialization: `{args.attack_init}`.",
         f"- Attack steps: `{args.attack_steps}`.",
-        f"- Attack learning rate: `{args.attack_lr}`.",
+        f"- Attack learning rate / PGD alpha: `{args.attack_lr}`.",
         f"- Output directory: `{output_dir}`.",
         f"- Runtime device: `{manifest.get('gpu_runtime', {}).get('torch_device_name', 'not recorded')}`.",
         f"- Runtime seconds: `{format_float(float(manifest.get('seconds', math.nan)))}`.",
@@ -587,6 +655,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--epsilon", type=float, default=8.0)
     parser.add_argument("--attack-steps", type=int, default=50)
     parser.add_argument("--attack-lr", type=float, default=0.3)
+    parser.add_argument("--attack-optimizer", choices=["adam", "pgd"], default="adam")
+    parser.add_argument("--attack-init", choices=["local", "zero"], default="local")
     parser.add_argument("--initial-radius", type=float, default=1e-3)
     parser.add_argument("--regularization-c", type=float, default=1.0)
     parser.add_argument("--eta", type=float, default=1e-6)
@@ -717,6 +787,8 @@ def main() -> None:
         "experiment": "loss3_ray_profile_normal_fno_nu0p001_batch100",
         "status": "completed",
         "protocol": "final_step_only_single_init_no_best_over_steps_no_multi_restart",
+        "attack_optimizer": args.attack_optimizer,
+        "attack_init": args.attack_init,
         "sample_indices": args.sample_indices,
         "sample_count": len(args.sample_indices),
         "epsilon": args.epsilon,

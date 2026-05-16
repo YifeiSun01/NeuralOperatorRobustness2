@@ -2701,3 +2701,46 @@ Conclusion:
 - At `epsilon=0.1`, finite-radius drift appears, so exact direction equality
   should not be overclaimed even when the scalar objective value remains near
   the candidate maximum.
+
+
+## 2026-05-16 - Experiment 4 Ray Profile PGD100 Sign-Fixed Batch100 Cross-Check
+
+Status: completed on GPU with no CPU fallback.
+
+Purpose:
+
+- Re-run the Ray Profile / Local-to-Global Profile under the user's requested normal protocol: no best-over-steps, no multi-restart, batch size 100, `epsilon=8`, zero initialization, ordinary PGD, `steps=100`, `alpha=0.3`.
+- Resolve the discrepancy between the earlier Ray wrapper output and the historical batch-100 loss3 result.
+
+Key correction:
+
+- The first hand-written PGD branch in `tools/run_loss3_ray_profile_normal_batch.py` had a sign error: it differentiated `-objective` and then updated `delta += alpha * grad`, which performs descent for the target objective.
+- The corrected PGD branch now differentiates the objective directly and updates `delta += alpha * grad`, matching `tools/run_batch_three_loss_loss_only.py`.
+- The earlier non-fixed-sign PGD output is superseded and should not be used as a scientific result.
+
+Runs and artifacts:
+
+- Corrected Ray wrapper script: `tools/run_loss3_ray_profile_normal_batch.py`.
+- Corrected result doc: `docs/loss3_ray_profile_pgd_fno_nu0p001_gpu_batch100_steps100_fixedsign_result_20260516.md`.
+- Corrected output directory: `forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/`.
+- Historical-script cross-check output directory: `results/three_loss_batch100_full_loss3_delta_rerun_20260516_fno_eps8_alpha0p3_final_boundary_local_repro/`.
+
+Corrected Ray result:
+
+- Endpoint `loss3_original` mean at `r=8`: `loss3_original_final=5.4469`, `loss3_increment_ratio_final=4.2215`, `loss3_regularized_final=2.0679`, `local_residual_movement=4.1391`, `local_outward_growth=2.7204`.
+- Endpoint winners among all profiled directions: `loss3_original_final` 58/100, `local_residual_movement` 31/100, `loss3_increment_ratio_final` 10/100, `loss3_regularized_final` 1/100.
+- Endpoint winners among only the three finite-radius PGD attack objectives: `loss3_original_final` 81/100, `loss3_increment_ratio_final` 15/100, `loss3_regularized_final` 4/100.
+- Small-radius clean norm-growth winner: `local_outward_growth` 100/100.
+- Small-radius residual-increment winner: `local_residual_movement` 100/100.
+
+Historical-script cross-check:
+
+- `loss3_original_pgd`: final delta norm mean `7.7510`, boundary `loss3_original` mean `5.4469`.
+- `loss3_increment_ratio_pgd`: final delta norm mean `7.8505`, boundary `loss3_original` mean `4.2215`.
+- `loss3_regularized_pgd`: final delta norm mean `0.3043`; boundary-rescaled `loss3_original` mean `2.0275`.
+
+Conclusion:
+
+- The user's expectation is confirmed under the historical PGD protocol: direct `loss3_original` PGD gives the strongest endpoint mean loss3.
+- The earlier contradictory PGD Ray result was an implementation bug, not evidence against the historical conclusion.
+- The Ray experiment still supports the intended nonlinear story: the clean local directions win tiny-radius slope diagnostics, but direct finite-radius `loss3_original` PGD gives the strongest large-radius endpoint behavior on average.
