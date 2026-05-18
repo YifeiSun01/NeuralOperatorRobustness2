@@ -3780,3 +3780,20 @@ Conclusion:
 - Inference recorded: the current result should be framed as a tradeoff among final loss, convergence speed, P/Q geometry, and physical plausibility, not as a universal optimizer ranking.
 - Mechanistic interpretation recorded: `p=1` can encourage sparse/Dirac-like perturbations, `q=inf` can focus optimization on extreme residual points, and `p=inf` gives a very large feasible set that can produce unstable/nonphysical inputs.
 - Next-step recommendation recorded: the 2026-05-19 alpha sweep should evaluate smoothness and spike behavior alongside final loss, and future experiments may need smoothness penalties, spectral low-pass parameterization, or an explicit smoothness budget.
+
+## 2026-05-18 - GitHub and R2 Sync for Direction-Proposal Ablation Work
+
+- Status: completed code/documentation push and R2 artifact sync.
+- GitHub branch: `vast-ai`.
+- Git commit pushed: `ab5902c` (`Add loss3 direction proposal ablation analysis`).
+- GitHub remote: `origin` / `YifeiSun01/NeuralOperatorRobustness2`.
+- Files committed to GitHub: experiment ledger, loss3 direction-proposal Markdown documents under `docs/`, and analysis/plotting/running scripts under `tools/`.
+- Generated experiment artifacts were intentionally not committed to Git.
+- R2 bucket/prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- R2 synced paths: `docs/`, `tools/`, `EXPERIMENT_LEDGER.md`, `logs/`, and `forensics/`.
+- R2 verification: key docs were present, including `loss3_direction_proposal_conclusions_and_20260519_plan.md`, `loss3_core_method_pq_analysis_20260518.md`, and `loss3_core_per_pq_four_figures_20260518.md`.
+- R2 verification: key tools were present, including `run_loss3_direction_proposal_ablation.py`, `analyze_final_delta_similarity.py`, and `plot_delta_3d_surfaces.py`.
+- R2 verification: `forensics/loss3_core_per_pq_four_figures_20260518` contained 36 objects, matching 9 P/Q folders times 4 PNGs.
+- R2 verification: `forensics/loss3_optimizer_direction_proposal_ablation_20260517` contained 1698 objects and about 1.105 GiB.
+- R2 verification: `forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518` contained 176 objects and about 127.5 MiB.
+- Remaining local untracked files: generated `forensics/` artifacts remain untracked by Git by design; they are stored in R2.
