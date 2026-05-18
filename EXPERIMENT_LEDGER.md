@@ -2906,3 +2906,877 @@ Conclusion:
 - At smaller radius (`epsilon=4`), PGD is significantly stronger at the boundary endpoint.
 - At larger radius (`epsilon=12`) and fixed 50 steps, Adam is stronger; Adam reaches the boundary immediately, while PGD's final norm mean is about `8.66` before boundary rescaling.
 - The robust conclusion is that Adam changes the constrained optimizer dynamics substantially; the relative ranking depends on epsilon, alpha, step count, and boundary reach.
+
+## 2026-05-17 - adv_robust Environment And 2026-05-16 Artifact Audit
+
+Status: completed audit on the current Vast.ai instance. No numerical experiment was rerun.
+
+Purpose:
+
+- Check whether the copied `adv_robust` environment is runnable and complete.
+- Check whether the 2026-05-16 experiment artifacts copied onto this instance are locally complete.
+- Separate observed local evidence from inference, especially for smoke runs, partial directories, and R2-backed artifacts.
+
+Source files and inputs:
+
+- Environment policy/setup script: `tools/setup_adv_robust_gpu_env.py`.
+- Requirements file: `requirements.txt`.
+- GPU compatibility note: `docs/cuda_gpu_wheel_compatibility_notes_20260516.md`.
+- Local 2026-05-16 manifests under `forensics/*20260516*/`.
+- Local 2026-05-16 result docs under `docs/`.
+- R2 sync record: `docs/r2_sync_manifest_ray_profile_20260516.md`.
+
+Output record:
+
+- `docs/adv_robust_environment_and_20260516_artifact_audit_20260517.md`.
+
+Observed environment evidence:
+
+- The first `tools/setup_adv_robust_gpu_env.py --verify-only` check found that `adv_robust/bin/python` was unusable because `python3` and `python3.12` formed a symlink loop.
+- Repaired `adv_robust/bin/python3` to point to `/usr/bin/python3.12`.
+- After repair, `tools/setup_adv_robust_gpu_env.py --verify-only` passed: PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, GPU `Tesla V100-SXM2-32GB`, compute capability `(7, 0)`, required architecture `sm_70`, PyTorch arch list includes `sm_70`, PyTorch CUDA matmul returned `1.0`, JAX backend was `gpu`, JAX device was `CudaDevice(id=0)`, JAX matmul returned `1.0`, and `pip check` reported no broken requirements.
+- Requirements-vs-installed check covered `79` direct requirement entries: missing requirements `[]`, pinned-version mismatches `[]`, installed distributions `85`.
+- Key import smoke test passed for the major packages used by the experiments: PyTorch, JAX, NumPy/SciPy/Pandas/Matplotlib, DeepXDE, Equinox, Exponax, Torch2JAX, TensorLy, tslearn, UMAP, scikit-optimize, PhiFlow/PhiML, and related dependencies.
+
+Observed artifact evidence:
+
+- Found `18` `manifest.json` files under `forensics/*20260516*`.
+- All `18` manifests parsed, all manifest-declared `output_files` exist, all manifest-declared `result_doc`/`plan_doc` paths exist, and all manifest-declared `source_paths` exist locally.
+- `17` of the `18` manifests carry GPU runtime evidence consistent with the V100 / `sm_70` policy.
+- Exception: `forensics/loss3_small_epsilon_sweep_20260516/smoke_fno_nu0p001` records `"device": "cpu"` and no `gpu_runtime`; it should be treated as an old smoke check, not an official GPU result.
+- Incomplete local directory: `forensics/loss3_ray_profile_optimizer_control_20260516` contains only one `local_direction_trace.csv` file with `5` lines and no manifest/result doc; the R2 sync manifest also records it as only `1` file / `672` bytes.
+- Corrected fixed-sign PGD batch-100 Ray profile directory has the manifest outputs present; `ray_profile.csv` has `31501` lines (`100 * 7 * 45 + header`), `ray_winner_summary.csv` has `101` lines, and `attack_final_by_sample.csv` has `401` lines.
+- Historical-script cross-check directory `results/three_loss_batch100_full_loss3_delta_rerun_20260516_fno_eps8_alpha0p3_final_boundary_local_repro` contains all `9` expected `loss3_*` run directories, and each has the expected `summary.json`, `loss_stats.csv`, `loss_values.npz`, `final_delta.npz`, `final_delta_summary.json`, `final_delta_diagnostics.csv`, and `final_delta_diagnostics.npz` files.
+- `docs/r2_sync_manifest_ray_profile_20260516.md` records `198` uploaded files and `145207187` bytes. This audit did not perform a live R2 network query.
+- `git status --short` before this record update showed untracked experiment paths but no deleted tracked experiment artifacts.
+
+Conclusion:
+
+- Observed evidence supports that `adv_robust` is now runnable and complete for the repository's GPU-only experiment policy after the venv symlink repair.
+- Observed evidence supports that the main 2026-05-16 GPU result directories with manifests are locally complete.
+- The CPU small-epsilon smoke directory is not an official GPU result.
+- The `loss3_ray_profile_optimizer_control_20260516` directory is incomplete locally and should not be interpreted as a completed experiment.
+
+Remaining work:
+
+- If remote backup completeness matters, perform a live R2 listing/checksum comparison against the recorded manifests.
+- If saving this audit in git, explicitly stage the new doc and ledger update along with any relevant source/record files; do not rely on `git commit -am`.
+
+## 2026-05-17 - Loss3 Original Six-Experiment Completion Audit
+
+Status: completed audit and status-table update. No numerical experiment was rerun.
+
+Purpose:
+
+- Locate the user's six-experiment plan and determine whether all six planned
+  experiments are completed.
+- Update stale planning records if the local evidence shows later experiments
+  completed the missing rows.
+
+Source plan:
+
+- `docs/loss3_original_theory_experiment_plan.md`, section `5.1 Current
+  Completion Status for the Minimal Six Experiments`.
+
+Audit record:
+
+- `docs/loss3_original_six_experiment_completion_audit_20260517.md`.
+
+Observed evidence:
+
+- Experiment 1 is documented in
+  `docs/main_objective_mechanism_experiment1_result_20260514.md`. The local
+  source directory
+  `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`
+  exists with `27` loss/objective/method run directories, and the core table
+  `mechanism_diagnostics/mechanism_summary.csv` has `55` lines. R2 recovery update: `results/main_objective_mechanism_summary_20260514/` has now been restored locally from R2 and contains `combined_mechanism_summary.csv`, `focused_original_objectives.csv`, and three focused-objective PNG plots.
+- Experiment 2 is completed by the FNO/solver Jacobian similarity records and
+  the outward-growth row in `docs/outward_growth_direction_result_20260515.md`,
+  with outputs under `forensics/fno_solver_jacobian_similarity_20260514/` and
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/`.
+- Experiment 3 is completed by the GPU small-epsilon sweep and gradient-direction
+  optimization records:
+  `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`,
+  `docs/loss3_gradient_direction_optimization_fno_nu0p001_gpu_steps12_result_20260516.md`,
+  and the corresponding `forensics/` directories.
+- Experiment 4 is completed by the corrected fixed-sign PGD100 Ray Profile in
+  `docs/loss3_ray_profile_pgd_fno_nu0p001_gpu_batch100_steps100_fixedsign_result_20260516.md`
+  and its artifact directory
+  `forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/`.
+- Experiment 5 is completed by the boundary-rescaled final-boundary diagnostics
+  in the 2026-05-14 final-boundary source directory and by the 2026-05-16 local
+  cross-check directory
+  `results/three_loss_batch100_full_loss3_delta_rerun_20260516_fno_eps8_alpha0p3_final_boundary_local_repro/`.
+- Experiment 6 is completed by `docs/loss3_direction_rotation_path_fno_nu0p001_result_20260516.md`
+  and the expanded `docs/loss3_jacobian_subspace_rotation_path_fno_nu0p001_result_20260516.md`.
+  The expanded manifest records `status: completed`, V100 GPU runtime, and
+  output files under
+  `forensics/loss3_jacobian_subspace_rotation_path_20260516/fno_nu0p001/`.
+
+Changes made:
+
+- Updated `docs/loss3_original_theory_experiment_plan.md` section 5.1 from
+  `Done: 5 / Partially done: 1` to `Done: 6 / Partially done: 0` for the current
+  FNO / Burgers `nu=0.001` scope.
+- Added `docs/loss3_original_six_experiment_completion_audit_20260517.md` with
+  observed evidence and caveats.
+
+Conclusion:
+
+- Observed evidence supports marking all six planned experiments complete for
+  the current FNO / Burgers `nu=0.001` story.
+- Remaining work is extension/presentation/full remote-backup verification, not a
+  blocker for the six-experiment completion claim.
+
+R2 follow-up in the same turn:
+
+- Used the provided R2 S3 endpoint to restore the previously missing local
+  directory `results/main_objective_mechanism_summary_20260514/`.
+- Restored files: `combined_mechanism_summary.csv`,
+  `focused_original_objectives.csv`, and three focused-objective PNG plots.
+- Verified restored CSV line counts: `combined_mechanism_summary.csv` has `325`
+  lines and `focused_original_objectives.csv` has `55` lines.
+- Also checked R2 for
+  `forensics/loss3_ray_profile_optimizer_control_20260516`; R2 contains only
+  the same single `local_direction_trace.csv`, so that directory remains an
+  incomplete/aborted trace rather than a local copy gap.
+
+## 2026-05-17 - Six-Experiment Results And Conclusions Written Into Plan
+
+Status: completed documentation update. No numerical experiment was rerun.
+
+Purpose:
+
+- Add the user's requested per-experiment explanation: what each of the six
+  experiments measured, which numeric outputs matter, what conclusion each
+  experiment supports, and how the six results fit together.
+
+Files updated:
+
+- `docs/loss3_original_theory_experiment_plan.md`:
+  added section `5.2 Six-Experiment Results, Data, And Conclusions - 2026-05-17`.
+- `docs/loss3_original_six_experiment_completion_audit_20260517.md`:
+  appended the same detailed conclusion section for audit traceability.
+- `EXPERIMENT_LEDGER.md`: this entry.
+
+Observed source evidence used:
+
+- Experiment 1: `docs/main_objective_mechanism_experiment1_result_20260514.md`,
+  `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/mechanism_diagnostics/mechanism_summary.csv`,
+  and the restored `results/main_objective_mechanism_summary_20260514/`.
+- Experiment 2: `docs/fno_solver_jacobian_similarity_result_20260514.md`,
+  `docs/outward_growth_direction_result_20260515.md`,
+  `forensics/fno_solver_jacobian_similarity_20260514/`, and
+  `forensics/outward_growth_direction_20260515/fno_nu0p001/`.
+- Experiment 3: `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`,
+  `docs/loss3_gradient_direction_optimization_fno_nu0p001_gpu_steps12_result_20260516.md`,
+  and corresponding `forensics/loss3_*_20260516/` outputs.
+- Experiment 4: `docs/loss3_ray_profile_pgd_fno_nu0p001_gpu_batch100_steps100_fixedsign_result_20260516.md`,
+  `forensics/loss3_ray_profile_pgd_20260516/fno_nu0p001_gpu_v100_batch100_steps100_zero_fixedsign/`,
+  and the 2026-05-16 local historical-script cross-check result directory.
+- Experiment 5: `docs/loss3_original_plan_r2_completion_audit_20260515.md`,
+  the 2026-05-14 final-boundary source directory, and the 2026-05-16 local
+  cross-check directory.
+- Experiment 6: `docs/loss3_direction_rotation_path_fno_nu0p001_result_20260516.md`,
+  `docs/loss3_jacobian_subspace_rotation_path_fno_nu0p001_result_20260516.md`,
+  and corresponding `forensics/loss3_*rotation_path_20260516/` outputs.
+
+Key conclusions recorded:
+
+- Experiment 1: `loss1`/`loss2` mainly produce large model/solver co-movement;
+  `loss3_original` produces larger true mismatch and endpoint error.
+- Experiment 2: residual movement `v_e*` and clean residual outward growth
+  `v_growth*` are different local diagnostics.
+- Experiment 3: ratio diagnostics converge to local Jacobian references for
+  `epsilon <= 1e-2`, while finite-radius drift appears by `epsilon=0.1`.
+- Experiment 4: local tiny-radius winners are not finite-radius endpoint winners;
+  direct `loss3_original` is strongest at `r=8` under the corrected protocol.
+- Experiment 5: boundary-rescaling ratio/regularized directions does not make
+  them beat direct `loss3_original` endpoint optimization.
+- Experiment 6: residual-Jacobian directions and top-k subspaces rotate and
+  steepen along the attack path, so a single clean-point linearization is not a
+  full finite-radius explanation.
+
+Conclusion:
+
+- The plan now contains a readable per-experiment result/conclusion section, in
+  addition to the completion-status table.
+
+## 2026-05-17 - Loss3 Optimizer Direction-Proposal Ablation Plan
+
+Status: plan written; no numerical experiment was run.
+
+Purpose:
+
+- Design a new experiment comparing PGD, LP-steepest PGD, and generalized power
+  iteration for `loss3_original`.
+- Separate the direction rule from the proposal rule so the observed fast
+  convergence of generalized power can be attributed to either direction choice,
+  replacement/boundary update, step size, or physical/smoothness tradeoffs.
+
+Plan document:
+
+- `docs/loss3_optimizer_direction_proposal_ablation_plan_20260517.md`.
+
+Observed code basis:
+
+- `tools/run_batch_three_loss_loss_only.py` currently implements:
+  `pgd` as `delta <- Proj(delta + alpha * grad)`,
+  `lp_steepest_pgd` as `delta <- Proj(delta + alpha * steepest_direction(grad))`,
+  and `generalized_power` as `delta <- Proj(epsilon * steepest_direction(grad))`.
+- `run_three_loss_objective_attack.py` documents the same PGD and LP-steepest
+  update rules and also supports generalized-power variants such as
+  `objective_gradient`, `pure_jvp_vjp`, and `affine_jvp_vjp`.
+
+Proposed experiment:
+
+- Factorial ablation over three direction rules and two proposal rules:
+  raw-gradient/additive, raw-gradient/replacement, LP-steepest/additive,
+  LP-steepest/replacement, generalized-power/additive, and
+  generalized-power/replacement.
+- Main setting: FNO / Burgers `nu=0.001`, `loss3_original`, L2 input/output,
+  `epsilon=8`, batch 100, zero initialization, 100 steps, GPU only.
+- Metrics: final and best-so-far `loss3_original`, boundary reach, time/steps to
+  threshold, boundary-normalized per-step direction quality, direction cosines,
+  final-delta pairwise cosines, projection shrink factors, and perturbation
+  smoothness/physical diagnostics such as Fourier high-frequency energy, total
+  variation, derivative norms, and clean/adversarial spectrum comparison.
+
+Conclusion expected from the design:
+
+- The experiment can tell whether generalized power is faster because it uses a
+  better direction, because it replaces the perturbation directly on the
+  boundary, because additive PGD is step-size limited, or because fast boundary
+  directions trade off against perturbation smoothness/physical plausibility.
+
+## 2026-05-17 - Direction-Proposal Ablation Plan Equivalence Update
+
+Status: documentation update only. No numerical experiment was run.
+
+Purpose:
+
+- Clarify the user's concern that PGD, LP-steepest PGD, and generalized power
+  can collapse into equivalent updates under some norm/direction/proposal
+  choices.
+
+Files updated:
+
+- `docs/loss3_optimizer_direction_proposal_ablation_plan_20260517.md`.
+
+Key additions:
+
+- Added an explicit `Equivalence And Degeneracy Cases To Check Explicitly`
+  section.
+- Recorded that for L2, normalized raw-gradient updates collapse to LP-steepest
+  updates: `unit_raw_add == steepest_add` when both use `g / ||g||_2`.
+- Recorded that the current batch-script `generalized_power` implementation can
+  collapse to LP-steepest replacement when `u_k = steepest_direction(g_k, p)`, so
+  `power_replace == steepest_replace` by construction.
+- Added the requirement to label power variants separately, e.g.
+  `power_replace__steepest_gradient`, `power_replace__objective_gradient`,
+  `power_replace__pure_jvp_vjp`, and `power_replace__affine_jvp_vjp`.
+- Added required sanity outputs such as same-step direction cosines,
+  final-delta cosines, max absolute delta differences, and warning flags when
+  two rows are mathematically equivalent.
+
+Conclusion:
+
+- The planned experiment now explicitly handles equivalence/degeneracy cases and
+  should first verify which rows are actually distinct before making optimizer
+  superiority claims.
+## 2026-05-17 - Direction-Proposal Ablation Plan P/Q Geometry Update
+
+- Status: plan update only; no numerical run was started.
+- Updated `docs/loss3_optimizer_direction_proposal_ablation_plan_20260517.md`
+  to add a dedicated P/Q geometry extension for the new optimizer comparison.
+- Observed from `tools/run_batch_three_loss_loss_only.py`: `--p` controls the
+  perturbation projection/budget for `delta`, while `--q` controls the
+  residual norm used by `loss3_original`.
+- Observed from `run_three_loss_objective_attack.py`: the older single-index
+  runner uses `--input_p/--output_q`, supports generalized p/q power variants,
+  and documents that q-aware power uses the output dual map before mapping back
+  to the p-ball.
+- Observed from `three_loss_objective_experiment_plan.md`: an earlier p/q sweep
+  already proposed `(2,2)`, `(inf,2)`, `(2,inf)`, `(inf,inf)`, plus sparse
+  input extensions.
+- Inference from the code and prior plan: the optimizer ablation should compare
+  methods within each p/q pair first, and only compare across p/q pairs using
+  shared auxiliary metrics such as `loss3_l2`, `loss3_linf`, common-unit delta
+  norms, and smoothness diagnostics.
+- Remaining work: implement the runner/analysis changes, then run GPU-verified
+  smoke and official p/q sweeps.
+## 2026-05-17 - Direction-Proposal Ablation Plan Autograd Gradient Clarification
+
+- Status: plan update only; no numerical run was started.
+- Updated `docs/loss3_optimizer_direction_proposal_ablation_plan_20260517.md`
+  to separate exact objective-gradient computation from p-steepest direction
+  construction.
+- Observed from existing helpers: `tools/run_batch_three_loss_loss_only.py`
+  computes the scalar loss and uses autograd for the gradient, then maps the
+  gradient through `steepest_direction(grad, p_order)` for LP-steepest and
+  current generalized-power rows.
+- Inference from the implementation and user clarification: for ordinary PGD,
+  LP-steepest PGD, and objective-gradient replacement, the q-norm residual
+  gradient should come from autograd.  Only the map from `g_k` to the p-ball
+  steepest direction `s_k` needs an explicit formula.
+- Remaining work: when implementing the new runner, record both
+  `gradient_implementation_source` and `steepest_direction_source` in the
+  manifest and per-run diagnostics.
+## 2026-05-17 - Direction-Proposal Ablation Plan Visualization And GIF Update
+
+- Status: plan update only; no numerical run was started.
+- Updated `docs/loss3_optimizer_direction_proposal_ablation_plan_20260517.md`
+  to require visualization of final deltas, per-step delta trajectories, loss
+  curves, spectra, smoothness metrics, time-space heatmaps, and GIFs.
+- Observed from existing code: `loss_attack_common.py` already contains basic
+  run plots, final-field plots, and GIF helper patterns;
+  `run_three_loss_objective_attack.py` already supports saving `trajectory.npz`
+  for per-step fields; `plot_burgers_corrected_oldstyle_5loss_gif.py` already
+  renders synchronized Burgers GIF frames.
+- Inference from the user request: the new optimizer ablation should save
+  representative-sample trajectories and make synchronized visual comparisons,
+  because final scalar metrics alone cannot show whether a method creates
+  spiky/high-frequency deltas early and smooths them later.
+- Remaining work: implement `--save-delta-trajectory`, trajectory NPZ outputs,
+  per-step smoothness/spectrum diagnostics, static comparison grids, and GIF
+  rendering in the new runner/analysis scripts.
+## 2026-05-17 - Direction-Proposal Ablation Runner Implemented, Not Run
+
+- Status: code implementation only; no numerical optimizer run was started.
+- Added `tools/run_loss3_direction_proposal_ablation.py` as a single-entry
+  runner/analyzer/visualizer for the loss3 direction-proposal ablation.
+- Source paths changed:
+  - `tools/run_loss3_direction_proposal_ablation.py`
+  - `docs/loss3_optimizer_direction_proposal_ablation_plan_20260517.md`
+  - `EXPERIMENT_LEDGER.md`
+- Planned output paths for future runs:
+  - `forensics/loss3_optimizer_direction_proposal_ablation_20260517/...`
+  - method subdirectories containing `per_step_metrics.csv`,
+    `per_sample_step_metrics.csv`, `final_delta_diagnostics.csv`,
+    `final_deltas.npz`, `trajectory_samples.npz`, and visualization outputs.
+- Key settings encoded in the script: `loss3_original`, GPU-only runtime
+  evidence, `--p/--q` geometry, additive versus replacement proposals, raw /
+  unit raw / LP-steepest / objective-gradient power / q-aware power directions,
+  representative delta trajectories, static plots, optional GIFs, and
+  post-run analysis checklist generation.
+- Verification performed: `python3 -m py_compile
+  tools/run_loss3_direction_proposal_ablation.py` completed successfully.
+- Observed evidence: syntax check passed; no model load, solver call, CUDA
+  optimization loop, or experiment result file was produced by this step.
+- Inference: the code is ready for a smoke run after explicit approval, starting
+  with non-contiguous dataset indices `0 7 40 47 115`, short steps, and GIFs.
+- Remaining work: run GPU-verified smoke, inspect the generated figures/GIFs,
+  then run the official p/q and alpha/epsilon sweeps.
+## 2026-05-17 - Direction-Proposal Ablation Tiny Smoke Runtime
+
+- Status: tiny GPU smoke completed; no scientific optimizer-quality conclusion.
+- GPU verification before run: `nvidia-smi` detected Tesla V100-SXM2-32GB with
+  compute capability `7.0`; `tools/setup_adv_robust_gpu_env.py --verify-only`
+  passed with PyTorch `2.8.0+cu126`, CUDA `12.6`, arch list including `sm_70`,
+  JAX backend `gpu`, and GPU matmul sanity checks.
+- Source file: `tools/run_loss3_direction_proposal_ablation.py`.
+- Output root: `forensics/loss3_optimizer_direction_proposal_ablation_20260517/smoke_tiny_runtime_p2_q2_idx0_7_steps3`.
+- Result document: `docs/loss3_direction_proposal_ablation_smoke_runtime_20260517.md`.
+- Key settings: FNO/Burgers `nu=0.001`, `loss3_original`, dataset indices `0`
+  and `7`, methods `official3 main`, `steps=3`, `epsilon=8`, `alpha=0.3`,
+  `p=2`, `q=2`, trajectory saving enabled, GIF rendering enabled.
+- Observed outputs: manifest status `completed`; root CSV/NPZ outputs exist;
+  66 files under `figures/`; 28 GIFs under `figures/gifs/`.
+- Observed runtime: method optimizer runtime sum `32.27` seconds; whole-output
+  file timestamp span including diagnostics, plots, and GIFs `74.10` seconds.
+- Observed prior calibration: recent local batch100/steps100 official
+  `loss3_original` runs took about `103-105` seconds per ordinary method.
+- Inference: a batch100/steps100 p=2/q=2 `main` run should be planned as
+  roughly `30-40` minutes without GIFs, or `50-75` minutes with full GIFs.
+- Remaining work: run official p=2/q=2 main comparison without GIFs first, then
+  selectively render GIFs for interesting methods/samples.
+## 2026-05-17 - Direction-Proposal Ablation P2/Q2 In-Progress Runtime Status
+
+- Status: official p=2/q=2 batch100/steps100 `main` run is still in progress.
+- Status check time: `2026-05-17 22:24:07 UTC`.
+- Process: PID `37171`, elapsed `13:43`, CPU `98.0%`, RSS `2280672 KiB`.
+- GPU: utilization `97%`, memory `10744 / 32768 MiB`.
+- Output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Log path: `/workspace/NeuralOperatorRobustness2/logs/loss3_direction_proposal_p2_q2_batch100.log`.
+- Observed progress: 7 of 11 methods completed; current method is
+  `power_add__pure_jvp_vjp`; three methods remain after it.
+- Observed completed method runtimes: ordinary/objective-gradient methods are
+  stable at about `105.5` seconds each.
+- Inference: remaining time from the check was about `13-18` minutes including
+  final aggregation/static plots; estimated finish window `22:37-22:42 UTC`.
+- Result/status document: `docs/loss3_direction_proposal_ablation_p2_q2_run_status_20260517.md`.
+## 2026-05-17 - Direction-Proposal Ablation P2/Q2 Main Run Completed
+
+- Status: completed; no scientific interpretation performed in this status check.
+- Output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Log path: `/workspace/NeuralOperatorRobustness2/logs/loss3_direction_proposal_p2_q2_batch100.log`.
+- Source file: `tools/run_loss3_direction_proposal_ablation.py`.
+- Key settings: FNO/Burgers `nu=0.001`, `loss3_original`, batch `100`, start
+  index `0`, `steps=100`, `epsilon=8`, `alpha=0.3`, `p=2`, `q=2`, methods
+  `main`, trajectory saving enabled, GIF rendering not enabled.
+- Observed from `manifest.json`: status `completed`, method count `11`, finished
+  at `2026-05-17 22:38:08 UTC`; GPU runtime evidence recorded with Tesla
+  V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, `sm_70` in arch list,
+  and JAX backend `gpu`.
+- Observed method runtime summary: runtime sum `1537.89` seconds, mean `139.81`
+  seconds, median `105.70` seconds; q-aware JVP/VJP methods took about
+  `199-200` seconds each.
+- Observed output completeness: `per_step_metrics.csv` has `1111` data rows,
+  `per_sample_step_metrics.csv` has `111100` data rows, `pq_geometry_summary.csv`
+  has `11` data rows, `figures/` contains `56` files, and GIF count is `0` as
+  intended.
+- Result/status document updated: `docs/loss3_direction_proposal_ablation_p2_q2_run_status_20260517.md`.
+- Remaining work: analyze p=2/q=2 metrics/figures and write a scientific result
+  document before launching more p/q geometry runs.
+## 2026-05-17 - Direction-Proposal Ablation P2/Q2 Visualization Update
+
+- Status: visualization update for the completed p=2/q=2 run; no new optimizer
+  experiment was run.
+- Output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Generated additional figures from existing `trajectory_samples.npz` outputs:
+  - `figures/final_input_delta_overlays/final_input_delta_overlay_sample_000.png`
+  - `figures/final_input_delta_overlays/final_input_delta_overlay_sample_007.png`
+  - `figures/final_input_delta_overlays/final_input_delta_overlay_sample_040.png`
+  - `figures/final_input_delta_overlays/final_input_delta_overlay_sample_047.png`
+  - corresponding `figures/final_delta_overlaid/final_delta_overlay_sample_*.png`
+  - `figures/loss_progression_by_method/loss3_q_and_boundary_ratio_methods_p2_q2.png`
+- Observed existing figures: mean loss/boundary/roughness curves, delta grids,
+  and delta time-space heatmaps.
+- Observed scope limitation: only `p=2,q=2` has been run; no cross-P/Q figures
+  exist yet. Requested trajectory index `115` was not included in batch `0..99`,
+  so trajectory visualizations exist for indices `0`, `7`, `40`, and `47`.
+- Observed figure count after update: `65`; GIF count remains `0`.
+- Status document updated: `docs/loss3_direction_proposal_ablation_p2_q2_run_status_20260517.md`.
+## 2026-05-17 - Direction-Proposal Ablation Extended P/Q Queue Started
+
+- Status: extended P/Q queue has started and is currently running.
+- Queue shell PID: `44098`; current Python PID: `44102`.
+- Current pair: `p=1`, `q=1`; current method from log: `raw_add`.
+- Logs:
+  - `/workspace/NeuralOperatorRobustness2/logs/loss3_direction_proposal_pq_queue.log`
+  - `/workspace/NeuralOperatorRobustness2/logs/loss3_direction_proposal_p1_q1_batch100.log`
+- Output root for current pair:
+  `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q1`.
+- Observed GPU state at check: utilization `97%`, memory `9522 / 32768 MiB`.
+- Observed log state: first pair has entered `raw_add`; no failure observed.
+- Scope: this status check only verifies that the queue started normally; no P/Q
+  pair has completed yet in this queue.
+- Status document: `docs/loss3_direction_proposal_ablation_pq_queue_status_20260517.md`.
+
+## 2026-05-17 - Direction-Proposal Ablation P2/Q2 Actual-Loss-Only Figure
+
+- Status: visualization update only; no optimizer experiment was run.
+- Output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Source metrics: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/per_step_metrics.csv`.
+- New figure:
+  `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/figures/true_loss_progression/actual_loss3_q_mean_methods_p2_q2_clean_20260517.png`.
+- Observed evidence: the new figure is drawn from `loss3_q_mean` values at the
+  actual optimizer iterates `delta_k`; it does not use boundary-normalized loss
+  or boundary-projected diagnostic loss.
+- Preservation note: existing figures were kept in place and were not deleted
+  or overwritten. Future additional plots should use new file names or new
+  figure directories unless replacement is explicitly requested.
+- Remaining work: use actual loss as the primary comparison in scientific
+  summaries; treat boundary-normalized quantities only as optional diagnostics.
+
+## 2026-05-18 - Direction-Proposal Ablation Figure Meaning Guide
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source run inspected: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Source files inspected: `tools/run_loss3_direction_proposal_ablation.py` and `tools/run_batch_three_loss_loss_only.py`.
+- Result document created: `docs/loss3_direction_proposal_ablation_figure_guide_20260518.md`.
+- Observed evidence: current completed figure set is for `p=2,q=2`; the main actual-loss figures are `figures/curves/loss3_q_mean_vs_step.png` and `figures/true_loss_progression/actual_loss3_q_mean_methods_p2_q2_clean_20260517.png`.
+- Interpretation note: `boundary_ratio` is a constraint-radius diagnostic, not a loss; `boundary_loss3_q_mean` is a boundary-rescaled diagnostic and should not be used as the primary convergence/result curve.
+- Remaining work: once additional P/Q runs complete, create corresponding actual-loss-first summaries and avoid leading with boundary-normalized diagnostic plots.
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Progress Inspection
+
+- Status: inspection/status update only; no new experiment was launched and no figures were deleted or overwritten.
+- Queue shell PID observed: `44098`; current Python PID observed: `48371`.
+- Observed current pair: `p=1`, `q=inf`; current log shows the run has entered `raw_add`, `unit_raw_add`, and `steepest_add`.
+- Observed completed output roots:
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q1`, manifest status `completed`, `40` PNG figures.
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q2`, manifest status `completed`, `40` PNG figures.
+- Observed in-progress output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_qinf`, manifest status `run_started`, `0` PNG figures at the check.
+- Result/status document updated: `docs/loss3_direction_proposal_ablation_pq_queue_status_20260517.md`.
+- Figure guide updated: `docs/loss3_direction_proposal_ablation_figure_guide_20260518.md`.
+- Remaining work: continue monitoring the queue; only interpret P/Q pairs after their manifest reports completion and figures exist.
+
+## 2026-05-18 - Direction-Proposal Ablation Mean/Std Clean Loss Figures
+
+- Status: visualization update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source metrics inspected:
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/per_step_metrics.csv`
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q1/per_step_metrics.csv`
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q2/per_step_metrics.csv`
+- Observed evidence: `loss3_q_finite_count` is `100` for inspected per-step rows, and `per_sample_step_metrics.csv` has 100 raw-add step-0 sample positions for each completed run inspected. Existing old line plots use `loss3_q_mean` without plotting `loss3_q_std`.
+- New figures generated under `figures/actual_loss_with_std_clean/` for completed runs `p=2,q=2`, `p=1,q=1`, and `p=1,q=2`:
+  - `actual_loss3_q_mean_std_core3.png`
+  - `actual_loss3_q_mean_std_power_replacement_variants.png`
+- Interpretation note: shaded bands are `loss3_q_mean +/- loss3_q_std` across the 100 samples at each step, not uncertainty across repeated seeds.
+- Result/guide document updated: `docs/loss3_direction_proposal_ablation_figure_guide_20260518.md`.
+- Remaining work: use the core-three shaded plots as the default first-read comparison and keep all-method plots as diagnostic ablation figures.
+
+## 2026-05-18 - Direction-Proposal Ablation Final Delta Similarity Analysis
+
+- Status: completed post-processing analysis; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source script added: `tools/analyze_final_delta_similarity.py`.
+- Source arrays:
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/final_deltas.npz`
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q1/final_deltas.npz`
+  - `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p1_q2/final_deltas.npz`
+- Outputs written under each completed run: `final_delta_similarity/20260518_final_delta_similarity/`, including per-sample pairwise CSV, summary CSV, mean cosine matrices, relative L2 matrices, and heatmap PNGs.
+- Result document created: `docs/loss3_final_delta_similarity_results_20260518.md`.
+- Observed evidence: `p=2,q=2` has exact final-delta equivalences among `unit_raw_add`, `steepest_add`, and `power_add__objective_gradient`, and among `raw_replace`, `steepest_replace`, and `power_replace__objective_gradient`.
+- Observed evidence: `p=1,q=1` and `p=1,q=2` keep exact equivalence between `steepest_replace` and `power_replace__objective_gradient`, but `unit_raw_add` and `steepest_add` are not similar.
+- Inference: for `p=2`, the L2 steepest direction equals normalized raw gradient, so several method labels are redundant. For `p=1`, the Lp geometry changes the steepest direction, so the same redundancy does not hold.
+- Remaining work: repeat this analysis for later P/Q pairs once their manifests complete and `final_deltas.npz` exists.
+
+## 2026-05-18 - Direction-Proposal Ablation Generalized Power Naming Clarification
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source files inspected: `tools/run_batch_three_loss_loss_only.py` and `tools/run_loss3_direction_proposal_ablation.py`.
+- Result document created: `docs/loss3_generalized_power_naming_clarification_20260518.md`.
+- Observed evidence: the previous three-method runner implements `generalized_power` as `steepest_direction(autograd(loss3_q), p)` followed by `project_delta(epsilon * direction, epsilon, p)`.
+- Observed evidence: the new ablation's `power_*__jvp_vjp`, `power_*__affine_jvp_vjp`, and `power_*__generalized_pq` variants compute directions through JVP/VJP of the residual Jacobian rather than directly using the objective-gradient direction.
+- Interpretation: when referring to the user's earlier three-method comparison, `generalized_power` should map to `steepest_replace` / `power_replace__objective_gradient`; JVP/VJP variants should be described separately as P-Q operator-power direction variants.
+- Remaining work: future plots and summaries should use clearer labels to avoid presenting these as one identical method family.
+
+## 2026-05-18 - Direction-Proposal Ablation 3D Delta Surface Visualizations
+
+- Status: completed post-processing visualization; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source script added: `tools/plot_delta_3d_surfaces.py`.
+- Command used: `./adv_robust/bin/python tools/plot_delta_3d_surfaces.py --space-stride 4 --step-stride 1`.
+- Source arrays: completed runs' per-method `trajectory_samples.npz` files under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/`.
+- Observed trajectory shape example: `k` has 101 steps from `0` to `100`; `delta` has shape `(101, 4, 1024, 1)` for trajectory dataset indices `0`, `7`, `40`, and `47`.
+- Output directories: `figures/delta_surfaces_3d_20260518/` under each completed run.
+- Observed output counts: `p=1,q=1` 28 PNGs, `p=1,q=2` 28 PNGs, `p=1,q=inf` 28 PNGs, `p=2,q=2` 44 PNGs; total `128` 3D surface PNGs.
+- Observed skipped run: `p=2,q=1` had manifest status `run_started`, so it was not included in the completed-run visualization batch.
+- Result document created: `docs/loss3_delta_3d_surface_visualizations_20260518.md`.
+- Figure guide updated: `docs/loss3_direction_proposal_ablation_figure_guide_20260518.md`.
+- Remaining work: generate corresponding 3D surfaces for later P/Q pairs after their manifests complete.
+
+## 2026-05-18 - Direction-Proposal Ablation Method Formulas And Equivalences
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source files inspected: `tools/run_batch_three_loss_loss_only.py`, `tools/run_loss3_direction_proposal_ablation.py`, and completed `p=2,q=2/final_deltas.npz` method order.
+- Result document created: `docs/loss3_optimizer_method_formulas_and_equivalences_20260518.md`.
+- Observed evidence: `p=2,q=2` method order begins with seven objective-gradient methods: `raw_add`, `unit_raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`, `power_add__objective_gradient`, and `power_replace__objective_gradient`.
+- Formula conclusion: for `p=2`, `s_2(g)=g/||g||_2`, so `unit_raw_add`, `steepest_add`, and `power_add__objective_gradient` have identical updates, and `raw_replace`, `steepest_replace`, and `power_replace__objective_gradient` have identical updates.
+- Observed similarity evidence: completed `p=2,q=2` final-delta analysis gives mean cosine `1.000000` and mean relative L2 `0.000000` for those duplicate-formula pairs.
+- Inference: high similarity among the first seven p=2,q=2 methods is mainly due to duplicated objective-gradient formulas plus the L2 identity between normalized raw gradient and L2-steepest direction; it is not a universal claim for p=1, where `unit_raw_add` and `steepest_add` are not similar.
+- Remaining work: rename/relabel future plots to collapse exact duplicate methods into representative method groups before presentation.
+
+## 2026-05-18 - Direction-Proposal Ablation Readable Formula Document
+
+- Status: documentation formatting update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document created: `docs/loss3_optimizer_method_formulas_readable_20260518.md`.
+- Purpose: rewrite the optimizer formulas using readable displayed math instead of code-block-style pseudocode.
+- Observed evidence preserved: the readable document states the p=2 equivalences `unit_raw_add = steepest_add = power_add__objective_gradient` and `raw_replace = steepest_replace = power_replace__objective_gradient`, and cites the final-delta similarity values showing cosine `1.000000` and relative L2 `0.000000` for duplicate-formula pairs.
+- Remaining work: use the readable formula document as the default reference when explaining optimizer methods to avoid confusion from code-like formatting.
+
+## 2026-05-18 - Direction-Proposal Ablation Plain-Language Formula Document
+
+- Status: documentation formatting update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document created: `docs/loss3_optimizer_method_formulas_plain_language_20260518.md`.
+- Purpose: rewrite method formulas without LaTeX math syntax or code-block formatting, using plain-language equations such as `delta_next = project(delta_current + alpha * direction)`.
+- Observed evidence preserved: the document explains that for `p=2`, normalized raw gradient equals L2-steepest direction, which makes `unit_raw_add = steepest_add = power_add__objective_gradient` and `raw_replace = steepest_replace = power_replace__objective_gradient`.
+- Remaining work: use this plain-language document when the rendered interface does not display LaTeX formulas cleanly.
+
+## 2026-05-18 - Direction-Proposal Ablation P2/Q2 Method Equivalence Summary
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document created: `docs/loss3_p2_q2_method_equivalence_summary_20260518.md`.
+- Related result document updated: `docs/loss3_final_delta_similarity_results_20260518.md`.
+- Source numeric table: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/final_delta_similarity/20260518_final_delta_similarity/final_delta_pairwise_similarity_summary.csv`.
+- Observed evidence: `unit_raw_add`, `steepest_add`, and `power_add__objective_gradient` have identical final deltas for `p=2,q=2` with pairwise cosine `1.000000` and relative L2 `0.000000`.
+- Observed evidence: `raw_replace`, `steepest_replace`, and `power_replace__objective_gradient` have identical final deltas for `p=2,q=2` with pairwise cosine `1.000000` and relative L2 `0.000000`.
+- Observed evidence: `raw_add` versus `steepest_add` has mean cosine `0.858049` and mean relative L2 `0.384210`, so it is similar but not identical.
+- Inference: the high similarity among the first seven methods in the `p=2,q=2` heatmap is mainly due to the L2 identity between normalized raw gradient and L2-steepest direction plus duplicate objective-gradient method labels; future presentation plots should collapse exact duplicates into representative method groups.
+- Remaining work: use the concise p=2/q=2 equivalence summary when explaining the crowded heatmap and when designing cleaned presentation figures.
+
+## 2026-05-18 - Direction-Proposal Ablation P-Norm Equivalence Rules
+
+- Status: documentation/interpretation update plus post-processing for newly completed runs; no optimizer experiment was launched and no existing figures were deleted or overwritten.
+- Source script used for new post-processing: `tools/analyze_final_delta_similarity.py`.
+- New similarity outputs generated for newly completed runs: `p=1,q=inf` and `p=2,q=1` under `final_delta_similarity/20260518_final_delta_similarity/`.
+- Result document created: `docs/loss3_p_norm_method_equivalence_rules_20260518.md`.
+- Related documents updated with links: `docs/loss3_p2_q2_method_equivalence_summary_20260518.md` and `docs/loss3_final_delta_similarity_results_20260518.md`.
+- Observed evidence: for completed `p=1,q=inf`, `unit_raw_add` vs `steepest_add` has mean cosine `0.344037` and mean relative L2 `1.776665`, so they are not equivalent; `steepest_replace` vs `power_replace__objective_gradient` remains exactly equivalent with cosine `1.000000` and relative L2 `0.000000`.
+- Observed evidence: for completed `p=2,q=1`, `unit_raw_add` vs `steepest_add` has mean cosine `1.000000` and relative L2 `0.000000`, consistent with the p=2 rule.
+- Inference: `p=2` creates additional exact equivalences because normalized raw gradient equals L2-steepest direction. For `p!=2`, those extra equivalences disappear; remaining exact matches are mostly duplicate method labels such as `steepest_replace = power_replace__objective_gradient` or the current `generalized_pq = pure_jvp_vjp` implementation.
+- Remaining work: analyze `p=2,q=inf` after its manifest completes and `final_deltas.npz` exists.
+
+## 2026-05-18 - Direction-Proposal Ablation JVP/VJP Power Method Explanation
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source files inspected: `tools/run_loss3_direction_proposal_ablation.py`.
+- Result document created: `docs/loss3_jvp_vjp_power_methods_explanation_20260518.md`.
+- Observed code evidence: objective-gradient methods use `grad = autograd(loss3_q)` and then `steepest_direction(grad,p)`, while JVP/VJP power methods compute `J v`, apply a q-side map, pull back with VJP, and then use `steepest_direction(vjp,p)`.
+- Observed formula distinction: objective-gradient replacement uses `J^T phi_q(r_k)`, while pure JVP/VJP power uses `J^T phi_q(J v_k)`; affine JVP/VJP power uses `J^T phi_q(r_k + rho_k J v_k)`.
+- Observed similarity evidence: completed `p=2,q=2` final-delta analysis gives `steepest_replace` vs `power_replace__pure_jvp_vjp` mean cosine `0.121156` and relative L2 `1.293200`, so these are not the same method in practice.
+- Inference: JVP/VJP variants are local operator-power direction methods and should be interpreted separately from the earlier objective-gradient generalized-power replacement method.
+- Remaining work: use clearer labels in future figures to separate objective-gradient generalized power from JVP/VJP operator-power variants.
+
+## 2026-05-18 - Direction-Proposal Ablation Minimal Core Question Summary
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document created: `docs/loss3_minimal_core_question_answer_20260518.md`.
+- Source run summarized: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Source tables: `per_step_metrics.csv` and `final_delta_similarity/20260518_final_delta_similarity/final_delta_pairwise_similarity_summary.csv`.
+- Observed evidence: for `p=2,q=2`, `raw_replace` and `steepest_replace` have identical final deltas with mean cosine `1.000000` and mean relative L2 `0.000000`.
+- Observed evidence: final actual loss at `k=100` is `6.804780` for both `raw_replace` and `steepest_replace`, compared with `5.389592` for `raw_add` and `6.377158` for `steepest_add`.
+- Observed evidence: replacement methods in `p=2,q=2` did not show higher recorded roughness than additive methods; `raw_replace`/`steepest_replace` had high-frequency ratio `8.10e-10` and first-derivative L2 `0.217019`.
+- Inference: the original core question is answered for `p=2`: replacing PGD's additive update by direct boundary replacement using the normalized gradient becomes the same as generalized-power-style steepest replacement. For `p!=2`, the exact `raw_replace` comparison remains to be run because the completed `pq_key` runs omitted `raw_replace`.
+- Remaining work: run only the minimal method set `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace` for non-2 p values if the user wants the same conclusion across P/Q geometry.
+
+## 2026-05-18 - Direction-Proposal Ablation JVP Bias-Term Clarification
+
+- Status: documentation/interpretation update only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document updated: `docs/loss3_jvp_vjp_power_methods_explanation_20260518.md`.
+- Clarification: the actual local residual model includes a bias/base residual term `b_k = r(x_k)`, so the local objective is closer to `||b_k + J_k v||_q` than `||J_k v||_q`.
+- Interpretation: pure JVP/VJP uses `J_k v_k` and therefore studies local operator amplification while ignoring the current residual bias direction; affine JVP/VJP includes `r(x_k) + rho_k J_k v_k` and is closer to the biased local objective, but still differs from direct objective-gradient replacement.
+- Remaining work: keep pure/affine JVP/VJP variants out of the minimal core experiment unless the research question is specifically about operator-power directions.
+
+## 2026-05-18 - Direction-Proposal Ablation raw_replace vs steepest_replace Clarification
+
+- Status: documentation clarification only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document updated: `docs/loss3_p2_q2_method_equivalence_summary_20260518.md`.
+- Clarification: `raw_replace` in the ablation is not ordinary additive PGD walking to the boundary; it is a direct boundary replacement using the normalized raw-gradient direction.
+- Formula clarification: `raw_replace` uses normalized `g_k`, while `steepest_replace` uses `s_k`; these coincide for `p=2` because `s_k = g_k / ||g_k||_2`, but they should not be assumed equal for `p!=2`.
+- Remaining work: keep future labels explicit, e.g. `unit_raw_replace` rather than `raw_replace`, to avoid this ambiguity.
+
+## 2026-05-18 - Direction-Proposal Ablation Selected Core Findings Summary
+
+- Status: documentation consolidation only; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Result document created: `docs/loss3_selected_core_findings_summary_20260518.md`.
+- Related document updated: `docs/loss3_minimal_core_question_answer_20260518.md`.
+- Observed evidence consolidated: for `p=2,q=2`, `raw_replace` and `steepest_replace` have identical final deltas with mean cosine `1.000000` and mean relative L2 `0.000000`; both have final actual loss mean `6.804780`, boundary ratio `1.000000`, high-frequency ratio `8.10e-10`, and first-derivative L2 `0.217019`.
+- Observed evidence consolidated: `raw_add` has final actual loss mean `5.389592`; `steepest_add` has final actual loss mean `6.377158`; `raw_add` vs `steepest_add` has mean cosine `0.858049`; `steepest_add` vs `steepest_replace` has mean cosine `0.530025`.
+- Interpretation consolidated: for `p=2`, normalized raw-gradient direction equals L2-steepest direction, explaining exact equivalence groups; for `p!=2`, that equivalence should not be assumed.
+- Remaining work: run the minimal four-method set `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace` for non-2 p values if the user wants the same boundary-replacement conclusion beyond `p=2`.
+
+## 2026-05-18 - Direction-Proposal Ablation Simplified Core Figure Folder
+
+- Status: completed post-processing visualization; no optimizer experiment was run and no existing figures were deleted or overwritten.
+- Source run: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Output folder: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_simplified_figures_20260518_p2_q2`.
+- Output contents: only PNG images; generated files are `01_actual_loss_core4_mean_std.png`, `02_delta_quality_core4_metrics.png`, and `03_final_delta_core4_selected_samples.png`.
+- Methods plotted: `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace` only.
+- Result document created: `docs/loss3_simplified_core_visualizations_20260518.md`.
+- Related summary updated: `docs/loss3_selected_core_findings_summary_20260518.md`.
+- Scope note: this simplified four-method folder is currently only for `p=2,q=2`, because other completed P/Q runs omitted `raw_replace` and therefore cannot produce the same four-method comparison without a minimal additional run.
+- Remaining work: run the minimal four-method set for non-2 p values before generating matching simplified folders for those P/Q cases.
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Status Check 01:18 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no existing figures were deleted or overwritten.
+- Current background queue: still running, shell PID `44098`.
+- Current experiment process: PID `65319`, running `p=inf,q=1` with methods `pq_key`.
+- Observed GPU state: utilization `97%`, memory `10740 / 32768 MiB`.
+- Observed completed pairs: `p=1,q=1`, `p=1,q=2`, `p=1,q=inf`, `p=2,q=1`, `p=2,q=2`, and `p=2,q=inf` have manifest status `completed` and root `final_deltas.npz`.
+- Observed current pair: `p=inf,q=1` has manifest status `run_started`; six of seven method directories have 101 per-step rows through `k=100`; `power_replace__generalized_pq` has started but had not written per-step rows at the check.
+- Observed remaining queue items after current pair: `p=inf,q=2` and `p=inf,q=inf`.
+- Result/status document updated: `docs/loss3_direction_proposal_ablation_pq_queue_status_20260517.md`.
+- Remaining work: wait for queue completion, then run any needed post-processing/summary updates for the newly completed P/Q pairs.
+
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Status Check 01:20 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no existing figures were deleted or overwritten.
+- Current background queue: still running, shell PID `44098`.
+- Current experiment process: PID `71831`, running `p=inf,q=2` with methods `pq_key`.
+- Observed GPU state: utilization `99%`, memory `9522 / 32768 MiB`.
+- Observed log evidence: queue log has advanced to `p=inf,q=2`; current run log shows method `raw_add` has started.
+- Observed process evidence: no separate plotting/post-processing command such as `plot_delta_3d_surfaces.py` or `analyze_final_delta_similarity.py` was running at this check.
+- Remaining work: wait for `p=inf,q=2` and queued `p=inf,q=inf` to finish, then run any desired post-processing/summary plots for those newly completed P/Q pairs.
+
+
+## 2026-05-18 - Direction-Proposal Ablation Core-Four Data Availability Check 01:22 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no existing figures were deleted or overwritten.
+- Question checked: whether the same simplified four-method plots can be generated for P/Q pairs beyond `p=2,q=2`.
+- Observed evidence: local completed P/Q directories other than `p=2,q=2` generally contain `raw_add`, `steepest_add`, and `steepest_replace`, but not `raw_replace`.
+- Observed evidence: `p=inf,q=2` is currently still running and has only `raw_add` visible so far; `p=inf,q=inf` has not started in the queue output yet.
+- Inference: same-style four-line plots for non-2 p values need a minimal additional run including `raw_replace`. For `p=2` pairs, `raw_replace` should be equivalent to `steepest_replace` by L2 geometry, but that would be an inference unless the method is actually run or explicitly duplicated and labeled as inferred.
+- Remaining work: wait for the current queue to finish, then decide whether to run a small core-four补跑 for selected P/Q pairs.
+
+
+## 2026-05-18 - Direction-Proposal Ablation p=2,q=2 Figure Location Lookup
+
+- Status: inspection/path lookup only; no experiment was launched and no existing figures were deleted or overwritten.
+- Simplified p=2,q=2 figure folder: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_simplified_figures_20260518_p2_q2`.
+- Observed simplified PNGs: `01_actual_loss_core4_mean_std.png`, `02_delta_quality_core4_metrics.png`, and `03_final_delta_core4_selected_samples.png`.
+- Full p=2,q=2 figure tree: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/figures`.
+- Observed process state during lookup: background P/Q queue was still running `p=inf,q=2`; no plotting process was observed.
+
+
+## 2026-05-18 - Direction-Proposal Ablation p=2,q=2 Smoothness Interpretation Figures
+
+- Status: completed post-processing visualization and documentation; no optimizer experiment was launched and no existing figures were deleted or overwritten.
+- Source run: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Source numeric files: root/per-method `per_step_metrics.csv`, root `per_sample_step_metrics.csv`, and root `final_deltas.npz`.
+- Output folder: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_smoothness_annotated_figures_20260518_p2_q2`.
+- Output PNGs: `01_final_smoothness_core4_mean_std_annotated.png`, `02_sample040_final_delta_with_smoothness_numbers.png`, and `03_sample040_smoothness_over_steps.png`.
+- Result document created: `docs/loss3_delta_smoothness_metrics_interpretation_20260518.md`.
+- Observed evidence: at final step `k=100`, `raw_replace` and `steepest_replace` have actual loss mean `6.804780`, first-derivative L2 mean `0.217019`, and total variation mean `2.685119`; `raw_add` has actual loss mean `5.389592`, first-derivative L2 mean `0.645722`, and total variation mean `8.573150`.
+- Observed evidence: for dataset index `40`, final-step `raw_add` has first-derivative L2 `0.949167` and total variation `14.660805`, while `steepest_replace` has first-derivative L2 `0.250301` and total variation `2.685880`.
+- Inference: the sample-40 visual impression that additive PGD creates a more jagged perturbation is supported by the derivative/variation metrics. In this observed `p=2,q=2` run, the GPI-style replacement reaches higher loss while also producing smoother final deltas by these metrics.
+- Remaining work: repeat the same annotated smoothness plotting for other P/Q pairs after core-four data, especially `raw_replace`, is available.
+
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Status Check 01:30 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no existing figures were deleted or overwritten.
+- Current background queue: still running, shell PID `44098`.
+- Current experiment process: PID `71831`, still running `p=inf,q=2` with methods `pq_key`.
+- Observed GPU state: utilization `97%`, memory `10744 / 32768 MiB`.
+- Observed process evidence: no separate plotting process was observed; current active workload is the optimizer/data run.
+- Remaining work: wait for `p=inf,q=2` and then `p=inf,q=inf` to finish.
+
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Status Check 01:33 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no existing figures were deleted or overwritten.
+- Current background queue: still running, shell PID `44098`.
+- Current experiment process: PID `71831`, still running `p=inf,q=2` with methods `pq_key`.
+- Observed GPU state: utilization `98%`, memory `10744 / 32768 MiB`.
+- Observed output status: completed pairs through `p=inf,q=1` have root `final_deltas.npz`; `p=inf,q=2` remains `run_started` and root `final_deltas.npz` does not yet exist.
+- Observed current method progress for `p=inf,q=2`: `raw_add`, `unit_raw_add`, `steepest_add`, `steepest_replace`, `power_replace__objective_gradient`, and `power_replace__pure_jvp_vjp` each have 101 per-step rows through `k=100`; `power_replace__generalized_pq` has started in the log but has not written per-step rows yet.
+- Inference: the queue is not finished; after the current `p=inf,q=2` run, `p=inf,q=inf` remains queued.
+- Remaining work: wait for `p=inf,q=2` and `p=inf,q=inf` to complete before post-processing/plotting the new P/Q results.
+
+
+## 2026-05-18 - Direction-Proposal Ablation Simplified Smoothness Figure Redraw 01:41 UTC
+
+- Status: completed post-processing figure redraw/cleanup; no optimizer experiment was launched.
+- Source run: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2`.
+- Redrawn output: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_simplified_figures_20260518_p2_q2/02_delta_quality_core4_metrics.png`.
+- Redraw details: the figure now shows `boundary_ratio`, `high_frequency_energy_ratio`, `first_derivative_l2`, and `total_variation` as mean curves with `+/- 1` sample-standard-deviation shading over the 100 samples; it also includes final-step mean `+/-` sample std bars with labels.
+- Deleted per user request as redundant: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_smoothness_annotated_figures_20260518_p2_q2/02_sample040_final_delta_with_smoothness_numbers.png` and `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_smoothness_annotated_figures_20260518_p2_q2/03_sample040_smoothness_over_steps.png`.
+- Remaining annotated record: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_smoothness_annotated_figures_20260518_p2_q2/01_final_smoothness_core4_mean_std_annotated.png`.
+- Result documents updated: `docs/loss3_simplified_core_visualizations_20260518.md` and `docs/loss3_delta_smoothness_metrics_interpretation_20260518.md`.
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Runtime Estimate 01:41 UTC
+
+- Status: inspection/status update only; no new experiment was launched.
+- Current background queue: still running, shell PID `44098`.
+- Current experiment process: PID `79740`, running final queued pair `p=inf,q=inf` with methods `pq_key`.
+- Observed current method progress: `raw_add`, `unit_raw_add`, and `steepest_add` are complete through `k=100`; `steepest_replace` has started; `power_replace__objective_gradient`, `power_replace__pure_jvp_vjp`, and `power_replace__generalized_pq` have not started.
+- Inference from previous `p=inf` pair timings: remaining runtime from 2026-05-18 01:41 UTC is approximately 10-12 minutes, with expected finish around 2026-05-18 01:51-01:54 UTC if speed remains similar.
+- Remaining work: wait for `p=inf,q=inf` to complete, then post-process/plot any newly completed P/Q results requested by the user.
+
+
+## 2026-05-18 - Direction-Proposal Ablation Simplified Smoothness Figure Redraw 01:48 UTC
+
+- Status: completed post-processing figure redraw; no optimizer experiment was launched.
+- Redrawn output: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_simplified_figures_20260518_p2_q2/02_delta_quality_core4_metrics.png`.
+- Redraw detail: changed the second simplified figure to a wide/flat layout. The left side now has four horizontally wide mean-curve panels with `+/- 1` sample-standard-deviation shading; the right side has compact final-step mean `+/-` sample std summaries.
+- Output check: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_simplified_figures_20260518_p2_q2` still contains only `01_actual_loss_core4_mean_std.png`, `02_delta_quality_core4_metrics.png`, and `03_final_delta_core4_selected_samples.png`.
+- Observed data availability: other P/Q output directories generally have `raw_add`, `steepest_add`, and `steepest_replace`, but not `raw_replace`; only `p=2,q=2` currently has all four core methods actually run.
+- Inference: matching four-method simplified figures for non-2 p values require a minimal `raw_replace` run. For `p=2` pairs, `raw_replace` can be inferred from `steepest_replace` by L2 geometry, but should be labeled as inferred unless actually run.
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Status Check 01:48 UTC
+
+- Status: inspection/status update only; no new experiment was launched.
+- Current final queued pair: `p=inf,q=inf`, manifest status `run_started`, root `final_deltas.npz` absent.
+- Observed method progress: all methods through `power_replace__pure_jvp_vjp` have 101 per-step rows through `k=100`; `power_replace__generalized_pq` directory exists but has not written per-step rows yet.
+- Inference: the queue is on the final method of the final queued pair; likely remaining time is a few minutes if timing follows the previous `p=inf` pairs.
+
+
+## 2026-05-18 - Direction-Proposal Ablation P/Q Queue Completion and Core-Four Availability 01:53 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no figures were generated or deleted.
+- Observed process evidence: no active `run_loss3_direction_proposal_ablation.py` or queue shell process was observed.
+- Observed log evidence: the final queued pair `p=inf,q=inf` reached `[done] ablation outputs written under ... p=inf_qinf`.
+- Observed output evidence: all P/Q pairs in the queue have manifest status `completed` and root `final_deltas.npz` exists.
+- Observed core-method availability: `p=2,q=2` has `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace`; all other queued P/Q pairs have `raw_add`, `steepest_add`, and `steepest_replace` but are missing `raw_replace`.
+- Inference: three-method simplified figures can be generated now for all completed P/Q pairs. Strict four-method simplified figures require a minimal `raw_replace`补跑 for pairs other than `p=2,q=2`. For `p=2` pairs, `raw_replace` can be inferred from `steepest_replace` by L2 geometry, but should be labeled as inferred unless actually run.
+- Remaining work: decide whether to generate three-method figures now, inferred `p=2` four-method figures, or run a minimal `raw_replace`补跑 before generating strict four-method figures for all P/Q pairs.
+
+
+## 2026-05-18 - Raw-Replace Backfill Runtime Check 02:04 UTC
+
+- Status: inspection/status update only; no new experiment was launched and no figures were generated or deleted.
+- Current backfill queue process: shell PID `86272`.
+- Current Python process: PID `89734`, running `raw_replace` for `p=2,q=inf`.
+- Observed GPU state: utilization `88-99%`, memory `9522 / 32768 MiB`.
+- Observed completed backfill pairs: `p=1,q=1`, `p=1,q=2`, `p=1,q=inf`, and `p=2,q=1`, each with `final_deltas.npz` and 101 `raw_replace` per-step rows.
+- Observed current pair: `p=2,q=inf` has started but had not yet written per-step rows at the check.
+- Observed queued pairs after current: `p=inf,q=1`, `p=inf,q=2`, and `p=inf,q=inf`.
+- Observed logging note: `logs/loss3_raw_replace_backfill_queue_20260518.log` was absent, but per-pair logs existed and were updating.
+- Inference: completed backfill pairs are taking about 1.9 minutes each; from 2026-05-18 02:04 UTC, estimated remaining runtime is about 7-9 minutes, with expected finish around 2026-05-18 02:11-02:13 UTC if speed stays similar.
+- Remaining work: wait for the raw-replace backfill to finish, then merge/plot strict four-method simplified figures for all P/Q pairs.
+
+
+## 2026-05-18 - Raw-Replace Backfill Completion 02:17 UTC
+
+- Status: completed inspection/status update; no new experiment was launched during this check and no figures were generated or deleted.
+- Observed process evidence: no active `loss3_raw_replace_backfill`, `run_loss3_direction_proposal_ablation.py`, or `adv_robust/bin/python` experiment process was observed.
+- Observed GPU state: utilization `0%`, memory `0 / 32768 MiB`.
+- Observed log evidence: `logs/loss3_raw_replace_backfill_pinf_qinf_batch100.log` includes `[done] ablation outputs written under ... p_inf_qinf`.
+- Observed output evidence: all eight raw-replace backfill pairs have manifest status `completed`, root `final_deltas.npz`, and `raw_replace/per_step_metrics.csv` with 101 rows through `k=100`.
+- Backfill output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518`.
+- Inference: strict four-core-method plotting is now possible for all P/Q pairs by combining original runs with the corresponding raw-replace backfill outputs.
+- Remaining work: generate the simplified four-method figure folders for each P/Q pair using the original run data plus raw-replace backfill data.
+
+
+## 2026-05-18 - All-PQ Core Four Figure Set 02:17 UTC
+
+- Status: completed post-processing visualization; no optimizer experiment was launched.
+- Output folder: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_all_pq_four_figures_20260518`.
+- Output contents: exactly four PNG files and no data files: `01_actual_loss_all_pq_core4_mean_std.png`, `02_boundary_ratio_all_pq_core4_mean_std.png`, `03_final_metrics_all_pq_core4_heatmaps.png`, and `04_sample040_final_delta_all_pq_core4.png`.
+- Source data: original runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517` plus raw-replace backfill runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518`.
+- Methods plotted: `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace`.
+- P/Q pairs plotted: `p=1,q=1`, `p=1,q=2`, `p=1,q=inf`, `p=2,q=1`, `p=2,q=2`, `p=2,q=inf`, `p=inf,q=1`, `p=inf,q=2`, and `p=inf,q=inf`.
+- Observed file check: the output folder contains exactly 4 files, all PNG images.
+- Result document created: `docs/loss3_core_all_pq_four_figures_20260518.md`.
+- Inference: the plots are strict four-core-method plots because `raw_replace` now comes from actual backfill outputs for all P/Q pairs where it was previously missing.
+- Remaining work: inspect the four images and, if desired, generate per-P/Q separate simplified folders using the same merged source data.
+
+
+## 2026-05-18 - Per-PQ Core Four Figure Folders 02:18 UTC
+
+- Status: completed post-processing visualization; no optimizer experiment was launched.
+- Output root: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_per_pq_four_figures_20260518`.
+- Output structure: 9 P/Q subfolders (`p1_q1`, `p1_q2`, `p1_qinf`, `p2_q1`, `p2_q2`, `p2_qinf`, `pinf_q1`, `pinf_q2`, `pinf_qinf`).
+- Output contents: each P/Q subfolder contains exactly four PNG files: `01_actual_loss_core4_mean_std.png`, `02_delta_quality_core4_metrics.png`, `03_final_delta_core4_selected_samples.png`, and `04_final_smoothness_core4_mean_std.png`.
+- Observed file check: 9 subfolders, 4 PNG files per subfolder, 36 total files; all files are PNG images.
+- Source data: original P/Q runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517` plus raw-replace backfill runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518`.
+- Methods plotted: `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace`.
+- Result document created: `docs/loss3_core_per_pq_four_figures_20260518.md`.
+- Inference: the requested per-P/Q figure organization is now available; every P/Q pair has its own folder with the same four-figure structure as the revised `p=2,q=2` style.
+
+
+## 2026-05-18 - Core Four Method/PQ Numerical Analysis
+
+- Status: completed numerical analysis from existing outputs; no optimizer experiment was launched and no figures were generated or deleted.
+- Source data: original P/Q runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517` plus raw-replace backfill runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518`.
+- Generated numeric tables: `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_method_pq_analysis_20260518/core4_pq_method_summary.csv`, `core4_pq_winner_summary.csv`, and `core4_pq_metric_ranks.csv`.
+- Result document created: `docs/loss3_core_method_pq_analysis_20260518.md`.
+- Observed evidence: `p=2,q=2` is the cleanest balanced setting; `raw_replace` and `steepest_replace` tie for largest final loss, fastest early growth, and smoothest final delta metrics.
+- Observed evidence: `p=1` settings show a tradeoff: `steepest_add` gives the largest final finite loss, `steepest_replace` grows fastest early, and `raw_replace` is smoothest by first-derivative L2 / total variation.
+- Observed evidence: `p=inf` settings have nonfinite final losses for several additive methods and nonfinite intermediate behavior for replacement methods; `p=inf` is not recommended without fixing numerical stability.
+- Inference: for a practical balance of high final loss, fast growth, and low-frequency/smooth perturbations, use `p=2,q=2` with `steepest_replace` / GPI; `p=2,q=1` is a useful secondary comparison, while `p=1` is mainly useful to illustrate the loss-smoothness tradeoff and `p=inf` is currently unsuitable.
+- Remaining work: if needed, inspect the per-P/Q figure folders visually and add representative figures to a paper/report section.
+
+## 2026-05-18 - Direction-Proposal Conclusions and 2026-05-19 Alpha Plan
+
+- Status: completed documentation/planning update; no optimizer experiment was launched and no figures were generated or deleted.
+- Result document created: `docs/loss3_direction_proposal_conclusions_and_20260519_plan.md`.
+- Source evidence summarized: original P/Q runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_20260517`, raw-replace backfill runs under `/workspace/NeuralOperatorRobustness2/forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518`, per-P/Q four-figure folders under `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_per_pq_four_figures_20260518`, and numerical analysis tables under `/workspace/NeuralOperatorRobustness2/forensics/loss3_core_method_pq_analysis_20260518`.
+- Observed evidence recorded: `p=2,q=2` is the cleanest balanced case; `p=2,q=1` is a useful secondary tradeoff case; `p=1,*` shows final-loss vs smoothness tradeoffs; `p=inf,*` has nonfinite/degenerate behavior and should not be used as a main result without stability fixes.
+- Inference recorded: P/Q selection is itself part of the experiment conclusion; `p=2,q=2` with `steepest_replace` / GPI should be the primary result.
+- Next experiment recorded for 2026-05-19: keep `epsilon = 8`, increase `alpha`, and test whether additive methods close the speed gap once they reach the boundary quickly.
+- Proposed alpha sweep recorded: baseline `0.3`, then `0.6`, `1.0`, `2.0`, `4.0`, optionally `8.0` if additive methods still reach the boundary too slowly.
+- Proposed P/Q settings recorded: primary `p=2,q=2`, secondary `p=2,q=1`, optional `p=1,q=2` or `p=1,q=1`; avoid `p=inf,*` for the first alpha sweep.
+
+## 2026-05-18 - Direction-Proposal Interpretation Update: No Universal Best Optimizer
+
+- Status: completed documentation/interpretation update; no optimizer experiment was launched and no figures were generated or deleted.
+- Result document updated: `docs/loss3_direction_proposal_conclusions_and_20260519_plan.md`.
+- Observed evidence recorded: no single optimizer wins every P/Q setting by final loss; `steepest_add` wins several high-loss cases, replacement/GPI methods often win speed, and `p=inf` settings show nonfinite/degenerate behavior.
+- Observed visual concern recorded: several final deltas look spike-like or highly localized, especially in P/Q settings that encourage sparse or extreme perturbations.
+- Inference recorded: the current result should be framed as a tradeoff among final loss, convergence speed, P/Q geometry, and physical plausibility, not as a universal optimizer ranking.
+- Mechanistic interpretation recorded: `p=1` can encourage sparse/Dirac-like perturbations, `q=inf` can focus optimization on extreme residual points, and `p=inf` gives a very large feasible set that can produce unstable/nonphysical inputs.
+- Next-step recommendation recorded: the 2026-05-19 alpha sweep should evaluate smoothness and spike behavior alongside final loss, and future experiments may need smoothness penalties, spectral low-pass parameterization, or an explicit smoothness budget.
