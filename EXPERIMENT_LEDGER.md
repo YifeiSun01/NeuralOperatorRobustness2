@@ -5796,3 +5796,50 @@ Inference:
 
 Remaining work:
 - None for the consolidated Markdown.
+
+## 2026-05-21 - Loss1/Loss2/Loss3 GitHub and R2 Sync
+
+Status: completed code/documentation push and R2 artifact upload/update.
+
+Source files and inputs:
+- Local branch: `vast-ai`.
+- GitHub remote: `origin` / `https://github.com/YifeiSun01/NeuralOperatorRobustness2.git`.
+- R2 destination prefix:
+  `s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+- Paths uploaded/updated to R2: `docs/`, `tools/`, `EXPERIMENT_LEDGER.md`,
+  `all_requested_figures_20260521/`, `results/`, and `forensics/`.
+
+Output files:
+- Sync record: `docs/loss1_loss2_loss3_r2_github_sync_20260521.md`.
+- GitHub substantive commit pushed: `7c1ebd4` (`Add loss1 loss2 combined optimizer findings`).
+
+Observed evidence:
+- GitHub push updated `vast-ai` from `b529421` to `7c1ebd4`.
+- R2 key docs were present after upload, including
+  `three_loss_burgers_optimizer_findings_summary_20260521.md`,
+  `gpi_fast_optimizer_three_losses_interpretation_20260521.md`,
+  `loss1_loss2_loss3_core4_combined_0to100_20260521.md`, and
+  `all_requested_figures_single_folder_20260521.md`.
+- R2 key tools were present after upload:
+  `plot_loss1_loss2_loss3_combined_core4_0to100.py` and
+  `run_loss1_loss2_core4_baseline_visuals.py`.
+- `EXPERIMENT_LEDGER.md` was present at the R2 root prefix.
+- R2 `all_requested_figures_20260521/`: `62` objects, `11,019,609` bytes.
+- R2 `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/`:
+  `36` objects, `6,221,148` bytes.
+- R2 total `forensics/` prefix: `14,407` objects, `18,104,140,782` bytes.
+- R2 total `results/` prefix: `41,449` objects, `1,992,387,343` bytes.
+- No stale unlabeled `combined_*_by_*_0to100.png` files were observed in the
+  remote combined artifact directory.
+
+Inference:
+- The requested code/record update is on GitHub, while large generated data,
+  plots, and experiment artifacts are available under the R2 selected machine
+  sync prefix.
+- The R2 upload used non-destructive copy semantics, so remote-only historical
+  objects were not deleted.
+
+Remaining work:
+- After this sync record is committed/pushed, upload `docs/` and
+  `EXPERIMENT_LEDGER.md` once more so the sync record itself is also present on
+  R2.
