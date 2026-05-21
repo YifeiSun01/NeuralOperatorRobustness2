@@ -6141,3 +6141,17 @@ Inference:
 Remaining work:
 - Push code and experiment records to GitHub branch `vast-ai`.
 - Keep large dataset/checkpoint artifacts out of git unless explicitly requested.
+
+
+## 2026-05-21 - GitHub Backup Completed
+
+Status: pushed code and experiment records to GitHub branch `vast-ai`.
+
+Observed evidence:
+- Local commit created: `674810f Add 2D NS recurrent FNO training workflow`.
+- `git push origin vast-ai` completed successfully and updated remote branch `vast-ai` from `e9223ea` to `674810f`.
+- Staged/pushed files were limited to source and record files: recurrent FNO2d trainer, launch wrapper, `AGENTS.md`, `EXPERIMENT_LEDGER.md`, and the 2D NS training result Markdown.
+- Large generated `.pt` datasets and partial training output directories were not added to git.
+
+Inference:
+- The code/record backup is present on GitHub at branch `vast-ai` through commit `674810f`; generated datasets are backed up on R2 rather than git.
