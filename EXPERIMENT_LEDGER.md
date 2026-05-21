@@ -5321,3 +5321,27 @@ Inference:
 Remaining work:
 - Population-level Jacobian/SVD and direct affine trust-region comparisons remain optional future work if a stronger mathematical claim is needed.
 
+## 2026-05-21 - Loss3 GitHub and R2 Artifact Sync
+
+Status: completed.
+
+Source files and inputs:
+- Local git branch `vast-ai`.
+- Loss3 docs and tools under `docs/` and `tools/`.
+- Generated Loss3 artifact directories under `forensics/`.
+
+GitHub output:
+- Commit `9dac8f5` with message `Add Loss3 core4 mechanism validation tooling and docs`.
+- Pushed to `origin/vast-ai` at `https://github.com/YifeiSun01/NeuralOperatorRobustness2/tree/vast-ai`.
+
+R2 output:
+- Destination prefix: `s3://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/forensics/`.
+- Uploaded generated Loss3 figures, visual exports, summaries, probe outputs, and large sweep outputs.
+- Verification reported `14,253` objects and `16.710 GiB` under the remote `forensics` prefix.
+
+Observed evidence:
+- R2 remote listing showed key uploaded directories including `loss3_core4_pq_landscape_probe_full_20260521`, `loss3_core4_pq_landscape_probe_trajectory_20260521`, `loss3_current_core4_jacobian_svd_probe_20260521`, `loss3_current_mechanism_validation_summary_20260521`, `loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520`, and `loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520`.
+
+Remaining work:
+- None for this sync request. Local `forensics/` remains untracked by git by design.
+
