@@ -1104,7 +1104,7 @@ def train(args: argparse.Namespace) -> int:
             )
 
         current_metrics = {"train": train_metrics, "test": test_metrics, "row": row}
-        if epoch % args.save_every == 0 or epoch == args.epochs:
+        if args.save_every > 0 and (epoch % args.save_every == 0 or epoch == args.epochs):
             save_checkpoint(
                 latest_checkpoint,
                 fno=fno,
@@ -1129,19 +1129,28 @@ def train(args: argparse.Namespace) -> int:
 
         sync_r2_records_if_requested(args, output_dir, epoch)
 
-    if args.data_residency == "gpu":
-        assert train_tensors is not None
-        final_train = evaluate_tensors(
-            recurrent,
-            train_tensors[0],
-            train_tensors[1],
-            batch_size=args.eval_batch_size,
-            amp=args.amp,
-        )
+    if args.eval_every > 0:
+        if args.data_residency == "gpu":
+            assert train_tensors is not None
+            final_train = evaluate_tensors(
+                recurrent,
+                train_tensors[0],
+                train_tensors[1],
+                batch_size=args.eval_batch_size,
+                amp=args.amp,
+            )
+        else:
+            assert train_loader is not None
+            final_train = evaluate(recurrent, train_loader, device=device, amp=args.amp)
+        final_test = evaluate(recurrent, test_loader, device=device, amp=args.amp)
     else:
-        assert train_loader is not None
-        final_train = evaluate(recurrent, train_loader, device=device, amp=args.amp)
-    final_test = evaluate(recurrent, test_loader, device=device, amp=args.amp)
+        final_train = train_metrics
+        final_test = {
+            "relative_l2_sum": float("nan"),
+            "relative_l2_mean": float("nan"),
+            "mse": float("nan"),
+            "samples": float(len(test_ds)),
+        }
     run_total_seconds = time.perf_counter() - run_start
     final_metrics = {
         "train": final_train,
@@ -1202,8 +1211,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--eval-batch-size", type=int, default=16)
     parser.add_argument("--epochs", type=int, default=500)
-    parser.add_argument("--eval-every", type=int, default=10)
-    parser.add_argument("--save-every", type=int, default=25)
+    parser.add_argument("--eval-every", type=int, default=0, help="Run test evaluation every N epochs; use 0 to disable periodic and final evaluation.")
+    parser.add_argument("--save-every", type=int, default=0, help="Save latest checkpoint every N epochs; use 0 to save only final artifacts.")
     parser.add_argument("--progress-every", type=int, default=10, help="Print and persist progress every N training batches; use 0 to disable batch progress logs.")
     parser.add_argument("--eta-window-epochs", type=int, default=5, help="Use the most recent N epochs to estimate remaining wall time.")
     parser.add_argument("--learning-rate", type=float, default=1e-3)

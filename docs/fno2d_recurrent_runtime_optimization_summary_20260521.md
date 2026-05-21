@@ -115,3 +115,73 @@ PYTHON_BIN=adv_robust/bin/python DATA_RESIDENCY=gpu EPOCHS=500 BATCH_SIZE=16 EVA
 ```
 
 Do not put R2 secrets into repository files.
+
+## Active 500-Epoch Run Timing Update - 2026-05-21 09:08 UTC
+
+Observed evidence:
+- Active `DATA_RESIDENCY=gpu`, `BATCH_SIZE=16`, `EPOCHS=500` output directory: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC`.
+- Epoch 1: `93.884s` (`1m34s`), including test evaluation.
+- Epoch 2: `83.839s` (`1m24s`), train only.
+- Epoch 3: `83.837s` (`1m24s`), train only.
+- The trainer's estimate after epoch 3 was total runtime `12h06m36s`, with about `12h02m12s` remaining.
+
+Inference:
+- The current practical expectation for this active 500-epoch run is about `11h45m-12h10m` before final R2 upload variability.
+- This confirms the optimized run is much closer to the expected A100 timing than the earlier slow `batch_size=4`/CPU-collation run.
+
+## Active Run Status Update - 2026-05-21 09:12 UTC
+
+Observed evidence:
+- Epochs 2-6 were all approximately `83.8-83.9s` non-evaluation epochs.
+- After epoch 6, the trainer estimated total runtime `11h39m03s`, with `11h30m27s` remaining.
+- The run was active in epoch `7/500`, batch `40/72`, with A100 utilization still at `100%`.
+
+Inference:
+- The active long run is stable so far and is trending closer to `11.5-12h` than the earlier conservative `12-14h` estimate.
+
+## Active Run Epochs 7-10 Timing Update - 2026-05-21 09:18 UTC
+
+Observed evidence:
+- Epoch 7: `83.929s`.
+- Epoch 8: `83.859s`.
+- Epoch 9: `83.889s`.
+- Epoch 10: `99.226s`, with scheduled test evaluation; test relative L2 mean was `0.225781`.
+- The trainer estimated total runtime `12h04m39s` after epoch 10.
+
+Inference:
+- Normal epochs are stable around `83.9s`; scheduled evaluation epochs are currently around `99s`.
+- A 500-epoch run with evaluation every 10 epochs is still tracking around `12h` total before final R2 upload variability.
+
+## Active Run Epoch 11 Quick Check - 2026-05-21 09:19 UTC
+
+Observed evidence:
+- Epoch 11 completed in `83.894s`, train relative L2 mean `0.203593`.
+- The run advanced to epoch `12/500`, batch `1/72`.
+
+Inference:
+- The run returned to normal non-evaluation timing after the longer scheduled epoch-10 evaluation.
+
+## Active Run GPU Memory Headroom Check - 2026-05-21 09:20 UTC
+
+Observed evidence:
+- `nvidia-smi` reported `81121 MiB` used, `32 MiB` free, `81920 MiB` total on `NVIDIA A100-SXM4-80GB`, with `100%` GPU utilization.
+- Per-process GPU memory query showed the active Python compute process using `81112 MiB`.
+- `progress_latest.json` showed epoch `12/500` complete, elapsed `17m18s`, estimated total `12h04m38s`, and ETA `11h47m21s`.
+- `train_log.csv` showed epoch 12 completed in `83.978s`.
+- Code inspection found scalar logging via `float(...detach().cpu())`, `@torch.no_grad()` evaluation, and no obvious accumulation of GPU tensors or retained computation graphs in the epoch loop.
+
+Inference:
+- The current memory report is about `79.22 GiB / 80 GiB`; the configuration is very aggressive.
+- The stable high value is consistent with PyTorch's CUDA caching allocator, not currently evidence of a growing memory leak.
+- Because epoch 10 evaluation already completed and later epochs use the same shapes, gradual leak-driven OOM is not evidenced, but the tiny headroom leaves nonzero OOM risk.
+
+## Active Run GPU Memory Trend Check - 2026-05-21 09:24 UTC
+
+Observed evidence:
+- Four consecutive `nvidia-smi` samples at about 10-second intervals reported `81121 MiB` used, `32 MiB` free, `81920 MiB` total, and `100%` GPU utilization.
+- `progress_latest.json` showed epoch `15/500`, batch `50/72`.
+- `train_log.csv` had reached epoch 14; epochs 11-14 remained normal non-evaluation epochs around `83.9-84.0s`.
+
+Inference:
+- No upward GPU-memory trend was observed.
+- The stable number is consistent with PyTorch holding its peak cached allocation, not with an evidenced per-epoch memory leak.

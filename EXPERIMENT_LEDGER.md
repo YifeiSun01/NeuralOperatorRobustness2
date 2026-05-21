@@ -1,3 +1,206 @@
+## 2026-05-21 - NS2D attack reserved memory and recompute explanation doc
+
+- Status: created consolidated Chinese Markdown explaining `reserved` memory, `allocated` memory, non-linear OOM cliff, checkpoint/remat granularity, recomputation coverage, and final batch/memory/time recommendations; no GPU run launched.
+- Result document: `docs/ns2d_recurrent_core4_attack_reserved_memory_recompute_explanation_20260521.md`.
+- Evidence summarized from existing benchmark outputs and source code: `none`, `micro/original`, `chunk=20`, `chunk=100`, and `second` modes; target rollout has `3800` solver micro-steps.
+- Remaining work: commit and push source/record files as requested; generated large outputs remain unstaged unless explicitly requested.
+
+## 2026-05-21 - NS2D attack final remat summary table
+
+- Status: created final summary table for remat/checkpoint modes from existing benchmark outputs; no GPU run launched.
+- Result document: `docs/ns2d_recurrent_core4_attack_remat_final_table_20260521.md`.
+- Clarification recorded: explicit recompute coverage is `0%` for `none` and conceptually `~100%` of the differentiable 3800-step solver rollout for `micro`, `chunk=20`, `chunk=100`, and `second`; the modes differ by checkpoint granularity, not simple percentage slowdown.
+- Observed best throughput remains `chunk=20`, batch 17, with `73.34 GiB` peak reserved and about `19.41s/update`; reliable recommendation remains `micro/original`, batch 12.
+
+## 2026-05-21 - NS2D attack remat granularity clarification
+
+- Status: clarified checkpoint/remat granularity and `chunk=100` status in the scaling document; no GPU run launched.
+- Result document updated: `docs/ns2d_recurrent_core4_attack_remat_scaling_20260521.md`.
+- Observed from source: `fixed_step=0.005` gives `200` solver micro-steps per second; target frame index `19` gives `3800` micro-steps for the target rollout.
+- Clarification recorded: `chunk=20` means 190 checkpointed chunks over the 19-second target rollout, `chunk=100` means 38 chunks, and `second` means 19 chunks; these are remat/checkpoint units, not direct multiplicative slowdowns.
+- Observed evidence: `chunk=100` has one-step memory probes at batch 12 and 15 but no 5-step steady timing probe, so it is not ranked as a final throughput recommendation.
+
+## 2026-05-21 - NS2D attack remat scaling plots and summary
+
+- Status: generated CPU-only plots and tables from existing benchmark outputs; no new GPU attack run launched.
+- Result document: `docs/ns2d_recurrent_core4_attack_remat_scaling_20260521.md`.
+- Numeric sources created: `docs/ns2d_recurrent_core4_attack_remat_scaling_20260521.csv` and `docs/ns2d_recurrent_core4_attack_remat_scaling_fits_20260521.csv`.
+- Figures created: `docs/figures/ns2d_core4_attack_remat_memory_vs_batch_20260521.png`, `docs/figures/ns2d_core4_attack_remat_time_vs_batch_20260521.png`, and `docs/figures/ns2d_core4_attack_remat_throughput_vs_batch_20260521.png`.
+- Observed evidence: checkpointed/remat passing points have nearly linear peak reserved memory, about `4.2-4.3 GiB` per added attack sample; `chunk=20`, batch 17 had the best observed throughput at about `0.876 sample-updates/s`.
+- Inference: memory is close to linear only inside the passing region for a fixed remat mode; OOM boundaries are non-linear because JAX/XLA can change buffer plans and request large contiguous allocations.
+
+## 2026-05-21 - NS2D attack GPU memory terminology clarification
+
+- Status: clarified existing benchmark memory terminology; no GPU run launched.
+- Result document updated: `docs/ns2d_recurrent_core4_attack_remat_comparison_20260521.md`.
+- Observed evidence referenced: `SOLVER_REMAT=none`, batch 2 passed with about `11.19 GB` reserved, while batch 3 failed with a requested allocation around `46.91 GiB`; `chunk=20`, batch 17 passed with peak reserved `78743863296` bytes.
+- Inference recorded: PyTorch `reserved` memory is allocator cache accounting, not a guarantee that the next JAX/XLA allocation can fit; OOM depends on the next contiguous/requested buffer and XLA buffer plan, and memory is not linear across remat modes or batch sizes.
+
+## 2026-05-21 - NS2D core4 attack chunk20 batch17 steady benchmark
+
+- Status: completed the previously missing GPU benchmark for `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `ATTACK_BATCH_SIZE=17`, `STEPS=5`; no long/full sweep launched.
+- Result document updated: `docs/ns2d_recurrent_core4_attack_remat_comparison_20260521.md`.
+- Output source: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_225102_UTC`.
+- GPU path verified before run: `NVIDIA A100-SXM4-80GB`; PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, compute capability `sm_80`; JAX `0.10.0` backend `gpu` with `CudaDevice(id=0)`.
+- Settings: checkpoint `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`, `LOSS_TYPES=loss3`, `METHODS=raw_add`, `MODE_SPEC=all_w`, `EPSILON=32`, `ALPHA=1`, `P_ORDER=2`, `Q_ORDER=2`, target frame index `19`, fixed step `0.005`.
+- Observed from `solver_rollout_trace.csv`: solver update rollout used `t_final=19`, `micro_steps_per_sample=3800`, `solver_remat=chunk`, `solver_remat_chunk_steps=20`, `x_shape=17x256x256`, `output_shape=20x17x256x256`, and `requires_grad=True`; later repeated rollout calls were cache hits.
+- Observed from `per_step_metrics.csv`: first update reached `k=0` at `24.2438s`; warm update intervals were about `19.42s`, `19.41s`, `19.41s`, and `19.42s`; final no-backward evaluation interval was about `4.99s`; total 5-update method time was `106.8827s`, with summary runtime `107.4113s`.
+- Observed from `batch_memory.csv`: max allocated `77158011904` bytes and max reserved `78743863296` bytes (`78.74 GB` decimal / `73.34 GiB` reserved).
+- Inference: `chunk=20`, batch 17 is the best observed sample-throughput setting so far at about `17 / 19.41 = 0.88` sample-updates/s, roughly `9%` better than `micro` batch 12 or `second` batch 15; it is also close to the A100 memory ceiling and should be treated as aggressive.
+- Clarification recorded: prior confusing timings came from mixing first-update/JIT timing, warm update intervals, final no-backward evaluation, and different batch sizes. The final short interval is not a real attack update.
+- Remaining work: before a very long full sweep, decide whether the extra throughput is worth the narrower memory headroom; the conservative setting remains `SOLVER_REMAT=micro`, `ATTACK_BATCH_SIZE=12`.
+
+## 2026-05-21 - NS2D core4 attack remat/checkpoint comparison summary
+
+- Status: consolidated remat/checkpoint mode results; no new GPU run launched in this documentation step.
+- Result document: `docs/ns2d_recurrent_core4_attack_remat_comparison_20260521.md`.
+- Observed modes summarized: `none`, `micro`, `chunk=20`, `chunk=100`, and `second`.
+- Observed conclusion: `none` is fastest per step but only reaches batch 2, so throughput is poor; `micro` reaches batch 14 and has measured warm throughput about `0.80` sample-updates/s at batch 12; `second` reaches batch 15 and has measured warm throughput about `0.80` sample-updates/s at batch 15; later completed evidence shows `chunk=20` reaches batch 17 and has measured warm throughput about `0.88` sample-updates/s at batch 17.
+- Recommendation recorded: reliable setting is `SOLVER_REMAT=micro`, `ATTACK_BATCH_SIZE=12`; highest-throughput observed setting is `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `ATTACK_BATCH_SIZE=17`, but it is close to the memory ceiling; middle-ground monitored setting is `SOLVER_REMAT=second`, `ATTACK_BATCH_SIZE=15`.
+
+## 2026-05-21 - NS2D attack solver/remat clarification before full run
+
+- Status: stopped additional batch/remat probing at user request; checked for running attack processes and found none beyond the status command itself.
+- Observed from process check: no `attack_ns2d_recurrent_core4.py`, `run_ns2d_recurrent_core4_attack.sh`, or long `adv_robust/bin/python` attack process remained active.
+- Clarification recorded: current attack commands use checkpoint `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`, the newly trained modes64/width60 final checkpoint.
+- Clarification recorded: current default target is zero-based `target_frame_index=19`, so the solver uses `19 * 200 = 3800` micro-steps at `fixed_step=0.005`. This matches the training setup with `T_in=10`, `T_out=10` over frames `0..19`; if attacking physical `t=20.0` / frame index `20`, the code should be run with target frame `20` and recurrent output horizon adjusted to `T_out=11`.
+- Clarification recorded: solver state resolution is `256x256` per frame, matching the dataset/model; the attack does not solve a `2560x2560` spatial grid.
+- Clarification recorded: `solver_remat=second` ignores `solver_remat_chunk_steps`; the trace still showing chunk value `20` is a default field and should be treated as not applicable for `second`.
+
+## 2026-05-21 - NS2D core4 attack memory/runtime strategy summary
+
+- Status: consolidated existing GPU probes into a dedicated strategy document; no new GPU run launched in this step.
+- Result document: `docs/ns2d_recurrent_core4_attack_memory_runtime_strategy_20260521.md`.
+- Sources summarized: batch-size probe document, checkpoint-speed benchmark document, solver trace document, and `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Observed from prior probes: `batch=10`, `12`, and `14` pass for `loss3/all_w/raw_add/steps=1`; `batch=15`, `16`, and `20` fail.
+- Observed from prior speed benchmark: `ATTACK_BATCH_SIZE=12`, `STEPS=5` has warm update speed about `15s/step`, estimated `100`-step runtime about `25.2 minutes` for one `loss3/all_w/raw_add` batch of 12 samples.
+- Inference recorded: checkpoint/rematerialization probably reduces memory enough to allow larger batches but slows each update; the optimization target should be sample-updates per second, and the next experiment should compare current checkpointed solver mode against a no-rematerialization mode.
+- Recommendation recorded: use `ATTACK_BATCH_SIZE=12` for full runs, use `14` only aggressively with monitoring, avoid `15+` for the current path.
+
+## 2026-05-21 - NS2D core4 attack speed benchmark with checkpointed solver
+
+- Status: completed short GPU speed benchmark for `loss3/all_w/raw_add` with checkpointed JAX solver path.
+- Result document: `docs/ns2d_recurrent_core4_attack_speed_checkpoint_benchmark_20260521.md`.
+- Output source: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215942_UTC`.
+- Settings: `ATTACK_BATCH_SIZE=12`, `LOSS_TYPES=loss3`, `METHODS=raw_add`, `MODE_SPEC=all_w`, `STEPS=5`, `EPSILON=32`, `ALPHA=1`, `P_ORDER=2`, `Q_ORDER=2`.
+- Observed from `solver_rollout_trace.csv`: update calls used `t_final=19`, `fixed_step=0.005`, `micro_steps_per_sample=3800`, `x_shape=12x256x256`, `output_shape=20x12x256x256`, and `requires_grad=True`.
+- Observed from `per_step_metrics.csv`: first update completed at `20.525715954019688s`; subsequent update increments were about `15.0s`; final no-backward evaluation ended at `84.67072753596585s`.
+- Observed memory: max allocated `54712062976` bytes and max reserved `55857643520` bytes.
+- Inference: a 100-step `loss3/all_w/raw_add` attack for one batch of 12 samples is about `25.2` minutes on this A100 path; checkpoint/rematerialization is slower per step than the user's recalled B200 no-recompute run, but batch size 12 partly offsets throughput loss per sample.
+- Post-benchmark GPU status: `nvidia-smi` returned to `0 MiB / 81920 MiB`.
+
+## 2026-05-21 - NS2D core4 attack batch-size upper-bound probe
+
+- Status: completed GPU batch-size probe for the `loss3/all_w/raw_add` solver-backward path.
+- Result document: `docs/ns2d_recurrent_core4_attack_batch_size_probe_20260521.md`.
+- GPU path verified before probes: `NVIDIA A100-SXM4-80GB`, PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, `sm_80`, JAX `0.10.0` backend `gpu`.
+- Settings for all probes: `LOSS_TYPES=loss3`, `METHODS=raw_add`, `MODE_SPEC=all_w`, `STEPS=1`, `EPSILON=32`, `ALPHA=1`, `P_ORDER=2`, `Q_ORDER=2`, `SAVE_STEPS=0`.
+- Observed passing batch sizes and memory:
+  - `ATTACK_BATCH_SIZE=10`: output `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215124_UTC`, max allocated `45746082816` bytes, max reserved `46787461120` bytes.
+  - `ATTACK_BATCH_SIZE=12`: output `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215421_UTC`, max allocated `54703543296` bytes, max reserved `55857643520` bytes.
+  - `ATTACK_BATCH_SIZE=14`: output `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215525_UTC`, max allocated `63663100928` bytes, max reserved `64929923072` bytes.
+- Observed failing batch sizes:
+  - `ATTACK_BATCH_SIZE=15`: output root `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215632_UTC`, JAX backward/DLPack OOM while trying to allocate about `14.79 GiB`.
+  - `ATTACK_BATCH_SIZE=16`: output root `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215325_UTC`, JAX backward/DLPack OOM while trying to allocate about `15.78 GiB`.
+  - `ATTACK_BATCH_SIZE=20`: output root `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_215231_UTC`, PyTorch recurrent FNO FFT OOM with about `79.04 GiB` in use.
+- Observed solver traces for passing runs: each recorded `t_final=19`, `fixed_step=0.005`, `steps_per_second=200`, `micro_steps_per_sample=3800`, and `requires_grad=True` for the attack update rollout.
+- Inference: the largest observed passing batch size for this exact one-step path is `14`; recommended full-run value is `12` for headroom.
+- Post-probe GPU status: `nvidia-smi` returned to `0 MiB / 81920 MiB`.
+
+## 2026-05-21 - NS2D core4 attack solver-rollout trace proof
+
+- Status: added explicit solver-rollout tracing and ran one minimal GPU proof probe.
+- Source changed: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Result document: `docs/ns2d_recurrent_core4_attack_solver_trace_20260521.md`.
+- Output source: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_214900_UTC`.
+- Settings: `ATTACK_BATCH_SIZE=1`, `LOSS_TYPES=loss3`, `METHODS=raw_add`, `MODE_SPEC=all_w`, `STEPS=1`, `EPSILON=32`, `ALPHA=1`, `p=q=2`.
+- Observed from `solver_rollout_trace.csv`: three solver rollout calls were recorded. The attack update call used `t_final=19`, `fixed_step=0.005`, `steps_per_second=200`, `micro_steps_per_sample=3800`, `x_shape=1x256x256`, `output_shape=20x1x256x256`, and `requires_grad=True`.
+- Observed from `summary.json`: `solver_rollout_calls=3`, method runtime `15.016598572023213` seconds.
+- Observed from `batch_memory.csv`: max allocated `5442786304` bytes and max reserved `5890899968` bytes.
+- Inference: the current `loss3/all_w` attack path really does invoke the differentiable NS solver to the twentieth frame and backpropagates through that solver path; low memory is consistent with JAX checkpoint/rematerialization in the solver scan.
+
+## 2026-05-21 - NS2D core4 attack epsilon scale inspection
+
+- Status: CPU-only source/data scale inspection; no GPU attack launched.
+- Source inspected: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Dataset inspected on CPU: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`.
+- Observed from code: `epsilon` is a raw batchwise L2/Lp budget over the full flattened `256x256` initial condition, not per-pixel and not normalized by grid size.
+- Observed from CPU stats: test initial-condition mean L2 norm `66.26712036132812`, mean per-pixel RMS `0.25885701179504395`, mean Linf `0.7032134532928467`.
+- Inference: `epsilon=32768` is about `494.48x` the mean initial-condition L2 norm; `epsilon=3276825` is about `49448.73x`. Raw-L2 first sweeps should be closer to `8, 16, 32, 64` unless an external scale conversion is explicitly added.
+- Result document: `docs/ns2d_recurrent_core4_attack_epsilon_scale_20260521.md`.
+
+## 2026-05-21 - Clarified NS2D core4 attack batch-size-6 evidence
+
+- Status: read-only clarification from existing probe output and source code; no new attack run launched.
+- Source code inspected: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, especially `_rollout_for_modes`, `model_prediction`, and `run_one`.
+- Output inspected: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_214034_UTC/summary.json` and `batch_memory.csv`.
+- Observed from code: for `loss3` and `mode_spec=wwwwwwwwww`, the solver rollout requests recurrent input frames `1..9` and target frame `19`; `run_one` calls `objective.backward()` for `k < steps`.
+- Observed from probe output: `dataset_indices` were `0..5`, `attack_batch_size=6`, `loss_type=loss3`, `method=raw_add`, `steps=1`, `epsilon=3276825`, `alpha=5`, `p=q=2`.
+- Observed memory from `batch_memory.csv`: max allocated `27829064704` bytes and max reserved `29462888448` bytes.
+- Inference: batch size 6 is evidenced for this one-step all-w loss3/raw_add probe on the A100 80GB, not a blanket guarantee for every longer/full attack configuration. Full-combo attack code runs loss/method combinations sequentially, not all simultaneously.
+
+## 2026-05-21 - 2D NS recurrent core4 attack memory/cache optimization
+
+- Status: source optimization completed; no full attack benchmark launched.
+- Source files changed: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`.
+- Result document: `docs/ns2d_recurrent_core4_attack_memory_optimization_20260521.md`.
+- Observed from source edits: JAX preallocation defaults to disabled, JAX memory fraction defaults to `0.40`, model/solver/dictionary objects are reused per run, per-step logging no longer copies full `delta/grad/direction` tensors to CPU, and dictionary lookup no longer materializes the large `[B, chunk, H*W]` diff tensor.
+- Observed validation: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py` passed; `bash -n 2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh` passed.
+- Inference: the default path should reduce cache pressure while preserving speed better than forcing `XLA_PYTHON_CLIENT_ALLOCATOR=platform`; lowest-displayed-memory mode can be tested later with `CLEAR_JAX_CACHES_AFTER_BATCH=1` or platform allocator if needed.
+- Observed post-edit GPU probe: `ATTACK_BATCH_SIZE=6`, `LOSS_TYPES=loss3`, `METHODS=raw_add`, `STEPS=1` completed successfully at `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_214034_UTC`.
+- Observed from that probe: peak allocated `27829064704` bytes, peak reserved `29462888448` bytes, final in-process reserved after cache release `979369984` bytes, and post-run `nvidia-smi` returned to `0 MiB / 81920 MiB`.
+- Not done: no full attack runtime/memory benchmark was launched in this step.
+
+## 2026-05-21 - 2D NS recurrent core4 attack p2 epsilon/alpha probe
+
+- Status: completed probe runs; no full long attack launched.
+- Probe checkpoint: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`.
+- Settings: `p=2`, `q=2`, `epsilon=3276825`, `alpha=5`, `mode_spec=all_w`.
+- Observed: batch sizes `3`, `4`, and `6` passed for `loss3/raw_add/steps=1`.
+- Observed: full-combination sanity probe passed with batch size `6`, `loss1 loss2 loss3`, and `raw_add raw_replace steepest_add steepest_replace` for `steps=1`.
+- Output source: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_212630_UTC`.
+- Inference: `ATTACK_BATCH_SIZE=6` is acceptable for launching the first p2/q2 run, with monitoring recommended for longer step counts.
+- Result document: `docs/ns2d_recurrent_core4_attack_probe_20260521.md`.
+
+## 2026-05-21 - Corrected FNO2d recurrent visualization format to GIF only
+
+- Status: completed; deleted the prior PNG-based visualization outputs and regenerated final-checkpoint test visualizations as GIFs.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/fno2d_recurrent_test_predictions_20260521_final`.
+- Observed files: five four-panel GIFs named `sample_004_initial_solver_model_diff.gif`, `sample_025_initial_solver_model_diff.gif`, `sample_028_initial_solver_model_diff.gif`, `sample_030_initial_solver_model_diff.gif`, and `sample_033_initial_solver_model_diff.gif`.
+- Observed by file search: no PNG files remain under the regenerated `fno2d_recurrent_test_predictions_20260521*` visualization outputs.
+- Result document updated: `docs/fno2d_recurrent_test_prediction_visualization_20260521.md`.
+
+## 2026-05-21 - FNO2d recurrent final checkpoint test visualizations
+
+- Status: completed; generated visualizations for five test samples.
+- Source files added: `2D_NS_FNO2d_recurrent/visualizations/visualize_recurrent_test_predictions.py`, `2D_NS_FNO2d_recurrent/visualizations/run_visualize_recurrent_test_predictions.sh`.
+- Checkpoint visualized for final results: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/fno2d_recurrent_test_predictions_20260521_final`.
+- Samples: `4`, `25`, `28`, `30`, `33`.
+- Observed metrics from visualization run: relative L2 values `0.0804970786`, `0.1197442338`, `0.0816519186`, `0.0518293418`, `0.1158824265`.
+- Result document: `docs/fno2d_recurrent_test_prediction_visualization_20260521.md`.
+- GPU status after visualization: observed `0 MiB` used, `81153 MiB` free.
+
+## 2026-05-21 - FNO2d recurrent late-run monitoring near epoch 498
+
+- Status: read-only monitoring of active training process; no model/data/GPU experiment was started.
+- Observed from `progress.jsonl`: active run at epoch `498/500`, batch `10/72`, completed train batches `35794/36000` at `2026-05-21T20:53:07+00:00`.
+- Observed ETA from latest progress record: `4m05s` remaining train-batch ETA; inference is about `4-5` minutes to local training completion before final evaluation/save/upload overhead.
+- Observed latest completed epoch: epoch `497`, train relative L2 mean `0.05292977390081986`, train MSE `0.005659206264206897`.
+- Observed latest test evaluation: epoch `490`, test relative L2 mean `0.08654208987951278`, test MSE `0.0178410891443491`, score `0.9134579101204872`; next test expected at epoch `500`.
+- Result record updated: `docs/fno2d_recurrent_training_monitor_20260521.md`.
+
+## 2026-05-21 - 2D NS recurrent FNO core4 attack code scaffold
+
+- Status: source code added; not executed.
+- Source files added: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`.
+- Result/design record: `docs/ns2d_recurrent_core4_attack_design_20260521.md`.
+- Observed from source reading: the four optimizer rules are implemented in `tools/run_loss3_direction_proposal_ablation.py` as `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace`; the 2D NS recurrent attack plumbing is represented by `2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py`.
+- Inference from source reading: the optimizer update rules are dimension-agnostic once tensors are flattened batchwise; the 2D-specific work is solver rollout, recurrent model input construction, dictionary lookup, and `a/d/w` gradient handling.
+- Key settings encoded as defaults: `p=2`, `q=2`, `num_samples=5`, `attack_batch_size=1`, target frame index `19`, and mode preset `all_w`.
+- Implementation note: `loss1` and `loss2` avoid computing the perturbed target frame and only build the recurrent FNO input; `loss3` computes `G(x+delta)` at the target frame.
+- Not done: no attack run, no dictionary generation, no model/dataset loading, no GPU/CPU experiment execution, and no syntax validation command, by user request to avoid disturbing the active training run.
+
 # Experiment Ledger
 
 ## 2026-05-20 Loss3 P-Not-Q Visualization Directory Location Check
@@ -6598,3 +6801,289 @@ Inference:
 
 Remaining work:
 - Commit and push the source and Markdown updates to the `vast-ai` branch.
+
+
+### 2026-05-21 09:08 UTC - Active 500-Epoch FNO2d Run First-Three-Epoch Monitor
+
+Status: monitored the user's active optimized recurrent FNO2d run through the first three completed epochs; training remained active after observation.
+
+Observed evidence:
+- Process observed: PID `58013`, `adv_robust/bin/python -u 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC`.
+- Source files involved: `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`, `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`, and model definitions under `2D_NS_FNO2d_recurrent/models/FNO2d.py`.
+- Key settings observed from the running process and output files: `EPOCHS=500`, `BATCH_SIZE=16`, `EVAL_BATCH_SIZE=16`, `EVAL_EVERY=10`, `DATA_RESIDENCY=gpu`, `AMP=0`, `R2_UPLOAD=1`, `R2_SYNC_EVERY_EPOCHS=0`.
+- GPU path observed from `gpu_verification.txt`: PyTorch `2.8.0+cu126`, CUDA `12.6`, GPU `NVIDIA A100-SXM4-80GB`, compute capability `sm_80`, and a passing CUDA sanity matmul.
+- GPU utilization observed with `nvidia-smi`: about `81121 MiB / 81920 MiB` in use and `100%` GPU utilization during training.
+- Metrics observed from `train_log.csv`:
+  - Epoch 1: `93.884s`, train relative L2 mean `0.610978`, test relative L2 mean `0.430839`, test MSE `0.365911`.
+  - Epoch 2: `83.839s`, train relative L2 mean `0.347183`; no test evaluation on this epoch.
+  - Epoch 3: `83.837s`, train relative L2 mean `0.279608`; no test evaluation on this epoch.
+- Progress observed from `progress_latest.json`: the run was in epoch `4/500`, batch `30/72` after the first three epochs.
+
+Inference:
+- The active run is using the intended optimized GPU-resident training path, not the earlier slow `batch_size=4` CPU-collation path.
+- The first three epoch timings imply about `87.19s/epoch` averaged so far; the trainer estimated total runtime `12h06m36s` after epoch 3.
+- Using epochs 2-3 as the non-evaluation baseline and epoch 1 as the evaluation-overhead sample, the practical estimate is about `11h45m-12h10m` before final R2 upload variability.
+
+Remaining work:
+- Continue monitoring near epoch 10 to observe the next scheduled test evaluation.
+- Watch for CUDA OOM because `BATCH_SIZE=16` intentionally uses most of the A100 80GB memory.
+- Verify final checkpoint files and R2 upload after training completes.
+
+### 2026-05-21 09:12 UTC - Active 500-Epoch FNO2d Run Six-Epoch Status Update
+
+Status: inspected the active optimized recurrent FNO2d run again after epoch 6; training remained active.
+
+Observed evidence:
+- `train_log.csv` reached epoch 6 in output directory `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC`.
+- Epoch 4: `83.826s`, train relative L2 mean `0.256466`.
+- Epoch 5: `83.882s`, train relative L2 mean `0.242491`.
+- Epoch 6: `83.918s`, train relative L2 mean `0.232962`.
+- The trainer estimate after epoch 6 was total runtime `11h39m03s`, with `11h30m27s` remaining.
+- `progress_latest.json` showed epoch `7/500`, batch `40/72`.
+- `nvidia-smi` still showed about `81121 MiB / 81920 MiB` in use and `100%` GPU utilization.
+
+Inference:
+- Non-evaluation epoch timing has stabilized around `83.8-83.9s`.
+- Current runtime expectation is about `11h40m-12h` before final R2 upload variability.
+
+Remaining work:
+- Check epoch 10 to measure scheduled evaluation overhead during the steady-state run.
+
+### 2026-05-21 09:18 UTC - Active 500-Epoch FNO2d Run Epochs 7-10 Timing Update
+
+Status: inspected the active optimized recurrent FNO2d run after epoch 10; training remained active.
+
+Observed evidence:
+- `train_log.csv` reached epoch 10 in output directory `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC`.
+- Epoch 7: `83.929s`, train relative L2 mean `0.225809`; no test evaluation on this epoch.
+- Epoch 8: `83.859s`, train relative L2 mean `0.218148`; no test evaluation on this epoch.
+- Epoch 9: `83.889s`, train relative L2 mean `0.211692`; no test evaluation on this epoch.
+- Epoch 10: `99.226s`, train relative L2 mean `0.206796`, test relative L2 mean `0.225781`, test MSE `0.102908`.
+- After epoch 10, the trainer reported estimated total runtime `12h04m39s` and ETA `11h50m12s`.
+- `progress_latest.json` showed epoch `11/500`, batch `30/72`.
+- `nvidia-smi` still showed about `81121 MiB / 81920 MiB` allocated and `100%` GPU utilization.
+
+Inference:
+- Non-evaluation epochs are stable around `83.9s`.
+- The epoch-10 scheduled test evaluation added roughly `15s` over a normal epoch.
+- The run is still tracking about `12h` total before final R2 upload variability.
+
+Remaining work:
+- Continue periodic checks at later evaluation epochs and verify final R2 upload after training completes.
+
+### 2026-05-21 09:19 UTC - Active 500-Epoch FNO2d Run Epoch 11 Quick Check
+
+Status: inspected the active run after epoch 11; training remained active.
+
+Observed evidence:
+- Epoch 11 completed in `83.894s`, train relative L2 mean `0.203593`.
+- `progress_latest.json` showed epoch `12/500`, batch `1/72`.
+
+Inference:
+- Training returned to the normal non-evaluation epoch timing after the longer scheduled epoch-10 evaluation.
+
+Remaining work:
+- Continue periodic checks at later evaluation epochs and verify final R2 upload after training completes.
+
+### 2026-05-21 09:20 UTC - Active Run GPU Memory Headroom Check
+
+Status: inspected current A100 memory usage and reviewed the recurrent FNO2d training loop for obvious GPU tensor retention patterns; training remained active.
+
+Observed evidence:
+- `nvidia-smi` reported `81121 MiB` used, `32 MiB` free, `81920 MiB` total on `NVIDIA A100-SXM4-80GB`, with `100%` GPU utilization.
+- Per-process GPU memory query showed the active Python compute process using `81112 MiB`.
+- `progress_latest.json` showed epoch `12/500` complete, elapsed `17m18s`, estimated total `12h04m38s`, and ETA `11h47m21s`.
+- `train_log.csv` showed epoch 12 completed in `83.978s` with train relative L2 mean `0.196368`.
+- Code inspection of `train_fno2d_recurrent_cli.py` found scalar logging via `float(...detach().cpu())`, `@torch.no_grad()` evaluation, and no obvious list/dict accumulation of GPU tensors or retained computation graphs in the epoch loop.
+
+Inference:
+- Reported memory is approximately `79.22 GiB / 80 GiB`; the run is intentionally near the memory ceiling.
+- The stable high `nvidia-smi` number is consistent with PyTorch's CUDA caching allocator reserving memory after the first peak, not necessarily with live tensors growing every epoch.
+- Because batch shapes and evaluation shapes are fixed and epoch 10 evaluation already completed, a gradual leak-driven OOM is not currently evidenced. The remaining risk is low but not zero because the free headroom is extremely small and allocator fragmentation or an unexpected larger temporary allocation could still OOM.
+
+Remaining work:
+- Continue monitoring memory around later evaluation/checkpoint epochs, especially epoch 20 and epoch 25.
+- If OOM occurs, restart with `BATCH_SIZE=14` or `BATCH_SIZE=10` for more headroom.
+
+### 2026-05-21 09:24 UTC - Active Run GPU Memory Trend Check
+
+Status: sampled A100 memory repeatedly while the active recurrent FNO2d run continued; training remained active.
+
+Observed evidence:
+- Four consecutive `nvidia-smi` samples at about 10-second intervals reported `81121 MiB` used, `32 MiB` free, `81920 MiB` total, and `100%` GPU utilization.
+- `progress_latest.json` showed epoch `15/500`, batch `50/72`.
+- `train_log.csv` had reached epoch 14; epochs 11-14 remained normal non-evaluation epochs around `83.9-84.0s`.
+
+Inference:
+- No upward GPU-memory trend was observed across the repeated samples.
+- The current behavior still looks like a stable high-water/cached allocation near the memory ceiling, not a visible per-epoch leak.
+- OOM risk remains nonzero only because the free headroom is tiny, not because a rising trend has been evidenced.
+
+Remaining work:
+- Recheck memory after epoch 20 evaluation and epoch 25 checkpoint save.
+
+### 2026-05-21 09:28 UTC - Exponax T20 Train/Test GIF Visualization
+
+Status: generated CPU-only coolwarm heatmap GIFs for five random train samples and five random test samples; active GPU training remained running.
+
+Observed evidence:
+- Plotting command ran with `CUDA_VISIBLE_DEVICES=''` and printed `torch_cuda_available=False`.
+- Source train dataset: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`.
+- Source test dataset: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`.
+- Observed train tensor shape: `(1150, 256, 256, 21)`.
+- Observed test tensor shape: `(50, 256, 256, 21)`.
+- Random seed: `20260521`.
+- Selected train sample indices: `131`, `831`, `907`, `927`, `1084`.
+- Selected test sample indices: `4`, `30`, `32`, `35`, `45`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/exponax_t20_random_samples_coolwarm_20260521_0926`.
+- PIL validation confirmed all 10 GIFs are `256x256` with `21` frames.
+- Active training progress after generation: epoch `18/500`, batch `50/72`, with A100 GPU utilization still at `100%`.
+
+Inference:
+- The selected train/test samples are in the expected `(256, 256, 21)` frame layout and were rendered without using GPU.
+- The CPU visualization did not interrupt the active GPU training process.
+
+Remaining work:
+- User should visually inspect the GIFs and decide whether to generate more samples or a shared-global-scale version.
+
+### 2026-05-21 09:33 UTC - Disable Periodic Evaluation And Checkpoint Defaults
+
+Status: updated recurrent FNO2d training defaults to avoid periodic test evaluation and periodic checkpoint writes for future runs; the already-running PID 58013 still has its original command-line arguments.
+
+Observed evidence:
+- Active PID 58013 command line still includes `--eval-every 10` and `--save-every 25`; launched processes cannot pick up changed defaults without restart.
+- Current run reached epoch 21 after completing the epoch-20 scheduled evaluation.
+- `train_log.csv` showed epoch 20 took `99.673s`, while nearby non-evaluation epochs 16-19 took about `83.97-84.01s`.
+- Current checkpoint directory contains `best.pt` with size about `2.7G`; no `latest.pt` had been written yet at inspection time.
+- Updated `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` defaults from `EVAL_EVERY=10` to `0`, and from `SAVE_EVERY=25` to `0`.
+- Updated `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` parser defaults to `--eval-every 0` and `--save-every 0`.
+- Updated trainer logic so `--save-every 0` disables in-loop `latest.pt` checkpoint saves.
+- Updated trainer logic so `--eval-every 0` skips final train/test evaluation and uses last epoch training metrics plus NaN test metrics in final results.
+- Validation passed: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` and `bash -n 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`.
+
+Inference:
+- Future wrapper runs will train through 500 epochs without scheduled test evaluation and without periodic latest checkpoints, then save final artifacts at the end.
+- This removes the roughly `15-16s` scheduled evaluation overhead every 10 epochs and avoids repeated multi-GB checkpoint writes every 25 epochs.
+- To apply this to the active run, the current process must be stopped and restarted with the new defaults or explicit `EVAL_EVERY=0 SAVE_EVERY=0`.
+
+Remaining work:
+- Decide whether to stop and restart the active run, accepting that the already completed epochs in the old run will not continue into the restarted run unless resume support is added.
+
+### 2026-05-21 09:41 UTC - Epoch-25 Checkpoint Save Overhead Measurement
+
+Status: measured the active old-argument run after its first `save_every=25` latest checkpoint write; training remained active.
+
+Observed evidence:
+- `checkpoints/latest.pt` appeared at epoch 25 with size about `2.7G`; `checkpoints/best.pt` also exists at about `2.7G`.
+- Checkpoint directory total size became about `5.3G`.
+- `train_log.csv` row for epoch 25 reported `seconds=84.0115s` and `elapsed_total_seconds=2147.7380s`; note this row is written before the in-loop checkpoint save.
+- `train_log.csv` row for epoch 26 reported `seconds=84.0250s` and `elapsed_total_seconds=2234.5126s`.
+- Inferred gap not explained by epoch 26 training time: `2234.5126 - 2147.7380 - 84.0250 = 2.75s`.
+
+Inference:
+- The first observed `latest.pt` checkpoint write cost roughly `2.7-3.0s` on this machine, not minutes.
+- If repeated every 25 epochs through 500 epochs, the latest-checkpoint write overhead alone would be roughly `20 * 3s = 60s`, while the disk writes would still be unnecessary churn and temporary storage pressure.
+- This measurement excludes scheduled test evaluation overhead, which was about `15-16s` on epoch 20.
+
+Remaining work:
+- Future runs should keep `SAVE_EVERY=0` and `EVAL_EVERY=0` as already changed, unless intermediate recovery checkpoints or test metrics are explicitly needed.
+
+### 2026-05-21 09:43 UTC - Active 500-Epoch Runtime Projection After 28 Epochs
+
+Status: projected total runtime for the active old-argument recurrent FNO2d run using completed epochs 1-28; training remained active.
+
+Observed evidence:
+- Active process elapsed from `ps`: about `41m35s`.
+- `train_log.csv` completed epoch 28 with `elapsed_total_seconds=2402.501s` (`40m03s`) and epoch 28 time `83.975s`.
+- Current `progress_latest.json` showed epoch `28/500`, batch `70/72`, with total train-batch ETA about `11h15m04s`.
+- Stable non-evaluation epoch mean from recent completed epochs was about `83.982s`.
+- Observed evaluation overhead from completed evaluation epochs was about `15.468s` over a normal epoch.
+- Observed epoch-25 latest-checkpoint overhead was about `2.75s`.
+
+Inference:
+- Remaining training time after epoch 28 is about `11h13m54s` without assuming future best-checkpoint overwrites, or about `11h16m06s` if every future evaluation also overwrites `best.pt`.
+- Projected total training time is about `11h54m-11h56m` from training-loop start.
+- Using current time `2026-05-21 09:43:11 UTC`, projected training completion is about `2026-05-21 20:57-20:59 UTC`, before final R2 upload variability.
+
+Remaining work:
+- Continue monitoring around later evaluation/checkpoint epochs and verify final R2 upload completion separately.
+
+### 2026-05-21 11:05 UTC - Active Run Health Check At Epoch 86
+
+Status: inspected the active recurrent FNO2d 500-epoch run; training remained active with no observed runtime failure.
+
+Observed evidence:
+- Current UTC time: `2026-05-21T11:05:20Z`.
+- Active process PID `58013` had `ps` elapsed time `02:03:43`, state `Rl+`.
+- `progress_latest.json` showed epoch `86/500`, batch `40/72`, completed train batches `6160/36000`, run elapsed `7329.845s`, and train-batch ETA `9h51m47s`.
+- Latest completed epoch in `train_log.csv` was epoch 85 with elapsed total `2h01m23s`; recent non-evaluation epochs remained around `83.9-84.0s`.
+- Epoch 80 scheduled evaluation completed normally with test relative L2 mean `0.146012` and test MSE `0.0452241`.
+- `nvidia-smi` reported `NVIDIA A100-SXM4-80GB`, `81121 MiB` used, `32 MiB` free, `81920 MiB` total, `100%` GPU utilization, `72%` memory-controller utilization, temperature `52 C`, and power draw about `218.74 W`.
+
+Inference:
+- No evidence of training failure, OOM, stalled GPU, or runaway memory growth was observed at this check.
+- The active run remains on roughly the same completion track, with an approximate finish around `2026-05-21 20:57 UTC` before final R2 upload variability.
+
+Remaining work:
+- Continue periodic health checks and verify final checkpoint/R2 upload after completion.
+
+### 2026-05-21 19:43 UTC - Active Run Progress Check At Epoch 449
+
+Status: inspected the active recurrent FNO2d 500-epoch run near completion; training remained active.
+
+Observed evidence:
+- Current UTC time: `2026-05-21T19:43:22Z`.
+- Active process PID `58013` had `ps` elapsed time `10:41:51`.
+- `progress_latest.json` showed epoch `449/500`, batch `30/72`, completed train batches `32286/36000`, run elapsed `38412.897s`, and train-batch ETA `1h13m39s`.
+- Current total train-batch completion was `89.6833%`.
+- Latest completed epoch in `train_log.csv` was epoch 448 with elapsed total `10h39m38s`; recent non-evaluation epochs remained around `83.94-83.96s`.
+- `nvidia-smi` reported `81121 MiB` used, `32 MiB` free, `81920 MiB` total, `100%` GPU utilization, temperature `57 C`, and power draw about `208.99 W`.
+
+Inference:
+- No evidence of training failure, OOM, stalled GPU, or runaway memory growth was observed.
+- The active run is roughly on track to finish training around `2026-05-21 20:57 UTC`, before final checkpoint/R2 upload variability.
+
+Remaining work:
+- Monitor final epochs and verify final checkpoint plus R2 upload completion.
+
+### 2026-05-21 20:04 UTC - Active Run Latest Train/Test Loss Check
+
+Status: inspected the active recurrent FNO2d run metrics; training remained active.
+
+Observed evidence:
+- Current UTC time: `2026-05-21T20:04:07Z`.
+- Active process PID `58013` had `ps` elapsed time `11:02:33`.
+- `progress_latest.json` showed epoch `463/500`, batch `50/72`, completed train batches `33314/36000`, run elapsed `39650.645s`, and train-batch ETA `53m17s`.
+- Latest completed epoch in `train_log.csv` was epoch 462.
+- Epoch 462 train relative L2 mean was `0.05333483872206315`, train MSE was `0.0057479435699465484`, and train score `1 - relative_l2_mean` was `0.9466651612779369`.
+- Latest completed test evaluation was epoch 460.
+- Epoch 460 test relative L2 mean was `0.08675776571035385`, test MSE was `0.0179227876663208`, and test score `1 - relative_l2_mean` was `0.9132422342896461`.
+- Current in-progress batch loss from `progress_latest.json` was `0.9232521057128906` at epoch 463 batch 50.
+
+Inference:
+- Test metrics are only updated on scheduled evaluation epochs; epoch 461 and 462 test fields are NaN because they were not evaluation epochs, not because the run failed.
+- No evidence of training failure was observed in this metric check.
+
+Remaining work:
+- Continue monitoring final epochs and verify final checkpoint plus R2 upload completion.
+
+### 2026-05-21 20:06 UTC - Active Run Loss Trend Check
+
+Status: inspected `train_log.csv` for train/test loss trend in the active recurrent FNO2d run; only log files were read.
+
+Observed evidence:
+- Latest completed epoch was epoch 464; active progress was epoch `465/500`, batch `20/72`.
+- Train relative L2 mean decreased from `0.610978` at epoch 1 to `0.053272` at epoch 464, a drop of about `91.28%`.
+- Train MSE decreased from `0.791622` at epoch 1 to `0.005734` at epoch 464.
+- Test relative L2 mean decreased from `0.430839` at epoch 1 to `0.086758` at epoch 460, a drop of about `79.86%`.
+- Test MSE decreased from `0.365911` at epoch 1 to `0.017923` at epoch 460.
+- Selected train relative L2 means: epoch 10 `0.206796`, epoch 100 `0.111969`, epoch 200 `0.094641`, epoch 300 `0.070758`, epoch 400 `0.056783`, epoch 450 `0.053651`, epoch 464 `0.053272`.
+- Recent test relative L2 means: epoch 410 `0.087922`, epoch 420 `0.087647`, epoch 430 `0.087481`, epoch 440 `0.087220`, epoch 450 `0.086976`, epoch 460 `0.086758`.
+
+Inference:
+- The loss curves show a clear downward trend.
+- The largest improvement happened early; by epochs 400-460 the test curve is improving slowly and appears close to a plateau, but the latest evaluated test loss is still the best observed test relative L2 so far.
+
+Remaining work:
+- Recheck final test evaluation and final R2 upload after training completes.

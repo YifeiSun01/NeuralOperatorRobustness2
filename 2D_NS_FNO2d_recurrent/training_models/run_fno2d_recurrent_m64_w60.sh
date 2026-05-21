@@ -49,10 +49,10 @@ exec "$PYTHON_BIN" -u 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurren
   --ntest "${NTEST:-50}" \
   --learning-rate "${LR:-0.001}" \
   --weight-decay "${WEIGHT_DECAY:-0.0001}" \
-  --eval-every "${EVAL_EVERY:-10}" \
+  --eval-every "${EVAL_EVERY:-0}" \
   --progress-every "${PROGRESS_EVERY:-10}" \
   --data-residency "${DATA_RESIDENCY:-gpu}" \
-  --save-every "${SAVE_EVERY:-25}" \
+  --save-every "${SAVE_EVERY:-0}" \
   "${R2_ARGS[@]}" \
   "${EXTRA_ARGS[@]}" \
   "$@"
