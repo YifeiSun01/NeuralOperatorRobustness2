@@ -6155,3 +6155,446 @@ Observed evidence:
 
 Inference:
 - The code/record backup is present on GitHub at branch `vast-ai` through commit `674810f`; generated datasets are backed up on R2 rather than git.
+
+
+## 2026-05-21 - 2D NS Recurrent FNO2d Runtime Logging And R2 Auto-Upload Workflow
+
+Status: modified training workflow code after syncing local tree to GitHub `vast-ai` commit `d107e33c2740fef80609ac1385f20ddbc52fafa8`; no new training run was executed in this turn.
+
+Observed evidence:
+- `git fetch --prune origin vast-ai`, `git reset --hard FETCH_HEAD`, and `git clean -fd` completed before edits; `HEAD` was `d107e33c2740fef80609ac1385f20ddbc52fafa8`.
+- Source files modified: `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` and `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`.
+- Result/workflow note created: `docs/fno2d_recurrent_training_runtime_r2_upload_20260521.md`.
+- Validation commands passed: `python3 -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` and `bash -n 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`.
+
+Key settings implemented:
+- Wrapper defaults to the real-initial 2D NS train/test dataset paths under `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/`, with `NTRAIN=1150`, `NTEST=50`, `BATCH_SIZE=4`, `EVAL_BATCH_SIZE=4`, and `EPOCHS=500` unless overridden.
+- Trainer now prints and records per-epoch wall time, mean epoch time, recent mean epoch time, ETA, estimated total runtime, train/test relative L2, train/test MSE, and `1-relative_l2` score.
+- `--r2-upload` now performs R2 preflight before GPU training, syncs small metric/log files every `--r2-sync-every-epochs`, and uploads the complete output directory at training completion.
+- R2 secrets are read from environment variables only and are not stored in repository files.
+
+Observed metrics:
+- No model-training metrics were produced because training was not run in this turn.
+
+Inference:
+- The next full training run will print epoch duration and ETA after the first epoch and will keep updating local and R2-synced metric records.
+- Final model artifacts should land under the configured R2 prefix after training completes, provided R2 preflight and final `rclone copy` both succeed.
+
+Remaining work:
+- Launch the full GPU training command with `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` set in the environment.
+- Monitor `train_log.csv`, `progress.jsonl`, `progress_latest.json`, and console output for runtime estimates and train/test metrics.
+- Verify final R2 model directory after completion.
+
+
+## 2026-05-21 - adv_robust GPU Environment Rebuilt
+
+Status: rebuilt local `adv_robust` virtual environment with the repository GPU setup script; no model training was run.
+
+Observed evidence:
+- `adv_robust/bin/python` was initially unusable: `tools/setup_adv_robust_gpu_env.py --verify-only` failed with `Too many levels of symbolic links` for `adv_robust/bin/python3.12`.
+- Preserved broken environment as `adv_robust_broken_20260521_venv_symlink`.
+- Rebuild command used: `tools/setup_adv_robust_gpu_env.py`.
+- Active GPU: `NVIDIA A100-SXM4-80GB`, compute capability `8.0`, expected PyTorch arch `sm_80`.
+- Verification after rebuild: PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, `torch.cuda.is_available() = True`, torch device `NVIDIA A100-SXM4-80GB`, torch arch list includes `sm_80`, PyTorch CUDA matmul succeeded.
+- JAX verification after rebuild: backend `gpu`, device `[CudaDevice(id=0)]`, JAX GPU matmul succeeded.
+- `pip check` reported no broken requirements.
+- Result record: `docs/adv_robust_environment_rebuild_20260521.md`.
+
+Inference:
+- `adv_robust` is now installed and verified for GPU execution on the current A100 machine.
+- The previous `adv_robust` directory was a broken partial environment and should not be used.
+
+Remaining work:
+- Use `adv_robust/bin/python` for training commands.
+- Continue using `tools/setup_adv_robust_gpu_env.py` for future environment rebuilds instead of raw `pip install -r requirements.txt`.
+
+
+### 2026-05-21 - R2 Credential Whitespace Hardening Note
+
+Status: small follow-up edit to the 2D NS recurrent FNO2d trainer; no training run executed.
+
+Observed evidence:
+- Updated `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` so R2 credential environment variables are stripped of accidental leading/trailing whitespace before temporary rclone config creation.
+- Validation command passed: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`.
+
+Inference:
+- Commands copied with an accidental trailing space inside the quoted R2 key are less likely to fail R2 preflight, though clean environment exports without spaces remain preferred.
+
+
+## 2026-05-21 - Active 2D NS Recurrent FNO2d Training First-Three-Epoch Monitor
+
+Status: inspected active 500-epoch training run; no changes made to the running process.
+
+Observed evidence:
+- Active PID `23159` is running `adv_robust/bin/python -u 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC`.
+- Exact metric source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/train_log.csv`.
+- Latest progress source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/progress_latest.json`.
+- The run had advanced into epoch `4/500`, batch `10/288`, with run elapsed `1423.15s` when inspected after the first three epochs.
+- GPU snapshot at `2026-05-21 07:36:38 UTC`: `NVIDIA A100-SXM4-80GB`, utilization `68%`, memory used `23113 MiB / 81920 MiB`, power draw `189.15 W`.
+- First three epoch rows from `train_log.csv`:
+  - Epoch 1: `475.2787319869967s`, train relative L2 `0.4178855663278829`, test relative L2 `0.28925264835357667`, estimated total `66h00m39s`.
+  - Epoch 2: `444.8703988859779s`, train relative L2 `0.27541956862677697`, test relative L2 `0.26146268486976626`, estimated total `63h54m02s`.
+  - Epoch 3: `476.0251846399624s`, train relative L2 `0.253930271708447`, test relative L2 `0.27035082519054415`, estimated total `64h38m25s`.
+- Dedicated note: `docs/fno2d_recurrent_training_monitor_20260521.md`.
+
+Inference:
+- Training is actively running in the `adv_robust` environment on the A100 GPU.
+- Mean runtime over the first three completed epochs is about `465.39s` (`7m45s`) per epoch.
+- First-three-epoch extrapolation suggests about `64.6h` total wall time for 500 epochs, including per-epoch evaluation and R2 record sync overhead.
+
+Remaining work:
+- Continue monitoring later epoch times and final upload status.
+- Verify R2 contains the final model directory after training completes.
+
+
+### 2026-05-21 07:38 UTC - Active 2D NS Recurrent FNO2d Runtime Estimate Update
+
+Status: inspected active run for a user-requested runtime estimate; no changes made to the running process.
+
+Observed evidence:
+- Active PID `23159` still running under `adv_robust/bin/python`.
+- Metric source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/train_log.csv`.
+- Progress source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/progress_latest.json`.
+- Completed epoch times available: epoch 1 `475.2787s`, epoch 2 `444.8704s`, epoch 3 `476.0252s`; mean `465.39s` per epoch.
+- Latest progress showed epoch `4/500`, batch `70/288`, run elapsed `1520.47s`, ETA `64h41m39s`.
+
+Inference:
+- With current settings, 500 epochs are estimated at about `64.6h` total (`~2.7 days`).
+- Estimate includes per-epoch evaluation and per-epoch R2 record sync overhead.
+
+Remaining work:
+- Refresh estimate after more completed epochs, ideally after epoch 10-20.
+
+
+### 2026-05-21 07:40 UTC - Runtime Estimate Clarification
+
+Status: inspected active run to clarify epoch-vs-ETA confusion; no changes made to the running process.
+
+Observed evidence:
+- `train_log.csv` still had three completed epochs: `475.2787s`, `444.8704s`, and `476.0252s`.
+- Latest `progress_latest.json` showed epoch `4/500`, batch `120/288`, epoch elapsed `196.27s`, epoch remaining ETA `4m35s`, and total train-batch ETA `64h45m08s`.
+- GPU snapshot at `2026-05-21 07:39:58 UTC`: A100 utilization `100%`, memory utilization `58%`, memory used `23113 MiB / 81920 MiB`, power draw `188.76 W`.
+
+Inference:
+- The earlier `epoch_eta=5m22s` was remaining time within an already-started epoch, not the full epoch duration.
+- Measured full epoch time remains about `7m25s-7m56s`, with first-three-epoch mean `465.39s`.
+- Current 500-epoch estimate remains about `64-65h` total with eval and R2 sync enabled.
+
+Remaining work:
+- Re-estimate after 10-20 completed epochs and consider reducing eval/R2 sync frequency or testing larger batch/AMP if runtime is unacceptable.
+
+
+
+### 2026-05-21 07:43 UTC - A100 Runtime Bottleneck Check
+
+Status: inspected the active run and training code to explain why the A100 run is estimating much longer than expected; no changes made to the running process.
+
+Observed evidence:
+- Active PID `23159` still running `adv_robust/bin/python`.
+- Metric source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/train_log.csv`.
+- Progress source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/progress.jsonl`.
+- Latest progress inspected showed epoch `4/500`, batch `240/288`, run elapsed `1798.87s`, and total train-batch ETA `64h40m37s`.
+- GPU utilization sample from `nvidia-smi dmon -s pucm -c 8` alternated between `100%` SM utilization during training bursts and `0%` at synchronization or logging sample points; framebuffer memory stayed around `23113 MB` on an `81920 MB` A100.
+- Active command uses `--batch-size 4`, `--eval-batch-size 4`, `--eval-every 1`, and `--r2-sync-every-epochs 1`.
+- Current wrapper `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` defaults to `BATCH_SIZE=4`, giving `ceil(1150/4)=288` train batches per epoch.
+- `2D_NS_FNO2d_recurrent/models/FNO2d.py` uses `RecurrentPredictor.forward()` with `for _ in range(0, T_out, step)`; with `T_out=10` and `step=1`, each training batch performs 10 sequential FNO model calls.
+- Legacy script `2D_NS_FNO2d_recurrent/training_models/trainFNO2d_unnormalized.py` used `batch_size = 20`, `ntrain = 1000`, and about `50` train batches per epoch for that configuration.
+
+Inference:
+- I did not observe data generation, solver execution, or CPU fallback inside the active training loop.
+- The current run is GPU-backed but is not configured to use most of the A100 memory; it uses about `23 GB / 80 GB`.
+- The largest observed configuration difference explaining the long epoch time is `batch_size=4`: the current run does about `288` train batches per epoch, and each batch contains 10 recurrent FNO steps. A batch size closer to the legacy `20` would reduce the number of optimizer steps per epoch substantially if memory and numerics allow it.
+- Evaluation every epoch and R2 record sync every epoch add overhead, but they do not by themselves explain the full slowdown.
+
+Remaining work:
+- If the current runtime is unacceptable, benchmark larger `BATCH_SIZE`/`EVAL_BATCH_SIZE` values, for example 8, 12, or 16, before restarting a long 500-epoch official run.
+- Consider reducing `EVAL_EVERY` and `R2_SYNC_EVERY_EPOCHS` for long runs after confirming the monitoring cadence needed.
+
+
+
+### 2026-05-21 07:48 UTC - Fourth Epoch Runtime Refresh
+
+Status: inspected the active run after epoch 4 completed; no changes made to the running process.
+
+Observed evidence:
+- Metric source: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_071254_UTC/train_log.csv`.
+- Epoch 4 completed in `487.73004865599796s` (`8m08s`).
+- Mean epoch time after four epochs is `473.83224393974524s` and recent mean is `470.97609104223375s`.
+- Epoch 4 row reported estimated total `65h24m59s`.
+- Latest `progress_latest.json` after epoch 4 showed epoch `5/500`, batch `110/288`, run elapsed `2081.57s`, and total train-batch ETA `65h23m55s`.
+- Current GPU snapshot showed A100 utilization `100%`, memory utilization `58%`, memory used `23113 MiB / 81920 MiB`, and power draw `189.23 W / 400 W`.
+
+Inference:
+- The fourth epoch reinforces the current estimated wall time of about `65h` with the active settings.
+- The run is using the A100, but memory use remains far below the 80 GB capacity, so larger batch-size benchmarking is the most direct throughput test.
+
+
+
+### 2026-05-21 07:50 UTC - GPU Path And Utilization Verification
+
+Status: verified the active training run is using the A100 GPU and inspected why throughput is still poor; no changes made to the running process.
+
+Observed evidence:
+- Active PID `23159` continued running the 500-epoch recurrent FNO2d trainer with `--batch-size 4`, `--eval-batch-size 4`, `--eval-every 1`, and `--r2-sync-every-epochs 1`.
+- Run GPU verification file records `device: cuda:0`, `device_name: NVIDIA A100-SXM4-80GB`, `compute_capability_tag: sm_80`, `torch_version: 2.8.0+cu126`, `torch_cuda_version: 12.6`, and CUDA sanity matmul sum `8.0`.
+- Saved config records `amp: false`, `batch_size: 4`, `num_workers: 0`, `ntrain: 1150`, `ntest: 50`, `modes1: 64`, `modes2: 64`, `width: 60`, `t_out: 10`, `step: 1`.
+- `nvidia-smi dmon -s pucmt -c 15` showed alternating samples including SM utilization `100`, `97`, `73`, `32`, and many `0` samples, while memory stayed around `23113 MB / 81920 MB`.
+- Latest progress around `2026-05-21T07:49:53+00:00` showed epoch `5/500`, batch `190/288`, run elapsed `2211.27s`, and total train-batch ETA `65h17m43s`.
+
+Inference:
+- The run is definitely GPU-backed on the A100, not CPU fallback.
+- The A100 is not continuously saturated; it bursts into GPU compute and then idles between bursts, consistent with a small batch size, host-side/DataLoader/synchronization overhead, and frequent logging/evaluation checkpoints.
+- The current configuration is not a good throughput configuration for an 80 GB A100.
+
+Remaining work:
+- Stop and benchmark larger batch sizes if the goal is fastest wall-clock training; suggested starting points are batch size 8 and 12, then 16 only if memory remains safe.
+
+
+
+### 2026-05-21 08:00 UTC - A100 Fast Batch Benchmark And Default Update
+
+Status: stopped the slow batch-size-4 active run, benchmarked larger batch sizes on A100, and updated defaults for faster training.
+
+Observed evidence:
+- Stopped active PID `23159`; it had been running with `--batch-size 4`, `--eval-batch-size 4`, `--eval-every 1`, and `--r2-sync-every-epochs 1`.
+- Last inspected slow-run progress before stopping was epoch `5/500`, batch `260/288`, with total train-batch ETA `65h13m12s`.
+- Batch benchmark used the real training dataset path `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`, model `modes1=64`, `modes2=64`, `width=60`, `T_out=10`, `step=1`, and A100 GPU.
+- FP32 benchmark results:
+  - `batch_size=10`: mean timed batch `0.924s`, `115` batches per epoch, train-only epoch estimate `106.2s`, peak memory `46.71 GiB`.
+  - `batch_size=12`: mean timed batch `1.074s`, `96` batches per epoch, train-only epoch estimate `103.1s`, peak memory `55.52 GiB`.
+  - `batch_size=14`: mean timed batch `1.077s`, `83` batches per epoch, train-only epoch estimate `89.4s`, peak memory `64.33 GiB`.
+  - `batch_size=16`: mean timed batch `1.165s`, `72` batches per epoch, train-only epoch estimate `83.9s`, peak memory `72.19 GiB`.
+  - `batch_size=20`: failed with CUDA OOM around `78.78 GiB` in use.
+- AMP benchmark failed before timing because `torch.fft` plus complex spectral weights entered a CUDA `ComplexHalf` path and raised `NotImplementedError: baddbmm_cuda not implemented for ComplexHalf`.
+- Updated `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` defaults to `BATCH_SIZE=16`, `EVAL_BATCH_SIZE=16`, `EVAL_EVERY=5`, and `R2_SYNC_EVERY_EPOCHS=0` while preserving final R2 upload when `R2_UPLOAD=1`.
+- Updated `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` parser defaults to match and added a clear runtime error if `--amp` is requested.
+- Validation passed: `bash -n 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` and `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`.
+
+Inference:
+- Increasing batch size is the best immediate speed lever that preserves the same model and dataset, but it changes optimizer dynamics because there are fewer optimizer updates per epoch.
+- `batch_size=16` is the fastest tested no-AMP setting that fits the A100, but it uses high memory and should be monitored for OOM.
+- A 10-hour 500-epoch run is not currently evidenced with this exact model/training setup; batch size 16 points to roughly 12+ hours train-only before full-run overhead, evaluation, checkpoint, and final upload.
+
+Remaining work:
+- Start the next official run with `BATCH_SIZE=16`, `EVAL_BATCH_SIZE=16`, `EVAL_EVERY=5`, `R2_SYNC_EVERY_EPOCHS=0`, and `AMP=0`.
+- If batch size 16 OOMs during a full run, retry with batch size 14; if accuracy is unstable, compare against batch size 10 or tune learning rate.
+
+
+
+### 2026-05-21 08:10 UTC - Batch Size 18 OOM Test
+
+Status: tested user-requested `batch_size=18` on the A100 with the real recurrent FNO2d model and dataset; no official 500-epoch training run started.
+
+Observed evidence:
+- No active 2D FNO training process was found before the test.
+- Pre-test GPU snapshot showed `NVIDIA A100-SXM4-80GB`, `0 MiB / 81920 MiB` used.
+- Current defaults before the test remained `BATCH_SIZE=16`, `EVAL_BATCH_SIZE=16`, `EVAL_EVERY=10`, and `R2_SYNC_EVERY_EPOCHS=0`.
+- Plain FP32 `batch_size=18` failed with CUDA OOM: requested `1.05 GiB`, GPU capacity `79.25 GiB`, process memory in use `79.12 GiB`.
+- Retesting from a fresh process with `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` also failed with CUDA OOM: requested `1.05 GiB`, process memory in use `78.31 GiB`, free `949.88 MiB`.
+
+Inference:
+- `batch_size=18` is not reliable for this exact model/data setup on the current 80GB A100.
+- `batch_size=16` remains the largest tested safe setting, while `batch_size=14` is the safer fallback.
+
+Remaining work:
+- Use `batch_size=16` for the next official run unless the user chooses a more conservative batch size.
+- If further speed is required, investigate implementation-level changes rather than simply increasing batch size above 16.
+
+
+
+### 2026-05-21 08:06 UTC - Training Process Stop Confirmation
+
+Status: rechecked active training state after the user asked to stop the prior run and test `batch_size=18`; no official training run started.
+
+Observed evidence:
+- `pgrep -af train_fno2d_recurrent_cli.py|run_fno2d_recurrent_m64_w60.sh|trainFNO2d_unnormalized.py` returned no active matching training process.
+- GPU snapshot showed `NVIDIA A100-SXM4-80GB`, utilization `0%`, and memory used `0 MiB / 81920 MiB`.
+- The earlier recorded `batch_size=18` real forward/backward tests failed with CUDA OOM in both normal FP32 mode and with `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`.
+
+Inference:
+- The previous slow training run remains stopped.
+- `batch_size=18` should not be used for the next official run on this exact setup; `batch_size=16` remains the largest tested safe setting.
+
+
+
+### 2026-05-21 08:12 UTC - Batch Size 17 Test
+
+Status: tested user-requested `batch_size=17` on the A100 with the real recurrent FNO2d model and dataset; no official 500-epoch training run started.
+
+Observed evidence:
+- No active 2D FNO training process was found before the test.
+- Pre-test GPU snapshot showed `NVIDIA A100-SXM4-80GB`, `0 MiB / 81920 MiB` used.
+- Plain FP32 `batch_size=17` completed batch 1 in `1.572s` with peak memory `74.82 GiB`, then failed with CUDA OOM on the next allocation; process memory in use was `78.28 GiB`.
+- Retesting from a fresh process with `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` completed four timed batches: `1.835s`, `1.218s`, `1.218s`, `1.216s`, peak memory `76.53 GiB`.
+- The expandable-segments run reported `68` batches per epoch and a short-run train-only epoch estimate of `93.3s`; warm batches after the first were about `1.217s` each.
+
+Inference:
+- `batch_size=17` can run only with `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` in this short test, but it is close to the memory limit.
+- `batch_size=16` remains the safer official-run setting; `batch_size=17` is a speed/memory-risk option if the user accepts OOM risk and sets the allocator environment variable before process start.
+
+Remaining work:
+- If using `batch_size=17`, launch from a fresh shell/process with `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` and monitor early epochs for OOM.
+
+
+
+### 2026-05-21 08:18 UTC - AMP Compatibility Retest
+
+Status: directly retested mixed precision compatibility on the real recurrent FNO2d model path; no official training run started.
+
+Observed evidence:
+- Test environment: `NVIDIA A100-SXM4-80GB`, PyTorch `2.8.0+cu126`, CUDA `12.6`, default CUDA autocast dtype `torch.float16`, BF16 supported by hardware.
+- Test used the real recurrent FNO2d model with `modes1=64`, `modes2=64`, `width=60`, `T_out=10`, `step=1`, and a real dataset batch from `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`.
+- FP32/no autocast forward-backward completed successfully: `seconds=0.682`, `pred_dtype=torch.float32`, `loss_dtype=torch.float32`, peak memory `9.74 GiB` for the small batch-size-2 test.
+- FP16/default AMP autocast failed with `NotImplementedError: baddbmm_cuda not implemented for ComplexHalf` at `2D_NS_FNO2d_recurrent/models/FNO2d.py`, inside `torch.einsum("bixy,ioxy->boxy", input, weights)` after `torch.fft.rfft2` produced complex half tensors.
+- BF16 autocast failed with `RuntimeError: Unsupported dtype BFloat16` at `torch.fft.rfft2(x)`.
+
+Inference:
+- Full-model AMP autocast is not compatible with the current recurrent FNO2d implementation in this PyTorch/CUDA environment.
+- The existing trainer guard that rejects `--amp` remains justified for this model path.
+- Any mixed precision speedup would require a selective implementation that keeps FFT/spectral complex operations in FP32/complex64 and only autocasts safe real-valued submodules, followed by numerical validation.
+
+Remaining work:
+- Continue using `AMP=0` for official runs unless a selective mixed-precision implementation is added and validated.
+
+
+
+### 2026-05-21 08:25 UTC - Batch Size 16 Full-Epoch Stress Test
+
+Status: ran a one-epoch stress test with `batch_size=16` on the real dataset/model path to answer whether later batches can OOM after the first batch succeeds; no checkpoint, R2 upload, or official 500-epoch run was started.
+
+Observed evidence:
+- Pre-test state had no active FNO training process and A100 memory at `0 MiB / 81920 MiB`.
+- Test used the real train dataset `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`, model `modes1=64`, `modes2=64`, `width=60`, `T_out=10`, `step=1`, and FP32/no AMP.
+- `batch_size=16` gives `72` batches per epoch for `1150` samples.
+- The stress test completed all `72/72` batches with no CUDA OOM.
+- Peak CUDA memory stayed at `72.19 GiB` after the early batches and did not continue climbing through batch 72.
+- Selected progress: batch 1 peak `70.42 GiB`; batches 10, 20, 30, 40, 50, 60, 70, and 72 all reported peak `72.19 GiB`.
+- Mean measured GPU compute section per batch was `1.170s`; total wall time for the full epoch script was `401.1s` (`6.69min`).
+
+Inference:
+- Unlike `batch_size=17`, `batch_size=16` did not show a second-batch OOM or later-batch memory creep during a full epoch.
+- `batch_size=16` is materially safer than `batch_size=17`, although it still uses high memory.
+- The gap between measured compute-section time and full wall time indicates significant host-side data loading/collation/transfer overhead that should be investigated for further speedup.
+
+Remaining work:
+- Use `batch_size=16` for the next official run if prioritizing speed without accepting the `batch_size=17` OOM risk.
+- Profile DataLoader/data movement and consider larger `num_workers`, precomputed contiguous input/target tensors, or GPU-resident data strategies if further speed is required.
+
+
+
+### 2026-05-21 08:30 UTC - Data Loading Bottleneck Analysis
+
+Status: inspected the recurrent FNO2d trainer data path after the batch-size-16 full-epoch stress test; no official training run started and no code change made in this step.
+
+Observed evidence:
+- In `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`, `load_y_tensor()` loads the full dataset to CPU with `torch.load(..., map_location="cpu")`.
+- `NSTrajectoryDataset.__getitem__()` slices each sample every time it is requested and returns `x.contiguous(), y.contiguous()`.
+- `make_loader()` uses `num_workers=args.num_workers`, default `0`, and `pin_memory=True`.
+- The training loop recreates the DataLoader inside every epoch with `make_loader(...)`.
+- The training loop transfers each batch to GPU with `xb.to(device, non_blocking=True)` and `yb.to(device, non_blocking=True)`.
+- The batch-size-16 full-epoch stress test measured about `1.170s` for the synchronized GPU compute section per batch, but `401.1s` total wall time for 72 batches.
+
+Inference:
+- The difference between about `84s` of measured compute sections and `401s` wall time is consistent with host-side overhead from per-sample CPU slicing/copying/collation, DataLoader iteration, pinned-memory handling, and CPU-to-GPU transfer waits.
+- Pure PCIe bandwidth alone is unlikely to explain the full overhead because the per-epoch batch tensor volume is only several GiB; the current per-sample data path is likely the larger issue.
+- Candidate optimizations are: precompute contiguous input/target tensors once, avoid recreating the DataLoader every epoch, benchmark persistent multi-worker loading, and optionally preload train/test tensors to GPU with a manual GPU batcher if memory permits.
+
+Remaining work:
+- Implement and benchmark the data path optimizations before starting another official 500-epoch run if wall-clock time is the priority.
+
+
+
+### 2026-05-21 08:42 UTC - GPU-Resident Data Path Benchmark And Trainer Integration
+
+Status: benchmarked optimized GPU-resident data loading, integrated it into the official trainer, and validated one official epoch with `batch_size=16`; no 500-epoch official run started.
+
+Observed evidence:
+- Pre-benchmark state had no active FNO training process and A100 memory at `0 MiB / 81920 MiB`.
+- Standalone optimized benchmark precomputed train `x/y` tensors once and kept them resident on GPU, using `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`.
+- GPU-resident benchmark results:
+  - `batch_size=16`: completed `72/72` batches, mean batch `1.209s`, total `87.1s` (`1.45min`), peak memory `77.80 GiB`.
+  - `batch_size=10`: completed `115/115` batches, mean batch `0.862s`, total `99.2s` (`1.65min`), peak memory `52.32 GiB`.
+- The first official trainer integration attempt kept train and test tensors resident on GPU and failed with CUDA OOM during epoch 1 because memory was too close to the limit.
+- The trainer was adjusted so only train tensors are resident on GPU; test data stays on CPU and is copied during evaluation.
+- Updated `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` with `--data-residency {dataloader,gpu}`, GPU-resident train tensor materialization, manual GPU batching, and GPU-tensor final train evaluation.
+- Updated `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` to default to `DATA_RESIDENCY=gpu` and `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`.
+- Validation passed: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` and `bash -n 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`.
+- Official wrapper validation command with `R2_UPLOAD=0 DATA_RESIDENCY=gpu EPOCHS=1 BATCH_SIZE=16 EVAL_BATCH_SIZE=16 EVAL_EVERY=10 PROGRESS_EVERY=20 SAVE_EVERY=999 AMP=0` completed.
+- Official one-epoch output directory: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs1_Tin10_T10_recurrent_pytorch_20260521_083756_UTC`.
+- Official epoch 1 row reported `seconds=100.266` (`1m40s`) including training and epoch evaluation; complete one-epoch command total time was `2m31s` including final train/test evaluation and checkpoint save.
+
+Inference:
+- The data path optimization reduces one training epoch with batch size 16 from the previous stress-test wall time of `401.1s` (`6.69min`) to about `100s` (`1m40s`) when using the official trainer and epoch evaluation.
+- `batch_size=16` with GPU-resident train data is close to the memory limit but passed the official one-epoch validation when test data was not kept resident on GPU.
+- `batch_size=10` has much more memory headroom and still runs a full train-only epoch in under two minutes in the standalone optimized benchmark.
+- For a 500-epoch official run with eval every 10 epochs, the observed epoch timing suggests a rough lower-bound training time near `14h` plus periodic evaluation, final evaluation/checkpointing, and final R2 upload. This is a large improvement over the earlier `~65h` estimate but is not yet evidenced as under `10h`.
+
+Remaining work:
+- Use the optimized official wrapper for the next long run if speed is the priority.
+- Monitor the first several official epochs for OOM because batch size 16 remains close to the memory ceiling.
+- If OOM occurs, switch to `BATCH_SIZE=10` or `14` while keeping `DATA_RESIDENCY=gpu`.
+
+
+
+### 2026-05-21 08:48 UTC - Original Script Comparison
+
+Status: compared the original local recurrent FNO2d training script with the newer CLI after the user questioned whether the slow timing came from deviating from the original code; no official training run started.
+
+Observed evidence:
+- Original script trainFNO2d_unnormalized.py imports the same FNO2d and RecurrentPredictor model classes from 2D_NS_FNO2d_recurrent/models/FNO2d.py.
+- Original script uses hard-coded batch_size=20, ntrain=1000, ntest=100, modes=96, width=80, and dataset dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.pt.
+- Original script precomputes x_train, y_train, x_test, and y_test once from the loaded tensor, then uses torch.utils.data.TensorDataset and DataLoader.
+- The newer CLI also uses the same model classes and recurrent autoregressive loop, but was added for GPU verification, separate train/test path support, epoch timing/progress logs, R2 upload, and safer CLI configurability.
+- The early slow CLI path initially used batch_size=4 and a custom NSTrajectoryDataset.__getitem__() that sliced each sample and called contiguous per sample before DataLoader collation.
+- Later optimization added DATA_RESIDENCY=gpu to precompute train tensors and keep them resident on GPU, reducing official one-epoch time with batch_size=16 to about 100.266s including epoch evaluation.
+
+Inference:
+- The core model was not replaced with a different model, but the early CLI was not a line-for-line copy of the original training script.
+- The original script precomputed-tensor data path should be faster than the early custom Dataset path.
+- The earlier 6-8min/epoch timings were mainly caused by conservative batch size and the inefficient early data path, not by the FNO model itself.
+
+Remaining work:
+- Continue using the optimized DATA_RESIDENCY=gpu path for speed, or keep a compatibility path that mirrors the original precomputed TensorDataset approach if exact original semantics are required.
+
+
+
+### 2026-05-21 08:55 UTC - 10-12 Hour Run Configuration
+
+Status: configured the optimized recurrent FNO2d wrapper for a 10-12 hour target run and estimated batch-size-4 runtime; no long official run remains active from this turn.
+
+Observed evidence:
+- Optimized batch-size-16 official one-epoch validation previously reported epoch seconds `100.266s` including epoch evaluation, and standalone train-only GPU-resident timing was `87.1s` per epoch.
+- Optimized batch-size-4 official one-epoch validation completed with epoch seconds `152.087s` (`2m32s`) including epoch evaluation; full one-epoch command including final evaluation/checkpoint save took `3m22s`.
+- The wrapper default was changed from `EPOCHS=500` to `EPOCHS=450` in `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`.
+- The CLI parser default was changed from `epochs=500` to `epochs=450` in `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`.
+- Validation passed after the epoch edit: `bash -n 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` and `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`.
+- Existing trainer logic saves `checkpoints/best.pt` whenever evaluated test relative L2 reaches a new finite minimum and final R2 upload copies the full output directory, including `checkpoints/best.pt`.
+- A short attempt to launch a detached background training process from the tool shell did not persist in this execution environment: no active matching training process remained, no new 450-epoch output directory was created, and the temporary nohup log was empty.
+
+Inference:
+- For the optimized batch-size-16 path, `450` epochs is a reasonable 10-12 hour target: about `11h` using train-only plus periodic-eval estimate, or up to about `12.5h` using the conservative one-epoch wall time.
+- `1000` epochs would likely exceed the target window substantially, roughly `24h+` under the optimized batch-size-16 timings.
+- With the optimized data path, batch-size-4 is no longer the earlier `~65h/500 epochs` case, but it is still slower than batch-size-16: about `17-19h` for 450 epochs or `19-21h` for 500 epochs based on the one-epoch validation.
+
+Remaining work:
+- Start the official 450-epoch run from a persistent shell using the wrapper command, with R2 credentials in environment variables and `R2_UPLOAD=1`.
+- Monitor early epochs for OOM because batch-size 16 remains close to the memory ceiling.
+
+
+
+### 2026-05-21 09:00 UTC - Default Epochs Restored To 500 And Runtime Summary Added
+
+Status: changed optimized recurrent FNO2d defaults back to 500 epochs and added a dedicated runtime/optimization summary Markdown.
+
+Observed evidence:
+- Updated `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` default from `EPOCHS=450` to `EPOCHS=500`.
+- Updated `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` parser default from `epochs=450` to `epochs=500`.
+- Added `docs/fno2d_recurrent_runtime_optimization_summary_20260521.md` summarizing GPU, runtime, memory, data path optimization, AMP status, best-checkpoint behavior, and R2 upload behavior.
+- No active FNO training process was running before this edit.
+
+Inference:
+- The official default now matches the user request for 500 epochs while preserving optimized `BATCH_SIZE=16` and `DATA_RESIDENCY=gpu` behavior.
+
+Remaining work:
+- Commit and push the source and Markdown updates to the `vast-ai` branch.

@@ -6,9 +6,12 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import random
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -56,6 +59,11 @@ REAL_INITIAL_T20_TEST_PATH = (
 )
 CANDIDATE_TRAIN_PATHS = [LEGACY_T20_TRAIN_PATH, REAL_INITIAL_T20_TRAIN_PATH]
 DEFAULT_OUTPUT_ROOT = NS_ROOT / "saved_models" / "2D"
+DEFAULT_R2_ENDPOINT = "https://606bf6c862a4e8f63dabb6243dce2df7.r2.cloudflarestorage.com"
+DEFAULT_R2_BUCKET_PREFIX = (
+    "neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/"
+    "2D_NS_FNO2d_recurrent/saved_models/2D"
+)
 
 
 def json_default(value: Any) -> str:
@@ -373,6 +381,50 @@ def make_loader(dataset: Dataset, *, batch_size: int, shuffle: bool, seed: int, 
     )
 
 
+def tensor_gib(*tensors: torch.Tensor) -> float:
+    return sum(t.numel() * t.element_size() for t in tensors) / (1024**3)
+
+
+def materialize_dataset_tensors(dataset: NSTrajectoryDataset) -> tuple[torch.Tensor, torch.Tensor]:
+    indices = torch.as_tensor(dataset.indices, dtype=torch.long)
+    selected = dataset.y.index_select(0, indices)
+    sample = selected[:, :: dataset.sub_x, :: dataset.sub_y, :]
+    x = sample[..., : dataset.t_in].contiguous()
+    y = sample[..., dataset.t_in : dataset.t_in + dataset.t_out].contiguous()
+    return x, y
+
+
+@torch.no_grad()
+def evaluate_tensors(
+    model: torch.nn.Module,
+    x: torch.Tensor,
+    y: torch.Tensor,
+    *,
+    batch_size: int,
+    amp: bool,
+) -> dict[str, float]:
+    model.eval()
+    rel_sum = 0.0
+    mse_sum = 0.0
+    count = 0
+    n = int(x.shape[0])
+    for start in range(0, n, batch_size):
+        xb = x[start : start + batch_size]
+        yb = y[start : start + batch_size]
+        with torch.cuda.amp.autocast(enabled=amp):
+            pred = model(xb)
+        batch = int(xb.shape[0])
+        rel_sum += float(relative_l2_per_sample(pred, yb).sum().detach().cpu())
+        mse_sum += float(torch.mean((pred - yb) ** 2).detach().cpu()) * batch
+        count += batch
+    return {
+        "relative_l2_sum": rel_sum,
+        "relative_l2_mean": rel_sum / max(1, count),
+        "mse": mse_sum / max(1, count),
+        "samples": float(count),
+    }
+
+
 def relative_l2_per_sample(pred: torch.Tensor, target: torch.Tensor, eps: float = 1e-12) -> torch.Tensor:
     batch = pred.shape[0]
     pred_flat = pred.reshape(batch, -1)
@@ -443,10 +495,249 @@ def save_checkpoint(
     )
 
 
+
+def score_from_relative_l2(relative_l2_mean: float) -> float:
+    if not np.isfinite(relative_l2_mean):
+        return float("nan")
+    return 1.0 - relative_l2_mean
+
+
+def get_env_value(*names: str) -> str | None:
+    for name in names:
+        value = os.environ.get(name)
+        if value:
+            stripped = value.strip()
+            if stripped:
+                return stripped
+    return None
+
+
+def get_r2_credentials() -> tuple[str | None, str | None]:
+    access_key = get_env_value("R2_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID")
+    secret_key = get_env_value("R2_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY")
+    return access_key, secret_key
+
+
+def r2_destination_for_output(args: argparse.Namespace, output_dir: Path) -> str:
+    prefix = args.r2_bucket_prefix.strip("/")
+    return f"{args.r2_remote_name}:{prefix}/{output_dir.name}"
+
+
+def write_temp_rclone_config(args: argparse.Namespace, access_key: str, secret_key: str) -> Path:
+    fd, raw_path = tempfile.mkstemp(prefix="rclone-r2-", suffix=".conf")
+    os.close(fd)
+    config_path = Path(raw_path)
+    config_path.chmod(0o600)
+    config_path.write_text(
+        "\n".join(
+            [
+                f"[{args.r2_remote_name}]",
+                "type = s3",
+                "provider = Cloudflare",
+                "region = auto",
+                f"endpoint = {args.r2_endpoint}",
+                f"access_key_id = {access_key}",
+                f"secret_access_key = {secret_key}",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return config_path
+
+
+def validate_r2_upload_config(args: argparse.Namespace, output_dir: Path) -> dict[str, Any] | None:
+    if not args.r2_upload:
+        return None
+    if shutil.which("rclone") is None:
+        raise RuntimeError("--r2-upload was requested, but rclone is not available on PATH")
+    access_key, secret_key = get_r2_credentials()
+    if not access_key or not secret_key:
+        raise RuntimeError(
+            "--r2-upload requires R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY environment variables "
+            "(AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY are also accepted)"
+        )
+    target = r2_destination_for_output(args, output_dir)
+    info = {
+        "enabled": True,
+        "target": target,
+        "endpoint": args.r2_endpoint,
+        "bucket_prefix": args.r2_bucket_prefix,
+        "remote_name": args.r2_remote_name,
+        "periodic_sync_every_epochs": args.r2_sync_every_epochs,
+        "periodic_sync_records_only": True,
+        "final_upload_includes_checkpoints_and_model": True,
+        "secrets_source": "environment variables only; secrets are not written to repository files",
+    }
+    write_json(output_dir / "r2_upload_config.json", info)
+    print(f"[r2] upload enabled; final target={target}", flush=True)
+    if args.r2_preflight:
+        bucket = args.r2_bucket_prefix.strip("/").split("/", 1)[0]
+        config_path = write_temp_rclone_config(args, access_key, secret_key)
+        try:
+            proc = subprocess.run(
+                [
+                    "rclone",
+                    "lsf",
+                    f"{args.r2_remote_name}:{bucket}",
+                    "--config",
+                    str(config_path),
+                    "--s3-no-check-bucket",
+                    "--max-depth",
+                    "1",
+                ],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+                timeout=args.r2_preflight_timeout_seconds,
+            )
+        finally:
+            config_path.unlink(missing_ok=True)
+        if proc.returncode != 0:
+            tail = (proc.stderr or proc.stdout or "").strip()[-1000:]
+            raise RuntimeError(f"R2 preflight failed before training; refusing to start. rclone said: {tail}")
+        print(f"[r2] preflight ok for bucket={bucket}", flush=True)
+    return info
+
+
+def rclone_copy(
+    *,
+    args: argparse.Namespace,
+    output_dir: Path,
+    source: Path,
+    target: str,
+    phase: str,
+    records_only: bool,
+    strict: bool,
+) -> dict[str, Any]:
+    access_key, secret_key = get_r2_credentials()
+    if not access_key or not secret_key:
+        raise RuntimeError("R2 credentials disappeared from the environment before upload")
+
+    started = {
+        "phase": phase,
+        "status": "started",
+        "timestamp_utc": iso_timestamp(),
+        "source": str(source),
+        "target": target,
+        "records_only": records_only,
+    }
+    write_json(output_dir / f"r2_upload_{phase}_started.json", started)
+
+    config_path = write_temp_rclone_config(args, access_key, secret_key)
+    cmd = [
+        "rclone",
+        "copy",
+        str(source),
+        target,
+        "--config",
+        str(config_path),
+        "--s3-no-check-bucket",
+        "--transfers",
+        str(args.r2_transfers),
+        "--checkers",
+        str(args.r2_checkers),
+        "--stats",
+        args.r2_stats,
+        "--retries",
+        str(args.r2_retries),
+    ]
+    if records_only:
+        cmd.extend(
+            [
+                "--include",
+                "*.csv",
+                "--include",
+                "*.json",
+                "--include",
+                "*.jsonl",
+                "--include",
+                "*.txt",
+                "--include",
+                "*.md",
+                "--exclude",
+                "*",
+            ]
+        )
+    elif args.r2_progress:
+        cmd.append("--progress")
+
+    print(
+        f"[r2] {phase} upload starting: source={source} target={target} records_only={records_only}",
+        flush=True,
+    )
+    started_perf = time.perf_counter()
+    try:
+        proc = subprocess.run(cmd, text=True, stdout=None, stderr=None, check=False)
+    finally:
+        config_path.unlink(missing_ok=True)
+    elapsed = time.perf_counter() - started_perf
+    result = {
+        "phase": phase,
+        "status": "completed" if proc.returncode == 0 else "failed",
+        "timestamp_utc": iso_timestamp(),
+        "source": str(source),
+        "target": target,
+        "records_only": records_only,
+        "returncode": proc.returncode,
+        "elapsed_seconds": elapsed,
+        "elapsed": format_duration(elapsed),
+    }
+    write_json(output_dir / f"r2_upload_{phase}.json", result)
+    if proc.returncode != 0:
+        message = f"rclone upload phase {phase!r} failed with return code {proc.returncode}"
+        print(f"[r2][ERROR] {message}", flush=True)
+        if strict:
+            raise RuntimeError(message)
+    else:
+        print(f"[r2] {phase} upload completed in {format_duration(elapsed)}", flush=True)
+    return result
+
+
+def sync_r2_records_if_requested(args: argparse.Namespace, output_dir: Path, epoch: int) -> None:
+    if not args.r2_upload or args.r2_sync_every_epochs <= 0:
+        return
+    if epoch % args.r2_sync_every_epochs != 0 and epoch != args.epochs:
+        return
+    target = r2_destination_for_output(args, output_dir)
+    try:
+        rclone_copy(
+            args=args,
+            output_dir=output_dir,
+            source=output_dir,
+            target=target,
+            phase=f"records_epoch_{epoch:04d}",
+            records_only=True,
+            strict=False,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[r2][WARN] periodic record sync failed at epoch {epoch}: {exc}", flush=True)
+
+
+def final_r2_upload_if_requested(args: argparse.Namespace, output_dir: Path) -> None:
+    if not args.r2_upload:
+        return
+    rclone_copy(
+        args=args,
+        output_dir=output_dir,
+        source=output_dir,
+        target=r2_destination_for_output(args, output_dir),
+        phase="final_model_dir",
+        records_only=False,
+        strict=not args.r2_allow_upload_failure,
+    )
+
 def train(args: argparse.Namespace) -> int:
+    if args.amp:
+        raise RuntimeError(
+            "--amp is currently disabled for this recurrent FNO2d trainer because the FFT spectral convolution uses complex tensors and PyTorch CUDA does not implement the required ComplexHalf einsum path. Use AMP=0."
+        )
+
     set_global_seeds(args.seed)
     train_path = resolve_train_path(args.train_path)
     output_dir = make_output_dir(args, train_path)
+    r2_upload_info = validate_r2_upload_config(args, output_dir)
 
     device, gpu_info = require_cuda_device(args.device)
     write_gpu_verification(output_dir / "gpu_verification.txt", gpu_info)
@@ -460,6 +751,7 @@ def train(args: argparse.Namespace) -> int:
             "resolved_test_path": str(args.test_path) if args.test_path is not None else None,
             "output_dir": str(output_dir),
             "candidate_train_paths": [str(p) for p in CANDIDATE_TRAIN_PATHS],
+            "r2_upload": r2_upload_info,
         }
     )
     write_json(output_dir / "config.json", config)
@@ -471,6 +763,20 @@ def train(args: argparse.Namespace) -> int:
 
     train_ds, test_ds, dataset_info = build_datasets(args, train_path)
     write_json(output_dir / "dataset_info.json", dataset_info)
+
+    train_tensors = None
+    if args.data_residency == "gpu":
+        train_x_cpu, train_y_cpu = materialize_dataset_tensors(train_ds)
+        print(
+            f"data_residency=gpu precomputed_train_cpu_gib={tensor_gib(train_x_cpu, train_y_cpu):.2f}",
+            flush=True,
+        )
+        train_tensors = (train_x_cpu.to(device), train_y_cpu.to(device))
+        print(
+            f"data_residency=gpu resident_train_gpu_gib={tensor_gib(*train_tensors):.2f}",
+            flush=True,
+        )
+        del train_x_cpu, train_y_cpu
 
     fno = FNO2d(
         modes1=args.modes1,
@@ -487,13 +793,15 @@ def train(args: argparse.Namespace) -> int:
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(1, args.epochs * steps_per_epoch))
     scaler = torch.cuda.amp.GradScaler(enabled=args.amp)
 
-    train_loader = make_loader(
-        train_ds,
-        batch_size=args.batch_size,
-        shuffle=True,
-        seed=args.seed,
-        workers=args.num_workers,
-    )
+    train_loader = None
+    if args.data_residency == "dataloader":
+        train_loader = make_loader(
+            train_ds,
+            batch_size=args.batch_size,
+            shuffle=True,
+            seed=args.seed,
+            workers=args.num_workers,
+        )
     test_loader = make_loader(
         test_ds,
         batch_size=args.eval_batch_size,
@@ -541,6 +849,10 @@ def train(args: argparse.Namespace) -> int:
     print(f"train_path: {train_path}", flush=True)
     print(f"modes1={args.modes1}, modes2={args.modes2}, width={args.width}, parameters={model_parameters}", flush=True)
     print(f"device: {gpu_info['device_name']} ({gpu_info['compute_capability_tag']})", flush=True)
+    print(f"data_residency: {args.data_residency}", flush=True)
+    if r2_upload_info is not None:
+        print(f"r2_final_target: {r2_upload_info['target']}", flush=True)
+        print(f"r2_record_sync_every_epochs: {args.r2_sync_every_epochs}", flush=True)
     print(
         f"progress: every {args.progress_every} train batches; jsonl={progress_jsonl_path}; latest={progress_latest_path}",
         flush=True,
@@ -563,6 +875,7 @@ def train(args: argparse.Namespace) -> int:
     )
 
     best_test = float("inf")
+    epoch_seconds_history: list[float] = []
     for epoch in tqdm(range(1, args.epochs + 1), desc="FNO2d recurrent"):
         recurrent.train()
         start = time.perf_counter()
@@ -570,17 +883,35 @@ def train(args: argparse.Namespace) -> int:
         train_mse_sum = 0.0
         train_count = 0
 
-        epoch_loader = make_loader(
-            train_ds,
-            batch_size=args.batch_size,
-            shuffle=True,
-            seed=args.seed + epoch,
-            workers=args.num_workers,
-        )
-        epoch_steps = len(epoch_loader)
-        for batch_index, (xb, yb) in enumerate(epoch_loader, start=1):
-            xb = xb.to(device, non_blocking=True)
-            yb = yb.to(device, non_blocking=True)
+        if args.data_residency == "gpu":
+            assert train_tensors is not None
+            train_x, train_y = train_tensors
+            permutation = torch.randperm(train_x.shape[0], device=device)
+            epoch_steps = steps_per_epoch
+            batch_iter = (
+                (
+                    batch_index,
+                    train_x.index_select(0, indices),
+                    train_y.index_select(0, indices),
+                )
+                for batch_index, start_index in enumerate(range(0, train_x.shape[0], args.batch_size), start=1)
+                for indices in [permutation[start_index : start_index + args.batch_size]]
+            )
+        else:
+            epoch_loader = make_loader(
+                train_ds,
+                batch_size=args.batch_size,
+                shuffle=True,
+                seed=args.seed + epoch,
+                workers=args.num_workers,
+            )
+            epoch_steps = len(epoch_loader)
+            batch_iter = (
+                (batch_index, xb.to(device, non_blocking=True), yb.to(device, non_blocking=True))
+                for batch_index, (xb, yb) in enumerate(epoch_loader, start=1)
+            )
+
+        for batch_index, xb, yb in batch_iter:
             optimizer.zero_grad(set_to_none=True)
 
             with torch.cuda.amp.autocast(enabled=args.amp):
@@ -613,6 +944,7 @@ def train(args: argparse.Namespace) -> int:
                 completed_batches = (epoch - 1) * steps_per_epoch + batch_index
                 total_eta_seconds = (run_elapsed / max(1, completed_batches)) * max(0, total_train_batches - completed_batches)
                 train_rel_mean_so_far = train_rel_sum / max(1, train_count)
+                train_score_so_far = score_from_relative_l2(train_rel_mean_so_far)
                 progress_row = {
                     "event": "train_batch",
                     "timestamp_utc": iso_timestamp(),
@@ -634,6 +966,7 @@ def train(args: argparse.Namespace) -> int:
                     "total_train_batch_eta": format_duration(total_eta_seconds),
                     "loss": float(loss.detach().cpu()),
                     "train_relative_l2_mean_so_far": train_rel_mean_so_far,
+                    "train_score_1_minus_relative_l2_so_far": train_score_so_far,
                     "lr": scheduler.get_last_lr()[0],
                 }
                 append_jsonl_row(progress_jsonl_path, progress_row)
@@ -648,6 +981,7 @@ def train(args: argparse.Namespace) -> int:
                     f"total_batches={progress_row['percent_total_train_batches']:.2f}% "
                     f"loss={progress_row['loss']:.6g} "
                     f"train_rel_mean_so_far={train_rel_mean_so_far:.6g} "
+                    f"train_score={train_score_so_far:.6g} "
                     f"lr={progress_row['lr']:.3e} "
                     f"epoch_eta={progress_row['epoch_eta']} "
                     f"train_batch_eta={progress_row['total_train_batch_eta']}",
@@ -677,16 +1011,37 @@ def train(args: argparse.Namespace) -> int:
             }
 
         elapsed = time.perf_counter() - start
+        epoch_seconds_history.append(elapsed)
+        run_elapsed_after_epoch = time.perf_counter() - run_start
+        mean_epoch_seconds = run_elapsed_after_epoch / max(1, epoch)
+        recent_window = epoch_seconds_history[-max(1, args.eta_window_epochs) :]
+        recent_mean_epoch_seconds = float(np.mean(recent_window)) if recent_window else mean_epoch_seconds
+        remaining_epochs = max(0, args.epochs - epoch)
+        eta_seconds = recent_mean_epoch_seconds * remaining_epochs
+        estimated_total_seconds = run_elapsed_after_epoch + eta_seconds
+        train_score = score_from_relative_l2(train_metrics["relative_l2_mean"])
+        test_score = score_from_relative_l2(test_metrics["relative_l2_mean"])
         row = {
             "epoch": epoch,
             "seconds": elapsed,
+            "seconds_formatted": format_duration(elapsed),
+            "elapsed_total_seconds": run_elapsed_after_epoch,
+            "elapsed_total": format_duration(run_elapsed_after_epoch),
+            "mean_epoch_seconds": mean_epoch_seconds,
+            "recent_mean_epoch_seconds": recent_mean_epoch_seconds,
+            "eta_seconds": eta_seconds,
+            "eta": format_duration(eta_seconds),
+            "estimated_total_seconds": estimated_total_seconds,
+            "estimated_total": format_duration(estimated_total_seconds),
             "lr": scheduler.get_last_lr()[0],
             "train_relative_l2_sum": train_metrics["relative_l2_sum"],
             "train_relative_l2_mean": train_metrics["relative_l2_mean"],
             "train_mse": train_metrics["mse"],
+            "train_score_1_minus_relative_l2": train_score,
             "test_relative_l2_sum": test_metrics["relative_l2_sum"],
             "test_relative_l2_mean": test_metrics["relative_l2_mean"],
             "test_mse": test_metrics["mse"],
+            "test_score_1_minus_relative_l2": test_score,
         }
         append_csv_row(csv_path, row)
         epoch_progress_row = {
@@ -696,10 +1051,22 @@ def train(args: argparse.Namespace) -> int:
             "epochs": args.epochs,
             "seconds": elapsed,
             "seconds_formatted": format_duration(elapsed),
+            "elapsed_total_seconds": run_elapsed_after_epoch,
+            "elapsed_total": format_duration(run_elapsed_after_epoch),
+            "mean_epoch_seconds": mean_epoch_seconds,
+            "mean_epoch": format_duration(mean_epoch_seconds),
+            "recent_mean_epoch_seconds": recent_mean_epoch_seconds,
+            "recent_mean_epoch": format_duration(recent_mean_epoch_seconds),
+            "eta_seconds": eta_seconds,
+            "eta": format_duration(eta_seconds),
+            "estimated_total_seconds": estimated_total_seconds,
+            "estimated_total": format_duration(estimated_total_seconds),
             "train_relative_l2_mean": train_metrics["relative_l2_mean"],
             "train_mse": train_metrics["mse"],
+            "train_score_1_minus_relative_l2": train_score,
             "test_relative_l2_mean": test_metrics["relative_l2_mean"],
             "test_mse": test_metrics["mse"],
+            "test_score_1_minus_relative_l2": test_score,
             "lr": scheduler.get_last_lr()[0],
         }
         append_jsonl_row(progress_jsonl_path, epoch_progress_row)
@@ -709,8 +1076,14 @@ def train(args: argparse.Namespace) -> int:
             f"{epoch_progress_row['timestamp_utc']} "
             f"epoch={epoch}/{args.epochs} "
             f"seconds={elapsed:.3f} ({epoch_progress_row['seconds_formatted']}) "
+            f"avg_epoch={epoch_progress_row['mean_epoch']} "
+            f"recent_avg_epoch={epoch_progress_row['recent_mean_epoch']} "
+            f"eta={epoch_progress_row['eta']} "
+            f"est_total={epoch_progress_row['estimated_total']} "
             f"train_rel_mean={train_metrics['relative_l2_mean']:.8f} "
             f"test_rel_mean={test_metrics['relative_l2_mean']:.8f} "
+            f"train_score={train_score:.8f} "
+            f"test_score={test_score:.8f} "
             f"train_mse={train_metrics['mse']:.8g} "
             f"test_mse={test_metrics['mse']:.8g}",
             flush=True,
@@ -721,7 +1094,13 @@ def train(args: argparse.Namespace) -> int:
                 f"train l2:{train_metrics['relative_l2_sum']:.8f}, "
                 f"test l2:{test_metrics['relative_l2_sum']:.8f}, "
                 f"train l2 mean:{train_metrics['relative_l2_mean']:.8f}, "
-                f"test l2 mean:{test_metrics['relative_l2_mean']:.8f}\n"
+                f"test l2 mean:{test_metrics['relative_l2_mean']:.8f}, "
+                f"avg epoch time:{mean_epoch_seconds:.6f}, "
+                f"recent avg epoch time:{recent_mean_epoch_seconds:.6f}, "
+                f"eta seconds:{eta_seconds:.6f}, "
+                f"estimated total seconds:{estimated_total_seconds:.6f}, "
+                f"train score 1-minus-rel-l2:{train_score:.8f}, "
+                f"test score 1-minus-rel-l2:{test_score:.8f}\n"
             )
 
         current_metrics = {"train": train_metrics, "test": test_metrics, "row": row}
@@ -748,9 +1127,34 @@ def train(args: argparse.Namespace) -> int:
                 metrics=current_metrics,
             )
 
-    final_train = evaluate(recurrent, train_loader, device=device, amp=args.amp)
+        sync_r2_records_if_requested(args, output_dir, epoch)
+
+    if args.data_residency == "gpu":
+        assert train_tensors is not None
+        final_train = evaluate_tensors(
+            recurrent,
+            train_tensors[0],
+            train_tensors[1],
+            batch_size=args.eval_batch_size,
+            amp=args.amp,
+        )
+    else:
+        assert train_loader is not None
+        final_train = evaluate(recurrent, train_loader, device=device, amp=args.amp)
     final_test = evaluate(recurrent, test_loader, device=device, amp=args.amp)
-    final_metrics = {"train": final_train, "test": final_test, "best_test_relative_l2_mean": best_test}
+    run_total_seconds = time.perf_counter() - run_start
+    final_metrics = {
+        "train": final_train,
+        "test": final_test,
+        "train_score_1_minus_relative_l2": score_from_relative_l2(final_train["relative_l2_mean"]),
+        "test_score_1_minus_relative_l2": score_from_relative_l2(final_test["relative_l2_mean"]),
+        "best_test_relative_l2_mean": best_test,
+        "epochs": args.epochs,
+        "total_train_seconds": run_total_seconds,
+        "total_train_time": format_duration(run_total_seconds),
+        "mean_epoch_seconds": run_total_seconds / max(1, args.epochs),
+        "mean_epoch_time": format_duration(run_total_seconds / max(1, args.epochs)),
+    }
     save_checkpoint(
         final_checkpoint,
         fno=fno,
@@ -762,9 +1166,27 @@ def train(args: argparse.Namespace) -> int:
     )
     torch.save(fno.state_dict(), legacy_model_path)
     write_json(output_dir / "results.json", final_metrics)
+    final_progress_row = {
+        "event": "training_complete",
+        "timestamp_utc": iso_timestamp(),
+        **final_metrics,
+    }
+    append_jsonl_row(progress_jsonl_path, final_progress_row)
+    write_json(progress_latest_path, final_progress_row)
     print(f"[saved] {legacy_model_path}")
     print(f"[saved] {final_checkpoint}")
     print(f"[log] {csv_path}")
+    print(
+        "[complete] "
+        f"total_time={final_metrics['total_train_time']} "
+        f"mean_epoch={final_metrics['mean_epoch_time']} "
+        f"final_train_rel_mean={final_train['relative_l2_mean']:.8f} "
+        f"final_test_rel_mean={final_test['relative_l2_mean']:.8f} "
+        f"final_train_score={final_metrics['train_score_1_minus_relative_l2']:.8f} "
+        f"final_test_score={final_metrics['test_score_1_minus_relative_l2']:.8f}",
+        flush=True,
+    )
+    final_r2_upload_if_requested(args, output_dir)
     return 0
 
 
@@ -777,12 +1199,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--ntrain", type=int, default=1000)
     parser.add_argument("--ntest", type=int, default=100)
-    parser.add_argument("--batch-size", type=int, default=4)
-    parser.add_argument("--eval-batch-size", type=int, default=4)
+    parser.add_argument("--batch-size", type=int, default=16)
+    parser.add_argument("--eval-batch-size", type=int, default=16)
     parser.add_argument("--epochs", type=int, default=500)
-    parser.add_argument("--eval-every", type=int, default=1)
+    parser.add_argument("--eval-every", type=int, default=10)
     parser.add_argument("--save-every", type=int, default=25)
     parser.add_argument("--progress-every", type=int, default=10, help="Print and persist progress every N training batches; use 0 to disable batch progress logs.")
+    parser.add_argument("--eta-window-epochs", type=int, default=5, help="Use the most recent N epochs to estimate remaining wall time.")
     parser.add_argument("--learning-rate", type=float, default=1e-3)
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--modes1", type=int, default=64)
@@ -797,8 +1220,27 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--grad-clip-norm", type=float, default=0.0)
     parser.add_argument("--amp", action="store_true")
     parser.add_argument("--num-workers", type=int, default=0)
+    parser.add_argument(
+        "--data-residency",
+        choices=["dataloader", "gpu"],
+        default=os.environ.get("DATA_RESIDENCY", "dataloader"),
+        help="Use the original CPU DataLoader path or precompute train/test tensors and keep them resident on GPU.",
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--device", default="cuda:0")
+    parser.add_argument("--r2-upload", action="store_true", help="After training, upload the whole output directory to Cloudflare R2 with rclone.")
+    parser.add_argument("--r2-endpoint", default=os.environ.get("R2_ENDPOINT", DEFAULT_R2_ENDPOINT))
+    parser.add_argument("--r2-bucket-prefix", default=os.environ.get("R2_BUCKET_PREFIX", DEFAULT_R2_BUCKET_PREFIX))
+    parser.add_argument("--r2-remote-name", default=os.environ.get("R2_REMOTE_NAME", "r2_auto"))
+    parser.add_argument("--r2-sync-every-epochs", type=int, default=int(os.environ.get("R2_SYNC_EVERY_EPOCHS", "0")), help="When --r2-upload is set, sync small log/metric files every N epochs; use 0 to disable periodic sync.")
+    parser.add_argument("--r2-preflight", action=argparse.BooleanOptionalAction, default=True, help="Check R2 credentials and bucket access before the GPU training starts.")
+    parser.add_argument("--r2-preflight-timeout-seconds", type=int, default=int(os.environ.get("R2_PREFLIGHT_TIMEOUT_SECONDS", "60")))
+    parser.add_argument("--r2-transfers", type=int, default=int(os.environ.get("R2_TRANSFERS", "4")))
+    parser.add_argument("--r2-checkers", type=int, default=int(os.environ.get("R2_CHECKERS", "8")))
+    parser.add_argument("--r2-retries", type=int, default=int(os.environ.get("R2_RETRIES", "3")))
+    parser.add_argument("--r2-stats", default=os.environ.get("R2_STATS", "30s"))
+    parser.add_argument("--r2-progress", action=argparse.BooleanOptionalAction, default=True, help="Show rclone progress during the final model upload.")
+    parser.add_argument("--r2-allow-upload-failure", action="store_true", help="Let training exit 0 even if the final R2 upload fails.")
     parser.add_argument("--dry-run", action="store_true")
     return parser
 
