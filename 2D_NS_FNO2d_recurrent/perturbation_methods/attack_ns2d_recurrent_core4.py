@@ -592,6 +592,28 @@ class NS2DRecurrentProblem:
             losses["loss3"] = batch_norm(pred - g_delta, self.args.q_order)
         return losses, pred, g_delta, aux
 
+    def true_loss_all_w(self, x_adv):
+        """Evaluate the full-solver true loss curve without contributing gradients."""
+
+        import torch
+
+        with torch.no_grad():
+            x_eval = x_adv.detach()
+            seq = self.rollout_solver.rollout(
+                x_eval,
+                self.args.target_frame_index,
+                context={
+                    "source": "true_loss_all_w",
+                    "mode_spec": "wwwwwwwwww",
+                    "need_target": True,
+                    "required_frames": list(range(1, self.args.t_in)) + [self.args.target_frame_index],
+                },
+            )
+            frames = [x_eval] + [seq[frame_index] for frame_index in range(1, self.args.t_in)]
+            pred = self.model(torch_stack_last(frames))[..., -1]
+            target = seq[self.args.target_frame_index]
+            return batch_norm(pred - target, self.args.q_order)
+
 
 def torch_stack_last(frames: list[Any]):
     import torch
@@ -662,6 +684,7 @@ def append_metric_rows(
     delta_l2,
     delta_linf,
     delta_p,
+    true_loss_np,
     grad_l2_mean,
     direction_l2_mean,
     elapsed,
@@ -684,6 +707,8 @@ def append_metric_rows(
     for name, values in {"delta_l2": delta_l2, "delta_linf": delta_linf, "delta_p": delta_p}.items():
         for key, value in finite_stats(values).items():
             row[f"{name}_{key}"] = value
+    for key, value in finite_stats(true_loss_np).items():
+        row[f"true_loss_{key}"] = value
     row["boundary_ratio_mean"] = float(np.nanmean(delta_p / float(args.epsilon)))
     if grad_l2_mean is not None:
         row["grad_l2_mean"] = float(grad_l2_mean)
@@ -708,6 +733,7 @@ def append_metric_rows(
             "delta_linf": float(delta_linf[pos]),
             "delta_p": float(delta_p[pos]),
             "boundary_ratio": float(delta_p[pos] / float(args.epsilon)),
+            "true_loss": float(true_loss_np[pos]),
         }
         for name in LOSS_TYPES:
             sample[name] = float(losses_np[name][pos])
@@ -715,31 +741,57 @@ def append_metric_rows(
 
 
 def annotate_growth_metrics(step_rows: list[dict[str, Any]], sample_rows: list[dict[str, Any]], active_loss: str) -> None:
-    """Add active-loss curve and finite-difference growth metrics in-place."""
+    """Add surrogate and true loss curve/growth metrics in-place."""
 
-    active_key = active_loss
     mean_key = f"{active_loss}_mean"
-    first_mean = None
-    prev_mean = None
+    first_surrogate = None
+    first_true = None
+    prev_surrogate = None
+    prev_true = None
     prev_seconds = None
     for row in step_rows:
-        current = float(row.get(mean_key, float("nan")))
+        surrogate = float(row.get(mean_key, float("nan")))
+        true_value = float(row.get("true_loss_mean", float("nan")))
         seconds = float(row.get("seconds_since_method_start", float("nan")))
         row["active_loss"] = active_loss
-        row["active_loss_mean"] = current
-        if first_mean is None and math.isfinite(current):
-            first_mean = current
-        row["active_loss_mean_increase_from_k0"] = current - first_mean if first_mean is not None and math.isfinite(current) else float("nan")
-        row["active_loss_mean_ratio_to_k0"] = current / first_mean if first_mean not in (None, 0.0) and math.isfinite(current) else float("nan")
-        if prev_mean is None or not math.isfinite(current) or not math.isfinite(prev_mean):
+        row["active_loss_mean"] = surrogate
+        row["surrogate_loss_mean"] = surrogate
+        if first_surrogate is None and math.isfinite(surrogate):
+            first_surrogate = surrogate
+        if first_true is None and math.isfinite(true_value):
+            first_true = true_value
+
+        row["active_loss_mean_increase_from_k0"] = surrogate - first_surrogate if first_surrogate is not None and math.isfinite(surrogate) else float("nan")
+        row["active_loss_mean_ratio_to_k0"] = surrogate / first_surrogate if first_surrogate not in (None, 0.0) and math.isfinite(surrogate) else float("nan")
+        row["surrogate_loss_mean_increase_from_k0"] = row["active_loss_mean_increase_from_k0"]
+        row["surrogate_loss_mean_ratio_to_k0"] = row["active_loss_mean_ratio_to_k0"]
+        row["true_loss_mean_increase_from_k0"] = true_value - first_true if first_true is not None and math.isfinite(true_value) else float("nan")
+        row["true_loss_mean_ratio_to_k0"] = true_value / first_true if first_true not in (None, 0.0) and math.isfinite(true_value) else float("nan")
+
+        if prev_surrogate is None or not math.isfinite(surrogate) or not math.isfinite(prev_surrogate):
             row["active_loss_mean_delta_from_prev"] = float("nan")
             row["active_loss_mean_growth_per_second"] = float("nan")
+            row["surrogate_loss_mean_delta_from_prev"] = float("nan")
+            row["surrogate_loss_mean_growth_per_second"] = float("nan")
         else:
-            delta = current - prev_mean
-            row["active_loss_mean_delta_from_prev"] = delta
+            delta = surrogate - prev_surrogate
             dt = seconds - prev_seconds if prev_seconds is not None else float("nan")
+            row["active_loss_mean_delta_from_prev"] = delta
             row["active_loss_mean_growth_per_second"] = delta / dt if dt and dt > 0 else float("nan")
-        prev_mean = current
+            row["surrogate_loss_mean_delta_from_prev"] = delta
+            row["surrogate_loss_mean_growth_per_second"] = row["active_loss_mean_growth_per_second"]
+
+        if prev_true is None or not math.isfinite(true_value) or not math.isfinite(prev_true):
+            row["true_loss_mean_delta_from_prev"] = float("nan")
+            row["true_loss_mean_growth_per_second"] = float("nan")
+        else:
+            delta = true_value - prev_true
+            dt = seconds - prev_seconds if prev_seconds is not None else float("nan")
+            row["true_loss_mean_delta_from_prev"] = delta
+            row["true_loss_mean_growth_per_second"] = delta / dt if dt and dt > 0 else float("nan")
+
+        prev_surrogate = surrogate
+        prev_true = true_value
         prev_seconds = seconds
 
     by_sample: dict[int, list[dict[str, Any]]] = {}
@@ -747,27 +799,53 @@ def annotate_growth_metrics(step_rows: list[dict[str, Any]], sample_rows: list[d
         by_sample.setdefault(int(row["sample_position"]), []).append(row)
     for rows in by_sample.values():
         rows.sort(key=lambda item: int(item["k"]))
-        first = None
-        prev = None
+        first_surrogate = None
+        first_true = None
+        prev_surrogate = None
+        prev_true = None
         prev_seconds = None
         for row in rows:
-            current = float(row.get(active_key, float("nan")))
+            surrogate = float(row.get(active_loss, float("nan")))
+            true_value = float(row.get("true_loss", float("nan")))
             seconds = float(row.get("seconds_since_method_start", float("nan")))
             row["active_loss"] = active_loss
-            row["active_loss_value"] = current
-            if first is None and math.isfinite(current):
-                first = current
-            row["active_loss_increase_from_k0"] = current - first if first is not None and math.isfinite(current) else float("nan")
-            row["active_loss_ratio_to_k0"] = current / first if first not in (None, 0.0) and math.isfinite(current) else float("nan")
-            if prev is None or not math.isfinite(current) or not math.isfinite(prev):
+            row["active_loss_value"] = surrogate
+            row["surrogate_loss_value"] = surrogate
+            if first_surrogate is None and math.isfinite(surrogate):
+                first_surrogate = surrogate
+            if first_true is None and math.isfinite(true_value):
+                first_true = true_value
+
+            row["active_loss_increase_from_k0"] = surrogate - first_surrogate if first_surrogate is not None and math.isfinite(surrogate) else float("nan")
+            row["active_loss_ratio_to_k0"] = surrogate / first_surrogate if first_surrogate not in (None, 0.0) and math.isfinite(surrogate) else float("nan")
+            row["surrogate_loss_increase_from_k0"] = row["active_loss_increase_from_k0"]
+            row["surrogate_loss_ratio_to_k0"] = row["active_loss_ratio_to_k0"]
+            row["true_loss_increase_from_k0"] = true_value - first_true if first_true is not None and math.isfinite(true_value) else float("nan")
+            row["true_loss_ratio_to_k0"] = true_value / first_true if first_true not in (None, 0.0) and math.isfinite(true_value) else float("nan")
+
+            if prev_surrogate is None or not math.isfinite(surrogate) or not math.isfinite(prev_surrogate):
                 row["active_loss_delta_from_prev"] = float("nan")
                 row["active_loss_growth_per_second"] = float("nan")
+                row["surrogate_loss_delta_from_prev"] = float("nan")
+                row["surrogate_loss_growth_per_second"] = float("nan")
             else:
-                delta = current - prev
-                row["active_loss_delta_from_prev"] = delta
+                delta = surrogate - prev_surrogate
                 dt = seconds - prev_seconds if prev_seconds is not None else float("nan")
+                row["active_loss_delta_from_prev"] = delta
                 row["active_loss_growth_per_second"] = delta / dt if dt and dt > 0 else float("nan")
-            prev = current
+                row["surrogate_loss_delta_from_prev"] = delta
+                row["surrogate_loss_growth_per_second"] = row["active_loss_growth_per_second"]
+
+            if prev_true is None or not math.isfinite(true_value) or not math.isfinite(prev_true):
+                row["true_loss_delta_from_prev"] = float("nan")
+                row["true_loss_growth_per_second"] = float("nan")
+            else:
+                delta = true_value - prev_true
+                dt = seconds - prev_seconds if prev_seconds is not None else float("nan")
+                row["true_loss_delta_from_prev"] = delta
+                row["true_loss_growth_per_second"] = delta / dt if dt and dt > 0 else float("nan")
+            prev_surrogate = surrogate
+            prev_true = true_value
             prev_seconds = seconds
 
 
@@ -793,6 +871,8 @@ def build_delta_threshold_rows(
                 "boundary_ratio": None if hit is None else float(hit.get("boundary_ratio_mean", float("nan"))),
                 "delta_p": None if hit is None else float(hit.get("delta_p_mean", float("nan"))),
                 "active_loss": active_loss,
+                "surrogate_loss_value": None if hit is None else float(hit.get("surrogate_loss_mean", float("nan"))),
+                "true_loss_value": None if hit is None else float(hit.get("true_loss_mean", float("nan"))),
                 "active_loss_value": None if hit is None else float(hit.get("active_loss_mean", float("nan"))),
             }
         )
@@ -818,6 +898,8 @@ def build_delta_threshold_rows(
                 "boundary_ratio": None if all_hit is None else float(np.nanmin([row["boundary_ratio"] for row in all_hit])),
                 "delta_p": None if all_hit is None else float(np.nanmin([row["delta_p"] for row in all_hit])),
                 "active_loss": active_loss,
+                "surrogate_loss_value": None if all_hit is None else float(np.nanmean([row.get("surrogate_loss_value", float("nan")) for row in all_hit])),
+                "true_loss_value": None if all_hit is None else float(np.nanmean([row.get("true_loss", float("nan")) for row in all_hit])),
                 "active_loss_value": None if all_hit is None else float(np.nanmean([row.get("active_loss_value", float("nan")) for row in all_hit])),
             }
         )
@@ -842,6 +924,8 @@ def build_delta_threshold_rows(
                     "boundary_ratio": None if hit is None else float(hit.get("boundary_ratio", float("nan"))),
                     "delta_p": None if hit is None else float(hit.get("delta_p", float("nan"))),
                     "active_loss": active_loss,
+                    "surrogate_loss_value": None if hit is None else float(hit.get("surrogate_loss_value", float("nan"))),
+                    "true_loss_value": None if hit is None else float(hit.get("true_loss", float("nan"))),
                     "active_loss_value": None if hit is None else float(hit.get("active_loss_value", float("nan"))),
                 }
             )
@@ -869,6 +953,14 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             direction = method_direction(spec, grad, problem.args.p_order)
             _, projected = propose_delta(spec, delta, direction, problem.args.epsilon, problem.args.alpha, problem.args.p_order)
 
+        if int(problem.args.true_loss_every) > 0 and (k % int(problem.args.true_loss_every) == 0 or k >= problem.args.steps):
+            if loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww":
+                true_loss_t = losses["loss3"].detach()
+            else:
+                true_loss_t = problem.true_loss_all_w(x_adv)
+        else:
+            true_loss_t = torch.full((x_adv.shape[0],), float("nan"), device=x_adv.device, dtype=x_adv.dtype)
+
         with torch.no_grad():
             delta_l2_t = batch_norm(delta, 2.0)
             delta_linf_t = batch_norm(delta, float("inf"))
@@ -877,6 +969,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             direction_l2_mean = None if direction is None else float(batch_norm(direction, 2.0).mean().detach().cpu().item())
 
         losses_np = {name: tensor_to_numpy(value.detach()).astype(np.float64) for name, value in losses.items()}
+        true_loss_np = tensor_to_numpy(true_loss_t.detach()).astype(np.float64)
         delta_l2_np = tensor_to_numpy(delta_l2_t).astype(np.float64)
         delta_linf_np = tensor_to_numpy(delta_linf_t).astype(np.float64)
         delta_p_np = tensor_to_numpy(delta_p_t).astype(np.float64)
@@ -892,6 +985,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             delta_l2_np,
             delta_linf_np,
             delta_p_np,
+            true_loss_np,
             grad_l2_mean,
             direction_l2_mean,
             time.perf_counter() - start,
@@ -905,7 +999,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
 
         if x_adv.grad is not None:
             x_adv.grad = None
-        del x_adv, losses, objective, delta_l2_t, delta_linf_t, delta_p_t
+        del x_adv, losses, objective, true_loss_t, delta_l2_t, delta_linf_t, delta_p_t
         if grad is not None:
             del grad
         if direction is not None:
@@ -1064,6 +1158,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--p", default="2")
     parser.add_argument("--q", default="2")
     parser.add_argument("--save-steps", nargs="*", type=int, default=[], help="Optional trajectory checkpoints to save. Final delta is always saved separately; default saves no per-step trajectory arrays.")
+    parser.add_argument("--true-loss-every", type=int, default=1, help="Evaluate the full all-W solver true loss every N attack steps; 1 records the full true-loss curve.")
     parser.add_argument("--modes1", type=int, default=64)
     parser.add_argument("--modes2", type=int, default=64)
     parser.add_argument("--width", type=int, default=60)

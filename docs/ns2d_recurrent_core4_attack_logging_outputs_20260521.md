@@ -8,37 +8,58 @@ This note records the attack logging behavior added for long NS2D Core4 attack r
 
 Each `loss_type / method / mode_spec / attack batch` output directory now records:
 
-- `per_step_metrics.csv`: one row per attack step `k`, including loss curves and mean delta norms.
-- `per_sample_step_metrics.csv`: one row per sample per step, including per-sample loss and delta norms.
+- `per_step_metrics.csv`: one row per attack step `k`, including surrogate loss, true loss, loss growth rates, and mean delta norms.
+- `per_sample_step_metrics.csv`: one row per sample per step, including per-sample surrogate loss, true loss, loss growth rates, and delta norms.
 - `delta_threshold_crossings.csv`: first time `delta_p / epsilon` reaches `25%`, `50%`, `75%`, and `100%`.
 - `summary.json`: includes the final metrics and embeds the delta threshold crossing rows.
 - `final_delta_and_metrics.npz`: always saves only the final `delta` and `x_adv` for the batch.
 
-## Loss Growth Metrics
+## True Loss And Surrogate Loss Curves
 
-`per_step_metrics.csv` now includes active-loss fields:
+The most important curves are now explicit:
 
-```text
-active_loss
-active_loss_mean
-active_loss_mean_increase_from_k0
-active_loss_mean_ratio_to_k0
-active_loss_mean_delta_from_prev
-active_loss_mean_growth_per_second
-```
+- `surrogate_loss`: the loss actually optimized for the current loss/method/mode group.
+- `true_loss`: the full all-W solver evaluation `||F(x + delta) - G(x + delta)||` recorded for comparison.
 
-`per_sample_step_metrics.csv` now includes per-sample active-loss fields:
+By default, `--true-loss-every 1` records the true-loss curve at every attack step. This adds forward solver evaluation overhead for surrogate modes, but it preserves the main evidence curve. For `loss3/all_w`, the code reuses the active loss as the true loss to avoid duplicate solver work.
+
+`per_step_metrics.csv` now includes surrogate-loss fields:
 
 ```text
 active_loss
-active_loss_value
-active_loss_increase_from_k0
-active_loss_ratio_to_k0
-active_loss_delta_from_prev
-active_loss_growth_per_second
+surrogate_loss_mean
+surrogate_loss_mean_increase_from_k0
+surrogate_loss_mean_ratio_to_k0
+surrogate_loss_mean_delta_from_prev
+surrogate_loss_mean_growth_per_second
 ```
 
-These fields make the loss growth curve and growth speed explicit without having to infer them later from raw loss columns.
+`per_step_metrics.csv` also includes true-loss fields:
+
+```text
+true_loss_mean
+true_loss_mean_increase_from_k0
+true_loss_mean_ratio_to_k0
+true_loss_mean_delta_from_prev
+true_loss_mean_growth_per_second
+```
+
+`per_sample_step_metrics.csv` includes matching per-sample fields:
+
+```text
+surrogate_loss_value
+surrogate_loss_increase_from_k0
+surrogate_loss_ratio_to_k0
+surrogate_loss_delta_from_prev
+surrogate_loss_growth_per_second
+true_loss
+true_loss_increase_from_k0
+true_loss_ratio_to_k0
+true_loss_delta_from_prev
+true_loss_growth_per_second
+```
+
+These fields make the true and surrogate loss curves and growth speed explicit without having to infer them later from raw loss columns.
 
 ## Delta Threshold Crossings
 
@@ -55,6 +76,8 @@ The file contains three scopes:
 - `batch_mean`: first `k` when mean `delta_p / epsilon` reaches the threshold.
 - `all_samples`: first `k` when every sample in the batch reaches the threshold.
 - `sample`: first `k` for each individual sample.
+
+At each threshold crossing, the CSV also records both `surrogate_loss_value` and `true_loss_value`.
 
 ## Final Delta Only
 

@@ -1,3 +1,13 @@
+## 2026-05-21 - NS2D attack true/surrogate loss curve logging
+
+- Status: updated attack code and documentation so the primary loss evidence contains both true and surrogate loss curves; no GPU run launched.
+- Source changed: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Result document updated: `docs/ns2d_recurrent_core4_attack_logging_outputs_20260521.md`.
+- Implementation: `surrogate_loss_*` fields record the active optimization objective; `true_loss_*` fields record the full all-W solver evaluation `||F(x + delta) - G(x + delta)||`; default `--true-loss-every 1` records true loss every attack step.
+- Efficiency note: for `loss3/all_w`, the active loss is reused as true loss to avoid duplicate solver work; other surrogate modes pay an additional forward all-W true-loss evaluation per recorded step.
+- Threshold crossing rows now include both `surrogate_loss_value` and `true_loss_value`.
+- Validation: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py` passed.
+
 ## 2026-05-21 - NS2D attack logging outputs for loss growth and delta thresholds
 
 - Status: updated attack logging code and documentation; no GPU run launched.

@@ -69,6 +69,7 @@ do
     --alpha 1 \
     --p 2 \
     --q 2 \
+    --true-loss-every 1 \
     --solver-remat chunk \
     --solver-remat-chunk-steps 20 \
     --dictionary-chunk-size 32 \
@@ -105,6 +106,7 @@ do
     --alpha 1 \
     --p 2 \
     --q 2 \
+    --true-loss-every 1 \
     --solver-remat chunk \
     --solver-remat-chunk-steps 20 \
     --empty-torch-cache-after-batch
@@ -134,3 +136,6 @@ The full Cartesian product command above is broader than the intended experiment
 
 
 Note: current attack logging records loss/delta curves in CSV and saves final delta automatically. Do not pass `--save-steps` unless intermediate trajectory arrays are explicitly needed.
+
+
+Note: `--true-loss-every 1` records the full all-W solver true-loss curve at every attack step, alongside the surrogate loss being optimized.
