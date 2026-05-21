@@ -270,6 +270,59 @@ def batch_linf_torch(x):
     return x.reshape(x.shape[0], -1).abs().max(dim=1).values
 
 
+def batch_delta_step_metrics(delta, prev_delta, p_order: float, epsilon: float) -> dict[str, Any]:
+    import torch
+
+    base = batch_l2_torch(delta).detach()
+    nan = torch.full_like(base, float("nan"))
+    if prev_delta is None:
+        return {
+            "delta_step_l2": nan,
+            "delta_step_pnorm": nan,
+            "delta_step_linf": nan,
+            "delta_step_l2_over_epsilon": nan,
+            "delta_step_pnorm_over_epsilon": nan,
+            "delta_prev_cosine": nan,
+            "delta_prev_angle_degrees": nan,
+            "delta_unit_direction_l2_step": nan,
+        }
+
+    step = delta - prev_delta
+    step_l2 = batch_l2_torch(step).detach()
+    step_pnorm = batch_norm(step, p_order).detach()
+    step_linf = batch_linf_torch(step).detach()
+
+    flat = delta.reshape(delta.shape[0], -1)
+    prev_flat = prev_delta.reshape(prev_delta.shape[0], -1)
+    norm = torch.linalg.vector_norm(flat, dim=1)
+    prev_norm = torch.linalg.vector_norm(prev_flat, dim=1)
+    denom = norm * prev_norm
+    valid = denom > EPS
+
+    cosine = nan.clone()
+    angle = nan.clone()
+    unit_step = nan.clone()
+    if bool(valid.any().detach().cpu()):
+        dot = torch.sum(flat * prev_flat, dim=1)
+        cos_valid = (dot[valid] / denom[valid]).clamp(-1.0, 1.0)
+        cosine[valid] = cos_valid
+        angle[valid] = torch.acos(cos_valid) * (180.0 / math.pi)
+        current_unit = flat[valid] / norm[valid].unsqueeze(1).clamp_min(EPS)
+        prev_unit = prev_flat[valid] / prev_norm[valid].unsqueeze(1).clamp_min(EPS)
+        unit_step[valid] = torch.linalg.vector_norm(current_unit - prev_unit, dim=1)
+
+    return {
+        "delta_step_l2": step_l2,
+        "delta_step_pnorm": step_pnorm,
+        "delta_step_linf": step_linf,
+        "delta_step_l2_over_epsilon": step_l2 / float(epsilon),
+        "delta_step_pnorm_over_epsilon": step_pnorm / float(epsilon),
+        "delta_prev_cosine": cosine.detach(),
+        "delta_prev_angle_degrees": angle.detach(),
+        "delta_unit_direction_l2_step": unit_step.detach(),
+    }
+
+
 def np_l2_cosine(a: np.ndarray, b: np.ndarray) -> float:
     af = np.asarray(a, dtype=np.float64).reshape(-1)
     bf = np.asarray(b, dtype=np.float64).reshape(-1)
@@ -628,6 +681,7 @@ def append_step_rows(
     direction,
     proposal,
     projected,
+    prev_delta,
     prev_direction,
     direction_info: dict[str, Any],
     elapsed: float,
@@ -639,6 +693,8 @@ def append_step_rows(
     delta_linf = batch_linf_torch(delta).detach()
     delta_np = tensor_to_numpy(delta.detach()).astype(np.float32)
     smooth = smoothness_batch(delta_np)
+
+    step_metrics = batch_delta_step_metrics(delta, prev_delta, problem.args.p_order, problem.args.epsilon)
 
     grad_l2 = torch.full_like(delta_norm_p, float("nan"))
     grad_linf = torch.full_like(delta_norm_p, float("nan"))
@@ -677,6 +733,7 @@ def append_step_rows(
         "delta_l2": tensor_to_numpy(delta_l2),
         "delta_linf": tensor_to_numpy(delta_linf),
         "boundary_ratio": tensor_to_numpy(delta_norm_p / float(problem.args.epsilon)),
+        **{key: tensor_to_numpy(value) for key, value in step_metrics.items()},
         "grad_l2": tensor_to_numpy(grad_l2),
         "grad_linf": tensor_to_numpy(grad_linf),
         "direction_pnorm": tensor_to_numpy(direction_pnorm),
@@ -895,6 +952,7 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
     }
     direction_trace: dict[str, list[Any]] = {"k": [], "direction": []}
 
+    prev_delta = None
     prev_direction = None
     power_state = initialize_power_state(problem, problem.args.seed + 1009) if spec.uses_power_state else None
     if torch.cuda.is_available() and problem.device.type == "cuda":
@@ -906,7 +964,7 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
         step_start = time.perf_counter()
         delta = sanitize_tensor(delta.detach())
         x_adv = (problem.x0 + delta).detach().requires_grad_(k < problem.args.steps)
-        losses, _, _, _ = loss3_norms(problem, x_adv, allow_solver_grad=(k < problem.args.steps))
+        losses, f_adv, g_adv, residual = loss3_norms(problem, x_adv, allow_solver_grad=(k < problem.args.steps))
         objective = sanitize_tensor(losses["loss3_q"])
         losses_np = {key: tensor_to_numpy(value.detach()).astype(np.float32) for key, value in losses.items()}
 
@@ -949,6 +1007,7 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
             direction=direction,
             proposal=proposal,
             projected=projected,
+            prev_delta=prev_delta,
             prev_direction=prev_direction,
             direction_info=direction_info,
             elapsed=elapsed,
@@ -957,6 +1016,10 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
         if selected_pos and problem.args.save_delta_trajectory:
             delta_np = tensor_to_numpy(delta.detach()).astype(np.float32)
             x_adv_np = tensor_to_numpy((problem.x0 + delta).detach()).astype(np.float32)
+            if problem.args.save_trajectory_final_conditions:
+                model_final_np = tensor_to_numpy(f_adv.detach()).astype(np.float32)
+                solver_final_np = tensor_to_numpy(g_adv.detach()).astype(np.float32)
+                residual_final_np = tensor_to_numpy(residual.detach()).astype(np.float32)
             delta_norm_p = tensor_to_numpy(batch_norm(delta, problem.args.p_order).detach())
             delta_l2 = tensor_to_numpy(batch_l2_torch(delta).detach())
             delta_linf = tensor_to_numpy(batch_linf_torch(delta).detach())
@@ -964,6 +1027,11 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
             trajectory["k"].append(k)
             trajectory["delta"].append(delta_np[selected_pos])
             trajectory["x_adv"].append(x_adv_np[selected_pos])
+            if problem.args.save_trajectory_final_conditions:
+                trajectory.setdefault("perturbed_initial", []).append(x_adv_np[selected_pos])
+                trajectory.setdefault("model_final_condition", []).append(model_final_np[selected_pos])
+                trajectory.setdefault("solver_final_condition", []).append(solver_final_np[selected_pos])
+                trajectory.setdefault("final_condition_residual", []).append(residual_final_np[selected_pos])
             for key in LOSS3_KEYS:
                 trajectory[key].append(losses_np[key][selected_pos])
             trajectory["delta_pnorm"].append(delta_norm_p[selected_pos])
@@ -983,6 +1051,7 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
                 direction_trace["k"].append(k)
                 direction_trace["direction"].append(tensor_to_numpy(direction.detach()).astype(np.float32)[selected_pos])
 
+        prev_delta = delta.detach()
         if direction is not None:
             prev_direction = direction.detach()
         if k >= problem.args.steps:
@@ -1018,8 +1087,30 @@ def run_method(problem: AblationProblem, spec: MethodSpec, root: Path, trajector
             "sample_position": np.asarray(selected_pos, dtype=np.int64),
             **{key: np.asarray(value) for key, value in trajectory.items()},
         }
+        if problem.args.save_trajectory_final_conditions:
+            trajectory_payload["clean_initial"] = tensor_to_numpy(problem.x0.detach()).astype(np.float32)[selected_pos]
         np.savez_compressed(method_dir / "trajectory_samples.npz", **trajectory_payload)
         save_delta_spectra(method_dir / "delta_spectrum_by_step.npz", trajectory_payload)
+        if problem.args.save_trajectory_final_conditions:
+            save_json(
+                method_dir / "trajectory_samples_schema.json",
+                {
+                    "trajectory_samples_npz": "trajectory_samples.npz",
+                    "step_axis": "k",
+                    "sample_axis": "dataset_index/sample_position",
+                    "clean_initial_shape": "sample x space x channel",
+                    "per_step_array_shape": "step x sample x space x channel",
+                    "gif_ready_arrays": [
+                        "delta",
+                        "x_adv",
+                        "perturbed_initial",
+                        "model_final_condition",
+                        "solver_final_condition",
+                        "final_condition_residual",
+                    ],
+                    "notes": "x_adv and perturbed_initial are the attacked initial condition x0 + delta. model_final_condition is f(x0+delta); solver_final_condition is g(x0+delta).",
+                },
+            )
     if selected_pos and direction_trace["k"]:
         direction_payload = {
             "method": np.asarray([spec.label]),
@@ -1423,6 +1514,7 @@ def write_manifest(root: Path, args: argparse.Namespace, specs: list[MethodSpec]
         "gradient_implementation_source": "autograd(loss3_q) for PGD/LP-steepest/objective-gradient rows",
         "steepest_direction_source": "explicit p-ball linear maximizer",
         "gpu_runtime": gpu_evidence,
+        "save_trajectory_final_conditions": bool(args.save_trajectory_final_conditions),
         "outputs_expected": [
             "per_step_metrics.csv",
             "per_sample_step_metrics.csv",
@@ -1482,6 +1574,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--save-boundary-normalized-eval", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--save-physical-diagnostics", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--save-delta-trajectory", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument(
+        "--save-trajectory-final-conditions",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="When saving selected trajectory samples, also store clean initial condition, perturbed initial condition, model final condition, solver final condition, and residual for every saved step. Intended for baseline GIF/movie diagnostics.",
+    )
     parser.add_argument("--make-gifs", action="store_true")
     parser.add_argument("--no-plots", action="store_true")
     parser.add_argument("--dry-run-plan", action="store_true", help="Write the resolved method plan and exit without loading GPU/model or running attacks.")
@@ -1520,6 +1618,7 @@ def main() -> None:
                 "static_figures": not args.no_plots,
                 "gifs": bool(args.make_gifs),
                 "trajectory_npz": bool(args.save_delta_trajectory),
+                "trajectory_final_conditions_npz": bool(args.save_trajectory_final_conditions),
             },
         },
     )

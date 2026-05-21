@@ -1,5 +1,1051 @@
 # Experiment Ledger
 
+## 2026-05-20 Loss3 P-Not-Q Visualization Directory Location Check
+
+Status: inspected local filesystem paths for the stopped p!=q visualization outputs; no experiment, analysis, or plotting job was launched.
+
+Observed evidence:
+
+- Stopped p!=q raw sweep root exists: `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/`.
+- Stopped p!=q analysis root exists: `forensics/loss3_alpha_epsilon_core4_analysis_pneq_q_stopped_100steps_20260520/`.
+- New stopped visualization roots exist:
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p1_q2_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p1_qinf_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p2_qinf_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_pinf_q1_partial_stopped_100steps_20260520/`
+- Each listed visualization root contains `manifest.json` and `figures/loss3_q_mean_curves_with_boundary_markers.png`.
+- Index Markdown exists: `docs/loss3_pneq_stopped_visual_index_20260520.md`.
+
+Inference:
+
+- The requested new p!=q visualization directories are present locally; `pinf_q1` remains partial, and no `pinf_q2` stopped visual exists because no completed roots were present when stopped.
+
+## 2026-05-20 Loss3 P-Not-Q Stopped Post-Processing Visuals
+
+Status: completed post-processing and visualization from existing completed p!=q roots after stopping the overnight run; no additional experiment roots were launched.
+
+Source files:
+
+- Stopped p!=q sweep root: `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/`.
+- Analysis script: `tools/analyze_loss3_alpha_epsilon_core4_sweep.py`.
+- Plot script: `tools/plot_loss3_alpha_epsilon_core4_visuals.py`.
+
+Output files:
+
+- Analysis root: `forensics/loss3_alpha_epsilon_core4_analysis_pneq_q_stopped_100steps_20260520/`.
+- Analysis Markdown: `docs/loss3_alpha_epsilon_core4_pneq_q_stopped_100steps_result_20260520.md`.
+- Visual index: `docs/loss3_pneq_stopped_visual_index_20260520.md`.
+- Visual roots:
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p1_q2_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p1_qinf_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_p2_qinf_stopped_100steps_20260520/`
+  - `forensics/loss3_alpha_epsilon_core4_visuals_pinf_q1_partial_stopped_100steps_20260520/`
+
+Observed evidence:
+
+- Analysis skipped the interrupted `p=inf,q=1, epsilon=2.0, alpha=0.2` root because its manifest was not completed.
+- Completed-setting counts in generated visual manifests: `p=1,q=2` 20, `p=1,q=inf` 20, `p=2,q=1` 20, `p=2,q=inf` 20, and `p=inf,q=1` partial 2.
+- `p=inf,q=2` was not plotted because no completed roots were present when the run was stopped.
+
+Inference:
+
+- The stopped p!=q visual set is suitable for the four full P/Q pairs above. The `p=inf,q=1` output is only a partial preview and should be labeled as such in any interpretation.
+
+Remaining work:
+
+- Do not compare `p=inf,q=1` as a full alpha/epsilon sweep unless the missing settings are intentionally run later.
+
+## 2026-05-20 Loss3 P-Not-Q Run Stopped By User
+
+Status: stopped active overnight p!=q experiment at the user's request; no further experiment roots should be launched for this p!=q sweep in this turn.
+
+Observed process evidence before stop:
+
+- Active overnight driver: `bash tools/run_loss3_overnight_20260520.sh`.
+- Active sweep: `tools/run_loss3_alpha_epsilon_core4_sweep.py --base-out forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520 --steps 100 --pq-pairs 1:2 1:inf 2:1 2:inf inf:1 inf:2 ...`.
+- Active setting runner before stop: `p=inf,q=1, epsilon=2.0, alpha=0.2`, output root `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps2_alpha0p2_batch100_steps100_pinf_q1`.
+
+Observed artifact status before post-processing:
+
+- `p=1,q=2`: 20 completed roots.
+- `p=1,q=inf`: 20 completed roots.
+- `p=2,q=1`: 20 completed roots.
+- `p=2,q=inf`: 20 completed roots.
+- `p=inf,q=1`: 2 completed roots and 1 interrupted/run-started root.
+- `p=inf,q=2`: not started locally in this stopped run.
+
+Action taken:
+
+- Sent SIGTERM to process group `63104` and verified no `loss3_overnight`, `run_loss3_alpha_epsilon_core4_sweep`, or `run_loss3_direction_proposal_ablation` processes remained.
+
+Remaining work:
+
+- Run post-processing only on completed roots currently present under `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/`.
+
+## 2026-05-20 Loss3 P-Not-Q Path/Visualization Status Check
+
+Status: inspected existing/local p!=q artifacts and active overnight process; no new experiment, plotting, or analysis job was launched.
+
+Observed evidence:
+
+- Active overnight driver is still running: `bash tools/run_loss3_overnight_20260520.sh`.
+- Active p!=q sweep command is running: `tools/run_loss3_alpha_epsilon_core4_sweep.py --base-out forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520 --steps 100 --pq-pairs 1:2 1:inf 2:1 2:inf inf:1 inf:2 ...`.
+- Current new p!=q raw sweep root: `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/`.
+- Completion counts observed in the new p!=q sweep root: `p=1,q=2` 20 completed roots, `p=1,q=inf` 20 completed roots, `p=2,q=1` 20 completed roots, `p=2,q=inf` 18 completed roots plus 1 `run_started` root. Planned `p=inf,q=1` and `p=inf,q=2` pairs have not appeared yet.
+- The overnight script plans to generate per-P/Q visual roots after the sweep/analysis finishes: `forensics/loss3_alpha_epsilon_core4_visuals_p1_q2_100steps_20260520/`, `..._p1_qinf_...`, `..._p2_q1_...`, `..._p2_qinf_...`, `..._pinf_q1_...`, and `..._pinf_q2_...`.
+- Older completed P/Q comparison figures exist under `forensics/loss3_core_per_pq_four_figures_20260518/`, with per-P/Q folders such as `p1_q2`, `p1_qinf`, `p2_q1`, `p2_qinf`, `pinf_q1`, and `pinf_q2`.
+
+Inference:
+
+- The new 2026-05-20 alpha/epsilon p!=q sweep is not finished yet, so its new planned visual folders have not been generated locally yet.
+- The currently available P/Q visual figures are the older 2026-05-18 per-P/Q figure set, not the new alpha/epsilon p!=q overnight visual set.
+
+Remaining work:
+
+- Wait for the active overnight p!=q sweep to finish; then the scripted analysis and per-P/Q visual folders should be generated automatically.
+
+## 2026-05-20 Loss3 GPI Overall Conclusion Markdown
+
+Status: created a dedicated Markdown synthesis note from existing experiment artifacts; no experiment, plotting job, or analysis job was launched.
+
+Output file:
+
+- `docs/loss3_gpi_overall_conclusion_20260520.md`
+
+Observed evidence summarized:
+
+- 300-step p2q2 summary table: `forensics/loss3_alpha_epsilon_core4_analysis_p2q2_300steps_20260520/core4_alpha_epsilon_method_summary.csv`.
+- 300-step p2q2 visual root: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/`.
+- GPI early-step comparison: `forensics/loss3_gpi_early_step_comparison_20260520/`.
+- Baseline trajectory/GIF source: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/`.
+
+Inference recorded:
+
+- GPI/replacement is a strong practical optimizer for the tested `loss3` settings because it reaches the boundary immediately, quickly converges to a final-like perturbation shape, and often obtains comparable perturbations/loss much faster than additive PGD-style methods.
+- The conclusion is phrased as a speed/stability/Pareto advantage, not as unconditional final-loss dominance.
+
+Remaining work:
+
+- Extend early-step GPI comparisons beyond the saved baseline trajectory if a paper-level claim needs broader evidence.
+
+## 2026-05-20 Loss3 GPI Overall Interpretation Check
+
+Status: recorded synthesis from existing generated artifacts; no experiment, plotting job, or analysis job was launched.
+
+Source evidence:
+
+- 300-step p2q2 summary table: `forensics/loss3_alpha_epsilon_core4_analysis_p2q2_300steps_20260520/core4_alpha_epsilon_method_summary.csv`.
+- 300-step visual root: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/`.
+- GPI early-step comparison: `forensics/loss3_gpi_early_step_comparison_20260520/` and `docs/loss3_gpi_early_step_comparison_20260520.md`.
+- GPI trajectory/GIF source: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/`.
+
+Observed evidence:
+
+- Replacement/GPI reaches the p-norm boundary at step 1 in the p2q2 alpha/epsilon sweeps, while raw PGD and LP-steepest additive methods take multiple steps and can be much slower depending on alpha/epsilon.
+- In the saved baseline early-step comparison, selected-sample mean `cos(delta_k, delta_300)` for GPI is `0.8868` at k=5, `0.9840` at k=10, and `0.9949` at k=20.
+- Final perturbation shapes are often visually and cosine-wise similar across GPI, PGD, and LP-steepest additive methods for representative samples, though at least one saved sample is an outlier where GPI and PGD/LP final directions differ substantially.
+- In 300-step p2q2 runs, GPI/replacement is not always the strict largest final-loss method; `steepest_add` or raw PGD can match or slightly exceed it in final mean loss for some alpha/epsilon settings.
+
+Inference:
+
+- The evidence supports describing GPI/replacement as a strong practical method for this loss3 setting: it rapidly saturates the perturbation budget, quickly converges to a stable perturbation shape, and often reaches comparable final perturbations much faster than additive PGD-style methods.
+- The safer conclusion is speed/stability/Pareto advantage, not unconditional final-loss dominance. For final-loss-only evaluation after long horizons, additive LP-steepest can sometimes be competitive or better.
+
+Remaining work:
+
+- If this becomes a paper claim, phrase it as empirical evidence over the tested alpha/epsilon and p2q2 settings, and separately report final-loss winners, boundary-arrival speed, angular motion, and perturbation smoothness/similarity.
+
+## 2026-05-20 Loss3 GIF Trace and Early-Step Artifact Location Reply
+
+Status: verified existing artifact paths and clarified interpretation; no experiment or plotting job was launched.
+
+Observed evidence:
+
+- GIF trace manifest exists: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/trajectory_condition_gifs/manifest.json`.
+- GPI early-step delta grid exists: `forensics/loss3_gpi_early_step_comparison_20260520/figures/gpi_early_delta_grid_steps_1_5_10_20_100_300.png`.
+
+Inference:
+
+- Boundary-ratio variance difference is primarily explained by normalized p-steepest directions for `steepest_add`/replacement methods versus unnormalized raw gradient scale for `raw_add`/PGD.
+- Early-step visualization is available for the baseline GIF-trace run because it saved trajectory arrays; ordinary final-only artifacts cannot support the same full condition-panel reconstruction without saved trajectories.
+
+Remaining work:
+
+- Use the GIF trace directory and early-step comparison directory for visual inspection; rerun/save trajectory arrays for any missing exact settings that need step-wise condition panels.
+
+## 2026-05-20 Loss3 GPI Early-Step Perturbation Comparison 18:41 UTC
+
+Status: generated post-processing visualizations and tables from existing trajectory artifacts; no neural-operator experiment was launched.
+
+Source files:
+
+- Trajectory source: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/steepest_replace/trajectory_samples.npz`.
+- Cross-method final comparison sources: sibling `trajectory_samples.npz` files for `raw_add`, `steepest_add`, `raw_replace`, and `steepest_replace`.
+- Plotting script added: `tools/plot_loss3_gpi_early_step_comparison.py`.
+
+Output files:
+
+- Manifest: `forensics/loss3_gpi_early_step_comparison_20260520/manifest.json`.
+- Delta grid: `forensics/loss3_gpi_early_step_comparison_20260520/figures/gpi_early_delta_grid_steps_1_5_10_20_100_300.png`.
+- Loss/cosine curve: `forensics/loss3_gpi_early_step_comparison_20260520/figures/gpi_loss_cosine_to_final_selected_samples.png`.
+- Condition panels: `forensics/loss3_gpi_early_step_comparison_20260520/figures/gpi_early_condition_panels/`.
+- Similarity table: `forensics/loss3_gpi_early_step_comparison_20260520/tables/gpi_early_step_similarity.csv`.
+- Result Markdown: `docs/loss3_gpi_early_step_comparison_20260520.md`.
+
+Key settings:
+
+- Baseline setting `epsilon=4`, `alpha=0.4`, `p=2`, `q=2`, `steps=300`.
+- Method visualized: `steepest_replace` (GPI/replacement).
+- Saved dataset indices: `0`, `7`, `40`, `47`.
+- Plotted steps: `1`, `5`, `10`, `20`, `100`, `300`; condition panels include `1`, `5`, `10`, sample-best step, and `300`.
+
+Observed evidence:
+
+- Mean selected-sample `cos(delta_k, delta_300)` for GPI is `0.8868` at k=5, `0.9840` at k=10, `0.9949` at k=20, and `1.0000` at k=300.
+- Mean selected-sample GPI loss is `3.4935` at k=5, `3.6642` at k=10, `3.6791` at k=20, `3.5362` at k=100, and `3.6344` at k=300.
+- Dataset 40 is nonmonotone: it has higher GPI loss around k=20 than at k=100 or k=300 while remaining high-cosine to final.
+- Cross-method final-delta similarity is high for datasets 7, 40, and 47, but dataset 0 is an outlier with low cosine between GPI final and PGD/LP-steepest final deltas.
+
+Inference:
+
+- For the saved baseline trajectory samples, GPI perturbation shape is already close to its k=300 final shape by k=10. This supports testing a 5-step/10-step GPI early-stop variant, but the evidence is currently selected-sample trajectory evidence, not a full-batch proof.
+- Early stopping should be judged with both shape similarity and loss stability because the loss can fluctuate after the shape has nearly converged.
+
+Remaining work:
+
+- If exact early-stop performance is needed for all 100 samples and all alpha/epsilon settings, rerun or extend the sweep to save full-batch early-step deltas or compute early-stop summary metrics directly.
+
+## 2026-05-20 Loss3 Angle Triptych Y-Axis Fix 18:34 UTC
+
+Status: modified and regenerated visualization artifacts only; no neural-operator experiment was launched.
+
+Source files:
+
+- Plotting script updated: `tools/plot_loss3_alpha_epsilon_core4_visuals.py`.
+- 100-step sweep source: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/*/per_step_metrics.csv`.
+- 300-step sweep source: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/*/per_step_metrics.csv`.
+
+Output files:
+
+- 100-step refreshed visual root: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/`.
+- 100-step angle-available triptychs: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/dynamics_triptychs_angle_available/`.
+- 300-step refreshed visual root: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/`.
+- 300-step angle-available triptychs: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/dynamics_triptychs_angle_available/`.
+- Updated visual notes: `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`, `docs/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520.md`.
+
+Observed evidence:
+
+- Existing angle means have maximum `70.3312` degrees in both inspected 100-step and 300-step p2q2 roots.
+- Existing angle mean-plus-std values have maximum `81.7749` degrees in both inspected roots.
+- The previous fixed `0..180` degree y-axis compressed the angle curves unnecessarily.
+- Refreshed manifests were generated at `2026-05-20T18:32:34.324100+00:00` for the 100-step visual root and `2026-05-20T18:34:08.800642+00:00` for the 300-step visual root.
+
+Inference:
+
+- A data-driven angle y-axis is more faithful for these figures: it preserves the actual angle range and makes PGD/LP-steepest/GPI angular-motion differences readable without clipping the observed mean +/- std band.
+
+Remaining work:
+
+- Use the regenerated triptychs for angular-motion interpretation; older images with fixed 0..180 y-axis should not be used for judging relative angular speed.
+
+## 2026-05-20 Loss3 Angular-Motion Interpretation 18:31 UTC
+
+Status: recorded interpretation from existing generated angle-dynamics figures; no new neural-operator experiment was launched.
+
+Source files:
+
+- Angle dynamics figures: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/dynamics_triptychs_angle_available/`.
+- Result Markdown updated: `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`.
+
+Observed evidence:
+
+- User inspection of the generated angle dynamics figures found that replacement/GPI-style methods have much larger per-step `angle(delta_k, delta_{k-1})` than raw PGD and LP-steepest additive PGD.
+- Raw PGD shows the slowest angular movement; LP-steepest additive PGD rotates faster than raw PGD but still decays as the perturbation approaches the boundary.
+
+Inference:
+
+- Replacement/GPI should not be framed as a classical power-iteration optimizer with global guarantees for this nonquadratic neural loss.
+- A better interpretation is geometric: replacement/GPI repeatedly solves a local linearized full-budget boundary-direction problem, avoiding the angular inertia of additive updates. This can explain why it reaches strong loss values quickly even when the objective is nonquadratic.
+- The empirical claim should be: replacement/GPI is an aggressive boundary-direction optimizer with fast angular motion; its perturbation quality still needs to be checked with spectral/smoothness/shape metrics.
+
+Remaining work:
+
+- Compare angular-motion curves against high-frequency energy, derivative/TV metrics, and GIF trajectories to ensure the fast rotation does not correspond to transient spike-like perturbations.
+
+## 2026-05-20 Loss3 Angle-Available Dynamics Triptych Fix 18:27 UTC
+
+Status: modified and regenerated visualization artifacts only; no neural-operator experiment was launched.
+
+Source files:
+
+- Plotting script updated: `tools/plot_loss3_alpha_epsilon_core4_visuals.py`.
+- 100-step sweep source: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/*/per_step_metrics.csv`.
+- 300-step sweep source: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/*/per_step_metrics.csv`.
+
+Output files:
+
+- 100-step refreshed manifest: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`.
+- 100-step angle-available triptych directory: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/dynamics_triptychs_angle_available/`.
+- 100-step updated note: `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`.
+- 300-step refreshed manifest: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/manifest.json`.
+- 300-step angle-available triptych directory: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/dynamics_triptychs_angle_available/`.
+- 300-step updated note: `docs/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520.md`.
+
+Observed evidence:
+
+- The 100-step p2q2 sweep has angular metrics in 9 of 20 completed roots. The missing 11 roots are older completed settings produced before `delta_prev_angle_degrees_mean` was added.
+- The explicit 100-step representative triptych settings (`epsilon,alpha` = `4,0.4`, `8,0.3`, `8,1.6`, `16,1.6`) are all among the older roots without angular metrics, so their angular panels cannot be reconstructed from local files.
+- The refreshed 100-step manifest generated at `2026-05-20T18:26:38.752656+00:00` now lists 9 `angle_available_triptychs`.
+- The 300-step p2q2 sweep has angular metrics in 20 of 20 completed roots. The refreshed 300-step manifest generated at `2026-05-20T18:27:35.916818+00:00` now lists 20 `angle_available_triptychs`.
+
+Inference:
+
+- The previous visual output hid usable angular-motion plots because only explicitly requested representative triptychs were generated, and those happened to be old no-angle settings. The new output separately plots every setting that actually has `delta_prev_angle_degrees_mean`.
+- Old no-angle settings still require rerunning the experiment if angular motion is needed for those exact epsilon/alpha combinations.
+
+Remaining work:
+
+- Use `figures/dynamics_triptychs_angle_available/` for angular-motion review. Rerun old 100-step settings only if the exact missing epsilon/alpha angle trajectories are required.
+
+## 2026-05-20 Loss3 Boundary-Ratio Std Interpretation 18:24 UTC
+
+Status: inspected existing 300-step p2q2 per-step metrics and updated the dedicated result Markdown; no new neural-operator experiment was launched.
+
+Source files:
+
+- `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/*/per_step_metrics.csv`
+- `forensics/loss3_alpha_epsilon_core4_analysis_p2q2_300steps_20260520/core4_alpha_epsilon_method_summary.csv`
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`
+
+Observed evidence:
+
+- For `epsilon=8, alpha=0.3`, max/mean `boundary_ratio_std` values are `raw_add=0.288/0.0588`, `steepest_add=0.0438/0.00211`, and `raw_replace=steepest_replace=~3e-08/~3e-08`.
+- For `epsilon=8, alpha=0.3`, per-sample 99% boundary steps are `raw_add` mean/median/max `73.47/80/126`, `steepest_add` `29.44/29/34`, and replacement methods `1/1/1`.
+- At `epsilon=8, alpha=0.3`, step 20 has `raw_add` `boundary_ratio_mean=0.310`, `boundary_ratio_std=0.194`; `steepest_add` has `boundary_ratio_mean=0.700`, `boundary_ratio_std=0.026`.
+- At `epsilon=8, alpha=0.3`, step 1 has `steepest_add` `delta_step_pnorm_mean=0.3` and `delta_step_pnorm_std=1.5e-08`, consistent with the normalized p-steepest step rule.
+
+Inference:
+
+- The large `raw_add` boundary-ratio std is caused by sample-dependent raw-gradient scale and radial alignment, which make samples reach the epsilon boundary at very different steps.
+- The smaller `steepest_add` boundary-ratio std is expected because the p-steepest direction is normalized before applying alpha, making radial budget usage much more synchronized across samples.
+- Replacement/GPI boundary-ratio std is essentially floating-point noise because the replacement update enforces boundary norm from step 1 onward.
+
+Remaining work:
+
+- Use angular-change and post-boundary loss-gain diagnostics to study boundary movement; `boundary_ratio_std` only measures radial synchronization.
+
+## 2026-05-20 Loss3 300-Step P2Q2 Interpretation Check 18:20 UTC
+
+Status: inspected existing 300-step analysis tables and updated the dedicated result Markdown; no new neural-operator experiment was launched.
+
+Source files:
+
+- `forensics/loss3_alpha_epsilon_core4_analysis_p2q2_300steps_20260520/core4_alpha_epsilon_method_summary.csv`
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`
+
+Observed evidence:
+
+- For `epsilon=2, alpha=0.4`, final mean losses are `raw_add=1.4420`, `steepest_add=1.4552`, and `raw_replace=steepest_replace=1.3651`; mean 99% boundary-hit steps are `25`, `6`, and `1` respectively.
+- For `epsilon=2, alpha=0.8`, final mean losses are `raw_add=1.4551`, `steepest_add=1.4440`, and `raw_replace=steepest_replace=1.3651`; mean 99% boundary-hit steps are `13`, `3`, and `1` respectively.
+- For large-epsilon examples, replacement/GPI has lower final-loss std than add methods, e.g. `epsilon=8, alpha=0.3`: replacement/GPI std `1.4882` versus `raw_add=2.4005` and `steepest_add=2.0900`; `epsilon=16, alpha=1.6`: replacement/GPI std `2.2430` versus `raw_add=4.1427` and `steepest_add=3.3813`.
+- Across 20 p2q2 300-step settings, strict largest-final-mean winners are `steepest_add` in 16 settings and `raw_add` in 1 setting; replacement/GPI tie for largest final mean in 3 settings.
+
+Inference:
+
+- The observed 300-step evidence supports a Pareto-style conclusion: replacement/GPI is consistently fastest to the boundary and lower variance, while longer-horizon `steepest_add` can slightly exceed it in final mean loss for many settings.
+
+Remaining work:
+
+- Use both early-time performance and final 300-step loss when writing the final comparison; avoid claiming that GPI is always the final-loss winner.
+
+## 2026-05-20 Loss3 Boundary-Ratio Std Visualization Fix 18:16 UTC
+
+Status: modified and regenerated visualization artifacts only; no neural-operator experiment was launched by this fix.
+
+Source files:
+
+- Plotting script updated: `tools/plot_loss3_alpha_epsilon_core4_visuals.py`.
+- Source 100-step sweep data: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/*/per_step_metrics.csv`.
+- Source 300-step sweep data: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/*/per_step_metrics.csv`.
+
+Output files:
+
+- 100-step refreshed manifest: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`.
+- 100-step added std figure: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/boundary_ratio_std_curves.png`.
+- 100-step updated note: `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`.
+- 300-step refreshed manifest: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/manifest.json`.
+- 300-step added std figure: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/boundary_ratio_std_curves.png`.
+- 300-step updated note: `docs/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520.md`.
+
+Key settings:
+
+- Plotted `p=2,q=2`, 20 alpha/epsilon settings, core four methods.
+- The original mean boundary-ratio plot still uses true mean +/- sample std shading for every method; the new figure directly plots `boundary_ratio_std` by method and alpha/epsilon panel.
+
+Observed evidence:
+
+- 100-step visual manifest regenerated at `2026-05-20T18:15:51.486994+00:00` with `completed_setting_count=20` and a `boundary_std_curves` output path.
+- 300-step visual manifest regenerated at `2026-05-20T18:16:42.069367+00:00` with `completed_setting_count=20` and a `boundary_std_curves` output path.
+- Aggregating `boundary_ratio_std` over all 20 p2q2 100-step roots gives max/mean values: `raw_add` `0.2954/0.0751`, `raw_replace` `3.58e-08/2.86e-08`, `steepest_add` `0.0898/0.00340`, `steepest_replace` `3.58e-08/2.86e-08`.
+- Aggregating `boundary_ratio_std` over all 20 p2q2 300-step roots gives max/mean values: `raw_add` `0.2954/0.0264`, `raw_replace` `3.64e-08/2.90e-08`, `steepest_add` `0.0898/0.00114`, `steepest_replace` `3.64e-08/2.90e-08`.
+
+Inference:
+
+- The apparent missing std shading on replacement methods is a visualization-scale issue, not missing computation: their boundary-ratio sample std is nearly zero and the true band collapses onto the mean line.
+- The separate std curve figure makes this visible without artificially inflating the uncertainty band.
+
+Remaining work:
+
+- Use the new `boundary_ratio_std_curves.png` figures when checking whether a method has genuinely small across-sample variability versus visually hidden mean-curve shading.
+
+## 2026-05-20 Loss3 300-Step Figure Location Check
+
+Status: inspected generated 300-step visualization artifacts; no new experiment was launched by this check.
+
+Observed evidence:
+
+- 300-step visualization manifest exists and reports status `completed`, generated at `2026-05-20T10:33:34.196576+00:00`.
+- Manifest source sweep root: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520`.
+- Manifest reports `completed_setting_count=20` and `pq_pairs_plotted=[{p: 2, q: 2}]`.
+- 300-step loss figure exists: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`.
+- Boundary-ratio figure exists: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/boundary_ratio_mean_curves.png`.
+- Delta angular-speed figure exists: `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/delta_prev_angle_degrees_mean_curves.png`.
+- Dynamics triptychs exist for representative settings under `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/dynamics_triptychs/`.
+
+Inference:
+
+- The requested 300-step loss visualization has been generated. It is scoped to `p=2,q=2` and the 20 alpha/epsilon settings.
+
+## 2026-05-20 Loss3 Overnight Run Status Check 17:54 UTC
+
+Status: inspected active background run; no new experiment was launched by this check.
+
+Observed process evidence:
+
+- Overnight driver is still running: PID `63104`, command `bash tools/run_loss3_overnight_20260520.sh`, elapsed about `15:45:48` at inspection.
+- Current active stage is stage 4: strict off-diagonal `p != q` 100-step sweep, command `tools/run_loss3_alpha_epsilon_core4_sweep.py --base-out forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520 --steps 100 --pq-pairs 1:2 1:inf 2:1 2:inf inf:1 inf:2 ...`.
+- Current active setting runner: PID `131603`, output root `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha0p2_batch100_steps100_p2_q1`.
+- Current setting is `epsilon=8.0`, `alpha=0.2`, `p=2`, `q=1`, `steps=100`; current log has printed `[run] raw_add`.
+
+Observed GPU evidence:
+
+- `nvidia-smi` showed Tesla V100-SXM2-32GB, memory `9520 MiB / 32768 MiB`, GPU utilization `97%` at inspection.
+
+Observed artifact/log evidence:
+
+- Stage 1 `p=2,q=2` 100-step sweep/analysis/plots completed: 20 completed roots, plus one old `interrupted_not_for_analysis` root not included in analysis.
+- Stage 2 `p=2,q=2` 300-step sweep completed: 20 completed roots.
+- Stage 3 baseline GIF trace completed: baseline run manifest and trajectory GIF manifest are completed.
+- Stage 4 strict `p != q` sweep has 50 completed roots and 1 running root out of 120 planned settings.
+- Stage 4 progress by observed P/Q pair: `p=1,q=2` completed 20/20, `p=1,q=inf` completed 20/20, `p=2,q=1` completed 10/20 with the 11th running.
+- Stages not yet reached in stage 4: remaining `p=2,q=1` settings, then `p=2,q=inf`, `p=inf,q=1`, and `p=inf,q=2`.
+- Current logs: `logs/loss3_overnight_20260520T020904Z.log` and `logs/loss3_alpha_epsilon_core4_eps8_alpha0p2_p2_q1.log`.
+
+Inference:
+
+- The workflow has not finished. It is in the final major sweep stage, but the largest stage is still in progress.
+- By planned setting count, completed settings are approximately 92 out of 160 experiment roots if counting stage 1/2/4 sweeps plus the baseline root; stage 4 itself is about 50/120 completed, with one active.
+
+Remaining work:
+
+- Continue monitoring until stage 4 completes and the automatic stage-4 analysis/visualization/similarity/post-boundary diagnostics finish.
+
+## 2026-05-20 Loss3 Overnight Run Status Check 04:21 UTC
+
+Status: inspected active background run; no new experiment was launched by this check.
+
+Observed process evidence:
+
+- Overnight driver is still running: PID `63104`, command `bash tools/run_loss3_overnight_20260520.sh`, elapsed about `02:12:24` at inspection.
+- Current active stage is stage 2: `tools/run_loss3_alpha_epsilon_core4_sweep.py --base-out forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520 --steps 300 --p 2 --q 2 ...`.
+- Current active setting runner: PID `74234`, output root `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/fno_nu0p001_eps2_alpha0p2_batch100_steps300_p2_q2`.
+- Current setting is `epsilon=2.0`, `alpha=0.2`, `p=2`, `q=2`, `steps=300`.
+- Within the current setting, `raw_add`, `raw_replace`, and `steepest_add` method summaries exist; `steepest_replace` summary is not yet present, so the setting is likely running the fourth method.
+
+Observed GPU evidence:
+
+- `nvidia-smi` showed Tesla V100-SXM2-32GB, memory `9522 MiB / 32768 MiB`, GPU utilization `95%` at inspection.
+
+Observed artifact/log evidence:
+
+- Stage 1 completed: `forensics/loss3_alpha_epsilon_core4_sweep_20260519` has `20` completed roots and no running/failed roots; stage-1 analysis, visualizations, final-delta similarity, and post-boundary diagnostics completed with `completed_setting_count=20`.
+- Stage 2 status: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520` has `2` completed roots, `1` running root, and no failed roots.
+- Baseline GIF trace has not started: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520` has no roots yet.
+- Strict `p != q` sweep has not started: `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520` has no roots yet.
+- Current logs: `logs/loss3_overnight_20260520T020904Z.log` and `logs/loss3_alpha_epsilon_core4_eps2_alpha0p2_p2_q2.log`.
+
+Inference:
+
+- The workflow has not finished. It has completed the first major stage and is early in the second major stage.
+- By major stage count: stage 1 done; stage 2 in progress; stages 3 and 4 pending.
+- By 300-step p=2,q=2 stage: 2 of 20 settings completed, third setting running and near the fourth method.
+- The strict off-diagonal P/Q stage is large (`120` 100-step settings) and will dominate remaining runtime after the 300-step and baseline stages complete.
+
+Remaining work:
+
+- Continue monitoring. If desired, inspect again after the current 300-step setting completes to refine runtime estimates.
+
+## 2026-05-20 Loss3 Overnight Run Status Check 02:09 UTC
+
+Status: inspected active background run; no new experiment was launched by this check.
+
+Observed process evidence:
+
+- Overnight driver is running: PID `63104`, command `bash tools/run_loss3_overnight_20260520.sh`, elapsed about `01:18` at inspection.
+- Stage-1 sweep wrapper is running: PID `63429`, command `tools/run_loss3_alpha_epsilon_core4_sweep.py --base-out forensics/loss3_alpha_epsilon_core4_sweep_20260519 --steps 100 --p 2 --q 2 --skip-completed ...`.
+- Current setting runner is running: PID `63430`, command `tools/run_loss3_direction_proposal_ablation.py`, output root `forensics/loss3_alpha_epsilon_core4_sweep_20260519/fno_nu0p001_eps1_alpha0p1_batch100_steps100_p2_q2`.
+- Current method observed from log: `raw_add` for `epsilon=1.0`, `alpha=0.1`, `p=2`, `q=2`.
+
+Observed GPU evidence:
+
+- `nvidia-smi` showed Tesla V100-SXM2-32GB, memory `9520 MiB / 32768 MiB`, GPU utilization `86%` at inspection.
+- Current setting manifest records PyTorch `2.8.0+cu126`, CUDA `12.6`, device `Tesla V100-SXM2-32GB`, compute capability `sm_70`, PyTorch arch list includes `sm_70`, and JAX backend `gpu` with device `cuda:0`.
+
+Observed log evidence:
+
+- Overnight log: `logs/loss3_overnight_20260520T020904Z.log`.
+- Current setting log: `logs/loss3_alpha_epsilon_core4_eps1_alpha0p1_p2_q2.log`.
+- Log has reached stage `1. Fill missing p=2,q=2 100-step settings` and printed `[run] raw_add` for the first new setting.
+
+Inference:
+
+- The overnight workflow is actively running, but tasks are sequential rather than all running in parallel. It is currently in task 1 of the requested sequence.
+- Because the runner writes per-method outputs after method completion, the exact step inside `raw_add` is not visible from files yet; GPU utilization and the live Python process indicate active computation.
+
+Remaining work:
+
+- Continue monitoring the logs and manifests. Later stages should run automatically if this stage completes successfully.
+
+## 2026-05-20 Loss3 Overnight Readiness Review
+
+Status: completed readiness review; no optimizer experiment was launched.
+
+Record file added:
+
+- `docs/loss3_overnight_readiness_review_20260520.md`
+
+Observed verification:
+
+- `bash -n tools/run_loss3_overnight_20260520.sh` passed.
+- `py_compile` passed for all runner/analyzer/plotter/GIF scripts used by the overnight workflow.
+- Dry-run p=2,q=2 300-step plan resolved to 20 settings and the core four methods.
+- Dry-run strict p!=q plan resolved to 120 settings: 6 off-diagonal P/Q pairs times 20 alpha/epsilon settings.
+- Dry-run baseline GIF trace plan confirmed `trajectory_final_conditions_npz=true` and `gifs=true`.
+
+Observed caveat:
+
+- Existing 11 completed 100-step `p=2,q=2` roots predate the new angular-speed fields. Stage 1 uses `--skip-completed`, so only the 9 newly run 100-step roots will have those fields. The full 20-setting 300-step root will have complete angular-speed metrics for all 20 settings.
+
+Inference:
+
+- The current code is ready to run the requested overnight workflow and will automatically generate tables, figures, Markdown notes, delta similarity, post-boundary diagnostics, and GIF panels. Complete angular-speed analysis across all 20 p=2,q=2 settings should be taken from the fresh 300-step root unless the old 100-step roots are rerun.
+
+Remaining work:
+
+- Launch `bash tools/run_loss3_overnight_20260520.sh` on GPU when ready, then inspect the generated manifests and figures.
+
+## 2026-05-20 Loss3 Delta Angular-Speed Metrics
+
+Status: completed code/plotting update only; no optimizer experiment was launched.
+
+Source/code files updated:
+
+- `tools/run_loss3_direction_proposal_ablation.py`
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+- `tools/run_loss3_overnight_20260520.sh`
+
+Record file updated:
+
+- `docs/loss3_next_run_commands_20260520.md`
+
+Prepared behavior:
+
+- Future runs write step-to-step perturbation motion metrics to `per_step_metrics.csv` and `per_sample_step_metrics.csv`: `delta_prev_cosine`, `delta_prev_angle_degrees`, `delta_step_l2`, `delta_step_pnorm`, `delta_step_linf`, normalized step distances, and `delta_unit_direction_l2_step`.
+- `delta_prev_angle_degrees` is recorded as NaN when either `delta_k` or `delta_{k-1}` has near-zero norm, avoiding a fake angle at initialization.
+- Visualization now shades mean +/- std for loss and boundary-ratio curves and generates angular-speed curves when `delta_prev_angle_degrees_mean` is present.
+- Representative settings now get dynamics triptychs with loss, boundary ratio, and `angle(delta_k, delta_{k-1})`, all as batch mean +/- std.
+
+Remaining work:
+
+- Run `bash tools/run_loss3_overnight_20260520.sh`; newly generated 300-step and off-diagonal P/Q roots will contain complete angular-speed metrics.
+- Existing completed roots from before this update do not contain these fields unless rerun.
+- Verification: `py_compile` passed for the modified runner/plotter/diagnostic scripts; `bash -n tools/run_loss3_overnight_20260520.sh` passed; a `/tmp` smoke test of `tools/plot_loss3_alpha_epsilon_core4_visuals.py` completed without modifying official outputs.
+
+## 2026-05-20 Loss3 Overnight Script Preparation
+
+Status: completed command-script preparation only; no optimizer experiment was launched.
+
+Source/code file added:
+
+- `tools/run_loss3_overnight_20260520.sh`
+
+Record file updated:
+
+- `docs/loss3_next_run_commands_20260520.md`
+
+Prepared behavior:
+
+- The script logs to `logs/loss3_overnight_<UTC_TIMESTAMP>.log`.
+- It starts with `nvidia-smi` plus a PyTorch/JAX GPU quick check; individual experiment runners still perform the required GPU verification before official runs.
+- It fills missing default `p=2,q=2` 100-step settings and refreshes analysis, visualization, final-delta similarity, and post-boundary diagnostics.
+- It runs all 20 default `p=2,q=2` settings for 300 steps and automatically generates analysis, visualization, final-delta similarity, and post-boundary diagnostics.
+- It runs the baseline `epsilon=4, alpha=0.4, p=2, q=2` detailed 300-step GIF trace and generates multi-panel trajectory GIFs.
+- It runs strict off-diagonal `p != q` 100-step settings for `1:2`, `1:inf`, `2:1`, `2:inf`, `inf:1`, and `inf:2`, then generates per-P/Q visualizations, final-delta similarity, and post-boundary diagnostics.
+
+Remaining work:
+
+- The user should launch `bash tools/run_loss3_overnight_20260520.sh` in terminal when ready for the overnight GPU run.
+
+## 2026-05-20 Loss3 Post-Boundary Mechanism Diagnostics
+
+Status: completed post-processing analysis from existing completed `p=2,q=2` sweep artifacts; no optimizer experiment was rerun.
+
+Source/code file added:
+
+- `tools/analyze_loss3_post_boundary_mechanism.py`
+
+Output / record files:
+
+- Analysis root: `forensics/loss3_post_boundary_mechanism_20260520/`
+- Per-setting diagnostics: `forensics/loss3_post_boundary_mechanism_20260520/tables/post_boundary_mechanism_by_setting.csv`
+- Method rollup: `forensics/loss3_post_boundary_mechanism_20260520/tables/post_boundary_mechanism_rollup.csv`
+- Result Markdown: `docs/loss3_post_boundary_mechanism_diagnostics_20260520.md`
+- Main result Markdown updated: `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md`
+- Similarity metric definitions updated: `docs/loss3_alpha_epsilon_core4_delta_similarity_20260520.md`
+- Next-run command note updated: `docs/loss3_next_run_commands_20260520.md`
+
+Observed evidence:
+
+- The diagnostic manifest reports status `completed`, `completed_setting_count=11`, and `row_count=44` for current `p=2,q=2` artifacts.
+- `raw_add` has mean 99% boundary hit step `43.1` and mean post-boundary loss gain `0.511`.
+- `steepest_add` has mean 99% boundary hit step `13.45` and mean post-boundary loss gain `1.160`.
+- `raw_replace` and `steepest_replace` hit the 99% boundary at step `1` and have mean post-boundary loss gain `3.028`, with mean 10-step post-boundary gain `2.917`.
+- Selected trajectory diagnostics show lower boundary-hit-to-final delta cosine for replacement/GPI (`0.301`) than for `raw_add` (`0.768`) or `steepest_add` (`0.696`), consistent with larger direction refinement on the boundary.
+- The `p=2` tangent-motion proxy is larger for replacement/GPI (`0.597`) than for `raw_add` (`0.215`) or `steepest_add` (`0.239`).
+
+Inference:
+
+- GPI/replacement's post-boundary loss growth is best interpreted as fast boundary-direction optimization after immediate budget use, not merely as early boundary arrival.
+- Additive PGD-like methods may have slower post-boundary growth because they spend iterations reaching the boundary and their projected boundary updates have weaker tangent/boundary-surface motion.
+
+Remaining work:
+
+- Re-run the diagnostic script on the pending 20-setting 100-step sweep, the 300-step `p=2,q=2` sweep, and the detailed baseline GIF trajectory after those runs complete.
+
+## 2026-05-20 Loss3 Next-Run Command Preparation
+
+Status: completed code/runbook preparation only; no optimizer experiment was launched.
+
+Source/code files updated or added:
+
+- `tools/run_loss3_direction_proposal_ablation.py`
+- `tools/run_loss3_alpha_epsilon_core4_sweep.py`
+- `tools/plot_loss3_trajectory_gif_panels.py`
+
+Record file added:
+
+- `docs/loss3_next_run_commands_20260520.md`
+
+Observed code changes:
+
+- The baseline runner now has `--save-trajectory-final-conditions`, which augments selected `trajectory_samples.npz` files with `clean_initial`, `perturbed_initial`, `model_final_condition`, `solver_final_condition`, and `final_condition_residual` for every saved step.
+- The alpha/epsilon sweep wrapper passes through `--save-trajectory-final-conditions` and `--no-save-delta-trajectory` when requested.
+- A post-processing GIF panel script was added to render delta, perturbed initial condition, model final condition, solver final condition, and final-condition residual over optimization steps.
+
+Prepared run order:
+
+1. Fill the nine missing default 100-step `p=2,q=2` alpha/epsilon settings in the existing 2026-05-19 sweep root.
+2. Run all 20 default `p=2,q=2` settings for 300 steps in a separate root.
+3. Run the baseline `epsilon=4, alpha=0.4, p=2, q=2` detailed trajectory with GIF-ready final-condition arrays.
+4. Run strict `p != q` 100-step settings for the six off-diagonal P/Q pairs.
+
+Remaining work:
+
+- The user should run the commands in `docs/loss3_next_run_commands_20260520.md` on GPU. After the runs complete, analyze and interpret the resulting 20-setting/300-step and non-P/Q artifacts.
+
+## 2026-05-20 Loss3 Boundary-Marker Mechanism Interpretation
+
+Status: completed documentation update based on existing `p=2,q=2` visualization artifacts; no optimizer experiment was rerun.
+
+Source evidence:
+
+- Loss curves with boundary markers: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- Boundary-threshold table: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/tables/boundary_threshold_loss_gain_summary.csv`
+- Main result document updated: `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md`
+
+Observed evidence:
+
+- `raw_add` / PGD and `steepest_add` / Lp-steepest PGD have boundary-ratio markers spread across steps, showing visible radial travel toward the epsilon boundary.
+- `steepest_replace` / GPI-style replacement has the `0.25`, `0.50`, `0.75`, and `0.99` mean boundary-ratio markers collapsed at the first step in the completed `p=2,q=2` settings.
+- GPI/replacement still shows substantial post-boundary loss growth, so boundary arrival and loss convergence are separate phases.
+
+Inference:
+
+- The marker pattern supports a mechanism distinction: additive PGD-like methods spend iterations reaching the boundary, while GPI/replacement immediately uses the fixed budget and then refines the boundary direction.
+- Together with the final-delta smoothness and similarity evidence, this strengthens the interpretation that `steepest_replace` / GPI is the better practical optimizer for the completed fixed-budget `p=2,q=2` loss3 setting.
+
+Remaining work:
+
+- Re-check the same marker-collapse pattern after the nine pending alpha/epsilon settings and any requested multi-P/Q sweeps are run.
+
+## 2026-05-20 Loss3 Core-Four Final-Delta Similarity Analysis
+
+Status: completed post-processing analysis from existing completed `p=2,q=2` sweep artifacts; no optimizer experiment was rerun.
+
+Source file added:
+
+- `tools/analyze_loss3_alpha_epsilon_core4_delta_similarity.py`
+
+Source data:
+
+- Completed roots under `forensics/loss3_alpha_epsilon_core4_sweep_20260519/`, using each method's `final_deltas.npz`.
+
+Output / record files:
+
+- Analysis root: `forensics/loss3_alpha_epsilon_core4_delta_similarity_20260520/`
+- Manifest: `forensics/loss3_alpha_epsilon_core4_delta_similarity_20260520/manifest.json`
+- Pairwise summary: `forensics/loss3_alpha_epsilon_core4_delta_similarity_20260520/tables/final_delta_pairwise_similarity_summary.csv`
+- Per-sample table: `forensics/loss3_alpha_epsilon_core4_delta_similarity_20260520/tables/final_delta_pairwise_similarity_per_sample.csv`
+- Across-setting rollup: `forensics/loss3_alpha_epsilon_core4_delta_similarity_20260520/tables/final_delta_pairwise_similarity_rollup.csv`
+- Result Markdown: `docs/loss3_alpha_epsilon_core4_delta_similarity_20260520.md`
+- Main result Markdown updated: `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md`
+
+Observed evidence:
+
+- The analysis completed with manifest status `completed`, `completed_setting_count=11`, `p_filter=2`, `q_filter=2`.
+- `raw_replace` and `steepest_replace` are identical for `p=2`: cosine `1.0000`, centered cosine `1.0000`, spectral cosine `1.0000`, relative L2 `0.0000`.
+- `raw_add` and `steepest_add` are highly similar: across-setting mean cosine `0.8986`, centered cosine `0.8971`, spectral cosine `0.9454`, relative L2 `0.2627`.
+- Additive methods versus replacement/GPI methods have moderate signed spatial cosine but high spectral similarity: `raw_add` vs `steepest_replace` cosine `0.5713`, spectral cosine `0.8003`; `steepest_add` vs `steepest_replace` cosine `0.6144`, spectral cosine `0.8501`.
+- Existing smoothness rollup records `steepest_replace` / GPI high-frequency ratio `3.707e-09`, first-derivative L2 `0.1955`, and total variation `2.472`, lower than additive methods.
+
+Inference:
+
+- Final perturbations share a broad low-frequency shape and are not wildly dissimilar across methods, but they cluster by update family: additive methods together, replacement/GPI methods together.
+- The evidence supports the user's visual impression that the GPI perturbation is not an abnormal high-frequency or spike-like perturbation; it is smooth by the recorded metrics and spectrally similar to the other final deltas.
+- For completed `p=2,q=2` settings, GPI/replacement looks better because it combines immediate boundary use, substantial post-boundary loss gain, and smooth final perturbations.
+
+Remaining work:
+
+- Repeat the same similarity analysis after the nine pending alpha/epsilon settings complete, and separately for additional P/Q pairs if multi-PQ alpha/epsilon runs are launched.
+
+
+## 2026-05-20 Loss3 20-Setting Plan and Boundary-Threshold Markers
+
+Status: code/plan/visualization update completed; no new optimizer experiment was launched.
+
+Source files updated:
+
+- `tools/run_loss3_alpha_epsilon_core4_sweep.py`
+- `tools/analyze_loss3_alpha_epsilon_core4_sweep.py`
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+
+Output / record files updated:
+
+- `forensics/loss3_alpha_epsilon_core4_sweep_20260519/sweep_plan.json`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/tables/boundary_threshold_loss_gain_summary.csv`
+- `docs/loss3_alpha_epsilon_core4_sweep_plan_20260519.md`
+- `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md`
+- `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`
+
+Observed evidence:
+
+- Dry-run generated a 20-setting default plan for `p=2,q=2`; the additional nine settings are pending and were not run in this update.
+- Existing completed alpha/epsilon visualizations remain scoped to `p=2,q=2`; refreshed manifest records `pq_pairs_plotted=[{p: 2, q: 2}]`.
+- The sweep wrapper now supports `--pq-pairs` for explicit multi-PQ alpha/epsilon runs.
+- The loss-curve visualization now marks first mean boundary-ratio hits at `0.25`, `0.50`, `0.75`, and `0.99`.
+- The analysis script's boundary thresholds were expanded to `0.25`, `0.50`, `0.75`, `0.95`, and `0.99` for future analysis runs.
+
+Inference:
+
+- Current conclusions about GPI/replacement versus raw PGD are evidenced for `p=2,q=2` only in this alpha/epsilon sweep.
+- The new threshold markers/table should make it easier to separate radius growth, boundary arrival, and post-boundary directional optimization.
+
+Remaining work:
+
+- Run the default sweep to fill the nine pending `p=2,q=2` settings, or explicitly run a larger `--pq-pairs` grid if all-PQ alpha/epsilon evidence is required.
+- Re-run `tools/analyze_loss3_alpha_epsilon_core4_sweep.py` after new experiments complete.
+
+
+## 2026-05-20 Loss3 Plot Layout and Boundary-Gain Interpretation Update
+
+Status: completed full visualization layout correction, reran plots, and added boundary-hit loss-gain table; no optimizer experiment was rerun.
+
+Source file updated:
+
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+
+Output / record files updated:
+
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/boundary_ratio_mean_curves.png`
+- Heatmaps under `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/heatmap_*.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/tables/boundary_hit_loss_gain_summary.csv`
+- `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md`
+- `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`
+
+Observed evidence:
+
+- Reran the plotting script; refreshed manifest reports status `completed`, generated at `2026-05-20T01:10:40.052414+00:00`, with `completed_setting_count=11`.
+- Heatmap x-axis labels were shortened, subplot/colorbar margins were increased, and representative/delta-grid panels were given explicit title and bottom-margin spacing.
+- The loss curves retain `x` markers for the first step where mean `boundary_ratio >= 0.99`; delta plots do not use cross markers.
+- `boundary_hit_loss_gain_summary.csv` records loss at first mean 99% boundary hit, final loss, and post-boundary loss gain.
+- At `epsilon=8, alpha=0.3`, `raw_add` has no mean 99% boundary hit by step `100`, while `steepest_replace` hits at step `1` and increases mean loss from `2.720` at boundary hit to `6.805` final.
+
+Inference:
+
+- The visual and tabular evidence supports the user's interpretation: raw PGD/additive updates are slow partly because they spend many steps reaching the boundary.
+- Replacement/GPI-style methods should be described as reaching the boundary immediately and then continuing substantial directional optimization along or near the boundary; boundary arrival is not the same as final convergence.
+
+Remaining work:
+
+- Use the refreshed plot set and boundary-hit loss-gain table for the written comparison.
+
+
+## 2026-05-20 Loss3 Curve Plot Layout Correction
+
+Status: completed visualization layout correction and rerun; no optimizer experiment was rerun.
+
+Source file updated:
+
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+
+Output files refreshed:
+
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/boundary_ratio_mean_curves.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`
+
+Observed evidence:
+
+- Moved the curve-figure legend to a separate bottom area so it no longer overlaps the title.
+- Increased subplot size and spacing.
+- Removed per-subplot boundary text annotations from the loss curves; only the boundary `x` marker remains on the curve.
+- Added a horizontal `0.99` threshold line and fixed y-axis range to the boundary-ratio curves.
+- Reran the plotting script; refreshed manifest reports status `completed`, generated at `2026-05-20T01:06:12.923337+00:00`, with `completed_setting_count=11`.
+
+Inference:
+
+- The boundary-ratio and loss-curve figures should now have readable method/color legend placement and less annotation clutter.
+
+Remaining work:
+
+- Visually inspect the refreshed PNGs for final report use.
+
+
+## 2026-05-20 Loss3 Visualization Marker Correction
+
+Status: completed visualization correction and rerun; no optimizer experiment was rerun.
+
+Source file updated:
+
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+
+Output / record files refreshed:
+
+- Visualization manifest: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`
+- Loss boundary-marker figure: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- Representative sample panels: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/representative_samples/`
+- Delta shape grids: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/delta_shape_grids/`
+- Visualization note: `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`
+
+Observed evidence:
+
+- Removed the black `x` marker from final-delta line plots and delta-shape grids.
+- Retained `x` markers only on loss curves, where they indicate the first step with mean `boundary_ratio >= 0.99`.
+- Reran the plotting script; refreshed manifest reports status `completed`, generated at `2026-05-20T01:03:29.127258+00:00`, with `completed_setting_count=11`.
+
+Inference:
+
+- Delta plots now show perturbation shape without a misleading marker. Boundary-arrival markers are visually reserved for loss curves only.
+
+Remaining work:
+
+- Use the refreshed figures for interpretation/reporting.
+
+
+## 2026-05-20 Loss3 PGD Boundary Literature Note and Visualization Rerun
+
+Status: visualization script rerun completed; literature note created from web research and local experiment context. No optimizer experiment was rerun.
+
+Source files and sources:
+
+- Local visualization script: `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+- Local sweep outputs: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/`
+- Local analysis outputs: `forensics/loss3_alpha_epsilon_core4_analysis_20260519/`
+- Web sources recorded in `docs/loss3_pgd_epsilon_boundary_optimum_notes_20260520.md`, including Goodfellow et al. 2014, Madry et al. 2017, DeepFool, Boundary Attack, AutoAttack/APGD, ART docs, and Distill discussion.
+
+Output / record files:
+
+- Refreshed visualization manifest: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`
+- Refreshed main loss figure: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- Literature note: `docs/loss3_pgd_epsilon_boundary_optimum_notes_20260520.md`
+
+Observed evidence:
+
+- The plotting script was rerun and completed with manifest status `completed`, `completed_setting_count=11`, and boundary marker definition `first step with boundary_ratio_mean >= 0.99`.
+- The web/literature note records that fixed-budget PGD/FGSM-style loss maximization is generally expected to use the epsilon budget under local linear/nonzero-gradient assumptions.
+- The note also records exceptions: general nonconvex losses may have interior stationary optima or plateaus; input box constraints, regularizers, smoothness/frequency penalties, and minimum-distortion attacks can all lead to non-boundary solutions.
+
+Inference:
+
+- For our loss3 fixed-budget sweep, slow boundary arrival by `raw_add` is better interpreted as an optimization-path/step-scaling issue than as evidence that the true fixed-budget optimum lies inside the epsilon ball.
+- Replacement/GPI-style methods reach the boundary immediately because they match the local-linear steepest/maximization geometry more directly.
+- The next diagnostic should be radial loss profiles `L(x + r u)` and boundary-rescale checks for raw-add trajectories that remain inside the ball.
+
+Remaining work:
+
+- Add radial-profile plots and boundary-rescale loss comparisons if we want direct evidence for whether loss3 increases monotonically along final perturbation directions.
+
+
+## 2026-05-20 Loss3 Alpha/Epsilon Core-Four Visualizations
+
+Status: completed visualization post-processing from existing sweep artifacts; no optimizer experiment was rerun.
+
+Source files:
+
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+- Existing sweep outputs under `forensics/loss3_alpha_epsilon_core4_sweep_20260519/`
+- Existing analysis tables under `forensics/loss3_alpha_epsilon_core4_analysis_20260519/`
+
+Output / record files:
+
+- Visualization root: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/`
+- Manifest: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/manifest.json`
+- Result Markdown: `docs/loss3_alpha_epsilon_core4_visuals_20260520.md`
+- Main loss figure: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- Peakiness table: `forensics/loss3_alpha_epsilon_core4_visuals_20260520/tables/final_delta_peakiness_summary.csv`
+
+Key settings:
+
+- Objective: `loss3_original`, recorded as `loss3_q`.
+- Geometry: `p=2`, `q=2`.
+- Methods: `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+- Completed settings visualized: `11`.
+- Boundary marker definition: first step where mean `boundary_ratio >= 0.99`; this approximates `||delta||_p ~= epsilon` while avoiding exact floating-point equality.
+- Representative sample panels: dataset index `40` for `(epsilon, alpha)` settings `(4,0.4)`, `(8,0.3)`, `(8,1.6)`, and `(16,1.6)`.
+
+Observed evidence:
+
+- The visualization script completed and wrote a manifest with status `completed`.
+- Generated PNG files were readable and had nonzero dimensions, including loss curves with boundary-hit `x` markers, boundary-ratio curves, final-loss/smoothness/high-frequency heatmaps, representative clean/delta/clean+delta panels, and final-delta shape grids.
+- The representative panels show clean initial condition, final delta, clean plus delta, delta spectrum, and sample-level loss curve with a boundary-hit marker.
+- The peakiness table records `max(abs(delta)) / RMS(delta)`, max absolute delta, total variation, first-derivative L2, and high-frequency ratio from final deltas.
+
+Inference:
+
+- The marked loss curves directly separate pre-boundary growth from post-boundary optimization, which addresses the user's concern that additive methods can appear slow largely because they spend many steps reaching the epsilon boundary.
+- The smoothness/peakiness figures provide a visual and numeric check for Direct-Delta-like sharp spikes or high-frequency perturbations; these should be read alongside the final-loss and boundary-arrival summaries.
+
+Remaining work:
+
+- Inspect the new PNG figures visually for paper/report selection.
+- If a paper-facing figure set is needed, choose a smaller subset of settings and export publication-sized panels with the same boundary-marker convention.
+
+
+## 2026-05-20 Loss3 Alpha/Epsilon Core-Four Sweep Completion Status
+
+Status: completed and post-processed locally. This entry records a status/analysis check, not a new run launched by the assistant in this turn.
+
+Source files:
+
+- `tools/run_loss3_alpha_epsilon_core4_sweep.py`
+- `tools/analyze_loss3_alpha_epsilon_core4_sweep.py`
+- Existing runner: `tools/run_loss3_direction_proposal_ablation.py`
+
+Output files:
+
+- Sweep root: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/`
+- Sweep manifest: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/sweep_manifest.json`
+- Analysis root: `forensics/loss3_alpha_epsilon_core4_analysis_20260519/`
+- Result Markdown: `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md`
+
+Key settings:
+
+- Objective: `loss3_original`, recorded as `loss3_q`.
+- Geometry: `p=2`, `q=2`.
+- Methods: `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+- Completed setting count: `11/11`; failed setting count: `0`.
+- Batch/steps: dataset indices `0..99`, `batch_size=100`, `steps=100`, seed `0`.
+
+Observed evidence:
+
+- `ps` showed no running sweep or ablation process at the status check.
+- `nvidia-smi` showed GPU utilization `0%` and memory `0 / 32768 MiB`, so no experiment process remained active.
+- `sweep_manifest.json` reported status `completed`, `completed_count=11`, `failed_count=0`, start `2026-05-19T22:53:20.841733+00:00`, finish `2026-05-20T00:18:20.508758+00:00`, and summed setting elapsed time `5099.66` seconds.
+- Every completed setting contains four method summaries with `101` per-step rows per method.
+- The older interrupted directory `fno_nu0p001_eps4_alpha0p3_batch100_steps100_p2_q2/` remains marked `interrupted_not_for_analysis` and was skipped by post-processing.
+- Post-processing generated `44` method-summary rows, `44` boundary-arrival rows, `77` winner-summary rows, and `4` method-rollup rows.
+
+Observed boundary-arrival headline from the generated result Markdown:
+
+- `raw_replace` and `steepest_replace` reach `99%` boundary at step `1` for all completed settings.
+- `steepest_add` reaches `99%` boundary much later, matching the planned `epsilon/alpha` scale: for example `epsilon=4, alpha=0.4` has batch-mean step `11` and slowest-sample step `14`; `epsilon=8, alpha=0.3` has batch-mean step `31` and slowest-sample step `34`.
+- `raw_add` is much slower to reach the boundary: for `epsilon=4, alpha=0.4`, batch-mean step `43` and slowest-sample step `56`; for `epsilon=8, alpha=0.3`, the batch mean never reaches `99%` by step `100`, and `32/100` samples do not reach `99%` by step `100`.
+
+Inference:
+
+- The main run is `100%` complete with `0` estimated remaining runtime.
+- The user's concern is supported by the boundary-arrival diagnostics: additive raw-gradient PGD can spend many iterations below the epsilon boundary, especially at the old `epsilon=8, alpha=0.3` setting.
+- Replacement/GPI-style methods' speed advantage is tightly coupled to immediate boundary arrival; final scientific interpretation should separate boundary-arrival speed from later boundary-surface optimization.
+
+Remaining work:
+
+- Inspect the generated result Markdown and CSV tables for the final-loss/smoothness tradeoff narrative.
+- Optionally make compact plots/tables focusing on boundary arrival versus final loss for the paper-facing summary.
+
+## 2026-05-19 Loss3 Alpha/Epsilon Core-Four Sweep Code Prep
+
+Status: code and command preparation completed; official numerical sweep not completed in this turn. One accidentally started setting was stopped and marked not for analysis.
+
+Source files:
+
+- `tools/run_loss3_alpha_epsilon_core4_sweep.py`
+- `tools/analyze_loss3_alpha_epsilon_core4_sweep.py`
+- Existing runner reused: `tools/run_loss3_direction_proposal_ablation.py`
+
+Output / record files:
+
+- `docs/loss3_alpha_epsilon_core4_sweep_plan_20260519.md`
+- `docs/loss3_alpha_epsilon_core4_sweep_result_20260519.md` (pending; no completed numerical results yet)
+- `forensics/loss3_alpha_epsilon_core4_sweep_20260519/sweep_plan.json`
+- Interrupted partial directory: `forensics/loss3_alpha_epsilon_core4_sweep_20260519/fno_nu0p001_eps4_alpha0p3_batch100_steps100_p2_q2/`
+
+Key planned settings:
+
+- Objective: `loss3_original`, recorded as `loss3_q` under `p=2,q=2`.
+- Methods: `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+- New baseline reference: `epsilon=4`, `alpha=0.4`.
+- Previous slow reference retained: `epsilon=8`, `alpha=0.3`.
+- Curated `(epsilon, alpha)` settings: `(2,0.2)`, `(2,0.4)`, `(4,0.2)`, `(4,0.4)`, `(4,0.8)`, `(4,1.2)`, `(8,0.3)`, `(8,0.4)`, `(8,0.8)`, `(8,1.6)`, `(16,1.6)`.
+- Batch/steps: dataset indices `0..99`, `batch_size=100`, `steps=100`, seed `0`.
+
+Observed evidence:
+
+- GPU verification passed after repairing the broken `adv_robust/bin/python3` symlink: V100 `sm_70`, PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, PyTorch arch list includes `sm_70`, JAX backend `gpu`, PyTorch and JAX GPU matmul passed, and `pip check` passed.
+- The new scripts passed Python bytecode compilation.
+- A dry-run plan was generated successfully for the 11 curated settings and records nominal `epsilon/alpha` boundary-reach steps for L2-steepest additive updates.
+- A formal sweep command was accidentally started earlier for `epsilon=4`, `alpha=0.3`; after the user clarified to prepare code and commands only, the sweep wrapper and child runner were stopped.
+- The interrupted setting has no completed root-level `per_step_metrics.csv` and its manifest is marked `interrupted_not_for_analysis`.
+
+Inference:
+
+- No numerical optimizer conclusion should be drawn from the interrupted partial output.
+- The prepared wrapper is ready for the user to launch the requested `p=2,q=2` alpha/epsilon sweep manually.
+- The central scientific diagnostic is now boundary arrival: `delta_pnorm`, `boundary_ratio`, and first step to 95%/99% boundary at batch-mean and per-sample levels.
+- In `p=2`, `raw_replace` and `steepest_replace` should coincide geometrically, but both rows are kept so the custom raw-replacement method is explicitly represented.
+
+Remaining work:
+
+- User launches `adv_robust/bin/python tools/run_loss3_alpha_epsilon_core4_sweep.py` for the curated 11-setting boundary-arrival-focused sweep.
+- After completion, run `adv_robust/bin/python tools/analyze_loss3_alpha_epsilon_core4_sweep.py`.
+- Update the ledger and result Markdown with observed final-loss, boundary-arrival, growth-speed, and smoothness conclusions from completed artifacts.
+
+
 ## 2026-05-16 Unified Eval-Metric Raw-Data Interpretation
 
 Status: completed from the canonical 27-run saved trajectory data; no attack was rerun.
@@ -3797,3 +4843,481 @@ Conclusion:
 - R2 verification: `forensics/loss3_optimizer_direction_proposal_ablation_20260517` contained 1698 objects and about 1.105 GiB.
 - R2 verification: `forensics/loss3_optimizer_direction_proposal_ablation_raw_replace_backfill_20260518` contained 176 objects and about 127.5 MiB.
 - Remaining local untracked files: generated `forensics/` artifacts remain untracked by Git by design; they are stored in R2.
+
+## 2026-05-20 - Loss3 Clean Visualization Export and 4x5 Curve Relayout
+
+- Status: completed post-processing visualization/export; no optimizer experiment was launched.
+- Code changed: `tools/plot_loss3_alpha_epsilon_core4_visuals.py` now chooses 5 columns for 20 alpha/epsilon panels, producing a clean 4x5 layout for the multi-setting curve figures.
+- Regenerated visual roots: `forensics/loss3_alpha_epsilon_core4_visuals_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p1_q2_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p1_qinf_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p2_qinf_stopped_100steps_20260520`, and `forensics/loss3_alpha_epsilon_core4_visuals_pinf_q1_partial_stopped_100steps_20260520`.
+- Regenerated/new similarity roots: `forensics/loss3_alpha_epsilon_core4_delta_similarity_p1_q2_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_delta_similarity_p1_qinf_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_delta_similarity_p2_q1_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_delta_similarity_p2_qinf_stopped_100steps_20260520`, and `forensics/loss3_alpha_epsilon_core4_delta_similarity_pinf_q1_partial_stopped_100steps_20260520`.
+- Clean image-only export folder: `forensics/loss3_visuals_clean_export_20260520_2206`.
+- Export contents observed: 363 image files total; verification found no non-image files in the export folder. The folder contains copied `.png` and `.gif` files only.
+- Key source data: existing completed/partial stopped artifacts under `forensics/loss3_alpha_epsilon_core4_sweep_20260519`, `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520`, `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520`, and baseline GIF-trace artifacts under `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520`.
+- Observed evidence: regenerated 20-setting metric figures such as `loss3_q_mean_curves_with_boundary_markers.png` and `boundary_ratio_mean_curves.png` now have 4680x2736 pixel output, consistent with a 5-column by 4-row panel layout at the configured figure size and DPI.
+- Result document created: `docs/loss3_visuals_clean_export_20260520.md`.
+- Remaining work: inspect the clean export folder visually and select final figures for the report/paper; no additional optimizer run is pending from this export task.
+
+## 2026-05-20 - Loss3 No-Std Curve Figure Regeneration
+
+- Status: completed post-processing visualization/export; no optimizer experiment was launched.
+- Reason: mean +/- std shading can expand the y-axis strongly when a method or P/Q setting has large variance or spike behavior, making the central loss/boundary/angle trajectories and boundary markers hard to read.
+- Code changed: `tools/plot_loss3_alpha_epsilon_core4_visuals.py` now emits paired mean-curve outputs: a mean +/- std version and a mean-only/no-std-band version for `loss3_q_mean`, `boundary_ratio_mean`, and `delta_prev_angle_degrees_mean` when the angle metric exists. Dynamics triptychs also have paired no-std outputs.
+- Regenerated visual roots: `forensics/loss3_alpha_epsilon_core4_visuals_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p1_q2_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p1_qinf_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520`, `forensics/loss3_alpha_epsilon_core4_visuals_p2_qinf_stopped_100steps_20260520`, and `forensics/loss3_alpha_epsilon_core4_visuals_pinf_q1_partial_stopped_100steps_20260520`.
+- New clean image-only export folder: `forensics/loss3_visuals_clean_export_20260520_2216_with_no_std`.
+- Export contents observed: 521 image files total, including 158 copied filenames containing `_no_std`; verification found no non-image files and no subdirectories in the export folder.
+- Observed evidence: representative no-std 20-setting curve figures are readable PNGs at 4680x2736 pixels, preserving the previous 4x5 panel layout.
+- Result document created: `docs/loss3_visuals_clean_export_with_no_std_20260520.md`.
+- Inference: use the no-std figures to compare central optimizer trajectories and boundary-hit markers; use the std-shaded figures to inspect variability/spike behavior, especially for non-`p=2,q=2` settings.
+- Remaining work: visually inspect the no-std/with-std pairs and choose which version to include in the writeup for each comparison.
+
+## 2026-05-20 - Loss3 300-Step No-Std Export Verification
+
+- Status: completed verification only; no optimizer experiment and no new plotting run was launched.
+- Observed evidence: `forensics/loss3_visuals_clean_export_20260520_2216_with_no_std` contains 71 copied files whose names start with `p2q2_300step_visuals`.
+- Observed evidence: the 300-step source folder contains the main no-std curve outputs: `loss3_q_mean_curves_with_boundary_markers_no_std.png`, `boundary_ratio_mean_curves_no_std.png`, and `delta_prev_angle_degrees_mean_curves_no_std.png` under `forensics/loss3_alpha_epsilon_core4_visuals_p2q2_300steps_20260520/figures/`.
+- Observed evidence: the clean export includes 300-step no-std dynamics triptychs, including `dynamics_triptychs_no_std` and `dynamics_triptychs_angle_available_no_std` copied filenames.
+- Inference: the 300-step figures have already been regenerated with no-std variants and moved into the current clean export folder.
+
+## 2026-05-20 - Loss3 Surprising Findings Synthesis
+
+- Status: completed synthesis from existing local experiment artifacts and visual inspection notes; no optimizer experiment was launched.
+- Result document created: `docs/loss3_surprising_findings_synthesis_20260520.md`.
+- Source evidence referenced: p2q2 300-step analysis/visual roots, p!=q stopped 100-step analysis/visual roots, GPI early-step comparison, and clean std/no-std visual export `forensics/loss3_visuals_clean_export_20260520_2216_with_no_std`.
+- Observed evidence summarized: GPI/replacement reaches the p-norm boundary immediately but still grows loss afterward; GPI perturbation shape is close to its 300-step final shape by about 5-10 steps in the saved baseline samples; 300-step additive methods can sometimes exceed GPI final mean loss; LP-steepest additive PGD shows near-linear boundary-ratio growth while raw PGD curves/slows; p/q geometry, especially `q=inf`, can create spike-like perturbations.
+- Inference recorded: the central mechanism is not just reaching the epsilon boundary, but moving directionally on the boundary. GPI/replacement is strong because it uses the full budget immediately and rotates aggressively on the boundary; LP-steepest fixes radial step normalization but remains additive; raw PGD has both radial desynchronization and angular inertia.
+- Remaining work: for paper-level claims, pair no-std central trajectory plots with std-shaded variability plots, and separate p2q2 conclusions from p!=q geometry/spike conclusions.
+
+## 2026-05-20 - Loss3 Tree-Style Figure Export
+
+- Status: completed post-processing file organization/export; no optimizer experiment and no plotting run was launched.
+- Reason: the previous clean export `forensics/loss3_visuals_clean_export_20260520_2216_with_no_std` was flat and difficult to navigate with 521 images.
+- New tree-style image export folder: `forensics/loss3_visuals_tree_export_20260520_with_no_std`.
+- Result document created: `docs/loss3_visuals_tree_export_with_no_std_20260520.md`.
+- Export structure: top-level folders `visuals/`, `similarity/`, `gpi_early_step_comparison/`, and `baseline_giftrace/`; visual folders are further split by `p2q2`, `pneq`, P/Q pair, step count, curve type, `with_std`/`no_std`, heatmaps, representative samples, delta grids, and dynamics triptychs.
+- Export contents observed: 521 image files total and 158 filenames containing `_no_std`, matching the complete clean export count. Verification found no non-image files in the tree export folder.
+- Example checked: `visuals/p2q2/300step/curves/loss_with_boundary_markers/with_std/loss3_q_mean_curves_with_boundary_markers.png` and `visuals/p2q2/300step/curves/loss_with_boundary_markers/no_std/loss3_q_mean_curves_with_boundary_markers_no_std.png` are now separated into paired folders.
+- Remaining work: use the tree-style export as the main browsing folder; keep the flat export only as an archival all-images dump.
+
+## 2026-05-20 - Loss3 Cross-PQ Surprising-Findings Validation
+
+Status: completed post-processing analysis from existing local artifacts. No new optimizer/model experiment was launched in this step.
+
+Source files and inputs:
+- Analysis script: `tools/analyze_loss3_surprising_findings_validation.py`
+- Prior synthesis: `docs/loss3_surprising_findings_synthesis_20260520.md`
+- Existing p=q=2 300-step artifacts under the loss3 alpha/epsilon core4 p2q2 result directories.
+- Existing p!=q 100-step stopped artifacts under the loss3 alpha/epsilon core4 pneq-q result directories.
+- Existing similarity, per-step metric, peakiness, and visualization-export metadata tables.
+
+Output files:
+- Result Markdown: `docs/loss3_surprising_findings_validation_20260520.md`
+- Tables directory: `forensics/loss3_surprising_findings_validation_20260520/`
+- Main tables: `per_setting_method_validation.csv`, `pq_method_validation_rollup.csv`, `final_loss_winner_counts_by_pq.csv`, `angle_motion_winner_counts_by_pq.csv`, `boundary_arrival_winner_counts_by_pq.csv`, `delta_similarity_pair_rollup_by_pq.csv`, `equivalent_method_pairs_by_pq.csv`
+- Exception tables: `replacement_nonpositive_post_boundary_gain_settings.csv`, `raw_vs_steepest_add_linearity_exceptions.csv`, `angle_winner_by_setting.csv`, `equivalent_method_pairs_by_setting.csv`, `near_high_cosine_method_pairs_by_setting.csv`, `low_cosine_selected_pairs_by_setting.csv`, `claim_exception_table_manifest.csv`
+
+Key settings:
+- Methods: `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+- p=q=2 sweep uses the existing 20 alpha/epsilon settings with 300 steps.
+- p!=q sweep uses existing 100-step artifacts for p/q combinations including p=1,q=2; p=1,q=inf; p=2,q=1; p=2,q=inf; and partial p=inf,q=1.
+
+Observed from generated tables:
+- The validation table contains 408 per-setting/method rows, 24 PQ/method rollup rows, and 36 PQ/pair similarity rollup rows.
+- Boundary arrival is not the same as convergence: replacement methods often hit the boundary at step 1, but in p2q2, p2q1, and p2qinf they can still gain substantial loss afterward. However, this positive post-boundary gain is not universal: p1qinf has many weak or negative replacement post-boundary gain settings, and p1q2 has a small number of large-epsilon exceptions.
+- GPI/replacement is consistently fast in boundary arrival and angular motion, but is not the universal 300-step final-loss winner. In p2q2 300-step data, `steepest_add` wins most final-mean-loss settings; replacement remains strongest as an early, stable, fast method.
+- LP steepest additive updates usually produce a straighter, lower-variance boundary-ratio trajectory than raw PGD, while raw PGD is more curved and sample-dependent. This is a strong tendency, not a theorem; q=inf settings create many exceptions.
+- Boundary-ratio standard deviation is a useful diagnostic: raw PGD generally has much larger std than LP steepest and replacement, while replacement-family std is near zero when the method stays exactly on the boundary.
+- Replacement-family methods have the largest per-step delta angular motion in every checked setting. The winner is not always specifically `steepest_replace`; `raw_replace` can win or tie depending on P geometry.
+- Final delta similarity is conditional. It is high in p2q2 and p2q1 for many method pairs, but p=1 and q=inf cases introduce many low-cosine or spike-like exceptions.
+- P/Q geometry strongly affects perturbation realism. p2q1 looks comparatively natural in the checked artifacts; p1 and q=inf geometries can create localized spikes, especially for steepest/replacement directions.
+- Exact method equivalence was observed for `raw_replace` and `steepest_replace` for all checked p=2 groups, q in {1,2,inf}. The same equivalence is not observed as a universal fact for p=1 or p=inf groups. p1q2 has a near-equivalence tendency between `raw_add` and `raw_replace`, but it is not exact for all settings.
+
+Inference from the above evidence:
+- The most robust summary is not "boundary solves the attack". It is: after the optimizer reaches the epsilon boundary, the decisive difference is how fast and how freely it can rotate direction along that boundary.
+- GPI/replacement is best characterized as fast, stable, and strong early; not as an unconditional final-loss maximizer after long runs.
+- Claims in a paper should be stated by geometry regime: p2q2/p2q1 support the cleanest story, while p=1 and q=inf require caveats about spikes, weaker similarity, and non-universal post-boundary gain.
+
+Remaining work:
+- If a paper statement needs full coverage for missing p=inf combinations, run those missing PQ sweeps explicitly; the current p=inf,q=1 evidence is partial.
+- For publication figures, separate p2q2/p2q1 conclusions from p=1/q=inf caveat figures rather than collapsing them into one universal claim.
+
+## 2026-05-20 - Loss3 GPI Theoretical Caveat Note
+
+Status: completed interpretation update from existing validation results; no new experiment was run.
+
+Updated result document:
+- `docs/loss3_surprising_findings_validation_20260520.md`
+
+Observed evidence referenced:
+- GPI/replacement reaches the epsilon boundary immediately in the main p=2 regimes.
+- GPI/replacement has much larger delta angular motion than raw PGD or LP-steepest additive PGD.
+- Final delta shapes are often similar in p2q2/p2q1 despite different paths.
+- 300-step additive methods sometimes match or exceed replacement final mean loss.
+
+Inference recorded:
+- Fast GPI behavior should be treated as a strong empirical surrogate effect, not as proof that Loss 3 is exactly a generalized-power objective.
+- The likely mechanism is early alignment with a dominant local mode or local linearized/quadratic component of the loss, plus aggressive boundary-surface rotation.
+- The result is theoretically suspicious enough that a paper should avoid saying GPI is the mathematically correct optimizer for Loss 3.
+
+Remaining work:
+- Add diagnostics for gradient-step cosine, local spectrum dominance, linear-model predicted gain versus actual gain, and boundary-tangent update decomposition if this mechanism needs to be defended rigorously.
+
+## 2026-05-20 - Loss3 Surprising Findings Mathematical Interpretation
+
+Status: completed theory-interpretation note from existing experiment summaries and method definitions; no new optimizer/model experiment was launched.
+
+Source files and evidence:
+- Method definitions inspected from `tools/run_loss3_direction_proposal_ablation.py` and `tools/run_batch_three_loss_loss_only.py`.
+- Prior validation result: `docs/loss3_surprising_findings_validation_20260520.md`.
+- Supporting method notes: `docs/loss3_jvp_vjp_power_methods_explanation_20260518.md` and `docs/loss3_generalized_power_naming_clarification_20260518.md`.
+
+Output file:
+- `docs/loss3_surprising_findings_math_explanation_20260520.md`
+
+Observed evidence referenced:
+- The current `steepest_replace`/`generalized_power` method uses the objective gradient's p-steepest direction plus replacement to the epsilon boundary; it is not the full JVP/VJP generalized P-Q power iteration unless explicitly using those variants.
+- `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace` differ by direction normalization/steepest map and additive versus replacement proposal.
+- p=2 makes raw-gradient normalization and p-steepest direction identical, explaining exact `raw_replace`/`steepest_replace` equivalence for checked p=2 groups.
+
+Inference recorded:
+- Boundary arrival is only active-constraint satisfaction, not constrained stationarity; post-boundary tangent/directional motion explains continued loss growth.
+- Replacement/GPI is best understood as an aggressive local-linear full-budget surrogate optimizer, not as a guaranteed optimizer for the nonlinear Loss 3 objective.
+- LP-steepest additive norm growth is straighter because its p-step size is normalized; raw PGD curves because gradient scale varies by sample and step.
+- Boundary-ratio standard deviation diagnoses radial synchronization; angular-change metrics diagnose boundary direction search.
+- P/Q geometry explains spike-prone settings: p=1 promotes sparse extreme points and q=inf promotes localized max-residual gradients.
+
+Remaining work:
+- To turn this interpretation into stronger evidence, measure gradient-step cosine, local Jacobian/Hessian spectral dominance, linearized predicted gain versus actual gain, and p=2 tangent-update components after boundary arrival.
+
+## 2026-05-20 - Loss3 GPI Mechanism Hypothesis Probe
+
+Status: completed post-processing mechanism probe from existing local artifacts; no neural-operator optimizer/model experiment was launched.
+
+Source files and inputs:
+- Probe script: `tools/probe_loss3_gpi_mechanism_hypotheses.py`
+- p2q2 300-step sweep: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/`
+- p!=q 100-step sweep: `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/`
+- Saved trajectory roots: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/` and `forensics/loss3_optimizer_direction_proposal_ablation_20260517/`
+- Direction-proposal p2q2 eps8/alpha0.3 ablation root: `forensics/loss3_optimizer_direction_proposal_ablation_20260517/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q2/`
+
+Output files:
+- Result Markdown: `docs/loss3_gpi_mechanism_hypothesis_probe_20260520.md`
+- Output directory: `forensics/loss3_gpi_mechanism_hypothesis_probe_20260520/`
+- Tables: `mechanism_probe_by_setting_method.csv`, `mechanism_probe_rollup_by_pq_method.csv`, `mechanism_probe_rollup_by_method.csv`, `early_to_final_trajectory_probe.csv`, `hypothesis_tests.csv`, `qaware_power_variant_probe_p2q2_eps8_alpha0p3.csv`
+
+Observed from generated outputs:
+- The probe processed `102` setting roots, `408` setting/method rows, `441` trajectory-probe rows, and `11` q-aware/objective-gradient variant rows.
+- In p2q2, replacement hits 99% boundary at mean step `1`, versus raw add `49.2` and steepest add `13.45`.
+- In p2q2, replacement mean post-boundary gain is `3.412`; mean post-boundary angle is `30.68 deg`, compared with `0.246 deg` for raw add and `0.612 deg` for steepest add.
+- Across all settings, the Pearson correlation between post-boundary gain and post-boundary angle motion is weak (`~0.041`), so angular motion alone is not sufficient to explain loss gain.
+- In saved p2q2 trajectories, replacement becomes final-like early: baseline cosine to final is about `0.887` at step 5, `0.984` at step 10, and `0.995` at step 20; eps8/alpha0.3 direction-proposal trajectory is about `0.788`, `0.966`, and `0.988` at those steps.
+- In the p2q2 eps8/alpha0.3 direction-proposal ablation, objective-gradient replacement final mean loss is `6.805`, while affine JVP/VJP replacement is `3.842` and pure JVP/VJP replacement is `2.324`.
+- In p1qinf, steepest methods have peakiness around `30` and top-1 energy fraction around `0.86-0.96`, while p2q2 methods have peakiness around `3.6-4.1` and top-1 energy fraction around `0.014-0.018`.
+
+Inference from the above evidence:
+- The successful current GPI label is better interpreted as objective-gradient replacement: a local-linear full-budget surrogate plus aggressive boundary-direction search.
+- It should not be described as a literal generalized P-Q power method or exact optimizer for full nonlinear Loss 3.
+- p2q2-like regimes appear to have a dominant useful direction that replacement reaches within a few steps; p1/qinf regimes can create large angular motion that is not useful and often spike-like.
+
+Remaining work:
+- For stronger mechanism evidence, run a GPU diagnostic that records gradient-step cosine, local Jacobian/Hessian spectral dominance, and local-linear predicted gain versus actual gain along selected trajectories.
+
+## 2026-05-20 - Loss3 Boundary Geometry Derivation and Validation Clarification
+
+Status: completed explanatory/validation note from existing artifacts; no new optimizer/model experiment was launched.
+
+Output file:
+- `docs/loss3_boundary_geometry_derivation_and_validation_20260520.md`
+
+Source evidence referenced:
+- `docs/loss3_gpi_mechanism_hypothesis_probe_20260520.md`
+- `forensics/loss3_gpi_mechanism_hypothesis_probe_20260520/tables/`
+- Prior final-delta similarity and p/q concentration metrics from existing loss3 analyses.
+
+Observed evidence recorded:
+- p2q2 replacement hits 99% boundary at mean step `1`; raw add at `49.2`; steepest add at `13.45`.
+- p2q2 replacement post-boundary angular motion is about `30.68 deg`, compared with `0.246 deg` for raw add and `0.612 deg` for steepest add.
+- p2q2 replacement post-boundary gain is `3.412`.
+- Existing trajectory probes show p2q2 replacement reaches high cosine to final delta by steps 5-20.
+- p1qinf and p1q2 concentration metrics support the spike explanation for p=1/q=inf-like geometries.
+
+Inference recorded:
+- For p=2, `(I - u u^T) grad L` is the tangent-plane projection of the gradient on the L2 boundary; nonzero tangent projection means loss can still increase while staying on the boundary.
+- LP-steepest additive norm growth is only approximately linear; it depends on normalized step size plus stable positive radial alignment.
+- Additive angular motion after boundary is O(alpha/epsilon), while replacement has no alpha/epsilon small factor and can rotate directly to the new selected direction.
+- Existing evidence supports but does not fully prove the dominant-direction hypothesis; a true spectral-mode claim needs a GPU Jacobian/Hessian or tangent-KKT diagnostic.
+
+Remaining work:
+- Implement a GPU diagnostic for p2 tangent KKT residual `||(I-u u^T) grad L|| / ||grad L||`, local-linear predicted gain, and local spectral dominance along selected trajectories.
+
+## 2026-05-20 - Loss3 Mechanism Probe Plain-Language Walkthrough
+
+Status: completed documentation clarification; no new experiment or post-processing run was launched.
+
+Updated result file:
+- `docs/loss3_gpi_mechanism_hypothesis_probe_20260520.md`
+
+Clarification recorded:
+- The mechanism probe is a post-processing analysis of existing `per_step_metrics.csv`, `final_deltas.npz`, and `trajectory_samples.npz` artifacts, not a new neural-operator run.
+- A `setting root` means one completed P/Q/epsilon/alpha/steps experiment folder; the probe read 102 such roots and 408 core-method rows.
+- A `trajectory probe` row is an early-step-to-final-delta comparison from saved trajectory arrays, not a new optimization run.
+- The phrase boundary-surface direction change means loss increasing after `boundary_ratio ~= 1` while delta direction/angle continues changing.
+
+Remaining work:
+- If the mechanism needs to be verified beyond saved artifacts, run the proposed GPU diagnostics for tangent KKT residual, local-linear predicted gain, and local spectral dominance.
+
+## 2026-05-20 - Loss3 p2q2 Tangent and Radial Geometry Probe
+
+Status: completed post-processing diagnostic from existing p2q2 300-step per-sample metrics; no optimizer/model experiment was rerun.
+
+Source files and inputs:
+- Script: `tools/probe_loss3_p2q2_tangent_and_radial_geometry.py`
+- Sweep root: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/`
+- Input tables: per-setting `per_sample_step_metrics.csv` files containing recorded autograd-gradient cosines, direction cosines, delta norms, losses, and per-step geometry metrics.
+
+Output files:
+- Result Markdown: `docs/loss3_p2q2_tangent_radial_geometry_probe_20260520.md`
+- Output directory: `forensics/loss3_p2q2_tangent_radial_geometry_probe_20260520/`
+- Tables: `tangent_kkt_by_setting_method.csv`, `tangent_kkt_rollup_by_method.csv`, `radial_growth_by_setting_method.csv`, `radial_growth_rollup_by_method.csv`, `geometry_probe_correlations.csv`
+
+Observed from generated outputs:
+- Processed 20 p2q2 setting roots, 80 tangent setting/method rows, and 40 additive radial-growth rows.
+- p2 tangent-gradient residual was computed as `sqrt(1 - cos(delta, grad)^2)`, equivalent to `||(I-u u^T) grad L|| / ||grad L||` when `u=delta/||delta||_2`.
+- In p2q2 rollup, replacement/GPI tangent residual at boundary hit is about `0.855`, while raw add is about `0.397` and steepest add about `0.435`.
+- Last gradient-bearing step tangent residual is about `0.480` for replacement/GPI, but only about `0.039` for raw add and `0.046` for steepest add.
+- Post-boundary gain correlates with tangent residual at hit across alpha/epsilon settings: raw add `r=0.816`, steepest add `r=0.702`, replacement `r=0.622`.
+- Replacement post-hit/last tangent residual is not positively correlated with gain (`r=-0.082` after hit and `r=-0.112` last update), so tangent motion is opportunity/capacity, not a complete predictor of useful loss growth.
+- The p2 radial-growth formula matches the recorded pre-boundary radius increments with mean absolute error around `1e-7`.
+- Steepest add has direction L2 mean `1.0` with CV about `3.3e-8`; raw add direction L2 CV is about `0.621`. Actual radial-increment CV is about `0.110` for steepest add and `0.621` for raw add.
+
+Inference from the above evidence:
+- The p2 boundary-stationarity story is directly supported: replacement reaches the boundary with a large tangent gradient component and therefore still has room to improve by rotating on the boundary.
+- LP-steepest's straighter norm growth is mainly explained by normalized direction size and synchronized radial increments, not by cos-theta being universally more stable than raw PGD.
+- Raw PGD's curved and variable radial progress is strongly tied to raw gradient norm variability.
+
+Remaining work:
+- For a stricter final convergence claim, rerun selected trajectories with gradient computation enabled at the final saved step and optionally store full gradient vectors for direct projection plots.
+
+## 2026-05-20 - Loss3 Mechanism Validation and Landscape Visualization Plan
+
+Status: completed planning/analysis document; no new neural-operator experiment was launched.
+
+Output file:
+- `docs/loss3_mechanism_validation_and_landscape_plan_20260520.md`
+
+Source context inspected:
+- Existing mechanism diagnostics: `docs/loss3_p2q2_tangent_radial_geometry_probe_20260520.md` and `docs/loss3_gpi_mechanism_hypothesis_probe_20260520.md`.
+- Existing tools for landscape/curvature/ray diagnostics: `tools/run_loss3_2d_slice_planarity.py`, `tools/run_loss3_path_directional_curvature.py`, `tools/run_loss3_ray_profile*.py`, `tools/run_loss3_jacobian_subspace_rotation_path.py`, and local Jacobian/SVD analysis tools.
+
+Observed evidence summarized:
+- Existing saved metrics can already validate p2q2 tangent residual and radial-growth mechanisms.
+- Existing tools can be adapted for core4/PQ ray profiles, 2D slices, boundary arc interpolation, directional curvature, and local dominant-mode/Jacobian probes.
+
+Inference recorded:
+- The next strongest validation is not another broad alpha/epsilon sweep; it is targeted landscape probes that visualize rays, 2D planes, boundary arcs, and local curvature around method deltas.
+- Dominant-direction claims require stronger evidence from ray/2D/arc/Jacobian diagnostics; current early-to-final cosine evidence is suggestive but not a spectral proof.
+- p/q spike claims can be tested by comparing landscape sharpness/curvature and concentration metrics across p2q2, p2q1, p2qinf, and p1qinf.
+
+Remaining work:
+- Implement or adapt `tools/run_loss3_pq_landscape_probe.py` to read core4 outputs and evaluate rays/slices/arcs on GPU after the required GPU verification.
+- Run a small pilot before any large PQ landscape sweep.
+
+## 2026-05-20 - Loss3 p2q2 Stepwise Geometry vs Next-Step Gain Probe
+
+Status: completed post-processing diagnostic from existing p2q2 300-step per-sample metrics; no optimizer/model experiment was rerun.
+
+Source files and inputs:
+- Script: `tools/probe_loss3_p2q2_stepwise_gain_geometry.py`
+- Sweep root: `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/`
+- Input tables: per-setting `per_sample_step_metrics.csv` files with recorded loss, delta/gradient cosines, direction cosines, projection shrink factors, and step geometry.
+
+Output files:
+- Result Markdown: `docs/loss3_p2q2_stepwise_gain_geometry_probe_20260520.md`
+- Output directory: `forensics/loss3_p2q2_stepwise_gain_geometry_probe_20260520/`
+- Tables: `stepwise_geometry_mean_by_setting_method_step.csv`, `stepwise_geometry_correlations_by_method_scope.csv`, `stepwise_geometry_correlations_by_setting_method_scope.csv`
+- Figures: `post_boundary_grad_tangent_ratio_vs_next_loss_gain.png`, `post_boundary_direction_tangent_ratio_vs_next_loss_gain.png`, `post_boundary_linear_gain_projected_vs_next_loss_gain.png`, `post_boundary_stepwise_correlation_bars.png`
+
+Observed from generated outputs:
+- Processed 20 p2q2 setting roots and 2,400,000 sample-step pairs.
+- The diagnostic compares geometry at step `k` against immediate next-step gain `loss3_q[k+1] - loss3_q[k]`.
+- Post-boundary `grad_tangent_ratio` correlates with next-step gain for additive methods: `raw_add r=0.337`, `steepest_add r=0.265`.
+- Post-boundary projected local-linear gain is a stronger one-step predictor: `raw_add r=0.600`, `steepest_add r=0.299`.
+- Post-boundary radial/signed ratio is negatively correlated with next-step gain for additive methods: `raw_add r=-0.327`, `steepest_add r=-0.222`.
+- Replacement methods have weak post-boundary one-step correlations (`linear_gain_projected r=0.097`, `grad_tangent_ratio r=0.029`), despite large hit-step-to-final gains found in the previous tangent/radial probe.
+
+Inference from the above evidence:
+- Stepwise tangent projection is related to next-step loss growth, but it is only an opportunity measure. The actual projected local-linear gain better captures whether the chosen next step uses the tangent opportunity in a useful direction.
+- The earlier conclusion remains consistent: replacement/GPI reaches the boundary with large tangent residual and has room to improve, but once it is rotating aggressively on the boundary, immediate gain is not explained by tangent magnitude alone.
+- For LP-steepest norm growth, the data should not be interpreted as the direction being fixed. The stronger explanation is that the direction norm is fixed/normalized, so radial increments are much less variable than raw PGD, whose raw gradient norm varies strongly.
+
+Remaining work:
+- If needed, extend the same stepwise gain diagnostic to other p/q settings and add GPU landscape probes for ray/2D/arc curvature validation.
+
+## 2026-05-20 - Loss3 Mechanism/Landscape Existing Audit, All-p2 Tangent Extension, and Core4/PQ Landscape Pilot
+
+Status: completed audit plus one post-processing extension and one small GPU landscape evaluation pilot.
+
+Source files and inputs:
+- Audit/result docs inspected: `docs/loss3_ray_profile_ri_final_report_fno_nu0p001_20260516.md`, `docs/loss3_2d_slice_planarity_fno_nu0p001_steps100_dense_result_20260517.md`, `docs/loss3_directional_curvature_fno_nu0p001_steps100_samples5_20260517.md`, `docs/loss3_jacobian_subspace_rotation_path_fno_nu0p001_result_20260516.md`, and related forensics roots.
+- Post-processing script: `tools/probe_loss3_all_p2_tangent_geometry.py`
+- GPU landscape script: `tools/run_loss3_core4_pq_landscape_probe.py`
+- Existing core4 inputs: p2q2 baseline giftrace root and p2q1/p2qinf/p1qinf `eps=4, alpha=0.4` roots.
+
+Output files:
+- Audit doc: `docs/loss3_mechanism_landscape_existing_vs_new_audit_20260520.md`
+- All-p2 tangent doc: `docs/loss3_all_p2_tangent_geometry_probe_20260520.md`
+- All-p2 tangent output: `forensics/loss3_all_p2_tangent_geometry_probe_20260520/`
+- Core4/PQ landscape doc: `docs/loss3_core4_pq_landscape_probe_20260520.md`
+- Core4/PQ landscape output: `forensics/loss3_core4_pq_landscape_probe_20260520/`
+
+GPU verification for landscape pilot:
+- `nvidia-smi` showed Tesla V100-SXM2-32GB, driver 570.211.01, CUDA 12.8 driver capability, and no active GPU processes before the run.
+- `adv_robust/bin/python` reported PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, CUDA available, device `Tesla V100-SXM2-32GB`, compute capability `(7,0)`, PyTorch arch list including `sm_70`, successful CUDA matmul, JAX backend `gpu`, and JAX device `cuda:0`.
+- The landscape manifest records GPU-only runtime details and no CPU fallback.
+
+Observed from existing audit:
+- Prior ray-profile, 2D-slice, curvature, and Jacobian/SVD experiments already exist and are reusable as background evidence.
+- Those old experiments are mainly old `loss3_original_pgd` path diagnostics, not current core4/PQ method comparisons, so they cannot fully substitute for the current GPI/replacement mechanism checks.
+
+Observed from all-p2 tangent extension:
+- Processed 60 p=2 setting roots and 24,000 sample/method rows.
+- Replacement hits the 99% boundary at step 1 in p2q1, p2q2, and p2qinf.
+- Replacement tangent residual at boundary hit is high across q: about `0.873` for p2q1, `0.855` for p2q2, and `0.938` for p2qinf.
+- p2qinf is the warning case: high tangent residual and large angular motion do not translate into large post-boundary gain.
+
+Observed from GPU landscape pilot:
+- Scope: four setting roots, samples `[0, 7, 40, 47]`, row counts ray `8000`, boundary arc `756`, 2D slice `1568`, curvature `64`.
+- In baseline p2q2, replacement/GPI endpoint ray loss at epsilon is `1.481` for step 1, `3.494` for step 5, `3.664` for step 10, `3.679` for step 20, and `3.634` for final. This supports quick convergence to a final-like high-loss direction by around 5-10 steps.
+- p2q2 boundary arcs between replacement and additive final directions stay high-loss, with minima around `98.8%` of the weaker endpoint.
+- p2q1 also looks broadly connected and replacement has strong endpoint ray loss.
+- p2qinf differs: endpoint final-direction winner is steepest_add rather than replacement, and some arcs dip more.
+
+Inference from the above evidence:
+- The dominant-ridge / rapid-final-like-direction story is supported for p2q2 and partly p2q1.
+- The story must be qualified for q=inf and p1/qinf: high tangent opportunity and aggressive angular motion are not sufficient without useful landscape alignment.
+- A paper-level dominant-mode claim still needs a new, expensive local Jacobian/SVD probe on current core4/PQ deltas; old Jacobian/SVD artifacts are background evidence only.
+
+Remaining work:
+- Optionally scale the landscape pilot to more samples/settings.
+- Run targeted local Jacobian/SVD dominant-mode diagnostics for p2q2 baseline, p2qinf warning case, and p1qinf spike case only if a stronger spectral claim is needed.
+
+## 2026-05-21 - Loss3 Correlation and Radial-Growth Clarification
+
+Status: completed clarification from existing generated tables; no experiment was rerun.
+
+Source files inspected:
+- `forensics/loss3_p2q2_tangent_radial_geometry_probe_20260520/tables/geometry_probe_correlations.csv`
+- `forensics/loss3_p2q2_tangent_radial_geometry_probe_20260520/tables/radial_growth_rollup_by_method.csv`
+- `forensics/loss3_p2q2_stepwise_gain_geometry_probe_20260520/tables/stepwise_geometry_correlations_by_method_scope.csv`
+
+Output file:
+- `docs/loss3_correlation_and_radial_growth_clarification_20260521.md`
+
+Observed evidence:
+- Setting-level hit-to-final correlations answer whether tangent residual at first boundary hit predicts total post-boundary gain across 20 p2q2 alpha/epsilon settings: raw_add `r=0.816`, steepest_add `r=0.702`, replacement/GPI `r=0.622`.
+- Stepwise post-boundary correlations answer whether the geometry at each post-boundary step predicts immediate next-step gain: raw_add tangent ratio `r=0.337`, steepest_add `r=0.265`, replacement/GPI `r=0.029`.
+- Post-boundary projected local-linear gain is a better one-step predictor for additive methods: raw_add `r=0.600`, steepest_add `r=0.299`, replacement/GPI `r=0.097`.
+- Radial-growth rollup shows `steepest_add` direction L2 CV is about `3.3e-8`, but cos(theta) CV is `0.478`; raw_add direction L2 CV and actual radial increment CV are both about `0.621`.
+
+Inference:
+- The high hit-to-final correlations and lower stepwise correlations are not contradictory; they answer different statistical questions.
+- Fixed update norm alone does not mathematically guarantee straight norm growth. The supported statement is that normalized update length plus mostly positive radial alignment makes steepest_add radial progress much steadier in the observed p2q2 data.
+
+## 2026-05-21 - Loss3 Key Findings Master Summary
+
+Status: completed consolidated Markdown record; no experiment was rerun.
+
+Source files and inputs:
+- Existing result docs under `docs/`, especially `docs/loss3_surprising_findings_synthesis_20260520.md`, `docs/loss3_surprising_findings_validation_20260520.md`, `docs/loss3_boundary_geometry_derivation_and_validation_20260520.md`, `docs/loss3_p2q2_tangent_radial_geometry_probe_20260520.md`, `docs/loss3_p2q2_stepwise_gain_geometry_probe_20260520.md`, `docs/loss3_all_p2_tangent_geometry_probe_20260520.md`, `docs/loss3_core4_pq_landscape_probe_20260520.md`, and `docs/loss3_correlation_and_radial_growth_clarification_20260521.md`.
+- Existing forensics roots including `forensics/loss3_p2q2_tangent_radial_geometry_probe_20260520/`, `forensics/loss3_p2q2_stepwise_gain_geometry_probe_20260520/`, `forensics/loss3_all_p2_tangent_geometry_probe_20260520/`, and `forensics/loss3_core4_pq_landscape_probe_20260520/`.
+
+Output file:
+- `docs/loss3_key_findings_master_summary_20260521.md`
+
+Observed evidence recorded:
+- Boundary hit is not convergence; replacement/GPI reaches boundary early but retains large tangent residual and large post-hit angular motion.
+- p2q2 setting-level tangent residual at boundary hit correlates with total post-boundary gain, while stepwise tangent residual has much weaker immediate next-step correlation.
+- Objective-gradient replacement is the successful current surrogate; existing ablation does not support calling it the exact generalized-power optimizer of full Loss3.
+- LP-steepest straight-ish norm growth is supported by normalized update length plus observed positive radial alignment, not by fixed direction.
+- Final delta shapes are often similar in p2q2/p2q1 but this weakens in p=1 or q=inf settings.
+- p/q geometry strongly affects spike/concentration behavior.
+
+Inference:
+- The consolidated paper-style interpretation is that replacement/GPI is an aggressive full-budget local surrogate that is especially effective in p2q2-like landscapes with a strong shared high-loss direction or ridge, but it should not be overclaimed as a guaranteed global optimizer of Loss3.
+
+Remaining work:
+- Optional targeted local Jacobian/SVD probes are still needed for a strong spectral dominant-mode claim.
+
+## 2026-05-21 - Loss3 Current Core4/PQ Mechanism Validation Suite
+
+Status: completed current core4/PQ mechanism validation with GPU landscape evaluation, trajectory-focused early-ray evaluation, targeted residual-Jacobian/SVD probe, summary figures, summary tables, and Markdown conclusions.
+
+Source files and inputs:
+- Landscape runner: `tools/run_loss3_core4_pq_landscape_probe.py`
+- Jacobian/SVD runner: `tools/probe_loss3_current_core4_jacobian_svd.py`
+- Summary plotter: `tools/plot_loss3_mechanism_validation_summary.py`
+- Existing current core4/PQ setting roots under `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/` and `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/`
+- Existing tangent/stepwise post-processing roots: `forensics/loss3_all_p2_tangent_geometry_probe_20260520/` and `forensics/loss3_p2q2_stepwise_gain_geometry_probe_20260520/`
+
+GPU verification:
+- Pre-run `nvidia-smi` showed Tesla V100-SXM2-32GB, driver 570.211.01, CUDA 12.8 driver capability, and no active GPU processes.
+- `adv_robust/bin/python` reported PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, CUDA available, device `Tesla V100-SXM2-32GB`, compute capability `(7,0)`, PyTorch arch list including `sm_70`, successful CUDA matmul, JAX backend `gpu`, and JAX device `cuda:0`.
+- Each GPU runner manifest records GPU-only runtime metadata and no CPU fallback.
+
+Output files:
+- Expanded landscape doc: `docs/loss3_core4_pq_landscape_probe_full_20260521.md`
+- Expanded landscape output: `forensics/loss3_core4_pq_landscape_probe_full_20260521/`
+- Trajectory-focused landscape doc: `docs/loss3_core4_pq_landscape_probe_trajectory_20260521.md`
+- Trajectory-focused landscape output: `forensics/loss3_core4_pq_landscape_probe_trajectory_20260521/`
+- Targeted Jacobian/SVD doc: `docs/loss3_current_core4_jacobian_svd_probe_20260521.md`
+- Targeted Jacobian/SVD output: `forensics/loss3_current_core4_jacobian_svd_probe_20260521/`
+- Final mechanism summary doc: `docs/loss3_current_mechanism_validation_summary_20260521.md`
+- Final mechanism summary output: `forensics/loss3_current_mechanism_validation_summary_20260521/`
+- Updated master summary: `docs/loss3_key_findings_master_summary_20260521.md`
+
+Key settings:
+- Expanded landscape: p2q2 baseline plus p2q1, p2qinf, and p1qinf baseline roots; sample indices `[0,7,20,40,47,63,80,99]`; ray/arc/2D slice/curvature evaluation.
+- Trajectory-focused landscape: same four roots; sample indices `[0,7,40,47]` because only those have trajectory NPZ; early steps `[1,5,10,20]`.
+- Jacobian/SVD: sample index `0`; 11 current core4/PQ states including p2q2 clean/step1/step5/step10/replacement final/steepest_add final, p2qinf clean/replacement final/steepest_add final, and p1qinf clean/replacement final.
+
+Observed evidence:
+- p2q2 steepest_replace ray endpoint ratio relative to final reaches `0.961` at step 5, `1.008` at step 10, and `1.012` at step 20.
+- p2q2 boundary arcs stay near the weaker endpoint: replacement-to-additive arcs have min/weak-endpoint ratio about `0.986`.
+- all-p2 tangent residual confirms replacement reaches boundary at step 1 with large tangent residual: p2q1 about `0.873`, p2q2 about `0.855`, p2qinf about `0.938`.
+- p2q2 residual-Jacobian spectrum becomes more dominated after GPI moves: `sigma1/sigma2` rises from `1.148` at clean to `5.094` at replacement step 5, with top-1 energy fraction rising from `0.404` to `0.925`.
+- The stronger pure-SVD claim is not supported: at p2q2 replacement final, the top residual-Jacobian right singular vector has cosine only `0.281` with the replacement final delta.
+- p2qinf and p1qinf remain caveats: p2qinf has stronger geometry-dependent arc/ray differences, and p1qinf replacement final has weak spectral gap (`sigma1/sigma2 = 1.235`) and near-orthogonal top direction to replacement final delta.
+
+Inference:
+- The current data supports the local-surrogate/shared-ridge explanation: replacement/GPI rapidly reaches a high-loss boundary region and can rotate aggressively there.
+- The data does not support claiming that replacement/GPI simply follows the top singular vector of the local residual Jacobian.
+- The cleanest paper wording should remain conditional: objective-gradient replacement is an aggressive full-budget surrogate that works very well in p2q2-like geometry, while q=inf and p=1 geometries limit the story and can produce less stable/spikier behavior.
+
+Remaining work:
+- Optional: repeat the residual-Jacobian/SVD probe for more samples if a statistically stronger spectral statement is needed. Current SVD probe is targeted, not population-level.
+
+## 2026-05-21 - Loss3 Hypothesis Validation Status Map
+
+Status: completed documentation-only consolidation of which mechanism hypotheses have been verified, rejected, refined, or remain open. No new experiment was run for this map.
+
+Source files and inputs:
+- `docs/loss3_current_mechanism_validation_summary_20260521.md`
+- `docs/loss3_current_core4_jacobian_svd_probe_20260521.md`
+- `docs/loss3_core4_pq_landscape_probe_full_20260521.md`
+- `docs/loss3_core4_pq_landscape_probe_trajectory_20260521.md`
+- `docs/loss3_p2q2_tangent_radial_geometry_probe_20260520.md`
+- `docs/loss3_p2q2_stepwise_gain_geometry_probe_20260520.md`
+- `docs/loss3_all_p2_tangent_geometry_probe_20260520.md`
+- `docs/loss3_gpi_mechanism_hypothesis_probe_20260520.md`
+
+Output file:
+- `docs/loss3_hypothesis_validation_status_20260521.md`
+
+Observed evidence recorded:
+- Boundary hit, post-boundary tangent residual, angular motion, early high-loss ray ratios, shared ridge boundary arcs, p/q spike behavior, LP-steepest radial growth, raw PGD gradient-scale effects, and targeted residual-Jacobian/SVD mismatch were each mapped to explicit hypotheses.
+
+Inference:
+- Most of the original practical hypotheses are verified or refined, but the pure residual-Jacobian top-singular-vector explanation is rejected. The remaining strongest explanation is objective-gradient full-budget replacement as an aggressive local surrogate for an affine/nonlinear Loss3 landscape.
+
+Remaining work:
+- Population-level Jacobian/SVD and direct affine trust-region comparisons remain optional future work if a stronger mathematical claim is needed.
+
