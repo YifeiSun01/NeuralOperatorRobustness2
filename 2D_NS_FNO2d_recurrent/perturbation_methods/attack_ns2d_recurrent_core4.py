@@ -703,6 +703,7 @@ def append_metric_rows(
             "alpha": float(args.alpha),
             "p_order": norm_name(args.p_order),
             "q_order": norm_name(args.q_order),
+            "seconds_since_method_start": float(elapsed),
             "delta_l2": float(delta_l2[pos]),
             "delta_linf": float(delta_linf[pos]),
             "delta_p": float(delta_p[pos]),
@@ -711,6 +712,140 @@ def append_metric_rows(
         for name in LOSS_TYPES:
             sample[name] = float(losses_np[name][pos])
         sample_rows.append(sample)
+
+
+def annotate_growth_metrics(step_rows: list[dict[str, Any]], sample_rows: list[dict[str, Any]], active_loss: str) -> None:
+    """Add active-loss curve and finite-difference growth metrics in-place."""
+
+    active_key = active_loss
+    mean_key = f"{active_loss}_mean"
+    first_mean = None
+    prev_mean = None
+    prev_seconds = None
+    for row in step_rows:
+        current = float(row.get(mean_key, float("nan")))
+        seconds = float(row.get("seconds_since_method_start", float("nan")))
+        row["active_loss"] = active_loss
+        row["active_loss_mean"] = current
+        if first_mean is None and math.isfinite(current):
+            first_mean = current
+        row["active_loss_mean_increase_from_k0"] = current - first_mean if first_mean is not None and math.isfinite(current) else float("nan")
+        row["active_loss_mean_ratio_to_k0"] = current / first_mean if first_mean not in (None, 0.0) and math.isfinite(current) else float("nan")
+        if prev_mean is None or not math.isfinite(current) or not math.isfinite(prev_mean):
+            row["active_loss_mean_delta_from_prev"] = float("nan")
+            row["active_loss_mean_growth_per_second"] = float("nan")
+        else:
+            delta = current - prev_mean
+            row["active_loss_mean_delta_from_prev"] = delta
+            dt = seconds - prev_seconds if prev_seconds is not None else float("nan")
+            row["active_loss_mean_growth_per_second"] = delta / dt if dt and dt > 0 else float("nan")
+        prev_mean = current
+        prev_seconds = seconds
+
+    by_sample: dict[int, list[dict[str, Any]]] = {}
+    for row in sample_rows:
+        by_sample.setdefault(int(row["sample_position"]), []).append(row)
+    for rows in by_sample.values():
+        rows.sort(key=lambda item: int(item["k"]))
+        first = None
+        prev = None
+        prev_seconds = None
+        for row in rows:
+            current = float(row.get(active_key, float("nan")))
+            seconds = float(row.get("seconds_since_method_start", float("nan")))
+            row["active_loss"] = active_loss
+            row["active_loss_value"] = current
+            if first is None and math.isfinite(current):
+                first = current
+            row["active_loss_increase_from_k0"] = current - first if first is not None and math.isfinite(current) else float("nan")
+            row["active_loss_ratio_to_k0"] = current / first if first not in (None, 0.0) and math.isfinite(current) else float("nan")
+            if prev is None or not math.isfinite(current) or not math.isfinite(prev):
+                row["active_loss_delta_from_prev"] = float("nan")
+                row["active_loss_growth_per_second"] = float("nan")
+            else:
+                delta = current - prev
+                row["active_loss_delta_from_prev"] = delta
+                dt = seconds - prev_seconds if prev_seconds is not None else float("nan")
+                row["active_loss_growth_per_second"] = delta / dt if dt and dt > 0 else float("nan")
+            prev = current
+            prev_seconds = seconds
+
+
+def build_delta_threshold_rows(
+    step_rows: list[dict[str, Any]],
+    sample_rows: list[dict[str, Any]],
+    active_loss: str,
+    thresholds: tuple[float, ...] = (0.25, 0.50, 0.75, 1.00),
+) -> list[dict[str, Any]]:
+    """Record when delta_p/epsilon first reaches each threshold."""
+
+    rows: list[dict[str, Any]] = []
+    sorted_steps = sorted(step_rows, key=lambda item: int(item["k"]))
+    for threshold in thresholds:
+        hit = next((row for row in sorted_steps if float(row.get("boundary_ratio_mean", float("nan"))) >= threshold), None)
+        rows.append(
+            {
+                "scope": "batch_mean",
+                "threshold": threshold,
+                "threshold_percent": int(round(100 * threshold)),
+                "first_k": None if hit is None else int(hit["k"]),
+                "seconds_since_method_start": None if hit is None else float(hit.get("seconds_since_method_start", float("nan"))),
+                "boundary_ratio": None if hit is None else float(hit.get("boundary_ratio_mean", float("nan"))),
+                "delta_p": None if hit is None else float(hit.get("delta_p_mean", float("nan"))),
+                "active_loss": active_loss,
+                "active_loss_value": None if hit is None else float(hit.get("active_loss_mean", float("nan"))),
+            }
+        )
+
+    by_k: dict[int, list[dict[str, Any]]] = {}
+    for row in sample_rows:
+        by_k.setdefault(int(row["k"]), []).append(row)
+    for threshold in thresholds:
+        all_hit = None
+        for k in sorted(by_k):
+            rows_at_k = by_k[k]
+            if rows_at_k and all(float(row.get("boundary_ratio", float("nan"))) >= threshold for row in rows_at_k):
+                all_hit = rows_at_k
+                break
+        representative = None if all_hit is None else all_hit[0]
+        rows.append(
+            {
+                "scope": "all_samples",
+                "threshold": threshold,
+                "threshold_percent": int(round(100 * threshold)),
+                "first_k": None if representative is None else int(representative["k"]),
+                "seconds_since_method_start": None if representative is None else float(representative.get("seconds_since_method_start", float("nan"))),
+                "boundary_ratio": None if all_hit is None else float(np.nanmin([row["boundary_ratio"] for row in all_hit])),
+                "delta_p": None if all_hit is None else float(np.nanmin([row["delta_p"] for row in all_hit])),
+                "active_loss": active_loss,
+                "active_loss_value": None if all_hit is None else float(np.nanmean([row.get("active_loss_value", float("nan")) for row in all_hit])),
+            }
+        )
+
+    by_sample: dict[int, list[dict[str, Any]]] = {}
+    for row in sample_rows:
+        by_sample.setdefault(int(row["sample_position"]), []).append(row)
+    for sample_position, rows_for_sample in sorted(by_sample.items()):
+        rows_for_sample.sort(key=lambda item: int(item["k"]))
+        dataset_index = int(rows_for_sample[0]["dataset_index"])
+        for threshold in thresholds:
+            hit = next((row for row in rows_for_sample if float(row.get("boundary_ratio", float("nan"))) >= threshold), None)
+            rows.append(
+                {
+                    "scope": "sample",
+                    "sample_position": sample_position,
+                    "dataset_index": dataset_index,
+                    "threshold": threshold,
+                    "threshold_percent": int(round(100 * threshold)),
+                    "first_k": None if hit is None else int(hit["k"]),
+                    "seconds_since_method_start": None if hit is None else float(hit.get("seconds_since_method_start", float("nan"))),
+                    "boundary_ratio": None if hit is None else float(hit.get("boundary_ratio", float("nan"))),
+                    "delta_p": None if hit is None else float(hit.get("delta_p", float("nan"))),
+                    "active_loss": active_loss,
+                    "active_loss_value": None if hit is None else float(hit.get("active_loss_value", float("nan"))),
+                }
+            )
+    return rows
 
 
 def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dataset_indices: list[int], method_dir: Path):
@@ -781,9 +916,13 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         delta = projected.detach()
         del projected
 
+    annotate_growth_metrics(step_rows, sample_rows, loss_type)
+    threshold_rows = build_delta_threshold_rows(step_rows, sample_rows, loss_type)
+
     method_dir.mkdir(parents=True, exist_ok=True)
     write_csv(method_dir / "per_step_metrics.csv", step_rows)
     write_csv(method_dir / "per_sample_step_metrics.csv", sample_rows)
+    write_csv(method_dir / "delta_threshold_crossings.csv", threshold_rows)
     final_delta_np = tensor_to_numpy(delta).astype(np.float32)
     final_x_adv_np = tensor_to_numpy((problem.x0 + delta).detach()).astype(np.float32)
     np.savez_compressed(
@@ -805,6 +944,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         "p_order": norm_name(problem.args.p_order),
         "q_order": norm_name(problem.args.q_order),
         "runtime_seconds": float(time.perf_counter() - start),
+        "delta_threshold_crossings": threshold_rows,
         "final_step_metrics": step_rows[-1] if step_rows else {},
     }
     write_json(method_dir / "summary.json", summary)
@@ -923,7 +1063,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--alpha", type=float, default=0.3)
     parser.add_argument("--p", default="2")
     parser.add_argument("--q", default="2")
-    parser.add_argument("--save-steps", nargs="+", type=int, default=[0, 1, 2, 5, 10, 25, 50])
+    parser.add_argument("--save-steps", nargs="*", type=int, default=[], help="Optional trajectory checkpoints to save. Final delta is always saved separately; default saves no per-step trajectory arrays.")
     parser.add_argument("--modes1", type=int, default=64)
     parser.add_argument("--modes2", type=int, default=64)
     parser.add_argument("--width", type=int, default=60)

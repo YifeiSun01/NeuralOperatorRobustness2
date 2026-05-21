@@ -1,3 +1,36 @@
+## 2026-05-21 - NS2D attack logging outputs for loss growth and delta thresholds
+
+- Status: updated attack logging code and documentation; no GPU run launched.
+- Source changed: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Result document: `docs/ns2d_recurrent_core4_attack_logging_outputs_20260521.md`.
+- Logging added: active loss growth metrics in `per_step_metrics.csv` and `per_sample_step_metrics.csv`; `delta_threshold_crossings.csv` for first 25%, 50%, 75%, and 100% `delta_p / epsilon` crossings at batch-mean, all-samples, and per-sample scopes; threshold rows embedded in `summary.json`.
+- Save behavior changed: `--save-steps` default is now empty, so intermediate trajectory arrays are not saved unless explicitly requested; `final_delta_and_metrics.npz` still always saves the final delta and final adversarial initial condition.
+- Validation: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py` passed.
+
+## 2026-05-21 - NS2D attack loss/mode mapping correction
+
+- Status: corrected the experiment plan so `loss_type` and `MODE_SPEC` are not treated as a full Cartesian product; no GPU run launched.
+- Result document: `docs/ns2d_recurrent_core4_attack_loss_mode_mapping_20260521.md`.
+- Correction recorded: `loss1` should run once without ADW mode sweep; `loss2` corresponds to fixed/approximate-target style groups such as `all_a_target_w`; `loss3` should sweep W/D/A target-path variants.
+- Corrected full grouping has `28` method combinations (`1 loss1 group + 1 loss2 group + 5 loss3 groups`, each with 4 methods), rather than the earlier over-broad `72` combinations.
+- Note added to `docs/ns2d_recurrent_core4_attack_multimode_command_20260521.md` pointing to the corrected grouped command.
+
+## 2026-05-21 - NS2D attack multi-mode command recommendation
+
+- Status: created a multi-mode command document for running 17 initial conditions across W/D/A mode presets, 3 losses, and 4 core methods; no GPU run launched.
+- Result document: `docs/ns2d_recurrent_core4_attack_multimode_command_20260521.md`.
+- Observed from source: CLI accepts one `--mode-spec` per run, so multiple ADW presets should be run with a shell loop.
+- Observed local state: default A-mode dictionary file was missing locally at the time of this check, so the full ADW command includes a guard and a W/D-only fallback command is documented.
+- Recommended throughput settings retained: `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `ATTACK_BATCH_SIZE=17`.
+
+## 2026-05-21 - NS2D attack run recommendation for maximum throughput
+
+- Status: created a run recommendation document from existing benchmark records; no GPU run launched.
+- Result document: `docs/ns2d_recurrent_core4_attack_run_recommendation_20260521.md`.
+- Observed evidence summarized: `chunk=20`, batch 17 has the best observed throughput at about `0.876 sample-updates/s` with `73.34 GiB` peak reserved; `micro`, batch 12 is the safer long-run configuration at about `0.799 sample-updates/s` with more memory headroom; `second`, batch 15 is a middle ground.
+- Recommended maximum-throughput parameters: `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `ATTACK_BATCH_SIZE=17`.
+- Recommended safer parameters: `SOLVER_REMAT=micro`, `ATTACK_BATCH_SIZE=12`.
+
 ## 2026-05-21 - NS2D attack reserved memory and recompute explanation doc
 
 - Status: created consolidated Chinese Markdown explaining `reserved` memory, `allocated` memory, non-linear OOM cliff, checkpoint/remat granularity, recomputation coverage, and final batch/memory/time recommendations; no GPU run launched.
