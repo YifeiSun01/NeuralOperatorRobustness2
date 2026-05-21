@@ -5843,3 +5843,301 @@ Remaining work:
 - After this sync record is committed/pushed, upload `docs/` and
   `EXPERIMENT_LEDGER.md` once more so the sync record itself is also present on
   R2.
+
+
+## 2026-05-21 - 2D NS Recurrent FNO2d 64/64/60 Training Entry
+
+Status: prepared a GPU-only PyTorch recurrent FNO2d command-line trainer for
+the requested `modes1=64`, `modes2=64`, `width=60` setup; full training was not
+launched in this turn.
+
+Source files inspected:
+- `2D_NS_FNO2d_recurrent/models/FNO2d.py`
+- `2D_NS_FNO2d_recurrent/training_models/trainFNO2d_unnormalized.py`
+- `2D_NS_FNO2d_recurrent/training_models/trainFNO2d_unnormalized.sh`
+- `2D_NS_FNO2d_recurrent/data_generation/generate_ns_real_initial_batched.py`
+- `2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame.py`
+- Historical log:
+  `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_width60_epochs500_Tin10_T10/NS_2d_FNO_log_trainedby_dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_all_frames.txt`
+
+Output files:
+- `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`
+- `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`
+- `docs/ns2d_recurrent_fno2d_m64_w60_training_entry_20260521.md`
+
+Key settings:
+- PyTorch recurrent FNO2d.
+- `modes1=64`, `modes2=64`, `width=60`, `num_layers=4`.
+- Defaults: `epochs=500`, `ntrain=1000`, `ntest=100`, `batch_size=4`,
+  `T_in=10`, `T_out=10`, `target_size=256`, `lr=0.001`,
+  `weight_decay=0.0001`.
+- Trainer refuses CPU fallback and records `nvidia-smi`, PyTorch/CUDA/device,
+  compute capability, CUDA arch list, and a CUDA matmul sanity check before
+  training.
+
+Observed evidence:
+- Existing `FNO2d.py` has a recurrent predictor compatible with
+  `[batch, s, s, T_in] -> [batch, s, s, T_out]`.
+- Historical `modes64_width60_epochs500_Tin10_T10` log records
+  `235989181` trainable parameters and final legacy summed relative L2 at epoch
+  499: train `66.15601575`, test `10.51145339`.
+- Local scan observed `0` `.pt` files under `2D_NS_FNO2d_recurrent/datasets/`.
+- Local scan observed `0` `.pth` files under
+  `2D_NS_FNO2d_recurrent/saved_models/`.
+- The newer real-initial generator expects
+  `2D_NS_FNO2d_recurrent/datasets/source_zongyi_real_initial/`, which is not
+  present locally.
+
+Verification:
+- `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py`
+  passed.
+- `adv_robust/bin/python 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py --help`
+  passed.
+- `2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh --help`
+  passed.
+
+Inference:
+- The repo has model and generator code for the requested 2D NS recurrent FNO2d
+  workflow, and now has a clean runnable training entry for the 64/64/60 model.
+- A full new run still requires restoring or generating the `.pt` dataset file;
+  no current local file evidences that the training data or the historical
+  checkpoint is present in this working tree.
+
+Remaining work:
+- Put or generate the required `.pt` dataset locally.
+- Launch
+  `bash 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh`
+  on the GPU machine.
+- After a real run, record the generated `gpu_verification.txt`,
+  `train_log.csv`, checkpoints, and final metrics in this ledger and a result
+  Markdown.
+
+
+## 2026-05-21 - 2D NS R2 Dataset Lookup
+
+Status: inspected the Cloudflare R2 bucket for existing 2D Navier-Stokes dataset/checkpoint artifacts; no download or training run was launched.
+
+Source paths inspected:
+- R2 bucket: `neural-operator-robustness`.
+- R2 selected machine-sync prefix: `machine-sync/NeuralOperatorRobustness2-selected/`.
+- Local result note updated: `docs/ns2d_recurrent_fno2d_m64_w60_training_entry_20260521.md`.
+
+Observed evidence:
+- R2 top level contained `machine-sync/` and `machine-sync/NeuralOperatorRobustness2-selected/`.
+- Recursive R2 scan found `5482` data/checkpoint-suffix objects and `32` `.pt` objects, with `0` `.pth` objects.
+- R2 scan found `0` data objects under `2D_NS_FNO2d_recurrent/datasets/`.
+- R2 scan found `0` `.pth` checkpoint objects under `2D_NS_FNO2d_recurrent/`.
+- The only R2 object matching 2D NS/FNO2d keywords with a `.pt/.pth/.npy/.npz/.mat` suffix was `machine-sync/NeuralOperatorRobustness2-selected/fno_training_runs/ns_m12_w20_profile_500/ns_real_initial_laxmap/ns_2d/checkpoints/fno2d_pytorch.pt`, size `3730297` bytes.
+- R2 objects under dataset/data paths with data suffixes were all 1D Burgers `.pt` files.
+
+Inference:
+- The checked R2 selected machine-sync prefix does not currently contain the required 2D NS `.pt` dataset for training the requested recurrent FNO2d `modes1=64`, `modes2=64`, `width=60` model.
+- The small `ns_m12_w20_profile_500` object is a checkpoint from a smaller training-suite run, not the requested dataset and not the target 64/64/60 model.
+
+Remaining work:
+- Generate the 2D NS dataset locally with the existing generator, restore it from another machine, or provide another R2 prefix if one exists outside the checked selected machine-sync prefix.
+- After the dataset is restored, run `bash 2D_NS_FNO2d_recurrent/training_models/run_fno2d_recurrent_m64_w60.sh` and record the actual run outputs.
+
+
+## 2026-05-21 - 2D NS Real-Initial Generation Runtime Check 05:11 UTC
+
+Status: inspected the active 2D NS real-initial 256x256 generation run; no command was stopped or restarted.
+
+Observed evidence:
+- Active process: PID `302925`, command `generate_ns_real_initial_batched.py --splits test,train --target-size 256 --batch-size 32 --solver-batch-size 8 --solver-mode lax-map`.
+- At `2026-05-21 05:11:25 UTC`, process elapsed time was `24:26` and GPU utilization was `98%`.
+- GPU memory used was `24822 MiB / 32768 MiB`; GPU memory-bandwidth utilization was `1%`.
+- Completed output present: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`, size `288362621` bytes, mtime `2026-05-21 04:48:06 UTC`.
+- No train `.pt` output file was present yet; output directory size was `276M`.
+
+Inference:
+- The job is actively running on GPU and is in the train split after completing the test split.
+- Because this command writes one `.pt` per split at completion, local files do not expose per-batch progress for the train split; progress is only visible in the launching terminal's tqdm output.
+- Based on elapsed time after the test split and current GPU utilization, the train split likely has on the order of tens of minutes remaining, not hours, assuming no late-stage slowdown.
+
+Remaining work:
+- Continue monitoring until the train `.pt` appears.
+- Start the recurrent FNO2d 64/64/60 training only after the train `.pt` is fully written.
+
+
+## 2026-05-21 - 2D NS Real-Initial Generation Runtime Check 05:24 UTC
+
+Status: inspected the active generation process again; no command was stopped or restarted.
+
+Observed evidence:
+- Active process: PID `302925`, elapsed time `38:05`, CPU time `39:37`.
+- At `2026-05-21 05:24:26 UTC`, GPU utilization was `99%`, GPU memory used was `24822 MiB / 32768 MiB`, and memory-bandwidth utilization was `1%`.
+- Completed output still only included the test split: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`, size `288362621` bytes.
+- No train `.pt` file was present yet.
+
+Inference:
+- The job remains active on GPU and has not finished the train split.
+- Since stdout/stderr are attached to the launching TTY and were not redirected to a log file, this inspection cannot see per-batch tqdm progress; only process/GPU/output-file status is visible from this session.
+- The remaining time is an estimate only until the train output file appears.
+
+Remaining work:
+- Continue monitoring for the train `.pt` file and avoid launching training until it appears fully written.
+
+
+## 2026-05-21 - 2D NS Real-Initial Dataset Completed And FNO2d Training Launched
+
+Status: completed 256x256 real-initial 2D NS dataset generation and launched the recurrent FNO2d 64/64/60 PyTorch training run.
+
+Generated dataset outputs:
+- Test: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`, size `288362621` bytes, shape `x=(50,256,256)`, `y=(50,256,256,21)`.
+- Train: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`, size `6632250121` bytes, shape `x=(1150,256,256)`, `y=(1150,256,256,21)`.
+- Summary: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/generation_summary.json`, size `21943` bytes.
+
+Observed generation metrics:
+- `generation_summary.json` contained `38` records: test `2` batches / `50` samples, train `36` batches / `1150` samples.
+- Recorded rollout seconds: test `104.30499046598561`, train `2278.595210202737`.
+- Recorded upsample seconds: test `0.20982681098394096`, train `0.31126681552268565`.
+
+Training launch:
+- Dry run passed before launch and reported model parameters `118024381` by PyTorch trainable-parameter count.
+- Detached training process launched as PID `314121` using `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python`.
+- Log file: `run_logs/train_fno2d_recurrent_m64_w60_20260521_0530.log`.
+- Output directory: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_real_initial_laxmap_v100/`.
+- Training settings: `modes1=64`, `modes2=64`, `width=60`, `epochs=500`, `ntrain=1000`, `ntest=50`, `batch_size=4`, `eval_batch_size=4`, `T_in=10`, `T_out=10`.
+- Initial GPU status after launch: Tesla V100-SXM2-32GB, GPU utilization `100%`, memory used `22662 MiB / 32768 MiB`, power draw `223.55 W`.
+
+Observed evidence:
+- Training log showed `Training FNO2d recurrent PyTorch`, resolved train/test paths, `device: Tesla V100-SXM2-32GB (sm_70)`, and tqdm at epoch `0/500`.
+- GPU verification file is expected in the output directory from the trainer startup.
+
+Remaining work:
+- Monitor `run_logs/train_fno2d_recurrent_m64_w60_20260521_0530.log` and `nvidia-smi` for training progress and OOM risk.
+- After completion, record `train_log.csv`, `results.json`, checkpoints, and final metrics.
+- Keep generated large datasets/checkpoints out of git unless explicitly requested; sync to R2 if requested.
+
+
+## 2026-05-21 - 2D NS FNO2d Training Status Check 05:34 UTC
+
+Status: inspected active recurrent FNO2d 64/64/60 training after dataset generation completed; no process was stopped or restarted.
+
+Observed evidence:
+- Data generation had completed before training launch; train/test 256x256 `.pt` files were present under `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/`.
+- Active training process: PID `314121`, command `train_fno2d_recurrent_cli.py --modes1 64 --modes2 64 --width 60 --epochs 500` via the wrapper settings, elapsed time `02:54`, CPU time `00:07:15`.
+- At `2026-05-21 05:34:08 UTC`, GPU utilization was `91%`, GPU memory used was `22662 MiB / 32768 MiB`, and power draw was `261.45 W`.
+- Log file `run_logs/train_fno2d_recurrent_m64_w60_20260521_0530.log` showed `Training FNO2d recurrent PyTorch`, device `Tesla V100-SXM2-32GB (sm_70)`, and tqdm at epoch `0/500`.
+- Output directory `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_real_initial_laxmap_v100/` contained startup files including `gpu_verification.txt`, `config.json`, `dataset_info.json`, and the text training log, but no final metrics were observed.
+
+Inference:
+- The dataset generation stage is finished, but the model training stage is still running.
+- It is not correct to treat the full experiment as complete until `train_log.csv`, final checkpoint/results files, and final metrics are present.
+
+Remaining work:
+- Continue monitoring PID `314121`, `run_logs/train_fno2d_recurrent_m64_w60_20260521_0530.log`, and the output directory for training progress.
+- If OOM occurs, reduce `--batch-size` and `--eval-batch-size` before changing model parameters.
+
+
+
+## 2026-05-21 - 2D NS FNO2d Progress Logging Patch
+
+Status: modified the recurrent FNO2d trainer so future launches or restarts expose batch-level progress and ETA information.
+
+Observed evidence:
+- Active training PID `314121` was still running from the pre-patch script invocation.
+- Its redirected log `run_logs/train_fno2d_recurrent_m64_w60_20260521_0530.log` showed epoch `1/500` completed in approximately `217.06s`, with tqdm estimating about `30:05:15` total at that early rate.
+- The old active process only exposes epoch-level tqdm progress in the log, not fixed-interval batch progress within long epochs.
+
+Code changes:
+- `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` now has `--progress-every`, default `10`, to print flushed `[progress]` lines every N train batches.
+- The trainer now writes `progress.jsonl` and `progress_latest.json` under the run output directory.
+- The trainer now prints `[eval]` lines before/after evaluation and `[epoch]` lines after each epoch with train/test metrics.
+
+Verification:
+- `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` passed.
+- `adv_robust/bin/python 2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py --help` showed `--progress-every`.
+
+Inference:
+- The patch improves progress visibility for any new training launch or restart.
+- The current PID `314121` cannot adopt this patch without a restart because it has already loaded the old Python code.
+
+Remaining work:
+- Decide whether to let PID `314121` continue with epoch-level progress only, or stop and restart the run to get batch-level progress and JSON progress files from the beginning of training.
+
+
+
+## 2026-05-21 - 2D NS FNO2d Frame Semantics Check
+
+Status: inspected generated dataset shape and recurrent training frame slicing.
+
+Observed evidence:
+- Train generated dataset has `x=(1150,256,256)` and `y=(1150,256,256,21)`.
+- Test generated dataset has `x=(50,256,256)` and `y=(50,256,256,21)`.
+- For both generated datasets, `max_abs(x - y[...,0]) = 0.0`, so `y[...,0]` is the real initial condition.
+- `2D_NS_FNO2d_recurrent/training_models/train_fno2d_recurrent_cli.py` slices `sample[..., :t_in]` as input and `sample[..., t_in:t_in+t_out]` as target.
+- With `t_in=10`, `t_out=10`, the training target is stored frames `10..19`, not stored frame `20`.
+- `2D_NS_FNO2d_recurrent/models/FNO2d.py` `RecurrentPredictor.forward` predicts one frame, appends it, and rolls the input window repeatedly for `T_out` frames.
+
+Inference:
+- The current recurrent FNO2d training setup matches input stored frames `1..10`, supervise predicted stored frames `11..20`, and ignores stored frame `21` in one-based frame naming.
+- The already-running PID `314121` was launched by the assistant after dataset completion; it was not launched by the data generation script itself.
+
+Remaining work:
+- If batch-level progress is required for the active run, stop/restart with the patched `--progress-every` trainer command.
+
+
+## 2026-05-21 - 2D NS FNO2d Runtime And Hardware Utilization Check 05:43 UTC
+
+Status: inspected active recurrent FNO2d 64/64/60 training runtime and GPU utilization.
+
+Observed evidence:
+- Active training PID `314121`, elapsed time `12:05`, CPU time `00:30:00`, process RSS about `7.84 GB`.
+- GPU snapshot at `2026-05-21 05:43:20 UTC`: Tesla V100-SXM2-32GB, GPU utilization `100%`, memory utilization `82%`, memory used `22662 MiB / 32768 MiB`, power draw `222.73 W`, SM clock `1530 MHz`, memory clock `877 MHz`.
+- `nvidia-smi dmon` samples showed SM utilization mostly `88-100%`, memory utilization `76-84%`, and power draw `213-262 W`.
+- `train_log.csv` contained epochs 1-3 with seconds `213.07864790898748`, `211.67835453199223`, and `213.18633831501938`.
+- The redirected tqdm log showed epoch `3/500` around `10:51`, consistent with about `212-217s` per epoch including evaluation.
+
+Inference:
+- The V100 is substantially occupied by the training run; this is a GPU-limited run rather than an obviously CPU-idle bottleneck.
+- At the observed early rate, the 500-epoch run is roughly `29.5-30.0` hours total on the current V100 setup, assuming the per-epoch time remains stable.
+- Larger/newer GPUs such as A100/B200 should reduce runtime, but exact speedup must be measured because this FNO workload includes FFT/complex spectral operations and autoregressive recurrent steps, not only dense tensor-core GEMMs.
+
+Remaining work:
+- Continue monitoring actual epoch times from `train_log.csv`.
+- If restarting for progress logging, use the patched `--progress-every` command and record the new PID/log path.
+
+
+## 2026-05-21 - 2D NS FNO2d V100 Speed-Up Assessment
+
+Status: assessed whether the active V100 training run can be made substantially faster without changing the requested model/data semantics.
+
+Observed evidence:
+- Active run is using a Tesla V100-SXM2-32GB with GPU utilization around `91%` at the snapshot and previous `nvidia-smi dmon` samples mostly `88-100%` SM utilization.
+- Memory used remains about `22662 MiB / 32768 MiB`, so there is memory headroom, but the GPU compute path is already highly occupied.
+- First three recorded epoch times are approximately `213.08s`, `211.68s`, and `213.19s`, implying about `29.5` hours for 500 epochs if stable.
+- The current process was launched without `--amp`; the trainer supports `--amp`, but this must be benchmarked because the FNO implementation uses FFT and complex spectral multiplication.
+
+Inference:
+- The current V100 run is primarily GPU-limited rather than obviously blocked by CPU or data loading.
+- Increasing batch size may improve overhead modestly but is unlikely by itself to reduce `~30h` to `~10h` because SM/memory utilization is already high.
+- Realistic V100-side speedups without changing the model/data are likely from `--amp`, less frequent evaluation, and perhaps a slightly larger batch if stable; a full 3x speedup on V100 is uncertain and should not be assumed without a benchmark.
+- Reaching roughly 10 hours is much more plausible on a faster GPU such as A100/B200, or by reducing the training budget such as epochs/early stopping.
+
+Remaining work:
+- If the user wants to optimize on this V100, stop the current run and launch a short AMP/eval-frequency benchmark before committing to a 500-epoch run.
+
+
+## 2026-05-21 - 2D NS Training Stopped And Dataset Backed Up To R2
+
+Status: stopped the active V100 recurrent FNO2d training run and backed up the generated 256x256 real-initial 2D NS dataset to R2.
+
+Observed evidence:
+- User requested stopping the active training process before backup.
+- Training process PID `314121` was terminated at approximately `2026-05-21 05:48 UTC`.
+- GPU snapshot after stopping showed utilization `0%` and memory used `0 MiB / 32768 MiB`.
+- R2 destination prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/`.
+- R2 listing after copy showed:
+  - `generation_summary.json`, size `21943` bytes.
+  - `test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`, size `288362621` bytes.
+  - `train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`, size `6632250121` bytes.
+
+Inference:
+- The generated real-initial 256x256 train/test dataset and generation summary are backed up on R2 under the selected machine-sync prefix.
+- The stopped training run did not complete; its partial local run outputs remain local and were not treated as final training results.
+
+Remaining work:
+- Push code and experiment records to GitHub branch `vast-ai`.
+- Keep large dataset/checkpoint artifacts out of git unless explicitly requested.

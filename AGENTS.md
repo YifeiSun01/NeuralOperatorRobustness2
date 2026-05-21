@@ -22,6 +22,23 @@ When creating or rebuilding `adv_robust`, use
 that script installs the pinned environment and refuses to pass unless PyTorch
 and JAX both execute on GPU.
 
+## GPU Batching And Memory Utilization Rule
+
+For neural-operator data generation, training, adversarial attack, and
+evaluation code, prefer batched GPU execution whenever the solver/model supports
+it. The user's standing preference is to use GPU memory aggressively to maximize
+throughput, instead of running avoidably serial single-sample loops.
+
+On the current Tesla V100-SXM2-32GB machine, choose defaults that target high
+but safe memory use: roughly 75% to 90% of GPU memory for long runs, while
+leaving enough headroom for JAX/PyTorch compilation caches, temporary tensors,
+and allocator fragmentation. Do not choose batch sizes that are likely to hit
+OOM. Expose separate knobs for outer processing batches and inner solver/model
+batches when they have different memory profiles, and document the expected
+memory/runtime tradeoff. If a run OOMs, reduce the inner solver/model batch
+first; if memory is well below target and throughput benefits, increase batch
+sizes cautiously.
+
 ## Experiment Logging Rules
 
 This repository contains long-running numerical experiments. Do not rely on
