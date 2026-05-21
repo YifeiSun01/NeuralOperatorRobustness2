@@ -5345,3 +5345,454 @@ Observed evidence:
 Remaining work:
 - None for this sync request. Local `forensics/` remains untracked by git by design.
 
+## 2026-05-21 - Loss1/Loss2 1D Burgers Optimizer-Speed Lookup
+
+Status: completed lookup from existing local results. No attack was rerun.
+
+Source files and inputs:
+- `results/three_loss_batch100_full_loss3_delta_rerun_20260514_fno_eps8_alpha0p3_final_boundary/`
+- Per-run `loss_stats.csv` and `summary.json` under `loss1_*_*` and
+  `loss2_*_*` attack tags.
+- `docs/unified_eval_metric_loss_curve_plots_20260516.md`
+- `THREE_LOSS_BATCH100_FULL_LOSS3_SWEEP.md`
+
+Output record:
+- `docs/loss1_loss2_1d_burgers_optimizer_speed_lookup_20260521.md`
+
+Key settings:
+- FNO / 1D Burgers `nu=0.001`, batch size `100`, dataset indices `0..99`.
+- `epsilon=8`, `alpha=0.3`, `steps=100`, `p=2`, `q=2`.
+- Methods available for `loss1` and `loss2`: `pgd`, `lp_steepest_pgd`,
+  `generalized_power`.
+
+Observed evidence:
+- For `loss1_original`, first step reaching 95% of the final mean was
+  `pgd` step `26`, `lp_steepest_pgd` step `27`, and `generalized_power` step
+  `3`. Final means were `11.1718`, `11.1493`, and `11.0143`, respectively.
+- For `loss2_original`, first step reaching 95% of the final mean was
+  `pgd` step `24`, `lp_steepest_pgd` step `27`, and `generalized_power` step
+  `2`. Final means were `11.3734`, `11.3812`, and `11.2360`, respectively.
+- Runtime recorded in `summary.json` was essentially the same across these
+  methods, about `137-139` seconds per tag.
+- No local result directory or documentation evidence was found for applying
+  `raw_replace`, `steepest_replace`, or `power_replace` directly to `loss1` or
+  `loss2`; the replacement-method evidence is for later `loss3`-focused runs.
+
+Inference:
+- For the existing `loss1_original` and `loss2_original` 1D Burgers evidence,
+  `generalized_power` is faster in optimization-step convergence, while
+  ordinary `pgd` and `lp_steepest_pgd` are slower but end at slightly higher
+  mean optimized objective values in this setting.
+
+Remaining work:
+- Run or restore `loss1`/`loss2` replacement-method results if the intended
+  comparison must include `raw_replace`, `steepest_replace`, or `power_replace`.
+
+## 2026-05-21 - Loss1/Loss2 Core-Four P2Q2 Baseline Visual Run
+
+Status: completed on GPU. This is a new run requested as the loss1/loss2 analogue
+of the Loss3 baseline visualizations, restricted to one setting.
+
+GPU verification:
+- `nvidia-smi`: Tesla V100-SXM2-32GB, driver `570.211.01`, CUDA driver API
+  `12.8`, no other GPU processes at verification time.
+- PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, device `Tesla V100-SXM2-32GB`,
+  compute capability `(7, 0)`, architecture list includes `sm_70`, CUDA matmul
+  sanity sum `8.0`.
+- JAX backend `gpu`, device `[CudaDevice(id=0)]`, JAX matmul sanity sum `8.0`.
+
+Source files and inputs:
+- New runner: `tools/run_loss1_loss2_core4_baseline_visuals.py`.
+- Dataset: `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt`.
+- Model checkpoint: `1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt`.
+- Baseline settings mirrored from the current Loss3 baseline visual run:
+  `epsilon=4`, `alpha=0.4`, `steps=300`, `p=2`, `q=2`, batch size `100`,
+  dataset indices `0..99`.
+- Methods: `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+- `loss1_original` used tiny random start `1e-6`; `loss2_original` used zero
+  start.
+
+Output files:
+- Result doc: `docs/loss1_loss2_core4_p2q2_baseline_visuals_20260521.md`.
+- Output root: `forensics/loss1_loss2_core4_p2q2_baseline_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/`.
+- Numeric summary: `forensics/loss1_loss2_core4_p2q2_baseline_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/method_summary.csv`.
+- Per-method sources: `per_step_metrics.csv`, `per_sample_step_metrics.csv`,
+  `trajectory_samples.npz`, `final_delta.npz`, and `summary.json` under each
+  `loss1_original/<method>/` and `loss2_original/<method>/` directory.
+- Figures: ten PNGs under
+  `forensics/loss1_loss2_core4_p2q2_baseline_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/figures/`,
+  covering objective curves, boundary-ratio curves, high-frequency-ratio curves,
+  final delta line plots for selected indices, and index-0 delta heatmaps.
+
+Observed evidence:
+- Figure pixel checks confirmed the generated PNGs are nonblank.
+- For `loss1_original`, final optimized-loss means were: `raw_add=6.9827`,
+  `raw_replace=6.9419`, `steepest_add=6.9835`, `steepest_replace=6.9419`.
+  Steps to 95% of best final were `7`, `2`, `10`, and `2`, respectively.
+- For `loss2_original`, final optimized-loss means were: `raw_add=7.0759`,
+  `raw_replace=7.0451`, `steepest_add=7.0783`, `steepest_replace=7.0451`.
+  Steps to 95% of best final were `7`, `2`, `10`, and `2`, respectively.
+- All final mean p-norms were essentially at the boundary: final
+  `||delta||_2` mean about `4.0` for every objective/method.
+- `raw_replace` and `steepest_replace` match numerically in this `p=2` setting,
+  as expected because both use the normalized gradient direction for these
+  objectives.
+
+Inference:
+- For this single baseline `p=q=2` setting, replacement methods reach the
+  high-loss plateau fastest in step count, while additive methods end with a
+  slightly higher final optimized loss, especially `steepest_add`.
+- The conclusion should not be generalized to other P/Q, epsilon, or alpha
+  settings without running those settings.
+
+Remaining work:
+- Optional: sync generated `forensics/` artifacts to R2 if these visual outputs
+  should be preserved off-machine.
+
+## 2026-05-21 - Loss1/Loss2 Core-Four Corrected 0..100 Marked/Angle Visuals
+
+Status: completed on GPU. This corrected visual run addresses the missing pieces
+from the prior simplified 0..300 visual output: it restricts the displayed range
+to `k=0..100`, marks L2-budget boundary arrivals, and records step-to-step angle
+diagnostics.
+
+GPU verification:
+- `nvidia-smi`: Tesla V100-SXM2-32GB, driver `570.211.01`, CUDA driver API
+  `12.8`, no other GPU processes at verification time.
+- PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, device `Tesla V100-SXM2-32GB`,
+  compute capability `(7, 0)`, architecture list includes `sm_70`, CUDA matmul
+  sanity sum `8.0`.
+- JAX backend `gpu`, device `[CudaDevice(id=0)]`, JAX matmul sanity sum `8.0`.
+
+Source files and inputs:
+- Updated runner: `tools/run_loss1_loss2_core4_baseline_visuals.py`.
+- Command: `adv_robust/bin/python tools/run_loss1_loss2_core4_baseline_visuals.py --steps 100 --save-every 1 --out-root forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps100_p2_q2 --doc docs/loss1_loss2_core4_p2q2_baseline_marked_angles_0to100_20260521.md`.
+- Same FNO / 1D Burgers `nu=0.001` dataset and checkpoint as the prior
+  baseline visual run.
+- Settings: `epsilon=4`, `alpha=0.4`, `steps=100`, `p=2`, `q=2`, batch size
+  `100`, dataset indices `0..99`.
+- Methods: `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+
+Output files:
+- Result doc: `docs/loss1_loss2_core4_p2q2_baseline_marked_angles_0to100_20260521.md`.
+- Output root: `forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps100_p2_q2/`.
+- Compact numeric tables: `method_summary.csv`, `boundary_marker_hits_0to100.csv`,
+  and `angle_summary_0to100.csv`.
+- Full per-step/per-sample sources under each `loss1_original/<method>/` and
+  `loss2_original/<method>/`: `per_step_metrics.csv`,
+  `per_sample_step_metrics.csv`, `trajectory_samples.npz`, `final_delta.npz`,
+  and `summary.json`.
+- Corrected figures: `figures_0to100_marked_angles/` contains boundary-marked
+  loss curves, boundary-ratio curves, and angle curves for both objectives;
+  the standard `figures/` directory contains the accompanying loss/delta/heatmap
+  plots.
+
+Observed evidence:
+- PNG pixel checks confirmed all corrected `figures_0to100_marked_angles/*.png`
+  files are nonblank.
+- Every-step trajectories were saved: each `trajectory_samples.npz` has delta
+  shape `(101, 4, 1024, 1)`, with saved steps `0..100`.
+- `per_step_metrics.csv` now records `delta_prev_angle_degrees`,
+  `direction_prev_angle_degrees`, and `delta_direction_angle_degrees`.
+- Boundary markers use `25%`, `50%`, `75%`, and `99%`; `100%` is not separately
+  marked. Replacement methods hit the `99%` boundary at step `1`; `raw_add`
+  hits at step `8`; `steepest_add` hits at step `11` for both objectives.
+- For `loss1_original`, final optimized-loss means were `raw_add=6.9773`,
+  `raw_replace=6.9416`, `steepest_add=6.9767`, and
+  `steepest_replace=6.9416`.
+- For `loss2_original`, final optimized-loss means were `raw_add=7.0698`,
+  `raw_replace=7.0452`, `steepest_add=7.0742`, and
+  `steepest_replace=7.0452`.
+
+Inference:
+- This corrected run should be used for the user's requested visualization
+  comparison. The earlier 0..300 run remains a valid numeric baseline but did
+  not include the requested boundary-marker and angle-diagnostic visual layer.
+
+Remaining work:
+- Optional: sync the corrected `forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/`
+  artifact directory to R2 if it should be preserved off-machine.
+
+## 2026-05-21 - Loss1/Loss2/Loss3 Core-Four Combined 0..100 Visuals
+
+Status: completed from existing completed outputs. No attack, model, matrix, or
+solver computation was rerun for this entry; the task was a CSV/PNG synthesis of
+previous GPU-verified runs.
+
+Source files and inputs:
+- New plotting script: `tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`.
+- Command: `adv_robust/bin/python tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`.
+- Loss1/Loss2 source root: `forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps100_p2_q2/`.
+- Loss3 source root: `forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/`, filtered to `k=0..100`.
+- Settings represented: FNO / 1D Burgers `nu=0.001`, `epsilon=4`,
+  `alpha=0.4`, `p=q=2`, batch size `100`, methods `raw_add`, `raw_replace`,
+  `steepest_add`, and `steepest_replace`.
+
+Output files:
+- Result doc: `docs/loss1_loss2_loss3_core4_combined_0to100_20260521.md`.
+- Output root: `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/`.
+- Numeric sources: `combined_per_step_metrics_0to100.csv`,
+  `combined_final_summary_0to100.csv`, and
+  `combined_boundary_gain_summary_0to100.csv`.
+- Figures: `combined_loss_mean_by_method_0to100.png`,
+  `combined_loss_normalized_by_method_0to100.png`,
+  `combined_boundary_ratio_by_method_0to100.png`,
+  `combined_delta_pnorm_by_method_0to100.png`,
+  `combined_delta_prev_angle_by_method_0to100.png`,
+  `combined_direction_prev_angle_by_method_0to100.png`,
+  `combined_delta_direction_angle_by_method_0to100.png`, and
+  `combined_high_frequency_ratio_by_method_0to100.png`.
+
+Observed evidence:
+- PNG pixel checks confirmed all eight combined figures are readable and
+  nonblank.
+- All objectives/methods end on the `epsilon=4` L2 boundary by `k=100`; final
+  mean boundary ratios are approximately `1.0` and final mean `||delta||_2` is
+  approximately `4.0`.
+- First mean boundary-ratio `>=0.99` and post-boundary loss gains from
+  `combined_boundary_gain_summary_0to100.csv`: `raw_add` hits at `k=8` for
+  loss1/loss2 with post-boundary gains `0.2101` and `0.1774`; loss3 `raw_add`
+  hits at `k=43` with gain `0.2545`.
+- Replacement methods hit boundary at `k=1`; post-boundary gains are `0.7203`
+  for loss1, `0.6935` for loss2, and `1.478` for loss3.
+- `steepest_add` hits boundary at `k=11`; post-boundary gains are `0.1851`
+  for loss1, `0.1609` for loss2, and `0.5622` for loss3.
+- Last-finite direction turning at the end is tiny for additive loss1/loss2
+  (`<=0.05031` degrees) and larger for loss3, especially replacement methods
+  (`36.62` degrees). Loss1/loss2 replacement turning is about `5.13..6.38`
+  degrees.
+
+Inference:
+- Under this baseline `p=q=2` setting, the combined plots support the user's
+  observation: loss1 and loss2 reach the epsilon boundary early and then gain
+  relatively little objective value, while loss3 retains more post-boundary
+  movement and turning, most clearly in the replacement-method panels.
+- Because loss scales differ across objectives, the normalized objective plot is
+  the preferred view for comparing curve shape; the raw objective plot should be
+  used for within-objective magnitudes.
+
+Remaining work:
+- Optional: sync `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/`
+  to R2 if these combined figures should be preserved off-machine.
+
+## 2026-05-21 - Loss1/Loss2/Loss3 Combined Figure Layout Correction
+
+Status: completed from existing CSV outputs. No attack, model, matrix, or solver
+computation was rerun.
+
+Source files and inputs:
+- Updated plotting script: `tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`.
+- Command: `adv_robust/bin/python tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`.
+- Source CSVs are the same as the combined visual entry above.
+
+Output files:
+- Updated result doc: `docs/loss1_loss2_loss3_core4_combined_0to100_20260521.md`.
+- Output root: `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/`.
+- The `*_by_method_0to100.png` figures preserve the original orientation:
+  four method panels, each overlaying `loss1`, `loss2`, and `loss3`, with the
+  legend moved outside the panels.
+- The new `*_by_objective_0to100.png` figures use the requested orientation:
+  three objective rows (`loss1`, `loss2`, `loss3`), each overlaying the four
+  optimizer methods, with shared x/y ranges inside each metric figure.
+
+Observed evidence:
+- Sixteen PNG files are now present: eight metrics times two orientations.
+- PNG readability checks confirmed all sixteen files are nonblank.
+- The result doc now documents the naming convention for `by_method` versus
+  `by_objective` layouts.
+
+Inference:
+- Use the `by_objective` files for the user's requested view of one row per
+  objective with four method curves. Use the `by_method` files for the inverse
+  comparison of one panel per optimizer with three objective curves.
+
+Remaining work:
+- Optional: sync the regenerated combined figure directory to R2.
+
+## 2026-05-21 - All Requested Figures Single Folder
+
+Status: completed. No experiment, model, matrix, or solver computation was
+rerun; existing PNG figures were copied into one ordinary folder for direct
+folder download. No archive or compressed file was created.
+
+Source files and inputs:
+- Combined comparison figures from
+  `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/`.
+- Loss1/Loss2 corrected 0..100 figures from
+  `forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps100_p2_q2/figures_0to100_marked_angles/`
+  and its `figures/` directory.
+- Loss1/Loss2 earlier 0..300 baseline figures from
+  `forensics/loss1_loss2_core4_p2q2_baseline_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/figures/`.
+
+Output files:
+- Result doc: `docs/all_requested_figures_single_folder_20260521.md`.
+- Single figure folder: `all_requested_figures_20260521/`.
+
+Observed evidence:
+- The folder contains 46 PNG files and no non-PNG files.
+- Per-category counts: `combined/by_method=8`, `combined/by_objective=8`,
+  `loss1_loss2_0to100` marked/angle categories total `10`,
+  `loss1_loss2_0to100/standard_curves_and_delta_views=10`, and
+  `loss1_loss2_0to300/standard_curves_and_delta_views=10`.
+- PNG readability/nonblank check reported `46` readable PNGs and `0` blank
+  files.
+
+Inference:
+- Use `all_requested_figures_20260521/` as the single folder for downloading
+  the requested figures. The original experiment output paths remain unchanged.
+
+Remaining work:
+- None for the requested folder organization.
+
+## 2026-05-21 - Combined Figures Std-Shaded Versions Added
+
+Status: completed from existing CSV outputs. No experiment, model, matrix, or
+solver computation was rerun.
+
+Source files and inputs:
+- Updated plotting script: `tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`.
+- Command: `adv_robust/bin/python tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`.
+- Same source CSV roots as the combined visual entries above.
+
+Output files:
+- Updated combined result doc:
+  `docs/loss1_loss2_loss3_core4_combined_0to100_20260521.md`.
+- Updated single-folder record:
+  `docs/all_requested_figures_single_folder_20260521.md`.
+- New combined figures under
+  `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/` using explicit
+  `*_no_std_by_*_0to100.png` and `*_with_std_by_*_0to100.png` names.
+- Updated single figure folder: `all_requested_figures_20260521/combined/`
+  now has `no_std/by_method`, `no_std/by_objective`, `with_std/by_method`, and
+  `with_std/by_objective` subfolders.
+
+Observed evidence:
+- Generated 32 explicit combined PNGs: eight metrics times two layouts times
+  no-std/with-std versions.
+- The whole `all_requested_figures_20260521/` folder now contains 62 PNGs and
+  no non-PNG files.
+- PNG readability/nonblank check reported 62 readable files and 0 blank files.
+- The with-std plots draw mean +/- std translucent bands. Loss3 direction and
+  delta-direction angle bands use the saved cosine std columns converted to an
+  approximate angle std band.
+
+Inference:
+- Use `combined/with_std/...` when the batch variability band is needed, and
+  `combined/no_std/...` when the mean-only curves are easier to read.
+
+Remaining work:
+- None for the requested std/no-std figure correction.
+
+## 2026-05-21 - Figure Folder Cleanup
+
+Status: completed. No experiment was rerun.
+
+Source files and inputs:
+- User-requested single folder: `all_requested_figures_20260521/`.
+- Combined output root:
+  `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/`.
+
+Output/cleanup actions:
+- Kept all requested figures in `all_requested_figures_20260521/`.
+- Deleted stale unlabeled combined PNGs from the combined output root; those
+  were superseded by explicit `*_no_std_*` and `*_with_std_*` PNGs.
+- Removed the unused empty `forensics/download_bundles/` directory.
+- Left original experiment result directories, CSVs, docs, and explicit
+  no-std/with-std figure outputs in place.
+
+Observed evidence:
+- `all_requested_figures_20260521/` contains 62 PNGs and no non-PNG files.
+- No stale unlabeled `combined_*_by_*_0to100.png` files remain in the combined
+  output root.
+- `forensics/download_bundles/` no longer exists.
+
+Inference:
+- The single folder for downloading is now clean and unambiguous, while the
+  experiment evidence paths needed for records remain intact.
+
+Remaining work:
+- None.
+
+## 2026-05-21 - GPI Fast Optimizer Three-Loss Interpretation
+
+Status: completed from existing experiment records. No experiment was rerun.
+
+Source files and inputs:
+- `docs/loss1_loss2_1d_burgers_optimizer_speed_lookup_20260521.md`.
+- `docs/unified_eval_metric_three_panel_loss_curve_plots_20260516.md`.
+- `docs/loss3_hypothesis_validation_status_20260521.md`.
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`.
+
+Output files:
+- New interpretation doc:
+  `docs/gpi_fast_optimizer_three_losses_interpretation_20260521.md`.
+
+Observed evidence:
+- For `loss1_original`, existing 1D Burgers CSV evidence gives k95 values
+  `pgd=26`, `lp_steepest_pgd=27`, and `generalized_power=3`.
+- For `loss2_original`, existing 1D Burgers CSV evidence gives k95 values
+  `pgd=24`, `lp_steepest_pgd=27`, and `generalized_power=2`.
+- For `loss3_original`, the saved generalized-power curve evaluated by
+  `loss3_original` is already `6.581` at step `5`, `6.680` at step `10`, and
+  `6.857` at step `100`; the final mean in that comparison is `6.8573`, larger
+  than `loss3_original_lp_steepest_pgd=6.3782` and `loss3_original_pgd=5.3949`.
+- Existing loss3 mechanism records show replacement/GPI has much larger angular
+  motion than additive methods: p2q2 replacement/GPI post-hit angle about
+  `30.68 deg` versus raw-add about `0.288 deg` and steepest-add about
+  `0.617 deg` in the p2q2 rollup.
+
+Inference:
+- The locally recorded evidence supports describing generalized power / GPI-style
+  replacement as the fastest early optimizer in step count across the three
+  original losses, and as a method with especially fast perturbation-direction
+  rotation for loss3.
+- The claim should stay precise: GPI is fastest/early-strong, not guaranteed to
+  be the largest final 300-step mean in every later alpha/epsilon setting.
+
+Remaining work:
+- None for this interpretation note.
+
+## 2026-05-21 - Consolidated Three-Loss Optimizer Findings Markdown
+
+Status: completed from existing records and generated figures. No experiment was
+rerun.
+
+Source files and inputs:
+- `docs/loss1_loss2_1d_burgers_optimizer_speed_lookup_20260521.md`.
+- `docs/loss1_loss2_core4_p2q2_baseline_marked_angles_0to100_20260521.md`.
+- `docs/loss1_loss2_loss3_core4_combined_0to100_20260521.md`.
+- `docs/gpi_fast_optimizer_three_losses_interpretation_20260521.md`.
+- `docs/unified_eval_metric_three_panel_loss_curve_plots_20260516.md`.
+- `docs/loss3_hypothesis_validation_status_20260521.md`.
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`.
+- Organized figure folder: `all_requested_figures_20260521/`.
+
+Output files:
+- New consolidated summary:
+  `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`.
+
+Observed evidence recorded:
+- Generalized power / GPI reaches k95 in `3` steps for `loss1_original` and
+  `2` steps for `loss2_original`, compared with `24..27` steps for additive
+  PGD-style methods in the saved three-method evidence.
+- `loss3_original_generalized_power` reaches `6.581` by step `5`, `6.680` by
+  step `10`, and `6.857` by step `100` in the saved comparison.
+- Loss1/loss2 corrected core-four baseline evidence shows boundary arrival
+  followed by small post-boundary gains in the p2q2 `epsilon=4`, `alpha=0.4`
+  setting.
+- Loss3 mechanism evidence records much larger replacement/GPI angular motion
+  than additive methods, including p2q2 replacement/GPI post-hit angle about
+  `30.68 deg` versus raw-add about `0.288 deg` and steepest-add about
+  `0.617 deg`.
+- The organized single figure folder contains `62` PNGs and no non-PNG files.
+
+Inference:
+- The consolidated Markdown states the current evidence-backed interpretation:
+  GPI-style replacement is the fastest early optimizer across the three original
+  losses; loss1/loss2 largely plateau after boundary arrival; loss3 benefits
+  from much more aggressive boundary-direction rotation.
+- The document also records the caveat that GPI should not be claimed as an
+  unconditional largest-final-loss method after long runs.
+
+Remaining work:
+- None for the consolidated Markdown.
