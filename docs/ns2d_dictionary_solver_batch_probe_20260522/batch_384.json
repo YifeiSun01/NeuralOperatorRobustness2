@@ -1,0 +1,43 @@
+{
+  "finite": false,
+  "finite_count": 365,
+  "fixed_step": 0.01,
+  "jax_backend": "gpu",
+  "jax_devices": [
+    "cuda:0"
+  ],
+  "jax_memory_stats": {
+    "bytes_in_use": 2149842432,
+    "bytes_limit": 72330604115,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 2147483648,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 112192,
+    "peak_bytes_in_use": 6176374272,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 8625586176,
+    "pool_bytes": 8625586176
+  },
+  "nonfinite_count": 19,
+  "output_shape": [
+    384,
+    256,
+    256,
+    21
+  ],
+  "seconds": 38.441031164024025,
+  "seconds_per_sample": 0.1001068519896459,
+  "solver_batch_size": 384,
+  "solver_mode": "vmap",
+  "status": "nonfinite",
+  "t_final": 20,
+  "torch_capability": [
+    8,
+    0
+  ],
+  "torch_cuda": "12.6",
+  "torch_device": "NVIDIA A100-SXM4-80GB",
+  "torch_peak_allocated_bytes": 3800301568,
+  "torch_peak_reserved_bytes": 4007657472,
+  "torch_version": "2.8.0+cu126"
+}

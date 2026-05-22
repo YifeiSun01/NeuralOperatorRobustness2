@@ -3,6 +3,65 @@
 Date: 2026-05-21
 
 This note corrects the earlier overly broad Cartesian-product command. No GPU run was launched for this note.
+## Current Conservative W/D-Only Command: Batch 10, Indices 0..9
+
+User-selected current run after reducing memory pressure:
+
+```text
+ATTACK_BATCH_SIZE=10
+INDICES=0,1,2,3,4,5,6,7,8,9
+```
+
+This intentionally runs only the first 10 initial conditions. It does not run indices `10..16`.
+Because the dictionary file is missing locally, this command excludes all `A` modes and runs only W/D modes.
+
+```bash
+cd /workspace/NeuralOperatorRobustness2
+
+set -euo pipefail
+
+export XLA_PYTHON_CLIENT_PREALLOCATE=false
+export XLA_PYTHON_CLIENT_MEM_FRACTION=0.35
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+CHECKPOINT=2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt
+
+run_attack_group () {
+  local mode="$1"
+  local loss="$2"
+
+  echo "=== $(date -u '+%Y-%m-%dT%H:%M:%SZ') Running LOSS_TYPES=$loss MODE_SPEC=$mode ==="
+
+  adv_robust/bin/python 2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py \
+    --checkpoint "$CHECKPOINT" \
+    --indices 0,1,2,3,4,5,6,7,8,9 \
+    --attack-batch-size 10 \
+    --loss-types "$loss" \
+    --methods raw_add raw_replace steepest_add steepest_replace \
+    --mode-spec "$mode" \
+    --steps 100 \
+    --epsilon 32 \
+    --alpha 1 \
+    --p 2 \
+    --q 2 \
+    --true-loss-every 1 \
+    --solver-remat chunk \
+    --solver-remat-chunk-steps 20 \
+    --empty-torch-cache-after-batch
+}
+
+run_attack_group all_w loss1
+
+for MODE in \
+  all_w \
+  all_d_target_w \
+  w1_5_d6_9_target_w \
+  d1_5_w6_9_target_w
+do
+  run_attack_group "$MODE" loss3
+done
+```
+
 
 ## Key Correction
 
@@ -54,7 +113,7 @@ not 72 combinations.
 
 ## Corrected Full Command
 
-This command uses the high-throughput setting `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `ATTACK_BATCH_SIZE=17`.
+This command uses the high-throughput setting `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `ATTACK_BATCH_SIZE=10`.
 
 Modes containing `a` require the dictionary file. If the dictionary is missing, this command exits before running.
 
@@ -79,8 +138,8 @@ run_attack_group () {
   adv_robust/bin/python 2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py \
     --checkpoint "$CHECKPOINT" \
     --dictionary-path "$DICT" \
-    --indices 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 \
-    --attack-batch-size 17 \
+    --indices 0,1,2,3,4,5,6,7,8,9 \
+    --attack-batch-size 10 \
     --loss-types "$loss" \
     --methods raw_add raw_replace steepest_add steepest_replace \
     --mode-spec "$mode" \
@@ -132,8 +191,8 @@ run_attack_group () {
   echo "=== Running LOSS_TYPES=$loss MODE_SPEC=$mode ==="
   adv_robust/bin/python 2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py \
     --checkpoint "$CHECKPOINT" \
-    --indices 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 \
-    --attack-batch-size 17 \
+    --indices 0,1,2,3,4,5,6,7,8,9 \
+    --attack-batch-size 10 \
     --loss-types "$loss" \
     --methods raw_add raw_replace steepest_add steepest_replace \
     --mode-spec "$mode" \

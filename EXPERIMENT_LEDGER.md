@@ -1,3 +1,65 @@
+## 2026-05-22 - NS2D dictionary solver batch-size probe
+
+- Status: ran forward-only GPU probes for true NS2D solver batch sizes; no full dictionary generation and no R2 upload were launched.
+- Source used: `tools/benchmark_ns_dictionary_solver_batch_size.py` and `2D_NS_FNO2d_recurrent/data_generation/generate_ns_dictionary_batched.py`.
+- Result document: `docs/ns2d_dictionary_solver_batch_probe_20260522.md`.
+- Numeric artifacts: JSON files under `docs/ns2d_dictionary_solver_batch_probe_20260522/`, including `batch_10.json`, `batch_20.json`, `batch_32.json`, `batch_48.json`, `batch_256.json`, `batch_512.json`, and `batch_768.json`.
+- GPU path observed: A100-SXM4-80GB; PyTorch `2.8.0+cu126`; CUDA runtime `12.6`; JAX backend `gpu`.
+- Solver path observed from source: `ex.stepper._navier_stokes.NavierStokesVorticityZongyi(2, ...)`, confirming the probe used the 2D Navier-Stokes vorticity solver, not Burgers.
+- Observed key timings: batch 10 `2.926s`, batch 20 `3.662s`, batch 32 `4.604s`, batch 48 `5.885s`, batch 512 `50.343s`, batch 768 `73.858s` for `dt=0.01`, `t_final=20`.
+- Observed numerical stability: batch 10 and 20 were fully finite; batch 32 had `31/32` finite; batch 48 had `46/48` finite; batch 512 had `485/512` finite. Nonfinite samples need fallback to `dt=0.0005`.
+- Observed memory: batch 512 used about `7.52 GiB` JAX peak in-use and `16.03 GiB` JAX peak pool; batch 768 used about `11.27 GiB` JAX peak in-use. The limiting factor in these probes was `dt=0.01` numerical stability, not A100 memory.
+- Inference: a first-pass `dt=0.01` solve for 2000 samples with solver batch 512 is roughly four chunks, about `3.3` minutes by observed per-chunk time; adding fallback, CPU save, and R2 upload gives a practical planning range of about `15-30` minutes if the fallback rate stays near 5%.
+- Remaining work: run the full dictionary generation/upload command when ready, preferably with `--batch-size 512 --solver-batch-size 512 --solver-mode vmap --step-options 0.01,0.0005`, then record actual generation, save, and upload timings.
+
+## 2026-05-21 - NS2D batched dictionary generation speedup plan
+
+- Status: added a true batched dictionary generator and updated the R2 upload command; no dataset generation was launched.
+- Source added: `2D_NS_FNO2d_recurrent/data_generation/generate_ns_dictionary_batched.py`.
+- Result documents updated: `docs/ns2d_recurrent_dictionary_generation_runtime_estimate_20260521.md` and `docs/ns2d_recurrent_dictionary_generation_upload_command_20260521.md`.
+- Observed from legacy source: `batch_size` in `VT_NS_gen_all_frame_dict.py` only controls output batching; solver generation remains a per-sample loop.
+- Observed from existing batched generation records: `solver_batch_size=8`, `solver_mode=lax-map`, and `dt=0.005` averaged about `1.99 s/sample` rollout time over 1200 samples.
+- Implementation: the new script supports `--solver-batch-size` for true JAX/Exponax rollout batching, default `--solver-batch-size 20`, `--solver-mode vmap`, and `--step-options 0.01,0.0005`.
+- Inference: with mostly `dt=0.01` samples on the current A100, the batched dictionary run should plausibly be closer to `45-90` minutes plus save/upload time than the legacy conservative `3-5` hour estimate; if many samples fall back to `dt=0.0005`, runtime can be longer.
+- Validation: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/data_generation/generate_ns_dictionary_batched.py` passed.
+
+## 2026-05-21 - NS2D dictionary generator dt/batch controls
+
+- Status: updated the dictionary generator so the requested step-size fallback and output batch size can be controlled from the command; no dataset generation was launched.
+- Source changed: `2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.py`.
+- Result documents updated: `docs/ns2d_recurrent_dictionary_generation_runtime_estimate_20260521.md` and `docs/ns2d_recurrent_dictionary_generation_upload_command_20260521.md`.
+- Implementation: `NS_DICT_STEP_OPTIONS` controls the ordered solver step-size attempts; the requested command uses `0.01,0.0005`, so each sample first tries `dt=0.01` and falls back directly to `dt=0.0005` if unstable.
+- Implementation: `NS_DICT_BATCH_SIZE` controls output batching; the requested command uses `2000`, which creates one output `.pt` for all samples. Source inspection shows the solver loop remains per-sample, so increasing output batch size above `N=2000` will not speed this script.
+- Validation: `adv_robust/bin/python -m py_compile 2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.py` passed.
+
+## 2026-05-21 - NS2D recurrent dictionary generation and R2 upload command
+
+- Status: prepared a command to generate the missing `N=2000` dictionary dataset and upload it to R2; no generation run was launched.
+- Result document: `docs/ns2d_recurrent_dictionary_generation_upload_command_20260521.md`.
+- Source referenced: `2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.py`.
+- Observed from source: the existing script already uses `batch_size=nsamples`, so output batching is already one large `N=2000` `.pt` file; the solver itself still loops per sample.
+- Command behavior: verifies GPU path with `nvidia-smi`, PyTorch CUDA, and JAX GPU; preflights R2 with `rclone lsf`; generates the local dictionary if missing; uploads the expected `.pt` with `rclone copyto` using R2/S3 multipart-friendly chunk settings, then verifies the remote listing.
+- Secrets policy: R2 credentials are passed via environment variables in the shell command and are not written into repository files.
+
+## 2026-05-21 - NS2D attack conservative W/D-only batch10 command correction
+
+- Status: corrected the current run command recommendation; no GPU run launched.
+- Result documents updated: `docs/ns2d_recurrent_core4_attack_multimode_command_20260521.md` and `docs/ns2d_recurrent_core4_attack_loss_mode_mapping_20260521.md`.
+- Correction: current W/D-only run should use `ATTACK_BATCH_SIZE=10` and `--indices 0,1,2,3,4,5,6,7,8,9` only; indices `10..16` are intentionally excluded.
+- Dictionary state: A-mode groups remain excluded until the `N2000` dictionary file exists locally.
+- Command grouping retained: `loss1/all_w`, plus `loss3` for `all_w`, `all_d_target_w`, `w1_5_d6_9_target_w`, and `d1_5_w6_9_target_w`, each with the four core methods.
+
+## 2026-05-21 - NS2D recurrent dictionary generation runtime estimate
+
+- Status: inspected dictionary generation source and historical logs; no dataset generation was launched.
+- Source inspected: `2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.py` and `2D_NS_FNO2d_recurrent/data_generation/VT_NS_gen_all_frame_dict.sh`.
+- Historical log inspected: `2D_NS_FNO2d_recurrent/data_generation/logs_gen/VT_NS_gen_all_frame_dict_7837625.out`.
+- Result document: `docs/ns2d_recurrent_dictionary_generation_runtime_estimate_20260521.md`.
+- Observed from source: the dictionary generator targets `N=2000`, `ntimepoints=21`, `256 x 256`, `nu=1e-5`, `tfinal=20`, one saved `.pt` batch, and tries solver steps `0.01`, `0.005`, `0.001`, `0.0005`, `0.0001` until stable.
+- Observed from the historical B200 log: full `2000/2000` generation completed in `2:03:34`, about `3.71 s/sample`; `1875` samples used `dt=0.01`, `125` used fallback `dt=0.005`, and no failures were observed.
+- Observed local state: current GPU query reported `NVIDIA A100-SXM4-80GB`; local dictionary directory exists but does not contain the full `N2000 ... all_frames.pt` dictionary file.
+- Inference: on the current A100, budget roughly `3-5` hours for the script as written; if fixed `dt=0.005` is forced or many samples fall back, budget roughly `5-8` hours. Expected output size is about `11-12 GB`.
+
 ## 2026-05-21 - NS2D attack true/surrogate loss curve logging
 
 - Status: updated attack code and documentation so the primary loss evidence contains both true and surrogate loss curves; no GPU run launched.
@@ -7130,3 +7192,625 @@ Inference:
 
 Remaining work:
 - Recheck final test evaluation and final R2 upload after training completes.
+
+### 2026-05-22 00:33 UTC - NS2D Dictionary Batch-500 Generation And GIF Visualization
+
+Status: completed local batch-500 dictionary generation and CPU GIF visualization.
+
+Observed evidence:
+- GPU verification before launch showed PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, `NVIDIA A100-SXM4-80GB`, compute capability `(8, 0)`, JAX backend `gpu`, and JAX device `CudaDevice(id=0)`.
+- Generation command used `--nsamples 2000`, `--batch-size 500`, `--solver-batch-size 500`, `--solver-mode vmap`, and `--step-options 0.01,0.0005` from `2D_NS_FNO2d_recurrent`.
+- Source log: `2D_NS_FNO2d_recurrent/data_generation/logs_gen/generate_ns_dictionary_batched_b500_20260522_001856_UTC.out`.
+- The tqdm generation loop completed 4/4 batches in `11:07`, with displayed average `166.91s/batch`.
+- `nvidia-smi` during generation observed about `17477 MiB / 81920 MiB` used and `99%` GPU utilization.
+- Output dictionary path: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- Output dictionary exact size: `11534339833` bytes, about `10.74 GiB`.
+- Replacement summary JSON path: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/generation_summary_dictionary_batched.json`.
+- Summary shapes: `x_shape=[2000,256,256]`, `y_shape=[2000,256,256,21]`.
+- Metadata step usage: `dt=0.01` for 1859 samples and fallback `dt=0.0005` for 141 samples.
+- CPU-only GIF visualization generated 5 `coolwarm` 21-frame GIFs under `2D_NS_FNO2d_recurrent/visualizations/dictionary_batched_20260522/`, using sample indices `0,499,999,1499,1999`.
+
+Inference:
+- Batch-500 true NS2D dictionary generation completed without OOM on the A100.
+- The observed solver loop time was about `11m07s`, not `3-4m`; the difference is consistent with actual full generation, fallback handling, and save/metadata overhead.
+- The generation script wrote the `.pt` successfully before hitting a JSON serialization bug; the script has now been fixed with `json_ready()` for future runs.
+- The generated dictionary and GIFs are large/generated artifacts and were not staged for git in this turn.
+
+Remaining work:
+- Upload the dictionary to R2 if the next workflow needs remote storage.
+- Point attack modes that use dictionary `A` frames at the generated `.pt` file before running the full attack sweep.
+
+### 2026-05-22 00:41 UTC - NS2D Dictionary Stability Scan After Batch-500 Generation
+
+Status: inspected generated dictionary stability and added stricter validation tooling.
+
+Observed evidence:
+- Source dictionary: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- CPU-only stability scan script: `2D_NS_FNO2d_recurrent/data_generation/validate_ns_dictionary_stability.py`.
+- Stability report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/stability_report_dictionary_batched.json`.
+- Top-outlier CSV: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/stability_report_dictionary_batched_top_outliers.csv`.
+- Scan results: `finite_count=2000`, `nonfinite_count=0`, and `robust_flagged_count=59` using robust multiplier `20.0`.
+- Robust thresholds from the report: `max_abs_threshold=6.987165093421936`, `max_rms_threshold=2.1462059020996094`.
+- Largest observed outliers include index `566` with `max_abs=237200850944.0` and index `1998` with `max_abs=193768416.0`.
+- `generate_ns_dictionary_batched.py` was updated to support optional `--max-abs-threshold` and `--max-rms-threshold` so finite but oversized trajectories can be rerun with the next step option.
+
+Inference:
+- The user's concern is valid: the original finite-only filter caught NaN/Inf instability but did not catch finite blow-up trajectories.
+- The current generated dictionary should not be considered fully clean for dictionary-based attack modes until the 59 robust outliers are regenerated or the full dataset is regenerated with strict thresholds.
+
+Remaining work:
+- Decide the final stability threshold policy, then either patch/regenerate flagged indices or rerun the full dictionary with strict thresholds enabled.
+
+### 2026-05-22 00:54 UTC - In-Place Repair Of Exploded NS2D Dictionary Samples
+
+Status: completed in-place repair of finite but exploded dictionary trajectories.
+
+Observed evidence:
+- Canonical dictionary repaired in place: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- Repair script: `2D_NS_FNO2d_recurrent/data_generation/repair_ns_dictionary_unstable_samples.py`.
+- Repair report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames_inplace_repair_report.json`.
+- Repair criterion: non-finite samples or `max_abs > 10`.
+- Targeted unstable sample count: `56`.
+- Rerun step options were `0.0005,0.0001`; all 56 targeted samples passed at `dt=0.0005`, so `dt=0.0001` was not needed.
+- Repair total runtime: `254.23267521499656s`; `dt=0.0005` rerun step runtime: `134.64052360795904s`.
+- Repair failed count: `0`.
+- Post-repair scan report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/stability_report_dictionary_batched_after_inplace_repair_maxabs10.json`.
+- Post-repair scan observed `finite_count=2000`, `nonfinite_indices=[]`, and zero samples flagged by the explicit `max_abs > 10` threshold.
+- Post-repair maximum `max_abs` is `9.996569633483887`; post-repair maximum RMS is `1.2635504007339478`.
+
+Inference:
+- The obviously exploded finite trajectories were replaced directly inside the canonical dictionary path.
+- The dictionary now satisfies the explicit large-value filter requested in this turn (`max_abs <= 10`).
+- A few adaptive-IQR robust outliers remain below 10; whether to rerun those too is a separate stricter policy choice.
+
+Remaining work:
+- Upload the repaired canonical dictionary to R2 if remote attack jobs need the corrected file.
+
+### 2026-05-22 01:04 UTC - NS2D Recurrent Train/Test Dataset Generation Time And Stability Check
+
+Status: inspected local train/test dataset generation timing and scanned the actual `.pt` files for exploded values.
+
+Observed evidence:
+- Train dataset path: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/train/dim2d_nx256_N1150_solver=exponax_nu0.000_t20.0_train_ntimepoints21_all_frames.pt`.
+- Test dataset path: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt`.
+- Timing source: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/generation_summary.json`.
+- Stability scan report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/training_dataset_stability_report_20260522.json`.
+- Per-sample scan CSV: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/training_dataset_stability_per_sample_20260522.csv`.
+- Dataset generation settings recorded in metadata: `fixed_step=0.005`, `processing_batch_size=32`, `solver_batch_size=8`, `solver_mode=lax-map`, and 21 saved frames through `tfinal=20`.
+- Recorded train generation time: `2278.9064770182595s` rollout+upsample for 1150 samples, about `37m58.9s`.
+- Recorded test generation time: `104.51481727696955s` rollout+upsample for 50 samples, about `1m44.5s`.
+- Combined recorded train+test generation time: `2383.421294295229s`, about `39m43.4s`.
+- Train stability scan observed `finite_count=1150`, `max_abs>10` count `0`, `max_abs>50` count `0`, `max_abs>100` count `0`, and `max_abs>1000` count `0`; train maximum `max_abs=3.8361892700195312`.
+- Test stability scan observed `finite_count=50`, `max_abs>10` count `0`, `max_abs>50` count `0`, `max_abs>100` count `0`, and `max_abs>1000` count `0`; test maximum `max_abs=3.4770100116729736`.
+
+Inference:
+- The train/test datasets used by the recurrent FNO2d training run do not show the finite blow-up problem seen in the dictionary dataset.
+- The recorded generation time is from per-batch metadata and may exclude small process startup/final filesystem overhead.
+- A separate 2025 B200 `.out` log found under `data_generation/logs_gen/VT_NS_gen_all_frame_6765843.out` is canceled/stale and should not be treated as the evidence for these current local `.pt` files.
+
+Remaining work:
+- If future regenerated training data uses adaptive `dt=0.01` first, rerun this same stability scan before training.
+
+### 2026-05-22 01:15 UTC - In-Place Repair Of NS2D Dictionary Samples With Max Abs Greater Than 5
+
+Status: stopped the in-progress R2 upload and completed stricter in-place dictionary repair.
+
+Observed evidence:
+- The active `rclone copy` upload process was stopped before the large `.pt` upload completed.
+- Canonical dictionary repaired in place: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- Repair script: `2D_NS_FNO2d_recurrent/data_generation/repair_ns_dictionary_unstable_samples.py`.
+- Repair report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames_inplace_repair_maxabs5_report.json`.
+- Repair criterion: non-finite samples or `max_abs > 5`.
+- Targeted unstable sample count: `12`.
+- Targeted indices: `76, 790, 820, 845, 971, 1057, 1078, 1150, 1287, 1670, 1704, 1923`.
+- Rerun step option was `0.0001`; all 12 targeted samples passed at `dt=0.0001`.
+- Repair total runtime: `432.052681391011s`; `dt=0.0001` rerun step runtime: `311.43955161608756s`.
+- Repair failed count: `0`.
+- Post-repair scan report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/stability_report_dictionary_batched_after_inplace_repair_maxabs5.json`.
+- Post-repair scan observed `finite_count=2000`, `nonfinite_indices=[]`, zero samples flagged by `max_abs > 5`, and zero robust-IQR flagged samples.
+- Post-repair maximum `max_abs` is `4.837541103363037`; post-repair maximum RMS is `1.2635504007339478`.
+
+Inference:
+- The canonical dictionary now matches the requested stricter large-value policy (`max_abs <= 5`).
+- The interrupted R2 upload happened before this stricter repair; R2 should be updated again before remote use.
+
+Remaining work:
+- Upload the max-abs-5 repaired canonical dictionary and reports to R2 when requested.
+
+### 2026-05-22 01:28 UTC - In-Place Repair Of NS2D Dictionary Samples With Max Abs Greater Than 4
+
+Status: completed stricter in-place dictionary repair for samples above `max_abs=4`.
+
+Observed evidence:
+- Canonical dictionary repaired in place: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- Repair report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames_inplace_repair_maxabs4_report.json`.
+- Pre-repair scan found 4 samples above `max_abs > 4`: indices `263, 819, 1357, 1694`.
+- Rerun step option was `0.00005`; all 4 targeted samples passed at `dt=0.00005`.
+- Repair total runtime: `386.4510918520391s`; `dt=0.00005` rerun step runtime: `270.24317298003007s`.
+- Repair failed count: `0`.
+- Post-repair scan report: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/stability_report_dictionary_batched_after_inplace_repair_maxabs4.json`.
+- Post-repair scan observed `finite_count=2000`, `nonfinite_indices=[]`, zero samples flagged by `max_abs > 4`, and zero robust-IQR flagged samples.
+- Post-repair maximum `max_abs` is `3.980586528778076`; post-repair maximum RMS is `1.2635504007339478`.
+
+Inference:
+- The canonical dictionary now satisfies the stricter large-value policy (`max_abs <= 4`).
+- This brings dictionary maxima close to the train/test dataset scale.
+
+Remaining work:
+- Upload the max-abs-4 repaired canonical dictionary and reports to R2 if remote jobs need it.
+
+### 2026-05-22 01:39 UTC - R2 Upload Of Final Max-Abs-4 NS2D Dictionary
+
+Status: uploaded the final max-abs-4 repaired dictionary and reports to the user's Cloudflare R2 bucket.
+
+Observed evidence:
+- R2 target directory: `r2://neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/`.
+- Uploaded canonical dictionary: `dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- R2-reported dictionary size: `11534341969` bytes; local size: `11534341969` bytes.
+- rclone reported the large `.pt` transfer completed in `4m27.1s`.
+- Uploaded final maxabs4 report files:
+  - `dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames_inplace_repair_maxabs4_report.json`, size `2807` bytes.
+  - `stability_report_dictionary_batched_after_inplace_repair_maxabs4.json`, size `5350` bytes.
+  - `stability_report_dictionary_batched_after_inplace_repair_maxabs4_top_outliers.csv`, size `4369` bytes.
+- `ps` check after upload found no remaining `rclone`, repair, or stability scan process.
+
+Inference:
+- The R2 bucket now has the final dictionary version whose local post-repair scan showed `max_abs <= 4`, `finite_count=2000`, and zero robust-IQR flagged samples.
+- Older maxabs10 report files remain in the same R2 directory; the current final evidence is the maxabs4 report set.
+
+Remaining work:
+- Use the R2 canonical `.pt` path above for dictionary-based attack jobs that need `A` mode.
+
+
+### 2026-05-22 02:05 UTC - Prepared Full ADW NS2D Recurrent Core4 Attack Launch Command
+
+Status: launch command prepared; attack was not started by this record update.
+
+Observed evidence:
+- Attack script supports mode presets `all_w`, `all_d_target_w`, `all_a_target_w`, `w1_5_d6_9_target_w`, `d1_5_w6_9_target_w`, and `a1_5_d6_9_target_w` in `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Local trained checkpoint exists: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`.
+- Local repaired dictionary exists: `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- Wrapper updated: `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh` now forwards `DICTIONARY_PATH`, `OUT_ROOT`, `TRUE_LOSS_EVERY`, and `FIXED_STEP` to the Python attack CLI.
+- Dedicated launch record created: `docs/ns2d_recurrent_core4_attack_full_adw_launch_20260522.md`.
+
+Key settings prepared:
+- Indices: `0,1,2,3,4,5,6,7,8,9`.
+- Attack batch size: `10`.
+- Steps: `100`.
+- Norms: `p=2`, `q=2`.
+- Budget/step: `epsilon=32`, `alpha=1`.
+- True-loss logging: `TRUE_LOSS_EVERY=1`.
+- Solver rematerialization: `chunk`, `20` micro-steps per chunk.
+- JAX memory: `XLA_PYTHON_CLIENT_PREALLOCATE=false`, `XLA_PYTHON_CLIENT_MEM_FRACTION=0.35`.
+- Output root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps32_alpha1_20260522`.
+
+Inference:
+- Correct grouped experiment set is 7 groups and 28 method combinations, not the old full Cartesian 72-combination sweep.
+- Practical runtime estimate remains broad until the first group completes: about 4 hours if the previous ~32.4 minute timing is per group including all four methods, up to about 15 hours if that timing applies per method combination.
+
+Remaining work:
+- Start the attack from the documented command if the GPU is free.
+- After the first completed group, update this ledger with the actual group runtime and a refined total ETA.
+
+
+### 2026-05-22 02:00 UTC - Status Check: Full ADW NS2D Attack Running
+
+Status: attack is running; no intervention performed.
+
+Observed evidence:
+- Active Python command observed for `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Current group: `LOSS_TYPES=loss1`, `MODE_SPEC=all_w`, `ATTACK_BATCH_SIZE=10`, `STEPS=100`, `EPSILON=32`, `ALPHA=1`.
+- Launch log: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps32_alpha1_20260522/launch_20260522_015450_UTC.log`.
+- Active run directory: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps32_alpha1_20260522/mode_wwwwwwwwww_p2_q2_20260522_015452_UTC/`.
+- Manifest records JAX backend `gpu`, JAX device `cuda:0`, PyTorch CUDA available, device `NVIDIA A100-SXM4-80GB`, compute capability `sm_80`.
+- Current `nvidia-smi` observed about `46851 MiB / 81920 MiB` and `99%` GPU utilization.
+- No method CSV had been written yet at this check.
+
+Inference:
+- The attack has started and is working on the first group/method sequence; no completed method metrics were available yet.
+- The run is on GPU, not CPU fallback.
+
+Remaining work:
+- Recheck after the first `per_step_metrics.csv` or `summary.json` appears to estimate total runtime from actual group timing.
+
+
+### 2026-05-22 02:05 UTC - Runtime Estimate Update For Full ADW NS2D Attack
+
+Status: estimate updated while first attack group was running.
+
+Observed evidence:
+- At `2026-05-22T02:04:38Z`, active process was still the first group: `LOSS_TYPES=loss1`, `MODE_SPEC=all_w`.
+- Launch log first group timestamp: `2026-05-22T01:54:51Z`; elapsed time at estimate was about `9m47s`.
+- No `per_step_metrics.csv` or method `summary.json` existed yet for the active run, so the first method had not completed.
+- Historical local benchmark summaries for similar `chunk=20` attack settings showed about `89.6s` for `steps=5`, `batch_size=12`, or roughly `17.9s/update` before extrapolation.
+
+Inference:
+- For this full command with `TRUE_LOSS_EVERY=1`, the total is more likely in the `12-16h` range than the earlier optimistic `4h` estimate.
+- Conservative broad range remains `10-18h` until the first method finishes and provides direct timing.
+- Approximate finish window from launch: `2026-05-22 14:00-18:00 UTC`, broad conservative window `2026-05-22 12:00-20:00 UTC`.
+
+Remaining work:
+- Re-estimate after the first method writes `summary.json`; that will make the ETA much tighter.
+
+
+### 2026-05-22 03:12 UTC - Runtime Progress Update For Full ADW NS2D Attack
+
+Status: first group completed; second group running.
+
+Observed evidence:
+- Current time checked: `2026-05-22T03:12:13Z`.
+- First group `LOSS_TYPES=loss1`, `MODE_SPEC=all_w` completed and wrote summary: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps32_alpha1_20260522/mode_wwwwwwwwww_p2_q2_20260522_015452_UTC/summary.json`.
+- First group completed four method combinations with total runtime `4423.67s` (`73.73m`).
+- Per-method runtimes in first group: `raw_add=1110.34s`, `raw_replace=1104.52s`, `steepest_add=1104.40s`, `steepest_replace=1104.40s`.
+- Active process moved to second group: `LOSS_TYPES=loss2`, `MODE_SPEC=all_a_target_w`.
+- Second group start logged at `2026-05-22T03:08:47Z`; elapsed at check was about `3m26s`.
+- Current GPU status observed about `45029 MiB / 81920 MiB` with `99%` utilization.
+
+Inference:
+- Completed progress is `1/7` groups, equivalent to `4/28` method combinations.
+- Best current point estimate is about `8h36m` total from launch, based on the first group's actual runtime.
+- Remaining estimate at the check time is about `7h15m-7h30m`.
+- Point finish ETA is about `2026-05-22 10:30 UTC`; practical range about `10:00-11:30 UTC`, with a conservative cushion to noon UTC if later groups slow down.
+
+Remaining work:
+- Recheck after `all_a_target_w/loss2` completes to see whether A-mode dictionary groups differ materially from the first all-W group.
+
+
+### 2026-05-22 03:18 UTC - Semantic Clarification: loss1 Is Not An ADW Target-Mode Sweep
+
+Status: code semantics inspected and clarified; no running process was changed.
+
+Observed evidence:
+- In `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, `active_losses` sets `need_target = loss_type == "loss3"`.
+- For `loss1`, `g_delta` target computation is not used; the objective is `||pred - f0||_q`.
+- `mode_spec` still affects `loss1` indirectly through `model_prediction`, because the FNO input requires the first `t_in=10` frames and the first nine `mode_spec` characters choose how frames 2-10 are generated.
+- Current launch already completed only one `loss1` group, using `all_w`, and is now running `loss2/all_a_target_w`.
+
+Inference:
+- The user's correction is conceptually right: ADW target modes are not a parallel sweep axis for `loss1`.
+- The completed `loss1/all_w` group should be interpreted as `loss1` with canonical differentiable solver context, not as an ADW target-mode condition.
+- Future result summaries should separate `loss1` from ADW target-mode comparisons and avoid implying a Cartesian loss/mode design.
+
+Remaining work:
+- When analyzing final outputs, label the first group as `loss1/canonical_solver_context` or similar.
+- If desired after the running launch is finished, rename CLI/report fields to distinguish input-context mode from target mode more clearly.
+
+
+### 2026-05-22 03:24 UTC - Potential Mismatch Found In NS2D Attack ADW Semantics
+
+Status: code semantics inspected; no process was stopped by this note.
+
+Observed evidence:
+- `MODE_PRESETS` in `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py` resolve to 10-character strings.
+- The current implementation uses the first nine characters of `mode_spec` in `model_prediction` to build the FNO input context frames for `t_in=10`.
+- The final character is only used as the target-frame policy when `need_target=True`, which is currently only for `loss3`.
+- For `loss1`, `need_target=False`, so the target mode is unused.
+
+Inference:
+- If the intended ADW policies are supposed to apply to frames 11-20 of the perturbed solver/target path, the current code likely implements the wrong semantics.
+- The completed `loss1/all_w` group is not an ADW target-mode experiment; it is `loss1` with canonical solver-generated input context.
+- The currently running and future A/D/W groups may not answer the intended question until the code separates input-context policy from target-path policy.
+
+Remaining work:
+- Stop or let the current launch continue based on user decision.
+- Refactor the attack code before treating the A/D/W results as final evidence.
+
+
+### 2026-05-22 03:32 UTC - Clarified No Cartesian loss1 By ADW Sweep In Active Launch
+
+Status: inspected active launch log and output files; no process change performed.
+
+Observed evidence:
+- Launch log contains only one `loss1` run: `LOSS_TYPES=loss1 MODE_SPEC=all_w`.
+- The next launch entry is `LOSS_TYPES=loss2 MODE_SPEC=all_a_target_w`.
+- Completed `loss1` summary files exist only under `mode_wwwwwwwwww.../batch_0000_0009/loss1/` for `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace`.
+- Current active process is `LOSS_TYPES=loss2`, `MODE_SPEC=all_a_target_w`.
+
+Inference:
+- The active launch did not run `loss1` against all ADW modes.
+- The user's conceptual correction remains important: `loss1` is a single objective and should not be interpreted as an ADW target-mode sweep.
+
+Remaining work:
+- Continue to distinguish completed `loss1` as a single canonical context baseline when analyzing results.
+
+
+### 2026-05-22 03:40 UTC - Audit: loss1 Solver Usage In Active NS2D Attack Code
+
+Status: code audited; no process change performed.
+
+Observed evidence:
+- `active_losses` computes `loss1` as `batch_norm(pred - self.f0, q_order)` and sets `need_target = loss_type == "loss3"`.
+- For `loss1`, the target branch `g_delta` is not computed in the optimized objective.
+- `model_prediction` still calls `_rollout_for_modes` to build the recurrent FNO input context frames; with `mode_spec=all_w`, this rolls solver frames 1 through 9.
+- `run_one` calls `true_loss_all_w(x_adv)` when `TRUE_LOSS_EVERY=1` for non-`loss3/all_w` objectives, so `loss1` also incurs a no-grad target-frame solver rollout for logging at each step.
+
+Inference:
+- The `loss1` group was not duplicated across ADW modes, but it did use solver computation.
+- Solver-to-frame-9 usage is part of the current definition of attacking an initial condition for a recurrent FNO that needs 10 input frames.
+- Solver-to-frame-20 usage for `true_loss_all_w` in loss1 is diagnostic logging, not the optimized loss1 objective; it can be skipped in future loss1 runs if that curve is not needed.
+- If loss1 is intended to be pure model-only on fixed 10-frame input, current code should be changed before using loss1 results as evidence.
+
+Remaining work:
+- Decide whether to keep collecting true-loss curves for loss1 or disable them in future runs.
+- Clarify and possibly refactor the loss1 input-context definition.
+
+
+### 2026-05-22 03:48 UTC - Recorded loss1 Solver Usage And Naming Clarification
+
+Status: created a dedicated Markdown clarification for the NS2D recurrent attack `loss1` semantics.
+
+Observed evidence:
+- Dedicated Markdown: `docs/ns2d_recurrent_attack_loss1_solver_usage_clarification_20260522.md`.
+- Prior code inspection found `active_losses` uses `need_target = loss_type == "loss3"`, so `loss1` does not use the solver target branch.
+- Prior code inspection found `model_prediction` still builds the recurrent FNO input context frames, so `loss1` can use solver frames 2..10 under the initial-condition attack setup.
+- Prior code inspection found `TRUE_LOSS_EVERY=1` calls `true_loss_all_w(x_adv)` for diagnostic true-loss logging, separate from the optimized `loss1` objective.
+
+Inference:
+- The completed `loss1/all_w` label is a naming/interpretation problem, not evidence of a full `loss1 x ADW` duplicate sweep.
+- Existing `loss1` results should be labeled as `loss1/canonical_solver_context` in analysis.
+- If `loss1` true-loss diagnostics are not needed in future runs, they can be disabled to reduce solver overhead.
+
+Remaining work:
+- When writing final attack analysis, use the corrected `loss1/canonical_solver_context` wording.
+- Consider future code refactor separating `context_policy` and `target_path_policy`.
+
+
+### 2026-05-22 03:38 UTC - Conservative Runtime Estimate Revision For Full ADW NS2D Attack
+
+Status: ETA revised upward based on completed `loss2/all_a_target_w` method timings and expected `loss3` cost.
+
+Observed evidence:
+- Current time checked: `2026-05-22T03:37:52Z`.
+- Active process was still `LOSS_TYPES=loss2`, `MODE_SPEC=all_a_target_w`.
+- Completed `loss1/canonical_solver_context` group total: `73.73m`, about `18.4m/method`.
+- Completed `loss2/all_a_target_w` methods: `raw_add=7.77m`, `raw_replace=7.69m`, `steepest_add=7.69m`.
+- GPU status observed about `45029 MiB / 81920 MiB` with `100%` utilization.
+
+Inference:
+- `loss2/all_a_target_w` is faster than `loss1`; it is not a good proxy for the remaining `loss3` groups.
+- The remaining five `loss3` groups are likely the expensive part because the perturbed target path to frame 20 participates in the objective/backward path.
+- If `loss3` matches `loss1`, remaining time after `loss2` is roughly `6.1h`; if `loss3` costs `25-35m/method`, remaining time is roughly `8.3-11.7h`.
+- Revised practical remaining estimate at this check: `8-12h`.
+- Revised finish window: about `2026-05-22 11:30-15:30 UTC`, with optimistic lower bound around `10:00 UTC` and conservative cushion to `16:00 UTC`.
+
+Remaining work:
+- Re-estimate after the first `loss3/all_w` method finishes; that will determine whether the conservative multiplier is necessary.
+
+
+### 2026-05-22 03:52 UTC - Generated Fast loss1 Final Perturbation Visualizations
+
+Status: generated CPU-only fast visualization panels from saved loss1 arrays; no model or solver rerun was completed.
+
+Observed evidence:
+- Visualization script created: `2D_NS_FNO2d_recurrent/visualizations/plot_loss1_attack_fast_panels.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_fast_panels_20260522/`.
+- Report: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_fast_panels_20260522/loss1_fast_panel_report.json`.
+- Generated 12 PNGs for four methods and sample positions 0, 1, 2.
+- Report shows `delta_l2=0.0` and `delta_linf=0.0` for all plotted methods/samples.
+- Direct metric inspection showed all four `loss1` methods have final `delta_p_mean=0.0`, final `loss1_mean=0.0`, and `boundary_ratio_mean=0.0`.
+- A CPU-only full model-output plotting attempt was stopped because it consumed many CPU cores and could slow the active attack.
+
+Inference:
+- The completed `loss1` group did not produce a nonzero perturbation.
+- The plotted perturbed initial and solver final conditions are identical to the clean versions because the saved final delta is zero.
+- The model-vs-solver final-output panel still needs to be generated later when it is safe to run model inference/solver computation.
+- The zero delta suggests the current loss1 objective can stall at zero initialization.
+
+Remaining work:
+- After the active attack finishes or the GPU is safely available, generate full model-vs-solver final-output plots for selected loss1 samples.
+- Consider nonzero random initialization or an adjusted loss1 objective if nontrivial loss1 perturbations are desired.
+
+
+### 2026-05-22 03:58 UTC - Root Cause Found For Zero-Delta loss1 Attack
+
+Status: diagnosed from completed `loss1` per-step metrics and attack source code.
+
+Observed evidence:
+- `per_step_metrics.csv` for all four `loss1` methods shows `loss1_mean=0.0`, `delta_p_mean=0.0`, `boundary_ratio_mean=0.0`, `grad_l2_mean=0.0`, and `direction_l2_mean=0.0` at every optimization step.
+- `final_delta_and_metrics.npz` confirms `final_delta` is exactly zero for all four methods.
+- Source code initializes `delta = torch.zeros_like(problem.x0)` in `run_one`.
+- Source code computes `self.f0 = self.model_prediction(self.x0, need_target=False)[0].detach()` and `loss1 = batch_norm(pred - self.f0, q_order)`.
+
+Inference:
+- At `k=0`, `x_adv=x0`, `pred=F(x0)`, and `f0=F(x0)`, so `loss1=0` exactly.
+- PyTorch returns zero gradient for the exact-zero norm residual in this implementation, producing zero direction for all four update methods.
+- The zero update repeats for all 100 steps, so the completed `loss1` group is a stalled attack, not a successful perturbation.
+- This is not caused by too-small `epsilon` or `alpha`; it is caused by zero initialization combined with the zero-residual `loss1` objective.
+
+Remaining work:
+- For any future `loss1` run, add random/nonzero initialization or another nonzero seed direction before the first update.
+- Treat the current completed `loss1` outputs as a diagnostic of stalling, not as evidence of robustness.
+
+
+### 2026-05-22 03:58 UTC - Stopped Full ADW NS2D Attack Launch
+
+Status: stopped the active full ADW attack launch on user request.
+
+Observed evidence:
+- Active `loss3/all_w` wrapper/Python/tee processes were terminated first.
+- The outer shell loop automatically launched subsequent `loss3` modes after the first termination; a short stopper loop terminated those auto-restarted groups as well.
+- Final process check found no matching `attack_ns2d_recurrent_core4`, `run_ns2d_recurrent_core4_attack`, `full_adw_b10_eps32_alpha1`, or loss1 visualization process.
+- Final `nvidia-smi` showed `0MiB / 81920MiB`, `0%` GPU utilization, and no running GPU processes.
+- Launch log shows `loss1/all_w` and `loss2/all_a_target_w` completed before stopping.
+- Launch log shows `loss3/all_w` and later loss3 modes were started but not completed.
+
+Inference:
+- The previous full ADW launch is incomplete and should not be treated as a finished experiment.
+- The GPU is available for a corrected rerun.
+- Completed `loss1` results should be interpreted as a stalled zero-delta diagnostic; completed `loss2/all_a_target_w` may remain usable depending on the corrected experiment design.
+
+Remaining work:
+- Patch `loss1` handling before rerunning if `loss1` is included.
+- Prepare a corrected launch command that prevents outer-loop continuation problems and uses safer failure behavior, such as `set -euo pipefail` at the top-level launch script.
+
+
+### 2026-05-22 04:10 UTC - Patched NS2D Attack For Epsilon/Alpha Sweeps And loss1 Random Start
+
+Status: source patch completed; no attack run started.
+
+Observed evidence:
+- Modified `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Modified `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`.
+- Added CLI support for `--epsilons`, `--alphas`, and `--epsilon-alpha-pairs`.
+- Added wrapper support for `EPSILONS`, `ALPHAS`, and `EPSILON_ALPHA_PAIRS`.
+- Added default `loss1` random start with `--loss1-random-start`, `--loss1-random-start-fraction`, and `--loss1-random-start-seed`.
+- Default `loss1_random_start_fraction` is `0.001`, giving initial L2 radius `0.001 * epsilon`.
+- Multiple epsilon/alpha settings are written under parameter-specific directories like `eps32_alpha1` to avoid overwriting outputs.
+- Checks passed: Python `py_compile`, wrapper `bash -n`, and CLI `--help` option discovery.
+- Dedicated patch note: `docs/ns2d_recurrent_attack_sweep_and_loss1_random_start_patch_20260522.md`.
+
+Inference:
+- Future `loss1` runs should no longer stall at exactly zero perturbation from zero initialization.
+- Explicit paired sweeps such as `EPSILON_ALPHA_PAIRS="16:0.5 32:1 64:2"` avoid accidental Cartesian explosion while still testing multiple scales.
+
+Remaining work:
+- Prepare the corrected rerun command after deciding which epsilon/alpha pairs to use.
+- Consider adding a tiny smoke run only after the user approves GPU usage.
+
+### 2026-05-22 04:20 UTC - Loss2 Fast Visualization From Completed NS2D Attack Outputs
+
+Status: summarized existing completed `loss2` outputs; no model or solver rerun.
+
+Observed evidence:
+- Source attack outputs: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps32_alpha1_20260522/mode_aaaaaaaaaw_p2_q2_20260522_030849_UTC/batch_0000_0009/loss2`
+- Visualization output directory: `2D_NS_FNO2d_recurrent/visualizations/loss2_attack_fast_panels_20260522/`
+- Report: `2D_NS_FNO2d_recurrent/visualizations/loss2_attack_fast_panels_20260522/loss2_fast_panel_report.json`
+- Dedicated note: `docs/ns2d_recurrent_loss2_fast_visualization_20260522.md`
+- The completed `loss2/all_a_target_w` group produced nonzero perturbations for all four methods.
+- Final mean L2 perturbation was `12.0754` for `raw_add` and about `32.0` for `raw_replace`, `steepest_add`, and `steepest_replace`.
+- Final true-loss ratio was about `1.0892` for `raw_add`, `1.1877` for `raw_replace`, `1.1984` for `steepest_add`, and `1.1877` for `steepest_replace`.
+
+Inference:
+- Unlike the stalled zero-delta `loss1` run, the completed `loss2` result is meaningful for scale inspection.
+- `epsilon=32` is not trivially too small, because most methods reached the L2 boundary and produced visible nonzero perturbations.
+- `alpha=1` is too weak for `raw_add` over 100 steps, while replacement methods saturate the budget immediately.
+- A paired epsilon/alpha sweep such as `16:0.5 32:1 64:2` is still needed before selecting final attack parameters.
+
+Remaining work:
+- Generate full model-vs-solver visualization later if exact output comparison is needed.
+- Rerun the corrected attack after the loss1 random-start and epsilon/alpha sweep patch, because the earlier full ADW launch was intentionally stopped.
+
+### 2026-05-22 04:25 UTC - Corrected Loss2 Full Final-Step Visualization
+
+Status: completed corrected visualization for existing `loss2` outputs.
+
+Observed evidence:
+- Created `2D_NS_FNO2d_recurrent/visualizations/plot_loss2_attack_full_final_panels.py`.
+- Generated 12 full final-step panels under `2D_NS_FNO2d_recurrent/visualizations/loss2_attack_full_final_panels_20260522/`.
+- Report: `2D_NS_FNO2d_recurrent/visualizations/loss2_attack_full_final_panels_20260522/loss2_full_final_panel_report.json`.
+- Dedicated note: `docs/ns2d_recurrent_loss2_full_final_visualization_20260522.md`.
+- The corrected panels include clean/perturbed initial condition, final delta, clean/perturbed FNO final output, clean/perturbed solver final output, and clean/perturbed FNO-minus-solver final differences.
+- GPU path was active: PyTorch CUDA available on `NVIDIA A100-SXM4-80GB`, JAX backend `gpu`, JAX device `cuda:0`.
+- Runtime was `58.28` seconds; peak PyTorch allocated memory was `1.40 GiB` and peak reserved memory was `1.70 GiB`.
+- Mean over three plotted samples: `raw_add` delta L2 `13.2124`; other methods delta L2 about `32.0`.
+- Mean adv FNO-solver L2 over three plotted samples: `raw_add` `51.9766`, `raw_replace` `60.2301`, `steepest_add` `51.6706`, `steepest_replace` `60.2301`.
+
+Inference:
+- The earlier fast saved-array loss2 panels were inadequate for judging final FNO-vs-solver behavior because they did not rerun final model/solver outputs.
+- The corrected full panels are the right visual artifact for checking whether `epsilon=32`, `alpha=1` looks too small or too large.
+- `epsilon=32` is visually meaningful; `raw_add` with `alpha=1` remains too weak, while replacement methods saturate immediately.
+- A paired epsilon/alpha sweep is still needed before selecting final attack settings.
+
+Remaining work:
+- Apply the full final-step visualizer to corrected sweep outputs after rerunning the patched attack.
+
+### 2026-05-22 04:35 UTC - Patched NS2D Attack To Record Full Final States And Sample Step Trace
+
+Status: source patch completed; no attack experiment launched.
+
+Observed evidence:
+- Modified `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Modified `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`.
+- Dedicated note: `docs/ns2d_recurrent_attack_output_recording_patch_20260522.md`.
+- Added `all_w_final_outputs` as the canonical no-gradient final FNO/solver output path.
+- Added per-method full-batch final archives: `final_state_outputs.npz` and `final_state_metrics.csv`.
+- Added per-method selected-sample step trace archives: `step_sample_trace.npz` and `step_sample_trace_metrics.csv`.
+- Defaults record full-batch final state for every sample and per-step trace for `sample_position=0`.
+- New controls include `--record-final-state-outputs`, `--record-step-sample-outputs`, `--record-step-sample-position`, `--record-step-sample-every`, and `--record-step-sample-gradients`.
+- Wrapper environment variables now expose the same controls.
+- Checks passed: Python `py_compile` for the attack script and `bash -n` for the wrapper.
+
+Inference:
+- Future attack runs will preserve enough information to inspect clean vs adversarial initial conditions, final deltas, FNO final output, solver final output, and FNO-minus-solver differences.
+- Output size will increase. If storage pressure becomes an issue, use `RECORD_STEP_SAMPLE_EVERY=5` or `RECORD_STEP_SAMPLE_GRADIENTS=0` while keeping full final-state output enabled.
+
+Remaining work:
+- Launch the corrected attack when the user is ready.
+- Generate plots/GIFs from the new `final_state_outputs.npz` and `step_sample_trace.npz` after the run finishes.
+
+### 2026-05-22 04:45 UTC - Updated NS2D Attack Alpha/Epsilon Recommendation
+
+Status: tuning recommendation updated from existing `loss2` evidence; no attack run launched.
+
+Observed evidence:
+- Old completed `loss2/raw_add` setting used `epsilon=32`, `alpha=1`, and `steps=100`.
+- It ended with mean `delta_p=12.0754`, giving boundary ratio `0.3774`.
+- Dedicated note: `docs/ns2d_recurrent_attack_alpha_epsilon_tuning_20260522.md`.
+
+Inference:
+- `epsilon=32, alpha=1` is too slow for additive methods; it would need about `265` steps to reach the L2 boundary under the observed raw-add scaling.
+- To reach the boundary by about 100 steps, `alpha / epsilon` needs about `2.65x` the old ratio.
+- To reach the boundary by about 50 steps, `alpha / epsilon` needs about `5.3x` the old ratio.
+- To reach the boundary by about 25 steps, `alpha / epsilon` needs about `10.6x` the old ratio.
+- The prior paired sweep recommendation `16:0.5 32:1 64:2` is superseded because it preserves the old too-small ratio.
+
+Recommendation:
+- Use paired values, not a Cartesian product.
+- Recommended calibration sweep: `EPSILON_ALPHA_PAIRS="8:1.25 16:2.5 32:5 32:10"`.
+- Shorter first check: `EPSILON_ALPHA_PAIRS="16:2.5 32:5"`.
+
+Remaining work:
+- Run the corrected attack calibration and inspect `delta_threshold_crossings.csv`, `final_state_outputs.npz`, and `step_sample_trace.npz`.
+
+### 2026-05-22 04:40 UTC - Regenerated Loss2 Full Final Panels With Independent Difference Ranges
+
+Status: regenerated existing visualization outputs; no attack rerun.
+
+Observed evidence:
+- Updated `2D_NS_FNO2d_recurrent/visualizations/plot_loss2_attack_full_final_panels.py`.
+- Regenerated 12 PNGs under `2D_NS_FNO2d_recurrent/visualizations/loss2_attack_full_final_panels_20260522/`.
+- Updated report: `2D_NS_FNO2d_recurrent/visualizations/loss2_attack_full_final_panels_20260522/loss2_full_final_panel_report.json`.
+- Report now has `plot_version=independent_difference_ranges_with_loss_titles`.
+- Difference panels now use independent color ranges.
+- Figure title now includes per-sample clean loss, adversarial loss, loss difference, and loss ratio.
+- Difference/change panel titles now include L2 values.
+- Example `loss2/steepest_add`, sample position `0`, dataset index `0`: clean loss `34.82`, adversarial loss `47.04`, difference `+12.22`, ratio `1.351`.
+- Visualization runtime was `62.95` seconds; post-run `nvidia-smi` showed `0MiB / 81920MiB` and no GPU process.
+
+Inference:
+- The revised figures are more useful for checking whether the attack actually increases final FNO-vs-solver loss.
+- Independent difference ranges avoid hiding small FNO-vs-solver error fields behind the larger final-change ranges.
+
+Dataset/source clarification:
+- This completed attack used the test dataset path from the manifest and `indices=0,1,2,3,4,5,6,7,8,9`; it did not use training-set initial conditions.
+
+### 2026-05-22 04:50 UTC - Estimated Boundary Steps For Recommended Alpha/Epsilon Pairs
+
+Status: analysis from existing `loss2` threshold logs; no experiment run launched.
+
+Observed evidence:
+- Old `loss2/raw_add` with `epsilon=32`, `alpha=1`, `steps=100` reached 25% boundary at step 62 and final boundary ratio `0.3774`, implying 100% around step `265` under linear scaling.
+- Old `loss2/steepest_add` reached 25% at step 9, 50% at step 20, 75% at step 31, and 100% at step 70.
+- Old replacement methods were effectively at the boundary after the first update; exact 100% threshold appeared by step 10 due floating-point thresholding.
+- Updated note: `docs/ns2d_recurrent_attack_alpha_epsilon_tuning_20260522.md`.
+
+Inference:
+- `8:1.25`, `16:2.5`, and `32:5` are all `5x` the old `alpha/epsilon` ratio. Raw-add should hit the boundary around step `53`, leaving about `47` projected-on-boundary steps in a 100-step attack.
+- `32:10` is `10x` the old ratio. Raw-add should hit the boundary around step `27`, leaving about `73` projected-on-boundary steps.
+- For steepest-add, observed-scaled crossing is about step `14` for the `5x` pairs and about step `7` for `32:10`; ideal epsilon/alpha estimates are even earlier.
+- Replacement methods ignore `alpha` in their replacement step and should be treated as immediate-boundary tests.
+
+### 2026-05-22 04:55 UTC - Tightened Alpha/Epsilon Recommendation For 50-Step Boundary Target
+
+Status: recommendation updated from existing loss2 evidence; no experiment run launched.
+
+Observed evidence:
+- Old `loss2/raw_add` with `epsilon=32`, `alpha=1` estimates boundary crossing around step `265`.
+- Earlier `5x` recommendation estimates raw-add boundary crossing around step `53`, which is borderline for a strict 50-step target.
+- Updated note: `docs/ns2d_recurrent_attack_alpha_epsilon_tuning_20260522.md`.
+
+Inference:
+- Because `loss3` may optimize more slowly than `loss2`, the main run should target boundary crossing clearly before 50 steps in the loss2 calibration scale.
+- Main recommended ratio is now `10x` the old `alpha/epsilon` ratio.
+- Recommended main sweep: `EPSILON_ALPHA_PAIRS="8:2.5 16:5 32:10"`.
+- Optional aggressive backup: add `32:15`, estimated around step `18` for raw-add under old loss2 scaling.

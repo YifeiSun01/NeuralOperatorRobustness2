@@ -121,6 +121,22 @@ else:
 jax.config.update("jax_default_prng_impl", "unsafe_rbg")
 jax.config.update("jax_debug_nans", False) 
 
+def parse_solver_step_options():
+    raw = os.environ.get("NS_DICT_STEP_OPTIONS", "0.01,0.005,0.001,0.0005,0.0001")
+    options = []
+    for item in raw.replace(";", ",").split(","):
+        item = item.strip()
+        if item:
+            options.append(float(item))
+    if not options:
+        raise ValueError("NS_DICT_STEP_OPTIONS must contain at least one positive float")
+    if any(step <= 0 for step in options):
+        raise ValueError(f"NS_DICT_STEP_OPTIONS must be positive floats, got {options}")
+    return options
+
+SOLVER_STEP_OPTIONS = parse_solver_step_options()
+print("Dictionary solver step options:", SOLVER_STEP_OPTIONS)
+
 # Set default device to GPU if available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -232,7 +248,7 @@ def generate_vorticity_transport_data(time_list, grf, nu, ntimepoints):
     )
     
     # 尝试不同的时间步长
-    step_options = [0.01, 0.005, 0.001, 0.0005, 0.0001]  # 从大到小尝试
+    step_options = SOLVER_STEP_OPTIONS  # 从大到小尝试；可由 NS_DICT_STEP_OPTIONS 覆盖
     solution_attempts = 0
     valid_solution = False
     
@@ -405,11 +421,15 @@ if __name__ == "__main__":
 
         print("Generating dataset:")
         tfinal = 20
+        batch_size = int(os.environ.get("NS_DICT_BATCH_SIZE", nsamples))
+        if batch_size < 1:
+            raise ValueError("NS_DICT_BATCH_SIZE must be positive")
+        print("Dictionary output batch size:", batch_size)
         path1 = generator.generate_dataset(
             nu_ns=1e-5,
             tfinal=tfinal,
             nsamples=nsamples,
-            batch_size=nsamples,
+            batch_size=batch_size,
             ntimepoints=tfinal+1,
             save_dir="./datasets/exponax_datasets/t20/dictionary"
         )
