@@ -7814,3 +7814,184 @@ Inference:
 - Main recommended ratio is now `10x` the old `alpha/epsilon` ratio.
 - Recommended main sweep: `EPSILON_ALPHA_PAIRS="8:2.5 16:5 32:10"`.
 - Optional aggressive backup: add `32:15`, estimated around step `18` for raw-add under old loss2 scaling.
+
+### 2026-05-22 05:39 UTC - Running Status Check For Aggressive NS2D Attack Launch
+
+Status: inspected active background run; no process changes made.
+
+Observed evidence:
+- Active launch root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps_aggressive_20260522`.
+- Active log: `nohup_launch_20260522_044859_UTC.log`.
+- Active Python process still has `--loss-types loss1 --mode-spec all_w`.
+- Run elapsed time for Python PID `302955` was about `50m36s` at inspection.
+- GPU was active at `99%` utilization with about `46953 MiB / 81920 MiB` used.
+- Completed files exist for `batch_0000_0009/eps8_alpha2p5/loss1/raw_add/` and `batch_0000_0009/eps8_alpha2p5/loss1/raw_replace/`, including `summary.json`, `final_state_outputs.npz`, and `step_sample_trace.npz`.
+
+Inference:
+- `loss1` is still running and has not yet advanced to `loss2`.
+- The first epsilon/alpha pair has completed at least `raw_add` and `raw_replace`; subsequent `loss1` methods/pairs remain in progress.
+
+### 2026-05-22 05:44 UTC - Running Status Check For Aggressive NS2D Attack Launch
+
+Status: inspected active background run; no process changes made.
+
+Observed evidence:
+- Active launch root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps_aggressive_20260522`.
+- Active Python process `302955` was still running `--loss-types loss1 --mode-spec all_w` after about `55m06s` elapsed.
+- GPU was active at `99%` utilization with about `46953 MiB / 81920 MiB` used.
+- Completed `loss1` summaries existed for `eps8_alpha2p5/raw_add` and `eps8_alpha2p5/raw_replace`.
+- `eps8_alpha2p5/raw_add` runtime was `1131.10s`; final `loss1_mean=304.5169`; final `delta_p_mean=8.0`; final boundary ratio about `1.0`.
+- `eps8_alpha2p5/raw_replace` runtime was `1124.85s`; final `loss1_mean=304.2200`; final `delta_p_mean=8.0`; final boundary ratio about `1.0`.
+
+Inference:
+- `loss1` has not completed yet and has not advanced to `loss2`.
+- Current progress is `2 / 16` loss1 subruns completed for the four epsilon/alpha pairs and four methods.
+- The active subrun is likely the next `loss1` method for `eps8_alpha2p5`, because no later epsilon/alpha directories have summaries yet.
+
+### 2026-05-22 06:00 UTC - Stopped Wrong-Order Aggressive NS2D Attack Launch
+
+Status: stopped the active background attack run before relaunch.
+
+Observed evidence:
+- Previous launch root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_eps_aggressive_20260522`.
+- The active process group was terminated before this record; a follow-up `pgrep -af 'attack_ns2d_recurrent_core4|run_ns2d_recurrent_core4_attack|full_adw_b10|pair_outer'` found no real attack process, only the `pgrep` command itself.
+- Follow-up `nvidia-smi --query-gpu=name,memory.used,memory.total,utilization.gpu --format=csv,noheader,nounits` reported `NVIDIA A100-SXM4-80GB, 0, 81920, 0`.
+- Partial completed outputs from the stopped run remain under the old root, including `eps8_alpha2p5/loss1/raw_add` and `eps8_alpha2p5/loss1/raw_replace`.
+
+Inference:
+- The stopped run used the wrong global ordering for the user's desired comparison: it ran loss/method work before completing a baseline epsilon/alpha pair across losses.
+- The relaunch command should use epsilon/alpha pair as the outer loop, with the baseline pair first, then run `loss1`, `loss2`, and the no-`A`/with-`A` `loss3` modes inside each pair.
+
+### 2026-05-22 05:54 UTC - Pair-Outer Baseline-First NS2D Attack Launch Check
+
+Status: inspected active background run; no process changes made.
+
+Observed evidence:
+- Launcher PID `308447` is running `/tmp/run_ns2d_pair_outer_attack.sh`.
+- Active Python PID `308458` is running `attack_ns2d_recurrent_core4.py` with `--out-root 2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Active command uses `--indices 0,1,2,3,4,5,6,7,8,9`, `--attack-batch-size 10`, `--steps 100`, `--epsilon-alpha-pairs 32:10`, `--loss-types loss1`, and `--mode-spec all_w`.
+- `nvidia-smi --query-gpu=name,memory.used,memory.total,utilization.gpu --format=csv,noheader,nounits` reported `NVIDIA A100-SXM4-80GB, 46851, 81920, 98`.
+- Run log exists at `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/nohup_pair_outer_20260522_055312_UTC.log` and shows the first block: `pair=32:10 loss=loss1 mode=all_w`.
+
+Inference:
+- The corrected pair-outer launch has started successfully and is currently running the baseline pair first.
+- No completed summary files were visible yet at this early inspection point, so step/loss progress should be read again after the first method finishes.
+
+### 2026-05-22 07:02 UTC - Baseline-First NS2D Attack Loss1 Progress Check
+
+Status: inspected active background run; no process changes made.
+
+Observed evidence:
+- Active Python process `308458` is still running `attack_ns2d_recurrent_core4.py` with `--loss-types loss1`, `--mode-spec all_w`, `--epsilon-alpha-pairs 32:10`, and `--attack-batch-size 10`.
+- GPU query reported `NVIDIA A100-SXM4-80GB, 46953, 81920, 98`, so the attack is still actively using the GPU.
+- Under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_055315_UTC/batch_0000_0009/loss1/`, completed `summary.json` files exist for `raw_add`, `raw_replace`, and `steepest_add`.
+- No `steepest_replace/summary.json` was visible at inspection time, and the active command has not advanced to `loss2`.
+- Observed method runtimes from completed summaries: `raw_add` about `18.95 min`, `raw_replace` about `18.84 min`, and `steepest_add` about `18.84 min`.
+- Observed final true-loss means from completed summaries: clean baseline `68.49199676513672`; `raw_add` adversarial `93.04156494140625`; `raw_replace` adversarial `98.32636260986328`; `steepest_add` adversarial `158.28329467773438`.
+
+Inference:
+- The baseline `loss1` group is not complete yet: progress is `3 / 4` methods completed.
+- The current active method is inferred to be `steepest_replace`, because it is the only configured `loss1` method without a completed summary.
+- Based on the observed per-method runtime around 18.8-19.0 minutes, the remaining `loss1` method should finish soon if runtime stays similar.
+
+### 2026-05-22 07:42 UTC - Baseline-First NS2D Attack Progress Check
+
+Status: inspected active background run; no process changes made.
+
+Observed evidence:
+- Current launcher root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522`.
+- Active Python process `313364` is running `attack_ns2d_recurrent_core4.py` with `--out-root .../eps32_alpha10`, `--loss-types loss3`, `--mode-spec all_w`, `--epsilon-alpha-pairs 32:10`, `--attack-batch-size 10`, and `--steps 100`.
+- GPU query reported `NVIDIA A100-SXM4-80GB, 47235, 81920, 99`.
+- The run log shows `pair=32:10 loss=loss1 mode=all_w` finished at `2026-05-22 07:08:56 UTC`, `pair=32:10 loss=loss2 mode=all_a_target_w` finished at `2026-05-22 07:41:33 UTC`, and `pair=32:10 loss=loss3 mode=all_w` started at `2026-05-22 07:41:33 UTC`.
+- Completed method summaries under `eps32_alpha10`: `loss1` has 4 method summaries; `loss2` has 4 method summaries; `loss3` has 0 method summaries at inspection time.
+- Observed method runtimes: `loss1` methods each about `18.84-18.95 min`; `loss2` methods each about `8.06-8.11 min`.
+
+Inference:
+- Baseline pair `32:10` has completed `loss1` and `loss2` fully and is now in the first `loss3` block (`all_w`).
+- In terms of configured method summaries, the full sweep has completed `8 / 112` summaries, with the 9th in progress. Within the baseline pair, it has completed `8 / 28` summaries.
+- Runtime estimates for the remaining sweep remain uncertain because `loss3` timings have not produced a completed method summary yet.
+
+### 2026-05-22 07:50 UTC - Loss1 Saved Final-State Visualization For Baseline Pair
+
+Status: generated CPU-only visualization from completed `loss1/all_w` saved final-state outputs; no model/solver rerun.
+
+Observed evidence:
+- Source loss root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_055315_UTC/batch_0000_0009/loss1`.
+- Visualization script: `2D_NS_FNO2d_recurrent/visualizations/plot_attack_saved_final_state_panels.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_full_final_panels_pair_outer_eps32_alpha10_20260522`.
+- Report file: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_full_final_panels_pair_outer_eps32_alpha10_20260522/loss1_saved_final_state_panel_report.json`.
+- Generated `40` PNG panels, covering four methods and ten sample positions.
+- The plotting command ran with `CUDA_VISIBLE_DEVICES=''` and the script imports NumPy/matplotlib only.
+- Follow-up GPU query reported `NVIDIA A100-SXM4-80GB, 47235, 81920, 99`, indicating the long-running attack remained active.
+- Result Markdown: `docs/ns2d_recurrent_loss1_saved_final_visualization_20260522.md`.
+
+Observed summary metrics from the report across ten samples:
+- `raw_add`: clean true loss mean `68.491997`, adversarial true loss mean `93.041568`, mean increase `24.549571`, mean ratio `1.422519`, mean delta L2 `31.999998`.
+- `raw_replace`: clean true loss mean `68.491997`, adversarial true loss mean `98.326353`, mean increase `29.834356`, mean ratio `1.586603`, mean delta L2 `32.000000`.
+- `steepest_add`: clean true loss mean `68.491997`, adversarial true loss mean `158.283305`, mean increase `89.791308`, mean ratio `2.568838`, mean delta L2 `31.929921`.
+- `steepest_replace`: clean true loss mean `68.491997`, adversarial true loss mean `98.326353`, mean increase `29.834356`, mean ratio `1.586603`, mean delta L2 `32.000000`.
+
+Inference:
+- In this completed baseline `loss1` block, `steepest_add` shows the largest mean true-loss increase among the four methods.
+- The visualizations are diagnostic snapshots of saved final states and should be compared later with the full `loss2`/`loss3` sweep outputs.
+
+### 2026-05-22 07:56 UTC - Loss1 Loss Curves With Standard Deviation Shading
+
+Status: generated CPU-only loss curve plots for completed baseline `loss1/all_w`; no model/solver rerun.
+
+Observed evidence:
+- Source loss root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_055315_UTC/batch_0000_0009/loss1`.
+- Source files: each method's `per_step_metrics.csv`.
+- Plotting script: `2D_NS_FNO2d_recurrent/visualizations/plot_attack_loss_curves.py`.
+- Step-curve PNG: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_loss_curves_pair_outer_eps32_alpha10_20260522/loss1_loss_curve_overview_with_std.png`.
+- Wall-time PNG: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_loss_curves_pair_outer_eps32_alpha10_20260522/loss1_loss_curve_wall_time_with_std.png`.
+- Summary CSV: `2D_NS_FNO2d_recurrent/visualizations/loss1_attack_loss_curves_pair_outer_eps32_alpha10_20260522/loss1_loss_curve_summary_with_std.csv`.
+- Result Markdown: `docs/ns2d_recurrent_loss1_loss_curves_20260522.md`.
+- The plotting command used `CUDA_VISIBLE_DEVICES=''`; the script imports NumPy/matplotlib only.
+- Follow-up GPU query reported `NVIDIA A100-SXM4-80GB, 47235, 81920, 99`, indicating the long-running attack remained active.
+
+Observed summary from the CSV:
+- `raw_add`: boundary step `1`, final objective `445.810025 +/- 30.303622`, true loss `68.491732 -> 93.041568`, true increase `24.549836`, final boundary `1.000000`, runtime `18.601783 min`.
+- `raw_replace`: boundary step `61`, final objective `401.017053 +/- 50.599833`, true loss `68.491732 -> 98.326353`, true increase `29.834621`, final boundary `1.000000`, runtime `18.519913 min`.
+- `steepest_add`: boundary step `12`, final objective `519.401230 +/- 25.633891`, true loss `68.491732 -> 158.283305`, true increase `89.791573`, final boundary `0.997810`, runtime `18.525295 min`.
+- `steepest_replace`: boundary step `61`, final objective `401.017053 +/- 50.599833`, true loss `68.491732 -> 98.326353`, true increase `29.834621`, final boundary `1.000000`, runtime `18.545024 min`.
+
+Inference:
+- In the completed `loss1` baseline block, `steepest_add` has the strongest true-loss growth by 100 steps.
+- The standard deviation shading shows substantial sample-to-sample variability, so the final-state panels remain important for interpreting individual cases.
+
+### 2026-05-22 08:05 UTC - Loss1 Steepest Add Versus Replace Interpretation
+
+Status: inspected completed baseline `loss1/all_w` code and metrics; no process changes made.
+
+Observed evidence:
+- Source loss root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_055315_UTC/batch_0000_0009/loss1`.
+- Source code inspected: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- For `p=2`, `steepest_direction` returns the normalized gradient; therefore `raw_replace` and `steepest_replace` are the same update direction in this run.
+- Replacement uses `delta = epsilon * direction`; additive uses `delta = delta + alpha * direction` followed by projection.
+- Observed k=1 metrics: `raw_replace` and `steepest_replace` both have loss1 `449.930487`, true loss `92.175734`, boundary `0.999999982`.
+- Observed k=100 metrics: `steepest_add` has loss1 `519.401230`, true loss `158.283305`, boundary `0.997810042`; `steepest_replace` has loss1 `401.017053`, true loss `98.326353`, boundary `0.999999982`.
+- Result Markdown: `docs/ns2d_recurrent_loss1_steepest_add_vs_replace_note_20260522.md`.
+
+Inference:
+- The fact that `steepest_add` beats `steepest_replace` in this completed block is not by itself evidence of a code bug.
+- The generalized-power intuition assumes a fixed quadratic/local-linear problem; this attack uses a nonlinear recurrent FNO at finite `epsilon=32`, and the true loss also includes solver output.
+- The earlier exact 100% boundary step for replacement showing as step 61 is a floating-point threshold artifact; replacement is effectively on the boundary at step 1.
+- A smaller-epsilon or fixed-linearized/JVP-only diagnostic would be the cleaner test of the generalized-power expectation.
+
+### 2026-05-22 08:12 UTC - Recorded 1D Burgers Versus 2D NS Optimizer Difference
+
+Status: documented the interpretation that the best attack optimizer may differ between 1D Burgers and 2D NS recurrent-FNO experiments.
+
+Observed evidence:
+- Current 2D source loss root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_055315_UTC/batch_0000_0009/loss1`.
+- Current 2D settings: `epsilon=32`, `alpha=10`, `p=q=2`, `loss1`, `mode=all_w`, `attack_batch_size=10`, `steps=100`.
+- Current 2D result: `steepest_add` has final loss1 mean `519.401230`, final true loss mean `158.283305`, and true-loss increase `89.791573`, larger than `steepest_replace` final loss1 mean `401.017053`, final true loss mean `98.326353`, and true-loss increase `29.834621`.
+- Prior 1D Burgers observation is user-reported from earlier project experiments: `steepest_replace` was usually strongest in that setting.
+- New result Markdown: `docs/ns2d_recurrent_1d_vs_2d_attack_optimizer_observation_20260522.md`.
+
+Inference:
+- The current result suggests attack optimizer ranking can be PDE- and regime-dependent.
+- The 2D NS recurrent setting is nonlinear and finite-epsilon; `steepest_add` may benefit from accumulating/rotating directions on the boundary, whereas replacement discards path history.
+- This should be treated as a useful observation, not yet a final universal conclusion; smaller-epsilon, loss2/loss3, sample-wise, and fixed-linearized diagnostics remain useful follow-ups.
+
