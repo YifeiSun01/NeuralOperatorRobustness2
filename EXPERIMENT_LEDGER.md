@@ -7995,3 +7995,476 @@ Inference:
 - The 2D NS recurrent setting is nonlinear and finite-epsilon; `steepest_add` may benefit from accumulating/rotating directions on the boundary, whereas replacement discards path history.
 - This should be treated as a useful observation, not yet a final universal conclusion; smaller-epsilon, loss2/loss3, sample-wise, and fixed-linearized diagnostics remain useful follow-ups.
 
+### 2026-05-22 20:32 UTC - Pair-Outer NS2D Attack Progress Check
+
+Status: inspected active background run; no process changes made.
+
+Observed evidence:
+- Active launcher root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522`.
+- Active Python PID `328653` is running `attack_ns2d_recurrent_core4.py` with `--out-root .../eps8_alpha2p5`, `--epsilon-alpha-pairs 8:2.5`, `--loss-types loss3`, `--mode-spec all_w`, `--attack-batch-size 10`, and `--steps 100`.
+- Current time from `date -u`: `2026-05-22 20:32:53 UTC`.
+- GPU query reported `NVIDIA A100-SXM4-80GB, 47197, 81920, 99`.
+- Log evidence: `pair=32:10` completed all seven blocks and finished at `2026-05-22 18:02:00 UTC`; `pair=8:2.5 loss=loss1 mode=all_w` finished at `2026-05-22 19:16:17 UTC`; `pair=8:2.5 loss=loss2 mode=all_a_target_w` finished at `2026-05-22 19:49:00 UTC`; `pair=8:2.5 loss=loss3 mode=all_w` started at `2026-05-22 19:49:00 UTC`.
+- Completed method summary count: `37 / 112` total configured method summaries.
+- Completed by pair/loss: `eps32_alpha10` has `loss1=4`, `loss2=4`, `loss3=20`; `eps8_alpha2p5` has `loss1=4`, `loss2=4`, `loss3=1`.
+- In the active `eps8_alpha2p5/loss3/all_w` block, only `raw_add/summary.json` exists so far; `raw_add` runtime was about `31.19 min`, with final adversarial true loss `98.74174499511719` and clean true loss `68.49199676513672`.
+
+Inference:
+- The run has completed the full baseline pair `32:10` and is partway through the second pair `8:2.5`.
+- The active method is inferred to be the next method after `raw_add` in `eps8_alpha2p5/loss3/all_w`, likely `raw_replace`, because only `raw_add` has a summary in that block and the active Python command is still in `loss3/all_w`.
+- By method-summary count, progress is about `33%` complete (`37 / 112`), with the 38th method currently running.
+- Runtime projection remains approximate, but if later pairs behave similarly to `32:10`, the full sweep may take on the order of two days rather than one day.
+
+### 2026-05-22 20:38 UTC - eps32 alpha10 Baseline Overview Plots
+
+Status: generated CPU-only overview plots for the completed baseline pair `epsilon=32`, `alpha=10`; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Plotting script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_baseline_overview.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522`.
+- Generated plots: loss/objective curves with std shading, delta norm/boundary curves with std shading, sample-0 angle diagnostics, sample-0 final perturbation grid, and final metric heatmap.
+- Summary CSV: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522/eps32_alpha10_baseline_final_metric_summary.csv`.
+- Result Markdown: `docs/ns2d_recurrent_eps32_alpha10_baseline_overview_20260522.md`.
+- PNG size check showed generated images with dimensions: loss curves `2400x3255`, delta curves `2400x3255`, angle curves `2400x3255`, final delta grid `2400x3255`, final heatmap `2700x900`.
+- Follow-up GPU query reported `NVIDIA A100-SXM4-80GB, 47197, 81920, 99`, indicating the long-running attack remained active.
+
+Observed summary:
+- `steepest_add` was best by final true-loss increase in all completed baseline blocks.
+- Largest true-loss increases: `loss3/all_w` with `steepest_add` `236.100975`; `loss3/d1_5_w6_9_target_w` with `steepest_add` `220.735313`; `loss3/all_d_target_w` with `steepest_add` `147.921621`; `loss3/w1_5_d6_9_target_w` with `steepest_add` `139.366045`; `loss3/a1_5_d6_9_target_w` with `steepest_add` `108.555902`.
+
+Inference:
+- For the completed `epsilon=32`, `alpha=10` pair, `steepest_add` dominates by final true-loss increase across the observed loss/mode blocks.
+- Angle curves are sample-0 diagnostics only because the attack run records per-step trace for `step_sample_position=0`; batch loss and delta curves use mean/std over the 10 attacked samples.
+
+### 2026-05-22 20:46 UTC - eps32 alpha10 Baseline Overview v2 Plot Corrections
+
+Status: regenerated CPU-only baseline overview plots with corrected true-loss y-axis and boundary threshold markers; no model/solver rerun.
+
+Observed evidence:
+- Updated output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522_v2`.
+- Updated loss curve PNG: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522_v2/eps32_alpha10_baseline_loss_curves_with_std_shared_true_y_thresholds.png`.
+- Updated delta curve PNG: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522_v2/eps32_alpha10_baseline_delta_norm_boundary_with_std_thresholds.png`.
+- The true-loss column now uses a shared y-axis range across all rows.
+- Objective, true-loss, delta-norm, and boundary-ratio curves now mark first crossings of `25%`, `50%`, `75%`, and `100%` boundary ratio.
+- PNG size check showed generated images with valid dimensions: loss curves `2400x3255`, delta curves `2400x3255`, angle curves `2400x3255`, final delta grid `2400x3255`, final heatmap `2700x900`.
+- Follow-up GPU query reported `NVIDIA A100-SXM4-80GB, 47197, 81920, 99`, indicating the long-running attack remained active.
+
+Inference:
+- The v2 plots are better for comparing true loss across modes because the second column has a unified scale.
+- `angle(delta, direction)` should be read as the sample-0 angle between current perturbation and current gradient-derived update direction; it is not a batch-mean angle.
+
+### 2026-05-22 20:50 UTC - eps32 alpha10 Delta Curve raw_add Visibility Check
+
+Status: inspected saved per-step metrics to explain why `raw_add` is not visually distinct in several delta norm/boundary plots; no process changes made.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- `raw_add` per-step CSV files exist for all completed baseline blocks.
+- In `loss1/all_w` and all `loss3` modes, `raw_add` reaches about 100% boundary at step 1 and its boundary curve differs from `raw_replace`/`steepest_replace` by only about `3e-8` to `5e-8` in max absolute difference.
+- In `loss2/all_a_target_w`, `raw_add` reaches about 100% boundary much later, around step 68, and its boundary curve is visibly different from replace curves.
+
+Inference:
+- `raw_add`/PGD is present in the delta norm plots, but in most blocks it is visually hidden because it overlaps almost exactly with replacement curves at `||delta||/epsilon ~= 1` from step 1 onward.
+- The visible exception in `loss2` happens because `raw_add` does not immediately hit the boundary there.
+- Future plots should use distinct line styles, z-order, alpha, or separate method panels to make overlapping PGD/replacement curves visible.
+
+### 2026-05-22 20:55 UTC - eps32 alpha10 PGD Norm Overlap Versus Loss Difference Check
+
+Status: inspected saved per-step metrics and final perturbation arrays to answer whether `raw_add`/PGD was missing or incorrectly recorded in delta norm plots; no process changes made.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Source code inspected: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py` lines 132-159, 467-484, and 1223-1300.
+- Formula from code: additive methods use `delta <- Proj(delta + alpha * direction)`; replacement methods use `delta <- Proj(epsilon * direction)`.
+- For `p=2`, `steepest_direction(grad)` is `normalize_to_p_ball(grad, 2.0)`, so `raw_replace` and `steepest_replace` share the same direction in this run.
+- Numeric check comparing `raw_add` versus `raw_replace`:
+  - `loss3/all_w`: max absolute boundary-ratio difference `4.172e-08`, final true loss `155.712` versus `106.323`, final-delta cosine mean `0.078`, min `-0.275`.
+  - `loss1/all_w`: max absolute boundary-ratio difference `4.172e-08`, final true loss `93.042` versus `98.326`, final objective `445.810` versus `401.017`, final-delta cosine mean `0.142`, min `-0.605`.
+  - `loss3/d1_5_w6_9_target_w`: max absolute boundary-ratio difference `4.768e-08`, final true loss `171.509` versus `137.871`, final-delta cosine mean `0.300`, min `-0.130`.
+  - `loss2/all_a_target_w` is the visible exception: max absolute boundary-ratio difference `9.579e-01`, because `raw_add` reaches the boundary much later than replacement.
+
+Inference:
+- The saved data support the explanation that PGD/raw_add is present in the delta norm plots but often hidden by overlapping boundary-ratio curves.
+- Overlap of `||delta||/epsilon` only means the perturbations have the same norm. It does not mean the perturbation vectors are the same.
+- Final perturbation cosine similarities between `raw_add` and `raw_replace` are often low, so the losses can differ substantially despite identical norm curves.
+
+### 2026-05-22 21:00 UTC - eps32 alpha10 Perturbed Final Output Heatmaps
+
+Status: generated CPU-only sample-0 final-output heatmaps from saved `final_state_outputs.npz`; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522_v2`.
+- Generated PNGs: `eps32_alpha10_baseline_adv_model_final_sample0_grid.png`, `eps32_alpha10_baseline_adv_solver_final_sample0_grid.png`, `eps32_alpha10_baseline_adv_model_minus_solver_sample0_grid.png`, and `eps32_alpha10_baseline_abs_adv_model_minus_solver_sample0_grid.png`.
+- Summary CSV: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522_v2/eps32_alpha10_baseline_adv_final_output_diff_sample0_summary.csv`.
+- PNG size check showed all four final-output images have valid dimensions `2520x3360`.
+- Follow-up GPU query reported `NVIDIA A100-SXM4-80GB, 47197, 81920, 99`, indicating the long-running attack remained active.
+
+Observed sample-0 top true-loss increases:
+- `loss3/all_w` + `steepest_add`: adversarial true loss `263.904083`, increase `229.079956`, ratio `7.578197`.
+- `loss3/d1_5_w6_9_target_w` + `steepest_add`: adversarial true loss `257.590118`, increase `222.765991`, ratio `7.396887`.
+- `loss3/w1_5_d6_9_target_w` + `steepest_add`: adversarial true loss `145.218689`, increase `110.394562`, ratio `4.170060`.
+- `loss3/all_d_target_w` + `steepest_add`: adversarial true loss `145.115677`, increase `110.291550`, ratio `4.167102`.
+- `loss1/all_w` + `steepest_add`: adversarial true loss `133.663818`, increase `98.839691`, ratio `3.838253`.
+
+Inference:
+- The new heatmaps visualize the perturbed final FNO output, perturbed final solver output, and signed/absolute model-solver final differences for the same sample-0 perturbations as the final-delta grid.
+- These are sample-0 diagnostics and should be interpreted alongside the batch mean/std curves.
+
+### 2026-05-22 21:08 UTC - eps32 alpha10 Final Delta Fourier Analysis
+
+Status: generated CPU-only Fourier analysis for completed baseline final perturbations; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Analysis script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_delta_fft_analysis.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_delta_fft_analysis_20260522`.
+- Generated plots: `eps32_alpha10_final_delta_fft_log_magnitude_sample0_grid.png`, `eps32_alpha10_final_delta_radial_fft_profiles.png`, and `eps32_alpha10_final_delta_fft_band_metrics_heatmaps.png`.
+- Summary CSV: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_delta_fft_analysis_20260522/eps32_alpha10_final_delta_fft_metrics_summary.csv`.
+- Result Markdown: `docs/ns2d_recurrent_eps32_alpha10_delta_fft_analysis_20260522.md`.
+- PNG size check showed valid images: FFT grid `2520x3360`, radial profiles `1500x2835`, band heatmap `3150x900`.
+- Follow-up GPU query reported `NVIDIA A100-SXM4-80GB, 47197, 81920, 99`, indicating the long-running attack remained active.
+
+Observed aggregate metrics:
+- `loss1`: mean low fraction `0.999710`, mid fraction `0.000290`, high fraction `8.48e-08`, spectral centroid `0.013960`.
+- `loss2`: mean low fraction `0.999977`, mid fraction `0.000021`, high fraction `2.12e-06`, spectral centroid `0.011957`.
+- `loss3`: mean low fraction `0.998162`, mid fraction `0.001837`, high fraction `1.01e-06`, spectral centroid `0.019692`.
+
+Inference:
+- The user's observation is mostly supported: `loss2` is especially smooth/low-frequency, `loss1` is also low-frequency, and `loss3` shifts more energy into mid-frequency/curvier spatial structure.
+- The strict high-frequency band remains tiny for all groups, so the visual "higher frequency" in `loss3` is primarily a shift toward low-mid/mid radial frequencies rather than a large Nyquist-scale high-frequency component.
+
+### 2026-05-22 21:18 UTC - eps32 alpha10 LP Steepest PGD Final-Delta Observation
+
+Status: recorded follow-up interpretation of the final-delta and FFT plots; no experiment rerun.
+
+Observed evidence:
+- Source final-delta plot set: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_baseline_overview_20260522_v2`.
+- Source FFT plot set: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_delta_fft_analysis_20260522`.
+- Result Markdown updated: `docs/ns2d_recurrent_eps32_alpha10_delta_fft_analysis_20260522.md`.
+
+Inference:
+- `loss3` + LP steepest PGD (`steepest_add`) produces some of the most visually distinctive final perturbation structures among the completed `epsilon=32`, `alpha=10` baseline cases, especially in `loss3/all_w` and related W-heavy settings.
+- The visible structure and FFT metrics suggest that LP steepest PGD is selecting a materially different spatial perturbation direction, not simply making the same perturbation larger.
+- This supports the current working conclusion that 2D recurrent NS attack behavior can differ from the earlier 1D Burgers pattern, where replacement/GPI-style updates looked more dominant.
+
+### 2026-05-22 21:17 UTC - eps32 alpha10 Output FFT Dealiasing Analysis
+
+Status: generated CPU-only FFT/dealiasing analysis for saved final delta, clean/adv FNO final outputs, clean/adv solver final outputs, and model-solver final differences; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Analysis script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_output_fft_dealias_analysis.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_output_fft_dealias_analysis_20260522`.
+- Summary CSV: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_output_fft_dealias_analysis_20260522/eps32_alpha10_output_fft_dealias_metrics_summary.csv`.
+- Result Markdown: `docs/ns2d_recurrent_eps32_alpha10_output_fft_dealias_analysis_20260522.md`.
+- Training-data and dictionary generation both set `dealiasing_fraction=2 / 3`; active attack code rolls out solver frames for `d`/`w` modes.
+
+Observed metrics:
+- Final-delta outside-`2/3` square fractions: `loss1` `1.361e-10`, `loss2` `1.183e-06`, `loss3` `3.490e-10`.
+- Final-delta outside-square cross-arm share: `loss1` `0.852`, `loss2` `0.836`, `loss3` `0.835`.
+- Adv FNO final outside-square fractions are around `1.1e-06` to `1.5e-06`.
+- Adv solver final outside-square fractions are around `1.8e-06` to `2.4e-06`.
+- Adv model-solver difference outside-square fractions are much larger, around `7.2e-05` to `1.27e-04`, with substantially higher spectral centroids.
+
+Inference:
+- The `2/3` dealiasing fingerprint is visible in solver outputs, FNO outputs, and final perturbations.
+- The trained FNO appears to mirror the solver/training-data spectral cutoff, though not as an exact hard projector.
+- `loss1/all_w` can inherit the cutoff because solver-generated frames 2-10 are used as recurrent model input in `w` mode, even though the loss1 target itself is `F(x)`.
+- `loss2/all_a_target_w` is smoother and lacks the same obvious cutoff-box boundary because its active objective uses dictionary/fixed-target structure rather than differentiating through a perturbed solver target.
+- The model-solver difference is where mid/high-frequency mismatch is most visible.
+
+### 2026-05-22 21:22 UTC - eps32 alpha10 Method-Grouped Loss and Spectral Curves
+
+Status: generated CPU-only curve plots grouped by optimizer/method; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Analysis script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_method_grouped_curves.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_method_grouped_curves_20260522`.
+- Generated loss-curve PNGs: `eps32_alpha10_loss_curves_by_method_all_blocks_linear.png` and `eps32_alpha10_loss_curves_by_method_all_blocks_logy.png`.
+- Generated spectral PNGs: `eps32_alpha10_final-delta_radial_fft_by_method_all_blocks.png`, `eps32_alpha10_adv-model-final_radial_fft_by_method_all_blocks.png`, `eps32_alpha10_adv-solver-final_radial_fft_by_method_all_blocks.png`, and `eps32_alpha10_adv-model-minus-solver_radial_fft_by_method_all_blocks.png`.
+- Result Markdown: `docs/ns2d_recurrent_eps32_alpha10_method_grouped_curves_20260522.md`.
+
+Inference:
+- The method-grouped plots complement the block-grouped plots: block-grouped views compare optimizers within one loss/mode block, while method-grouped views compare all loss/mode blocks for one optimizer.
+- Spectral plots mark both `rho=sqrt(2)/3` and `rho=2/3`, clarifying why a square 2/3 cutoff appears as a radial drop-off band rather than a single point.
+- These plots support the existing interpretation that loss2 perturbations are smoothest/lowest-frequency, loss3 perturbations carry more mid-frequency structure, and model/solver outputs both show a 2/3-rule spectral cutoff.
+
+### 2026-05-22 21:30 UTC - eps32 alpha10 FFT Heatmaps Without Cutoff Overlays
+
+Status: generated CPU-only FFT heatmaps with no drawn cutoff line/box for visual inspection of the dealiasing boundary; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Analysis script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_output_fft_heatmaps_no_cutoff.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_fft_heatmaps_no_cutoff_20260522`.
+- Generated no-cutoff fields: `x_clean`, `x_adv`, `final_delta`, `clean_model_final`, `clean_solver_final`, `clean_model_minus_solver`, `adv_model_final`, `adv_solver_final`, `adv_model_minus_solver`, `model_final_change`, and `solver_final_change`.
+- Result Markdown: `docs/ns2d_recurrent_eps32_alpha10_fft_heatmaps_no_cutoff_20260522.md`.
+
+Inference:
+- These plots complement the previous overlayed FFT/dealiasing plots by removing all visual guide lines. If the spectral cutoff remains visible by eye, the boundary is a feature of the saved fields rather than an artifact of the overlay.
+
+### 2026-05-22 21:36 UTC - Corrected Visual Interpretation of 2/3 Cutoff FFT Heatmaps
+
+Status: updated records after visual inspection corrected the earlier interpretation; no code execution beyond Markdown updates.
+
+Observed evidence:
+- No-cutoff FFT heatmap directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_fft_heatmaps_no_cutoff_20260522`.
+- Updated notes: `docs/ns2d_recurrent_eps32_alpha10_fft_heatmaps_no_cutoff_20260522.md` and `docs/ns2d_recurrent_eps32_alpha10_output_fft_dealias_analysis_20260522.md`.
+
+Correction:
+- The clean/adversarial FNO model-output FFT heatmaps do not show a visually clear `2/3` cutoff box in the same strong way as solver outputs or solver-change outputs.
+- The earlier statement that the FNO visibly learned the solver cutoff should be weakened to: model outputs have low outside-cutoff energy, but the sharp visual cutoff box is not clearly visible without overlays.
+- Strong visual cutoff evidence is present in solver-related fields and in final delta fields whose attack gradients pass through differentiable solver/dealiasing paths.
+
+Inference:
+- `loss1/all_w` can show the solver cutoff fingerprint because solver-generated frames 2-10 are part of the recurrent FNO input path, even though the loss1 target is `F(x)`.
+- `loss3` can show the fingerprint because target frame 20 is kept in `w` mode and differentiates through `G(x+delta)`.
+- `loss2/all_a_target_w` lacks the same differentiable perturbed-solver path, helping explain why its delta lacks the clear cutoff-box structure.
+- The clean initial condition appears lower-band-limited, consistent with an upsampled lower-resolution source; `x_adv = x_clean + delta` can show both the original low-frequency support and the solver-gradient-shaped cutoff structure.
+
+### 2026-05-22 21:41 UTC - eps32 alpha10 Batch-Mean FFT Heatmaps Without Cutoff Overlays
+
+Status: generated CPU-only 10-sample batch-mean FFT heatmaps with no drawn cutoff guide; no model/solver rerun.
+
+Observed evidence:
+- Source pair root: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Analysis script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_output_fft_heatmaps_no_cutoff_batchmean.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_fft_heatmaps_batchmean_no_cutoff_20260522`.
+- Result Markdown: `docs/ns2d_recurrent_eps32_alpha10_fft_heatmaps_batchmean_no_cutoff_20260522.md`.
+- Generated fields: `x_clean`, `x_adv`, `final_delta`, `clean_model_final`, `clean_solver_final`, `clean_model_minus_solver`, `adv_model_final`, `adv_solver_final`, `adv_model_minus_solver`, `model_final_change`, and `solver_final_change`.
+
+Observed method:
+- For each saved field, the script computes FFT per sample, takes the magnitude, averages magnitudes over the 10 saved samples, and then plots `log10(mean |FFT|)`.
+- It intentionally does not average fields before FFT, avoiding phase cancellation.
+
+Inference:
+- These batch-mean no-cutoff heatmaps are better than sample-0 plots for judging whether the apparent spectral support/cutoff/directional structure is robust across the attack batch.
+
+### 2026-05-22 21:50 UTC - eps32 alpha10 Visual/FFT Conclusions and Image-Only Bundle
+
+Status: consolidated recent `epsilon=32`, `alpha=10` visual/FFT conclusions into a Markdown note and collected generated visual outputs into an image-only package; no experiment/model/solver rerun.
+
+Observed evidence:
+- Summary Markdown: `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`.
+- Bundle root: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522`.
+- Image-only folder: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/images_only`.
+- Records folder: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/records`.
+- Manifest CSV: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/records/bundle_manifest.csv`.
+- Manifest JSON: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/records/bundle_manifest.json`.
+- Source visualization directories: `11` directories.
+- Copied image files: `134`.
+- Copied record files: `33`.
+
+File organization:
+- `images_only/` contains only image extensions and intentionally excludes CSV/JSON/Markdown/TXT records.
+- `records/` preserves CSV/JSON/JSONL/TXT/Markdown records, including the new consolidated conclusion note.
+- Original source visualization folders were left intact to avoid deleting existing evidence.
+
+Inference:
+- This package is intended as a clean visual browsing folder plus a separate record archive for reproducibility.
+
+### 2026-05-22 21:56 UTC - Corrected Model/Solver Cutoff and Loss2 Final-Delta Curve Interpretation
+
+Status: inspected existing final-delta FFT metrics and radial profile behavior to clarify visual interpretation; no model/solver rerun.
+
+Observed evidence:
+- Method-grouped curves: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_method_grouped_curves_20260522/eps32_alpha10_final-delta_radial_fft_by_method_all_blocks.png`, `eps32_alpha10_adv-model-final_radial_fft_by_method_all_blocks.png`, and `eps32_alpha10_adv-solver-final_radial_fft_by_method_all_blocks.png`.
+- Final-delta FFT CSV: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_delta_fft_analysis_20260522/eps32_alpha10_final_delta_fft_metrics_summary.csv`.
+- Updated summary Markdown: `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`.
+
+Observed metrics:
+- `loss2/all_a_target_w` final delta has mean low-frequency fraction about `0.999975-0.999978` and spectral centroid about `0.0117-0.0122` across methods.
+- Its first radial-profile bin contains about `0.91-0.93` of the normalized radial profile, higher than `loss1/all_w` (`0.75-0.82`) and `loss3/all_w` (`0.55-0.70`).
+
+Correction/inference:
+- Model/FNO outputs share major spectral directions with solver outputs but do not show the same visually sharp `2/3` cutoff as solver outputs.
+- The solver and solver-change plots are the strongest visual evidence for the hard cutoff.
+- Loss2 final-delta curves look unusually high at the low-frequency start because the perturbation is extremely concentrated in the first few radial Fourier bins. Heatmaps can make this less obvious because they use log-magnitude colormaps and percentile scaling rather than radial log-y profiles.
+
+### 2026-05-22 22:02 UTC - Solver Radial Spectrum Bump Near 0.5 Interpretation
+
+Status: inspected the method-grouped radial spectrum implementation and recorded interpretation of the solver bump/feature near `rho ~= 0.47-0.55`; no model/solver rerun.
+
+Observed evidence:
+- Script inspected: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_method_grouped_curves.py`.
+- The plotted radial coordinate normalizes FFT radius by the diagonal Nyquist radius.
+- The script marks `RADIAL_AXIS_CUTOFF = sqrt(2)/3 ~= 0.471` and `RADIAL_CORNER_CUTOFF = 2/3 ~= 0.667`.
+- Radial profile uses mean FFT power per radial bin and then normalizes the binned profile.
+- Updated summary Markdown: `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`.
+
+Inference:
+- A square per-coordinate `2/3` mask becomes a radial transition band from `rho ~= 0.47` to `rho ~= 0.67`.
+- In anisotropic spectra, the surviving angular sectors inside that square can produce an apparent bump or boundary near `rho ~= 0.5` before the final drop near `2/3`.
+- This feature should be interpreted primarily as square-cutoff geometry plus anisotropic spectral directions, not as a separate physical cascade scale without further angular-sector diagnostics.
+
+### 2026-05-22 22:08 UTC - Radial Frequency Normalization Note
+
+Status: documented the radial FFT normalization explanation in the consolidated visual/FFT conclusions Markdown; no experiment/model/solver rerun.
+
+Observed evidence:
+- Updated summary Markdown: `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`.
+
+Recorded explanation:
+- The radial plots normalize `rho` by the FFT square's diagonal corner radius `sqrt(0.5^2 + 0.5^2) = sqrt(2)/2`, so `rho=1` is the corner, not the horizontal Nyquist point.
+- The per-coordinate `2/3` retained-mode cutoff gives `|kx|, |ky| <= 1/3`.
+- The cutoff square intersects the axis at `rho = sqrt(2)/3 ~= 0.471` and reaches the retained square corner at `rho = 2/3 ~= 0.667`.
+
+Inference:
+- This explains why the solver radial spectrum has a transition band from about `0.471` to `0.667`, rather than a single radial cutoff point.
+
+### 2026-05-22 22:12 UTC - Linear-Y Final-Delta Radial FFT Plot
+
+Status: generated CPU-only linear-y final-delta radial FFT plots for `epsilon=32`, `alpha=10`; no model/solver rerun.
+
+Observed evidence:
+- Script: `2D_NS_FNO2d_recurrent/visualizations/plot_eps32_alpha10_final_delta_radial_linear_y.py`.
+- Output directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_final_delta_radial_linear_y_20260522`.
+- Generated plots: `eps32_alpha10_final-delta_radial_fft_by_method_all_blocks_linear_y.png` and `eps32_alpha10_final-delta_radial_fft_by_method_all_blocks_linear_y_lowfreq_zoom.png`.
+- First-bin CSV: `eps32_alpha10_final_delta_radial_linear_y_first_bins.csv`.
+- Updated summary Markdown: `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`.
+
+Observed first-bin values at `rho ~= 0.0052`:
+- `loss2/all_a_target_w`: about `0.909-0.926` across methods.
+- `loss1/all_w`: about `0.746-0.821` across methods.
+- `loss3/all_w`: about `0.546-0.700` across methods.
+
+Inference:
+- Loss2's final delta is genuinely more concentrated in the lowest radial FFT bin.
+- The log-y grouped plot visually compressed this separation because all these values lie near `10^0`; linear-y and low-frequency zoom make the difference clearer.
+
+### 2026-05-22 22:18 UTC - Added Linear-Y Final-Delta Plots to Image Bundle
+
+Status: copied the newly generated linear-y final-delta radial FFT plots into the existing image-only report package and updated package manifests; no model/solver rerun.
+
+Observed evidence:
+- Source directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_final_delta_radial_linear_y_20260522`.
+- Bundle image directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/images_only/eps32_alpha10_final_delta_radial_linear_y_20260522`.
+- Bundle records directory: `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/records/eps32_alpha10_final_delta_radial_linear_y_20260522`.
+- Added image files: `2`.
+- Added record files: `2`.
+- Current total image files in `images_only/`: `136`.
+- Current total record files in `records/`: `3`.
+
+Inference:
+- The image-only package now includes the linear-y and low-frequency zoom views needed to inspect loss2's low-frequency final-delta concentration.
+
+## 2026-05-22 22:23:23 UTC - NS2D attack optimizer behavior explanation
+
+Status: analysis recorded; no model, solver, or GPU experiment was run for this update.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`
+- Prior 2D NS eps32/alpha10 visual/FFT artifacts under `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522/`
+- Prior 1D/Burgers comparison notes referenced in existing docs.
+
+Observed evidence:
+- In current 2D NS recurrent FNO attack records, `steepest_add` / LP-steepest PGD is often strongest, while replacement/GPI-style methods are not consistently best.
+- The final perturbation and output FFT diagnostics show solver/dealiasing fingerprints and mode-dependent spectral behavior.
+
+Inference:
+- The 1D Burgers setting likely behaved closer to a locally quadratic/dominant-direction problem, where replacement/GPI is well matched.
+- The 2D NS recurrent setting is more finite-radius, nonlinear, recurrent, solver-coupled, and frequency-filtered; additive normalized updates can preserve useful trajectory history while replacement can discard it.
+
+Remaining work:
+- Run smaller epsilon comparisons and a frozen-linearized/JVP diagnostic to test whether replacement becomes stronger when the objective is forced closer to a fixed quadratic problem.
+
+## 2026-05-22 22:25:39 UTC - Validation plan for NS2D optimizer-geometry hypothesis
+
+Status: analysis/plan recorded; no experiment was run and no GPU/solver/model computation was started.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`
+- Existing eps32/alpha10 attack curves, FFT plots, and visual report package.
+
+Inference to validate:
+- 1D Burgers likely favored replacement/GPI because it behaved closer to a fixed local quadratic/dominant-direction objective.
+- 2D NS recurrent FNO likely favors `steepest_add` because gradients rotate across a nonlinear recurrent solver-coupled trajectory, so additive updates preserve useful perturbation history.
+
+Planned validation:
+- Frozen-linearized diagnostic, epsilon sweep, gradient-angle trajectory diagnostics, boundary-matched comparisons, solver-gradient ablations, spectral projection ablations, and true-loss vs surrogate-loss checks.
+
+## 2026-05-22 22:29:03 UTC - 1D Burgers evidence check for NS2D optimizer hypothesis
+
+Status: existing experiment records inspected and summarized; no new neural-operator run, GPU computation, solver call, or attack computation was started.
+
+Source files / evidence:
+- `docs/ns2d_vs_1d_burgers_optimizer_hypothesis_check_20260522.md`
+- `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`
+- `docs/loss3_hypothesis_validation_status_20260521.md`
+- `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`
+- `docs/loss3_path_geometry_theory_and_angle_evidence_20260517.md`
+- `docs/loss3_current_mechanism_validation_summary_20260521.md`
+
+Observed evidence:
+- Prior 1D Burgers records support GPI/replacement as fastest early optimizer and strong boundary-direction method, but not as an unconditional final-loss theorem.
+- Small-epsilon and path-geometry diagnostics support local-linear stability and early entry into a stable high-loss corridor in the tested Burgers setting.
+
+Inference:
+- This supports the current NS2D explanation in refined form: Burgers favored replacement because the boundary corridor quickly became stable/final-like, while NS2D likely favors `steepest_add` because the full recurrent solver-coupled objective is more path-dependent and benefits from accumulated perturbation history.
+
+Remaining work:
+- Run NS2D small-epsilon, early-to-final cosine, boundary-matched true-loss, and frozen-linearized diagnostics to test whether the same Burgers mechanisms appear or fail in 2D.
+
+## 2026-05-22 22:31:41 UTC - Plain-language clarification on NS2D nonlinearity vs GPI intuition
+
+Status: conceptual clarification recorded; no model, solver, GPU, plotting, or attack computation was run.
+
+Source files / evidence:
+- `docs/ns2d_vs_1d_burgers_optimizer_hypothesis_check_20260522.md`
+- Current 2D NS eps32/alpha10 optimizer observations and prior 1D Burgers optimizer diagnostics.
+
+Inference:
+- The current explanation is that finite-radius nonlinearity, recurrent rollout, and solver/warm-up frame dependence can weaken replacement/GPI intuition even for `loss1`.
+- A small-epsilon or frozen-linearized 2D NS diagnostic should test whether replacement/GPI becomes stronger when the problem is forced back toward a local Jacobian regime.
+
+## 2026-05-22 22:35:25 UTC - Existing-data validation of NS2D optimizer complexity explanation
+
+Status: existing local result summaries inspected only; no new neural-operator run, GPU computation, solver call, attack computation, or plotting was started.
+
+Source files / evidence:
+- `docs/ns2d_vs_1d_burgers_optimizer_hypothesis_check_20260522.md`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/*/*/batch_0000_0009/*/*/summary.json`
+
+Observed evidence:
+- At `eps32_alpha10`, `steepest_add` strongly beats `steepest_replace` for 2D NS `loss1/all_w` and most `loss3` modes.
+- At `eps8_alpha2p5`, the `loss1/all_w` gap nearly disappears and the `loss3/all_w` advantage shrinks, consistent with smaller epsilon being closer to a local-linear/replacement-friendly regime.
+
+Inference:
+- Existing 2D NS evidence supports the finite-radius/nonlinear/path-dependent explanation: more complex full objectives can favor LP-steepest additive PGD, while simpler or smaller-radius objectives look more replacement/GPI-like.
+- A frozen-linearized 2D NS diagnostic remains the strongest missing confirmation.
+
+## 2026-05-22 22:36:58 UTC - NS2D optimizer-hypothesis validation experiment design
+
+Status: experiment design recorded; no neural-operator run, GPU computation, solver call, attack computation, or plotting was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_hypothesis_validation_experiment_design_20260522.md`
+- Existing 2D NS eps32/eps8 summaries under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/`
+- Prior 1D Burgers optimizer diagnostics in `docs/three_loss_burgers_optimizer_findings_summary_20260521.md` and related docs.
+
+Designed experiments:
+- Epsilon sweep, frozen-linearized/JVP diagnostic, early-to-final direction stability, gradient rotation diagnostics, boundary-matched true-loss comparison, W/D/A mode ablation, and hybrid add/replace probes.
+
+Remaining work:
+- Implement/run the priority experiments, starting with epsilon sweep and early-to-final direction stability because they can reuse the current attack logging structure.
+
+## 2026-05-22 22:43:44 UTC - NS2D R2 and GitHub sync
+
+Status: R2 uploads completed; GitHub source/record files staged for commit and push.
+
+Source files / evidence:
+- `docs/ns2d_r2_github_sync_20260522.md`
+- R2 size verification from the completed `rclone size` commands.
+
+Observed evidence:
+- Visualization report package uploaded to R2 at `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_visual_fft_report_package_20260522`, with `137` objects and `348.500 MiB`.
+- Attack result directory uploaded to R2 at `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522`, with `411` objects and `7.679 GiB`.
+
+Inference:
+- Large generated artifacts are now backed up in R2 and should remain out of GitHub unless explicitly force-added later.
+
+Remaining work:
+- Commit and push the staged Markdown/source records to `origin/vast-ai`.
