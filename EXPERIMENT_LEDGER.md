@@ -8468,3 +8468,506 @@ Inference:
 
 Remaining work:
 - Commit and push the staged Markdown/source records to `origin/vast-ai`.
+
+## 2026-05-22 23:57:34 UTC - NS2D recurrent core4 attack runtime status
+
+Status: runtime inspection only; no new GPU/model/solver/attack computation was launched.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260522.md`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/nohup_pair_outer_20260522_055312_UTC.log`
+- `ps` and `nvidia-smi` status checks.
+
+Observed evidence:
+- The outer attack process is still running on A100 with about `47197 MiB / 81920 MiB` used and `100%` GPU utilization.
+- `eps32_alpha10` is complete.
+- `eps8_alpha2p5` has completed `loss1/all_w`, `loss2/all_a_target_w`, `loss3/all_w`, and `loss3/all_d_target_w`; it has advanced to `loss3/w1_5_d6_9_target_w`.
+
+Inference:
+- About `30-31 h` remain for the full scripted run, with rough completion around `2026-05-24 06:27 UTC` if observed timings hold.
+
+## 2026-05-22 23:59:58 UTC - NS2D optimizer validation runtime estimate
+
+Status: runtime estimate recorded; no new neural-operator run, GPU computation, solver call, attack computation, or plotting was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_hypothesis_validation_runtime_estimate_20260522.md`
+- Active pair-outer attack log timings from `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/nohup_pair_outer_20260522_055312_UTC.log`.
+
+Observed evidence:
+- `loss1/all_w` takes about `75 min`; `loss2/all_a_target_w` about `33 min`; one `loss3` mode about `123-125 min` on the current A100.
+
+Inference:
+- Minimal four-epsilon validation sweep over `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_w` would take about `15.5-16 h` from scratch.
+- The current expanded script takes about `48-49 h` from scratch and had about `30-31 h` remaining at the last status check.
+- Offline early-to-final, boundary-matched, and one-sample gradient-rotation analyses should take about `1-2 h` after the current run finishes.
+
+
+## 2026-05-23 00:06:14 UTC - NS2D optimizer validation offline-analysis feasibility
+
+Status: local record inspection only; no Python analysis, plotting, model inference, solver call, attack step, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_hypothesis_validation_runtime_estimate_20260522.md`
+- Existing local records under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/`
+- Observed record files include `per_step_metrics.csv`, `per_sample_step_metrics.csv`, `step_sample_trace.npz`, `step_sample_trace_metrics.csv`, `final_delta_and_metrics.npz`, `final_state_metrics.csv`, `summary.json`, and `solver_rollout_trace.csv`.
+
+Observed evidence:
+- Current completed attack directories contain step-level CSV metrics and representative sample NPZ traces for multiple epsilon/loss/mode/method combinations.
+
+Inference:
+- Early-to-final cosine, boundary-matched true-loss comparison, and representative-sample gradient rotation should be runnable as CPU-only offline post-processing with `0 GiB` GPU memory if the analysis avoids JAX/PyTorch GPU imports.
+- Expected CPU memory is usually under `1 GiB` for CSV/table analysis and roughly tens to hundreds of MiB when loading one `step_sample_trace.npz` at a time.
+- Expected runtime is about `30-90 min` for current completed records, or `1-2 h` with polished figures and Markdown interpretation.
+
+Remaining work:
+- Implement/run the CPU-only analysis script when desired, ideally with `CUDA_VISIBLE_DEVICES=""` and one method directory loaded at a time.
+
+
+## 2026-05-23 00:36:15 UTC - NS2D optimizer validation offline diagnostics completed
+
+Status: CPU-only offline post-processing completed. No solver call, model inference, attack step, JAX import, PyTorch import, or GPU computation was started.
+
+Source files / evidence:
+- `tools/analyze_ns2d_optimizer_validation_offline.py`
+- `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/early_to_final_cosine.csv`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/boundary_matched_true_loss.csv`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/gradient_rotation_step_sample.csv`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/gradient_rotation_summary.csv`
+- Images under `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/images/`.
+
+Observed evidence:
+- Completed method directories analyzed: 45.
+- Epsilon/loss/mode groups represented: 12.
+- Generated rows: 405 early-to-final cosine rows, 180 boundary-matched true-loss rows, and 4545 gradient-rotation step rows.
+- Generated images: 36.
+- The CPU-only run completed in 33.3 seconds with `CUDA_VISIBLE_DEVICES=""`; `nvidia-smi` showed only the pre-existing attack process using GPU memory.
+
+Key observations:
+- At `eps32_alpha10`, `steepest_add` is the 100%-boundary true-loss winner for `loss1/all_w` and every completed `loss3` mode.
+- At `eps8_alpha2p5`, the `loss1/all_w` method gap is much smaller, and `loss2/all_a_target_w` favors replacement methods slightly.
+- Early-to-final cosine and gradient-rotation summaries support the interpretation that larger-epsilon 2D NS attacks are more nonlinear/path-dependent, making additive LP-steepest PGD stronger than replacement/GPI in the observed full attack.
+
+Remaining work:
+- Re-run this offline script after the active pair-outer attack completes to include later epsilon/mode combinations.
+- Optional frozen-linearized diagnostic remains the strongest missing direct test of the local-linear explanation.
+
+
+## 2026-05-23 - NS2D vs 1D optimizer interpretation recorded
+
+Status: interpretation recorded from existing offline diagnostics only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/boundary_matched_true_loss.csv`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/early_to_final_cosine.csv`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/gradient_rotation_summary.csv`
+
+Observed evidence:
+- At `eps32_alpha10`, `steepest_add` wins boundary-matched true loss for `loss1/all_w` and every completed `loss3` mode.
+- At `eps8_alpha2p5`, the `loss1/all_w` method gap nearly collapses.
+- Replacement methods show larger step-to-step delta rotation in the large-epsilon 2D NS setting.
+
+Inference:
+- The observed 2D NS behavior supports a finite-radius nonlinear/path-dependent explanation: replacement/GPI is strong when the objective has a stable local dominant direction, while additive LP-steepest PGD is stronger when gradients rotate and useful perturbations must accumulate along a nonlinear path.
+- This explains why the 2D NS recurrent FNO attack can favor `steepest_add`, while the earlier 1D Burgers case favored replacement/GPI.
+
+Remaining work:
+- Run a frozen-linearized 2D NS diagnostic to directly test whether replacement/GPI becomes strongest when the full nonlinear objective is frozen locally.
+
+
+## 2026-05-23 - NS2D optimizer validation next-experiment recommendations
+
+Status: experiment-design recommendation recorded only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_validation_next_experiments_20260523.md`
+- Existing offline diagnostic summary in `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`.
+
+Recommendation:
+- Prioritize an epsilon sweep with matched `alpha/epsilon`, then an alpha sweep at fixed epsilon, then a frozen-linearized diagnostic.
+- Use boundary-matched true loss, early-to-final cosine, and gradient/update rotation as primary readouts.
+- Avoid a full cross-product of epsilon, alpha, loss, W/D/A mode, and sample count until the smaller hypothesis-targeted experiments clarify the mechanism.
+
+Remaining work:
+- Run the missing small-epsilon minimal cases after the active pair-outer attack finishes, then re-run the CPU-only offline diagnostics on the expanded result set.
+
+
+## 2026-05-23 - Burgers epsilon-dependence check for NS2D hypothesis
+
+Status: local record inspection only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_epsilon_dependence_vs_ns2d_check_20260523.md`
+- `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`
+- `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`
+- `docs/ns2d_vs_1d_burgers_optimizer_hypothesis_check_20260522.md`
+
+Observed evidence:
+- 1D Burgers small-epsilon diagnostics show local-linear stability for `epsilon <= 1e-2` and finite-radius scalar drift by `epsilon=0.1`.
+- 1D Burgers p2q2 loss3 alpha/epsilon sweep shows replacement methods are fastest early and boundary-reaching, but long final loss can sometimes favor additive methods such as `steepest_add`.
+
+Inference:
+- Burgers supports the general principle that epsilon controls local-linear versus finite-radius behavior, but the exact NS2D-style four-method/three-loss/boundary-matched epsilon sweep was not already available in the same form.
+- Current NS2D evidence is consistent with the same principle but shows a stronger large-epsilon advantage for additive LP-steepest PGD.
+
+Remaining work:
+- If desired, run an exactly matched Burgers-vs-NS2D epsilon sweep with the same boundary-matched readouts for a direct cross-PDE comparison.
+
+
+## 2026-05-23 - NS2D smaller-epsilon validation grid recommendation
+
+Status: experiment-design recommendation recorded only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_validation_next_experiments_20260523.md`
+
+Recommendation:
+- Since `eps32_alpha10` is already available and `eps8_alpha2p5` is actively running, the next local-linearity probe should focus on smaller radii: `eps4_alpha1p25`, `eps2_alpha0p625`, `eps1_alpha0p3125`, and optional `eps0p5_alpha0p15625`.
+- Keep `alpha/epsilon = 0.3125` for comparability with the existing baseline pairs.
+- Minimal cases remain `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_w`.
+
+Remaining work:
+- After the active attack completes, run only the missing smaller-epsilon cases and rerun CPU-only offline diagnostics.
+
+
+## 2026-05-23 - NS2D next-experiment priority revision
+
+Status: experiment-design revision recorded only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_validation_next_experiments_20260523.md`
+
+Revision:
+- Frozen-linearized testing is downgraded from a main validation experiment to a secondary sanity check because it changes the actual nonlinear adversarial optimization problem.
+- Sample-count expansion from 10 to 20/30 initial conditions is deprioritized and not necessary for the immediate mechanism question.
+- Main priority is now missing smaller-epsilon full nonlinear attacks (`eps4_alpha1p25`, `eps2_alpha0p625`, `eps1_alpha0p3125`, optional `eps0p5_alpha0p15625`) on the minimal cases `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_w`.
+
+Remaining work:
+- After the active run completes, run the missing smaller-epsilon full nonlinear cases and apply CPU-only offline diagnostics.
+
+
+## 2026-05-23 - Direct Burgers vs NS2D mechanism comparison recorded
+
+Status: comparison recorded from existing local documents only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_epsilon_dependence_vs_ns2d_check_20260523.md`
+- `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`
+- `docs/loss3_current_mechanism_validation_summary_20260521.md`
+- `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`
+
+Observed evidence:
+- Burgers had analogues for boundary arrival, early-to-final direction stability, direction/tangent geometry, and small-epsilon local behavior.
+- Burgers replacement/GPI became final-like quickly in saved p2q2 evidence, with `cos(delta_k, delta_300)` around `0.9840` by `k=10` and `0.9949` by `k=20`.
+- NS2D `eps32_alpha10 / loss3 / all_w` replacement was not final-like early in the representative trace, while `steepest_add` was much more final-like and had smoother delta updates.
+
+Inference:
+- Burgers and NS2D differ not because the diagnostic concepts are different, but because the geometry they reveal is different: Burgers replacement/GPI exploits a stable high-loss boundary corridor, while NS2D large-epsilon replacement directions rotate too much and additive LP-steepest PGD benefits from path accumulation.
+
+Remaining work:
+- Run smaller-epsilon NS2D real attacks to test whether NS2D moves toward the Burgers-like stable local regime as epsilon decreases.
+
+## 2026-05-23 - Burgers optimizer-ranking correction for NS2D comparison
+
+Status: record correction from existing local documents only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_epsilon_dependence_vs_ns2d_check_20260523.md`
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`
+- `docs/loss3_small_epsilon_sweep_fno_nu0p001_gpu_result_20260516.md`
+
+Observed evidence:
+- The Burgers small-epsilon/local-Jacobian sweep is not an optimizer-ranking experiment; it only supports local-linear versus finite-radius interpretation.
+- The Burgers optimizer-ranking evidence comes from the p2q2 loss3 alpha/epsilon sweep.
+- In that sweep, replacement/GPI-style methods are the clearest speed and boundary-arrival winners, usually reaching the boundary at step `1`.
+- The long-run final-loss winner is not a clean monotone function of epsilon or alpha; `steepest_add` won many final-mean settings, while replacement/GPI remained the strongest early/boundary method.
+
+Inference:
+- The accurate Burgers law is Pareto-style: replacement/GPI wins early speed and boundary use, while final loss can depend on alpha, epsilon, and run length.
+- This differs from current NS2D large-epsilon evidence, where `steepest_add` also wins boundary-matched true-loss comparisons for `loss1/all_w` and completed `loss3` modes, suggesting stronger nonlinear/path-dependent direction rotation.
+
+Remaining work:
+- Run matched small-epsilon NS2D optimizer-ranking cases and compare them directly against the existing Burgers p2q2 loss3 sweep metrics.
+
+## 2026-05-23 - Burgers vs NS2D unified optimizer-mechanism experiment plan
+
+Status: experiment-design document only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_vs_ns2d_unified_optimizer_mechanism_experiment_plan_20260523.md`
+- `docs/burgers_epsilon_dependence_vs_ns2d_check_20260523.md`
+- `docs/ns2d_optimizer_validation_next_experiments_20260523.md`
+
+Design summary:
+- Proposed a matched 1D Burgers versus 2D NS comparison using the same four optimizers, three loss roles, p=q=2 geometry, normalized epsilon budgets, alpha schedules, and shared diagnostics.
+- The central mechanism tests are finite-radius epsilon dependence, direction stability/rotation, boundary-matched true loss, path replay/ray scans, spectral diagnostics, and solver-involvement ablations.
+- The recommended first real run is a minimal matched sweep over Burgers and NS2D, losses `loss1/loss2/loss3`, four optimizers, 10 samples, normalized epsilon anchor plus smaller radii, and fixed `alpha/epsilon`.
+
+Inference:
+- A fair cross-PDE conclusion requires comparing normalized perturbation budgets and boundary-matched metrics, not raw epsilon values or isolated final-loss curves.
+- The likely differentiator to test is whether Burgers replacement/GPI finds a stable boundary direction quickly while NS2D large-epsilon replacement/GPI suffers from strong direction rotation and path dependence.
+
+Remaining work:
+- Implement a unified offline comparison table for existing Burgers and NS2D outputs.
+- Run the minimal matched normalized-epsilon sweep only after current long-running attacks are finished or resource-safe.
+
+## 2026-05-23 - Burgers vs NS2D unified experiment coverage check
+
+Status: local record inspection and coverage summary only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_vs_ns2d_unified_experiment_coverage_20260523.md`
+- `docs/burgers_vs_ns2d_unified_optimizer_mechanism_experiment_plan_20260523.md`
+- `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`
+- `docs/loss1_loss2_loss3_core4_combined_0to100_20260521.md`
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`
+- `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`
+- `2D_NS_FNO2d_recurrent/visualizations/ns2d_optimizer_validation_offline_diagnostics_20260523/records/input_method_dirs.csv`
+
+Observed evidence:
+- Burgers already has extensive documented evidence for p2q2 loss3 alpha/epsilon optimizer sweeps, loss1/loss2/loss3 baseline curves, small-epsilon local diagnostics, ray-profile diagnostics, and final-delta similarity/spectral metrics.
+- NS2D already has `eps32_alpha10` core-four results across loss1/loss2 and multiple loss3 W/D/A modes, plus `eps8_alpha2p5` minimal results for key blocks and CPU-only offline diagnostics.
+- Some Burgers raw `forensics/loss3_alpha_epsilon_core4_*` source directories referenced by docs are not currently present locally, so those results are presently Markdown-evidenced unless artifacts are restored.
+
+Inference:
+- The next work should not rerun broad Burgers sweeps or NS2D eps32 baseline experiments.
+- The main missing pieces are a unified normalized-epsilon comparison table, NS2D smaller-epsilon minimal cases, NS2D boundary-arrival alpha controls, and NS2D ray-scan/path-replay diagnostics.
+
+Remaining work:
+- Generate the unified CPU-only comparison table from current evidence and restored source CSVs if needed.
+- Run missing NS2D `eps4/eps2/eps1` minimal cases only when GPU resources are intentionally allocated.
+
+## 2026-05-23 - NS2D eps8 alpha2p5 runtime status check
+
+Status: local process/log inspection only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `/tmp/ns2d_pair_outer_attack_nohup.out`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/`
+
+Observed evidence:
+- Active process at about `2026-05-23 02:26 UTC` was `eps8_alpha2p5 / loss3 / d1_5_w6_9_target_w`, started `2026-05-23 02:04:35 UTC`.
+- Completed `eps8_alpha2p5` blocks before that had durations: `loss1/all_w` 1h14m17s, `loss2/all_a_target_w` 32m43s, `loss3/all_w` 2h04m41s, `loss3/all_d_target_w` 2h02m59s, and `loss3/w1_5_d6_9_target_w` 2h07m55s.
+- GPU query showed A100 usage about `47235 MiB / 81920 MiB` and `99%` utilization.
+
+Inference:
+- Current `d1_5_w6_9_target_w` block likely had about `1h40m-1h50m` remaining at the check.
+- `eps8_alpha2p5` as a pair likely had about `3h45m-4h00m` remaining, including the final `a1_5_d6_9_target_w` block.
+- Estimated `eps8_alpha2p5` completion was around `2026-05-23 06:10-06:25 UTC` if no abnormal slowdown occurs.
+
+Remaining work:
+- Recheck the nohup log after the current block finishes to refine estimates for the subsequent `eps16_alpha5` and `eps32_alpha15` pairs.
+
+## 2026-05-23 - NS2D eps8 alpha2p5 runtime status check 04:02 UTC
+
+Status: local process/log/file inspection only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `/tmp/ns2d_pair_outer_attack_nohup.out`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps8_alpha2p5/`
+
+Observed evidence:
+- At `2026-05-23 04:02:39 UTC`, the active process was still `eps8_alpha2p5 / loss3 / d1_5_w6_9_target_w`, elapsed about `1h58m`.
+- Method outputs existed for `raw_add`, `raw_replace`, and `steepest_add`; `steepest_replace` was inferred as the active method.
+- GPU query showed A100 usage about `47197 MiB / 81920 MiB` and `99%` utilization.
+
+Inference:
+- The current block likely had about `5-15 min` remaining.
+- The full `eps8_alpha2p5` pair likely had about `2h10m-2h30m` remaining, because `loss3/a1_5_d6_9_target_w` still remains after the active block.
+- The full pair-outer script would still continue to `eps16_alpha5` and `eps32_alpha15`, likely adding about another day if not stopped.
+
+## 2026-05-23 - NS2D eps8 alpha2p5 runtime status check 04:42 UTC
+
+Status: local process/log/file inspection only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `/tmp/ns2d_pair_outer_attack_nohup.out`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps8_alpha2p5/`
+
+Observed evidence:
+- At `2026-05-23 04:42:47 UTC`, the active process was `eps8_alpha2p5 / loss3 / a1_5_d6_9_target_w`, elapsed about `35 min`.
+- `raw_add` for this final eps8 block completed at about `2026-05-23 04:39:11 UTC`; `raw_replace`, `steepest_add`, and `steepest_replace` remained.
+- GPU query showed A100 usage about `47337 MiB / 81920 MiB` and `99%` utilization.
+
+Inference:
+- `eps8_alpha2p5` likely had about `1h25m-1h45m` remaining at this check.
+- Estimated `eps8_alpha2p5` completion remained around `2026-05-23 06:10-06:30 UTC`.
+- The full pair-outer script would still continue to `eps16_alpha5` and `eps32_alpha15`, likely adding roughly another day if not stopped.
+
+## 2026-05-23 - NS2D eps8 alpha2p5 runtime status check 04:59 UTC
+
+Status: local process/log/file inspection only; no solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `/tmp/ns2d_pair_outer_attack_nohup.out`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps8_alpha2p5/`
+
+Observed evidence:
+- At `2026-05-23 04:59:14 UTC`, the active process was `eps8_alpha2p5 / loss3 / a1_5_d6_9_target_w`, elapsed about `51m32s`.
+- `raw_add` for this final eps8 block completed at about `2026-05-23 04:39:11 UTC`; `raw_replace` was inferred active because no completed `raw_replace` files were visible yet.
+- GPU query showed A100 usage about `47337 MiB / 81920 MiB` and `99%` utilization.
+
+Inference:
+- `eps8_alpha2p5` likely had about `1h15m-1h35m` remaining at this check.
+- Estimated `eps8_alpha2p5` completion was around `2026-05-23 06:15-06:35 UTC`.
+- The full pair-outer script would still continue to `eps16_alpha5` and `eps32_alpha15`, likely adding roughly another day if not stopped.
+
+## 2026-05-23 - NS2D eps32 alpha10 step trace GIF
+
+Status: generated one CPU-only animated GIF from an already-saved NS2D attack
+step trace. No solver run, model inference, attack update, PyTorch import, JAX
+import, or GPU computation was started.
+
+Source files / evidence:
+- `tools/plot_ns2d_step_trace_gif.py`
+- `docs/ns2d_recurrent_eps32_alpha10_step_trace_gif_20260523.md`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_074135_UTC/batch_0000_0009/loss3/steepest_add/step_sample_trace.npz`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/mode_wwwwwwwwww_p2_q2_20260522_074135_UTC/batch_0000_0009/loss3/steepest_add/step_sample_trace_metrics.csv`
+
+Output files:
+- `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_step_trace_gifs_20260523/eps32_alpha10_loss3_wwwwwwwwww_steepest_add_sample0_idx0_step_trace.gif`
+- `2D_NS_FNO2d_recurrent/visualizations/eps32_alpha10_step_trace_gifs_20260523/eps32_alpha10_loss3_wwwwwwwwww_steepest_add_sample0_idx0_step_trace_manifest.json`
+
+Key settings:
+- `epsilon=32`, `alpha=10`
+- `loss3`, `mode=wwwwwwwwww`, method `steepest_add`
+- `sample_position=0`, `dataset_index=0`
+- steps `0..100`, `101` GIF frames
+- independent per-panel heat-map ranges, each symmetric around zero
+
+Observed evidence:
+- `imageio` readback reported `101` frames.
+- GIF size was about `39 MB`.
+
+Conclusion:
+- The saved trace contains enough intermediate state to visualize the attack
+  trajectory frame by frame: perturbed initial condition, gradient, model output,
+  solver output, model-minus-solver difference, and loss progression.
+
+Remaining work:
+- Additional eps32 alpha10 traces can be rendered with the same script by
+  changing `--method-dir`.
+
+## 2026-05-23 - NS2D eps8 alpha2p5 full visualization and GIFs
+
+Status: generated CPU-only overview figures, winner tables, and all step-trace GIFs for the completed `eps8_alpha2p5` NS2D recurrent attack outputs. No solver run, model inference, attack update, PyTorch import, JAX import, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_eps8_alpha2p5_visualization_summary_20260523.md`
+- `tools/plot_ns2d_pair_attack_overview.py`
+- `tools/plot_ns2d_step_trace_gif.py`
+- `tools/render_ns2d_step_trace_gifs_batch.py`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps8_alpha2p5/`
+
+Output files:
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_overview_20260523/`
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_step_trace_gifs_20260523/`
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_overview_20260523/eps8_alpha2p5_final_metric_summary.csv`
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_overview_20260523/eps8_alpha2p5_winners.json`
+
+Observed evidence:
+- The completed eps8 grid contains 7 loss/mode blocks times 4 optimizer methods = 28 traces.
+- `28` GIF files were generated; the GIF directory size is about `545 MB`.
+- The representative `loss3/all_w/steepest_add` GIF read back as `101` frames.
+- Overall largest final true-loss increase: `loss3/all_w` with `steepest_add`, true-loss increase `70.964`.
+- Overall largest active-objective increase: `loss1/all_w` with `steepest_add`, objective increase `304.8`.
+- By final true-loss increase, `steepest_add` wins 6/7 blocks and `raw_replace` wins 1/7 blocks.
+
+Inference:
+- eps8/alpha2.5 preserves the main NS2D ranking pattern seen at eps32/alpha10: `steepest_add` is the most reliable final true-loss optimizer, although the absolute loss growth is smaller at eps8.
+
+Remaining work:
+- Optionally generate a direct eps8-vs-eps32 comparison table from the two final metric summary CSV files.
+
+## 2026-05-23 - NS2D eps8 alpha2p5 image/GIF download package
+
+Status: consolidated the previously generated eps8 alpha2p5 PNG figures and GIF animations into one image-only download folder. No solver run, model inference, attack update, PyTorch import, JAX import, or GPU computation was started.
+
+Source files / evidence:
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_overview_20260523/`
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_step_trace_gifs_20260523/`
+- `docs/ns2d_recurrent_eps8_alpha2p5_visualization_summary_20260523.md`
+
+Output files:
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_image_gif_download_package_20260523/overview_pngs/`
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_image_gif_download_package_20260523/step_trace_gifs/`
+
+Observed evidence:
+- The package contains `11` PNG files and `28` GIF files.
+- No non-image files were found in the package.
+- Package size is about `554 MB`.
+
+Conclusion:
+- The eps8 alpha2p5 static figures and dynamic heat-map GIFs are now collected in a single folder for direct download.
+
+## 2026-05-23 - NS2D PGD step-scale interpretation
+
+Status: inspected existing eps8 alpha2p5 summary CSVs and NS2D attack update code to explain why `raw_add` PGD does not look like earlier PGD curves the user remembers. No solver run, model inference, attack update, PyTorch import, JAX import, or GPU computation was started.
+
+Source files / evidence:
+- `2D_NS_FNO2d_recurrent/visualizations/eps8_alpha2p5_overview_20260523/eps8_alpha2p5_final_metric_summary.csv`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps8_alpha2p5/mode_wwwwwwwwww_p2_q2_20260522_194902_UTC/batch_0000_0009/loss3/*/per_step_metrics.csv`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`
+- `docs/ns2d_recurrent_eps8_alpha2p5_visualization_summary_20260523.md`
+
+Observed evidence:
+- For `eps8_alpha2p5 / loss3 / all_w`, `raw_add`, `raw_replace`, and `steepest_replace` hit 100% epsilon boundary at step 1; `steepest_add` hit it at step 5.
+- Final true-loss increase for `loss3/all_w`: `raw_add=+30.2497`, `raw_replace=+29.3196`, `steepest_add=+70.9640`, `steepest_replace=+29.3196`.
+- Code inspection shows `raw_add` uses unnormalized gradient additive updates, while `steepest_add` uses LP-steepest direction; for `p=2`, this is normalized-gradient additive PGD.
+
+Inference:
+- The current `raw_add` result likely reflects step-size/gradient-scale mismatch: with `alpha=2.5`, unnormalized PGD is too aggressive and immediately projects to the epsilon boundary.
+- The earlier PGD behavior remembered by the user may have used a smaller effective alpha, a normalized-gradient PGD, or different normalization scale.
+- A raw-PGD alpha sweep and/or a `unit_raw_add` NS2D method would test this directly.
+
+## 2026-05-23 - Burgers optimizer curve location and NS2D comparison check
+
+Status: inspected existing Markdown records and local filesystem to answer where the old 1D Burgers optimizer loss-curve figures are and whether their results match the current NS2D ranking. No solver run, model inference, attack update, PyTorch import, JAX import, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_vs_1d_burgers_optimizer_curve_location_check_20260523.md`
+- `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`
+- `docs/loss1_loss2_core4_p2q2_baseline_marked_angles_0to100_20260521.md`
+- `docs/loss1_loss2_loss3_core4_combined_0to100_20260521.md`
+- `docs/loss3_alpha_epsilon_core4_p2q2_300steps_result_20260520.md`
+- `docs/ns2d_vs_1d_burgers_optimizer_hypothesis_check_20260522.md`
+
+Observed evidence:
+- The documented old Burgers image folder `all_requested_figures_20260521/` is not present in the current local working tree.
+- The documented source figure directories under `forensics/loss1_loss2_loss3_core4_combined_0to100_20260521/` and `forensics/loss3_alpha_epsilon_core4_analysis_p2q2_300steps_20260520/` are also not present locally.
+- Existing docs record that Burgers replacement/GPI was fastest early: k95 for loss1/loss2 was 3/2 for generalized power versus 26/24 for PGD and 27/27 for LP-steepest PGD.
+- Existing docs also record that in the Burgers p2q2 300-step sweep, `steepest_add` had slightly larger mean final loss3_q (`5.827`) than replacement (`5.747`), while replacement remained much faster to 95% final loss and to the boundary.
+
+Inference:
+- The old Burgers results are not identical to current NS2D. Burgers primarily supported replacement/GPI as a fastest-early optimizer, with modest long-run final-loss caveats; current NS2D shows a stronger final true-loss advantage for `steepest_add` across most tested blocks.
+- The old figures need to be restored/fetched from R2 or the original generation machine if the user wants to visually inspect them now.
+
+## 2026-05-23 10:21:58 UTC - Paused active NS2D attack before Git/R2 sync
+
+Status: paused the active NS2D recurrent attack process with `SIGSTOP`; no experiment process was killed.
+
+Source files / evidence:
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `ps` process table inspection
+- `nvidia-smi` GPU utilization inspection
+
+Observed evidence:
+- Active experiment before pause: `eps16_alpha5 / loss3 / all_d_target_w` under `/tmp/run_ns2d_pair_outer_attack.sh`.
+- Active Python PID: `408673`; wrapper PID: `408671`.
+- After `kill -STOP 408673`, the Python process state was `Tl`.
+- GPU utilization dropped to `0%` after waiting a few seconds. GPU memory remained allocated by the stopped process, which is expected for a paused CUDA process.
+
+Resume command if needed:
+- `kill -CONT 408673`
+
+Remaining work:
+- Commit source/docs/scripts to GitHub.
+- Upload large generated artifacts and current experiment state to R2.
+
