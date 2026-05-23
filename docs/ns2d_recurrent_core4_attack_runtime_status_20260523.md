@@ -117,3 +117,23 @@ Remaining work:
 - Push source/docs/scripts to GitHub.
 - Copy large generated experiment artifacts to R2.
 
+## 2026-05-23 10:30 UTC - GitHub/R2 Sync After Pause
+
+Status: sync record. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started by this note.
+
+Observed evidence:
+
+- Paused Python PID `408673` remained in process state `Tl`.
+- GPU utilization remained `0%`; GPU memory remained allocated by the stopped CUDA process.
+- Source/docs/scripts were committed and pushed to GitHub branch `vast-ai` in commit `c2cc0ea`.
+- Large generated experiment artifacts were copied to R2 with non-destructive `rclone copy`.
+- R2 verification showed the eps8 image/GIF package, NS2D core4 attack result tree, trained model directory, dictionary directory, `docs/`, `tools/`, and `EXPERIMENT_LEDGER.md` present under the configured prefix.
+- Temporary R2 config was removed after the upload/verification step.
+
+Detailed record:
+
+- `docs/ns2d_git_r2_sync_20260523.md`
+
+Remaining work:
+
+- Resume the paused attack only when wanted with `kill -CONT 408673`.

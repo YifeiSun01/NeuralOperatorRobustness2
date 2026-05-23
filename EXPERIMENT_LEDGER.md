@@ -8971,3 +8971,34 @@ Remaining work:
 - Commit source/docs/scripts to GitHub.
 - Upload large generated artifacts and current experiment state to R2.
 
+## 2026-05-23 10:30:04 UTC - GitHub/R2 sync after pausing active NS2D attack
+
+Status: active NS2D attack remained paused; code/docs/scripts were pushed to GitHub and large generated artifacts were copied to R2. No experiment process was killed.
+
+Source files / evidence:
+- `docs/ns2d_git_r2_sync_20260523.md`
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `ps` process table inspection
+- `nvidia-smi` GPU utilization inspection
+- `git push origin vast-ai` output
+- `rclone copy` and `rclone size` verification output
+
+Observed evidence:
+- Active Python PID `408673` remained paused with process state `Tl`.
+- GPU utilization was `0%`; memory remained allocated by the stopped CUDA process.
+- Main GitHub experiment/tooling commit `c2cc0ea` was pushed to branch `vast-ai`.
+- R2 root prefix contains `EXPERIMENT_LEDGER.md`.
+- R2 `docs/` contains current NS2D eps8 visualization and Burgers/NS2D comparison docs.
+- R2 `tools/` contains the new NS2D analysis/plotting scripts.
+- R2 eps8 image/GIF package contains `39` objects and `553.377 MiB`.
+- R2 NS2D core4 attack result tree contains `682` objects and `12.727 GiB`.
+- R2 trained model directory contains `15` objects and `8.795 GiB`.
+- R2 dictionary directory contains `18` objects and `10.743 GiB`.
+- Temporary R2 config was removed after the upload/verification step.
+
+Inference:
+- The active experiment is paused and recoverable with `kill -CONT 408673`.
+- Large generated outputs are backed up to R2 rather than committed to Git, matching the repository recording discipline.
+
+Remaining work:
+- Resume the paused attack only when the user wants to continue the long run.
