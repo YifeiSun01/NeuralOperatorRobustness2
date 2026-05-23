@@ -137,3 +137,17 @@ Detailed record:
 Remaining work:
 
 - Resume the paused attack only when wanted with `kill -CONT 408673`.
+
+## 2026-05-23 10:34 UTC - Final Experiment Process Sweep
+
+Status: final process sweep after GitHub/R2 sync. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started by this note.
+
+Observed evidence:
+
+- `pgrep -af 'attack|train_fno|run_ns2d|run_fno|python'` showed normal system services such as Jupyter, TensorBoard, supervisor, portal, and log helpers.
+- The only neural-operator experiment chain visible was `/tmp/run_ns2d_pair_outer_attack.sh` with child Python PID `408673`.
+- PID `408673` was already paused from the earlier `SIGSTOP` operation.
+
+Inference:
+
+- No additional active training, solver-generation, or attack experiment process was found that needed a separate pause action.
