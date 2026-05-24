@@ -9714,3 +9714,15 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Inference: the eps160 cleanstyle PNG now satisfies the requested three-row loss1/loss2/loss3 figure. The highlighted row in this PNG is selected-index-specific, not the 10-sample mean comparison.
 - Dedicated result file: `docs/ns2d_eps160_alpha50_three_row_figure_redraw_20260524.md`.
 
+## R2 And GitHub Incremental Backup - 2026-05-24
+
+- Status: completed.
+- R2 target: `r2:neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- GitHub target: `origin/vast-ai`.
+- Source files/data: latest cleanstyle figure bundle, eps160/alpha50 three-target results in gitclean, 2026-05-24 docs/reports, and critical 2026-05-24 plotting/launcher scripts.
+- Upload method: used `rclone copy`; large directories used `--ignore-existing`, while explicitly changed tar/PNG/CSV/JSON/script files used `copyto` to update remote objects. No `rclone sync` remote deletion was used.
+- Observed R2 evidence: `docs/ns_burgers_spectrum_loss_curve_cleanstyle_bundle_20260524.tar.gz` is present remotely with size `44,412,325` bytes; eps160 figure and optimizer-grouped PNGs are present; key scripts are present.
+- GitHub evidence: pushed commit `5a16119 Record eps160 analysis redraw and backup scripts` to `vast-ai`.
+- Safety note: existing tracked `D` entries in the incomplete main worktree were not staged or pushed; large generated data/images remained out of GitHub and were backed up to R2.
+- Dedicated record: `docs/r2_github_incremental_backup_20260524.md`.
+
