@@ -9726,3 +9726,15 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Safety note: existing tracked `D` entries in the incomplete main worktree were not staged or pushed; large generated data/images remained out of GitHub and were backed up to R2.
 - Dedicated record: `docs/r2_github_incremental_backup_20260524.md`.
 
+## NS2D/Burgers Optimizer Winner And Equivalence Summary - 2026-05-24
+
+- Status: completed offline summary; no new GPU experiment, model inference, solver rollout, or attack update was run.
+- Source evidence: `/workspace/NeuralOperatorRobustness2_gitclean/docs/ns2d_all_eps_optimizer_grouped_loss_curves_20260524.md`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/optimizer_grouped_loss_curves_20260524.md`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/burgers_ns2d_existing_results_analysis_20260524_tables/ns2d_complete_group_winners.csv`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/burgers_ns2d_existing_results_analysis_20260524_tables/burgers_recorded_key_metrics.csv`, and method/equivalence notes under `/workspace/NeuralOperatorRobustness2_gitclean/docs/`.
+- Code evidence: `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py` defines `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace` through direction and proposal rules.
+- Observed NS2D active-target result: among `26` complete four-method groups, `steepest_add` wins `16`, `raw_add` wins `9`, `raw_replace` wins `1`, and `steepest_replace` wins `0`; `eps160/alpha50` is partial because only `steepest_add` exists locally for the three completed targets.
+- Observed NS2D unified true-loss result: in `17` complete rows from `ns2d_complete_group_winners.csv`, `steepest_add` wins `15` and `raw_replace` wins `2`.
+- Observed Burgers result: for the evidenced complete same-protocol `epsilon = 4`, `alpha = 0.4`, `p = 2`, `q = 2` core-four comparison, active-target winners are `raw_add` for loss1, `steepest_add` for loss2, and tied `raw_replace/steepest_replace` for loss3.
+- Inference: NS2D currently favors `steepest_add`, especially under unified final all-W true-loss; Burgers is more mixed, with replacement/GPI-like behavior most competitive for loss3.
+- Equivalence conclusion: for `p = 2`, `raw_replace` and `steepest_replace` are the same current update because both use the normalized raw/L2-steepest direction and replacement to the L2 boundary; `raw_add` is related but not identical to `steepest_add` because raw gradient magnitude is retained.
+- Remaining work: a stronger cross-`p/q` statement requires complete same-protocol four-method tables beyond the currently evidenced p2q2 core comparisons.
+- Dedicated result file: `docs/ns_burgers_optimizer_winner_and_equivalence_summary_20260524.md`.
