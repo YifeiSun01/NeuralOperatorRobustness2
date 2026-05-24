@@ -9021,3 +9021,696 @@ Inference:
 
 Remaining work:
 - Resume the paused attack only when the user wants with `kill -CONT 408673`.
+
+## 2026-05-23 - Burgers vs NS2D optimizer-mechanism experiment design recap
+
+Status: summarized existing experiment-design records only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_vs_ns2d_unified_optimizer_mechanism_experiment_plan_20260523.md`
+- `docs/ns2d_optimizer_hypothesis_validation_experiment_design_20260522.md`
+- `docs/burgers_vs_ns2d_unified_experiment_coverage_20260523.md`
+- `docs/burgers_vs_ns2d_optimizer_experiment_design_recap_20260523.md`
+
+Observed evidence:
+- The unified plan asks for matched optimizer rules, matched loss roles, normalized epsilon rather than raw-epsilon comparison, boundary-arrival controls, direction-rotation diagnostics, ray scans, solver/mode ablations, and spectral diagnostics.
+- Existing records already cover substantial Burgers evidence and NS2D eps32/eps8 evidence.
+- Missing high-priority pieces are smaller NS2D epsilon cases, NS2D boundary-arrival alpha control, NS2D ray-scan/path replay, and a unified cross-PDE table.
+
+Inference:
+- The experiment design is intended to distinguish finite-radius nonlinear/path-dependence, alpha/boundary-arrival confounding, solver-gradient W-mode effects, and the possibility that Burgers replacement/GPI was primarily a fastest-early optimizer rather than universally best by final loss.
+
+Remaining work:
+- Use the recap as the run-order guide before launching further comparison experiments.
+
+## 2026-05-23 - Burgers vs NS2D optimizer-mechanism runtime estimate
+
+Status: estimated runtime from existing records only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_optimizer_hypothesis_validation_runtime_estimate_20260522.md`
+- `docs/ns2d_recurrent_core4_attack_runtime_status_20260523.md`
+- `docs/burgers_vs_ns2d_unified_experiment_coverage_20260523.md`
+- `docs/burgers_vs_ns2d_optimizer_experiment_runtime_estimate_20260523.md`
+
+Observed evidence:
+- NS2D `loss1/all_w` takes about `75 min`.
+- NS2D `loss2/all_a_target_w` takes about `33 min`.
+- One NS2D `loss3` mode takes about `123-125 min`.
+- A minimal one-epsilon validation set costs about `3.9 h`.
+- An expanded one-epsilon W/D/A set costs about `12.1 h`.
+
+Inference:
+- Minimal NS2D `eps4`, `eps2`, `eps1` mechanism sweep should cost about `11.5-13 h` GPU, plus `1-2 h` offline diagnostics.
+- A stronger package with boundary-arrival control and selected ray scans likely costs `1.5-2 days` wall-clock.
+- The full aggressive package with frozen-linearized and hybrid probes likely costs `3-5 days`.
+
+Remaining work:
+- Prefer the minimal smaller-epsilon NS2D sweep before launching wider W/D/A or frozen-linearized experiments.
+
+## 2026-05-23 - NS2D minimal mechanism sweep launcher prepared
+
+Status: launcher/code preparation only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_minimal_mechanism_sweep_20260523.sh`
+- `docs/ns2d_minimal_mechanism_sweep_launch_20260523.md`
+- `docs/burgers_vs_ns2d_optimizer_experiment_runtime_estimate_20260523.md`
+
+Observed evidence:
+- The launcher runs `eps4_alpha1p25`, `eps2_alpha0p625`, and `eps1_alpha0p3125`.
+- For each epsilon/alpha pair it runs only `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_w`.
+- It keeps four methods: `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace`.
+- It uses `ATTACK_BATCH_SIZE=10`, `STEPS=100`, `p=q=2`, chunk rematerialization, and records final outputs plus one sample step trace/gradients.
+- It refuses to launch if another `attack_ns2d_recurrent_core4.py` process is visible unless `ALLOW_CONCURRENT_ATTACK=1` is set.
+
+Inference:
+- This is the intended `14-17 h` wall-clock mechanism package after offline diagnostics, and avoids the much more expensive full W/D/A expansion.
+
+Remaining work:
+- Free GPU memory from any paused old attack if the user does not want to resume it, then launch the new minimal sweep with `nohup`.
+
+## 2026-05-23 - Burgers vs NS2D optimizer mechanism validation logic
+
+Status: mechanism-validation explanation only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/burgers_vs_ns2d_optimizer_mechanism_validation_logic_20260523.md`
+- Existing optimizer mechanism design docs and current minimal NS2D sweep plan.
+
+Observed evidence:
+- The validation logic separates step-size/boundary effects, epsilon/local-linearity effects, direction rotation, solver/mode coupling, ray/path quality, and spectral structure.
+- The current minimal NS2D run tests the smaller-epsilon part first with `eps4`, `eps2`, `eps1` over `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_w`.
+
+Inference:
+- These experiments do not prove a global theorem, but they can falsify or support the specific explanations for why Burgers and NS2D show different optimizer rankings.
+
+Remaining work:
+- After the current minimal sweep finishes, compute boundary-matched loss, direction-stability/rotation diagnostics, and compare against existing Burgers records.
+
+## 2026-05-23 - Old NS2D Adam-PGD curves versus current core4 curve interpretation
+
+Status: code/figure interpretation only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `2D_NS_FNO2d_recurrent/perturbation_methods/PGD_attack_adam_batch_adaptive.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`
+- `docs/ns2d_old_adam_pgd_vs_core4_curve_difference_20260523.md`
+
+Observed evidence:
+- Old Adam-PGD code uses Adam state `m`, `v`, and update direction `m_hat / (sqrt(v_hat) + adam_eps)` before L2 normalization/projection.
+- Current core4 methods use explicit `raw_add`, `raw_replace`, `steepest_add`, and `steepest_replace` update rules.
+- Old code records `F.mse_loss(..., reduction="sum")`; current core4 true loss records q-norm final-frame error.
+- Old figures compare `mode_spec` strings for one sample; current summaries compare optimizer methods across explicit loss roles and often 10 samples.
+
+Inference:
+- The old Adam-PGD curves are not directly comparable to current core4 optimizer-ranking curves.
+- Major expected causes of different shapes are Adam preconditioning, loss scale/definition, mode-spec axis versus optimizer axis, single-sample variance, epsilon/alpha ratio, A/D/W target semantics, and possibly checkpoint/data differences.
+
+Remaining work:
+- If needed, implement an apples-to-apples Adam-PGD baseline inside the current core4 framework with the same checkpoint, indices, true-loss metric, epsilon/alpha, and loss/mode mapping.
+
+## 2026-05-23 - Non-Adam historical NS2D PGD curves versus current core4 interpretation
+
+Status: figure/code-record interpretation only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ray_profile_adam_pgd_debug_and_data_record_20260516.md`
+- `docs/ns2d_old_adam_pgd_vs_core4_curve_difference_20260523.md`
+- User-provided non-Adam `Attack Comparison - Parameters` figures.
+
+Observed evidence:
+- The non-Adam historical figures compare labels such as `approximated`, `constant1to9`, `detached1to5`, `detached1to9`, `detached5to9`, and `withsolver` for `idx: 1`.
+- Existing historical records contain normal-PGD final losses for comparable labels and parameters.
+- Old parameters use alpha/epsilon ratios that differ substantially from the current core4 paired settings.
+
+Inference:
+- Even without Adam, these historical curves are not directly comparable to current core4 optimizer-ranking curves because they compare mode/objective variants for one sample, while current core4 compares optimizer methods under explicit loss/mode blocks and usually 10-sample summaries.
+- Single-sample variance, loss-scale differences, ADW target semantics, alpha/epsilon boundary timing, possible checkpoint/data differences, and old-code-path risks can all make the curves look different.
+
+Remaining work:
+- If needed, reproduce the old ordinary-PGD setting inside current core4 with the same checkpoint, same metric, same sample, and same alpha/epsilon before drawing optimizer-ranking conclusions from it.
+
+## 2026-05-23 - Wendy/Burgers attack loss definition check
+
+Status: code inspection and record update only. No solver call, model inference, attack step, JAX import, PyTorch import, plotting, or GPU computation was started.
+
+Source files / evidence:
+- `tools/run_batch_three_loss_loss_only.py`
+- `tools/run_loss3_direction_proposal_ablation.py`
+- `run_three_loss_objective_attack.py`
+- `docs/burgers_attack_loss_definitions_20260523.md`
+
+Observed evidence:
+- Burgers raw losses are `loss1 = ||F(x+delta)-F(x)||_q`, `loss2 = ||F(x+delta)-G(x)||_q`, and `loss3 = ||F(x+delta)-G(x+delta)||_q`.
+- The usual `q=2` setting is an L2 norm over each sample's output tensor, not squared MSE sum.
+- The objective variants are `original`, `increment_ratio`, and `regularized`.
+- The batched script sums per-sample objectives only to form one scalar for backpropagation.
+
+Inference:
+- The Wendy/Burgers core attack loss is norm-based and is more directly comparable to the current NS2D core4 q-norm attack than to the old NS2D `mse_loss(..., reduction="sum")` plotting path.
+
+Remaining work:
+- If an apples-to-apples historical comparison is needed, compare Burgers and NS2D using the same q-norm/MSE convention, checkpoint, epsilon/alpha, sample indices, and optimizer-method axis.
+
+## 2026-05-23 - Burgers loss curve reconstruction plan
+
+Status: reconstruction planning from source/artifact inspection only. No solver call, model inference, attack step, plotting run, JAX import, PyTorch import, or GPU computation was started.
+
+Source files / evidence:
+- `tools/plot_batch_three_loss_loss_only.py`
+- `tools/run_and_plot_batch_three_loss_loss_only.py`
+- `tools/plot_loss1_loss2_loss3_combined_core4_0to100.py`
+- `tools/plot_loss3_alpha_epsilon_core4_visuals.py`
+- `docs/burgers_loss_curve_reconstruction_plan_20260523.md`
+
+Observed evidence:
+- Previous-style Burgers three-loss curves can be regenerated from `loss_stats.csv` using `tools/plot_batch_three_loss_loss_only.py` if the raw root still exists.
+- If raw CSV/NPZ artifacts are missing, exact reconstruction requires rerunning `tools/run_and_plot_batch_three_loss_loss_only.py` with the original `config.json` values.
+- Local May-16 Burgers roots exist for small-epsilon and ray-profile experiments; the later `forensics/loss3_alpha_epsilon_core4_sweep_20260519/` root is not present locally.
+
+Inference:
+- Direct CPU-only replotting is preferred whenever old numeric artifacts exist. GPU rerun should be used only when the needed raw artifacts cannot be recovered from local disk, git, or R2.
+
+Remaining work:
+- Identify the exact historical figure/run the user wants, then either replot its existing root or recover/rerun the missing root with matched config.
+
+## 2026-05-23 - Historical 2D NS attack loss curve reconstruction plan
+
+Status: source/log/artifact inspection and record update only. No solver call, model inference, attack run, plotting run, JAX import, PyTorch import, or GPU computation was started.
+
+Source files / evidence:
+- `2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/all_attacks_results/viz_attack_results_short_pic.py`
+- `2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/all_attacks_results/logs/viz_attack_results_short_pic_9535570.out`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_*.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files/PGD_attack_with_solver_5.py`
+- `docs/ns2d_historical_attack_loss_curve_reconstruction_20260523.md`
+
+Observed evidence:
+- The user screenshots match the old non-Adam `Attack Comparison - Parameters` plotting script, not the newer core4 plotting path.
+- The old plotting script expects `pgd_attack_records_*.pkl` files in a local `pickle_files/` directory and writes `comparison_plots/*.png`.
+- For `approximated`, the script plots `surrogate_loss` by default; for other labels it plots `loss`.
+- Old logs list settings including `alpha=1.0, epsilon=13.1072`, `alpha=1.0, epsilon=39.3216`, `alpha=2.0, epsilon=26.2144`, `alpha=5.0, epsilon=13.1072`, and `alpha=5.0, epsilon=39.3216`, all with `norm=2`, `steps=100`, `idx=1`.
+- The required historical pickle files and generated PNGs are not currently present locally.
+
+Inference:
+- Exact curve reproduction is currently a data-recovery task first: restore the historical `pickle_files/` directory from R2/git/old machine, then rerun the plotting script CPU-only.
+- If the pickles cannot be recovered, exact reproduction requires rerunning the old attack generators with the original checkpoint, data preprocessing, and hardcoded settings.
+
+Remaining work:
+- Search R2 or other backups for `all_attacks_results/pickle_files/pgd_attack_records_norm2_alpha*_epsilon*_steps100_idx1_*.pkl` before considering a GPU rerun.
+
+## 2026-05-23 - Historical 2D NS raw attack data regeneration script identification
+
+Status: source/log/artifact inspection and record update only. No solver call, model inference, attack run, plotting run, PyTorch import, JAX import, or GPU computation was started.
+
+Source files / evidence:
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_approximated.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_constant1to9.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to5.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached1to9.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_detached5to9.py`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/old_files_2/PGD_attack_with_solver.py`
+- `docs/ns2d_historical_attack_loss_curve_reconstruction_20260523.md`
+
+Observed evidence:
+- The old plotting script only reads `pgd_attack_records_*.pkl`; it does not regenerate raw data.
+- The raw data generators are the `PGD_attack_*.py` scripts in `old_files_2/`.
+- Non-approximated raw records store per-step `x0`, model `output`, solver `truth`, `loss`, `gradient`, optional `numerical_gradient`, and boundary state.
+- The approximated raw records also store `surrogate_truth` and `surrogate_loss`.
+- Several old generator scripts currently have incomplete hardcoded `input_list` values relative to the five alpha/epsilon settings visible in the historical plots/logs.
+
+Inference:
+- Exact data restoration should first search for the historical pickle files in R2/old machine backups.
+- If the pickles are missing, data recreation requires rerunning or wrapping the old `PGD_attack_*.py` scripts with the exact historical checkpoint, dataset, `idx=1`, and five alpha/epsilon settings.
+- `PGD_attack_with_solver.py` may require output-name handling to match the old short `withsolver` plot label.
+
+Remaining work:
+- Do not run these GPU scripts until explicitly requested.
+- Before rerun, verify old checkpoint/data availability and patch/wrap the incomplete hardcoded parameter lists.
+
+## 2026-05-23 - NS2D old vs current loss curve smoothness explanation
+
+Status: reasoning and record update only. No solver call, model inference, attack run, plotting run, PyTorch import, JAX import, or GPU computation was started.
+
+Source files / evidence:
+- `docs/ns2d_old_vs_current_loss_curve_smoothness_20260523.md`
+- Prior inspection of `2D_NS_FNO2d_recurrent/perturbation_results/all_old_2/all_attacks_results/viz_attack_results_short_pic.py`
+- Prior inspection of old `PGD_attack_*.py` raw-data generators and current core4 records
+
+Observed evidence:
+- Historical curves compare old attack/mode labels for one index and are read from old `pgd_attack_records_*.pkl` files.
+- Current curves compare optimizer update rules and explicit true/surrogate loss blocks, often over multiple samples.
+- Old plotting uses `surrogate_loss` for `approximated` and `loss` for other labels.
+
+Inference:
+- Sum-vs-mean is only a constant scale change at fixed tensor size.
+- Squared-vs-unsquared can amplify spikes but is unlikely to be the sole reason for jagged current curves.
+- More likely causes are aggressive alpha/epsilon boundary dynamics, projection, discontinuous replacement updates, true-loss/surrogate-objective mismatch, multi-sample heterogeneity, and finite-radius nonlinear recurrent NS2D dynamics.
+
+Remaining work:
+- Verify by replotting the same saved current trajectories with old MSE-sum metric, replotting old pickle trajectories with current q-norm metric if recovered, and comparing objective-vs-true-loss curves with boundary markers and angle diagnostics.
+
+## 2026-05-23 - Recent NS2D run data timestamp audit
+
+Status: filesystem/log/process inspection and record update only. No solver call,
+model inference, attack run, plotting run, PyTorch import, JAX import, or GPU
+computation was started by this audit.
+
+Source files / evidence:
+- `docs/recent_run_data_timestamp_audit_20260523.md`
+- `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_minimal_mechanism_sweep_20260523.sh`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC/nohup_minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC.log`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/nohup_pair_outer_20260522_055312_UTC.log`
+- `find`, `stat`, `pgrep`, and `nvidia-smi` command outputs from the local workspace at 2026-05-23 21:56-21:57 UTC
+
+Output files / inspected paths:
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps16_alpha5`
+- `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/mode_wwwwwwwwww_p2_q2_20260521_212630_UTC/batch_0000_0005/loss2/raw_replace/.final_delta_and_metrics.npz.O9aKgA`
+
+Key settings observed from the minimal mechanism sweep log:
+- `indices=0,1,2,3,4,5,6,7,8,9`; `attack_batch_size=10`; `steps=100`
+- `methods=raw_add raw_replace steepest_add steepest_replace`
+- `solver_remat=chunk`; `solver_remat_chunk_steps=20`
+- `xla_preallocate=false`; `xla_mem_fraction=0.35`
+- checkpoint `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`
+- dictionary `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`
+
+Key metrics:
+- Audit time was 2026-05-23 21:56:36 UTC; the 12-hour cutoff was 2026-05-23 09:56:36 UTC.
+- Observed from `find`: 299 regular files outside `.git` had mtimes within the last 12 hours.
+- Observed from `du -sh`: the minimal mechanism sweep tree is 5.3G; the full ADW `eps16_alpha5` tree is 2.3G.
+- Minimal mechanism sweep completed seven segments between 2026-05-23 11:14:14 and 20:10:35 UTC; the completed portion spans about 8:56:21.
+- The eighth minimal segment, `eps1_alpha0p3125` loss2 `all_a_target_w`, started at 2026-05-23 20:10:35 UTC but only has a manifest and no completion evidence.
+- The full ADW run produced `eps16_alpha5` loss3 `all_w` files finishing at 2026-05-23 10:04:21 UTC; the following `all_d_target_w` segment only has a manifest.
+- Observed from `pgrep` and current `nvidia-smi`: no matching attack process and no GPU compute process were running at inspection time.
+- Observed from `git status --short`: many tracked experiment artifacts are deleted locally, and the current NS2D attack result tree is untracked.
+
+Conclusion:
+- Observed evidence says yes: current local run data was created or modified in the past 12 hours.
+- Inference from `stat`: some local inode birth/ctime values around 2026-05-23 21:26-21:47 UTC likely reflect local restoration/copying with preserved mtimes, so logs and mtimes are the stronger evidence for actual experiment run time.
+- Inference from logs/process checks: the newest minimal mechanism sweep is not currently running and appears incomplete after starting the `eps1_alpha0p3125` loss2 segment.
+
+Remaining work:
+- Decide whether to resume/rerun the incomplete `eps1_alpha0p3125` loss2 and loss3 minimal mechanism segments.
+- Investigate the hidden temp-looking `.final_delta_and_metrics.npz.O9aKgA` file if exact cleanup/provenance is needed.
+- Do not interpret directory-only mtime changes or deleted tracked artifacts as completed current run results without matching regular files or logs.
+
+Follow-up after user clarified cross-instance copy, 2026-05-23 22:11 UTC:
+- Observed current repository size: `40G`; `2D_NS_FNO2d_recurrent` accounts for `39G`.
+- Observed current `ns2d_recurrent_core4_attack` regular-file total: 1335 files, 18.79 GiB.
+- Observed first-level result sizes: `full_adw_b10_pair_outer_baseline_first_20260522` is `13G`; `minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC` is `5.3G`; `full_adw_b10_eps_aggressive_20260522` is `574M`; `full_adw_b10_eps32_alpha1_20260522` is `32M`.
+- Observed counts under `ns2d_recurrent_core4_attack`: 196 `summary.json` files and 68 `manifest.json` files; nested older per-method summaries mean these counts are not one-to-one completed run roots.
+- Observed `nvidia-smi`: no GPU compute process at 2026-05-23 22:11 UTC.
+- Observed process-name-only scan: no obvious `rsync`, `scp`, `sftp`, `rclone`, `tar`, `cp`, `attack`, or `run_ns2d` process name; full command lines were intentionally not printed.
+- Observed `du` produced several `cannot access` errors while walking the tree, so current size readings may be a moving snapshot or reflect incomplete copy/restoration.
+- Inference: current local evidence supports incomplete transfer/partial restoration as a real possibility; the new instance alone cannot prove the old instance's exact inactive time or prove that old-instance data after 2026-05-23 20:10:47 UTC never existed.
+
+Copy-state snapshot at 2026-05-23 22:30 UTC:
+- Observed `ns2d_recurrent_core4_attack` unchanged from the 22:11 UTC snapshot: 18.79 GiB, 1335 regular files.
+- Observed core attack-result ctimes around 2026-05-23 22:09:40-22:09:55 UTC, indicating those files were locally copied/restored then while preserving older mtimes.
+- Observed whole repository size increased to about `54G`, up from the earlier `40G` snapshot.
+- Observed recent ctime activity in `2D_NS_FNO2d_recurrent/saved_models/2D/`, including large checkpoint files.
+- Observed temporary checkpoint `.../modes64_modes64_width60_epochs1_Tin10_T10_recurrent_pytorch_20260521_084653_UTC/checkpoints/.latest.pt.4BBt9s` grew from 430,702,592 bytes to 432,275,456 bytes during inspection.
+- Inference: the Vast copy is still active, currently writing saved-model checkpoint artifacts rather than growing the core attack-result tree. Current local data remains an incomplete transfer snapshot.
+
+
+## Recent Run Data Timestamp Audit - 2026-05-23 22:48 UTC
+
+- Date/status: 2026-05-23 22:50:26 UTC; read-only timestamp audit continued while Vast copy/restoration appeared active.
+- Source files inspected: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack`, broad repository file tree excluding `.git`, and previously observed `2D_NS_FNO2d_recurrent/saved_models/2D` copy activity.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Key settings: used file `mtime` window of last 720 minutes from `2026-05-23 22:48:50 UTC`; cutoff `2026-05-23 10:48:50 UTC`; no experiment execution.
+- Observed evidence: broad repo scan found 573 file entries with mtime in the last 12 hours; core recurrent NS2D attack-result scan found 282 such files. The core recent files were mainly under `minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC`, with observed mtimes from about `2026-05-23 11:14:21 UTC` to `2026-05-23 20:10:47 UTC`.
+- Observed evidence: the latest core-tree file in this mtime window was a manifest under `eps1_alpha0p3125/mode_aaaaaaaaaw_p2_q2_20260523_201037_UTC`, mtime `2026-05-23 20:10:47 UTC`; latest completed eps1/loss1 all-w summary/log mtimes were about `20:10:34` to `20:10:35 UTC`.
+- Inference: if Vast preserved mtimes during copy, these mtimes are evidence of source-side last modification/write-completion time; they are not strict creation/birth times. Earlier ctime evidence showed local copy/restoration around `2026-05-23 22:09 UTC`, distinct from older preserved mtimes.
+- Remaining work: when copy completes, rerun a frozen inventory/count and compare expected old-instance output tree sizes/counts against the new instance. Current live scans may miss paths that were moving during traversal.
+
+
+## Recent Run Data Timestamp Audit - 2026-05-23 22:52 UTC
+
+- Date/status: 2026-05-23 22:55:07 UTC; read-only filesystem birth/ctime/mtime inspection using the user's stated local time `2026-05-23 17:52`, treated as UTC-5 because the instance clock was about `2026-05-23 22:53 UTC`.
+- Source files inspected: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack`, `2D_NS_FNO2d_recurrent/saved_models/2D`, and repo tree excluding `.git`.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Key settings: mtime windows of 12h, 15h, 18h, and 24h from local `17:52` / UTC `22:52`; no experiment execution.
+- Observed evidence: core attack result counts by mtime window were 282 files / 5,612,290,523 bytes for 12h, 336 files / 6,618,470,301 bytes for 15h, 434 files / 8,624,114,936 bytes for 18h, and 554 files / 11,032,340,105 bytes for 24h.
+- Observed evidence: in the core attack tree, 12h mtime range was local `06:14:21` to `15:10:47`; 15h mtime range was local `02:59:13` to `15:10:47`. The corresponding local ctime/birth ranges were roughly `16:47` to `16:55` for 12h and `16:28` to `16:55` for 15h.
+- Observed evidence: `saved_models_2D` had zero files whose mtimes were inside these windows in this scan, but 49 files disappeared during walking; repo-wide scan also saw 627 missing-during-walk events, consistent with active copy/restoration outside the stable core attack tree.
+- Inference: copied files' birth/ctime show local copy/create time on the new instance, while preserved mtime is the best available evidence for old-instance last write/modify time. These data do not prove strict original creation time on the old instance.
+- Remaining work: after copy quiesces, rerun the same mtime/birth/ctime inventory and compare against source expectations; avoid relying on live-scan counts for changing paths such as `saved_models/2D`.
+
+
+## Recent Run Data Timestamp Audit - 2026-05-23 Exact Hourly Mtime Buckets
+
+- Date/status: 2026-05-23 22:59:07 UTC; read-only exact hourly mtime bucket inspection for the stable core attack result tree.
+- Source files inspected: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack`.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Key settings: user local time treated as `2026-05-23 17:52 UTC-5`; exact windows of 12h, 15h, 18h, and 24h; membership by file mtime only.
+- Observed evidence: scan had `MISSING_DURING_WALK=0`. Exact 12h window contained 282 files / 5.227 GiB with local mtime range `06:14:21` to `15:10:47`. Exact 15h window contained 336 files / 6.164 GiB with local mtime range `02:59:13` to `15:10:47`. Exact 18h window contained 434 files / 8.032 GiB. Exact 24h window contained 554 files / 10.275 GiB.
+- Observed evidence: within the 12h window, per-hour local mtime file counts were 06:00=19, 07:00=49, 08:00=22, 09:00=18, 10:00=31, 11:00=62, 12:00=18, 13:00=22, 14:00=27, 15:00=14.
+- Inference: preserved mtimes show source-side writes/modifications in the core attack result tree through local `15:10:47`; they do not prove source process liveness past the last mtime.
+- Remaining work: after copy stops, repeat inventory for all result and saved model paths.
+
+
+## Vast Copy Error/Restart Snapshot - 2026-05-23
+
+- Date/status: 2026-05-23 23:13:20 UTC; read-only copy-state inspection after user reported `error receiving copies` near 79G/81G and then restarted receiving copies.
+- Source files inspected: workspace size, `2D_NS_FNO2d_recurrent`, `perturbation_results`, `saved_models`, `saved_models_expanded`.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: `df` showed `79G` used on the destination filesystem. Quiet scan measured workspace contents at 75.95 GiB; `2D_NS_FNO2d_recurrent` at 68.37 GiB; `perturbation_results` at 18.80 GiB with zero missing-during-scan; `saved_models` at 29.02 GiB with 49 missing-during-scan; `saved_models_expanded` at 0 bytes with 48 missing-during-scan. A 20-second repeat scan showed no growth.
+- Inference: most of the partial copy remains present after the Vast receive error. Current uncertainty is concentrated in changing/inconsistent paths outside the stable core attack results, especially model-related directories. A new receiving-copy status does not by itself prove active local byte growth.
+- Remaining work: after the Vast job finishes or errors again, rerun full inventory and compare sizes/counts for critical result/model directories.
+
+
+## Vast Copy Speed Snapshot - 2026-05-23
+
+- Date/status: 2026-05-23 23:15:28 UTC; read-only copy-speed inspection.
+- Source files inspected: filesystem usage, network counters, workspace and major copied directories.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: a 30-second destination-side sample showed 0 bytes of disk/workspace/directory growth and only 109,793 bytes of network RX, about 0.004 MB/s / 0.029 Mbps.
+- Observed evidence: current destination disk used was 78.273 GiB; workspace file contents were 75.955 GiB.
+- Inference: if 81G took about 2 hours, the average transfer rate was roughly 11.25 MB/s for decimal GB, or 11.52 MiB/s for GiB, about 90-97 Mbps. Current sample showed the receive was effectively stalled or idle, despite any UI `receiving copies` status.
+- Remaining work: if the Vast UI still claims active receiving, repeat a longer sample or inspect Vast-side copy status/logs from the control plane; locally there was no measured byte growth in this sample.
+
+
+## 2D_NS_FNO2d_recurrent Size Distribution - 2026-05-23
+
+- Date/status: 2026-05-23 23:19:24 UTC; read-only size distribution inspection.
+- Source files inspected: `/workspace/NeuralOperatorRobustness2/2D_NS_FNO2d_recurrent`.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: `2D_NS_FNO2d_recurrent` measured 68.371 GiB / 3,502 files. Top contributors were `saved_models` 29.02 GiB, `perturbation_results` 18.80 GiB, `datasets` 18.08 GiB, and `visualizations` 1.83 GiB.
+- Observed evidence: `saved_models/2D` was dominated by recurrent PyTorch model directories from 20260521: three directories around 8.79-8.80 GiB each and one 2.64 GiB directory. The large files were repeated checkpoint files (`latest.pt`, `best.pt`, `final.pt`) around 2.64 GiB each plus `.pth` files around 900 MiB each.
+- Observed evidence: `datasets` was dominated by a 10.74 GiB dictionary `.pt` and a 6.18 GiB train `.pt`. `perturbation_results` was dominated by `ns2d_recurrent_core4_attack` 18.79 GiB, with `.npz` trace files totaling 18.73 GiB.
+- Inference: the 68 GiB footprint is explained by datasets, model checkpoints, and attack traces; `saved_models` is large mainly due to repeated full checkpoint snapshots, not logs.
+- Remaining work: after copy finishes, rerun this distribution scan to confirm no additional directories such as `saved_models_expanded` remain missing.
+
+
+## R2 Snapshot Upload Preparation - 2026-05-23
+
+- Date/status: 2026-05-23 23:24:20 UTC; preparing R2 upload after Vast copy instability.
+- Source files planned: `/workspace/NeuralOperatorRobustness2`, excluding `.git`, virtualenv/cache, `__pycache__`, and `*.pyc`.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`; remote prefix `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Observed evidence: prior size scan measured workspace contents around 75.955 GiB and `2D_NS_FNO2d_recurrent` around 68.371 GiB, with partial-copy inconsistency in model-related directories.
+- Inference: use non-deleting `rclone copy` to preserve a destination snapshot without risking remote deletions from local partial state. Avoid GitHub commit/push from the current dirty partial-copy tree unless explicitly reviewed later.
+- Remaining work: test R2 access, start upload, and monitor transfer logs/speed.
+
+
+## R2 Upload Started - 2026-05-23
+
+- Date/status: 2026-05-23 23:32:40 UTC; detached Cloudflare R2 upload started and verified active.
+- Source files: `/workspace/NeuralOperatorRobustness2`, excluding `.git`, `adv_robust`, `__pycache__`, `*.pyc`, and local caches.
+- Destination: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected` on Cloudflare R2.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`; runtime log `/tmp/nor2_rclone/r2_upload_20260523.log`.
+- Observed evidence: GitHub `vast-ai` fetch succeeded, and `git rev-list --left-right --count HEAD...FETCH_HEAD` returned `0 0`, so local commit and fetched remote branch matched. The worktree remained dirty due partial-copy state; no git commit/push was made.
+- Observed evidence: R2 prefix was reachable. Detached rclone process PID `21646` was alive. A 60-second network sample showed about 60.59 MB/s / 484.69 Mbps TX, and the rclone log showed new object copies plus mtime updates for existing objects.
+- Inference: R2 upload is actively transferring and is currently much faster than the earlier Vast instance-copy average. Because `copy` is used instead of `sync`, incomplete local paths should not delete remote data.
+- Remaining work: monitor PID/log until completion; after completion, run `rclone check` or at least `rclone size` on the remote prefix, then remove any remaining temporary credential files.
+
+
+## R2 Upload Completion Check - 2026-05-23
+
+- Date/status: 2026-05-23 23:37:12 UTC; R2 upload completion checked.
+- Source files inspected: `/tmp/nor2_rclone/r2_upload_20260523.log`, R2 prefix `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Output/record files: `docs/recent_run_data_timestamp_audit_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: the detached rclone copy process was no longer running; the log showed `6.311 GiB / 6.311 GiB, 100%, 47.229 MiB/s, ETA 0s`; no `error`, `failed`, or `fatal` lines were found in the log.
+- Observed evidence: `rclone size` on the remote prefix reported 67,139 objects totaling 88.550 GiB / 95,079,338,491 bytes.
+- Inference: the R2 upload job completed successfully for the current local snapshot delta. Since `copy` was used instead of `sync`, the remote prefix may contain older extra objects in addition to the current local snapshot, which is preferable while the local Vast copy state may be incomplete.
+- Remaining work: if an exact mirror is needed later, run a deliberate `rclone check`/inventory comparison after the local copy state is stable; do not run deleting sync from the current partial-copy tree without review.
+
+
+## Prior Burgers vs NS2D Optimizer Plan Inventory - 2026-05-23
+
+- Date/status: 2026-05-23 23:41:08 UTC; read-only search and git-object inspection for prior optimizer-mechanism plan/results.
+- Source files inspected: local docs, git `HEAD` docs objects, `EXPERIMENT_LEDGER.md`, and candidate result directories by filename/content search.
+- Output/record files: `docs/prior_burgers_ns2d_optimizer_plan_inventory_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: recovered the main plan `docs/burgers_vs_ns2d_unified_optimizer_mechanism_experiment_plan_20260523.md` from git `HEAD`; recovered NS2D result summary `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`; recovered follow-up plan `docs/ns2d_optimizer_validation_next_experiments_20260523.md`; recovered coverage audit `docs/burgers_vs_ns2d_unified_experiment_coverage_20260523.md`; read local recap/validation logic docs currently present in the working tree.
+- Observed evidence: NS2D offline diagnostics recorded 45 completed method directories, 180 boundary-matched true-loss rows, 405 early-to-final cosine rows, and 4545 gradient-rotation rows. Key result: at `eps32_alpha10`, `steepest_add` beat replacement methods at 100%-boundary true loss for main `loss1/all_w` and `loss3/all_w` cases.
+- Observed evidence: Burgers summaries recorded generalized-power/GPI replacement as the fastest early optimizer; k95 for loss1/loss2 was 3/2 for generalized power versus 26/24 for PGD and 27/27 for LP-steepest PGD. Caveat: Burgers docs framed this as early-speed/boundary-direction strength rather than unconditional final-loss dominance.
+- Inference: the previous experiment plan and processed result story are recoverable; some documents are missing in the current working tree but present in git objects. The next mechanism validation should prioritize missing smaller-epsilon real NS2D minimal cases and offline diagnostics, not a full rerun.
+- Remaining work: restore selected missing docs from git/R2 if the user wants them physically present in `docs/`; avoid destructive checkout/sync while the partial-copy state is still dirty.
+
+
+## Prior Plan Worktree-vs-Git Confirmation - 2026-05-23
+
+- Date/status: 2026-05-23 23:43:00 UTC; read-only confirmation of whether key recovered Markdown files are missing only from the working tree or also absent from git.
+- Source files inspected: `docs/burgers_vs_ns2d_unified_optimizer_mechanism_experiment_plan_20260523.md`, `docs/ns2d_optimizer_validation_offline_diagnostics_20260523.md`, `docs/ns2d_optimizer_validation_next_experiments_20260523.md`, `docs/burgers_vs_ns2d_unified_experiment_coverage_20260523.md`.
+- Output/record files: `docs/prior_burgers_ns2d_optimizer_plan_inventory_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: `git status --short -- <paths>` marked all four files as deleted in the current working tree. `ls -l <paths>` reported all four paths absent from the current filesystem. `git ls-tree -r HEAD -- <paths>` found all four as `100644 blob` entries in `HEAD`.
+- Inference: the files are not permanently lost; they are missing from the current local filesystem copy but still recoverable from git `HEAD` objects.
+- Remaining work: restore selected docs from `HEAD` or R2 once the user asks for physical restoration; do not interpret the current absence as experiment result loss.
+
+
+## Deleted Tracked Files and GitHub Branch Cache Check - 2026-05-23
+
+- Date/status: 2026-05-23 23:47:00 UTC; read-only diagnosis of many `D` worktree entries and whether key Markdown files remain represented in the GitHub branch cache.
+- Source files inspected: `git status --short`, `git diff --name-only --diff-filter=D`, `refs/remotes/origin/vast-ai`, and key prior-plan Markdown paths under `docs/`.
+- Output/record files: `docs/prior_burgers_ns2d_optimizer_plan_inventory_20260523.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: `git status --short` counted `D 2225`, `M 1`, and `?? 37`. Deleted tracked files were concentrated in `forensics` 892, `2D_NS_FNO2d_recurrent` 266, `docs` 248, `2D_NS_old` 231, `benchmark_results` 178, `fno_training_runs` 144, and `tools` 86.
+- Observed evidence: live `git ls-remote --heads origin vast-ai` could not authenticate to GitHub from this machine. The cached remote-tracking ref `origin/vast-ai` exists at `64392e24d43a49909ddcdbaa29d71fc43017769a`, and `git rev-list --left-right --count HEAD...origin/vast-ai` returned `0 0`.
+- Observed evidence: `git ls-tree -r origin/vast-ai -- <key-doc-paths>` found the key optimizer-plan/result Markdown files as committed blobs.
+- Inference: the current workspace is a partial or damaged working tree, not evidence that the GitHub branch lost the tracked files. A live GitHub confirmation requires credentials, but the last fetched `origin/vast-ai` cache matches `HEAD` and contains the key Markdown files.
+- Remaining work: restore tracked files from git/R2 only after deciding whether to preserve current partial-copy untracked outputs; avoid staging/deleting the `D` state accidentally.
+
+
+## Deleted Tracked File Recovery Attempt and Clean Worktree - 2026-05-23
+
+- Date/status: 2026-05-23 23:56:00 UTC; attempted to recover deleted tracked files after the current worktree showed 2225 `D` entries.
+- Source files inspected/used: git `HEAD` at `64392e24d43a49909ddcdbaa29d71fc43017769a`, current deleted tracked-file list, key prior-plan Markdown paths, and `/workspace/NeuralOperatorRobustness2_gitclean`.
+- Output/record files: `docs/prior_burgers_ns2d_optimizer_plan_inventory_20260523.md`, `EXPERIMENT_LEDGER.md`, `/tmp/restore_deleted_from_head_20260523.log`.
+- Observed evidence: in-place `git restore` failed with filesystem `Stale file handle` errors. A manual blob restore from git `HEAD` attempted 2225 deleted tracked paths and restored 0; all 2225 failed with `OSError: [Errno 116] Stale file handle` at original paths.
+- Observed evidence: probe writes could create a brand-new filename in `docs`, but recreating a deleted tracked filename in `docs` failed with `Stale file handle`; this indicates stale current working-tree directory entries rather than absent git blobs.
+- Observed evidence: `git worktree add --detach /workspace/NeuralOperatorRobustness2_gitclean HEAD` completed and checked out 4762 tracked files. The clean worktree has zero deleted tracked files and contains the key Markdown files under `docs/`. Its size is about 1.4G.
+- Inference: the reliable recovery path is the clean worktree `/workspace/NeuralOperatorRobustness2_gitclean`; the original worktree should be treated as partial/stale and should not be used for commits until rebuilt or carefully merged.
+- Remaining work: if the user wants a single combined tree, decide whether to attach/copy selected data from the original partial tree or R2 into the clean worktree; avoid a blind deleting sync or `git add -A` from the stale original tree.
+
+
+
+## NS2D eps1 Missing Loss2/Loss3 Launch - 2026-05-24
+
+- Date/status: 2026-05-24 02:46 UTC; missing `eps1_alpha0p3125` `loss2/all_a_target_w` and `loss3/all_w` run launched and observed running on GPU.
+- Source files used: `/workspace/NeuralOperatorRobustness2/tools/run_ns2d_eps1_missing_loss2_loss3_20260524.sh`, `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`, `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`.
+- Output/record files: `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_024533_UTC/run.log`, `docs/ns2d_eps1_missing_loss2_loss3_run_status_20260524.md`, `EXPERIMENT_LEDGER.md`.
+- Key settings: `INDICES=0,1,2,3,4,5,6,7,8,9`, `ATTACK_BATCH_SIZE=10`, `STEPS=100`, `P_ORDER=2`, `Q_ORDER=2`, `METHODS=raw_add raw_replace steepest_add steepest_replace`, `EPSILON_ALPHA_PAIRS=1:0.3125`, `TRUE_LOSS_EVERY=1`, `FIXED_STEP=0.005`, `SOLVER_REMAT=chunk`, `SOLVER_REMAT_CHUNK_STEPS=20`, `DICTIONARY_CHUNK_SIZE=32`, final-state outputs and step-sample outputs enabled.
+- Observed evidence: initial attempts did not reach the attack because a `pgrep` guard matched the launcher itself, then the current venv Python symlink was broken, and non-detached background jobs were killed with only partial logs. Restored `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python3.12` as a symlink to `/usr/bin/python3.12`.
+- Observed evidence: GPU sanity check passed in the run log with PyTorch `2.8.0+cu126`, CUDA `12.6`, `torch.cuda.is_available()=True`, device `NVIDIA A100-SXM4-80GB` capability `(8, 0)`, arch list including `sm_80`, and JAX `0.10.0` backend `gpu [CudaDevice(id=0)]`.
+- Observed evidence: after detached launch via `setsid -f`, active processes included `attack_ns2d_recurrent_core4.py` with `--loss-types loss2 --mode-spec all_a_target_w`, and live `nvidia-smi` showed about `45029 MiB / 81920 MiB` and `99%` GPU utilization.
+- Inference: the missing eps1 experiment is genuinely running on GPU, currently in the `loss2/all_a_target_w` stage; final numeric results are not yet available.
+- Remaining work: monitor `run.log` until both `loss2/all_a_target_w` and `loss3/all_w` finish, then regenerate the eps1-inclusive tables/heatmaps and update the result docs from the new output directory.
+
+
+## Delta Fourier Spectrum Analysis - 2026-05-24
+
+- Date/status: 2026-05-24; offline Fourier-spectrum analysis completed for saved NS2D perturbation deltas and available Burgers loss3-variant deltas.
+- Source files used: `tools/analyze_delta_fourier_spectrum_20260524.py`; NS2D saved outputs under `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522` and `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC`; Burgers saved delta files under `/workspace/NeuralOperatorRobustness2_gitclean/forensics/loss3_ray_profile_*_20260516/.../deltas.npz`.
+- Output/record files: `docs/delta_fourier_spectrum_analysis_20260524.md`, `docs/delta_fourier_spectrum_20260524/ns2d_delta_fourier_per_sample.csv`, `docs/delta_fourier_spectrum_20260524/ns2d_delta_fourier_by_case.csv`, `docs/delta_fourier_spectrum_20260524/ns2d_delta_fourier_by_loss_mode.csv`, `docs/delta_fourier_spectrum_20260524/burgers_delta_fourier_per_sample.csv`, `docs/delta_fourier_spectrum_20260524/burgers_delta_fourier_by_key.csv`, and PNG figures under `docs/delta_fourier_spectrum_20260524/figures/`.
+- Key settings: no model/solver/GPU computation; only NumPy FFT on saved final `delta`; band fractions computed after subtracting the spatial mean; primary detail metric `detail_gt0.04` is energy with normalized frequency radius `r > 0.04`; strict `high_frac` remains `r > 0.30`.
+- Observed evidence: NS2D analyzed 96 case rows and 960 sample rows. Aggregated `detail_gt0.04` is `0.2547` for `loss3/all_w`, `0.0373` for `loss1/all_w`, and `0.0193` for `loss2/all_a_target_w`; spectral centroid/r90 show the same ordering.
+- Observed evidence: among NS2D loss3 modes, `all_w` and `d1_5_w6_9_target_w` have the largest detail tails and largest final true losses among saved loss3 modes, while `all_d_target_w`, `w1_5_d6_9_target_w`, and `a1_5_d6_9_target_w` are lower-frequency and usually lower-loss.
+- Observed evidence: local Burgers raw final delta artifacts were found for loss3-variant forensic runs only; no paired Burgers `loss1`/`loss2`/`loss3` final-delta sweep artifacts were found locally.
+- Inference: the NS2D data supports the user's hypothesis in a precise form: successful `loss3` does not use extreme Nyquist-high modes, but it does push much more energy into a higher mid/high-frequency detail tail, matching the visually finer perturbation structure. For Burgers, current evidence can compare loss3 variants only; proving a loss1/loss2/loss3 frequency split requires rerunning or recovering the paired final deltas.
+- Remaining work: after the running `eps1_missing_loss2_loss3` job finishes, rerun this FFT script including the new eps1 loss2/loss3 outputs; optionally run/recover paired Burgers loss1/loss2/loss3 attacks with final delta saving enabled.
+
+
+## Progress Check - 2026-05-24 03:01 UTC
+
+Observed from process, GPU, run log, and output-file mtimes: the detached `eps1_missing_loss2_loss3_b10_20260524_024533_UTC` job is still running on GPU. Active Python process is `attack_ns2d_recurrent_core4.py` with `--loss-types loss2 --mode-spec all_a_target_w`. Live `nvidia-smi` showed A100 memory about `45029 MiB / 81920 MiB` and GPU utilization `99%`.
+
+Observed completed outputs: `loss2/raw_add` finished with `summary.json` at about `2026-05-24T02:53:40Z` and runtime `470.998 s`; `loss2/raw_replace` finished with `summary.json` at about `2026-05-24T03:00:18Z` and runtime `398.125 s`. No `steepest_add` or `steepest_replace` summary existed at the check time, so the current stage is inferred to be `loss2/steepest_add`.
+
+Inference from current and historical runtimes: the remaining `loss2` methods should take roughly `13-16 min`; the subsequent `loss3/all_w` four-method block should take roughly `2.0-2.1 h` based on prior `loss3/all_w` summaries around `1837-1876 s` per optimizer. Estimated total remaining time at `03:01 UTC` is about `2 h 15 min` to `2 h 25 min`, with an estimated completion around `05:15-05:30 UTC` if there is no OOM or stall.
+
+
+## Delta Radial Fourier Mean-Std Spectrum Plots - 2026-05-24
+
+- Date/status: 2026-05-24; offline radial Fourier spectrum plots with mean curves and +/- 1 standard deviation bands completed for saved perturbation deltas.
+- Source files used: `tools/plot_delta_radial_spectra_20260524.py`; NS2D saved `final_state_outputs.npz` files under `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522` and `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/minimal_mechanism_eps4_eps2_eps1_b10_20260523_111410_UTC`; Burgers saved `deltas.npz` files under `/workspace/NeuralOperatorRobustness2_gitclean/forensics/loss3_ray_profile_*_20260516/.../deltas.npz`.
+- Output/record files: `docs/delta_radial_spectra_mean_std_20260524.md`, `docs/delta_radial_spectra_mean_std_20260524/ns2d_radial_spectrum_summary_by_case.csv`, `docs/delta_radial_spectra_mean_std_20260524/ns2d_radial_spectrum_summary_by_loss_mode.csv`, `docs/delta_radial_spectra_mean_std_20260524/burgers_radial_spectrum_summary.csv`, and 66 PNG figures under `docs/delta_radial_spectra_mean_std_20260524/figures/`.
+- Key settings: offline NumPy FFT only; no model inference, solver rollout, attack updates, JAX, PyTorch autograd, or GPU work. Each figure uses normalized frequency magnitude `|k|` on the x-axis and normalized Fourier amplitude on the y-axis. Curves are means over saved sample spectra; translucent bands are +/- 1 sample standard deviation. For the main NS2D case-level figures, each curve is usually the 10 paired samples for one `epsilon x optimizer x loss/mode` setting.
+- Observed evidence: the run produced 96 NS2D case rows, 7 NS2D loss/mode aggregate rows, 12 Burgers saved-delta rows, and 66 PNG files; the PNG files were verified openable with PIL.
+- Observed evidence: NS2D aggregate `detail_gt0.04` is `0.2463` for `loss3/all_w`, `0.0352` for `loss1/all_w`, and `0.0182` for `loss2/all_a_target_w`; centroid/r90 are `0.0307/0.0656` for `loss3/all_w`, `0.0139/0.0260` for `loss1/all_w`, and `0.0105/0.0260` for `loss2/all_a_target_w`.
+- Observed evidence: among saved NS2D loss3 modes, `d1_5_w6_9_target_w` has the largest aggregate final true loss (`142.050`) and a high detail tail (`detail_gt0.04 = 0.2024`), while `loss3/all_w` has the largest aggregate detail tail (`0.2463`) and final true loss `115.303`.
+- Inference: the corrected wording is that higher NS2D final loss is associated with a higher mid/high-frequency detail tail, larger centroid, and larger r90 relative to loss1/loss2; it is not an extreme Nyquist-only effect, and the current plots show association rather than a complete causal proof.
+- Remaining work: rerun the radial-spectrum script after the active eps1 missing loss2/loss3 job finishes; recover or rerun paired Burgers `loss1`/`loss2`/`loss3` final-delta artifacts before claiming an equivalent Burgers frequency split.
+
+## Burgers Five-Row Overlay Delta/Spectrum Panels - 2026-05-24
+
+- Date/status: 2026-05-24; generated a follow-up corrected Burgers visualization after the user clarified that the three `loss1`/`loss2`/`loss3` final deltas should be overlaid in one row-2 axis, the three delta spectra should be overlaid in one row-2 axis, and the loss-specific rows should keep shared y-axis ranges by column.
+- GPU evidence: `docs/burgers_five_row_overlay_delta_spectrum_20260524/gpu_evidence.json` records the same verified GPU path used for Burgers saved-`x_adv` evaluation: NVIDIA A100-SXM4-80GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, compute capability `sm_80`, PyTorch arch list including `sm_80`, JAX backend `gpu`, JAX device `cuda:0`, and successful PyTorch/JAX sanity matmuls.
+- Source files used: restored `trajectory_samples.npz` files under `/workspace/NeuralOperatorRobustness2_gitclean/forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/fno_nu0p001_eps4_alpha0p4_batch100_steps100_p2_q2/*/*/` and `/workspace/NeuralOperatorRobustness2_gitclean/forensics/loss3_alpha_epsilon_core4_baseline_giftrace_20260520/fno_nu0p001_eps4_alpha0p4_batch100_steps300_p2_q2/*/`; established Burgers FNO checkpoint and JAX solver from the clean worktree code path.
+- Output/record files: `tools/plot_burgers_five_row_overlay_delta_spectrum_20260524.py`, `docs/burgers_five_row_overlay_delta_spectrum_20260524.md`, `docs/burgers_five_row_overlay_delta_spectrum_20260524/burgers_five_row_overlay_delta_spectrum_index.csv`, `docs/burgers_five_row_overlay_delta_spectrum_20260524/gpu_evidence.json`, and 16 PNG figures under `docs/burgers_five_row_overlay_delta_spectrum_20260524/figures/`.
+- Key layout: each PNG keeps five rows. Row 1 is the clean initial/model/solver/residual baseline. Row 2 overlays `loss1`/`loss2`/`loss3` final deltas in one axis and overlays their Fourier spectra in one log-scale axis, with text panels for top10 concentration, effective modes, residual-L2 changes, and dataset indices. Rows 3-5 are separate `loss1`, `loss2`, and `loss3` rows for perturbed initial, adversarial model output, adversarial solver output, model-solver residual, and per-loss metric text.
+- Observed evidence: all 16 PNG files were verified openable at `2957 x 2278`. The report/index record clean residual L2, adversarial residual L2, signed residual-L2 change, top10 Fourier concentration, and effective modes for each selected method/sample/loss.
+- Inference: this corrected layout is the preferred visual version for comparing Burgers loss1/loss2/loss3 perturbation structure, because the overlaid row-2 delta/spectrum panels make the low-frequency concentration versus broader loss3 spectrum directly comparable while the lower rows preserve separate loss-specific model/solver outputs.
+- Remaining work: older Burgers line-example directories are retained for provenance but should not be used as the main figure unless explicitly requested.
+
+
+
+## Burgers eps8 alpha0p4 R2 Artifact Check - 2026-05-24
+
+- Date/status: 2026-05-24; inspected Cloudflare R2 object names and small `config.json` files to answer whether Burgers `epsilon=8`, `alpha=0.4` data/results exist. No large data arrays were downloaded.
+- Source inspected: R2 bucket/prefix `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`; exact R2 paths `forensics/loss3_alpha_epsilon_core4_sweep_20260519/fno_nu0p001_eps8_alpha0p4_batch100_steps100_p2_q2/` and `forensics/loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520/fno_nu0p001_eps8_alpha0p4_batch100_steps300_p2_q2/`; R2 top-level listings for `forensics/loss1_loss2_core4_p2q2_baseline_marked_angles_20260521/` and `forensics/loss1_loss2_core4_p2q2_baseline_20260521/`.
+- Output/record files: `docs/burgers_eps8_alpha0p4_artifact_check_20260524.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: R2 contains the `loss3` steps100 path with 86 objects / 86,914,880 bytes; its `config.json` records `epsilon=8.0`, `alpha=0.4`, `steps=100`, `p=q=2`, batch 100, FNO Burgers `nu=0.001`, CUDA device, and methods `raw_add`, `raw_replace`, `steepest_add`, `steepest_replace`.
+- Observed evidence: R2 contains the `loss3` p2q2 steps300 path with 58 objects / 268,723,988 bytes; its `config.json` records `epsilon=8.0`, `alpha=0.4`, `steps=300`, `p=q=2`, batch 100, FNO Burgers `nu=0.001`, CUDA device, and the same four methods.
+- Observed evidence: the R2 `loss1_loss2_core4_p2q2_baseline_marked_angles_20260521` and `loss1_loss2_core4_p2q2_baseline_20260521` top-level listings showed only `eps4_alpha0p4` directories, not `eps8_alpha0p4`.
+- Inference: Burgers `eps8_alpha0p4` exists on R2 for `loss3` alpha/epsilon sweep artifacts, but there is not current R2 evidence of the same paired `loss1`/`loss2`/`loss3` baseline at `eps8_alpha0p4`.
+- Remaining work: recover the two R2 `loss3` directories if those artifacts are needed locally; rerun or recover a paired three-loss `eps8_alpha0p4` Burgers baseline if direct loss1/loss2/loss3 comparison is required.
+
+
+## NS2D eps160 alpha50 Steepest Add Seven-Target Launch Command - 2026-05-24
+
+- Date/status: 2026-05-24; prepared and verified a launch command for a new NS2D perturbation experiment. The experiment was not started by this record.
+- Source files inspected: `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`, `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, historical `summary.json` files under `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10`.
+- Output/record files: `tools/run_ns2d_eps160_alpha50_steepest_add_7targets_20260524.sh`, `docs/ns2d_eps160_alpha50_steepest_add_7targets_command_20260524.md`, `EXPERIMENT_LEDGER.md`.
+- Key settings: method `steepest_add` only; `EPSILON_ALPHA_PAIRS=160:50`; indices `0..9`; batch size `10`; steps `100`; `p=q=2`; final-state outputs and per-step sample outputs enabled; GPU preflight included in the launcher.
+- Target list: `loss1/all_w`, `loss2/all_a_target_w`, `loss3/all_w`, `loss3/all_d_target_w`, `loss3/w1_5_d6_9_target_w`, `loss3/d1_5_w6_9_target_w`, and `loss3/a1_5_d6_9_target_w`.
+- Observed evidence: current `nvidia-smi` reported `NVIDIA A100-SXM4-80GB`, `81920 MiB`, idle GPU utilization at the time of command preparation. Current worktree has executable `adv_robust/bin/python`, checkpoint file, and dictionary file present.
+- Observed runtime basis: prior `eps32_alpha10` `steepest_add` summaries for the same seven target classes summed to about `10,897 s = 3.03 h`; individual historical runtimes were about `1130 s` for loss1, `484 s` for loss2, and `1837-1876 s` for each loss3 mode.
+- Inference: because the new run keeps the same samples, steps, batch size, model/solver rollouts, and true-loss cadence, increasing epsilon/alpha to `160/50` should not materially change compute cost. Expected attack runtime is about `3.0 h`; with preflight, plotting, and verification, plan for `3.2-3.5 h` if no OOM or numerical failure occurs.
+- Remaining work: after the run finishes, point the NS2D plotting scripts at the new `RUN_TAG` output root and regenerate the same heatmap/spectrum/loss-curve figures; current plotting scripts are hardcoded to older run roots.
+
+## R2 Burgers Epsilon/Alpha Inventory - 2026-05-24
+
+- Date/status: 2026-05-24; inspected Cloudflare R2 directory listings to inventory Burgers-related artifact paths containing `epsilon`/`alpha` parameters. No large data arrays were downloaded for this inventory.
+- Source inspected: R2 bucket/prefix `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`; scanned prefixes `forensics/`, `results/`, `figures/`, and `1D_Burgers/`.
+- Output/record files: `docs/r2_burgers_epsilon_alpha_inventory_20260524.md`, `docs/r2_burgers_epsilon_alpha_inventory_20260524_unique_pairs.csv`, `docs/r2_burgers_epsilon_alpha_inventory_20260524_topdirs.csv`, and `EXPERIMENT_LEDGER.md`.
+- Key settings: directory-name inventory only, using `eps...alpha...` path patterns and filtering to Burgers-looking paths such as `burgers`, `nu0p`, `fno_nu`, `deeponet`, `loss3_alpha_epsilon`, and `loss1_loss2`.
+- Observed evidence: across scanned Burgers-related paths, 73 unique `epsilon, alpha` pairs were found. The paired three-loss baseline directories visible on R2 are at `epsilon=4, alpha=0.4`.
+- Observed evidence: Burgers `epsilon=8, alpha=0.4` is present in the `loss3` alpha/epsilon sweep artifacts, including `loss3_alpha_epsilon_core4_sweep_20260519` and `loss3_alpha_epsilon_core4_sweep_p2q2_300steps_20260520`.
+- Inference: the current R2 evidence supports `eps8/alpha0.4` as a loss3-sweep setting, but not as a complete paired loss1/loss2/loss3 Burgers baseline in the scanned prefixes.
+- Remaining work: if a clean three-loss Burgers comparison at `epsilon=8, alpha=0.4` is needed, recover it from another unscanned location or rerun that paired baseline.
+
+## NS2D Loss Definition And Runtime Code Check - 2026-05-24
+
+- Date/status: 2026-05-24; inspected NS2D attack code and historical runtime summaries to answer why `loss2` can run faster than `loss1`/`loss3`. No new GPU attack was started.
+- Source files inspected: `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, `2D_NS_FNO2d_recurrent/perturbation_methods/run_ns2d_recurrent_core4_attack.sh`, and historical `summary.json` files under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/full_adw_b10_pair_outer_baseline_first_20260522/eps32_alpha10/`.
+- Output/record files: `docs/ns2d_loss_definition_runtime_code_check_20260524.md`, `tools/run_ns2d_eps160_alpha50_steepest_add_loss3_aw_20260524.sh`, and `EXPERIMENT_LEDGER.md`.
+- Observed evidence: code defines fixed clean references `f0` and `g0`; per-step active losses are `loss1 = ||pred - f0||`, `loss2 = ||pred - g0||`, and `loss3 = ||pred - g_delta(x_adv)||`. Only `loss3` sets `need_target=True`.
+- Observed evidence: historical `eps32_alpha10` `steepest_add` runtimes were `1130.4 s` for `loss1/all_w`, `484.1 s` for `loss2/all_a_target_w`, and about `1837-1876 s` for each saved `loss3` mode.
+- Inference: `loss2/all_a_target_w` can be faster because its active objective uses dictionary frames and a fixed clean solver target, while `loss3` recomputes the perturbed target; `loss1/all_w` still uses solver-generated input frames in the differentiable graph.
+- Change made: created a separate AW-only launcher that runs only `loss3/all_a_target_w` with `steepest_add`, `epsilon=160`, `alpha=50`, 10 samples, 100 steps, p=q=2. The original seven-target launcher was left unchanged.
+- Remaining work: start the AW-only run if requested; after completion regenerate the same NS2D figure suite for that output root.
+
+## R2 Burgers Loss Coverage By Epsilon/Alpha - 2026-05-24
+
+- Date/status: 2026-05-24; classified the previously scanned R2 Burgers epsilon/alpha inventory by whether directory-name evidence shows `loss1`, `loss2`, and/or `loss3` artifacts. No new GPU attack was started and no large R2 arrays were downloaded.
+- Source inspected: cached R2 listing JSON files `/tmp/r2_*_epsalpha.json` created from `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`; prior inventory record `docs/r2_burgers_epsilon_alpha_inventory_20260524.md`.
+- Output/record files: `docs/r2_burgers_loss_coverage_by_epsilon_alpha_20260524.md`, `docs/r2_burgers_loss_coverage_by_epsilon_alpha_20260524.csv`, and `EXPERIMENT_LEDGER.md`.
+- Observed evidence: the full epsilon/alpha inventory is not a list of settings where `loss1`, `loss2`, and `loss3` all exist. Most high-epsilon settings in the user's excerpt are loss3-only sweep/search artifacts by path evidence.
+- Observed evidence: the recent comparable core Burgers baseline with loss1/loss2/loss3 evidence remains `epsilon=4, alpha=0.4`. Older `three_loss...` directories exist for `epsilon=8` at `alpha=0.3`, `1.5`, and `3`, but they are not the same current core4 p2q2 baseline.
+- Inference: direct paired loss1/loss2/loss3 comparison at `epsilon=8, alpha=0.4` still requires a rerun or recovery from an unscanned source.
+- Remaining work: if needed, use R2 object-level listings or download selected metadata files for the older `three_loss...` paths to verify exactly which arrays are present and whether they are usable for the current plotting/analysis pipeline.
+
+## NS2D eps160 alpha50 loss3 AW Run Status - 2026-05-24
+
+- Date/status: 2026-05-24 07:40 UTC; inspected the current background process and confirmed the AW-only NS2D attack is running.
+- Source inspected: live process table, `nvidia-smi`, and log file under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_023355_UTC/`.
+- Output/record files: `docs/ns2d_eps160_alpha50_loss3_aw_run_status_20260524.md`, `EXPERIMENT_LEDGER.md`.
+- Observed evidence: active Python PID `211989` is running `attack_ns2d_recurrent_core4.py` with `--loss-types loss3`, `--mode-spec all_a_target_w`, `--methods steepest_add`, `--epsilon-alpha-pairs 160:50`, 10 indices, 100 steps, p=q=2.
+- Observed evidence: GPU is active on NVIDIA A100-SXM4-80GB with about `47335 MiB / 81920 MiB` used and `99%` utilization.
+- Observed evidence: the output root inherited an older `RUN_TAG` name, `eps1_missing_loss2_loss3_b10_20260524_023355_UTC/eps160_alpha50`, but the actual command arguments are the requested AW-only `loss3/all_a_target_w` run.
+- Remaining work: after completion, verify `summary.json`/final outputs and regenerate the matching figures.
+
+
+## NS2D/Burgers Spectrum-Loss Curve Readable Redraw - 2026-05-24
+
+- Date/status: 2026-05-24; completed readable redraws for the existing NS2D and Burgers figure suites and created a combined download bundle.
+- Source files used: `tools/plot_ns2d_heatmaps_spectrum_loss_curves_readable_20260524.py`, `tools/plot_ns2d_combined_target_mode_heatmaps_base_20260524.py`, `tools/plot_burgers_spectrum_loss_curves_readable_20260524.py`, saved NS2D `final_state_outputs.npz`/metric CSV artifacts, and saved Burgers trajectory/final-delta artifacts under `/workspace/NeuralOperatorRobustness2_gitclean/forensics/...`.
+- Output/record files: `docs/ns2d_heatmaps_spectrum_loss_curves_readable_20260524.md`, `docs/ns2d_heatmaps_spectrum_loss_curves_readable_20260524/`, `docs/burgers_spectrum_loss_curves_readable_20260524.md`, `docs/burgers_spectrum_loss_curves_readable_20260524/`, `docs/ns_burgers_spectrum_loss_curve_redraw_status_20260524.md`, and `docs/ns_burgers_spectrum_loss_curve_redraw_bundle_20260524.tar.gz`.
+- Key settings: spectrum x-axis fixed to normalized frequency radius `0-0.25`; top panels show selected-index spectrum/loss and all-sample mean +/- std spectrum/loss; y-limits are computed from solid selected/mean curves only; sample position is not shown in figure titles; aligned Burgers dataset indices are shown as a single number; fonts/resolution were increased.
+- GPU evidence: NS2D redraw was offline plotting from saved arrays. Burgers redraw evaluated saved `x_adv` through the established Burgers FNO/JAX solver on GPU, with evidence copied to `docs/burgers_spectrum_loss_curves_readable_20260524/gpu_evidence.json`.
+- Observed evidence: NS2D produced 24 PNGs, verified openable with dimensions including `1955 x 1553` and `1955 x 2513`. Burgers produced 16 PNGs, verified openable at `2250 x 1758`. The combined bundle contains 24 NS2D PNGs and 16 Burgers PNGs and is about 36 MB compressed.
+- Inference: the updated layout should make the requested selected-index versus all-sample mean/std spectra and loss curves directly comparable without std bands shrinking the visible curve range.
+- Remaining work: generate an additional matching NS2D panel for the newly completed `epsilon=160`, `alpha=50`, `loss3/all_a_target_w`, `steepest_add` run if that new extreme-epsilon result should be compared visually.
+
+## NS2D eps160 alpha50 loss3 AW Completion - 2026-05-24
+
+- Date/status: 2026-05-24; AW-only NS2D attack completed.
+- Source files used: `tools/run_ns2d_eps160_alpha50_steepest_add_loss3_aw_20260524.sh`, `2D_NS_FNO2d_recurrent/perturbation_methods/attack_ns2d_recurrent_core4.py`, FNO checkpoint `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/final.pt`, and dictionary `2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt`.
+- Output/record files: `docs/ns2d_eps160_alpha50_loss3_aw_run_status_20260524.md` and output root `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_023355_UTC/eps160_alpha50/mode_aaaaaaaaaw_p2_q2_20260524_073831_UTC/`.
+- Key settings: `loss3/all_a_target_w`, method `steepest_add`, `epsilon=160`, `alpha=50`, indices `0..9`, batch size `10`, `steps=100`, `p=q=2`, final-state outputs and per-sample step metrics enabled.
+- GPU evidence: run log preflight recorded NVIDIA A100-SXM4-80GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, compute capability `(8,0)`, PyTorch arch list including `sm_80`, and JAX backend `gpu` on `CudaDevice(id=0)`.
+- Observed evidence: run started `2026-05-24T07:38:29Z`, finished `2026-05-24T08:04:38Z`, and wrote `summary.json`, `per_step_metrics.csv`, `per_sample_step_metrics.csv`, `final_delta_and_metrics.npz`, `final_state_outputs.npz`, and `final_state_metrics.csv`.
+- Observed metrics from `summary.json`: `runtime_seconds=1550.86`, `final_clean_true_loss_mean=68.4911`, `final_adv_true_loss_mean=369.3712`, `final_state_metric_rows=10`.
+- Inference: this single AW-mode run finished much faster than the earlier seven-target estimate because only one `loss3` mode was run instead of seven targets.
+- Remaining work: generate the matching heatmap/spectrum/loss-curve visualization for this new eps160/alpha50 output if needed.
+
+
+## NS2D eps160/alpha50 Background Status Check - 2026-05-24
+
+- Status: inspected; no NS2D attack process is currently running.
+- Source files inspected: process table, `nvidia-smi`, and `summary.json` under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_023355_UTC/eps160_alpha50/mode_aaaaaaaaaw_p2_q2_20260524_073831_UTC`.
+- Output files observed: `summary.json`, `final_state_metrics.csv`, `final_state_outputs.npz`, and `step_sample_trace.npz` under the completed `loss3/steepest_add` batch directory.
+- Key settings observed: `epsilon = 160`, `alpha = 50`, `loss_type = loss3`, `mode_spec = aaaaaaaaaw`, `method = steepest_add`, `steps = 100`, dataset indices `0-9`.
+- Key metrics observed: runtime `1550.86` seconds; final clean true-loss mean `68.4911`; final adversarial true-loss mean `369.3712`; final true-loss mean increase about `300.8801`; final delta L2 mean `160.0000`.
+- Conclusion: the currently visible eps160/alpha50 AW-mode run completed at `2026-05-24 08:04:36 UTC`; no background NS2D process remains.
+- Remaining work: only this `loss3`/`aaaaaaaaaw`/`steepest_add` target is evidenced locally under `eps160_alpha50`; the other six planned targets are not present in this output tree.
+- Dedicated result file: `docs/ns2d_eps160_alpha50_background_status_20260524.md`.
+
+
+## NS2D eps160/alpha50 Loss1/Loss2 Launcher - 2026-05-24
+
+- Status: launcher prepared; attack not started by this record.
+- Source file created: `tools/run_ns2d_eps160_alpha50_steepest_add_loss1_loss2_20260524.sh`.
+- Command record: `docs/ns2d_eps160_alpha50_loss1_loss2_command_20260524.md`.
+- Key settings: `epsilon = 160`, `alpha = 50`, `method = steepest_add`, `loss1/all_w`, `loss2/all_a_target_w`, dataset indices `0-9`, `steps = 100`, `p = 2`, `q = 2`.
+- Observed preflight before providing command: GPU `NVIDIA A100-SXM4-80GB` was idle at `1 / 81920 MiB`, `0%` utilization; no `attack_ns2d_recurrent_core4.py` process was found.
+- Remaining work: run the command, then copy/sync the new result files into the gitclean tree and redraw the NS2D figure bundle so `eps160_alpha50` includes loss1/loss2 rows.
+
+
+## NS2D eps160/alpha50 Loss1/Loss2 Live Status - 2026-05-24T09:34:23Z
+
+- Status: running.
+- Observed active process: `attack_ns2d_recurrent_core4.py` for `loss1/all_w`, `steepest_add`, `epsilon = 160`, `alpha = 50`, dataset indices `0-9`, `steps = 100`.
+- GPU evidence: `NVIDIA A100-SXM4-80GB`, memory `46851 / 81920 MiB`, utilization `100%`.
+- Observed output directory: `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_023355_UTC/eps160_alpha50/mode_wwwwwwwwww_p2_q2_20260524_092837_UTC`; only `manifest.json` was visible at inspection time.
+- Progress: exact step count not yet evidenced because `per_step_metrics.csv` had not appeared for the active loss1 run.
+- Runtime inference from local summaries: historical `loss1` median around `1116s`; historical `loss2` median around `484s`; expected total around `27 min` plus overhead, with roughly `20-25 min` remaining at inspection time.
+- Dedicated status file: `docs/ns2d_eps160_alpha50_loss1_loss2_live_status_20260524.md`.
+
+
+## Optimizer-Grouped Loss Curves - 2026-05-24
+
+- Status: completed offline plotting.
+- Source script: `tools/plot_optimizer_grouped_loss_curves_20260524.py`.
+- Source data: saved `per_step_metrics.csv` files under `/workspace/NeuralOperatorRobustness2_gitclean/forensics/...` for Burgers and `/workspace/NeuralOperatorRobustness2_gitclean/2D_NS_FNO2d_recurrent/perturbation_results/...` for NS2D.
+- Output files: `/workspace/NeuralOperatorRobustness2_gitclean/docs/optimizer_grouped_loss_curves_20260524/burgers_optimizer_grouped_target_loss_curves_eps4_alpha0p4.png`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/optimizer_grouped_loss_curves_20260524/ns2d_optimizer_grouped_target_loss_curves_eps32_vs_eps1.png`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/optimizer_grouped_loss_curves_20260524.md`.
+- Bundle: updated `/workspace/NeuralOperatorRobustness2_gitclean/docs/ns_burgers_spectrum_loss_curve_cleanstyle_bundle_20260524.tar.gz`; bundle now contains `43` PNGs.
+- Key settings: each panel fixes one target loss and overlays four optimizer methods; Burgers uses `epsilon = 4`, `alpha = 0.4`; NS2D compares `epsilon = 32, alpha = 10` against `epsilon = 1, alpha = 0.3125`.
+- Inference: `steepest_replace` oscillation is consistent with replacing the perturbation direction each step after L2-normalized steepest direction computation; add variants retain perturbation history and are smoother. At small epsilon, optimizer differences shrink.
+- Dedicated local note: `docs/optimizer_grouped_loss_curves_20260524.md`.
+
+## NS2D/Burgers Cleanstyle Line-Range Redraw - 2026-05-24
+
+- Status: completed offline redraw and repackaging after user requested deleting/regenerating figures with axis ranges based on solid lines, not standard-deviation shadows.
+- Source scripts: `tools/plot_optimizer_grouped_loss_curves_20260524.py`, `tools/plot_ns2d_all_eps_optimizer_grouped_loss_curves_20260524.py`, `/workspace/NeuralOperatorRobustness2_gitclean/tools/plot_ns2d_heatmaps_spectrum_loss_curves_cleanstyle_20260524.py`, and `/workspace/NeuralOperatorRobustness2_gitclean/tools/plot_burgers_spectrum_loss_curves_cleanstyle_20260524.py`.
+- Output/record files: `docs/ns_burgers_cleanstyle_line_range_redraw_20260524.md`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/ns2d_heatmaps_spectrum_loss_curves_cleanstyle_20260524/`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/burgers_spectrum_loss_curves_cleanstyle_20260524/figures/`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/optimizer_grouped_loss_curves_20260524/`, and `/workspace/NeuralOperatorRobustness2_gitclean/docs/ns_burgers_spectrum_loss_curve_cleanstyle_bundle_20260524.tar.gz`.
+- Key settings: spectrum x-axis remains normalized frequency radius `0-0.25`; loss curves remain attack steps `0-100`; standard-deviation bands are drawn but y-axis/chart limits are computed from solid selected/mean curves only.
+- Observed evidence: deleted `100` old generated PNGs from targeted output folders; regenerated `25` NS2D cleanstyle PNGs, `16` Burgers cleanstyle PNGs, `2` optimizer-grouped summary PNGs, and `7` NS2D all-epsilon optimizer-grouped PNGs.
+- Observed evidence: rebuilt combined bundle contains `50` PNGs; PIL verification reported `0` bad images; tarball size is about `43.6 MB`.
+- Inference: the regenerated plots should no longer have std-band size controlling visible curve ranges; if a std band is larger than the solid-line range it may be clipped by the line-based axis.
+- Remaining work: if eps160 loss1/loss2 completes and is synced into gitclean, rerun the same redraw pipeline so the eps160 figure includes those extra rows.
+
+## NS2D eps160/alpha50 Three-Target Completion Check - 2026-05-24
+
+- Status: completed status inspection.
+- Source files inspected: process table, `nvidia-smi`, and summary/metric files under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_023355_UTC/eps160_alpha50/`.
+- Output/record file: `docs/ns2d_eps160_alpha50_three_target_completion_status_20260524.md`.
+- Observed evidence: no eps160 attack process is running; GPU is idle at `1 MiB / 81920 MiB`, `0%` utilization.
+- Observed evidence: `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_a_target_w` each have `summary.json`, `per_step_metrics.csv` with `101` rows and last `k=100`, and `final_state_metrics.csv` with `10` rows.
+- Key metrics: loss1 adv true-loss mean `336.555`, loss2 adv true-loss mean `285.897`, loss3/all_a_target_w adv true-loss mean `369.371`; clean true-loss mean is `68.4911` for all three.
+- Inference: among the three completed eps160/alpha50 steepest_add targets, `loss3/all_a_target_w` currently yields the largest final all-W true-loss mean.
+- Remaining work: sync loss1/loss2 outputs into gitclean and regenerate eps160 figures if those rows should appear in the figure bundle.
+
+## NS2D eps160/alpha50 Three-Row Figure Redraw - 2026-05-24
+
+- Status: completed.
+- Source data: completed eps160/alpha50 `steepest_add` runs for `loss1/all_w`, `loss2/all_a_target_w`, and `loss3/all_a_target_w` under `2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/eps1_missing_loss2_loss3_b10_20260524_023355_UTC/eps160_alpha50/`.
+- Data sync: copied loss1 and loss2 result directories into `/workspace/NeuralOperatorRobustness2_gitclean/.../eps160_alpha50/` with `step_sample_trace.npz` excluded; plotting-required files (`summary.json`, `per_step_metrics.csv`, `per_sample_step_metrics.csv`, `final_state_outputs.npz`, `final_state_metrics.csv`) are present.
+- Source scripts run: `/workspace/NeuralOperatorRobustness2_gitclean/tools/plot_ns2d_heatmaps_spectrum_loss_curves_cleanstyle_20260524.py` and `tools/plot_ns2d_all_eps_optimizer_grouped_loss_curves_20260524.py`.
+- Output files: `/workspace/NeuralOperatorRobustness2_gitclean/docs/ns2d_heatmaps_spectrum_loss_curves_cleanstyle_20260524/eps160_alpha50_steepest_add_spectrum_loss_curves_dataset0.png`, `/workspace/NeuralOperatorRobustness2_gitclean/docs/optimizer_grouped_loss_curves_20260524/ns2d_all_eps/eps160_alpha50_optimizer_grouped_target_loss_curves.png`, and `/workspace/NeuralOperatorRobustness2_gitclean/docs/ns_burgers_spectrum_loss_curve_cleanstyle_bundle_20260524.tar.gz`.
+- Observed figure evidence: eps160 row summary now has four rows total: clean baseline plus attack rows `Loss 1 / all W`, `Loss 2 / all A -> W`, and `Loss 3 / all A -> W`; for dataset index 0, `Loss 2 / all A -> W` is highlighted with adv true-loss `312.851`.
+- Inference: the eps160 cleanstyle PNG now satisfies the requested three-row loss1/loss2/loss3 figure. The highlighted row in this PNG is selected-index-specific, not the 10-sample mean comparison.
+- Dedicated result file: `docs/ns2d_eps160_alpha50_three_row_figure_redraw_20260524.md`.
+
