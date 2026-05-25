@@ -1564,3 +1564,53 @@ Monitor:
 ```bash
 tail -f /tmp/ns2d_alt9_budget_sweep_steps25.log
 ```
+
+## 2026-05-25 Brutal Warp v2 Parameter Update
+
+Reason for this update:
+
+The first `very_strong` 25-step run showed that `local_warp_dists` produced visibly different aligned-model-vs-solver behavior, but several global or semi-global warp methods still looked too close to identity in the alignment visualization:
+
+- `affine_dists` showed near-zero or visually tiny warp magnitude.
+- `homography_dists` also did not show obvious geometric motion.
+- Some `aligned model - solver` and `model - solver` panels looked too similar by eye.
+
+Interpretation:
+
+The previous settings increased the allowed warp range, but the detached inner alignment was still initialized at identity and used `loss3_align_objective=l2`. If the local L2 objective is already near a weak identity optimum, increasing the maximum allowed range alone may not make the optimizer actually use that range. Therefore v2 changes three things at once:
+
+1. Increase the allowed geometric budget substantially.
+2. Lower transformation regularization weights substantially.
+3. Change inner alignment objective from `l2` to `dists` for all budget presets, so the internal registration tries to match structure/texture rather than only pointwise L2.
+
+Important consequence:
+
+This is no longer directly comparable to the earlier completed `very_strong` run. The new run should use a new output tag/root containing `brutalwarp_v2`. Do not mix old `very_strong` outputs with the new parameter set.
+
+### New Brutal Warp v2 Presets
+
+| Preset | Align objective | Scattering J | Affine | Local warp | Homography | TPS | Elastic | SVF |
+|---|---:|---:|---|---|---|---|---|---|
+| `very_strong` | `dists` | 6 | inner=70, lr=0.10, shift=45%, rot=120 deg, scale=[0.25,4.0], reg=1e-6 | grid=24, inner=70, lr=0.10, disp=0.35, mag=1e-6, smooth=1e-4 | inner=70, lr=0.10, corner=0.45, reg=1e-6 | grid=10, inner=70, lr=0.10, disp=0.45, offset=1e-6, smooth=1e-4 | grid=32, inner=70, lr=0.10, disp=0.35, kernel=3, passes=1, mag=1e-6, smooth=1e-4 | grid=24, inner=70, lr=0.10, vel=0.32, int=8, mag=1e-6, smooth=1e-4 |
+| `strong` | `dists` | 5 | inner=50, lr=0.08, shift=30%, rot=75 deg, scale=[0.333,3.0], reg=1e-5 | grid=20, inner=50, lr=0.08, disp=0.25, mag=1e-5, smooth=5e-4 | inner=50, lr=0.08, corner=0.32, reg=1e-5 | grid=8, inner=50, lr=0.08, disp=0.32, offset=1e-5, smooth=5e-4 | grid=28, inner=50, lr=0.08, disp=0.25, kernel=5, passes=1, mag=1e-5, smooth=5e-4 | grid=20, inner=50, lr=0.08, vel=0.24, int=8, mag=1e-5, smooth=5e-4 |
+| `medium` | `dists` | 5 | inner=35, lr=0.08, shift=20%, rot=45 deg, scale=[0.5,2.0], reg=1e-4 | grid=16, inner=35, lr=0.08, disp=0.16, mag=1e-4, smooth=0.002 | inner=35, lr=0.08, corner=0.20, reg=1e-4 | grid=6, inner=35, lr=0.08, disp=0.20, offset=1e-4, smooth=0.002 | grid=22, inner=35, lr=0.08, disp=0.16, kernel=5, passes=1, mag=1e-4, smooth=0.002 | grid=16, inner=35, lr=0.08, vel=0.16, int=7, mag=1e-4, smooth=0.002 |
+| `weak` | `dists` | 4 | inner=20, lr=0.07, shift=10%, rot=25 deg, scale=[0.741,1.35], reg=0.001 | grid=10, inner=20, lr=0.07, disp=0.08, mag=0.001, smooth=0.01 | inner=20, lr=0.07, corner=0.10, reg=0.001 | grid=5, inner=20, lr=0.07, disp=0.10, offset=0.001, smooth=0.01 | grid=18, inner=20, lr=0.07, disp=0.08, kernel=7, passes=1, mag=0.001, smooth=0.01 | grid=10, inner=20, lr=0.07, vel=0.08, int=6, mag=0.001, smooth=0.01 |
+
+Approximate visual scale on 256x256:
+
+- `very_strong` affine translation budget is about 115 pixels per axis.
+- `very_strong` homography corner budget is about 115 pixels.
+- `very_strong` TPS control displacement budget is about 115 pixels in normalized coordinates.
+- `very_strong` local/elastic dense-warp component budget is about 89 pixels per axis before smoothing/interpolation.
+
+Caveat:
+
+These settings are intentionally aggressive for visual separation. They are useful for seeing whether the methods generate visibly different perturbations, but they are less conservative as a scientifically fair invariance budget. After identifying a visually distinct method, a smaller follow-up budget should be used for a cleaner comparison.
+
+Updated files:
+
+- `tools/run_ns2d_eps32_alpha10_steepest_add_loss3_allw_alt9_budget_sweep_steps25_20260525.sh`
+- `tools/run_ns2d_eps32_alpha10_steepest_add_loss3_allw_alt9_strongwarp_steps25_20260525.sh`
+- `tools/run_ns2d_alt9_budget_sweep_steps25_then100_upload_20260525.sh`
+- `tools/plot_ns2d_eps32_alpha10_altloss_heatmaps_spectrum_loss_curves_cleanstyle_20260525.py`
+

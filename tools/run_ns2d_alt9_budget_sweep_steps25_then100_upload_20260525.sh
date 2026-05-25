@@ -12,7 +12,7 @@ export BUDGET_PRESETS="${BUDGET_PRESETS:-very_strong strong medium weak}"
 export AUTO_PLOT_DATASET0="${AUTO_PLOT_DATASET0:-1}"
 export AUTO_UPLOAD_R2="${AUTO_UPLOAD_R2:-1}"
 
-MASTER_TAG="${MASTER_TAG:-eps32_alpha10_steepest_add_loss3_allw_alt9_budget_sweep_steps25_then100_b10_$(date -u +%Y%m%d_%H%M%S)_UTC}"
+MASTER_TAG="${MASTER_TAG:-eps32_alpha10_steepest_add_loss3_allw_alt9_brutalwarp_v2_budget_sweep_steps25_then100_b10_$(date -u +%Y%m%d_%H%M%S)_UTC}"
 MASTER_ROOT="${MASTER_ROOT:-2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/${MASTER_TAG}}"
 mkdir -p "$MASTER_ROOT"
 MASTER_LOG="$MASTER_ROOT/nohup_${MASTER_TAG}.log"
