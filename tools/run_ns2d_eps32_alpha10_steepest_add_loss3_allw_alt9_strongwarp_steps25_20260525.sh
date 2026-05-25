@@ -150,6 +150,11 @@ upload_to_r2_if_enabled() {
   fi
 }
 
+find_completed_metric_npz() {
+  local out_root="$1"
+  find "$out_root" -path '*/batch_0000_0009/loss3/steepest_add/final_state_outputs.npz' -type f -print -quit 2>/dev/null || true
+}
+
 run_metric() {
   local metric="$1"
   local label="$2"
@@ -158,6 +163,15 @@ run_metric() {
   export LOSS_TYPES="loss3"
   export MODE_SPEC="$LOSS3_MODE_SPEC"
   export LOSS3_METRIC="$metric"
+
+  local completed_npz
+  completed_npz="$(find_completed_metric_npz "$OUT_ROOT")"
+  if [[ -n "$completed_npz" ]]; then
+    echo
+    echo "===== ${label}: metric=${metric} already complete; skipping $(date -u '+%Y-%m-%dT%H:%M:%SZ') ====="
+    echo "completed_npz=$completed_npz"
+    return 0
+  fi
 
   echo
   echo "===== ${label}: metric=${metric} loss=loss3 mode=${LOSS3_MODE_SPEC} steps=${STEPS} started $(date -u '+%Y-%m-%dT%H:%M:%SZ') ====="
@@ -286,4 +300,4 @@ PYGPU
   echo "===== nvidia-smi final ====="
   nvidia-smi
   echo "===== run completed ====="
-} 2>&1 | tee "$LOG"
+} 2>&1 | tee -a "$LOG"

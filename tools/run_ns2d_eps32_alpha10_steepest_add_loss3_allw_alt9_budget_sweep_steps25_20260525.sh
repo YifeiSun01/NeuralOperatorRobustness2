@@ -245,4 +245,4 @@ fi
 
   echo "finish_time_utc=$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
   echo "===== budget sweep completed ====="
-} 2>&1 | tee "$SWEEP_LOG"
+} 2>&1 | tee -a "$SWEEP_LOG"

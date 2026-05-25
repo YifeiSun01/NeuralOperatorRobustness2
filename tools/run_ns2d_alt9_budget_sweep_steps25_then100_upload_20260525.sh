@@ -50,4 +50,4 @@ run_steps() {
 
   echo "finish_time_utc=$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
   echo "===== steps25_then100 completed ====="
-} 2>&1 | tee "$MASTER_LOG"
+} 2>&1 | tee -a "$MASTER_LOG"

@@ -350,10 +350,12 @@ def relpath(path: Path) -> str:
 
 
 def discover_alt_dir(alt_root: Path, metric: str) -> Path:
-    matches = sorted((alt_root / metric).glob("mode_*/batch_0000_0009/loss3/steepest_add"))
-    if len(matches) != 1:
-        raise SystemExit(f"Expected one method dir for {metric}, found {len(matches)} under {alt_root}")
-    return matches[0]
+    final_npzs = sorted((alt_root / metric).glob("mode_*/batch_0000_0009/loss3/steepest_add/final_state_outputs.npz"))
+    if not final_npzs:
+        raise SystemExit(f"Expected at least one completed method dir for {metric}, found 0 under {alt_root}")
+    if len(final_npzs) > 1:
+        print(f"WARNING: found {len(final_npzs)} completed runs for {metric}; using latest path {final_npzs[-1]}", file=sys.stderr)
+    return final_npzs[-1].parent
 
 
 def build_candidates(baseline_dir: Path, alt_root: Path) -> list[Candidate]:
