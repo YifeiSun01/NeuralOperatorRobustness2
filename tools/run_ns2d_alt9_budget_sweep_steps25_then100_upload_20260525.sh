@@ -8,7 +8,7 @@ export INDICES="${INDICES:-0,1,2,3,4,5,6,7,8,9}"
 export ATTACK_BATCH_SIZE="${ATTACK_BATCH_SIZE:-10}"
 export LOSS3_MODE_SPEC="${LOSS3_MODE_SPEC:-all_w}"
 export LOSS3_METRICS="${LOSS3_METRICS:-dists ms_ssim scattering2d affine_dists local_warp_dists homography_dists tps_dists elastic_dists svf_dists}"
-export BUDGET_PRESETS="${BUDGET_PRESETS:-very_very_strong very_strong strong medium weak}"
+export BUDGET_PRESETS="${BUDGET_PRESETS:-very_very_strong}"
 export AUTO_PLOT_DATASET0="${AUTO_PLOT_DATASET0:-1}"
 export AUTO_UPLOAD_R2="${AUTO_UPLOAD_R2:-1}"
 

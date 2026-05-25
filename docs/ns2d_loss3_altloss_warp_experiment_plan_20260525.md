@@ -1618,13 +1618,11 @@ Updated files:
 
 A new preset named `very_very_strong` has been added above `very_strong`.
 
-Default budget order is now:
+Default budget order is now only:
 
 1. `very_very_strong`
-2. `very_strong`
-3. `strong`
-4. `medium`
-5. `weak`
+
+The older `very_strong`, `strong`, `medium`, and `weak` presets remain defined in the code for manual override, but the default 25-then-100 launcher no longer runs them.
 
 The default output tag/root now contains `brutalwarp_v3`, so the new runs will not be mixed with the earlier `brutalwarp_v2` configuration.
 
@@ -1671,3 +1669,22 @@ Updated files:
 - `tools/watch_and_plot_ns2d_alt9_budget_sweep_dataset0_20260525.sh`
 - `tools/plot_ns2d_eps32_alpha10_altloss_heatmaps_spectrum_loss_curves_cleanstyle_20260525.py`
 
+
+
+## 2026-05-25 Very Very Strong Only Run Update
+
+The active default run plan was narrowed to only `very_very_strong`.
+
+The 25-then-100 launcher still runs in this order:
+
+1. `steps25` with `very_very_strong` only.
+2. `steps100` with `very_very_strong` only.
+
+The other presets (`very_strong`, `strong`, `medium`, `weak`) are still available if explicitly requested through `BUDGET_PRESETS`, but they are not part of the default run.
+
+Updated defaults:
+
+- `tools/run_ns2d_alt9_budget_sweep_steps25_then100_upload_20260525.sh`: `BUDGET_PRESETS=very_very_strong`
+- `tools/run_ns2d_eps32_alpha10_steepest_add_loss3_allw_alt9_budget_sweep_steps25_20260525.sh`: `BUDGET_PRESETS=very_very_strong`
+- `tools/watch_then_run_ns2d_alt9_budget_sweep_steps100_after25_20260525.sh`: `BUDGET_PRESETS=very_very_strong`
+- `tools/watch_and_plot_ns2d_alt9_budget_sweep_dataset0_20260525.sh`: `BUDGET_PRESET_DIRS=1_very_very_strong`

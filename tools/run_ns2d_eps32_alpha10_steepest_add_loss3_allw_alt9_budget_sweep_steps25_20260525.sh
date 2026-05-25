@@ -9,7 +9,7 @@ export INDICES="${INDICES:-0,1,2,3,4,5,6,7,8,9}"
 export ATTACK_BATCH_SIZE="${ATTACK_BATCH_SIZE:-10}"
 export LOSS3_MODE_SPEC="${LOSS3_MODE_SPEC:-all_w}"
 export LOSS3_METRICS="${LOSS3_METRICS:-dists ms_ssim scattering2d affine_dists local_warp_dists homography_dists tps_dists elastic_dists svf_dists}"
-export BUDGET_PRESETS="${BUDGET_PRESETS:-very_very_strong very_strong strong medium weak}"
+export BUDGET_PRESETS="${BUDGET_PRESETS:-very_very_strong}"
 
 BASE_SWEEP_TAG="${BASE_SWEEP_TAG:-eps32_alpha10_steepest_add_loss3_allw_alt9_brutalwarp_v3_budget_sweep_steps${STEPS}_b10_$(date -u +%Y%m%d_%H%M%S)_UTC}"
 BASE_SWEEP_ROOT="${BASE_SWEEP_ROOT:-2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/${BASE_SWEEP_TAG}}"
