@@ -38,12 +38,16 @@ import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 NS_ROOT = PROJECT_ROOT / "2D_NS_FNO2d_recurrent"
+PERTURBATION_ROOT = Path(__file__).resolve().parent
 if str(NS_ROOT) not in sys.path:
     sys.path.insert(0, str(NS_ROOT))
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+if str(PERTURBATION_ROOT) not in sys.path:
+    sys.path.insert(0, str(PERTURBATION_ROOT))
 
 from models.FNO2d import FNO2d, RecurrentPredictor
+from ns2d_alternative_losses import LOSS3_METRIC_CHOICES, build_loss3_metric
 
 
 EPS = 1e-12
@@ -179,6 +183,41 @@ def finite_stats(values: np.ndarray) -> dict[str, float]:
         "min": float(np.min(finite)),
         "max": float(np.max(finite)),
     }
+
+
+def metric_diag_to_numpy(diag: dict[str, Any] | None) -> dict[str, Any]:
+    if not diag:
+        return {}
+    out: dict[str, Any] = {}
+    for key, value in diag.items():
+        if hasattr(value, "detach"):
+            arr = tensor_to_numpy(value.detach())
+            out[key] = arr.astype(np.float64) if np.issubdtype(arr.dtype, np.number) else arr
+        elif isinstance(value, (int, float, np.number)):
+            out[key] = float(value)
+        else:
+            out[key] = str(value)
+    return out
+
+
+def add_loss3_metric_diag(row: dict[str, Any], diag: dict[str, Any], sample_pos: int | None = None) -> None:
+    for key, value in diag.items():
+        out_key = f"loss3_metric_{key}"
+        if isinstance(value, str):
+            row[out_key] = value
+            continue
+        arr = np.asarray(value)
+        if arr.ndim == 0:
+            row[out_key] = float(arr)
+            continue
+        if sample_pos is None:
+            for stat_key, stat_value in finite_stats(arr).items():
+                row[f"{out_key}_{stat_key}"] = stat_value
+            continue
+        if arr.shape[0] > sample_pos:
+            sample_arr = np.asarray(arr[sample_pos], dtype=np.float64)
+            finite = sample_arr[np.isfinite(sample_arr)]
+            row[out_key] = float(np.mean(finite)) if finite.size else float("nan")
 
 
 def ensure_cuda_or_die() -> None:
@@ -577,6 +616,7 @@ class NS2DRecurrentProblem:
         self.x0 = x0.to(self.device, dtype=torch.float32).detach()
         self.clean_target_from_data = None if clean_target is None else clean_target.to(self.device, dtype=torch.float32).detach()
         self.mode_spec = resolve_mode_spec(args.mode_spec)
+        self.loss3_metric = build_loss3_metric(args).to(self.device)
         if args.require_target_w and self.mode_spec[-1] != "w":
             raise ValueError("The target-frame mode must be 'w'. Use --no-require-target-w only for ablations.")
 
@@ -659,8 +699,13 @@ class NS2DRecurrentProblem:
 
     def all_losses(self, x_adv):
         pred, g_delta, aux = self.model_prediction(x_adv, need_target=True)
-        residuals = {"loss1": pred - self.f0, "loss2": pred - self.g0, "loss3": pred - g_delta}
-        losses = {name: batch_norm(residual, self.args.q_order) for name, residual in residuals.items()}
+        loss3_result = self.loss3_metric(pred, g_delta)
+        losses = {
+            "loss1": batch_norm(pred - self.f0, self.args.q_order),
+            "loss2": batch_norm(pred - self.g0, self.args.q_order),
+            "loss3": loss3_result.values,
+        }
+        aux["loss3_metric_diagnostics"] = loss3_result.diagnostics
         return losses, pred, g_delta, aux
 
     def active_losses(self, x_adv, loss_type: str):
@@ -675,7 +720,9 @@ class NS2DRecurrentProblem:
             "loss3": nan,
         }
         if need_target:
-            losses["loss3"] = batch_norm(pred - g_delta, self.args.q_order)
+            loss3_result = self.loss3_metric(pred, g_delta)
+            losses["loss3"] = loss3_result.values
+            aux["loss3_metric_diagnostics"] = loss3_result.diagnostics
         return losses, pred, g_delta, aux
 
     def all_w_final_outputs(self, x_adv, source: str = "all_w_final_outputs"):
@@ -786,6 +833,7 @@ def append_metric_rows(
     direction_l2_mean,
     elapsed,
     args,
+    loss3_metric_diag=None,
 ):
     row = {
         "loss_type": loss_type,
@@ -811,6 +859,9 @@ def append_metric_rows(
         row["grad_l2_mean"] = float(grad_l2_mean)
     if direction_l2_mean is not None:
         row["direction_l2_mean"] = float(direction_l2_mean)
+    row["loss3_metric"] = str(getattr(args, "loss3_metric", "qnorm"))
+    if loss3_metric_diag:
+        add_loss3_metric_diag(row, loss3_metric_diag)
     step_rows.append(row)
 
     for pos, dataset_index in enumerate(dataset_indices):
@@ -834,6 +885,9 @@ def append_metric_rows(
         }
         for name in LOSS_TYPES:
             sample[name] = float(losses_np[name][pos])
+        sample["loss3_metric"] = str(getattr(args, "loss3_metric", "qnorm"))
+        if loss3_metric_diag:
+            add_loss3_metric_diag(sample, loss3_metric_diag, sample_pos=pos)
         sample_rows.append(sample)
 
 
@@ -1048,6 +1102,8 @@ def final_state_metric_rows(dataset_indices: list[int], arrays: dict[str, np.nda
     solver_change = arrays["solver_final_change"]
     clean_true_loss = arrays["clean_true_loss"]
     adv_true_loss = arrays["adv_true_loss"]
+    clean_loss3_metric = arrays.get("clean_loss3_metric")
+    adv_loss3_metric = arrays.get("adv_loss3_metric")
     rows = []
     delta_l2 = batch_numpy_l2(delta)
     delta_linf = batch_numpy_linf(delta)
@@ -1073,6 +1129,11 @@ def final_state_metric_rows(dataset_indices: list[int], arrays: dict[str, np.nda
                 "solver_final_change_l2": float(solver_change_l2[pos]),
             }
         )
+        if clean_loss3_metric is not None and adv_loss3_metric is not None:
+            rows[-1]["clean_loss3_metric"] = float(clean_loss3_metric[pos])
+            rows[-1]["adv_loss3_metric"] = float(adv_loss3_metric[pos])
+            rows[-1]["loss3_metric_increase"] = float(adv_loss3_metric[pos] - clean_loss3_metric[pos])
+            rows[-1]["loss3_metric_ratio"] = float(adv_loss3_metric[pos] / clean_loss3_metric[pos]) if clean_loss3_metric[pos] != 0 else float("nan")
     return rows
 
 
@@ -1085,6 +1146,8 @@ def save_final_state_outputs(problem: NS2DRecurrentProblem, delta, dataset_indic
     x_adv = (problem.x0 + final_delta).detach()
     clean_true_loss, clean_model, clean_solver = problem.all_w_final_outputs(x_clean, source="record_final_state_clean")
     adv_true_loss, adv_model, adv_solver = problem.all_w_final_outputs(x_adv, source="record_final_state_adv")
+    clean_metric_result = problem.loss3_metric(clean_model.detach(), clean_solver.detach())
+    adv_metric_result = problem.loss3_metric(adv_model.detach(), adv_solver.detach())
     arrays = {
         "dataset_indices": np.asarray(dataset_indices, dtype=np.int64),
         "x_clean": tensor_to_numpy(x_clean).astype(np.float32),
@@ -1100,6 +1163,8 @@ def save_final_state_outputs(problem: NS2DRecurrentProblem, delta, dataset_indic
         "solver_final_change": tensor_to_numpy(adv_solver - clean_solver).astype(np.float32),
         "clean_true_loss": tensor_to_numpy(clean_true_loss).astype(np.float32),
         "adv_true_loss": tensor_to_numpy(adv_true_loss).astype(np.float32),
+        "clean_loss3_metric": tensor_to_numpy(clean_metric_result.values.detach()).astype(np.float32),
+        "adv_loss3_metric": tensor_to_numpy(adv_metric_result.values.detach()).astype(np.float32),
     }
     npz_path = method_dir / "final_state_outputs.npz"
     np.savez_compressed(npz_path, **arrays)
@@ -1113,6 +1178,8 @@ def save_final_state_outputs(problem: NS2DRecurrentProblem, delta, dataset_indic
         "final_state_metric_rows": len(metric_rows),
         "final_adv_true_loss_mean": float(np.nanmean(arrays["adv_true_loss"])),
         "final_clean_true_loss_mean": float(np.nanmean(arrays["clean_true_loss"])),
+        "final_adv_loss3_metric_mean": float(np.nanmean(arrays["adv_loss3_metric"])),
+        "final_clean_loss3_metric_mean": float(np.nanmean(arrays["clean_loss3_metric"])),
     }
 
 
@@ -1223,7 +1290,8 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
     for k in range(problem.args.steps + 1):
         delta = delta.detach()
         x_adv = (problem.x0 + delta).detach().requires_grad_(k < problem.args.steps)
-        losses, pred_active, target_active, _ = problem.active_losses(x_adv, loss_type)
+        losses, pred_active, target_active, active_aux = problem.active_losses(x_adv, loss_type)
+        loss3_metric_diag = metric_diag_to_numpy(active_aux.get("loss3_metric_diagnostics") if isinstance(active_aux, dict) else None)
         objective = losses[loss_type].sum()
         grad = direction = projected = None
         if k < problem.args.steps:
@@ -1236,8 +1304,15 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         record_trace_this_step = should_record_step_sample(problem, k)
         true_pred_t = true_target_t = None
         if true_loss_needed or record_trace_this_step:
-            if loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww" and not record_trace_this_step:
+            if loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww":
+                # For loss3/all_w, active_losses already computed the canonical
+                # all-W final model output and target for the whole batch. Reuse
+                # them for true-loss CSVs and the one-sample trace instead of
+                # paying for a duplicate solver/model rollout every step.
                 true_loss_t = losses["loss3"].detach()
+                if record_trace_this_step:
+                    true_pred_t = pred_active.detach()
+                    true_target_t = target_active.detach()
             else:
                 true_loss_t, true_pred_t, true_target_t = problem.all_w_final_outputs(x_adv, source="true_loss_and_step_trace")
         else:
@@ -1272,6 +1347,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             direction_l2_mean,
             time.perf_counter() - start,
             problem.args,
+            loss3_metric_diag=loss3_metric_diag,
         )
         if record_trace_this_step:
             if true_pred_t is None or true_target_t is None:
@@ -1285,7 +1361,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
 
         if x_adv.grad is not None:
             x_adv.grad = None
-        del x_adv, losses, pred_active, target_active, objective, true_loss_t, delta_l2_t, delta_linf_t, delta_p_t
+        del x_adv, losses, pred_active, target_active, active_aux, objective, true_loss_t, delta_l2_t, delta_linf_t, delta_p_t
         if true_pred_t is not None:
             del true_pred_t
         if true_target_t is not None:
@@ -1323,6 +1399,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         "loss_type": loss_type,
         "method": spec.name,
         "mode_spec": problem.mode_spec,
+        "loss3_metric": str(problem.args.loss3_metric),
         "dataset_indices": [int(i) for i in dataset_indices],
         "steps": int(problem.args.steps),
         "epsilon": float(problem.args.epsilon),
@@ -1455,6 +1532,48 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--attack-batch-size", type=int, default=1)
     parser.add_argument("--loss-types", nargs="+", default=list(LOSS_TYPES), choices=LOSS_TYPES)
     parser.add_argument("--methods", nargs="+", default=list(CORE4_METHODS), choices=CORE4_METHODS)
+    parser.add_argument("--loss3-metric", choices=LOSS3_METRIC_CHOICES, default="qnorm", help="Metric used for loss3 final-state discrepancy. qnorm preserves the original behavior.")
+    parser.add_argument("--loss3-image-normalization", choices=["pair_minmax_detached", "none"], default="pair_minmax_detached", help="Normalization for image-style loss3 metrics before DISTS/MS-SSIM/scattering.")
+    parser.add_argument("--loss3-metric-eps", type=float, default=1e-6)
+    parser.add_argument("--loss3-scattering-j", type=int, default=3)
+    parser.add_argument("--loss3-align-objective", choices=["l2", "dists"], default="l2", help="Detached inner-registration objective for affine/local-warp metrics; final content metric remains DISTS.")
+    parser.add_argument("--loss3-affine-inner-steps", type=int, default=8)
+    parser.add_argument("--loss3-affine-lr", type=float, default=0.05)
+    parser.add_argument("--loss3-affine-max-shift-ratio", type=float, default=0.05)
+    parser.add_argument("--loss3-affine-max-angle-deg", type=float, default=10.0)
+    parser.add_argument("--loss3-affine-max-log-scale", type=float, default=math.log(1.1))
+    parser.add_argument("--loss3-affine-reg-weight", type=float, default=0.01)
+    parser.add_argument("--loss3-local-grid-size", type=int, default=8)
+    parser.add_argument("--loss3-local-inner-steps", type=int, default=8)
+    parser.add_argument("--loss3-local-lr", type=float, default=0.05)
+    parser.add_argument("--loss3-local-max-disp-ratio", type=float, default=0.03)
+    parser.add_argument("--loss3-local-mag-weight", type=float, default=0.01)
+    parser.add_argument("--loss3-local-smooth-weight", type=float, default=0.05)
+    parser.add_argument("--loss3-homography-inner-steps", type=int, default=8)
+    parser.add_argument("--loss3-homography-lr", type=float, default=0.05)
+    parser.add_argument("--loss3-homography-max-corner-ratio", type=float, default=0.05)
+    parser.add_argument("--loss3-homography-reg-weight", type=float, default=0.01)
+    parser.add_argument("--loss3-tps-grid-size", type=int, default=4)
+    parser.add_argument("--loss3-tps-inner-steps", type=int, default=8)
+    parser.add_argument("--loss3-tps-lr", type=float, default=0.05)
+    parser.add_argument("--loss3-tps-max-disp-ratio", type=float, default=0.05)
+    parser.add_argument("--loss3-tps-offset-weight", type=float, default=0.01)
+    parser.add_argument("--loss3-tps-smooth-weight", type=float, default=0.05)
+    parser.add_argument("--loss3-elastic-grid-size", type=int, default=16)
+    parser.add_argument("--loss3-elastic-inner-steps", type=int, default=8)
+    parser.add_argument("--loss3-elastic-lr", type=float, default=0.05)
+    parser.add_argument("--loss3-elastic-max-disp-ratio", type=float, default=0.05)
+    parser.add_argument("--loss3-elastic-smooth-kernel", type=int, default=9)
+    parser.add_argument("--loss3-elastic-smooth-passes", type=int, default=2)
+    parser.add_argument("--loss3-elastic-mag-weight", type=float, default=0.01)
+    parser.add_argument("--loss3-elastic-smooth-weight", type=float, default=0.03)
+    parser.add_argument("--loss3-svf-grid-size", type=int, default=8)
+    parser.add_argument("--loss3-svf-inner-steps", type=int, default=8)
+    parser.add_argument("--loss3-svf-lr", type=float, default=0.05)
+    parser.add_argument("--loss3-svf-max-vel-ratio", type=float, default=0.04)
+    parser.add_argument("--loss3-svf-int-steps", type=int, default=5)
+    parser.add_argument("--loss3-svf-mag-weight", type=float, default=0.01)
+    parser.add_argument("--loss3-svf-smooth-weight", type=float, default=0.05)
     parser.add_argument("--mode-spec", default="all_w", help="10 chars for frames 1..9 plus target, or preset name.")
     parser.add_argument("--require-target-w", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--clean-target-source", choices=["dataset", "solver"], default="dataset")
