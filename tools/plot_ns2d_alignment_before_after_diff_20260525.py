@@ -26,14 +26,14 @@ spec.loader.exec_module(alt)
 base = alt.base
 
 EXPLICIT_KEYS = tuple(key for key in alt.ALT_METRICS if key in alt.EXPLICIT_ALIGNMENT_KEYS)
-FRAME_INDICES = (0, -1)
+FRAME_INDICES = (-1,)
 COLUMNS = [
     ("model", "Model Output\nBefore Warp", "sequential"),
-    ("aligned", "Aligned Model\nAfter Warp", "sequential"),
+    ("aligned", "Actual Loss-Warped\nModel", "sequential"),
     ("diff", "Aligned - Model\nPointwise Diff", "diverging"),
     ("solver", "Solver Output", "sequential"),
     ("model_solver_diff", "Model - Solver\nBefore Warp", "diverging"),
-    ("aligned_solver_diff", "Aligned Model\n- Solver", "diverging"),
+    ("aligned_solver_diff", "Loss-Warped Model\n- Solver", "diverging"),
     ("warp_mag", "Warp Magnitude", "sequential"),
 ]
 
@@ -81,9 +81,24 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
             real_index = model_stack.shape[0] + frame_index if frame_index < 0 else frame_index
             model = finite(model_stack[real_index])
             solver = finite(solver_stack[real_index])
-            aligned, warp_mag, source = alt.aligned_model_for_case(case, model, solver)
-            aligned = finite(aligned)
-            warp_mag = finite(warp_mag)
+            saved_available = False
+            if "loss3_alignment_available" in case.step_trace:
+                available_arr = np.asarray(case.step_trace["loss3_alignment_available"])
+                if available_arr.ndim > 0 and real_index < available_arr.shape[0]:
+                    saved_available = bool(available_arr[real_index])
+            if (
+                saved_available
+                and "loss3_aligned_model_final" in case.step_trace
+                and "loss3_alignment_warp_mag" in case.step_trace
+            ):
+                aligned = finite(case.step_trace["loss3_aligned_model_final"][real_index])
+                warp_mag = finite(case.step_trace["loss3_alignment_warp_mag"][real_index])
+                source_arr = np.asarray(case.step_trace.get("loss3_alignment_source", []))
+                source = str(source_arr[real_index]) if source_arr.ndim > 0 and real_index < source_arr.shape[0] else "saved_runtime_loss_warp"
+            else:
+                aligned, warp_mag, source = alt.aligned_model_for_case(case, model, solver)
+                aligned = finite(aligned)
+                warp_mag = finite(warp_mag)
             diff = finite(aligned - model)
             model_solver_diff = finite(model - solver)
             aligned_solver_diff = finite(aligned - solver)
@@ -118,15 +133,26 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
                 "alignment_source": source,
                 "source_npz": relpath(case.candidate.path),
             }
+            delta_l2 = summary["l2_aligned_minus_solver_delta_vs_raw"]
+            if not np.isfinite(delta_l2):
+                status = "NONFINITE"
+            elif delta_l2 > 1e-8:
+                status = "WORSE"
+            elif delta_l2 < -1e-8:
+                status = "IMPROVED"
+            else:
+                status = "UNCHANGED"
             rows.append({
                 "label": f"{case.candidate.label} | step {k}",
                 "notes": [
-                    f"Loss3/W-Q L2 model-solver: {base.fmt(summary['l2_model_minus_solver'], 4)}",
-                    f"Loss3/W-Q L2 aligned-solver: {base.fmt(summary['l2_aligned_minus_solver'], 4)}",
-                    f"aligned-model mean abs: {base.fmt(summary['mean_abs_aligned_minus_model'], 4)}",
-                    f"aligned-model max abs: {base.fmt(summary['max_abs_aligned_minus_model'], 4)}",
-                    f"nonzero pixels: {summary['nonzero_pixels_gt_1e-8']}/{summary['pixels']}",
-                    f"warp mean/max: {base.fmt(summary['warp_mean'], 4)} / {base.fmt(summary['warp_max'], 4)}",
+                    f"raw W-Q L2: {base.fmt(summary['l2_model_minus_solver'], 4)}",
+                    f"aligned W-Q L2: {base.fmt(summary['l2_aligned_minus_solver'], 4)}",
+                    f"delta: {base.fmt(delta_l2, 4)} {status}",
+                    f"aligned-model mean/max abs:",
+                    f"{base.fmt(summary['mean_abs_aligned_minus_model'], 4)} / {base.fmt(summary['max_abs_aligned_minus_model'], 4)}",
+                    f"nonzero: {summary['nonzero_pixels_gt_1e-8']}/{summary['pixels']}",
+                    f"warp mean/max:",
+                    f"{base.fmt(summary['warp_mean'], 4)} / {base.fmt(summary['warp_max'], 4)}",
                 ],
                 "model": model,
                 "aligned": aligned,
@@ -160,7 +186,6 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
         + [r["model_solver_diff"] for r in rows]
         + [r["aligned_solver_diff"] for r in rows]
     )
-    warp_lim = base.limits_sequential([r["warp_mag"] for r in rows])
     lims = {
         "model": (*state_lim, "sequential"),
         "aligned": (*state_lim, "sequential"),
@@ -168,7 +193,6 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
         "solver": (*state_lim, "sequential"),
         "model_solver_diff": (*diff_lim, "diverging"),
         "aligned_solver_diff": (*diff_lim, "diverging"),
-        "warp_mag": (*warp_lim, "sequential"),
     }
 
     margin = 34
@@ -190,14 +214,17 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
 
     canvas = Image.new("RGB", (width, height), (250, 250, 248))
     draw = ImageDraw.Draw(canvas)
-    draw.text((margin, 18), "NS2D Explicit Alignment Diagnostic | Warp Before/After Difference", font=base.FONT_TITLE, fill=(22, 27, 32))
-    draw.text((margin, 54), "Rows show attack step 0 and the final saved step for every explicit warp method: Affine, Local warp, Homography, TPS, Elastic, and SVF.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
-    draw.text((margin, 78), "Loss labels use the same Loss3/W-Q L2 distance before and after the plotting-time alignment warp; alignment is recomputed for visualization with the matching official backend.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
-    draw.text((margin, 102), "Aligned - Model shows the direct pixelwise effect of the warp; Model - Solver and Aligned - Solver show raw vs aligned errors.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
+    draw.text((margin, 18), "NS2D Explicit Warp Diagnostic | Actual Loss-Warp Before/After", font=base.FONT_TITLE, fill=(22, 27, 32))
+    draw.text((margin, 54), "Rows show the final saved attack step; warp columns use each method's actual loss inner objective and budget.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
+    draw.text((margin, 78), "W-Q L2 is reported before/after only as a diagnostic; the warp itself is the actual loss warp, not L2-only visualization.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
+    draw.text((margin, 102), "Loss-Warped - Model shows the direct pixelwise effect of the actual loss warp; no identity fallback is used.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
 
     for ci, (key, label, _) in enumerate(COLUMNS):
         x = x0 + ci * (col_w + col_gap)
         draw_multiline(draw, (x, y_cols + 4), label, base.FONT_COL, (32, 37, 42), line_gap=2)
+        if key == "warp_mag":
+            draw.text((x, y_cols + 42), "per-row scale", font=base.FONT_TINY, fill=(94, 98, 106))
+            continue
         vmin, vmax, cmap = lims[key]
         bar = base.vertical_colorbar(grid_h, bar_w, cmap, vmin, vmax)
         bar_x = x + img + 6
@@ -219,10 +246,23 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
             note_y += 26
         for ci, (key, _, _) in enumerate(COLUMNS):
             x = x0 + ci * (col_w + col_gap)
-            vmin, vmax, cmap = lims[key]
+            if key == "warp_mag":
+                vmin, vmax = base.limits_sequential([row[key]])
+                cmap = "sequential"
+            else:
+                vmin, vmax, cmap = lims[key]
             tile = Image.fromarray(base.colorize(row[key], cmap, vmin, vmax), mode="RGB").resize((img, img), Image.Resampling.BILINEAR)
             canvas.paste(tile, (x, y))
             draw.rectangle((x, y, x + img, y + img), outline=(40, 44, 49), width=1)
+            if key == "warp_mag":
+                bar_x = x + img + 6
+                bar = base.vertical_colorbar(img, bar_w, cmap, vmin, vmax)
+                canvas.paste(bar, (bar_x, y))
+                draw.rectangle((bar_x, y, bar_x + bar_w, y + img), outline=(75, 80, 85), width=1)
+                draw.text((bar_x + bar_w + 3, y - 2), base.fmt(vmax, 3), font=base.FONT_TINY, fill=(70, 73, 78))
+                min_label = base.fmt(vmin, 3)
+                bbox = draw.textbbox((0, 0), min_label, font=base.FONT_TINY)
+                draw.text((bar_x + bar_w + 3, y + img - (bbox[3] - bbox[1]) + 1), min_label, font=base.FONT_TINY, fill=(70, 73, 78))
 
     out_png = out_dir / "eps32_alpha10_steepest_add_alignment_before_after_diff_dataset0.png"
     out_csv = out_dir / "alignment_before_after_diff_summary.csv"
@@ -249,6 +289,8 @@ def main() -> int:
         "frame_indices": list(FRAME_INDICES),
         "explicit_methods": list(EXPLICIT_KEYS),
         "columns": [label for _, label, _ in COLUMNS],
+        "warp_magnitude_color_scale": "per explicit-warp row, not shared across methods",
+        "alignment_visualization_policy": "actual loss warp objective and budget inferred from run; no identity fallback; W-Q L2 before/after is diagnostic only",
     }
     manifest_path = args.out_dir / "alignment_before_after_diff_manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

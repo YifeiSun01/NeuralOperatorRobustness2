@@ -568,11 +568,47 @@ def stable_int_seed(*parts: Any) -> int:
     return int(digest[:16], 16) % (2**63 - 1)
 
 
+def load_initial_delta_from_npz(problem: "NS2DRecurrentProblem", dataset_indices: list[int]):
+    import torch
+
+    args = problem.args
+    path = getattr(args, "initial_delta_npz", None)
+    if path is None:
+        return None
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(f"initial delta npz not found: {path}")
+    key = str(getattr(args, "initial_delta_key", "final_delta"))
+    with np.load(path) as data:
+        if key not in data:
+            raise KeyError(f"initial delta key {key!r} not found in {path}; available keys: {list(data.files)}")
+        delta_all = np.asarray(data[key], dtype=np.float32)
+        source_indices = np.asarray(data.get("dataset_indices", []), dtype=np.int64)
+    if source_indices.size:
+        index_to_pos = {int(index): pos for pos, index in enumerate(source_indices.tolist())}
+        missing = [int(index) for index in dataset_indices if int(index) not in index_to_pos]
+        if missing:
+            raise ValueError(f"initial delta npz {path} is missing dataset indices {missing}; source has {source_indices.tolist()}")
+        selected = delta_all[[index_to_pos[int(index)] for index in dataset_indices]]
+    else:
+        if delta_all.shape[0] != len(dataset_indices):
+            raise ValueError(f"initial delta npz {path} has no dataset_indices and batch mismatch: {delta_all.shape[0]} vs {len(dataset_indices)}")
+        selected = delta_all
+    if tuple(selected.shape) != tuple(problem.x0.shape):
+        raise ValueError(f"initial delta shape {selected.shape} does not match current batch shape {tuple(problem.x0.shape)}")
+    delta = torch.as_tensor(selected, device=problem.device, dtype=problem.x0.dtype)
+    return project_delta(delta, args.epsilon, args.p_order).detach()
+
+
 def initial_delta_for_loss(problem: "NS2DRecurrentProblem", loss_type: str, dataset_indices: list[int]):
     import torch
 
-    delta = torch.zeros_like(problem.x0)
     args = problem.args
+    resumed = load_initial_delta_from_npz(problem, dataset_indices)
+    if resumed is not None:
+        return resumed
+
+    delta = torch.zeros_like(problem.x0)
     if loss_type != "loss1" or not args.loss1_random_start:
         return delta
     radius = float(args.loss1_random_start_fraction) * float(args.epsilon)
@@ -706,6 +742,7 @@ class NS2DRecurrentProblem:
             "loss3": loss3_result.values,
         }
         aux["loss3_metric_diagnostics"] = loss3_result.diagnostics
+        aux["loss3_metric_alignment_fields"] = loss3_result.alignment_fields
         return losses, pred, g_delta, aux
 
     def active_losses(self, x_adv, loss_type: str):
@@ -723,6 +760,7 @@ class NS2DRecurrentProblem:
             loss3_result = self.loss3_metric(pred, g_delta)
             losses["loss3"] = loss3_result.values
             aux["loss3_metric_diagnostics"] = loss3_result.diagnostics
+            aux["loss3_metric_alignment_fields"] = loss3_result.alignment_fields
         return losses, pred, g_delta, aux
 
     def all_w_final_outputs(self, x_adv, source: str = "all_w_final_outputs"):
@@ -1137,7 +1175,31 @@ def final_state_metric_rows(dataset_indices: list[int], arrays: dict[str, np.nda
     return rows
 
 
-def save_final_state_outputs(problem: NS2DRecurrentProblem, delta, dataset_indices: list[int], method_dir: Path) -> dict[str, Any]:
+def loss3_alignment_fields_to_arrays(fields: dict[str, Any] | None, prefix: str) -> dict[str, Any]:
+    if not fields:
+        return {}
+    return {
+        f"{prefix}_loss3_aligned_model_final": tensor_to_numpy(fields["aligned_model"]).astype(np.float32),
+        f"{prefix}_loss3_aligned_model_minus_solver": tensor_to_numpy(fields["aligned_model_minus_solver"]).astype(np.float32),
+        f"{prefix}_loss3_alignment_warp_mag": tensor_to_numpy(fields["warp_mag"]).astype(np.float32),
+        f"{prefix}_loss3_alignment_available": np.asarray(True, dtype=np.bool_),
+        f"{prefix}_loss3_alignment_source": np.asarray(str(fields.get("source", "unknown"))),
+    }
+
+
+def loss3_alignment_arrays(problem: NS2DRecurrentProblem, pred, target, prefix: str) -> dict[str, Any]:
+    if not hasattr(problem.loss3_metric, "aligned_fields"):
+        return {}
+    return loss3_alignment_fields_to_arrays(problem.loss3_metric.aligned_fields(pred.detach(), target.detach()), prefix)
+
+
+def save_final_state_outputs(
+    problem: NS2DRecurrentProblem,
+    delta,
+    dataset_indices: list[int],
+    method_dir: Path,
+    runtime_adv_alignment_fields: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     if not problem.args.record_final_state_outputs:
         return {"record_final_state_outputs": False}
 
@@ -1166,6 +1228,11 @@ def save_final_state_outputs(problem: NS2DRecurrentProblem, delta, dataset_indic
         "clean_loss3_metric": tensor_to_numpy(clean_metric_result.values.detach()).astype(np.float32),
         "adv_loss3_metric": tensor_to_numpy(adv_metric_result.values.detach()).astype(np.float32),
     }
+    arrays.update(loss3_alignment_arrays(problem, clean_model, clean_solver, "clean"))
+    if runtime_adv_alignment_fields:
+        arrays.update(loss3_alignment_fields_to_arrays(runtime_adv_alignment_fields, "adv"))
+    else:
+        arrays.update(loss3_alignment_arrays(problem, adv_model, adv_solver, "adv"))
     npz_path = method_dir / "final_state_outputs.npz"
     np.savez_compressed(npz_path, **arrays)
     metric_rows = final_state_metric_rows(dataset_indices, arrays)
@@ -1203,10 +1270,26 @@ def init_step_sample_trace() -> dict[str, list[Any]]:
         "adv_model_final": [],
         "adv_solver_final": [],
         "adv_model_minus_solver": [],
+        "loss3_aligned_model_final": [],
+        "loss3_aligned_model_minus_solver": [],
+        "loss3_alignment_warp_mag": [],
+        "loss3_alignment_available": [],
+        "loss3_alignment_source": [],
     }
 
 
-def append_step_sample_trace(problem: NS2DRecurrentProblem, trace: dict[str, list[Any]], k: int, delta, x_adv, grad, direction, all_w_pred, all_w_target) -> None:
+def append_step_sample_trace(
+    problem: NS2DRecurrentProblem,
+    trace: dict[str, list[Any]],
+    k: int,
+    delta,
+    x_adv,
+    grad,
+    direction,
+    all_w_pred,
+    all_w_target,
+    loss3_alignment_fields: dict[str, Any] | None = None,
+) -> None:
     pos = int(problem.args.record_step_sample_position)
     if pos < 0 or pos >= x_adv.shape[0]:
         return
@@ -1227,9 +1310,36 @@ def append_step_sample_trace(problem: NS2DRecurrentProblem, trace: dict[str, lis
         trace["direction_available"].append(np.asarray(False, dtype=np.bool_))
     pred = all_w_pred.detach()[pos]
     target = all_w_target.detach()[pos]
-    trace["adv_model_final"].append(tensor_to_numpy(pred).astype(np.float32))
-    trace["adv_solver_final"].append(tensor_to_numpy(target).astype(np.float32))
+    pred_np = tensor_to_numpy(pred).astype(np.float32)
+    target_np = tensor_to_numpy(target).astype(np.float32)
+    trace["adv_model_final"].append(pred_np)
+    trace["adv_solver_final"].append(target_np)
     trace["adv_model_minus_solver"].append(tensor_to_numpy(pred - target).astype(np.float32))
+    alignment = loss3_alignment_fields
+    if alignment is None and hasattr(problem.loss3_metric, "aligned_fields"):
+        alignment = problem.loss3_metric.aligned_fields(
+            all_w_pred.detach()[pos : pos + 1],
+            all_w_target.detach()[pos : pos + 1],
+        )
+    if alignment:
+        aligned_all = tensor_to_numpy(alignment["aligned_model"]).astype(np.float32)
+        aligned_diff_all = tensor_to_numpy(alignment["aligned_model_minus_solver"]).astype(np.float32)
+        warp_mag_all = tensor_to_numpy(alignment["warp_mag"]).astype(np.float32)
+        sample_pos = pos if aligned_all.shape[0] > pos else 0
+        aligned = aligned_all[sample_pos]
+        aligned_diff = aligned_diff_all[sample_pos]
+        warp_mag = warp_mag_all[sample_pos]
+        trace["loss3_aligned_model_final"].append(aligned)
+        trace["loss3_aligned_model_minus_solver"].append(aligned_diff)
+        trace["loss3_alignment_warp_mag"].append(warp_mag)
+        trace["loss3_alignment_available"].append(np.asarray(True, dtype=np.bool_))
+        trace["loss3_alignment_source"].append(str(alignment.get("source", "unknown")))
+    else:
+        trace["loss3_aligned_model_final"].append(pred_np.copy())
+        trace["loss3_aligned_model_minus_solver"].append((pred_np - target_np).astype(np.float32))
+        trace["loss3_alignment_warp_mag"].append(np.zeros_like(pred_np, dtype=np.float32))
+        trace["loss3_alignment_available"].append(np.asarray(False, dtype=np.bool_))
+        trace["loss3_alignment_source"].append("no_explicit_alignment")
 
 
 def save_step_sample_trace(problem: NS2DRecurrentProblem, trace: dict[str, list[Any]], sample_rows: list[dict[str, Any]], dataset_indices: list[int], method_dir: Path) -> dict[str, Any]:
@@ -1259,6 +1369,11 @@ def save_step_sample_trace(problem: NS2DRecurrentProblem, trace: dict[str, list[
         "adv_model_final": np.stack(trace["adv_model_final"], axis=0),
         "adv_solver_final": np.stack(trace["adv_solver_final"], axis=0),
         "adv_model_minus_solver": np.stack(trace["adv_model_minus_solver"], axis=0),
+        "loss3_aligned_model_final": np.stack(trace["loss3_aligned_model_final"], axis=0),
+        "loss3_aligned_model_minus_solver": np.stack(trace["loss3_aligned_model_minus_solver"], axis=0),
+        "loss3_alignment_warp_mag": np.stack(trace["loss3_alignment_warp_mag"], axis=0),
+        "loss3_alignment_available": np.asarray(trace["loss3_alignment_available"], dtype=np.bool_),
+        "loss3_alignment_source": np.asarray(trace["loss3_alignment_source"], dtype="U128"),
     }
     np.savez_compressed(trace_path, **payload)
     metric_rows = [row for row in sample_rows if int(row.get("sample_position", -1)) == pos and int(row.get("k", -1)) in set(int(v) for v in payload["k"])]
@@ -1280,18 +1395,24 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
     import torch
 
     delta = initial_delta_for_loss(problem, loss_type, dataset_indices)
+    step_offset = int(getattr(problem.args, "initial_step_offset", 0) or 0)
     initial_delta_summary = delta_stats(delta, problem.args.p_order)
     step_rows = []
     sample_rows = []
     trajectory = {"k": [], "delta": [], "x_adv": []}
     step_trace = init_step_sample_trace()
+    last_runtime_adv_alignment_fields = None
     start = time.perf_counter()
 
     for k in range(problem.args.steps + 1):
+        record_k = step_offset + k
         delta = delta.detach()
         x_adv = (problem.x0 + delta).detach().requires_grad_(k < problem.args.steps)
         losses, pred_active, target_active, active_aux = problem.active_losses(x_adv, loss_type)
         loss3_metric_diag = metric_diag_to_numpy(active_aux.get("loss3_metric_diagnostics") if isinstance(active_aux, dict) else None)
+        active_loss3_alignment_fields = active_aux.get("loss3_metric_alignment_fields") if isinstance(active_aux, dict) else None
+        if k >= problem.args.steps and loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww":
+            last_runtime_adv_alignment_fields = active_loss3_alignment_fields
         objective = losses[loss_type].sum()
         grad = direction = projected = None
         if k < problem.args.steps:
@@ -1300,8 +1421,9 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             direction = method_direction(spec, grad, problem.args.p_order)
             _, projected = propose_delta(spec, delta, direction, problem.args.epsilon, problem.args.alpha, problem.args.p_order)
 
-        true_loss_needed = int(problem.args.true_loss_every) > 0 and (k % int(problem.args.true_loss_every) == 0 or k >= problem.args.steps)
-        record_trace_this_step = should_record_step_sample(problem, k)
+        true_loss_needed = int(problem.args.true_loss_every) > 0 and (record_k % int(problem.args.true_loss_every) == 0 or k >= problem.args.steps)
+        record_every = max(1, int(problem.args.record_step_sample_every))
+        record_trace_this_step = bool(problem.args.record_step_sample_outputs) and (record_k % record_every == 0 or k >= problem.args.steps)
         true_pred_t = true_target_t = None
         if true_loss_needed or record_trace_this_step:
             if loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww":
@@ -1336,7 +1458,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             loss_type,
             spec.name,
             problem.mode_spec,
-            k,
+            record_k,
             dataset_indices,
             losses_np,
             delta_l2_np,
@@ -1352,10 +1474,11 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         if record_trace_this_step:
             if true_pred_t is None or true_target_t is None:
                 _, true_pred_t, true_target_t = problem.all_w_final_outputs(x_adv, source="step_trace_only")
-            append_step_sample_trace(problem, step_trace, k, delta, x_adv, grad, direction, true_pred_t, true_target_t)
-        if k in problem.args.save_steps:
+            trace_alignment_fields = active_loss3_alignment_fields if loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww" else None
+            append_step_sample_trace(problem, step_trace, record_k, delta, x_adv, grad, direction, true_pred_t, true_target_t, trace_alignment_fields)
+        if record_k in problem.args.save_steps:
             delta_np = tensor_to_numpy(delta).astype(np.float32)
-            trajectory["k"].append(np.asarray(k, dtype=np.int64))
+            trajectory["k"].append(np.asarray(record_k, dtype=np.int64))
             trajectory["delta"].append(delta_np)
             trajectory["x_adv"].append(tensor_to_numpy((problem.x0 + delta).detach()).astype(np.float32))
 
@@ -1391,7 +1514,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         final_delta=final_delta_np,
         final_x_adv=final_x_adv_np,
     )
-    final_state_summary = save_final_state_outputs(problem, delta, dataset_indices, method_dir)
+    final_state_summary = save_final_state_outputs(problem, delta, dataset_indices, method_dir, last_runtime_adv_alignment_fields)
     step_trace_summary = save_step_sample_trace(problem, step_trace, sample_rows, dataset_indices, method_dir)
     if trajectory["k"]:
         np.savez_compressed(method_dir / "trajectory_samples.npz", k=np.asarray(trajectory["k"], dtype=np.int64), delta=np.stack(trajectory["delta"], axis=0), x_adv=np.stack(trajectory["x_adv"], axis=0))
@@ -1402,6 +1525,10 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
         "loss3_metric": str(problem.args.loss3_metric),
         "dataset_indices": [int(i) for i in dataset_indices],
         "steps": int(problem.args.steps),
+        "initial_step_offset": int(step_offset),
+        "total_steps_after_run": int(step_offset + problem.args.steps),
+        "initial_delta_npz": str(getattr(problem.args, "initial_delta_npz", None)) if getattr(problem.args, "initial_delta_npz", None) is not None else None,
+        "initial_delta_key": str(getattr(problem.args, "initial_delta_key", "final_delta")),
         "epsilon": float(problem.args.epsilon),
         "alpha": float(problem.args.alpha),
         "p_order": norm_name(problem.args.p_order),
@@ -1589,6 +1716,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--p", default="2")
     parser.add_argument("--q", default="2")
     parser.add_argument("--save-steps", nargs="*", type=int, default=[], help="Optional trajectory checkpoints to save. Final delta is always saved separately; default saves no per-step trajectory arrays.")
+    parser.add_argument("--initial-delta-npz", type=Path, default=None, help="Optional final_delta_and_metrics.npz to initialize delta for continuation runs.")
+    parser.add_argument("--initial-delta-key", default="final_delta", help="Array key to load from --initial-delta-npz.")
+    parser.add_argument("--initial-step-offset", type=int, default=0, help="Global step offset used when continuing from an earlier run, e.g. 25 for a 25+75 run.")
     parser.add_argument("--true-loss-every", type=int, default=1, help="Evaluate the full all-W solver true loss every N attack steps; 1 records the full true-loss curve.")
     parser.add_argument("--record-final-state-outputs", action=argparse.BooleanOptionalAction, default=True, help="Save final clean/perturbed initial states plus all-W FNO and solver final outputs for every sample in the attack batch.")
     parser.add_argument("--record-step-sample-outputs", action=argparse.BooleanOptionalAction, default=True, help="Save per-step final delta, x_adv, gradients, and all-W FNO/solver final outputs for one sample position in each attack batch.")

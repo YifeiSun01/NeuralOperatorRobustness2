@@ -137,8 +137,8 @@ COLUMN_SPECS = [
     ("model", "Model Output", "sequential"),
     ("solver", "Solver Output", "sequential"),
     ("diff", "Model - Solver", "diverging"),
-    ("aligned_model", "Aligned Model", "sequential"),
-    ("aligned_diff", "Aligned Model - Solver", "diverging"),
+    ("aligned_model", "Actual Loss-Warped Model", "sequential"),
+    ("aligned_diff", "Loss-Warped Model - Solver", "diverging"),
     ("warp_mag", "Alignment Warp", "sequential"),
 ]
 
@@ -460,10 +460,11 @@ def relpath(path: Path) -> str:
         return str(path)
 
 
-def discover_alt_dir(alt_root: Path, metric: str) -> Path:
+def discover_alt_dir(alt_root: Path, metric: str) -> Path | None:
     final_npzs = sorted((alt_root / metric).glob("mode_*/batch_0000_0009/loss3/steepest_add/final_state_outputs.npz"))
     if not final_npzs:
-        raise SystemExit(f"Expected at least one completed method dir for {metric}, found 0 under {alt_root}")
+        print(f"WARNING: skipping missing/incomplete metric {metric}; found 0 completed runs under {alt_root}", file=sys.stderr)
+        return None
     if len(final_npzs) > 1:
         print(f"WARNING: found {len(final_npzs)} completed runs for {metric}; using latest path {final_npzs[-1]}", file=sys.stderr)
     return final_npzs[-1].parent
@@ -472,7 +473,10 @@ def discover_alt_dir(alt_root: Path, metric: str) -> Path:
 def build_candidates(baseline_dir: Path, alt_root: Path) -> list[Candidate]:
     items = [Candidate("baseline_loss3", LABELS["baseline_loss3"], SHORT_LABELS["baseline_loss3"], baseline_dir / "final_state_outputs.npz")]
     for metric in ALT_METRICS:
-        items.append(Candidate(metric, LABELS[metric], SHORT_LABELS[metric], discover_alt_dir(alt_root, metric) / "final_state_outputs.npz"))
+        method_dir = discover_alt_dir(alt_root, metric)
+        if method_dir is None:
+            continue
+        items.append(Candidate(metric, LABELS[metric], SHORT_LABELS[metric], method_dir / "final_state_outputs.npz"))
     return items
 
 
@@ -716,8 +720,8 @@ ATTACK_FIELD_KEYS = {
     "model": "adv_model_final",
     "solver": "adv_solver_final",
     "diff": "adv_model_minus_solver",
-    "aligned_model": "recomputed_offline_alignment_of_adv_model_final",
-    "aligned_diff": "recomputed_offline_alignment_model_minus_adv_solver_final",
+    "aligned_model": "recomputed_actual_loss_warp_of_adv_model_final",
+    "aligned_diff": "recomputed_actual_loss_warped_model_minus_adv_solver_final",
     "warp_mag": "recomputed_offline_alignment_grid_magnitude",
 }
 CLEAN_FIELD_KEYS = {
@@ -853,6 +857,9 @@ def plot_alignment_args_for_case(case: Case) -> SimpleNamespace:
     params = dict(BASE_PLOT_ALIGNMENT_ARGS)
     preset = infer_budget_preset(case.candidate.path)
     params.update(BUDGET_PRESET_OVERRIDES[preset])
+    # Use the same alignment objective and budget family as the attack/loss run.
+    # For the current very_very_strong runs this means DISTS-based inner
+    # registration, not a separate L2 visualization-only warp.
     return SimpleNamespace(**params)
 
 
@@ -918,6 +925,36 @@ def _tps_control_warp_mag(points_src, points_dst, height: int, width: int) -> np
     return _vector_norm_np(dense)
 
 
+def _wq_l2_np(x: np.ndarray, y: np.ndarray) -> float:
+    diff = np.nan_to_num(np.asarray(x, dtype=np.float64) - np.asarray(y, dtype=np.float64), nan=0.0, posinf=0.0, neginf=0.0)
+    return float(np.linalg.norm(diff.reshape(-1), ord=2))
+
+
+def _safe_wq_alignment(
+    model: np.ndarray,
+    solver: np.ndarray,
+    aligned: np.ndarray,
+    warp_mag: np.ndarray,
+    source: str,
+) -> tuple[np.ndarray, np.ndarray, str]:
+    raw_l2 = _wq_l2_np(model, solver)
+    aligned_l2 = _wq_l2_np(aligned, solver)
+    delta = aligned_l2 - raw_l2
+    if not np.isfinite(aligned_l2):
+        status = "NONFINITE"
+    elif delta > max(1e-8, abs(raw_l2) * 1e-8):
+        status = "WORSE"
+    elif delta < -max(1e-8, abs(raw_l2) * 1e-8):
+        status = "IMPROVED"
+    else:
+        status = "UNCHANGED"
+    return (
+        aligned,
+        warp_mag,
+        f"{source}_actual_loss_warp_no_identity_fallback_wq_l2_status={status}_raw_wq_l2={raw_l2:.9g}_aligned_wq_l2={aligned_l2:.9g}_delta={delta:.9g}",
+    )
+
+
 def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -> tuple[np.ndarray, np.ndarray, str]:
     import torch
 
@@ -931,17 +968,23 @@ def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -
     if key == "affine_dists":
         matrix, _ = computer._estimate_affine(model_norm, solver_norm)
         aligned = loss_impl._warp_affine_kornia(model_raw, matrix.to(dtype=model_raw.dtype, device=model_raw.device))
-        return _tensor_image_to_np(aligned), _projective_warp_mag(matrix, height, width), f"offline_recomputed_kornia_affine_alignment_model_to_solver_budget_{preset}"
+        aligned_np = _tensor_image_to_np(aligned)
+        warp_np = _projective_warp_mag(matrix, height, width)
+        return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_affine_alignment_model_to_solver_budget_{preset}")
 
     if key == "local_warp_dists":
         disp, _ = computer._estimate_local_disp(model_norm, solver_norm)
         aligned = computer._warp_dense_monai_xy(model_raw, disp.to(dtype=model_raw.dtype, device=model_raw.device))
-        return _tensor_image_to_np(aligned), _vector_norm_np(disp), f"offline_recomputed_monai_dense_warp_alignment_model_to_solver_budget_{preset}"
+        aligned_np = _tensor_image_to_np(aligned)
+        warp_np = _vector_norm_np(disp)
+        return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_monai_dense_warp_alignment_model_to_solver_budget_{preset}")
 
     if key == "homography_dists":
         matrix, _ = computer._estimate_homography(model_norm, solver_norm)
         aligned = loss_impl._warp_perspective_kornia(model_raw, matrix.to(dtype=model_raw.dtype, device=model_raw.device))
-        return _tensor_image_to_np(aligned), _projective_warp_mag(matrix, height, width), f"offline_recomputed_kornia_homography_alignment_model_to_solver_budget_{preset}"
+        aligned_np = _tensor_image_to_np(aligned)
+        warp_np = _projective_warp_mag(matrix, height, width)
+        return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_homography_alignment_model_to_solver_budget_{preset}")
 
     if key == "tps_dists":
         points_src, points_dst, _ = computer._estimate_tps(model_norm, solver_norm)
@@ -950,7 +993,9 @@ def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -
             points_src.to(dtype=model_raw.dtype, device=model_raw.device),
             points_dst.to(dtype=model_raw.dtype, device=model_raw.device),
         )
-        return _tensor_image_to_np(aligned), _tps_control_warp_mag(points_src, points_dst, height, width), f"offline_recomputed_kornia_tps_alignment_model_to_solver_budget_{preset}"
+        aligned_np = _tensor_image_to_np(aligned)
+        warp_np = _tps_control_warp_mag(points_src, points_dst, height, width)
+        return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_tps_alignment_model_to_solver_budget_{preset}")
 
     if key == "elastic_dists":
         noise, _ = computer._estimate_elastic_disp(model_norm, solver_norm)
@@ -960,12 +1005,16 @@ def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -
             computer.elastic_smooth_kernel,
             computer.elastic_smooth_passes,
         )
-        return _tensor_image_to_np(aligned), _vector_norm_np(noise), f"offline_recomputed_kornia_elastic_alignment_model_to_solver_budget_{preset}"
+        aligned_np = _tensor_image_to_np(aligned)
+        warp_np = _vector_norm_np(noise)
+        return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_elastic_alignment_model_to_solver_budget_{preset}")
 
     if key == "svf_dists":
         ddf, _ = computer._estimate_svf_disp(model_norm, solver_norm)
         aligned = computer._warp_dense_monai_xy(model_raw, ddf.to(dtype=model_raw.dtype, device=model_raw.device))
-        return _tensor_image_to_np(aligned), _vector_norm_np(ddf), f"offline_recomputed_monai_svf_alignment_model_to_solver_budget_{preset}"
+        aligned_np = _tensor_image_to_np(aligned)
+        warp_np = _vector_norm_np(ddf)
+        return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_monai_svf_alignment_model_to_solver_budget_{preset}")
 
     return model.copy(), np.zeros_like(model), "no_explicit_alignment_for_this_metric"
 
@@ -1002,7 +1051,20 @@ def field_bundle_for_clean(case: Case) -> tuple[dict[str, np.ndarray], dict[str,
 def field_bundle_for_attack(case: Case) -> tuple[dict[str, np.ndarray], dict[str, str]]:
     model = base.finite(case.data["adv_model_final"][SAMPLE_POSITION])
     solver = base.finite(case.data["adv_solver_final"][SAMPLE_POSITION])
-    aligned_model, warp_mag, alignment_source = aligned_model_for_case(case, model, solver)
+    keys = dict(ATTACK_FIELD_KEYS)
+    if (
+        "adv_loss3_aligned_model_final" in case.data
+        and "adv_loss3_alignment_warp_mag" in case.data
+        and bool(np.asarray(case.data.get("adv_loss3_alignment_available", False)).reshape(-1)[0])
+    ):
+        aligned_model = base.finite(case.data["adv_loss3_aligned_model_final"][SAMPLE_POSITION])
+        warp_mag = base.finite(case.data["adv_loss3_alignment_warp_mag"][SAMPLE_POSITION])
+        alignment_source = str(np.asarray(case.data.get("adv_loss3_alignment_source", "saved_runtime_loss_warp")).reshape(-1)[0])
+        keys["aligned_model"] = "adv_loss3_aligned_model_final"
+        keys["aligned_diff"] = "adv_loss3_aligned_model_minus_solver"
+        keys["warp_mag"] = "adv_loss3_alignment_warp_mag"
+    else:
+        aligned_model, warp_mag, alignment_source = aligned_model_for_case(case, model, solver)
     fields = {
         "initial": base.finite(case.data["x_clean"][SAMPLE_POSITION]),
         "delta": base.finite(case.data["final_delta"][SAMPLE_POSITION]),
@@ -1014,7 +1076,6 @@ def field_bundle_for_attack(case: Case) -> tuple[dict[str, np.ndarray], dict[str
         "aligned_diff": base.finite(aligned_model - solver),
         "warp_mag": base.finite(warp_mag),
     }
-    keys = dict(ATTACK_FIELD_KEYS)
     keys["alignment_source"] = alignment_source
     return fields, keys
 
@@ -1104,10 +1165,8 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
     explicit_rows = [r for r in rows if r.get("has_explicit_alignment")]
     aligned_state_arrays = [r["aligned_model"] for r in explicit_rows]
     aligned_diff_arrays = [r["aligned_diff"] for r in explicit_rows]
-    warp_arrays = [r["warp_mag"] for r in explicit_rows]
     state_lim = base.limits_sequential([r["model"] for r in rows] + [r["solver"] for r in rows] + aligned_state_arrays)
     diff_lim = base.limits_diverging([r["diff"] for r in rows] + aligned_diff_arrays)
-    warp_lim = base.limits_sequential(warp_arrays) if warp_arrays else (0.0, 1.0)
     lims = {
         "initial": (*initial_lim, "sequential"),
         "delta": (*delta_lim, "diverging"),
@@ -1117,7 +1176,6 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
         "diff": (*diff_lim, "diverging"),
         "aligned_model": (*state_lim, "sequential"),
         "aligned_diff": (*diff_lim, "diverging"),
-        "warp_mag": (*warp_lim, "sequential"),
     }
 
     row_label_w = 520
@@ -1158,6 +1216,9 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
     for ci, (key, label, _) in enumerate(COLUMN_SPECS):
         x = x0 + ci * (col_w + col_gap)
         draw.text((x, y_cols + 4), label, font=base.FONT_COL, fill=(32, 37, 42))
+        if key == "warp_mag":
+            draw.text((x, y_cols + 24), "per-row scale", font=base.FONT_TINY, fill=(94, 98, 106))
+            continue
         vmin, vmax, cmap = lims[key]
         bar_y = explicit_bar_y if key in ALIGNMENT_COLUMNS else y_grid
         bar_h_current = explicit_bar_h if key in ALIGNMENT_COLUMNS else grid_h
@@ -1197,11 +1258,24 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
             x = x0 + ci * (col_w + col_gap)
             if key in ALIGNMENT_COLUMNS and not row.get("has_explicit_alignment"):
                 continue
-            vmin, vmax, cmap = lims[key]
+            if key == "warp_mag":
+                vmin, vmax = base.limits_sequential([row[key]])
+                cmap = "sequential"
+            else:
+                vmin, vmax, cmap = lims[key]
             tile = Image.fromarray(base.colorize(row[key], cmap, vmin, vmax), mode="RGB").resize((img, img), Image.Resampling.BILINEAR)
             canvas.paste(tile, (x, y))
             outline = (203, 34, 47) if row.get("is_baseline_attack") else (40, 44, 49)
             draw.rectangle((x, y, x + img, y + img), outline=outline, width=3 if row.get("is_baseline_attack") else 1)
+            if key == "warp_mag":
+                bar_x = x + img + 6
+                bar = base.vertical_colorbar(img, bar_w, cmap, vmin, vmax)
+                canvas.paste(bar, (bar_x, y))
+                draw.rectangle((bar_x, y, bar_x + bar_w, y + img), outline=(75, 80, 85), width=1)
+                draw.text((bar_x + bar_w + 3, y - 2), base.fmt(vmax, 3), font=base.FONT_TINY, fill=(70, 73, 78))
+                min_label = base.fmt(vmin, 3)
+                bbox = draw.textbbox((0, 0), min_label, font=base.FONT_TINY)
+                draw.text((bar_x + bar_w + 3, y + img - (bbox[3] - bbox[1]) + 1), min_label, font=base.FONT_TINY, fill=(70, 73, 78))
 
     out_path = out_dir / "eps32_alpha10_steepest_add_altloss_original_cleanstyle_dataset0.png"
     canvas.save(out_path)
@@ -1242,7 +1316,7 @@ def main() -> int:
         "layout": "Original NS2D cleanstyle PIL layout: 2x2 top overlay panels plus heatmap rows, 220px tiles, 540px top panel block.",
         "heatmap_columns": [label for _, label, _ in COLUMN_SPECS],
         "full_loss_names": FULL_LOSS_NAMES,
-        "source_policy": "Each attack heatmap row is built from one run's own final_state_outputs.npz. The first six columns map to x_clean, final_delta, x_adv, adv_model_final, adv_solver_final, and adv_model_minus_solver. The alignment columns are shown only for methods with explicit warp/alignment, affine_dists, local_warp_dists, homography_dists, tps_dists, elastic_dists, and svf_dists; rows without explicit warp leave those cells blank. Alignment fields are recomputed offline from that same model-solver pair for visualization using the corresponding official Kornia/MONAI warp backend and the budget preset inferred from the run directory; the attack NPZ does not store the internal alignment fields. The clean row uses clean_model_final, clean_solver_final, and clean_model_minus_solver from the baseline NPZ, with alignment cells blank.",
+        "source_policy": "Each attack heatmap row is built from one run's own final_state_outputs.npz. The first six columns map to x_clean, final_delta, x_adv, adv_model_final, adv_solver_final, and adv_model_minus_solver. Alignment columns are shown only for explicit warp/alignment methods. New runs prefer saved adv_loss3_aligned_model_final / adv_loss3_alignment_warp_mag fields from the attack NPZ. Old runs that do not contain those fields fall back to offline recomputation from the same model-solver pair using the corresponding official Kornia/MONAI backend and the budget preset inferred from the run directory. No identity fallback is used; raw W-Q L2 status is recorded separately. The clean row uses clean_model_final, clean_solver_final, and clean_model_minus_solver from the baseline NPZ, with alignment cells blank.",
         "attack_field_npz_keys": ATTACK_FIELD_KEYS,
         "clean_field_npz_keys": CLEAN_FIELD_KEYS,
         "top_panels": [
@@ -1252,6 +1326,8 @@ def main() -> int:
             "Final batch mean all-W Loss 3 / W-Q norm bar chart",
         ],
         "loss_curve_policy": "The loss curve is not each method's active optimization objective. It is the same all-W Loss 3 / W-Q norm for every method, recomputed for sample_position=0 as ||adv_model_final - adv_solver_final||_2 from step_sample_trace.npz. Batch per-step all-W Loss 3 was not saved for all samples, so the batch panel uses final_state_metrics.csv final adv_true_loss means instead of a fake batch curve.",
+        "warp_magnitude_color_scale": "Alignment Warp / warp magnitude uses a separate per-row color scale and per-row colorbar, because the warp magnitudes are not comparable visually under one global range.",
+        "alignment_visualization_policy": "Alignment columns use the actual loss warp objective and budget inferred from the run, not a separate visualization-only L2 warp. No identity fallback is used; raw W-Q L2 status is recorded as IMPROVED, UNCHANGED, WORSE, or NONFINITE.",
         "runs": [{"key": c.candidate.key, "label": c.candidate.label, "source_npz": relpath(c.candidate.path)} for c in cases],
     }
     manifest_path = args.out_dir / "manifest.json"

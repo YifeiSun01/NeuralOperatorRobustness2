@@ -21,17 +21,21 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-LOSS3_METRIC_CHOICES = (
-    "qnorm",
-    "dists",
-    "ms_ssim",
-    "scattering2d",
+LOSS3_EXPLICIT_ALIGNMENT_CHOICES = (
     "affine_dists",
     "local_warp_dists",
     "homography_dists",
     "tps_dists",
     "elastic_dists",
     "svf_dists",
+)
+
+LOSS3_METRIC_CHOICES = (
+    "qnorm",
+    "dists",
+    "ms_ssim",
+    "scattering2d",
+    *LOSS3_EXPLICIT_ALIGNMENT_CHOICES,
 )
 
 
@@ -101,13 +105,15 @@ def _warp_affine_kornia(x: torch.Tensor, matrix: torch.Tensor) -> torch.Tensor:
 
 def _warp_perspective_kornia(x: torch.Tensor, matrix: torch.Tensor) -> torch.Tensor:
     KGT = _require_kornia_transform()
+    # get_perspective_transform uses pixel-corner coordinates. With
+    # align_corners=False, even the identity homography is not identity.
     return KGT.warp_perspective(
         x,
         matrix,
         dsize=(x.shape[-2], x.shape[-1]),
         mode="bilinear",
         padding_mode="border",
-        align_corners=False,
+        align_corners=True,
     )
 
 
@@ -121,7 +127,7 @@ def _warp_tps_kornia(x: torch.Tensor, points_src: torch.Tensor, points_dst: torc
         points_src,
         kernel_weights,
         affine_weights,
-        align_corners=False,
+        align_corners=True,
         padding_mode="border",
     )
 
@@ -143,7 +149,7 @@ def _warp_elastic_kornia(
         kernel_size=(kernel, kernel),
         sigma=(sigma_value, sigma_value),
         alpha=(1.0, 1.0),
-        align_corners=False,
+        align_corners=True,
         mode="bilinear",
         padding_mode="border",
     )
@@ -183,6 +189,7 @@ def _detach_diag(diag: dict[str, Any]) -> dict[str, Any]:
 class MetricResult:
     values: torch.Tensor
     diagnostics: dict[str, Any]
+    alignment_fields: dict[str, Any] | None = None
 
 
 class _DISTSAdapter(nn.Module):
@@ -327,23 +334,147 @@ class Loss3MetricComputer(nn.Module):
         return self.dists(x, y)
 
     def _align_loss(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        return self._align_values(x, y).mean()
+
+    def _align_values(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         if self.align_objective == "l2":
-            return _per_sample_mse(x, y).mean()
+            return _per_sample_mse(x, y)
         if self.align_objective == "dists":
-            return self._dists_values(x, y).mean()
+            return self._dists_values(x, y)
         raise ValueError(f"Unknown alignment objective: {self.align_objective}")
 
+    def _update_best_raw(
+        self,
+        best_raw: torch.Tensor,
+        best_score: torch.Tensor,
+        raw: torch.Tensor,
+        score: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        score = score.detach()
+        improved = score < best_score
+        expand_shape = [raw.shape[0]] + [1] * (raw.ndim - 1)
+        best_raw = torch.where(improved.view(*expand_shape), raw.detach(), best_raw)
+        best_score = torch.where(improved, score, best_score)
+        return best_raw, best_score
+
     def _ddf_yx_pixels_from_xy_normalized(self, disp_xy: torch.Tensor, height: int, width: int) -> torch.Tensor:
-        ddf = torch.empty_like(disp_xy)
-        ddf[:, 0] = disp_xy[:, 1] * ((height - 1) / 2.0)
-        ddf[:, 1] = disp_xy[:, 0] * ((width - 1) / 2.0)
-        return ddf
+        ddf_y = disp_xy[:, 1] * ((height - 1) / 2.0)
+        ddf_x = disp_xy[:, 0] * ((width - 1) / 2.0)
+        return torch.stack([ddf_y, ddf_x], dim=1)
 
     def _xy_normalized_from_ddf_yx_pixels(self, ddf: torch.Tensor, height: int, width: int) -> torch.Tensor:
-        disp_xy = torch.empty_like(ddf)
-        disp_xy[:, 0] = ddf[:, 1] * (2.0 / max(1, width - 1))
-        disp_xy[:, 1] = ddf[:, 0] * (2.0 / max(1, height - 1))
-        return disp_xy
+        disp_x = ddf[:, 1] * (2.0 / max(1, width - 1))
+        disp_y = ddf[:, 0] * (2.0 / max(1, height - 1))
+        return torch.stack([disp_x, disp_y], dim=1)
+
+    def has_explicit_alignment(self) -> bool:
+        return self.name in LOSS3_EXPLICIT_ALIGNMENT_CHOICES
+
+    def _match_input_rank(self, image: torch.Tensor, reference: torch.Tensor) -> torch.Tensor:
+        if reference.ndim == 3 and image.ndim == 4 and image.shape[1] == 1:
+            return image[:, 0]
+        return image
+
+    def _pixel_mesh(self, height: int, width: int, dtype: torch.dtype, device: torch.device) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        yy, xx = torch.meshgrid(
+            torch.arange(height, dtype=dtype, device=device),
+            torch.arange(width, dtype=dtype, device=device),
+            indexing="ij",
+        )
+        ones = torch.ones_like(xx)
+        points = torch.stack([xx, yy, ones], dim=-1).reshape(-1, 3).T
+        return xx, yy, points
+
+    def _projective_warp_magnitude(self, matrix: torch.Tensor, height: int, width: int) -> torch.Tensor:
+        if matrix.shape[-2:] == (2, 3):
+            bottom = torch.tensor([0.0, 0.0, 1.0], dtype=matrix.dtype, device=matrix.device).view(1, 1, 3)
+            matrix3 = torch.cat([matrix, bottom.repeat(matrix.shape[0], 1, 1)], dim=1)
+        else:
+            matrix3 = matrix
+        xx, yy, points = self._pixel_mesh(height, width, matrix3.dtype, matrix3.device)
+        mapped = torch.matmul(matrix3, points.unsqueeze(0).expand(matrix3.shape[0], -1, -1))
+        denom = mapped[:, 2].clamp_min(1e-8)
+        mapped_x = (mapped[:, 0] / denom).reshape(matrix3.shape[0], height, width)
+        mapped_y = (mapped[:, 1] / denom).reshape(matrix3.shape[0], height, width)
+        dx = (mapped_x - xx.unsqueeze(0)) * (2.0 / max(1, width - 1))
+        dy = (mapped_y - yy.unsqueeze(0)) * (2.0 / max(1, height - 1))
+        return torch.sqrt(dx.square() + dy.square()).nan_to_num(nan=0.0, posinf=0.0, neginf=0.0)
+
+    def _tps_warp_magnitude(self, points_src: torch.Tensor, points_dst: torch.Tensor, height: int, width: int) -> torch.Tensor:
+        grid_size = int(round(points_src.shape[1] ** 0.5))
+        offsets = (points_dst - points_src).reshape(points_src.shape[0], grid_size, grid_size, 2).permute(0, 3, 1, 2)
+        dense = F.interpolate(offsets, size=(height, width), mode="bilinear", align_corners=False)
+        return torch.linalg.vector_norm(dense.permute(0, 2, 3, 1), ord=2, dim=-1)
+
+    def _dense_warp_magnitude(self, disp_xy: torch.Tensor) -> torch.Tensor:
+        return torch.linalg.vector_norm(disp_xy.permute(0, 2, 3, 1), ord=2, dim=-1)
+
+    def _make_alignment_fields(
+        self,
+        pred: torch.Tensor,
+        target: torch.Tensor,
+        aligned: torch.Tensor,
+        warp_mag: torch.Tensor,
+        source: str,
+        diag: dict[str, Any],
+    ) -> dict[str, Any]:
+        aligned_out = self._match_input_rank(aligned.detach(), pred)
+        target_out = self._match_input_rank(_as_image(target.detach()), target)
+        return {
+            "aligned_model": aligned_out.detach(),
+            "aligned_model_minus_solver": (aligned_out - target_out).detach(),
+            "warp_mag": warp_mag.detach(),
+            "source": source,
+            "diagnostics": _detach_diag(diag),
+        }
+
+    def aligned_fields(self, pred: torch.Tensor, target: torch.Tensor) -> dict[str, Any] | None:
+        if not self.has_explicit_alignment():
+            return None
+        pred_raw = _as_image(pred.detach())
+        target_raw = _as_image(target.detach())
+        pred_img, target_img = self._normalized_images(pred.detach(), target.detach())
+        _, _, height, width = pred_raw.shape
+
+        if self.name == "affine_dists":
+            matrix, diag = self._estimate_affine(pred_img, target_img)
+            aligned = _warp_affine_kornia(pred_raw, matrix.to(device=pred_raw.device, dtype=pred_raw.dtype))
+            warp_mag = self._projective_warp_magnitude(matrix.to(device=pred_raw.device, dtype=pred_raw.dtype), height, width)
+            source = "runtime_recomputed_kornia_affine_alignment"
+        elif self.name == "local_warp_dists":
+            disp, diag = self._estimate_local_disp(pred_img, target_img)
+            disp = disp.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned = self._warp_dense_monai_xy(pred_raw, disp)
+            warp_mag = self._dense_warp_magnitude(disp)
+            source = "runtime_recomputed_monai_dense_warp_alignment"
+        elif self.name == "homography_dists":
+            matrix, diag = self._estimate_homography(pred_img, target_img)
+            aligned = _warp_perspective_kornia(pred_raw, matrix.to(device=pred_raw.device, dtype=pred_raw.dtype))
+            warp_mag = self._projective_warp_magnitude(matrix.to(device=pred_raw.device, dtype=pred_raw.dtype), height, width)
+            source = "runtime_recomputed_kornia_homography_alignment"
+        elif self.name == "tps_dists":
+            points_src, points_dst, diag = self._estimate_tps(pred_img, target_img)
+            points_src = points_src.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            points_dst = points_dst.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned = _warp_tps_kornia(pred_raw, points_src, points_dst)
+            warp_mag = self._tps_warp_magnitude(points_src, points_dst, height, width)
+            source = "runtime_recomputed_kornia_tps_alignment"
+        elif self.name == "elastic_dists":
+            noise, diag = self._estimate_elastic_disp(pred_img, target_img)
+            noise = noise.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned = _warp_elastic_kornia(pred_raw, noise, self.elastic_smooth_kernel, self.elastic_smooth_passes)
+            warp_mag = self._dense_warp_magnitude(noise)
+            source = "runtime_recomputed_kornia_elastic_alignment"
+        elif self.name == "svf_dists":
+            ddf, diag = self._estimate_svf_disp(pred_img, target_img)
+            ddf = ddf.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned = self._warp_dense_monai_xy(pred_raw, ddf)
+            warp_mag = self._dense_warp_magnitude(ddf)
+            source = "runtime_recomputed_monai_svf_alignment"
+        else:
+            return None
+
+        return self._make_alignment_fields(pred, target, aligned, warp_mag, source, diag)
 
     def _warp_dense_monai_xy(self, image: torch.Tensor, disp_xy: torch.Tensor) -> torch.Tensor:
         try:
@@ -405,20 +536,30 @@ class Loss3MetricComputer(nn.Module):
     def _estimate_affine(self, pred_img: torch.Tensor, target_img: torch.Tensor) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
         pred_detached = pred_img.detach()
         target_detached = target_img.detach()
-        _, _, height, width = pred_img.shape
-        raw = torch.zeros(pred_img.shape[0], 4, device=pred_img.device, dtype=pred_img.dtype, requires_grad=True)
+        batch, _, height, width = pred_img.shape
+        raw = torch.zeros(batch, 4, device=pred_img.device, dtype=pred_img.dtype, requires_grad=True)
+        best_raw = raw.detach().clone()
+        best_score = torch.full((batch,), float("inf"), device=pred_img.device, dtype=pred_img.dtype)
         optimizer = torch.optim.Adam([raw], lr=self.affine_lr)
         for _ in range(max(0, self.affine_inner_steps)):
             matrix, diag = self._affine_matrix(raw, height, width)
             warped = _warp_affine_kornia(pred_detached, matrix)
-            loss = self._align_loss(warped, target_detached) + self.affine_reg_weight * diag["affine_reg"].mean()
+            align_values = self._align_values(warped, target_detached)
+            score = align_values + self.affine_reg_weight * diag["affine_reg"]
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+            loss = score.mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
             with torch.no_grad():
                 raw.nan_to_num_(nan=0.0, posinf=6.0, neginf=-6.0)
                 raw.clamp_(-6.0, 6.0)
-        matrix, diag = self._affine_matrix(raw.detach(), height, width)
+        with torch.no_grad():
+            matrix, diag = self._affine_matrix(raw.detach(), height, width)
+            warped = _warp_affine_kornia(pred_detached, matrix)
+            score = self._align_values(warped, target_detached) + self.affine_reg_weight * diag["affine_reg"]
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+        matrix, diag = self._affine_matrix(best_raw.detach(), height, width)
         return matrix.detach(), _detach_diag(diag)
 
     def _estimate_local_disp(self, pred_img: torch.Tensor, target_img: torch.Tensor) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
@@ -434,6 +575,8 @@ class Loss3MetricComputer(nn.Module):
             dtype=pred_img.dtype,
             requires_grad=True,
         )
+        best_raw = raw.detach().clone()
+        best_score = torch.full((batch,), float("inf"), device=pred_img.device, dtype=pred_img.dtype)
         optimizer = torch.optim.Adam([raw], lr=self.local_lr)
         for _ in range(max(0, self.local_inner_steps)):
             disp_low = torch.tanh(raw) * self.local_max_disp_ratio * 2.0
@@ -441,7 +584,9 @@ class Loss3MetricComputer(nn.Module):
             warped = self._warp_dense_monai_xy(pred_detached, disp)
             mag = disp.square().flatten(1).mean(dim=1)
             smooth = _smoothness_per_sample(disp)
-            loss = self._align_loss(warped, target_detached) + self.local_mag_weight * mag.mean() + self.local_smooth_weight * smooth.mean()
+            score = self._align_values(warped, target_detached) + self.local_mag_weight * mag + self.local_smooth_weight * smooth
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+            loss = score.mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
@@ -449,7 +594,16 @@ class Loss3MetricComputer(nn.Module):
                 raw.nan_to_num_(nan=0.0, posinf=6.0, neginf=-6.0)
                 raw.clamp_(-6.0, 6.0)
 
-        disp_low = torch.tanh(raw.detach()) * self.local_max_disp_ratio * 2.0
+        with torch.no_grad():
+            disp_low = torch.tanh(raw.detach()) * self.local_max_disp_ratio * 2.0
+            disp = F.interpolate(disp_low, size=(height, width), mode="bilinear", align_corners=False)
+            warped = self._warp_dense_monai_xy(pred_detached, disp)
+            mag = disp.square().flatten(1).mean(dim=1)
+            smooth = _smoothness_per_sample(disp)
+            score = self._align_values(warped, target_detached) + self.local_mag_weight * mag + self.local_smooth_weight * smooth
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+
+        disp_low = torch.tanh(best_raw.detach()) * self.local_max_disp_ratio * 2.0
         disp = F.interpolate(disp_low, size=(height, width), mode="bilinear", align_corners=False).detach()
         disp_vectors = disp.permute(0, 2, 3, 1)
         disp_norm = torch.linalg.vector_norm(disp_vectors, ord=2, dim=-1)
@@ -470,16 +624,21 @@ class Loss3MetricComputer(nn.Module):
             dtype=raw.dtype,
         ).unsqueeze(0).repeat(batch, 1, 1)
         raw_offsets = torch.tanh(raw)
-        offsets = torch.empty_like(raw_offsets)
-        offsets[..., 0] = raw_offsets[..., 0] * self.homography_max_corner_ratio * float(width)
-        offsets[..., 1] = raw_offsets[..., 1] * self.homography_max_corner_ratio * float(height)
+        offsets = torch.stack(
+            [
+                raw_offsets[..., 0] * self.homography_max_corner_ratio * float(width),
+                raw_offsets[..., 1] * self.homography_max_corner_ratio * float(height),
+            ],
+            dim=-1,
+        )
         dst = src + offsets
         matrix = KGT.get_perspective_transform(src, dst)
-        corner_norm = torch.sqrt((offsets[..., 0] / float(width)).square() + (offsets[..., 1] / float(height)).square())
+        corner_sq = (offsets[..., 0] / float(width)).square() + (offsets[..., 1] / float(height)).square()
+        corner_norm = torch.sqrt(corner_sq.clamp_min(1e-12))
         diag = {
             "corner_displacement_mean": corner_norm.mean(dim=1),
             "corner_displacement_max": corner_norm.amax(dim=1),
-            "homography_reg": corner_norm.square().mean(dim=1),
+            "homography_reg": corner_sq.mean(dim=1),
             "official_warp_backend": "kornia.get_perspective_transform+warp_perspective",
         }
         return matrix, diag
@@ -489,18 +648,27 @@ class Loss3MetricComputer(nn.Module):
         target_detached = target_img.detach()
         batch, _, height, width = pred_img.shape
         raw = torch.zeros(batch, 4, 2, device=pred_img.device, dtype=pred_img.dtype, requires_grad=True)
+        best_raw = raw.detach().clone()
+        best_score = torch.full((batch,), float("inf"), device=pred_img.device, dtype=pred_img.dtype)
         optimizer = torch.optim.Adam([raw], lr=self.homography_lr)
         for _ in range(max(0, self.homography_inner_steps)):
             matrix, diag = self._homography_matrix_from_raw(raw, height, width)
             warped = _warp_perspective_kornia(pred_detached, matrix)
-            loss = self._align_loss(warped, target_detached) + self.homography_reg_weight * diag["homography_reg"].mean()
+            score = self._align_values(warped, target_detached) + self.homography_reg_weight * diag["homography_reg"]
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+            loss = score.mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
             with torch.no_grad():
                 raw.nan_to_num_(nan=0.0, posinf=6.0, neginf=-6.0)
                 raw.clamp_(-6.0, 6.0)
-        matrix, diag = self._homography_matrix_from_raw(raw.detach(), height, width)
+        with torch.no_grad():
+            matrix, diag = self._homography_matrix_from_raw(raw.detach(), height, width)
+            warped = _warp_perspective_kornia(pred_detached, matrix)
+            score = self._align_values(warped, target_detached) + self.homography_reg_weight * diag["homography_reg"]
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+        matrix, diag = self._homography_matrix_from_raw(best_raw.detach(), height, width)
         return matrix.detach(), _detach_diag(diag)
 
     def _tps_points_from_raw(self, raw: torch.Tensor, height: int, width: int) -> tuple[torch.Tensor, torch.Tensor, dict[str, torch.Tensor]]:
@@ -524,22 +692,35 @@ class Loss3MetricComputer(nn.Module):
         target_detached = target_img.detach()
         batch, _, height, width = pred_img.shape
         raw = torch.zeros(batch, 2, self.tps_grid_size, self.tps_grid_size, device=pred_img.device, dtype=pred_img.dtype, requires_grad=True)
+        best_raw = raw.detach().clone()
+        best_score = torch.full((batch,), float("inf"), device=pred_img.device, dtype=pred_img.dtype)
         optimizer = torch.optim.Adam([raw], lr=self.tps_lr)
         for _ in range(max(0, self.tps_inner_steps)):
             points_src, points_dst, diag = self._tps_points_from_raw(raw, height, width)
             warped = _warp_tps_kornia(pred_detached, points_src, points_dst)
-            loss = (
-                self._align_loss(warped, target_detached)
-                + self.tps_offset_weight * diag["tps_offset_reg"].mean()
-                + self.tps_smooth_weight * diag["tps_smoothness"].mean()
+            score = (
+                self._align_values(warped, target_detached)
+                + self.tps_offset_weight * diag["tps_offset_reg"]
+                + self.tps_smooth_weight * diag["tps_smoothness"]
             )
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+            loss = score.mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
             with torch.no_grad():
                 raw.nan_to_num_(nan=0.0, posinf=6.0, neginf=-6.0)
                 raw.clamp_(-6.0, 6.0)
-        points_src, points_dst, diag = self._tps_points_from_raw(raw.detach(), height, width)
+        with torch.no_grad():
+            points_src, points_dst, diag = self._tps_points_from_raw(raw.detach(), height, width)
+            warped = _warp_tps_kornia(pred_detached, points_src, points_dst)
+            score = (
+                self._align_values(warped, target_detached)
+                + self.tps_offset_weight * diag["tps_offset_reg"]
+                + self.tps_smooth_weight * diag["tps_smoothness"]
+            )
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+        points_src, points_dst, diag = self._tps_points_from_raw(best_raw.detach(), height, width)
         return points_src.detach(), points_dst.detach(), _detach_diag(diag)
 
     def _elastic_noise_from_raw(self, raw: torch.Tensor, height: int, width: int) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
@@ -562,22 +743,35 @@ class Loss3MetricComputer(nn.Module):
         target_detached = target_img.detach()
         batch, _, height, width = pred_img.shape
         raw = torch.zeros(batch, 2, self.elastic_grid_size, self.elastic_grid_size, device=pred_img.device, dtype=pred_img.dtype, requires_grad=True)
+        best_raw = raw.detach().clone()
+        best_score = torch.full((batch,), float("inf"), device=pred_img.device, dtype=pred_img.dtype)
         optimizer = torch.optim.Adam([raw], lr=self.elastic_lr)
         for _ in range(max(0, self.elastic_inner_steps)):
             noise, diag = self._elastic_noise_from_raw(raw, height, width)
             warped = _warp_elastic_kornia(pred_detached, noise, self.elastic_smooth_kernel, self.elastic_smooth_passes)
-            loss = (
-                self._align_loss(warped, target_detached)
-                + self.elastic_mag_weight * diag["elastic_mag_reg"].mean()
-                + self.elastic_smooth_weight * diag["elastic_smoothness"].mean()
+            score = (
+                self._align_values(warped, target_detached)
+                + self.elastic_mag_weight * diag["elastic_mag_reg"]
+                + self.elastic_smooth_weight * diag["elastic_smoothness"]
             )
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+            loss = score.mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
             with torch.no_grad():
                 raw.nan_to_num_(nan=0.0, posinf=6.0, neginf=-6.0)
                 raw.clamp_(-6.0, 6.0)
-        noise, diag = self._elastic_noise_from_raw(raw.detach(), height, width)
+        with torch.no_grad():
+            noise, diag = self._elastic_noise_from_raw(raw.detach(), height, width)
+            warped = _warp_elastic_kornia(pred_detached, noise, self.elastic_smooth_kernel, self.elastic_smooth_passes)
+            score = (
+                self._align_values(warped, target_detached)
+                + self.elastic_mag_weight * diag["elastic_mag_reg"]
+                + self.elastic_smooth_weight * diag["elastic_smoothness"]
+            )
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+        noise, diag = self._elastic_noise_from_raw(best_raw.detach(), height, width)
         return noise.detach(), _detach_diag(diag)
 
     def _svf_disp_from_raw(self, raw: torch.Tensor, height: int, width: int) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
@@ -604,22 +798,35 @@ class Loss3MetricComputer(nn.Module):
         target_detached = target_img.detach()
         batch, _, height, width = pred_img.shape
         raw = torch.zeros(batch, 2, self.svf_grid_size, self.svf_grid_size, device=pred_img.device, dtype=pred_img.dtype, requires_grad=True)
+        best_raw = raw.detach().clone()
+        best_score = torch.full((batch,), float("inf"), device=pred_img.device, dtype=pred_img.dtype)
         optimizer = torch.optim.Adam([raw], lr=self.svf_lr)
         for _ in range(max(0, self.svf_inner_steps)):
             ddf, diag = self._svf_disp_from_raw(raw, height, width)
             warped = self._warp_dense_monai_xy(pred_detached, ddf)
-            loss = (
-                self._align_loss(warped, target_detached)
-                + self.svf_mag_weight * diag["velocity_mag_reg"].mean()
-                + self.svf_smooth_weight * diag["velocity_smoothness"].mean()
+            score = (
+                self._align_values(warped, target_detached)
+                + self.svf_mag_weight * diag["velocity_mag_reg"]
+                + self.svf_smooth_weight * diag["velocity_smoothness"]
             )
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+            loss = score.mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
             with torch.no_grad():
                 raw.nan_to_num_(nan=0.0, posinf=6.0, neginf=-6.0)
                 raw.clamp_(-6.0, 6.0)
-        ddf, diag = self._svf_disp_from_raw(raw.detach(), height, width)
+        with torch.no_grad():
+            ddf, diag = self._svf_disp_from_raw(raw.detach(), height, width)
+            warped = self._warp_dense_monai_xy(pred_detached, ddf)
+            score = (
+                self._align_values(warped, target_detached)
+                + self.svf_mag_weight * diag["velocity_mag_reg"]
+                + self.svf_smooth_weight * diag["velocity_smoothness"]
+            )
+            best_raw, best_score = self._update_best_raw(best_raw, best_score, raw, score)
+        ddf, diag = self._svf_disp_from_raw(best_raw.detach(), height, width)
         return ddf.detach(), _detach_diag(diag)
 
     def forward(self, pred: torch.Tensor, target: torch.Tensor) -> MetricResult:
@@ -647,52 +854,72 @@ class Loss3MetricComputer(nn.Module):
 
         if self.name == "affine_dists":
             matrix, diag = self._estimate_affine(pred_img, target_img)
-            warped = _warp_affine_kornia(pred_img, matrix.to(device=pred_img.device, dtype=pred_img.dtype))
+            matrix = matrix.to(device=pred_img.device, dtype=pred_img.dtype)
+            warped = _warp_affine_kornia(pred_img, matrix)
             content = self._dists_values(warped, target_img)
             reg = diag["affine_reg"].to(device=content.device, dtype=content.dtype)
             values = content + self.affine_reg_weight * reg
             diag.update({"name": self.name, "direction": "larger_is_more_dissimilar", "content_loss": content.detach(), "align_objective": self.align_objective})
-            return MetricResult(values=values, diagnostics=diag)
+            pred_raw = _as_image(pred.detach())
+            aligned_raw = _warp_affine_kornia(pred_raw, matrix.to(device=pred_raw.device, dtype=pred_raw.dtype))
+            warp_mag = self._projective_warp_magnitude(matrix.to(device=pred_raw.device, dtype=pred_raw.dtype), pred_raw.shape[-2], pred_raw.shape[-1])
+            alignment_fields = self._make_alignment_fields(pred, target, aligned_raw, warp_mag, "runtime_forward_kornia_affine_alignment", diag)
+            return MetricResult(values=values, diagnostics=diag, alignment_fields=alignment_fields)
 
         if self.name == "local_warp_dists":
             disp, diag = self._estimate_local_disp(pred_img, target_img)
-            warped = self._warp_dense_monai_xy(pred_img, disp.to(device=pred_img.device, dtype=pred_img.dtype))
+            disp = disp.to(device=pred_img.device, dtype=pred_img.dtype)
+            warped = self._warp_dense_monai_xy(pred_img, disp)
             content = self._dists_values(warped, target_img)
             mag = diag["displacement_norm"].to(device=content.device, dtype=content.dtype).square()
             smooth = diag["smoothness"].to(device=content.device, dtype=content.dtype)
             values = content + self.local_mag_weight * mag + self.local_smooth_weight * smooth
             diag.update({"name": self.name, "direction": "larger_is_more_dissimilar", "content_loss": content.detach(), "align_objective": self.align_objective})
-            return MetricResult(values=values, diagnostics=diag)
+            pred_raw = _as_image(pred.detach())
+            aligned_raw = self._warp_dense_monai_xy(pred_raw, disp.to(device=pred_raw.device, dtype=pred_raw.dtype))
+            warp_mag = self._dense_warp_magnitude(disp.to(device=pred_raw.device, dtype=pred_raw.dtype))
+            alignment_fields = self._make_alignment_fields(pred, target, aligned_raw, warp_mag, "runtime_forward_monai_dense_warp_alignment", diag)
+            return MetricResult(values=values, diagnostics=diag, alignment_fields=alignment_fields)
 
 
         if self.name == "homography_dists":
             matrix, diag = self._estimate_homography(pred_img, target_img)
-            warped = _warp_perspective_kornia(pred_img, matrix.to(device=pred_img.device, dtype=pred_img.dtype))
+            matrix = matrix.to(device=pred_img.device, dtype=pred_img.dtype)
+            warped = _warp_perspective_kornia(pred_img, matrix)
             content = self._dists_values(warped, target_img)
             reg = diag["homography_reg"].to(device=content.device, dtype=content.dtype)
             values = content + self.homography_reg_weight * reg
             diag.update({"name": self.name, "direction": "larger_is_more_dissimilar", "content_loss": content.detach(), "align_objective": self.align_objective})
-            return MetricResult(values=values, diagnostics=diag)
+            pred_raw = _as_image(pred.detach())
+            aligned_raw = _warp_perspective_kornia(pred_raw, matrix.to(device=pred_raw.device, dtype=pred_raw.dtype))
+            warp_mag = self._projective_warp_magnitude(matrix.to(device=pred_raw.device, dtype=pred_raw.dtype), pred_raw.shape[-2], pred_raw.shape[-1])
+            alignment_fields = self._make_alignment_fields(pred, target, aligned_raw, warp_mag, "runtime_forward_kornia_homography_alignment", diag)
+            return MetricResult(values=values, diagnostics=diag, alignment_fields=alignment_fields)
 
         if self.name == "tps_dists":
             points_src, points_dst, diag = self._estimate_tps(pred_img, target_img)
-            warped = _warp_tps_kornia(
-                pred_img,
-                points_src.to(device=pred_img.device, dtype=pred_img.dtype),
-                points_dst.to(device=pred_img.device, dtype=pred_img.dtype),
-            )
+            points_src = points_src.to(device=pred_img.device, dtype=pred_img.dtype)
+            points_dst = points_dst.to(device=pred_img.device, dtype=pred_img.dtype)
+            warped = _warp_tps_kornia(pred_img, points_src, points_dst)
             content = self._dists_values(warped, target_img)
             offset = diag["tps_offset_reg"].to(device=content.device, dtype=content.dtype)
             smooth = diag["tps_smoothness"].to(device=content.device, dtype=content.dtype)
             values = content + self.tps_offset_weight * offset + self.tps_smooth_weight * smooth
             diag.update({"name": self.name, "direction": "larger_is_more_dissimilar", "content_loss": content.detach(), "align_objective": self.align_objective})
-            return MetricResult(values=values, diagnostics=diag)
+            pred_raw = _as_image(pred.detach())
+            points_src_raw = points_src.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            points_dst_raw = points_dst.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned_raw = _warp_tps_kornia(pred_raw, points_src_raw, points_dst_raw)
+            warp_mag = self._tps_warp_magnitude(points_src_raw, points_dst_raw, pred_raw.shape[-2], pred_raw.shape[-1])
+            alignment_fields = self._make_alignment_fields(pred, target, aligned_raw, warp_mag, "runtime_forward_kornia_tps_alignment", diag)
+            return MetricResult(values=values, diagnostics=diag, alignment_fields=alignment_fields)
 
         if self.name == "elastic_dists":
             noise, diag = self._estimate_elastic_disp(pred_img, target_img)
+            noise = noise.to(device=pred_img.device, dtype=pred_img.dtype)
             warped = _warp_elastic_kornia(
                 pred_img,
-                noise.to(device=pred_img.device, dtype=pred_img.dtype),
+                noise,
                 self.elastic_smooth_kernel,
                 self.elastic_smooth_passes,
             )
@@ -701,17 +928,28 @@ class Loss3MetricComputer(nn.Module):
             smooth = diag["elastic_smoothness"].to(device=content.device, dtype=content.dtype)
             values = content + self.elastic_mag_weight * mag + self.elastic_smooth_weight * smooth
             diag.update({"name": self.name, "direction": "larger_is_more_dissimilar", "content_loss": content.detach(), "align_objective": self.align_objective})
-            return MetricResult(values=values, diagnostics=diag)
+            pred_raw = _as_image(pred.detach())
+            noise_raw = noise.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned_raw = _warp_elastic_kornia(pred_raw, noise_raw, self.elastic_smooth_kernel, self.elastic_smooth_passes)
+            warp_mag = self._dense_warp_magnitude(noise_raw)
+            alignment_fields = self._make_alignment_fields(pred, target, aligned_raw, warp_mag, "runtime_forward_kornia_elastic_alignment", diag)
+            return MetricResult(values=values, diagnostics=diag, alignment_fields=alignment_fields)
 
         if self.name == "svf_dists":
             ddf, diag = self._estimate_svf_disp(pred_img, target_img)
-            warped = self._warp_dense_monai_xy(pred_img, ddf.to(device=pred_img.device, dtype=pred_img.dtype))
+            ddf = ddf.to(device=pred_img.device, dtype=pred_img.dtype)
+            warped = self._warp_dense_monai_xy(pred_img, ddf)
             content = self._dists_values(warped, target_img)
             mag = diag["velocity_mag_reg"].to(device=content.device, dtype=content.dtype)
             smooth = diag["velocity_smoothness"].to(device=content.device, dtype=content.dtype)
             values = content + self.svf_mag_weight * mag + self.svf_smooth_weight * smooth
             diag.update({"name": self.name, "direction": "larger_is_more_dissimilar", "content_loss": content.detach(), "align_objective": self.align_objective, "svf_int_steps": self.svf_int_steps})
-            return MetricResult(values=values, diagnostics=diag)
+            pred_raw = _as_image(pred.detach())
+            ddf_raw = ddf.to(device=pred_raw.device, dtype=pred_raw.dtype)
+            aligned_raw = self._warp_dense_monai_xy(pred_raw, ddf_raw)
+            warp_mag = self._dense_warp_magnitude(ddf_raw)
+            alignment_fields = self._make_alignment_fields(pred, target, aligned_raw, warp_mag, "runtime_forward_monai_svf_alignment", diag)
+            return MetricResult(values=values, diagnostics=diag, alignment_fields=alignment_fields)
 
         raise ValueError(f"Unknown loss3 metric: {self.name}")
 
