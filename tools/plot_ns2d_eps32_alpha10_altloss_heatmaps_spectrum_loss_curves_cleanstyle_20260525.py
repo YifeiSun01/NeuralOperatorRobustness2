@@ -341,6 +341,14 @@ def load_npz(path: Path) -> dict[str, np.ndarray]:
         return {key: z[key] for key in z.files}
 
 
+def relpath(path: Path) -> str:
+    path = Path(path)
+    try:
+        return str(path.resolve().relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def discover_alt_dir(alt_root: Path, metric: str) -> Path:
     matches = sorted((alt_root / metric).glob("mode_*/batch_0000_0009/loss3/steepest_add"))
     if len(matches) != 1:
@@ -917,7 +925,7 @@ def build_rows(cases: list[Case]) -> list[dict[str, Any]]:
             "wq_norm_increase": 0.0,
             "delta_l2": 0.0,
             "delta_linf": 0.0,
-            "source_npz": str(base_case.candidate.path.relative_to(ROOT)),
+            "source_npz": relpath(base_case.candidate.path),
         },
         clean_sources,
     )
@@ -953,7 +961,7 @@ def build_rows(cases: list[Case]) -> list[dict[str, Any]]:
                 "active_loss_initial_mean": active_initial,
                 "active_loss_final_mean": active_final,
                 "active_loss_ratio_to_k0": active_final / active_initial if active_initial else math.nan,
-                "source_npz": str(case.candidate.path.relative_to(ROOT)),
+                "source_npz": relpath(case.candidate.path),
             },
             source_keys,
         )
@@ -1093,7 +1101,7 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
             "epsilon": 32,
             "alpha": 10,
             "optimizer": "steepest_add",
-            "output_png": str(out_path.relative_to(ROOT)),
+            "output_png": relpath(out_path),
         })
         summary_rows.append(s)
     return out_path, summary_rows
@@ -1113,11 +1121,11 @@ def main() -> int:
     summary_csv = args.out_dir / "row_loss_summary.csv"
     write_csv(summary_csv, rows)
     manifest = {
-        "created_by": str(SCRIPT.relative_to(ROOT)),
-        "derived_from": str(ORIG_SCRIPT.relative_to(ROOT)),
-        "output_dir": str(args.out_dir.relative_to(ROOT)),
-        "png": str(png.relative_to(ROOT)),
-        "summary_csv": str(summary_csv.relative_to(ROOT)),
+        "created_by": relpath(SCRIPT),
+        "derived_from": relpath(ORIG_SCRIPT),
+        "output_dir": relpath(args.out_dir),
+        "png": relpath(png),
+        "summary_csv": relpath(summary_csv),
         "layout": "Original NS2D cleanstyle PIL layout: 2x2 top overlay panels plus heatmap rows, 220px tiles, 540px top panel block.",
         "heatmap_columns": [label for _, label, _ in COLUMN_SPECS],
         "full_loss_names": FULL_LOSS_NAMES,
@@ -1131,7 +1139,7 @@ def main() -> int:
             "Final batch mean all-W Loss 3 / W-Q norm bar chart",
         ],
         "loss_curve_policy": "The loss curve is not each method's active optimization objective. It is the same all-W Loss 3 / W-Q norm for every method, recomputed for sample_position=0 as ||adv_model_final - adv_solver_final||_2 from step_sample_trace.npz. Batch per-step all-W Loss 3 was not saved for all samples, so the batch panel uses final_state_metrics.csv final adv_true_loss means instead of a fake batch curve.",
-        "runs": [{"key": c.candidate.key, "label": c.candidate.label, "source_npz": str(c.candidate.path.relative_to(ROOT))} for c in cases],
+        "runs": [{"key": c.candidate.key, "label": c.candidate.label, "source_npz": relpath(c.candidate.path)} for c in cases],
     }
     manifest_path = args.out_dir / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

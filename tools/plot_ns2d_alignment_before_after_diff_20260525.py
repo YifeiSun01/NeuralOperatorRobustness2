@@ -61,6 +61,14 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
+def relpath(path: Path) -> str:
+    path = Path(path)
+    try:
+        return str(path.resolve().relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     summary_rows: list[dict[str, Any]] = []
@@ -108,7 +116,7 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
                 "warp_mean": float(abs_warp.mean()),
                 "warp_max": float(abs_warp.max()),
                 "alignment_source": source,
-                "source_npz": str(case.candidate.path.relative_to(ROOT)),
+                "source_npz": relpath(case.candidate.path),
             }
             rows.append({
                 "label": f"{case.candidate.label} | step {k}",
@@ -234,10 +242,10 @@ def main() -> int:
     cases = [alt.load_case(candidate, alt.SAMPLE_POSITION) for candidate in candidates]
     png, csv_path, rows = render(cases, args.out_dir)
     manifest = {
-        "created_by": str(SCRIPT.relative_to(ROOT)),
-        "uses_alignment_functions_from": str(ALT_PLOT_SCRIPT.relative_to(ROOT)),
-        "png": str(png.relative_to(ROOT)),
-        "summary_csv": str(csv_path.relative_to(ROOT)),
+        "created_by": relpath(SCRIPT),
+        "uses_alignment_functions_from": relpath(ALT_PLOT_SCRIPT),
+        "png": relpath(png),
+        "summary_csv": relpath(csv_path),
         "frame_indices": list(FRAME_INDICES),
         "explicit_methods": list(EXPLICIT_KEYS),
         "columns": [label for _, label, _ in COLUMNS],
