@@ -9,9 +9,9 @@ export INDICES="${INDICES:-0,1,2,3,4,5,6,7,8,9}"
 export ATTACK_BATCH_SIZE="${ATTACK_BATCH_SIZE:-10}"
 export LOSS3_MODE_SPEC="${LOSS3_MODE_SPEC:-all_w}"
 export LOSS3_METRICS="${LOSS3_METRICS:-dists ms_ssim scattering2d affine_dists local_warp_dists homography_dists tps_dists elastic_dists svf_dists}"
-export BUDGET_PRESETS="${BUDGET_PRESETS:-very_strong strong medium weak}"
+export BUDGET_PRESETS="${BUDGET_PRESETS:-very_very_strong very_strong strong medium weak}"
 
-BASE_SWEEP_TAG="${BASE_SWEEP_TAG:-eps32_alpha10_steepest_add_loss3_allw_alt9_brutalwarp_v2_budget_sweep_steps${STEPS}_b10_$(date -u +%Y%m%d_%H%M%S)_UTC}"
+BASE_SWEEP_TAG="${BASE_SWEEP_TAG:-eps32_alpha10_steepest_add_loss3_allw_alt9_brutalwarp_v3_budget_sweep_steps${STEPS}_b10_$(date -u +%Y%m%d_%H%M%S)_UTC}"
 BASE_SWEEP_ROOT="${BASE_SWEEP_ROOT:-2D_NS_FNO2d_recurrent/perturbation_results/ns2d_recurrent_core4_attack/${BASE_SWEEP_TAG}}"
 mkdir -p "$BASE_SWEEP_ROOT"
 SWEEP_LOG="$BASE_SWEEP_ROOT/nohup_${BASE_SWEEP_TAG}.log"
@@ -28,6 +28,47 @@ set_common_recording_defaults() {
 apply_budget_preset() {
   local preset="$1"
   case "$preset" in
+    very_very_strong)
+      export LOSS3_ALIGN_OBJECTIVE=dists
+      export LOSS3_SCATTERING_J=6
+      export LOSS3_AFFINE_INNER_STEPS=100
+      export LOSS3_AFFINE_LR=0.12
+      export LOSS3_AFFINE_MAX_SHIFT_RATIO=0.65
+      export LOSS3_AFFINE_MAX_ANGLE_DEG=180.0
+      export LOSS3_AFFINE_MAX_LOG_SCALE=1.6094379124341003
+      export LOSS3_AFFINE_REG_WEIGHT=0.0000001
+      export LOSS3_LOCAL_GRID_SIZE=32
+      export LOSS3_LOCAL_INNER_STEPS=100
+      export LOSS3_LOCAL_LR=0.12
+      export LOSS3_LOCAL_MAX_DISP_RATIO=0.50
+      export LOSS3_LOCAL_MAG_WEIGHT=0.0000001
+      export LOSS3_LOCAL_SMOOTH_WEIGHT=0.00001
+      export LOSS3_HOMOGRAPHY_INNER_STEPS=100
+      export LOSS3_HOMOGRAPHY_LR=0.12
+      export LOSS3_HOMOGRAPHY_MAX_CORNER_RATIO=0.65
+      export LOSS3_HOMOGRAPHY_REG_WEIGHT=0.0000001
+      export LOSS3_TPS_GRID_SIZE=12
+      export LOSS3_TPS_INNER_STEPS=100
+      export LOSS3_TPS_LR=0.12
+      export LOSS3_TPS_MAX_DISP_RATIO=0.65
+      export LOSS3_TPS_OFFSET_WEIGHT=0.0000001
+      export LOSS3_TPS_SMOOTH_WEIGHT=0.00001
+      export LOSS3_ELASTIC_GRID_SIZE=40
+      export LOSS3_ELASTIC_INNER_STEPS=100
+      export LOSS3_ELASTIC_LR=0.12
+      export LOSS3_ELASTIC_MAX_DISP_RATIO=0.50
+      export LOSS3_ELASTIC_SMOOTH_KERNEL=3
+      export LOSS3_ELASTIC_SMOOTH_PASSES=1
+      export LOSS3_ELASTIC_MAG_WEIGHT=0.0000001
+      export LOSS3_ELASTIC_SMOOTH_WEIGHT=0.00001
+      export LOSS3_SVF_GRID_SIZE=32
+      export LOSS3_SVF_INNER_STEPS=100
+      export LOSS3_SVF_LR=0.12
+      export LOSS3_SVF_MAX_VEL_RATIO=0.45
+      export LOSS3_SVF_INT_STEPS=9
+      export LOSS3_SVF_MAG_WEIGHT=0.0000001
+      export LOSS3_SVF_SMOOTH_WEIGHT=0.00001
+      ;;
     very_strong)
       export LOSS3_ALIGN_OBJECTIVE=dists
       export LOSS3_SCATTERING_J=6

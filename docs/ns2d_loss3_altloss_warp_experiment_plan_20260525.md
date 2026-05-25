@@ -1614,3 +1614,60 @@ Updated files:
 - `tools/run_ns2d_alt9_budget_sweep_steps25_then100_upload_20260525.sh`
 - `tools/plot_ns2d_eps32_alpha10_altloss_heatmaps_spectrum_loss_curves_cleanstyle_20260525.py`
 
+## 2026-05-25 Very Very Strong / Brutal Warp v3 Update
+
+A new preset named `very_very_strong` has been added above `very_strong`.
+
+Default budget order is now:
+
+1. `very_very_strong`
+2. `very_strong`
+3. `strong`
+4. `medium`
+5. `weak`
+
+The default output tag/root now contains `brutalwarp_v3`, so the new runs will not be mixed with the earlier `brutalwarp_v2` configuration.
+
+### Motivation
+
+The first aggressive run still showed several alignment methods with weak or visually tiny warp magnitude, especially:
+
+- `affine_dists`
+- `homography_dists`
+- some pointwise aligned-model difference panels
+
+The goal of `very_very_strong` is not to be a conservative invariance budget. It is intentionally extreme, mainly to force a visually obvious difference if the method is capable of using the warp freedom.
+
+### Very Very Strong Parameters
+
+| Method family | `very_very_strong` budget |
+|---|---|
+| Inner alignment objective | `dists` |
+| Scattering2D | `J=6` |
+| Affine | `inner=100`, `lr=0.12`, `shift=0.65`, `rotation=180 deg`, `log_scale=ln(5)=1.6094379124`, `reg=1e-7` |
+| Local dense warp | `grid=32`, `inner=100`, `lr=0.12`, `disp=0.50`, `mag=1e-7`, `smooth=1e-5` |
+| Homography | `inner=100`, `lr=0.12`, `corner=0.65`, `reg=1e-7` |
+| TPS | `grid=12`, `inner=100`, `lr=0.12`, `disp=0.65`, `offset=1e-7`, `smooth=1e-5` |
+| Elastic | `grid=40`, `inner=100`, `lr=0.12`, `disp=0.50`, `kernel=3`, `passes=1`, `mag=1e-7`, `smooth=1e-5` |
+| SVF | `grid=32`, `inner=100`, `lr=0.12`, `vel=0.45`, `int=9`, `mag=1e-7`, `smooth=1e-5` |
+
+Approximate scale on a 256x256 field:
+
+- Affine translation budget: about `0.65 * 255 ~= 166` pixels per axis.
+- Homography corner budget: about `0.65 * 256 ~= 166` pixels.
+- TPS control displacement budget: very large normalized displacement, intentionally allowing strong folding-like visual changes if the optimizer wants it.
+- Local/elastic component displacement budget: normalized component bound `1.00`, roughly `128` pixels per axis before interpolation/smoothing.
+
+### Caution
+
+This preset is deliberately extreme. It can produce unrealistic or overly permissive alignment. Use it to make visual differences obvious, not as the final scientifically fair budget. If `very_very_strong` makes the perturbations visually separable, the next step should be to back off toward `strong` or `medium` and identify the smallest budget where the effect remains visible.
+
+Updated files:
+
+- `tools/run_ns2d_alt9_budget_sweep_steps25_then100_upload_20260525.sh`
+- `tools/run_ns2d_eps32_alpha10_steepest_add_loss3_allw_alt9_budget_sweep_steps25_20260525.sh`
+- `tools/run_ns2d_eps32_alpha10_steepest_add_loss3_allw_alt9_strongwarp_steps25_20260525.sh`
+- `tools/watch_then_run_ns2d_alt9_budget_sweep_steps100_after25_20260525.sh`
+- `tools/watch_and_plot_ns2d_alt9_budget_sweep_dataset0_20260525.sh`
+- `tools/plot_ns2d_eps32_alpha10_altloss_heatmaps_spectrum_loss_curves_cleanstyle_20260525.py`
+

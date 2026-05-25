@@ -189,6 +189,47 @@ BASE_PLOT_ALIGNMENT_ARGS: dict[str, Any] = {
 }
 
 BUDGET_PRESET_OVERRIDES: dict[str, dict[str, Any]] = {
+    "very_very_strong": {
+        "loss3_align_objective": "dists",
+        "loss3_scattering_j": 6,
+        "loss3_affine_inner_steps": 100,
+        "loss3_affine_lr": 0.12,
+        "loss3_affine_max_shift_ratio": 0.65,
+        "loss3_affine_max_angle_deg": 180.0,
+        "loss3_affine_max_log_scale": 1.6094379124341003,
+        "loss3_affine_reg_weight": 0.0000001,
+        "loss3_local_grid_size": 32,
+        "loss3_local_inner_steps": 100,
+        "loss3_local_lr": 0.12,
+        "loss3_local_max_disp_ratio": 0.50,
+        "loss3_local_mag_weight": 0.0000001,
+        "loss3_local_smooth_weight": 0.00001,
+        "loss3_homography_inner_steps": 100,
+        "loss3_homography_lr": 0.12,
+        "loss3_homography_max_corner_ratio": 0.65,
+        "loss3_homography_reg_weight": 0.0000001,
+        "loss3_tps_grid_size": 12,
+        "loss3_tps_inner_steps": 100,
+        "loss3_tps_lr": 0.12,
+        "loss3_tps_max_disp_ratio": 0.65,
+        "loss3_tps_offset_weight": 0.0000001,
+        "loss3_tps_smooth_weight": 0.00001,
+        "loss3_elastic_grid_size": 40,
+        "loss3_elastic_inner_steps": 100,
+        "loss3_elastic_lr": 0.12,
+        "loss3_elastic_max_disp_ratio": 0.50,
+        "loss3_elastic_smooth_kernel": 3,
+        "loss3_elastic_smooth_passes": 1,
+        "loss3_elastic_mag_weight": 0.0000001,
+        "loss3_elastic_smooth_weight": 0.00001,
+        "loss3_svf_grid_size": 32,
+        "loss3_svf_inner_steps": 100,
+        "loss3_svf_lr": 0.12,
+        "loss3_svf_max_vel_ratio": 0.45,
+        "loss3_svf_int_steps": 9,
+        "loss3_svf_mag_weight": 0.0000001,
+        "loss3_svf_smooth_weight": 0.00001,
+    },
     "weak": {
         "loss3_align_objective": "dists",
         "loss3_scattering_j": 4,
@@ -802,7 +843,7 @@ def _aligned_local_model(model: np.ndarray, solver: np.ndarray) -> tuple[np.ndar
 
 def infer_budget_preset(path: Path) -> str:
     haystack = " ".join(str(part).lower() for part in path.parts)
-    for preset in ("very_strong", "strong", "medium", "weak"):
+    for preset in ("very_very_strong", "very_strong", "strong", "medium", "weak"):
         if preset in haystack:
             return preset
     return "weak"

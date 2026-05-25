@@ -11,7 +11,7 @@ if [[ -z "$BASE_SWEEP_ROOT" ]]; then
 fi
 
 METRICS="${LOSS3_METRICS:-dists ms_ssim scattering2d affine_dists local_warp_dists homography_dists tps_dists elastic_dists svf_dists}"
-PRESET_DIRS="${BUDGET_PRESET_DIRS:-1_very_strong 2_strong 3_medium 4_weak}"
+PRESET_DIRS="${BUDGET_PRESET_DIRS:-1_very_very_strong 2_very_strong 3_strong 4_medium 5_weak}"
 POLL_SECONDS="${POLL_SECONDS:-60}"
 
 metric_ready() {
