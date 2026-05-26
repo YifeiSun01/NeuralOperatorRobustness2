@@ -2,10 +2,12 @@
 """Direct NS2D alt9 launcher with 25+75 continuation.
 
 Schedule:
-1. Run each metric for 25 attack steps and plot/upload after the metric finishes.
-2. Continue the same metric for 75 more local steps from its 25-step final_delta,
-   recording global steps 25..100, then merge the 25-step CSV/trace into the
+1. Run all metrics for 25 attack steps.
+2. Plot/upload the complete 25-step comparison once all metrics are present.
+3. Continue all metrics for 75 more local steps from their 25-step final_delta,
+   recording global steps 25..100, then merge the 25-step CSV/trace into each
    continued run directory so plots can show a 0..100 trajectory.
+4. Plot/upload the complete 100-step comparison once all continuations finish.
 
 This avoids re-running the first 25 steps during the 100-step experiment.
 """
@@ -337,18 +339,13 @@ def upload_path(path: Path, master_log: Path, env: dict[str, str], label: str) -
     append_line(master_log, f"[{utc_now()}] upload finished for {label}: exit={code}; log={rel(log)}")
 
 
-def run_metric_25_then_75(metric: str, idx: int, master_root: Path, master_log: Path, env: dict[str, str], upload: bool) -> None:
+def run_metric_25(metric: str, idx: int, master_root: Path, master_log: Path, env: dict[str, str], upload: bool) -> Path:
     step25_root = master_root / "steps25"
-    step100_root = master_root / "steps100"
     preset25 = step25_root / "1_very_very_strong"
-    preset100 = step100_root / "1_very_very_strong"
     logs25 = preset25 / "logs"
-    logs100 = preset100 / "logs"
     logs25.mkdir(parents=True, exist_ok=True)
-    logs100.mkdir(parents=True, exist_ok=True)
 
     metric25_root = preset25 / "eps32_alpha10" / metric
-    metric100_root = preset100 / "eps32_alpha10" / metric
     done25 = completed_method_dir(metric25_root)
     if done25 is None:
         append_line(master_log, f"[{utc_now()}] steps25 metric {idx}/{len(METRICS)} {metric} started")
@@ -361,7 +358,22 @@ def run_metric_25_then_75(metric: str, idx: int, master_root: Path, master_log: 
         append_line(master_log, f"[{utc_now()}] steps25 metric {metric} already complete; skip: {rel(done25)}")
     if upload:
         upload_path(metric25_root, master_log, env, f"steps25_{metric}")
-    plot_and_upload(step25_root, master_log, env, f"steps25_after_{metric}", upload)
+    return done25
+
+
+def continue_metric_to_100(metric: str, idx: int, master_root: Path, master_log: Path, env: dict[str, str], upload: bool) -> Path:
+    step25_root = master_root / "steps25"
+    step100_root = master_root / "steps100"
+    preset25 = step25_root / "1_very_very_strong"
+    preset100 = step100_root / "1_very_very_strong"
+    logs100 = preset100 / "logs"
+    logs100.mkdir(parents=True, exist_ok=True)
+
+    metric25_root = preset25 / "eps32_alpha10" / metric
+    metric100_root = preset100 / "eps32_alpha10" / metric
+    done25 = completed_method_dir(metric25_root)
+    if done25 is None:
+        raise SystemExit(f"cannot continue metric {metric}: missing completed 25-step run under {rel(metric25_root)}")
 
     done100 = completed_method_dir(metric100_root)
     if done100 is None:
@@ -381,7 +393,7 @@ def run_metric_25_then_75(metric: str, idx: int, master_root: Path, master_log: 
         append_line(master_log, f"[{utc_now()}] steps100 metric {metric} already complete; skip: {rel(done100)}")
     if upload:
         upload_path(metric100_root, master_log, env, f"steps100_{metric}_continued")
-    plot_and_upload(step100_root, master_log, env, f"steps100_after_{metric}", upload)
+    return done100
 
 
 def main() -> int:
@@ -411,7 +423,7 @@ def main() -> int:
         "master_tag": tag,
         "master_root": rel(master_root),
         "started_utc": utc_now(),
-        "schedule": "run 25 steps, plot/upload, then continue 75 local steps from the 25-step final_delta to reach global step 100",
+        "schedule": "run all metrics for 25 steps, plot/upload complete 25-step comparison, continue all metrics for 75 local steps from each 25-step final_delta, then plot/upload complete 100-step comparison",
         "first_steps": FIRST_STEPS,
         "continue_steps": CONTINUE_STEPS,
         "final_steps": FINAL_STEPS,
@@ -433,8 +445,20 @@ def main() -> int:
     run_logged(["nvidia-smi"], preflight_log, env, allow_failure=True)
     run_logged([str(PYTHON_BIN), "-c", "import torch, jax; print('torch', torch.__version__, 'cuda', torch.cuda.is_available()); print('jax', jax.__version__, jax.default_backend(), jax.devices())"], preflight_log, env)
 
+    step25_root = master_root / "steps25"
+    step100_root = master_root / "steps100"
+
+    append_line(master_log, f"[{utc_now()}] stage steps25 started for all metrics")
     for idx, metric in enumerate(METRICS, 1):
-        run_metric_25_then_75(metric, idx, master_root, master_log, env, upload=not args.no_upload)
+        run_metric_25(metric, idx, master_root, master_log, env, upload=not args.no_upload)
+    append_line(master_log, f"[{utc_now()}] stage steps25 complete for all metrics; plotting once")
+    plot_and_upload(step25_root, master_log, env, "steps25_all_metrics", upload=not args.no_upload)
+
+    append_line(master_log, f"[{utc_now()}] stage steps100 continuation started for all metrics")
+    for idx, metric in enumerate(METRICS, 1):
+        continue_metric_to_100(metric, idx, master_root, master_log, env, upload=not args.no_upload)
+    append_line(master_log, f"[{utc_now()}] stage steps100 complete for all metrics; plotting once")
+    plot_and_upload(step100_root, master_log, env, "steps100_all_metrics", upload=not args.no_upload)
 
     append_line(master_log, f"[{utc_now()}] all requested metrics complete")
     (master_root / "launcher_done.json").write_text(json.dumps({"finished_utc": utc_now(), "master_root": rel(master_root)}, indent=2) + "\n", encoding="utf-8")
