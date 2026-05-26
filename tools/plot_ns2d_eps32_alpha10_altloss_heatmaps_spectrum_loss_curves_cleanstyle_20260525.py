@@ -586,6 +586,46 @@ def qnorm_from_trace(case: Case) -> tuple[np.ndarray, np.ndarray]:
     y = np.linalg.norm(diff.reshape(diff.shape[0], -1), ord=2, axis=1)
     return k, y
 
+def batch_wq_l2_curve(case: Case) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    rows = case.per_step
+    if rows and all("wq_l2_mean" in row and "wq_l2_std" in row for row in rows):
+        k = np.asarray([fnum(row.get("k")) for row in rows], dtype=np.float64)
+        mean = np.asarray([fnum(row.get("wq_l2_mean")) for row in rows], dtype=np.float64)
+        std = np.asarray([fnum(row.get("wq_l2_std"), 0.0) for row in rows], dtype=np.float64)
+        return k, mean, std
+
+    grouped: dict[int, list[float]] = {}
+    for row in case.per_sample_step:
+        if "wq_l2" not in row:
+            continue
+        k_value = int(fnum(row.get("k"), -1))
+        value = fnum(row.get("wq_l2"))
+        if k_value >= 0 and math.isfinite(value):
+            grouped.setdefault(k_value, []).append(value)
+    if grouped:
+        ks = np.asarray(sorted(grouped), dtype=np.float64)
+        mean = np.asarray([np.nanmean(grouped[int(k)]) for k in ks], dtype=np.float64)
+        std = np.asarray([np.nanstd(grouped[int(k)]) for k in ks], dtype=np.float64)
+        return ks, mean, std
+
+    return np.asarray([], dtype=np.float64), np.asarray([], dtype=np.float64), np.asarray([], dtype=np.float64)
+
+
+def case_epsilon_alpha(cases: list[Case]) -> tuple[float, float]:
+    for case in cases:
+        for row in case.per_step:
+            eps = fnum(row.get("epsilon"))
+            alpha = fnum(row.get("alpha"))
+            if math.isfinite(eps) and math.isfinite(alpha):
+                return eps, alpha
+    return 32.0, 10.0
+
+
+def tag_number(value: float) -> str:
+    if math.isfinite(value) and abs(value - round(value)) < 1e-9:
+        return str(int(round(value)))
+    return (f"{value:g}").replace(".", "p").replace("-", "m")
+
 
 def final_wq_mean(case: Case) -> float:
     vals = [fnum(row.get("adv_true_loss")) for row in case.final_metrics]
@@ -656,6 +696,7 @@ def plot_top_panels(cases: list[Case], width: int, height: int) -> Image.Image:
     selected_spec_lines = []
     mean_spec_lines = []
     selected_loss3_lines = []
+    batch_loss_lines = []
     for case in cases:
         color = rgb(LINE_COLORS[case.candidate.key])
         width_line = 6 if case.candidate.key == "baseline_loss3" else 4
@@ -663,9 +704,11 @@ def plot_top_panels(cases: list[Case], width: int, height: int) -> Image.Image:
         f_sel, a_sel = orig.normalized_radial_amplitude(data["final_delta"][SAMPLE_POSITION])
         f_mean, a_mean, a_std = orig.spectrum_stack(data["final_delta"])
         k_loss3, y_loss3 = qnorm_from_trace(case)
+        k_batch, y_batch, y_batch_std = batch_wq_l2_curve(case)
         mask_sel = f_sel <= SPECTRUM_XMAX
         mask_mean = f_mean <= SPECTRUM_XMAX
         k_loss3_mask = k_loss3 <= LOSS_CURVE_XMAX
+        k_batch_mask = k_batch <= LOSS_CURVE_XMAX
         spec_sel_y = np.log10(np.maximum(a_sel[mask_sel], SPECTRUM_FLOOR))
         spec_mean_y = np.log10(np.maximum(a_mean[mask_mean], SPECTRUM_FLOOR))
         spec_mean_lo = np.log10(np.maximum(a_mean[mask_mean] - a_std[mask_mean], SPECTRUM_FLOOR))
@@ -682,17 +725,26 @@ def plot_top_panels(cases: list[Case], width: int, height: int) -> Image.Image:
             "spec_mean_hi": spec_mean_hi,
             "k_loss3": k_loss3[k_loss3_mask],
             "loss3_wq": y_loss3[k_loss3_mask],
+            "k_batch_loss": k_batch[k_batch_mask],
+            "batch_wq_mean": y_batch[k_batch_mask],
+            "batch_wq_lower": y_batch[k_batch_mask] - y_batch_std[k_batch_mask],
+            "batch_wq_upper": y_batch[k_batch_mask] + y_batch_std[k_batch_mask],
         }
         prepared.append(item)
         selected_spec_lines.append((item["f_sel"], item["spec_sel_y"]))
         mean_spec_lines.append((item["f_mean"], item["spec_mean_y"]))
         selected_loss3_lines.append((item["k_loss3"], item["loss3_wq"]))
+        if item["k_batch_loss"].size:
+            batch_loss_lines.append((item["k_batch_loss"], item["batch_wq_mean"]))
+            batch_loss_lines.append((item["k_batch_loss"], item["batch_wq_lower"]))
+            batch_loss_lines.append((item["k_batch_loss"], item["batch_wq_upper"]))
 
     y_sel_spec = orig.chart_line_limits(selected_spec_lines)
     y_mean_spec = orig.chart_line_limits(mean_spec_lines)
     y_sel_spec = (max(y_sel_spec[0], math.log10(SPECTRUM_FLOOR)), y_sel_spec[1])
     y_mean_spec = (max(y_mean_spec[0], math.log10(SPECTRUM_FLOOR)), y_mean_spec[1])
     y_loss3 = orig.chart_line_limits(selected_loss3_lines)
+    y_batch_loss = orig.chart_line_limits(batch_loss_lines) if batch_loss_lines else y_loss3
 
     orig.draw_chart_panel(
         canvas, draw, boxes[0], "Single index delta spectrum (log10 amp)",
@@ -709,7 +761,22 @@ def plot_top_panels(cases: list[Case], width: int, height: int) -> Image.Image:
         [{"x": p["k_loss3"], "y": p["loss3_wq"], "color": p["color"], "width": p["width"], "label": p["label"]} for p in prepared],
         (0.0, LOSS_CURVE_XMAX), y_loss3, "attack step", "", True,
     )
-    draw_bar_panel(canvas, draw, boxes[3], "Final batch mean all-W Loss 3 / W-Q norm", cases)
+    batch_lines = []
+    for p in prepared:
+        if p["k_batch_loss"].size:
+            batch_lines.append({
+                "x": p["k_batch_loss"],
+                "y": p["batch_wq_mean"],
+                "lower": p["batch_wq_lower"],
+                "upper": p["batch_wq_upper"],
+                "color": p["color"],
+                "width": p["width"],
+                "label": p["label"],
+            })
+    orig.draw_chart_panel(
+        canvas, draw, boxes[3], "All samples mean all-W Loss 3 / W-Q norm",
+        batch_lines, (0.0, LOSS_CURVE_XMAX), y_batch_loss, "attack step", "mean +/- std", True,
+    )
     return canvas
 
 
@@ -1158,6 +1225,9 @@ def build_rows(cases: list[Case]) -> list[dict[str, Any]]:
 def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]]:
     rows = build_rows(cases)
     dataset_index = cases[0].dataset_index
+    epsilon_value, alpha_value = case_epsilon_alpha(cases)
+    eps_tag = tag_number(epsilon_value)
+    alpha_tag = tag_number(alpha_value)
 
     initial_lim = base.limits_sequential([r["initial"] for r in rows])
     delta_lim = base.limits_diverging([r["delta"] for r in rows])
@@ -1201,7 +1271,7 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
 
     canvas = Image.new("RGB", (width, height), (250, 250, 248))
     draw = ImageDraw.Draw(canvas)
-    draw.text((margin, 18), "NS2D Final-State Comparison | Epsilon = 32, Alpha = 10 | Optimizer = Steepest Add", font=base.FONT_TITLE, fill=(22, 27, 32))
+    draw.text((margin, 18), f"NS2D Final-State Comparison | Epsilon = {epsilon_value:g}, Alpha = {alpha_value:g} | Optimizer = Steepest Add", font=base.FONT_TITLE, fill=(22, 27, 32))
     draw.text((margin, 54), f"Dataset index = {dataset_index}; baseline Loss 3/all-W plus nine alternative loss3 metrics", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
     draw.text((margin, 78), "Top panels overlay all methods on common axes. Loss curve is the same all-W Loss 3 / W-Q norm for every method.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
 
@@ -1277,7 +1347,7 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
                 bbox = draw.textbbox((0, 0), min_label, font=base.FONT_TINY)
                 draw.text((bar_x + bar_w + 3, y + img - (bbox[3] - bbox[1]) + 1), min_label, font=base.FONT_TINY, fill=(70, 73, 78))
 
-    out_path = out_dir / "eps32_alpha10_steepest_add_altloss_original_cleanstyle_dataset0.png"
+    out_path = out_dir / f"eps{eps_tag}_alpha{alpha_tag}_steepest_add_altloss_original_cleanstyle_dataset0.png"
     canvas.save(out_path)
 
     summary_rows = []
@@ -1285,8 +1355,8 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
         s = dict(row["summary"])
         s.update({
             "dataset_index": dataset_index,
-            "epsilon": 32,
-            "alpha": 10,
+            "epsilon": epsilon_value,
+            "alpha": alpha_value,
             "optimizer": "steepest_add",
             "output_png": relpath(out_path),
         })
@@ -1323,9 +1393,9 @@ def main() -> int:
             "Single index delta spectrum, all methods overlaid",
             "All samples mean delta spectrum, all methods overlaid",
             "Single index all-W Loss 3 / W-Q norm curve, recomputed from step_sample_trace.npz",
-            "Final batch mean all-W Loss 3 / W-Q norm bar chart",
+            "All samples mean all-W Loss 3 / W-Q norm curve with mean +/- std shading",
         ],
-        "loss_curve_policy": "The loss curve is not each method's active optimization objective. It is the same all-W Loss 3 / W-Q norm for every method, recomputed for sample_position=0 as ||adv_model_final - adv_solver_final||_2 from step_sample_trace.npz. Batch per-step all-W Loss 3 was not saved for all samples, so the batch panel uses final_state_metrics.csv final adv_true_loss means instead of a fake batch curve.",
+        "loss_curve_policy": "The loss curves are not each method's active optimization objective. They are the same all-W Loss 3 / W-Q norm for every method. The lower-left panel uses sample_position=0 from step_sample_trace.npz. The lower-right panel uses full-batch per-step wq_l2_mean with mean +/- std shading; if an old run lacks wq_l2 fields, that method's batch curve is omitted rather than plotting an incomparable active metric.",
         "warp_magnitude_color_scale": "Alignment Warp / warp magnitude uses a separate per-row color scale and per-row colorbar, because the warp magnitudes are not comparable visually under one global range.",
         "alignment_visualization_policy": "Alignment columns use the actual loss warp objective and budget inferred from the run, not a separate visualization-only L2 warp. No identity fallback is used; raw W-Q L2 status is recorded as IMPROVED, UNCHANGED, WORSE, or NONFINITE.",
         "runs": [{"key": c.candidate.key, "label": c.candidate.label, "source_npz": relpath(c.candidate.path)} for c in cases],

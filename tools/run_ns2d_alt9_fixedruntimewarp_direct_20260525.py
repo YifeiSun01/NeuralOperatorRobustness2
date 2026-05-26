@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Direct NS2D alt9 launcher with 25+75 continuation.
+"""Direct NS2D qnorm baseline + alt9 launcher with 25+75 continuation.
 
 Schedule:
 1. Run all metrics for 25 attack steps.
@@ -36,7 +36,13 @@ CHECKPOINT = ROOT / "2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width
 TEST_PATH = ROOT / "2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/real_initial_laxmap_single/test/dim2d_nx256_N50_solver=exponax_nu0.000_t20.0_test_ntimepoints21_all_frames.pt"
 DICTIONARY_PATH = ROOT / "2D_NS_FNO2d_recurrent/datasets/exponax_datasets/t20/dictionary/dim2d_nx256_N2000_solver=exponax_nu0.000_t20.0_dict_ntimepoints21_batch0_all_frames.pt"
 
+EPSILON = 160
+ALPHA = 50
+EPS_ALPHA_PAIR = f"{EPSILON}:{ALPHA}"
+EPS_ALPHA_TAG = f"eps{EPSILON}_alpha{ALPHA}"
+
 METRICS = [
+    "qnorm",
     "dists",
     "ms_ssim",
     "scattering2d",
@@ -49,6 +55,7 @@ METRICS = [
 ]
 
 PACKAGE_BY_METRIC = {
+    "qnorm": [],
     "dists": ["piq"],
     "ms_ssim": ["pytorch_msssim"],
     "scattering2d": ["kymatio"],
@@ -207,7 +214,7 @@ def attack_cmd(metric: str, steps: int, out_root: Path, initial_delta_npz: Path 
         "--solver-remat-chunk-steps", "20",
         "--dictionary-chunk-size", "32",
         "--clean-target-source", "dataset",
-        "--epsilon-alpha-pairs", "32:10",
+        "--epsilon-alpha-pairs", EPS_ALPHA_PAIR,
         "--loss1-random-start",
         "--loss1-random-start-fraction", "0.001",
         "--loss1-random-start-seed", "12345",
@@ -307,14 +314,16 @@ def merge_continuation_outputs(prev_method_dir: Path, cont_method_dir: Path, ste
 
 
 def plot_and_upload(step_root: Path, master_log: Path, env: dict[str, str], label: str, upload: bool) -> None:
-    alt_root = step_root / "1_very_very_strong/eps32_alpha10"
+    alt_root = step_root / "1_very_very_strong" / EPS_ALPHA_TAG
     fig_dir = step_root / "1_very_very_strong/figures_dataset0"
     fig_dir.mkdir(parents=True, exist_ok=True)
     plot_log = step_root / "1_very_very_strong/logs/plot_dataset0.log"
     append_line(master_log, f"[{utc_now()}] plotting dataset0 for {label}: {rel(fig_dir)}")
+    baseline_dir = baseline_method_dir_for_plot(alt_root)
     run_logged([
         str(PYTHON_BIN),
         "tools/plot_ns2d_eps32_alpha10_altloss_heatmaps_spectrum_loss_curves_cleanstyle_20260525.py",
+        "--baseline-dir", str(baseline_dir),
         "--alt-root", str(alt_root),
         "--out-dir", str(fig_dir),
     ], plot_log, env, allow_failure=True)
@@ -345,7 +354,7 @@ def run_metric_25(metric: str, idx: int, master_root: Path, master_log: Path, en
     logs25 = preset25 / "logs"
     logs25.mkdir(parents=True, exist_ok=True)
 
-    metric25_root = preset25 / "eps32_alpha10" / metric
+    metric25_root = preset25 / EPS_ALPHA_TAG / metric
     done25 = completed_method_dir(metric25_root)
     if done25 is None:
         append_line(master_log, f"[{utc_now()}] steps25 metric {idx}/{len(METRICS)} {metric} started")
@@ -369,8 +378,8 @@ def continue_metric_to_100(metric: str, idx: int, master_root: Path, master_log:
     logs100 = preset100 / "logs"
     logs100.mkdir(parents=True, exist_ok=True)
 
-    metric25_root = preset25 / "eps32_alpha10" / metric
-    metric100_root = preset100 / "eps32_alpha10" / metric
+    metric25_root = preset25 / EPS_ALPHA_TAG / metric
+    metric100_root = preset100 / EPS_ALPHA_TAG / metric
     done25 = completed_method_dir(metric25_root)
     if done25 is None:
         raise SystemExit(f"cannot continue metric {metric}: missing completed 25-step run under {rel(metric25_root)}")
@@ -396,6 +405,13 @@ def continue_metric_to_100(metric: str, idx: int, master_root: Path, master_log:
     return done100
 
 
+def baseline_method_dir_for_plot(alt_root: Path) -> Path:
+    done = completed_method_dir(alt_root / "qnorm")
+    if done is None:
+        raise SystemExit(f"missing qnorm baseline run under {rel(alt_root / 'qnorm')}")
+    return done
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--master-tag", default="")
@@ -409,7 +425,7 @@ def main() -> int:
     if not args.allow_concurrent_attack:
         check_no_attack_process()
 
-    tag = args.master_tag or "eps32_alpha10_steepest_add_loss3_allw_alt9_fixedruntimewarp_vvstrong_direct_steps25_continue75_b10_" + dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d_%H%M%S_UTC")
+    tag = args.master_tag or f"eps{EPSILON}_alpha{ALPHA}_steepest_add_loss3_allw_alt9_plus_baseline_fixedruntimewarp_vvstrong_direct_steps25_continue75_b10_" + dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d_%H%M%S_UTC")
     master_root = RESULT_ROOT / tag
     master_root.mkdir(parents=True, exist_ok=True)
     master_log = master_root / f"launcher_{tag}.log"
@@ -429,10 +445,13 @@ def main() -> int:
         "final_steps": FINAL_STEPS,
         "budget_preset": "very_very_strong",
         "metrics": METRICS,
+        "baseline_metric": "qnorm",
         "very_very_strong_args": VERY_VERY_STRONG_ARGS,
         "batch_size": 10,
         "indices": "0,1,2,3,4,5,6,7,8,9",
-        "epsilon_alpha_pairs": "32:10",
+        "epsilon_alpha_pairs": EPS_ALPHA_PAIR,
+        "epsilon": EPSILON,
+        "alpha": ALPHA,
         "method": "steepest_add",
         "mode_spec": "all_w",
         "recording_policy": "sample position 0 records per-step arrays; all batch samples record final metrics and final_state_outputs",

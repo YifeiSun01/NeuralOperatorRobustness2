@@ -867,6 +867,7 @@ def append_metric_rows(
     delta_linf,
     delta_p,
     true_loss_np,
+    wq_l2_np,
     grad_l2_mean,
     direction_l2_mean,
     elapsed,
@@ -892,6 +893,8 @@ def append_metric_rows(
             row[f"{name}_{key}"] = value
     for key, value in finite_stats(true_loss_np).items():
         row[f"true_loss_{key}"] = value
+    for key, value in finite_stats(wq_l2_np).items():
+        row[f"wq_l2_{key}"] = value
     row["boundary_ratio_mean"] = float(np.nanmean(delta_p / float(args.epsilon)))
     if grad_l2_mean is not None:
         row["grad_l2_mean"] = float(grad_l2_mean)
@@ -920,6 +923,7 @@ def append_metric_rows(
             "delta_p": float(delta_p[pos]),
             "boundary_ratio": float(delta_p[pos] / float(args.epsilon)),
             "true_loss": float(true_loss_np[pos]),
+            "wq_l2": float(wq_l2_np[pos]),
         }
         for name in LOSS_TYPES:
             sample[name] = float(losses_np[name][pos])
@@ -1432,9 +1436,8 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
                 # them for true-loss CSVs and the one-sample trace instead of
                 # paying for a duplicate solver/model rollout every step.
                 true_loss_t = losses["loss3"].detach()
-                if record_trace_this_step:
-                    true_pred_t = pred_active.detach()
-                    true_target_t = target_active.detach()
+                true_pred_t = pred_active.detach()
+                true_target_t = target_active.detach()
             else:
                 true_loss_t, true_pred_t, true_target_t = problem.all_w_final_outputs(x_adv, source="true_loss_and_step_trace")
         else:
@@ -1448,7 +1451,12 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             direction_l2_mean = None if direction is None else float(batch_norm(direction, 2.0).mean().detach().cpu().item())
 
         losses_np = {name: tensor_to_numpy(value.detach()).astype(np.float64) for name, value in losses.items()}
+        if loss_type == "loss3" and problem.mode_spec == "wwwwwwwwww" and true_pred_t is not None and true_target_t is not None:
+            wq_l2_t = batch_norm(true_pred_t.detach() - true_target_t.detach(), problem.args.q_order)
+        else:
+            wq_l2_t = true_loss_t.detach()
         true_loss_np = tensor_to_numpy(true_loss_t.detach()).astype(np.float64)
+        wq_l2_np = tensor_to_numpy(wq_l2_t.detach()).astype(np.float64)
         delta_l2_np = tensor_to_numpy(delta_l2_t).astype(np.float64)
         delta_linf_np = tensor_to_numpy(delta_linf_t).astype(np.float64)
         delta_p_np = tensor_to_numpy(delta_p_t).astype(np.float64)
@@ -1465,6 +1473,7 @@ def run_one(problem: NS2DRecurrentProblem, spec: MethodSpec, loss_type: str, dat
             delta_linf_np,
             delta_p_np,
             true_loss_np,
+            wq_l2_np,
             grad_l2_mean,
             direction_l2_mean,
             time.perf_counter() - start,
