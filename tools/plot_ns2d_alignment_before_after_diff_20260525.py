@@ -16,6 +16,7 @@ from PIL import Image, ImageDraw
 SCRIPT = Path(__file__).resolve()
 ROOT = SCRIPT.parents[1]
 ALT_PLOT_SCRIPT = ROOT / "tools" / "plot_ns2d_eps32_alpha10_altloss_heatmaps_spectrum_loss_curves_cleanstyle_20260525.py"
+PERTURBATION_METHODS = ROOT / "2D_NS_FNO2d_recurrent" / "perturbation_methods"
 
 spec = importlib.util.spec_from_file_location("ns2d_altloss_plot_20260525", ALT_PLOT_SCRIPT)
 if spec is None or spec.loader is None:
@@ -24,6 +25,8 @@ alt = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = alt
 spec.loader.exec_module(alt)
 base = alt.base
+if str(PERTURBATION_METHODS) not in sys.path:
+    sys.path.insert(0, str(PERTURBATION_METHODS))
 
 EXPLICIT_KEYS = tuple(key for key in alt.ALT_METRICS if key in alt.EXPLICIT_ALIGNMENT_KEYS)
 FRAME_INDICES = (-1,)
@@ -69,6 +72,29 @@ def relpath(path: Path) -> str:
         return str(path)
 
 
+_DISTS_DIAG: Any = None
+_DISTS_DIAG_DEVICE: Any = None
+
+
+def dists_distance(model: np.ndarray, solver: np.ndarray) -> float:
+    global _DISTS_DIAG, _DISTS_DIAG_DEVICE
+    try:
+        import torch
+        from ns2d_alternative_losses import _DISTSAdapter, _normalize_pair
+
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if _DISTS_DIAG is None or _DISTS_DIAG_DEVICE != device:
+            _DISTS_DIAG = _DISTSAdapter().to(device).eval()
+            _DISTS_DIAG_DEVICE = device
+        x = torch.from_numpy(finite(model)[None]).to(device=device, dtype=torch.float32)
+        y = torch.from_numpy(finite(solver)[None]).to(device=device, dtype=torch.float32)
+        x_img, y_img = _normalize_pair(x, y, "pair_minmax_detached", 1e-8)
+        with torch.no_grad():
+            return float(_DISTS_DIAG(x_img, y_img).reshape(-1)[0].detach().cpu())
+    except Exception:
+        return float("nan")
+
+
 def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     summary_rows: list[dict[str, Any]] = []
@@ -107,6 +133,9 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
             abs_aligned_solver = np.abs(aligned_solver_diff.astype(np.float64))
             abs_warp = np.abs(warp_mag.astype(np.float64))
             k = int(k_values[real_index]) if k_values.ndim > 0 else int(real_index)
+            raw_dists = dists_distance(model, solver)
+            aligned_dists = dists_distance(aligned, solver)
+            dists_delta = aligned_dists - raw_dists
             summary = {
                 "method_key": case.candidate.key,
                 "method_label": case.candidate.label,
@@ -125,6 +154,9 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
                     np.linalg.norm(aligned_solver_diff.reshape(-1).astype(np.float64))
                     - np.linalg.norm(model_solver_diff.reshape(-1).astype(np.float64))
                 ),
+                "dists_model_minus_solver": raw_dists,
+                "dists_aligned_minus_solver": aligned_dists,
+                "dists_aligned_minus_solver_delta_vs_raw": dists_delta,
                 "nonzero_pixels_gt_1e-8": int((abs_diff > 1e-8).sum()),
                 "pixels": int(abs_diff.size),
                 "nonzero_fraction_gt_1e-8": float((abs_diff > 1e-8).mean()),
@@ -142,12 +174,23 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
                 status = "IMPROVED"
             else:
                 status = "UNCHANGED"
+            if not np.isfinite(dists_delta):
+                dists_status = "NONFINITE"
+            elif dists_delta > 1e-8:
+                dists_status = "WORSE"
+            elif dists_delta < -1e-8:
+                dists_status = "IMPROVED"
+            else:
+                dists_status = "UNCHANGED"
             rows.append({
                 "label": f"{case.candidate.label} | step {k}",
                 "notes": [
                     f"raw W-Q L2: {base.fmt(summary['l2_model_minus_solver'], 4)}",
                     f"aligned W-Q L2: {base.fmt(summary['l2_aligned_minus_solver'], 4)}",
                     f"delta: {base.fmt(delta_l2, 4)} {status}",
+                    f"DISTS raw->warped:",
+                    f"{base.fmt(raw_dists, 5)} -> {base.fmt(aligned_dists, 5)}",
+                    f"DISTS delta: {base.fmt(dists_delta, 5)} {dists_status}",
                     f"aligned-model mean/max abs:",
                     f"{base.fmt(summary['mean_abs_aligned_minus_model'], 4)} / {base.fmt(summary['max_abs_aligned_minus_model'], 4)}",
                     f"nonzero: {summary['nonzero_pixels_gt_1e-8']}/{summary['pixels']}",
@@ -217,7 +260,7 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
     draw.text((margin, 18), "NS2D Explicit Warp Diagnostic | Actual Loss-Warp Before/After", font=base.FONT_TITLE, fill=(22, 27, 32))
     draw.text((margin, 54), "Rows show the final saved attack step; warp columns use each method's actual loss inner objective and budget.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
     draw.text((margin, 78), "W-Q L2 is reported before/after only as a diagnostic; the warp itself is the actual loss warp, not L2-only visualization.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
-    draw.text((margin, 102), "Loss-Warped - Model shows the direct pixelwise effect of the actual loss warp; no identity fallback is used.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
+    draw.text((margin, 102), "DISTS before/after is printed in each row because DISTS-space improvement can disagree with raw W-Q L2. No identity fallback is used.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
 
     for ci, (key, label, _) in enumerate(COLUMNS):
         x = x0 + ci * (col_w + col_gap)
@@ -243,7 +286,7 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
         note_y = y + 48
         for note in row["notes"]:
             draw.text((margin + 8, note_y), note, font=base.FONT_SMALL, fill=(54, 58, 64))
-            note_y += 26
+            note_y += 23
         for ci, (key, _, _) in enumerate(COLUMNS):
             x = x0 + ci * (col_w + col_gap)
             if key == "warp_mag":
