@@ -97,6 +97,76 @@ Meaning:
 - It is not raw pixelwise L2.
 - It can improve while raw pointwise L2 gets worse.
 
+
+
+## 4.1 DISTS Formula Detail
+
+DISTS is originally a learned full-reference image similarity index. In our code, `piq.DISTS` returns the distance/loss version, so larger means more dissimilar.
+
+For two normalized image-like fields `\widetilde W` and `\widetilde Q`, DISTS first extracts multi-layer CNN features:
+
+$$
+F^{(i)}(\widetilde W), \quad F^{(i)}(\widetilde Q)
+$$
+
+where `i` indexes a feature layer and `j` indexes a channel within that layer. Let:
+
+$$
+\mu^{(i)}_{W,j} = \operatorname{mean}_{u,v}\left(F^{(i)}_j(\widetilde W)_{u,v}\right)
+$$
+
+$$
+\mu^{(i)}_{Q,j} = \operatorname{mean}_{u,v}\left(F^{(i)}_j(\widetilde Q)_{u,v}\right)
+$$
+
+and let `\sigma^{(i)}_{W,j}`, `\sigma^{(i)}_{Q,j}`, and `\sigma^{(i)}_{WQ,j}` denote the spatial standard deviations and covariance of the two feature maps.
+
+The mean / spatial-average similarity term is:
+
+$$
+l^{(i)}_j(W,Q)=
+\frac{2\mu^{(i)}_{W,j}\mu^{(i)}_{Q,j}+c_1}
+{\left(\mu^{(i)}_{W,j}\right)^2+\left(\mu^{(i)}_{Q,j}\right)^2+c_1}
+$$
+
+The structure / correlation similarity term is:
+
+$$
+s^{(i)}_j(W,Q)=
+\frac{2\sigma^{(i)}_{WQ,j}+c_2}
+{\left(\sigma^{(i)}_{W,j}\right)^2+\left(\sigma^{(i)}_{Q,j}\right)^2+c_2}
+$$
+
+The learned DISTS similarity is approximately:
+
+$$
+S_{DISTS}(W,Q)=
+\sum_{i,j}
+\left[
+\alpha_{i,j}l^{(i)}_j(W,Q)+\beta_{i,j}s^{(i)}_j(W,Q)
+\right]
+$$
+
+with nonnegative learned weights satisfying:
+
+$$
+\sum_{i,j}\left(\alpha_{i,j}+\beta_{i,j}\right)=1
+$$
+
+The distance/loss version used by PIQ is:
+
+$$
+L_{DISTS}(W,Q)=1-S_{DISTS}(W,Q)
+$$
+
+So the important point is:
+
+$$
+L_{DISTS}(W,Q) \neq \|W-Q\|_2
+$$
+
+and it can decrease even when pointwise L2 increases.
+
 ## 5. MS-SSIM Distance
 
 Package: `pytorch-msssim`
@@ -527,4 +597,60 @@ $$
 \text{bounded warp} + \text{ordinary pointwise L2}
 $$
 
-unless `loss3_align_objective` is changed to `l2` or the formula is modified to include a raw L2 term.
+for the `*_dists` metrics. Setting `loss3_align_objective = l2` only changes the inner registration objective; the final content loss remains DISTS. Use the new `*_l2` metrics for true warp + normalized pointwise L2/MSE content.
+
+## 16. L2 Versions Added After the DISTS-Warp Diagnosis
+
+After inspecting the alignment figures, we found an important mismatch:
+
+$$
+DISTS(T_{\theta^*}(\widetilde W), \widetilde Q)
+$$
+
+can get smaller while the raw pointwise difference
+
+$$
+\|T_{\theta^*}(W)-Q\|_2
+$$
+
+gets larger. This happens because DISTS is a feature/texture/structure distance, not ordinary pointwise L2.
+
+To test pointwise alignment directly, the code now also supports L2/MSE warp variants:
+
+- `affine_l2`
+- `local_warp_l2`
+- `homography_l2`
+- `tps_l2`
+- `elastic_l2`
+- `svf_l2`
+
+For these methods, both the inner alignment objective and the final content loss are normalized per-pixel L2/MSE:
+
+$$
+\theta^* = \arg\min_{\theta \in \Theta}
+\left[
+\frac{1}{N}\left\|T_{\theta}(\widetilde W)-\widetilde Q\right\|_2^2
++\lambda R(\theta)
+\right]
+$$
+
+and
+
+$$
+L_{warp+L2}(W,Q)=
+\frac{1}{N}\left\|T_{\theta^*}(\widetilde W)-\widetilde Q\right\|_2^2
++\lambda R(\theta^*)
+$$
+
+Here:
+
+- `T_theta` is the chosen warp family: affine, dense local warp, homography, TPS, elastic, or SVF.
+- `theta` is the parameter of that warp family.
+- `R(theta)` is the same transform regularizer already used by the corresponding DISTS warp method.
+- `N` is the number of pixels in the normalized 2D final-state field.
+- `W` is the model final state.
+- `Q` is the solver final state.
+- `tilde W` and `tilde Q` are the pair-normalized fields.
+
+Important: these `*_l2` losses are still attack losses. During adversarial optimization, the attack maximizes the selected loss. But the internal warp estimation step itself minimizes normalized pointwise MSE, so the diagnostic aligned model should be much more consistent with the visual pointwise `model - solver` heatmaps than the DISTS-warp versions.
+

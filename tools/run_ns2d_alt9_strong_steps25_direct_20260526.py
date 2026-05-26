@@ -60,6 +60,12 @@ PACKAGE_BY_METRIC = {
     "tps_dists": ["piq", "kornia"],
     "elastic_dists": ["piq", "kornia"],
     "svf_dists": ["piq", "monai"],
+    "affine_l2": ["kornia"],
+    "local_warp_l2": ["monai"],
+    "homography_l2": ["kornia"],
+    "tps_l2": ["kornia"],
+    "elastic_l2": ["kornia"],
+    "svf_l2": ["monai"],
 }
 
 STRONG_ARGS = {

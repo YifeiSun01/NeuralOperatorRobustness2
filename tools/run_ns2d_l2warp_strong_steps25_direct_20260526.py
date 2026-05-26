@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
-"""Direct NS2D qnorm baseline + alt9 launcher with 25+75 continuation.
+"""Direct NS2D qnorm baseline + L2-warp launcher for strong-budget 25-step run.
 
 Schedule:
-1. Run all metrics for 25 attack steps.
+1. Run qnorm baseline plus the six explicit warp+L2 metrics for 25 attack steps.
 2. Plot/upload the complete 25-step comparison once all metrics are present.
-3. Continue all metrics for 75 more local steps from their 25-step final_delta,
-   recording global steps 25..100, then merge the 25-step CSV/trace into each
-   continued run directory so plots can show a 0..100 trajectory.
-4. Plot/upload the complete 100-step comparison once all continuations finish.
-
-This avoids re-running the first 25 steps during the 100-step experiment.
+3. Stop. No DISTS-warp metrics and no 100-step continuation are run by this script.
 """
 
 from __future__ import annotations
@@ -42,16 +37,14 @@ EPS_ALPHA_PAIR = f"{EPSILON}:{ALPHA}"
 EPS_ALPHA_TAG = f"eps{EPSILON}_alpha{ALPHA}"
 
 METRICS = [
+    # qnorm is kept only as the original Loss 3 baseline/reference for plots.
     "qnorm",
-    "dists",
-    "ms_ssim",
-    "scattering2d",
-    "affine_dists",
-    "local_warp_dists",
-    "homography_dists",
-    "tps_dists",
-    "elastic_dists",
-    "svf_dists",
+    "affine_l2",
+    "local_warp_l2",
+    "homography_l2",
+    "tps_l2",
+    "elastic_l2",
+    "svf_l2",
 ]
 
 PACKAGE_BY_METRIC = {
@@ -73,9 +66,9 @@ PACKAGE_BY_METRIC = {
     "svf_l2": ["monai"],
 }
 
-VERY_VERY_STRONG_ARGS = {
+STRONG_ARGS = {
     "--loss3-scattering-j": "6",
-    "--loss3-align-objective": "dists",
+    "--loss3-align-objective": "l2",
     "--loss3-affine-inner-steps": "100",
     "--loss3-affine-lr": "0.12",
     "--loss3-affine-max-shift-ratio": "0.65",
@@ -115,9 +108,10 @@ VERY_VERY_STRONG_ARGS = {
     "--loss3-svf-smooth-weight": "0.00001",
 }
 
+
 FIRST_STEPS = 25
-FINAL_STEPS = 100
-CONTINUE_STEPS = FINAL_STEPS - FIRST_STEPS
+FINAL_STEPS = 25
+CONTINUE_STEPS = 0
 
 
 def utc_now() -> str:
@@ -206,7 +200,7 @@ def attack_cmd(metric: str, steps: int, out_root: Path, initial_delta_npz: Path 
         "--loss3-image-normalization", "pair_minmax_detached",
         "--loss3-metric-eps", "1e-6",
     ]
-    for key, value in VERY_VERY_STRONG_ARGS.items():
+    for key, value in STRONG_ARGS.items():
         cmd.extend([key, value])
     cmd.extend([
         "--methods", "steepest_add",
@@ -431,7 +425,7 @@ def main() -> int:
     if not args.allow_concurrent_attack:
         check_no_attack_process()
 
-    tag = args.master_tag or f"eps{EPSILON}_alpha{ALPHA}_steepest_add_loss3_allw_alt9_plus_baseline_fixedruntimewarp_vvstrong_direct_steps25_continue75_b10_" + dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d_%H%M%S_UTC")
+    tag = args.master_tag or f"eps{EPSILON}_alpha{ALPHA}_steepest_add_loss3_allw_l2warp_plus_baseline_fixedruntimewarp_strong_direct_steps25_b10_" + dt.datetime.now(dt.timezone.utc).strftime("%Y%m%d_%H%M%S_UTC")
     master_root = RESULT_ROOT / tag
     master_root.mkdir(parents=True, exist_ok=True)
     master_log = master_root / f"launcher_{tag}.log"
@@ -445,14 +439,16 @@ def main() -> int:
         "master_tag": tag,
         "master_root": rel(master_root),
         "started_utc": utc_now(),
-        "schedule": "run all metrics for 25 steps, plot/upload complete 25-step comparison, continue all metrics for 75 local steps from each 25-step final_delta, then plot/upload complete 100-step comparison",
+        "schedule": "run qnorm baseline plus six explicit warp+L2 metrics for 25 steps, then plot/upload complete 25-step comparison; no DISTS-warp metrics and no 100-step continuation",
         "first_steps": FIRST_STEPS,
         "continue_steps": CONTINUE_STEPS,
         "final_steps": FINAL_STEPS,
         "budget_preset": "very_very_strong",
         "metrics": METRICS,
         "baseline_metric": "qnorm",
-        "very_very_strong_args": VERY_VERY_STRONG_ARGS,
+        "content_metric_family": "warp_plus_l2_mse",
+        "dists_warp_metrics_excluded": True,
+        "very_very_strong_args": STRONG_ARGS,
         "batch_size": 10,
         "indices": "0,1,2,3,4,5,6,7,8,9",
         "epsilon_alpha_pairs": EPS_ALPHA_PAIR,
@@ -478,6 +474,11 @@ def main() -> int:
         run_metric_25(metric, idx, master_root, master_log, env, upload=not args.no_upload)
     append_line(master_log, f"[{utc_now()}] stage steps25 complete for all metrics; plotting once")
     plot_and_upload(step25_root, master_log, env, "steps25_all_metrics", upload=not args.no_upload)
+    append_line(master_log, f"[{utc_now()}] strong-budget steps25-only run complete; no steps100 continuation requested")
+    (master_root / "launcher_done.json").write_text(json.dumps({"finished_utc": utc_now(), "master_root": rel(master_root), "steps25_only": True}, indent=2) + "\n", encoding="utf-8")
+    if not args.no_upload:
+        upload_path(master_root, master_log, env, "master_complete")
+    return 0
 
     append_line(master_log, f"[{utc_now()}] stage steps100 continuation started for all metrics")
     for idx, metric in enumerate(METRICS, 1):

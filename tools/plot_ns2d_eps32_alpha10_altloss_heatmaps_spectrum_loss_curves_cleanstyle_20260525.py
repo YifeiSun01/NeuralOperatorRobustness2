@@ -72,15 +72,14 @@ ALT_METRICS = (
     "tps_dists",
     "elastic_dists",
     "svf_dists",
+    "affine_l2",
+    "local_warp_l2",
+    "homography_l2",
+    "tps_l2",
+    "elastic_l2",
+    "svf_l2",
 )
-EXPLICIT_ALIGNMENT_KEYS = {
-    "affine_dists",
-    "local_warp_dists",
-    "homography_dists",
-    "tps_dists",
-    "elastic_dists",
-    "svf_dists",
-}
+EXPLICIT_ALIGNMENT_KEYS = set(loss_impl.LOSS3_EXPLICIT_ALIGNMENT_CHOICES)
 ALIGNMENT_COLUMNS = {"aligned_model", "aligned_diff", "warp_mag"}
 LABELS = {
     "baseline_loss3": "Loss 3 baseline",
@@ -93,6 +92,12 @@ LABELS = {
     "tps_dists": "TPS + DISTS",
     "elastic_dists": "Elastic + DISTS",
     "svf_dists": "SVF + DISTS",
+    "affine_l2": "Affine + L2",
+    "local_warp_l2": "Local warp + L2",
+    "homography_l2": "Homography + L2",
+    "tps_l2": "TPS + L2",
+    "elastic_l2": "Elastic + L2",
+    "svf_l2": "SVF + L2",
 }
 FULL_LOSS_NAMES = {
     "baseline_loss3": "Loss 3 baseline: original all-W final-state W/Q norm objective",
@@ -105,6 +110,12 @@ FULL_LOSS_NAMES = {
     "tps_dists": "TPS + DISTS: bounded thin-plate-spline control-grid warp followed by DISTS",
     "elastic_dists": "Elastic + DISTS: bounded smoothed elastic deformation followed by DISTS",
     "svf_dists": "SVF + DISTS: bounded stationary-velocity-field diffeomorphic-style warp followed by DISTS",
+    "affine_l2": "Affine + L2: bounded affine alignment followed by normalized per-pixel L2/MSE",
+    "local_warp_l2": "Local warp + L2: bounded dense local deformation followed by normalized per-pixel L2/MSE",
+    "homography_l2": "Homography + L2: bounded projective corner warp followed by normalized per-pixel L2/MSE",
+    "tps_l2": "TPS + L2: bounded thin-plate-spline control-grid warp followed by normalized per-pixel L2/MSE",
+    "elastic_l2": "Elastic + L2: bounded smoothed elastic deformation followed by normalized per-pixel L2/MSE",
+    "svf_l2": "SVF + L2: bounded stationary-velocity-field warp followed by normalized per-pixel L2/MSE",
 }
 SHORT_LABELS = {
     "baseline_loss3": "L3 baseline",
@@ -117,6 +128,12 @@ SHORT_LABELS = {
     "tps_dists": "TPS+DISTS",
     "elastic_dists": "Elastic+DISTS",
     "svf_dists": "SVF+DISTS",
+    "affine_l2": "Aff+L2",
+    "local_warp_l2": "Warp+L2",
+    "homography_l2": "Homog+L2",
+    "tps_l2": "TPS+L2",
+    "elastic_l2": "Elastic+L2",
+    "svf_l2": "SVF+L2",
 }
 LINE_COLORS = {
     "baseline_loss3": "#c8353e",
@@ -129,6 +146,12 @@ LINE_COLORS = {
     "tps_dists": "#cc6677",
     "elastic_dists": "#117733",
     "svf_dists": "#44aa99",
+    "affine_l2": "#2f7d32",
+    "local_warp_l2": "#006d9c",
+    "homography_l2": "#6b4f1d",
+    "tps_l2": "#a83254",
+    "elastic_l2": "#0b5d2a",
+    "svf_l2": "#1b7f75",
 }
 COLUMN_SPECS = [
     ("initial", "Initial Condition", "sequential"),
@@ -924,9 +947,9 @@ def plot_alignment_args_for_case(case: Case) -> SimpleNamespace:
     params = dict(BASE_PLOT_ALIGNMENT_ARGS)
     preset = infer_budget_preset(case.candidate.path)
     params.update(BUDGET_PRESET_OVERRIDES[preset])
-    # Use the same alignment objective and budget family as the attack/loss run.
-    # For the current very_very_strong runs this means DISTS-based inner
-    # registration, not a separate L2 visualization-only warp.
+    params["loss3_metric"] = case.candidate.key
+    # Use the same metric key and budget family as the attack/loss run.
+    # The *_l2 metrics force L2/MSE registration; *_dists follows the preset objective.
     return SimpleNamespace(**params)
 
 
@@ -1032,28 +1055,28 @@ def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -
     model_norm, solver_norm = computer._normalized_images(model_raw, solver_raw)
     _, _, height, width = model_raw.shape
 
-    if key == "affine_dists":
+    if key in ("affine_dists", "affine_l2"):
         matrix, _ = computer._estimate_affine(model_norm, solver_norm)
         aligned = loss_impl._warp_affine_kornia(model_raw, matrix.to(dtype=model_raw.dtype, device=model_raw.device))
         aligned_np = _tensor_image_to_np(aligned)
         warp_np = _projective_warp_mag(matrix, height, width)
         return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_affine_alignment_model_to_solver_budget_{preset}")
 
-    if key == "local_warp_dists":
+    if key in ("local_warp_dists", "local_warp_l2"):
         disp, _ = computer._estimate_local_disp(model_norm, solver_norm)
         aligned = computer._warp_dense_monai_xy(model_raw, disp.to(dtype=model_raw.dtype, device=model_raw.device))
         aligned_np = _tensor_image_to_np(aligned)
         warp_np = _vector_norm_np(disp)
         return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_monai_dense_warp_alignment_model_to_solver_budget_{preset}")
 
-    if key == "homography_dists":
+    if key in ("homography_dists", "homography_l2"):
         matrix, _ = computer._estimate_homography(model_norm, solver_norm)
         aligned = loss_impl._warp_perspective_kornia(model_raw, matrix.to(dtype=model_raw.dtype, device=model_raw.device))
         aligned_np = _tensor_image_to_np(aligned)
         warp_np = _projective_warp_mag(matrix, height, width)
         return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_homography_alignment_model_to_solver_budget_{preset}")
 
-    if key == "tps_dists":
+    if key in ("tps_dists", "tps_l2"):
         points_src, points_dst, _ = computer._estimate_tps(model_norm, solver_norm)
         aligned = loss_impl._warp_tps_kornia(
             model_raw,
@@ -1064,7 +1087,7 @@ def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -
         warp_np = _tps_control_warp_mag(points_src, points_dst, height, width)
         return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_tps_alignment_model_to_solver_budget_{preset}")
 
-    if key == "elastic_dists":
+    if key in ("elastic_dists", "elastic_l2"):
         noise, _ = computer._estimate_elastic_disp(model_norm, solver_norm)
         aligned = loss_impl._warp_elastic_kornia(
             model_raw,
@@ -1076,7 +1099,7 @@ def _aligned_official_model(case: Case, model: np.ndarray, solver: np.ndarray) -
         warp_np = _vector_norm_np(noise)
         return _safe_wq_alignment(model, solver, aligned_np, warp_np, f"offline_recomputed_kornia_elastic_alignment_model_to_solver_budget_{preset}")
 
-    if key == "svf_dists":
+    if key in ("svf_dists", "svf_l2"):
         ddf, _ = computer._estimate_svf_disp(model_norm, solver_norm)
         aligned = computer._warp_dense_monai_xy(model_raw, ddf.to(dtype=model_raw.dtype, device=model_raw.device))
         aligned_np = _tensor_image_to_np(aligned)
@@ -1272,7 +1295,7 @@ def render(cases: list[Case], out_dir: Path) -> tuple[Path, list[dict[str, Any]]
     canvas = Image.new("RGB", (width, height), (250, 250, 248))
     draw = ImageDraw.Draw(canvas)
     draw.text((margin, 18), f"NS2D Final-State Comparison | Epsilon = {epsilon_value:g}, Alpha = {alpha_value:g} | Optimizer = Steepest Add", font=base.FONT_TITLE, fill=(22, 27, 32))
-    draw.text((margin, 54), f"Dataset index = {dataset_index}; baseline Loss 3/all-W plus nine alternative loss3 metrics", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
+    draw.text((margin, 54), f"Dataset index = {dataset_index}; baseline Loss 3/all-W plus available alternative loss3 metrics", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
     draw.text((margin, 78), "Top panels overlay all methods on common axes. Loss curve is the same all-W Loss 3 / W-Q norm for every method.", font=base.FONT_SUBTITLE, fill=(65, 68, 74))
 
     top_img = plot_top_panels(cases, top_w, top_h)

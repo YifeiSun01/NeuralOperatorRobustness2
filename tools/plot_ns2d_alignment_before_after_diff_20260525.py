@@ -185,17 +185,12 @@ def build_rows(cases: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, A
             rows.append({
                 "label": f"{case.candidate.label} | step {k}",
                 "notes": [
-                    f"raw W-Q L2: {base.fmt(summary['l2_model_minus_solver'], 4)}",
-                    f"aligned W-Q L2: {base.fmt(summary['l2_aligned_minus_solver'], 4)}",
-                    f"delta: {base.fmt(delta_l2, 4)} {status}",
-                    f"DISTS raw->warped:",
-                    f"{base.fmt(raw_dists, 5)} -> {base.fmt(aligned_dists, 5)}",
+                    f"W-Q L2 raw -> aligned: {base.fmt(summary['l2_model_minus_solver'], 4)} -> {base.fmt(summary['l2_aligned_minus_solver'], 4)}",
+                    f"L2 delta: {base.fmt(delta_l2, 4)} {status}",
+                    f"DISTS raw -> aligned: {base.fmt(raw_dists, 5)} -> {base.fmt(aligned_dists, 5)}",
                     f"DISTS delta: {base.fmt(dists_delta, 5)} {dists_status}",
-                    f"aligned-model mean/max abs:",
-                    f"{base.fmt(summary['mean_abs_aligned_minus_model'], 4)} / {base.fmt(summary['max_abs_aligned_minus_model'], 4)}",
-                    f"nonzero: {summary['nonzero_pixels_gt_1e-8']}/{summary['pixels']}",
-                    f"warp mean/max:",
-                    f"{base.fmt(summary['warp_mean'], 4)} / {base.fmt(summary['warp_max'], 4)}",
+                    f"aligned-model abs mean/max: {base.fmt(summary['mean_abs_aligned_minus_model'], 4)} / {base.fmt(summary['max_abs_aligned_minus_model'], 4)}",
+                    f"nonzero: {summary['nonzero_pixels_gt_1e-8']}/{summary['pixels']} | warp mean/max: {base.fmt(summary['warp_mean'], 4)} / {base.fmt(summary['warp_max'], 4)}",
                 ],
                 "model": model,
                 "aligned": aligned,
@@ -286,7 +281,7 @@ def render(cases: list[Any], out_dir: Path) -> tuple[Path, Path, list[dict[str, 
         note_y = y + 48
         for note in row["notes"]:
             draw.text((margin + 8, note_y), note, font=base.FONT_SMALL, fill=(54, 58, 64))
-            note_y += 23
+            note_y += 21
         for ci, (key, _, _) in enumerate(COLUMNS):
             x = x0 + ci * (col_w + col_gap)
             if key == "warp_mag":
