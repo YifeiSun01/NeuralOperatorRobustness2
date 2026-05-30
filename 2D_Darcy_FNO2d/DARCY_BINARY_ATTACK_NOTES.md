@@ -1609,3 +1609,77 @@ detail. Future checks should include:
 5. comparing against a soft/continuous relaxation of the binary attack to see
    whether the sign bias is specific to hard flips.
 
+## 2026-05-29 Loss4 Physics-Residual Attack With Boundary
+
+A fourth Darcy attack objective was added to match the StablePDENet-style
+physics-residual idea, while keeping the same binary coefficient attack setup
+used for the previous loss1/loss2/loss3 experiments.
+
+New script:
+
+```text
+2D_Darcy_FNO2d/perturbation_methods/attack_darcy_binary_physics_loss4.py
+```
+
+Loss4 is:
+
+```math
+L_4(A)=L_{4,pde}(A)+\lambda_{bc}L_{4,bc}(A),
+\qquad \lambda_{bc}=1.0.
+```
+
+Here `L4_pde` is the differentiable residual for `-div(A grad u)=1`, and
+`L4_bc` is the homogeneous Dirichlet boundary penalty on the FNO prediction.
+So this is not only a PDE residual; the boundary condition is included by
+default. The solver is not used inside the optimized loss4 objective, but
+loss1/loss2/loss3 are still recorded at every step using the numerical solver.
+
+Completed run matching the previous main Darcy binary setup:
+
+```text
+2D_Darcy_FNO2d/perturbation_results/binary_loss4_physics/darcy_loss4_physics_steepest_replace_nx211_N50_eps001_alpha5_steps100_bc_20260529
+```
+
+Configuration:
+
+```text
+resolution:       211 x 211
+samples:          50
+steps:            100
+epsilon_fraction: 0.01
+max flips:        437
+method:           steepest_replace
+bc_weight:        1.0
+```
+
+Final mean results:
+
+```text
+clean loss1:          0.000000
+clean loss2:          0.026588
+clean loss3:          0.026588
+clean loss4 physics: 17.712782
+clean loss4_pde:     17.712658
+clean loss4_bc:       0.000124
+
+final loss1:          0.011647
+final loss2:          0.028078
+final true loss3:     0.025949
+final loss4 physics: 36.435963
+final loss4_pde:     36.435841
+final loss4_bc:       0.000123
+
+loss1 increase:       0.011647
+loss2 increase:       0.001490
+loss3 increase:      -0.000639
+loss4 increase:      18.723179
+loss4_pde increase:  18.723179
+loss4_bc increase:   -0.000001
+```
+
+Interpretation: loss4 successfully attacks the physics residual surrogate, but
+it did not increase the solver-consistent true loss3 on this run. This supports
+the distinction discussed in the StablePDENet notes: physics-residual
+adversarial objectives and solver-referenced evaluation errors are related, but
+they are not the same objective.
+

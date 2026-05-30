@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 import torch
+import torch.utils.checkpoint as torch_checkpoint
 
 
 def _complex_roots_of_unity(
@@ -284,6 +285,8 @@ def solve_burgers_final_batch_with_solver(
     solver: Burgers1DETDRK4,
     steps: int,
     step_fn=None,
+    remat_mode: str = "none",
+    remat_chunk_steps: int = 20,
 ) -> torch.Tensor:
     # Input shape: (B, N). Output shape: (B, N).
     if u0_batch.ndim != 2:
@@ -291,8 +294,35 @@ def solve_burgers_final_batch_with_solver(
 
     u = u0_batch.to(device=solver.device, dtype=solver.dtype)
     advance = step_fn if step_fn is not None else solver.step
-    for _ in range(int(steps)):
-        u = advance(u)
+    remat_mode = str(remat_mode).lower()
+    remat_chunk_steps = max(1, int(remat_chunk_steps))
+
+    def checked(fn, x):
+        if not x.requires_grad:
+            return fn(x)
+        return torch_checkpoint.checkpoint(fn, x, use_reentrant=False)
+
+    def run_steps(x: torch.Tensor, n_steps: int) -> torch.Tensor:
+        out = x
+        for _ in range(int(n_steps)):
+            out = advance(out)
+        return out
+
+    if remat_mode in {"none", "off", "false"}:
+        u = run_steps(u, int(steps))
+    elif remat_mode in {"micro", "step"}:
+        for _ in range(int(steps)):
+            u = checked(advance, u)
+    elif remat_mode == "chunk":
+        remaining = int(steps)
+        while remaining > 0:
+            n = min(remat_chunk_steps, remaining)
+            u = checked(lambda x, n=n: run_steps(x, n), u)
+            remaining -= n
+    elif remat_mode in {"all", "full"}:
+        u = checked(lambda x: run_steps(x, int(steps)), u)
+    else:
+        raise ValueError(f"Unknown Burgers remat_mode={remat_mode!r}")
     return u
 
 
@@ -505,6 +535,8 @@ def solve_ns_zongyi_rollout_batch_with_solver(
     apply_exponax_orientation_transform: bool = True,
     return_time_last: bool = True,
     step_fn=None,
+    remat_mode: str = "none",
+    remat_chunk_steps: int = 20,
 ) -> torch.Tensor:
     # Input shape: (B, N, N).
     # If return_time_last=True, output shape: (B, N, N, t_final + 1).
@@ -529,10 +561,35 @@ def solve_ns_zongyi_rollout_batch_with_solver(
 
     frames = [u]
     advance = step_fn if step_fn is not None else solver.step
+    remat_mode = str(remat_mode).lower()
+    remat_chunk_steps = max(1, int(remat_chunk_steps))
+    if remat_mode == "chunk" and steps_per_second % remat_chunk_steps != 0:
+        raise ValueError("For remat_mode='chunk', remat_chunk_steps must divide steps_per_second.")
+
+    def checked(fn, x):
+        if not x.requires_grad:
+            return fn(x)
+        return torch_checkpoint.checkpoint(fn, x, use_reentrant=False)
+
+    def run_steps(x: torch.Tensor, n_steps: int) -> torch.Tensor:
+        out = x
+        for _ in range(int(n_steps)):
+            out = advance(out)
+        return out
 
     for _ in range(int(t_final)):
-        for _ in range(steps_per_second):
-            u = advance(u)
+        if remat_mode in {"none", "off", "false"}:
+            u = run_steps(u, steps_per_second)
+        elif remat_mode in {"micro", "step"}:
+            for _ in range(steps_per_second):
+                u = checked(advance, u)
+        elif remat_mode == "chunk":
+            for _ in range(steps_per_second // remat_chunk_steps):
+                u = checked(lambda x: run_steps(x, remat_chunk_steps), u)
+        elif remat_mode == "second":
+            u = checked(lambda x: run_steps(x, steps_per_second), u)
+        else:
+            raise ValueError(f"Unknown NS2D remat_mode={remat_mode!r}")
 
         frames.append(u)
 
