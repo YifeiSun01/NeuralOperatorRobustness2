@@ -49,11 +49,11 @@ run_case burgers_clean_plus_adv burgers clean-plus-adv \
 
 run_case darcy_adv_only darcy adv-only \
   "$PYTHON" "${COMMON[@]}" --tasks darcy --run-name full10_darcy_adv_only_20260530 --training-data-mode adv-only \
-  --darcy-attack-steps 10 --darcy-batch-size 448 --darcy-optimizer-batch-size 32
+  --darcy-attack-steps 10 --darcy-batch-size 416 --darcy-optimizer-batch-size 128
 
 run_case darcy_clean_plus_adv darcy clean-plus-adv \
   "$PYTHON" "${COMMON[@]}" --tasks darcy --run-name full10_darcy_clean_plus_adv_20260530 --training-data-mode clean-plus-adv \
-  --darcy-attack-steps 10 --darcy-batch-size 448 --darcy-optimizer-batch-size 32
+  --darcy-attack-steps 10 --darcy-batch-size 416 --darcy-optimizer-batch-size 128
 
 run_case ns2d_adv_only ns2d adv-only \
   "$PYTHON" "${COMMON[@]}" --tasks ns2d --run-name full10_ns2d_adv_only_20260530 --training-data-mode adv-only \

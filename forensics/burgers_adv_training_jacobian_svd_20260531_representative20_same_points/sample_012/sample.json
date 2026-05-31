@@ -1,0 +1,9 @@
+{
+  "sample_id": "12",
+  "source_split": "generalization",
+  "dataset_id": "burgers_target_gaussian_corr0p105",
+  "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_rmse_1p5_3x_all_ns50/burgers/burgers_target_gaussian_corr0p105.pt",
+  "local_index": "186",
+  "manual_rank": "9.0",
+  "selection_reason": "target gaussian, close to train corr but shifted"
+}

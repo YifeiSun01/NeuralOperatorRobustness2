@@ -1,0 +1,9 @@
+{
+  "sample_id": "13",
+  "source_split": "generalization",
+  "dataset_id": "burgers_target_gaussian_corr0p21",
+  "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_rmse_1p5_3x_all_ns50/burgers/burgers_target_gaussian_corr0p21.pt",
+  "local_index": "9",
+  "manual_rank": "9.0",
+  "selection_reason": "target gaussian, smoother than train"
+}

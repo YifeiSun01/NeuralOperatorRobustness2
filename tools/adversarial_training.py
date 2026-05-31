@@ -60,6 +60,8 @@ class TaskDefaults:
     epsilon_fraction: float
     epsilon_abs: float
     alpha_ratio: float
+    alpha_jitter_low: float
+    alpha_jitter_high: float
     learning_rate: float
     weight_decay: float
     random_start_fraction: float
@@ -80,6 +82,8 @@ DEFAULTS: dict[str, TaskDefaults] = {
         epsilon_fraction=0.06,
         epsilon_abs=0.0,
         alpha_ratio=1.0,
+        alpha_jitter_low=1.0,
+        alpha_jitter_high=1.0,
         learning_rate=2e-4,
         weight_decay=1e-5,
         random_start_fraction=0.35,
@@ -98,6 +102,8 @@ DEFAULTS: dict[str, TaskDefaults] = {
         epsilon_fraction=0.025,
         epsilon_abs=0.0,
         alpha_ratio=1.0,
+        alpha_jitter_low=1.0,
+        alpha_jitter_high=1.0,
         learning_rate=1e-4,
         weight_decay=1e-5,
         random_start_fraction=0.0,
@@ -116,6 +122,8 @@ DEFAULTS: dict[str, TaskDefaults] = {
         epsilon_fraction=0.035,
         epsilon_abs=0.0,
         alpha_ratio=0.45,
+        alpha_jitter_low=0.75,
+        alpha_jitter_high=1.25,
         learning_rate=5e-5,
         weight_decay=1e-5,
         random_start_fraction=0.20,
@@ -312,6 +320,23 @@ def compute_batch_eps(
     return (base * jitter).clamp_min(1e-8)
 
 
+def compute_alpha_values(
+    eps: torch.Tensor,
+    alpha_ratio: float,
+    jitter_low: float,
+    jitter_high: float,
+) -> torch.Tensor:
+    base = eps * float(alpha_ratio)
+    low = float(jitter_low)
+    high = float(jitter_high)
+    if high < low:
+        raise ValueError(f"alpha jitter high must be >= low, got low={low}, high={high}")
+    if low == high:
+        return (base * low).clamp_min(1e-8)
+    jitter = torch.empty_like(base).uniform_(low, high)
+    return (base * jitter).clamp_min(1e-8)
+
+
 def finite_mse(pred: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     finite = torch.isfinite(pred) & torch.isfinite(y)
     if finite.any():
@@ -324,6 +349,234 @@ class AttackBatchResult:
     x_train: torch.Tensor
     y_train: torch.Tensor
     info: dict[str, Any]
+
+
+def parse_int_list(value: str | None) -> list[int] | None:
+    if value is None or not str(value).strip():
+        return None
+    out: list[int] = []
+    for part in str(value).split(","):
+        part = part.strip()
+        if not part:
+            continue
+        out.append(int(part))
+    return out
+
+
+def select_attack_probe_indices(n_train: int, requested_count: int, explicit: str | None) -> np.ndarray:
+    explicit_indices = parse_int_list(explicit)
+    if explicit_indices is not None:
+        valid = sorted({idx for idx in explicit_indices if 0 <= idx < n_train})
+        return np.asarray(valid, dtype=np.int64)
+    count = min(max(0, int(requested_count)), max(0, n_train))
+    if count <= 0:
+        return np.asarray([], dtype=np.int64)
+    if count >= n_train:
+        return np.arange(n_train, dtype=np.int64)
+    return np.unique(np.rint(np.linspace(0, n_train - 1, count)).astype(np.int64))
+
+
+def tensor_to_probe_array(x: torch.Tensor) -> np.ndarray:
+    return x.detach().float().cpu().numpy()
+
+
+def _spectral_delta_stats(delta: np.ndarray) -> dict[str, float]:
+    arr = np.nan_to_num(np.asarray(delta, dtype=np.float64), copy=False)
+    while arr.ndim > 1 and arr.shape[-1] == 1:
+        arr = arr[..., 0]
+    if arr.size <= 1 or arr.ndim == 0:
+        return {
+            "delta_total_variation": 0.0,
+            "delta_sign_change_fraction": 0.0,
+            "delta_fft_high_freq_ratio": 0.0,
+            "delta_fft_spectral_centroid": 0.0,
+        }
+
+    spatial_axes = (0,) if arr.ndim == 1 else (0, 1)
+    total_variation = 0.0
+    sign_change_terms: list[float] = []
+    for axis in spatial_axes:
+        if arr.shape[axis] <= 1:
+            continue
+        diff = np.diff(arr, axis=axis)
+        total_variation += float(np.mean(np.abs(diff)))
+        left = np.take(arr, indices=range(0, arr.shape[axis] - 1), axis=axis)
+        right = np.take(arr, indices=range(1, arr.shape[axis]), axis=axis)
+        valid = (np.abs(left) > 1e-12) & (np.abs(right) > 1e-12)
+        if np.any(valid):
+            sign_change_terms.append(float(np.mean((left[valid] * right[valid]) < 0)))
+
+    centered = arr - np.mean(arr, axis=spatial_axes, keepdims=True)
+    fft = np.fft.fftn(centered, axes=spatial_axes)
+    power = np.abs(fft) ** 2
+    total_power = float(np.sum(power))
+    if total_power <= 1e-30:
+        high_ratio = 0.0
+        centroid = 0.0
+    else:
+        freq_grids = np.meshgrid(
+            *[np.fft.fftfreq(arr.shape[axis]) for axis in spatial_axes],
+            indexing="ij",
+        )
+        radial = np.sqrt(sum(grid ** 2 for grid in freq_grids))
+        radial_norm = radial / max(1e-12, math.sqrt(len(spatial_axes)) * 0.5)
+        if arr.ndim > len(spatial_axes):
+            radial_norm = radial_norm.reshape(radial_norm.shape + (1,) * (arr.ndim - len(spatial_axes)))
+        high_mask = radial_norm >= 0.5
+        high_ratio = float(np.sum(power * high_mask) / total_power)
+        centroid = float(np.sum(power * radial_norm) / total_power)
+
+    return {
+        "delta_total_variation": total_variation,
+        "delta_sign_change_fraction": float(np.mean(sign_change_terms)) if sign_change_terms else 0.0,
+        "delta_fft_high_freq_ratio": high_ratio,
+        "delta_fft_spectral_centroid": centroid,
+    }
+
+
+def attack_probe_delta_stats(delta: np.ndarray) -> dict[str, float]:
+    flat = np.nan_to_num(np.asarray(delta, dtype=np.float64).reshape(-1), copy=False)
+    if flat.size == 0:
+        return {
+            "delta_linf": float("nan"),
+            "delta_l2_rms": float("nan"),
+            "delta_abs_mean": float("nan"),
+            "delta_mean": float("nan"),
+            "delta_std": float("nan"),
+            **_spectral_delta_stats(delta),
+        }
+    return {
+        "delta_linf": float(np.max(np.abs(flat))),
+        "delta_l2_rms": float(np.sqrt(np.mean(flat ** 2))),
+        "delta_abs_mean": float(np.mean(np.abs(flat))),
+        "delta_mean": float(np.mean(flat)),
+        "delta_std": float(np.std(flat)),
+        **_spectral_delta_stats(delta),
+    }
+
+
+def collect_attack_probe_records(
+    *,
+    task: str,
+    epoch: int,
+    global_step: int,
+    local_batch_idx: int,
+    batch_indices: torch.Tensor,
+    xb: torch.Tensor,
+    yb: torch.Tensor,
+    attack_result: AttackBatchResult,
+    probe_index_to_rank: dict[int, int],
+    save_targets: bool,
+) -> list[dict[str, Any]]:
+    if not probe_index_to_rank:
+        return []
+    records: list[dict[str, Any]] = []
+    source_indices = [int(x) for x in batch_indices.detach().cpu().tolist()]
+    for batch_pos, source_index in enumerate(source_indices):
+        probe_rank = probe_index_to_rank.get(source_index)
+        if probe_rank is None:
+            continue
+        x_clean = tensor_to_probe_array(xb[batch_pos])
+        x_adv = tensor_to_probe_array(attack_result.x_train[batch_pos])
+        delta = x_adv - x_clean
+        record: dict[str, Any] = {
+            "task": task,
+            "epoch": int(epoch),
+            "attack_global_step": int(global_step),
+            "local_batch_idx": int(local_batch_idx),
+            "probe_rank": int(probe_rank),
+            "source_index": int(source_index),
+            "x_clean": x_clean,
+            "x_adv": x_adv,
+            "delta": delta,
+            **attack_probe_delta_stats(delta),
+        }
+        for key in (
+            "attack_type",
+            "attack_method",
+            "attack_steps",
+            "epsilon_mean",
+            "epsilon_min",
+            "epsilon_max",
+            "alpha_mean",
+            "alpha_min",
+            "alpha_max",
+            "clean_loss_before_attack",
+            "adv_loss_after_attack",
+            "attack_loss_gain",
+        ):
+            if key in attack_result.info:
+                record[key] = attack_result.info[key]
+        if save_targets:
+            record["y_clean"] = tensor_to_probe_array(yb[batch_pos])
+            record["y_adv"] = tensor_to_probe_array(attack_result.y_train[batch_pos])
+        records.append(record)
+    return records
+
+
+def save_attack_probe_epoch(
+    out_dir: Path,
+    task: str,
+    epoch: int,
+    epoch_end_global_step: int,
+    probe_indices: np.ndarray,
+    records: list[dict[str, Any]],
+    *,
+    save_targets: bool,
+) -> Path | None:
+    probe_dir = out_dir / "attack_probe_samples"
+    probe_dir.mkdir(parents=True, exist_ok=True)
+    records = sorted(records, key=lambda row: int(row["probe_rank"]))
+    captured = {int(row["source_index"]) for row in records}
+    missing = [int(idx) for idx in probe_indices.tolist() if int(idx) not in captured]
+
+    npz_path: Path | None = None
+    rel_npz = ""
+    if records:
+        npz_path = probe_dir / f"{task}_epoch{epoch:03d}_step{epoch_end_global_step:06d}_attack_probe.npz"
+        payload: dict[str, Any] = {
+            "task": np.asarray(task),
+            "epoch": np.asarray(int(epoch), dtype=np.int64),
+            "epoch_end_global_step": np.asarray(int(epoch_end_global_step), dtype=np.int64),
+            "probe_rank": np.asarray([int(row["probe_rank"]) for row in records], dtype=np.int64),
+            "source_index": np.asarray([int(row["source_index"]) for row in records], dtype=np.int64),
+            "attack_global_step": np.asarray([int(row["attack_global_step"]) for row in records], dtype=np.int64),
+            "local_batch_idx": np.asarray([int(row["local_batch_idx"]) for row in records], dtype=np.int64),
+            "x_clean": np.stack([row["x_clean"] for row in records]).astype(np.float32, copy=False),
+            "x_adv": np.stack([row["x_adv"] for row in records]).astype(np.float32, copy=False),
+            "delta": np.stack([row["delta"] for row in records]).astype(np.float32, copy=False),
+        }
+        if save_targets and all("y_clean" in row and "y_adv" in row for row in records):
+            payload["y_clean"] = np.stack([row["y_clean"] for row in records]).astype(np.float32, copy=False)
+            payload["y_adv"] = np.stack([row["y_adv"] for row in records]).astype(np.float32, copy=False)
+        np.savez_compressed(npz_path, **payload)
+        try:
+            rel_npz = str(npz_path.relative_to(PROJECT_ROOT))
+        except ValueError:
+            rel_npz = str(npz_path)
+
+    write_csv_row(
+        out_dir / "attack_probe_epochs.csv",
+        {
+            "task": task,
+            "epoch": int(epoch),
+            "epoch_end_global_step": int(epoch_end_global_step),
+            "expected_probe_count": int(len(probe_indices)),
+            "captured_probe_count": int(len(records)),
+            "missing_source_indices": json.dumps(missing),
+            "npz_path": rel_npz,
+        },
+    )
+    for row in records:
+        csv_row = {
+            key: value
+            for key, value in row.items()
+            if key not in {"x_clean", "x_adv", "delta", "y_clean", "y_adv"}
+        }
+        csv_row["epoch_end_global_step"] = int(epoch_end_global_step)
+        csv_row["npz_path"] = rel_npz
+        write_csv_row(out_dir / "attack_probe_samples.csv", csv_row)
+    return npz_path
 
 
 _MODULE_CACHE: dict[str, Any] = {}
@@ -551,6 +804,8 @@ def continuous_attack(
     epsilon_fraction: float,
     epsilon_abs: float,
     alpha_ratio: float,
+    alpha_jitter_low: float,
+    alpha_jitter_high: float,
     random_start_fraction: float,
     jitter_low: float,
     jitter_high: float,
@@ -564,8 +819,9 @@ def continuous_attack(
         param.requires_grad_(False)
 
     eps = compute_batch_eps(xb, epsilon_fraction, epsilon_abs, jitter_low, jitter_high)
+    alpha_values = compute_alpha_values(eps, alpha_ratio, alpha_jitter_low, alpha_jitter_high)
     eps_view = expand_per_sample(eps, xb)
-    alpha_view = expand_per_sample(eps * float(alpha_ratio), xb)
+    alpha_view = expand_per_sample(alpha_values, xb)
     mask = ns_attack_mask(xb, ns_frames) if task == "ns2d" else torch.ones_like(xb)
     delta = random_start_delta(xb, eps, random_start_fraction) * mask
     delta = torch.clamp(delta, -eps_view, eps_view)
@@ -633,10 +889,13 @@ def continuous_attack(
         "epsilon_mean": float(eps.mean().detach().cpu()),
         "epsilon_min": float(eps.min().detach().cpu()),
         "epsilon_max": float(eps.max().detach().cpu()),
-        "alpha_mean": float((eps * float(alpha_ratio)).mean().detach().cpu()),
-        "alpha_min": float((eps * float(alpha_ratio)).min().detach().cpu()),
-        "alpha_max": float((eps * float(alpha_ratio)).max().detach().cpu()),
-        "alpha_is_epsilon_times_ratio": 1.0,
+        "alpha_mean": float(alpha_values.mean().detach().cpu()),
+        "alpha_min": float(alpha_values.min().detach().cpu()),
+        "alpha_max": float(alpha_values.max().detach().cpu()),
+        "alpha_ratio_nominal": float(alpha_ratio),
+        "alpha_jitter_low": float(alpha_jitter_low),
+        "alpha_jitter_high": float(alpha_jitter_high),
+        "alpha_is_epsilon_times_ratio": 0.0 if float(alpha_jitter_low) != 1.0 or float(alpha_jitter_high) != 1.0 else 1.0,
         "clean_loss_before_attack": clean_loss_value,
         "adv_loss_after_random_start": first_adv_loss,
         "adv_loss_after_attack": final_loss_value,
@@ -794,8 +1053,9 @@ def ns2d_solver_consistent_attack(
 
     x0 = xb[..., 0].detach().contiguous()
     eps = compute_batch_eps(x0, epsilon_fraction, epsilon_abs, jitter_low, jitter_high)
+    alpha_values = compute_alpha_values(eps, alpha_ratio, alpha_jitter_low, alpha_jitter_high)
     eps_view = expand_per_sample(eps, x0)
-    alpha_view = expand_per_sample(eps * float(alpha_ratio), x0)
+    alpha_view = expand_per_sample(alpha_values, x0)
     delta = torch.clamp(random_start_delta(x0, eps, random_start_fraction), -eps_view, eps_view)
     x0_adv = (x0 + delta).detach()
 
@@ -853,10 +1113,13 @@ def ns2d_solver_consistent_attack(
         "epsilon_mean": float(eps.mean().detach().cpu()),
         "epsilon_min": float(eps.min().detach().cpu()),
         "epsilon_max": float(eps.max().detach().cpu()),
-        "alpha_mean": float((eps * float(alpha_ratio)).mean().detach().cpu()),
-        "alpha_min": float((eps * float(alpha_ratio)).min().detach().cpu()),
-        "alpha_max": float((eps * float(alpha_ratio)).max().detach().cpu()),
-        "alpha_is_epsilon_times_ratio": 1.0,
+        "alpha_mean": float(alpha_values.mean().detach().cpu()),
+        "alpha_min": float(alpha_values.min().detach().cpu()),
+        "alpha_max": float(alpha_values.max().detach().cpu()),
+        "alpha_ratio_nominal": float(alpha_ratio),
+        "alpha_jitter_low": float(alpha_jitter_low),
+        "alpha_jitter_high": float(alpha_jitter_high),
+        "alpha_is_epsilon_times_ratio": 0.0 if float(alpha_jitter_low) != 1.0 or float(alpha_jitter_high) != 1.0 else 1.0,
         "clean_loss_before_attack": clean_loss_value,
         "adv_loss_after_random_start": first_adv_loss,
         "adv_loss_after_attack": final_loss_value,
@@ -884,6 +1147,8 @@ def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict
             epsilon_fraction=float(cfg["epsilon_fraction"]),
             epsilon_abs=float(cfg["epsilon_abs"]),
             alpha_ratio=float(cfg["alpha_ratio"]),
+            alpha_jitter_low=float(cfg.get("alpha_jitter_low", 1.0)),
+            alpha_jitter_high=float(cfg.get("alpha_jitter_high", 1.0)),
             random_start_fraction=float(cfg["random_start_fraction"]),
             jitter_low=float(cfg["eps_jitter_low"]),
             jitter_high=float(cfg["eps_jitter_high"]),
@@ -912,6 +1177,8 @@ def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict
         epsilon_fraction=float(cfg["epsilon_fraction"]),
         epsilon_abs=float(cfg["epsilon_abs"]),
         alpha_ratio=float(cfg["alpha_ratio"]),
+        alpha_jitter_low=float(cfg.get("alpha_jitter_low", 1.0)),
+        alpha_jitter_high=float(cfg.get("alpha_jitter_high", 1.0)),
         random_start_fraction=float(cfg["random_start_fraction"]),
         jitter_low=float(cfg["eps_jitter_low"]),
         jitter_high=float(cfg["eps_jitter_high"]),
@@ -1052,6 +1319,12 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
     override_alpha_ratio = getattr(args, f"{task}_alpha_ratio", None)
     if override_alpha_ratio is not None:
         cfg["alpha_ratio"] = float(override_alpha_ratio)
+    override_alpha_jitter_low = getattr(args, f"{task}_alpha_jitter_low", None)
+    if override_alpha_jitter_low is not None:
+        cfg["alpha_jitter_low"] = float(override_alpha_jitter_low)
+    override_alpha_jitter_high = getattr(args, f"{task}_alpha_jitter_high", None)
+    if override_alpha_jitter_high is not None:
+        cfg["alpha_jitter_high"] = float(override_alpha_jitter_high)
     cfg["max_batches_per_epoch"] = args.max_batches_per_epoch
     return cfg
 
@@ -1085,9 +1358,18 @@ def build_planned_workload_estimate(
         total_steps = int(cfg["epochs"]) * max(1, batches_per_epoch)
         optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
         total_optimizer_steps = int(cfg["epochs"]) * max(1, optimizer_steps_per_epoch)
-        eval_every_steps = max(1, int(math.ceil(total_steps * float(args.eval_every_fraction))))
-        eval_steps = sorted(set(list(range(eval_every_steps, total_steps + 1, eval_every_steps)) + [total_steps]))
+        eval_every_steps = max(1, batches_per_epoch)
+        eval_steps = [epoch * max(1, batches_per_epoch) for epoch in range(1, int(cfg["epochs"]) + 1)]
         eval_passes = 1 + len(eval_steps)
+        checkpoint_fraction = args.checkpoint_every_fraction
+        if checkpoint_fraction is None:
+            checkpoint_fraction = args.eval_every_fraction
+        if checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
+            checkpoint_every_steps = max(1, int(math.ceil(total_steps * float(checkpoint_fraction))))
+            checkpoint_steps = sorted(set(list(range(checkpoint_every_steps, total_steps + 1, checkpoint_every_steps)) + [total_steps]))
+        else:
+            checkpoint_every_steps = None
+            checkpoint_steps = [total_steps]
         eval_dataset_count = expected_generalization + 2
 
         smoke = smoke_by_task.get(task, {})
@@ -1124,12 +1406,18 @@ def build_planned_workload_estimate(
             "attack_steps": int(cfg["attack_steps"]),
             "epsilon_fraction": float(cfg["epsilon_fraction"]),
             "alpha_ratio": float(cfg["alpha_ratio"]),
+            "alpha_jitter_low": float(cfg.get("alpha_jitter_low", 1.0)),
+            "alpha_jitter_high": float(cfg.get("alpha_jitter_high", 1.0)),
             "full_solver_gradient": True,
             "batches_per_epoch": batches_per_epoch,
             "total_train_steps": total_steps,
+            "evaluation_schedule": "every_epoch",
             "eval_every_steps": eval_every_steps,
             "eval_steps_after_baseline": eval_steps,
             "eval_pass_count_including_baseline": eval_passes,
+            "checkpoint_every_fraction": None if checkpoint_fraction is None else float(checkpoint_fraction),
+            "checkpoint_every_steps": checkpoint_every_steps,
+            "checkpoint_steps": checkpoint_steps,
             "eval_dataset_count_per_pass": eval_dataset_count,
             "estimated_train_seconds_from_smoke": estimated_train_sec,
             "estimated_eval_seconds_from_smoke_scaled_to_52_datasets": estimated_eval_sec,
@@ -1250,7 +1538,7 @@ def estimate_from_smoke(
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(full_train_samples, batch_size, optimizer_batch_size)
     train_batches = full_epochs * batches_per_epoch
     optimizer_steps = full_epochs * max(1, optimizer_steps_per_epoch)
-    evals = max(1, int(math.ceil(1.0 / max(eval_every_fraction, 1e-9)))) + 1
+    evals = int(full_epochs) + 1
     eval_mean = float(np.mean(eval_seconds)) if eval_seconds else 0.0
     total_seconds = per_batch * train_batches + eval_mean * evals
     return {
@@ -1290,9 +1578,15 @@ def train_one_task(
         {
             "task": task,
             "device": str(device),
+            "evaluation_schedule": "every_epoch",
             "eval_every_fraction": args.eval_every_fraction,
+            "checkpoint_every_fraction": args.checkpoint_every_fraction if args.checkpoint_every_fraction is not None else args.eval_every_fraction,
             "eval_max_samples": args.eval_max_samples,
             "max_generalization_eval": args.max_generalization_eval,
+            "attack_probe_samples": args.attack_probe_samples,
+            "attack_probe_indices": args.attack_probe_indices,
+            "attack_probe_every_n_epochs": args.attack_probe_every_n_epochs,
+            "attack_probe_save_targets": bool(args.attack_probe_save_targets),
             "binary_pool_multiplier": args.binary_pool_multiplier,
             "binary_score_noise": args.binary_score_noise,
             "ns_attack_frames": args.ns_attack_frames,
@@ -1336,6 +1630,12 @@ def train_one_task(
     override_alpha_ratio = getattr(args, f"{task}_alpha_ratio", None)
     if override_alpha_ratio is not None:
         task_cfg["alpha_ratio"] = float(override_alpha_ratio)
+    override_alpha_jitter_low = getattr(args, f"{task}_alpha_jitter_low", None)
+    if override_alpha_jitter_low is not None:
+        task_cfg["alpha_jitter_low"] = float(override_alpha_jitter_low)
+    override_alpha_jitter_high = getattr(args, f"{task}_alpha_jitter_high", None)
+    if override_alpha_jitter_high is not None:
+        task_cfg["alpha_jitter_high"] = float(override_alpha_jitter_high)
     override_optimizer_batch = getattr(args, f"{task}_optimizer_batch_size", None)
     if override_optimizer_batch is not None:
         task_cfg["optimizer_batch_size"] = int(override_optimizer_batch)
@@ -1371,13 +1671,44 @@ def train_one_task(
     total_steps = int(task_cfg["epochs"]) * max(1, batches_per_epoch)
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
     total_optimizer_steps = int(task_cfg["epochs"]) * max(1, optimizer_steps_per_epoch)
-    eval_every_steps = max(1, int(math.ceil(total_steps * float(args.eval_every_fraction))))
+    eval_every_steps = max(1, batches_per_epoch)
+    checkpoint_fraction = task_cfg.get("checkpoint_every_fraction", args.eval_every_fraction)
+    if checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
+        checkpoint_every_steps = max(1, int(math.ceil(total_steps * float(checkpoint_fraction))))
+    else:
+        checkpoint_every_steps = None
+    probe_indices = select_attack_probe_indices(
+        n_train,
+        int(task_cfg.get("attack_probe_samples", 10)),
+        task_cfg.get("attack_probe_indices"),
+    )
+    probe_index_to_rank = {int(source_index): rank for rank, source_index in enumerate(probe_indices.tolist())}
+    probe_every_n_epochs = max(1, int(task_cfg.get("attack_probe_every_n_epochs", 1)))
+    probe_save_targets = bool(task_cfg.get("attack_probe_save_targets", False))
 
     train_csv = out_dir / "train_steps.csv"
     attack_csv = out_dir / "attack_batches.csv"
     optimizer_csv = out_dir / "optimizer_steps.csv"
     eval_csv = out_dir / "eval_metrics.csv"
+    eval_pass_csv = out_dir / "evaluation_passes.csv"
     memory_csv = out_dir / "memory.csv"
+
+    (out_dir / "attack_probe_config.json").write_text(
+        json.dumps(
+            to_jsonable(
+                {
+                    "enabled": bool(len(probe_indices) > 0),
+                    "probe_indices": probe_indices.tolist(),
+                    "probe_count": int(len(probe_indices)),
+                    "save_every_n_epochs": probe_every_n_epochs,
+                    "save_targets": probe_save_targets,
+                    "note": "For each epoch, these fixed training source indices are captured from the actual attacked training batch. NPZ files contain x_clean, x_adv, and delta=x_adv-x_clean.",
+                }
+            ),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     eval_seconds: list[float] = []
     eval_rows, seconds = evaluate_task(
@@ -1395,6 +1726,19 @@ def train_one_task(
         max_generalization_eval=task_cfg["max_generalization_eval"],
     )
     eval_seconds.append(seconds)
+    write_csv_row(
+        eval_pass_csv,
+        {
+            "task": task,
+            "phase": "baseline_before_adversarial_training",
+            "epoch": 0,
+            "global_step": 0,
+            "progress_fraction": 0.0,
+            "eval_wall_sec": seconds,
+            "checkpoint_saved": 0,
+            "checkpoint_path": "",
+        },
+    )
 
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
@@ -1404,8 +1748,12 @@ def train_one_task(
     train_rows: list[dict[str, Any]] = []
     seed_base = int(args.seed)
     train_start_wall = time.perf_counter()
+    last_checkpoint_path: Path | None = None
+    last_checkpoint_epoch = -1
 
     for epoch in range(1, int(task_cfg["epochs"]) + 1):
+        probe_this_epoch = bool(probe_index_to_rank) and (epoch % probe_every_n_epochs == 0 or epoch == int(task_cfg["epochs"]))
+        epoch_probe_records: list[dict[str, Any]] = []
         generator = torch.Generator().manual_seed(seed_base + epoch * 1009 + hash(task) % 1000)
         batches = make_indices(n_train, batch_size, generator)
         if max_batches is not None:
@@ -1419,8 +1767,23 @@ def train_one_task(
             attack_start = time.perf_counter()
             attack_result = attack_batch(model, xb, yb, task, task_cfg)
             attack_info = attack_result.info
-            x_train_adv, y_train_adv, training_mix_info = combine_training_pairs(task, xb, yb, attack_result, task_cfg)
             attack_sec = time.perf_counter() - attack_start
+            if probe_this_epoch:
+                epoch_probe_records.extend(
+                    collect_attack_probe_records(
+                        task=task,
+                        epoch=epoch,
+                        global_step=global_step,
+                        local_batch_idx=local_batch_idx,
+                        batch_indices=idx,
+                        xb=xb,
+                        yb=yb,
+                        attack_result=attack_result,
+                        probe_index_to_rank=probe_index_to_rank,
+                        save_targets=probe_save_targets,
+                    )
+                )
+            x_train_adv, y_train_adv, training_mix_info = combine_training_pairs(task, xb, yb, attack_result, task_cfg)
 
             train_start = time.perf_counter()
             micro_slices = make_slices(int(x_train_adv.shape[0]), optimizer_batch_size)
@@ -1508,37 +1871,74 @@ def train_one_task(
             write_csv_row(memory_csv, {"task": task, "epoch": epoch, "global_step": global_step, **memory_stats(device)})
             train_rows.append(row)
 
-            should_eval = global_step == total_steps or global_step % eval_every_steps == 0
-            if should_eval:
-                ckpt = checkpoint_model(model, out_dir, task, epoch, global_step, task_cfg)
-                eval_rows, seconds = evaluate_task(
-                    model,
-                    task,
-                    all_specs,
-                    device,
-                    int(task_cfg["eval_batch_size"]),
-                    task_cfg["eval_max_samples"],
-                    eval_csv,
-                    global_step=global_step,
-                    epoch=epoch,
-                    progress_fraction=progress,
-                    phase="during_adversarial_training",
-                    max_generalization_eval=task_cfg["max_generalization_eval"],
-                )
-                eval_seconds.append(seconds)
-                write_csv_row(
-                    out_dir / "checkpoints.csv",
-                    {
-                        "task": task,
-                        "epoch": epoch,
-                        "global_step": global_step,
-                        "progress_fraction": progress,
-                        "checkpoint_path": str(ckpt.relative_to(PROJECT_ROOT)),
-                        "eval_wall_sec": seconds,
-                    },
-                )
 
-    final_ckpt = checkpoint_model(model, out_dir, task, int(task_cfg["epochs"]), global_step, task_cfg)
+        epoch_progress = global_step / max(1, total_steps)
+        if probe_this_epoch:
+            save_attack_probe_epoch(
+                out_dir,
+                task,
+                epoch,
+                global_step,
+                probe_indices,
+                epoch_probe_records,
+                save_targets=probe_save_targets,
+            )
+
+        is_final_step = global_step == total_steps
+        should_checkpoint = is_final_step or (checkpoint_every_steps is not None and global_step % checkpoint_every_steps == 0)
+        ckpt: Path | None = None
+        checkpoint_path = ""
+        if should_checkpoint:
+            ckpt = checkpoint_model(model, out_dir, task, epoch, global_step, task_cfg)
+            last_checkpoint_path = ckpt
+            last_checkpoint_epoch = epoch
+            checkpoint_path = str(ckpt.relative_to(PROJECT_ROOT))
+
+        eval_rows, seconds = evaluate_task(
+            model,
+            task,
+            all_specs,
+            device,
+            int(task_cfg["eval_batch_size"]),
+            task_cfg["eval_max_samples"],
+            eval_csv,
+            global_step=global_step,
+            epoch=epoch,
+            progress_fraction=epoch_progress,
+            phase="during_adversarial_training",
+            max_generalization_eval=task_cfg["max_generalization_eval"],
+        )
+        eval_seconds.append(seconds)
+        write_csv_row(
+            eval_pass_csv,
+            {
+                "task": task,
+                "phase": "during_adversarial_training",
+                "epoch": epoch,
+                "global_step": global_step,
+                "progress_fraction": epoch_progress,
+                "eval_wall_sec": seconds,
+                "checkpoint_saved": int(should_checkpoint),
+                "checkpoint_path": checkpoint_path,
+            },
+        )
+        if ckpt is not None:
+            write_csv_row(
+                out_dir / "checkpoints.csv",
+                {
+                    "task": task,
+                    "epoch": epoch,
+                    "global_step": global_step,
+                    "progress_fraction": epoch_progress,
+                    "checkpoint_path": checkpoint_path,
+                    "eval_wall_sec": seconds,
+                },
+            )
+
+    if last_checkpoint_path is not None and last_checkpoint_epoch == int(task_cfg["epochs"]):
+        final_ckpt = last_checkpoint_path
+    else:
+        final_ckpt = checkpoint_model(model, out_dir, task, int(task_cfg["epochs"]), global_step, task_cfg)
     elapsed = time.perf_counter() - train_start_wall
     estimate = estimate_from_smoke(
         task,
@@ -1564,6 +1964,14 @@ def train_one_task(
         "total_optimizer_steps": total_optimizer_steps,
         "epochs": int(task_cfg["epochs"]),
         "total_steps": global_step,
+        "evaluation_schedule": "every_epoch",
+        "eval_pass_count_including_baseline": int(len(eval_seconds)),
+        "checkpoint_every_fraction": None if checkpoint_fraction is None else float(checkpoint_fraction),
+        "checkpoint_every_steps": checkpoint_every_steps,
+        "attack_probe_indices": probe_indices.tolist(),
+        "attack_probe_count": int(len(probe_indices)),
+        "attack_probe_every_n_epochs": probe_every_n_epochs,
+        "attack_probe_save_targets": probe_save_targets,
         "elapsed_seconds": elapsed,
         "elapsed_minutes": elapsed / 60.0,
         "final_checkpoint": str(final_ckpt.relative_to(PROJECT_ROOT)),
@@ -1596,12 +2004,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=20260530)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--epochs", type=int, default=None)
-    parser.add_argument("--eval-every-fraction", type=float, default=0.2)
+    parser.add_argument("--eval-every-fraction", type=float, default=0.2, help="Deprecated scheduling knob kept for old scripts; evaluation now runs every epoch. If --checkpoint-every-fraction is omitted, this value controls checkpoint frequency.")
+    parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Save checkpoints every this fraction of total training progress; default reuses --eval-every-fraction. Evaluation still runs every epoch.")
     parser.add_argument("--eval-max-samples", type=int, default=50)
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
     parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs.")
+    parser.add_argument("--attack-probe-samples", type=int, default=10, help="Number of fixed train-set source indices whose attacked x_adv and delta are saved each probe epoch; set 0 to disable.")
+    parser.add_argument("--attack-probe-indices", default=None, help="Optional comma-separated explicit train-set source indices for attack probe saving. Overrides --attack-probe-samples.")
+    parser.add_argument("--attack-probe-every-n-epochs", type=int, default=1, help="Save attack probe arrays every N epochs; default 1 saves every epoch.")
+    parser.add_argument("--attack-probe-save-targets", action="store_true", help="Also save y_clean and y_adv arrays in attack probe NPZ files. Off by default to reduce disk usage.")
     parser.add_argument("--allow-clean-label", action="store_true", help="Allow the intentionally non-physical x_adv -> y_clean objective for ablation/debug only.")
     parser.add_argument("--ns-attack-frames", choices=["first", "all"], default="first")
     parser.add_argument("--burgers-solver-remat", choices=["none", "micro", "step", "chunk", "all"], default="none")
@@ -1625,6 +2038,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--burgers-alpha-ratio", type=float, default=None)
     parser.add_argument("--darcy-alpha-ratio", type=float, default=None)
     parser.add_argument("--ns2d-alpha-ratio", type=float, default=None)
+    parser.add_argument("--burgers-alpha-jitter-low", type=float, default=None)
+    parser.add_argument("--burgers-alpha-jitter-high", type=float, default=None)
+    parser.add_argument("--darcy-alpha-jitter-low", type=float, default=None)
+    parser.add_argument("--darcy-alpha-jitter-high", type=float, default=None)
+    parser.add_argument("--ns2d-alpha-jitter-low", type=float, default=None)
+    parser.add_argument("--ns2d-alpha-jitter-high", type=float, default=None)
     return parser.parse_args()
 
 
@@ -1669,6 +2088,15 @@ def main() -> None:
         "preflight_dataset_counts": dataset_count_rows,
         "planned_workload_estimate": planned_estimate,
         "training_data_mode": args.training_data_mode,
+        "evaluation_schedule": "every_epoch",
+        "eval_every_fraction_deprecated": args.eval_every_fraction,
+        "checkpoint_every_fraction": args.checkpoint_every_fraction if args.checkpoint_every_fraction is not None else args.eval_every_fraction,
+        "attack_probe": {
+            "samples": int(args.attack_probe_samples),
+            "indices": args.attack_probe_indices,
+            "every_n_epochs": int(args.attack_probe_every_n_epochs),
+            "save_targets": bool(args.attack_probe_save_targets),
+        },
         "remat_options": {
             "burgers_solver_remat": args.burgers_solver_remat,
             "burgers_solver_remat_chunk_steps": args.burgers_solver_remat_chunk_steps,
@@ -1714,7 +2142,7 @@ def main() -> None:
         f"- Label mode: `{args.label_mode}`",
         f"- Training data mode: `{args.training_data_mode}`",
         "",
-        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `memory.csv`, checkpoints, `data_range_summary.json`, and `summary.json`.",
+        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
         "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
@@ -1723,7 +2151,8 @@ def main() -> None:
         "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 384 because 512/1200 OOM on the 31.7GB GPU, optimizer microbatch is 80, with jittered flip budgets.",
         "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default.",
         "",
-        "Evaluation is clean evaluation on train/test/generated datasets at baseline and at scheduled progress fractions.",
+        "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch; checkpoints stay on the configured checkpoint fraction schedule.",
+        "Attack probes save fixed train-set source indices after their actual training attack each probe epoch, including x_clean, x_adv, delta, and delta high-frequency summary metrics.",
     ]
     (out_root / "README.md").write_text("\n".join(readme_lines) + "\n", encoding="utf-8")
     print(f"[done] wrote {out_root}", flush=True)

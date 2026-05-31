@@ -1,0 +1,9 @@
+{
+  "sample_id": "15",
+  "source_split": "generalization",
+  "dataset_id": "burgers_mid_matern_corr0p75_nu2p5",
+  "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_rmse_1p5_3x_all_ns50/burgers/burgers_mid_matern_corr0p75_nu2p5.pt",
+  "local_index": "62",
+  "manual_rank": "2.0",
+  "selection_reason": "mid Matern distribution"
+}

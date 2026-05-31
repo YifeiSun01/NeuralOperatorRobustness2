@@ -1,0 +1,9 @@
+{
+  "sample_id": "10",
+  "source_split": "generalization",
+  "dataset_id": "burgers_near_gaussian_corr0p08",
+  "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_rmse_1p5_3x_all_ns50/burgers/burgers_near_gaussian_corr0p08.pt",
+  "local_index": "156",
+  "manual_rank": "1.0",
+  "selection_reason": "near gaussian, lower correlation length"
+}

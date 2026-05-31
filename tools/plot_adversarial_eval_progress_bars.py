@@ -54,6 +54,8 @@ PREV_ALPHA = 0.28
 CHANGE_ALPHA = 1.00
 HATCH_EDGE = "#555555"
 FLAT_COLOR = "#222222"
+ARROW_COLOR = "black"
+ARROW_ALPHA = 1.0
 
 
 def parse_args() -> argparse.Namespace:
@@ -64,6 +66,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--metric", default="relative_l2", choices=["relative_l2", "rmse", "mae"])
     parser.add_argument("--max-label-len", type=int, default=34)
     parser.add_argument("--dpi", type=int, default=180)
+    parser.add_argument("--base-alpha", type=float, default=PREV_ALPHA)
+    parser.add_argument("--change-alpha", type=float, default=CHANGE_ALPHA)
+    parser.add_argument("--initial-alpha", type=float, default=CHANGE_ALPHA)
+    parser.add_argument("--change-lighten", type=float, default=0.0, help="Blend changed segments toward white by this fraction.")
+    parser.add_argument("--arrow-alpha", type=float, default=ARROW_ALPHA)
+    parser.add_argument("--arrow-color", default=ARROW_COLOR)
     return parser.parse_args()
 
 
@@ -78,13 +86,13 @@ def short_label(dataset_id: str, task: str, max_len: int) -> str:
     return label
 
 
-def pass_label(phase: str, step: int, total_step: int | None) -> str:
-    if step == 0 or phase == "baseline_before_adversarial_training":
-        return "eval 0: baseline"
-    if total_step and total_step > 0:
-        pct = 100.0 * step / total_step
-        return f"eval step {step} ({pct:.0f}%)"
-    return f"eval step {step}"
+def pass_label(phase: str, step: int, epoch: int, total_epoch: int | None) -> str:
+    if step == 0 or epoch == 0 or phase == "baseline_before_adversarial_training":
+        return "evaluation epoch 0: baseline"
+    if total_epoch and total_epoch > 0:
+        pct = 100.0 * epoch / total_epoch
+        return f"evaluation epoch {epoch} ({pct:.0f}%)"
+    return f"evaluation epoch {epoch}"
 
 
 def load_task_eval(run_dir: Path, task: str) -> pd.DataFrame:
@@ -97,17 +105,19 @@ def load_task_eval(run_dir: Path, task: str) -> pd.DataFrame:
     return df
 
 
-def load_total_step(run_dir: Path, task: str) -> int | None:
-    path = run_dir / task / "summary.json"
-    if path.exists():
-        try:
-            return int(json.loads(path.read_text()).get("total_steps"))
-        except Exception:
-            return None
+def load_total_epoch(run_dir: Path, task: str) -> int | None:
+    for path in (run_dir / task / "summary.json", run_dir / task / "config.json"):
+        if path.exists():
+            try:
+                value = json.loads(path.read_text()).get("epochs")
+                if value is not None:
+                    return int(value)
+            except Exception:
+                pass
     train_steps = run_dir / task / "train_steps.csv"
     if train_steps.exists():
         try:
-            return int(pd.read_csv(train_steps, usecols=["global_step"])["global_step"].max())
+            return int(pd.read_csv(train_steps, usecols=["epoch"])["epoch"].max())
         except Exception:
             return None
     return None
@@ -264,6 +274,21 @@ def family_hatch(family: str) -> str:
     return GENERATOR_HATCHES.get(str(family), "")
 
 
+def _clamp01(value: float) -> float:
+    return min(1.0, max(0.0, float(value)))
+
+
+def lighten_color(color: object, amount: float) -> tuple[float, float, float, float]:
+    rgba = to_rgba(color)
+    amount = _clamp01(amount)
+    return (
+        rgba[0] + (1.0 - rgba[0]) * amount,
+        rgba[1] + (1.0 - rgba[1]) * amount,
+        rgba[2] + (1.0 - rgba[2]) * amount,
+        rgba[3],
+    )
+
+
 def discrete_range_palette(labels: list[str]) -> dict[str, object]:
     uniq = sorted({str(x) for x in labels if str(x) not in {"train", "test", ""}})
     if not uniq:
@@ -320,18 +345,20 @@ def draw_styled_bar(
     color: str,
     hatch: str,
     alpha: float,
+    lighten: float = 0.0,
     width: float = 0.78,
     zorder: int = 3,
 ):
     if not (math.isfinite(height) and math.isfinite(bottom)):
         return None
-    hatch_edge = to_rgba(HATCH_EDGE, min(1.0, max(0.0, alpha))) if hatch else "none"
+    fill_color = lighten_color(color, lighten)
+    hatch_edge = to_rgba(HATCH_EDGE, _clamp01(alpha)) if hatch else "none"
     bar = ax.bar(
         x_pos,
         height,
         bottom=bottom,
         width=width,
-        color=to_rgba(color, alpha),
+        color=to_rgba(fill_color, _clamp01(alpha)),
         edgecolor=hatch_edge,
         linewidth=0.0,
         hatch=hatch or None,
@@ -353,10 +380,10 @@ def style_legend_handles(range_labels: list[str], family_labels: list[str], rang
     return handles
 
 
-def task_passes(df: pd.DataFrame) -> list[tuple[str, int]]:
-    rows = df[["phase", "global_step"]].drop_duplicates()
-    rows = rows.sort_values("global_step")
-    return [(str(r.phase), int(r.global_step)) for r in rows.itertuples(index=False)]
+def task_passes(df: pd.DataFrame) -> list[tuple[str, int, int]]:
+    rows = df[["phase", "global_step", "epoch"]].drop_duplicates()
+    rows = rows.sort_values(["global_step", "epoch"])
+    return [(str(r.phase), int(r.global_step), int(r.epoch)) for r in rows.itertuples(index=False)]
 
 
 def aligned_values(df: pd.DataFrame, dataset_order: list[str], metric: str, phase: str, step: int) -> tuple[np.ndarray, list[str]]:
@@ -369,14 +396,28 @@ def aligned_values(df: pd.DataFrame, dataset_order: list[str], metric: str, phas
     return np.asarray(vals, dtype=float), splits
 
 
-def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_len: int, dpi: int) -> list[Path]:
+def plot_task(
+    run_dir: Path,
+    out_dir: Path,
+    task: str,
+    metric: str,
+    max_label_len: int,
+    dpi: int,
+    *,
+    base_alpha: float,
+    change_alpha: float,
+    initial_alpha: float,
+    change_lighten: float,
+    arrow_alpha: float,
+    arrow_color: str,
+) -> list[Path]:
     df = load_task_eval(run_dir, task)
     passes = task_passes(df)
     dataset_order = order_datasets(df, task, metric)
-    total_step = load_total_step(run_dir, task)
+    total_epoch = load_total_epoch(run_dir, task)
 
     all_values = []
-    for phase, step in passes:
+    for phase, step, epoch in passes:
         vals, _ = aligned_values(df, dataset_order, metric, phase, step)
         all_values.append(vals)
     finite = np.concatenate([v[np.isfinite(v)] for v in all_values])
@@ -391,7 +432,7 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
     style_colors, style_hatches, range_labels, family_labels, range_palette = aligned_styles(task, df, dataset_order)
 
     prev_vals: np.ndarray | None = None
-    for pass_idx, (phase, step) in enumerate(passes):
+    for pass_idx, (phase, step, epoch) in enumerate(passes):
         vals, splits = aligned_values(df, dataset_order, metric, phase, step)
         fig_w = max(20, len(dataset_order) * 0.42)
         fig, ax = plt.subplots(figsize=(fig_w, 8.5))
@@ -405,7 +446,7 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
                     bottom=0.0,
                     color=style_colors[i],
                     hatch=style_hatches[i],
-                    alpha=CHANGE_ALPHA,
+                    alpha=initial_alpha,
                     zorder=3,
                 )
             up = down = flat = 0
@@ -419,7 +460,7 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
                     bottom=0.0,
                     color=style_colors[i],
                     hatch=style_hatches[i],
-                    alpha=PREV_ALPHA,
+                    alpha=base_alpha,
                     zorder=2,
                 )
             deltas = vals - prev_vals
@@ -440,7 +481,8 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
                         bottom=float(old),
                         color=style_colors[i],
                         hatch=style_hatches[i],
-                        alpha=CHANGE_ALPHA,
+                        alpha=change_alpha,
+                        lighten=change_lighten,
                         zorder=4,
                     )
                     ax.annotate(
@@ -450,8 +492,8 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
                         arrowprops=dict(
                             arrowstyle="-|>",
                             lw=3.25,
-                            color="black",
-                            alpha=1.0,
+                            color=arrow_color,
+                            alpha=arrow_alpha,
                             mutation_scale=18,
                             shrinkA=0,
                             shrinkB=0,
@@ -465,9 +507,9 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
         ax.set_xlim(-0.6, len(dataset_order) - 0.4)
         ax.set_xticks(x)
         ax.set_xticklabels(labels, rotation=70, ha="right", fontsize=7)
-        ylabel = "RRMSE / relative L2" if metric == "relative_l2" else metric.upper()
+        ylabel = "Relative L2 loss" if metric == "relative_l2" else metric.upper()
         ax.set_ylabel(ylabel)
-        title = pass_label(phase, step, total_step)
+        title = pass_label(phase, step, epoch, total_epoch)
         ax.set_title(f"{task} adversarial training eval progress — {title}\nshared y-range across {len(passes)} evals | color=range, hatch=generator | up={up}, down={down}, flat={flat}, mean Δ={mean_delta:+.3g}", fontsize=13)
         ax.grid(axis="y", linestyle="--", linewidth=0.8, alpha=0.45)
         ax.set_axisbelow(True)
@@ -479,25 +521,25 @@ def plot_task(run_dir: Path, out_dir: Path, task: str, metric: str, max_label_le
         legend.extend(
             [
                 Patch(
-                    facecolor=to_rgba(sample_range_color, PREV_ALPHA),
-                    edgecolor=to_rgba(HATCH_EDGE, PREV_ALPHA) if sample_hatch else "none",
+                    facecolor=to_rgba(sample_range_color, _clamp01(base_alpha)),
+                    edgecolor=to_rgba(HATCH_EDGE, _clamp01(base_alpha)) if sample_hatch else "none",
                     hatch=sample_hatch or None,
                     linewidth=0.0,
-                    label="previous height: same color/hatch, transparent",
+                    label="base/previous height",
                 ),
                 Patch(
-                    facecolor=to_rgba(sample_range_color, CHANGE_ALPHA),
-                    edgecolor=HATCH_EDGE if sample_hatch else "none",
+                    facecolor=to_rgba(lighten_color(sample_range_color, change_lighten), _clamp01(change_alpha)),
+                    edgecolor=to_rgba(HATCH_EDGE, _clamp01(change_alpha)) if sample_hatch else "none",
                     hatch=sample_hatch or None,
                     linewidth=0.0,
-                    label="changed amount: same color/hatch, opaque",
+                    label="changed amount",
                 ),
-                Line2D([0], [0], color="black", lw=3.25, marker=">", markersize=9, label="arrow: previous -> current"),
+                Line2D([0], [0], color=to_rgba(arrow_color, _clamp01(arrow_alpha)), lw=3.25, marker=">", markersize=9, label="arrow: previous -> current"),
             ]
         )
         ax.legend(handles=legend, loc="upper left", bbox_to_anchor=(1.01, 1.0), title="Encoding")
         fig.tight_layout()
-        out_path = task_dir / f"{task}_{metric}_eval{pass_idx:02d}_step{step:06d}.png"
+        out_path = task_dir / f"{task}_{metric}_eval{pass_idx:02d}_epoch{epoch:06d}.png"
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight")
         plt.close(fig)
         out_paths.append(out_path)
@@ -513,8 +555,33 @@ def main() -> None:
     tasks = [t.strip() for t in args.tasks.split(",") if t.strip()]
     written: list[Path] = []
     for task in tasks:
-        written.extend(plot_task(run_dir, out_dir, task, args.metric, args.max_label_len, args.dpi))
-    manifest = {"run_dir": str(run_dir), "metric": args.metric, "plots": [str(p) for p in written]}
+        written.extend(
+            plot_task(
+                run_dir,
+                out_dir,
+                task,
+                args.metric,
+                args.max_label_len,
+                args.dpi,
+                base_alpha=args.base_alpha,
+                change_alpha=args.change_alpha,
+                initial_alpha=args.initial_alpha,
+                change_lighten=args.change_lighten,
+                arrow_alpha=args.arrow_alpha,
+                arrow_color=args.arrow_color,
+            )
+        )
+    manifest = {
+        "run_dir": str(run_dir),
+        "metric": args.metric,
+        "base_alpha": args.base_alpha,
+        "change_alpha": args.change_alpha,
+        "initial_alpha": args.initial_alpha,
+        "change_lighten": args.change_lighten,
+        "arrow_alpha": args.arrow_alpha,
+        "arrow_color": args.arrow_color,
+        "plots": [str(p) for p in written],
+    }
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / f"manifest_{args.metric}.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"[done] wrote {len(written)} plots to {out_dir}")

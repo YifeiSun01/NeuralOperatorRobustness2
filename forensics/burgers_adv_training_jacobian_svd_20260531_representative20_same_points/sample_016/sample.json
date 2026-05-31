@@ -1,0 +1,9 @@
+{
+  "sample_id": "16",
+  "source_split": "generalization",
+  "dataset_id": "burgers_target_matern_corr0p42_nu4",
+  "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_rmse_1p5_3x_all_ns50/burgers/burgers_target_matern_corr0p42_nu4.pt",
+  "local_index": "93",
+  "manual_rank": "9.0",
+  "selection_reason": "target Matern moderate corr/nu"
+}
