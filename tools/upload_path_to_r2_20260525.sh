@@ -51,7 +51,10 @@ else
   export "RCLONE_CONFIG_${REMOTE_UPPER}_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID}"
   export "RCLONE_CONFIG_${REMOTE_UPPER}_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}"
   export "RCLONE_CONFIG_${REMOTE_UPPER}_ENDPOINT=${R2_ENDPOINT}"
-  export "RCLONE_CONFIG_${REMOTE_UPPER}_ACL=private"
+  # Cloudflare R2 does not implement S3 ACLs; sending x-amz-acl can return 501.
+  if [[ -n "${R2_ACL:-}" ]]; then
+    export "RCLONE_CONFIG_${REMOTE_UPPER}_ACL=${R2_ACL}"
+  fi
 fi
 
 {
