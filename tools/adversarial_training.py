@@ -366,7 +366,34 @@ class AttackBatchResult:
     x_train: torch.Tensor
     y_train: torch.Tensor
     info: dict[str, Any]
+    sample_info: dict[str, torch.Tensor] = field(default_factory=dict)
     probe_tensors: dict[str, torch.Tensor] = field(default_factory=dict)
+
+
+def make_attack_sample_info(
+    *,
+    epsilon: torch.Tensor,
+    epsilon_jitter_factor: torch.Tensor,
+    alpha: torch.Tensor,
+    clean_loss: torch.Tensor,
+    adv_loss: torch.Tensor,
+) -> dict[str, torch.Tensor]:
+    epsilon_cpu = epsilon.detach().reshape(-1).float().cpu()
+    jitter_cpu = epsilon_jitter_factor.detach().reshape(-1).float().cpu()
+    alpha_cpu = alpha.detach().reshape(-1).float().cpu()
+    clean_cpu = clean_loss.detach().reshape(-1).float().cpu()
+    adv_cpu = adv_loss.detach().reshape(-1).float().cpu()
+    gain_cpu = adv_cpu - clean_cpu
+    relative_cpu = gain_cpu / clean_cpu.abs().clamp_min(1e-20)
+    return {
+        "epsilon": epsilon_cpu,
+        "epsilon_jitter_factor": jitter_cpu,
+        "alpha": alpha_cpu,
+        "clean_loss_before_attack": clean_cpu,
+        "adv_loss_after_attack": adv_cpu,
+        "attack_loss_gain": gain_cpu,
+        "attack_loss_gain_relative": relative_cpu,
+    }
 
 
 def parse_int_list(value: str | None) -> list[int] | None:
@@ -906,6 +933,11 @@ def continuous_attack(
         param.requires_grad_(False)
 
     eps = compute_batch_eps(xb, epsilon_fraction, epsilon_abs, jitter_low, jitter_high)
+    if epsilon_abs and epsilon_abs > 0:
+        eps_nominal = torch.full_like(eps, float(epsilon_abs))
+    else:
+        eps_nominal = per_sample_range(xb).to(device=xb.device, dtype=xb.dtype) * float(epsilon_fraction)
+    eps_jitter_factor = eps / eps_nominal.clamp_min(1e-12)
     alpha_values = compute_alpha_values(eps, alpha_ratio, alpha_jitter_low, alpha_jitter_high)
     eps_view = expand_per_sample(eps, xb)
     alpha_view = expand_per_sample(alpha_values, xb)
@@ -918,6 +950,8 @@ def continuous_attack(
     first_adv_loss = float("nan")
     final_loss_value = float("nan")
     grad_abs_mean = float("nan")
+    clean_loss_samples = torch.full((xb.shape[0],), float("nan"), device=xb.device, dtype=xb.dtype)
+    adv_loss_samples = torch.full((xb.shape[0],), float("nan"), device=xb.device, dtype=xb.dtype)
     used_steps = max(1, int(steps))
 
     try:
@@ -935,7 +969,9 @@ def continuous_attack(
             if step == 0:
                 with torch.no_grad():
                     clean_target = solver_target_for_model_input(task, xb, yb, cfg, allow_target_grad=False)
-                    clean_loss_value = float(finite_mse(model(xb), clean_target).detach().cpu())
+                    clean_pred = model(xb)
+                    clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
+                    clean_loss_value = float(finite_mse(clean_pred, clean_target).detach().cpu())
                     first_adv_loss = float(loss.detach().cpu())
             grad = torch.autograd.grad(loss, x_adv, only_inputs=True)[0]
             grad = torch.nan_to_num(grad) * mask
@@ -952,7 +988,9 @@ def continuous_attack(
 
         with torch.no_grad():
             y_train = solver_target_for_model_input(task, x_adv, yb, cfg, allow_target_grad=False).detach()
-            final_loss_value = float(finite_mse(model(x_adv), y_train).detach().cpu())
+            adv_pred = model(x_adv)
+            adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+            final_loss_value = float(finite_mse(adv_pred, y_train).detach().cpu())
             delta = x_adv - xb
             active = mask > 0
             denom = eps_view.expand_as(delta).clamp_min(1e-12)
@@ -993,7 +1031,14 @@ def continuous_attack(
         "delta_l2_rms_mean": l2,
     }
     info.update(tensor_stats("target", y_train))
-    return AttackBatchResult(x_adv.detach(), y_train.detach(), info)
+    sample_info = make_attack_sample_info(
+        epsilon=eps,
+        epsilon_jitter_factor=eps_jitter_factor,
+        alpha=alpha_values,
+        clean_loss=clean_loss_samples,
+        adv_loss=adv_loss_samples,
+    )
+    return AttackBatchResult(x_adv.detach(), y_train.detach(), info, sample_info=sample_info)
 
 
 def binary_darcy_replace_attack(
@@ -1034,11 +1079,15 @@ def binary_darcy_replace_attack(
     first_loss = float("nan")
     positive_score_frac = float("nan")
     flips_total = 0
+    clean_loss_samples = torch.full((b,), float("nan"), device=x0.device, dtype=x0.dtype)
+    adv_loss_samples = torch.full((b,), float("nan"), device=x0.device, dtype=x0.dtype)
 
     try:
         with torch.no_grad():
             clean_target = solver_target_for_model_input("darcy", x0, yb, cfg, allow_target_grad=False)
-            clean_loss = finite_mse(model(x0), clean_target)
+            clean_pred = model(x0)
+            clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
+            clean_loss = finite_mse(clean_pred, clean_target)
 
         for step in range(used_steps):
             x_score = x_adv.detach().clone().requires_grad_(True)
@@ -1084,7 +1133,9 @@ def binary_darcy_replace_attack(
 
         with torch.no_grad():
             y_train = solver_target_for_model_input("darcy", x_adv, yb, cfg, allow_target_grad=False).detach()
-            adv_loss = finite_mse(model(x_adv), y_train)
+            adv_pred = model(x_adv)
+            adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+            adv_loss = finite_mse(adv_pred, y_train)
             delta = x_adv - x0
             changed = delta.reshape(b, -1).abs() > 1e-12
             flip_fraction = float(changed.float().mean().detach().cpu())
@@ -1121,7 +1172,15 @@ def binary_darcy_replace_attack(
         "darcy_last_step_flips_total": flips_total,
     }
     info.update(tensor_stats("target", y_train))
-    return AttackBatchResult(x_adv.detach(), y_train.detach(), info)
+    epsilon_fraction_per_sample = budgets.float() / float(n_pix)
+    sample_info = make_attack_sample_info(
+        epsilon=epsilon_fraction_per_sample,
+        epsilon_jitter_factor=epsilon_fraction_per_sample / max(float(epsilon_fraction), 1e-12),
+        alpha=epsilon_fraction_per_sample,
+        clean_loss=clean_loss_samples,
+        adv_loss=adv_loss_samples,
+    )
+    return AttackBatchResult(x_adv.detach(), y_train.detach(), info, sample_info=sample_info)
 
 
 def ns2d_solver_consistent_attack(
@@ -1149,6 +1208,11 @@ def ns2d_solver_consistent_attack(
 
     x0 = xb[..., 0].detach().contiguous()
     eps = compute_batch_eps(x0, epsilon_fraction, epsilon_abs, jitter_low, jitter_high)
+    if epsilon_abs and epsilon_abs > 0:
+        eps_nominal = torch.full_like(eps, float(epsilon_abs))
+    else:
+        eps_nominal = per_sample_range(x0).to(device=x0.device, dtype=x0.dtype) * float(epsilon_fraction)
+    eps_jitter_factor = eps / eps_nominal.clamp_min(1e-12)
     alpha_values = compute_alpha_values(eps, alpha_ratio, alpha_jitter_low, alpha_jitter_high)
     eps_view = expand_per_sample(eps, x0)
     alpha_view = expand_per_sample(alpha_values, x0)
@@ -1159,6 +1223,8 @@ def ns2d_solver_consistent_attack(
     first_adv_loss = float("nan")
     final_loss_value = float("nan")
     grad_abs_mean = float("nan")
+    clean_loss_samples = torch.full((x0.shape[0],), float("nan"), device=x0.device, dtype=x0.dtype)
+    adv_loss_samples = torch.full((x0.shape[0],), float("nan"), device=x0.device, dtype=x0.dtype)
     used_steps = max(1, int(steps))
 
     try:
@@ -1170,7 +1236,9 @@ def ns2d_solver_consistent_attack(
             if step == 0:
                 with torch.no_grad():
                     x_seq_clean, y_seq_clean = ns2d_solver_pair_from_initial(x0, cfg, for_attack=False)
-                    clean_loss_value = float(finite_mse(model(x_seq_clean), y_seq_clean).detach().cpu())
+                    clean_pred = model(x_seq_clean)
+                    clean_loss_samples = per_sample_finite_mse(clean_pred, y_seq_clean)
+                    clean_loss_value = float(finite_mse(clean_pred, y_seq_clean).detach().cpu())
                     first_adv_loss = float(loss.detach().cpu())
             grad = torch.autograd.grad(loss, x0_adv, only_inputs=True)[0]
             grad = torch.nan_to_num(grad)
@@ -1186,7 +1254,9 @@ def ns2d_solver_consistent_attack(
 
         with torch.no_grad():
             x_train, y_train = ns2d_solver_pair_from_initial(x0_adv, cfg, for_attack=False)
-            final_loss_value = float(finite_mse(model(x_train), y_train).detach().cpu())
+            adv_pred = model(x_train)
+            adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+            final_loss_value = float(finite_mse(adv_pred, y_train).detach().cpu())
             delta = x0_adv - x0
             denom = eps_view.expand_as(delta).clamp_min(1e-12)
             boundary_ratio = float((delta.detach().abs() / denom).mean().cpu())
@@ -1227,10 +1297,18 @@ def ns2d_solver_consistent_attack(
     }
     info.update(tensor_stats("target", y_train))
     info.update(tensor_stats("x_train", x_train))
+    sample_info = make_attack_sample_info(
+        epsilon=eps,
+        epsilon_jitter_factor=eps_jitter_factor,
+        alpha=alpha_values,
+        clean_loss=clean_loss_samples,
+        adv_loss=adv_loss_samples,
+    )
     return AttackBatchResult(
         x_train.detach(),
         y_train.detach(),
         info,
+        sample_info=sample_info,
         probe_tensors={
             "x0_clean": x0.detach(),
             "x0_adv": x0_adv.detach(),
@@ -1430,6 +1508,12 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
     override_alpha_jitter_high = getattr(args, f"{task}_alpha_jitter_high", None)
     if override_alpha_jitter_high is not None:
         cfg["alpha_jitter_high"] = float(override_alpha_jitter_high)
+    override_eps_jitter_low = getattr(args, f"{task}_eps_jitter_low", None)
+    if override_eps_jitter_low is not None:
+        cfg["eps_jitter_low"] = float(override_eps_jitter_low)
+    override_eps_jitter_high = getattr(args, f"{task}_eps_jitter_high", None)
+    if override_eps_jitter_high is not None:
+        cfg["eps_jitter_high"] = float(override_eps_jitter_high)
     cfg["max_batches_per_epoch"] = args.max_batches_per_epoch
     return cfg
 
@@ -1599,6 +1683,145 @@ def write_attack_epoch_summary(path: Path, task: str, epoch: int, global_step: i
     }
     row["attack_samples_per_sec"] = row["attack_samples"] / max(row["attack_wall_sec_total"], 1e-12)
     write_csv_row(path, row)
+
+
+
+
+def _cat_sample_tensors(sample_infos: list[dict[str, torch.Tensor]], key: str) -> torch.Tensor:
+    chunks: list[torch.Tensor] = []
+    for info in sample_infos:
+        value = info.get(key)
+        if isinstance(value, torch.Tensor) and value.numel() > 0:
+            chunks.append(value.detach().reshape(-1).float().cpu())
+    if not chunks:
+        return torch.empty((0,), dtype=torch.float32)
+    return torch.cat(chunks, dim=0)
+
+
+def _tensor_stat(values: torch.Tensor, op: str) -> float:
+    finite = values[torch.isfinite(values)]
+    if finite.numel() == 0:
+        return float("nan")
+    if op == "mean":
+        return float(finite.mean().item())
+    if op == "std":
+        return float(finite.std(unbiased=False).item())
+    if op == "min":
+        return float(finite.min().item())
+    if op == "max":
+        return float(finite.max().item())
+    raise ValueError(f"unknown tensor stat op={op!r}")
+
+
+def _add_metric_stats(row: dict[str, Any], prefix: str, values: torch.Tensor) -> None:
+    row[f"{prefix}_mean"] = _tensor_stat(values, "mean")
+    row[f"{prefix}_std"] = _tensor_stat(values, "std")
+    row[f"{prefix}_min"] = _tensor_stat(values, "min")
+    row[f"{prefix}_max"] = _tensor_stat(values, "max")
+
+
+def write_attack_epsilon_bucket_summary(
+    path: Path,
+    task: str,
+    epoch: int,
+    global_step: int,
+    sample_infos: list[dict[str, torch.Tensor]],
+    cfg: dict[str, Any],
+    bucket_count: int,
+) -> None:
+    bucket_count = int(bucket_count)
+    if bucket_count <= 0:
+        return
+
+    epsilon = _cat_sample_tensors(sample_infos, "epsilon")
+    if epsilon.numel() == 0:
+        return
+    epsilon_jitter = _cat_sample_tensors(sample_infos, "epsilon_jitter_factor")
+    alpha = _cat_sample_tensors(sample_infos, "alpha")
+    clean_loss = _cat_sample_tensors(sample_infos, "clean_loss_before_attack")
+    adv_loss = _cat_sample_tensors(sample_infos, "adv_loss_after_attack")
+    gain = _cat_sample_tensors(sample_infos, "attack_loss_gain")
+    relative_gain = _cat_sample_tensors(sample_infos, "attack_loss_gain_relative")
+
+    n = int(epsilon.numel())
+    valid_lengths = {tensor.numel() for tensor in (epsilon_jitter, alpha, clean_loss, adv_loss, gain, relative_gain)}
+    if valid_lengths != {n}:
+        # Avoid writing misleading bucket rows if one metric vector is missing or truncated.
+        return
+
+    jitter_low = float(cfg.get("eps_jitter_low", 1.0))
+    jitter_high = float(cfg.get("eps_jitter_high", 1.0))
+    use_jitter_basis = bool(epsilon_jitter.numel() == n and torch.isfinite(epsilon_jitter).any() and jitter_high > jitter_low)
+    if use_jitter_basis:
+        bucket_values = epsilon_jitter
+        bucket_low = jitter_low
+        bucket_high = jitter_high
+        bucket_basis = "epsilon_jitter_factor"
+    else:
+        bucket_values = epsilon
+        finite_bucket = bucket_values[torch.isfinite(bucket_values)]
+        if finite_bucket.numel() == 0:
+            return
+        bucket_low = float(finite_bucket.min().item())
+        bucket_high = float(finite_bucket.max().item())
+        bucket_basis = "epsilon_observed"
+
+    if not math.isfinite(bucket_low) or not math.isfinite(bucket_high):
+        return
+    if bucket_high <= bucket_low:
+        bucket_high = bucket_low + max(abs(bucket_low), 1.0) * 1e-12
+
+    edges = np.linspace(bucket_low, bucket_high, bucket_count + 1)
+    finite_basis = torch.isfinite(bucket_values)
+    for bucket_idx in range(bucket_count):
+        left = float(edges[bucket_idx])
+        right = float(edges[bucket_idx + 1])
+        if bucket_idx == bucket_count - 1:
+            mask = finite_basis & (bucket_values >= left) & (bucket_values <= right)
+        else:
+            mask = finite_basis & (bucket_values >= left) & (bucket_values < right)
+        sample_count = int(mask.sum().item())
+        row: dict[str, Any] = {
+            "task": task,
+            "epoch": int(epoch),
+            "global_step_last": int(global_step),
+            "bucket_basis": bucket_basis,
+            "bucket_index": int(bucket_idx),
+            "bucket_count": int(bucket_count),
+            "bucket_fraction_low": float(bucket_idx / bucket_count),
+            "bucket_fraction_high": float((bucket_idx + 1) / bucket_count),
+            "bucket_value_low": left,
+            "bucket_value_high": right,
+            "sample_count": sample_count,
+            "sample_fraction": sample_count / max(1, n),
+        }
+        if sample_count > 0:
+            _add_metric_stats(row, "bucket_value", bucket_values[mask])
+            _add_metric_stats(row, "epsilon", epsilon[mask])
+            _add_metric_stats(row, "epsilon_jitter_factor", epsilon_jitter[mask])
+            _add_metric_stats(row, "alpha", alpha[mask])
+            _add_metric_stats(row, "clean_loss_before_attack", clean_loss[mask])
+            _add_metric_stats(row, "adv_loss_after_attack", adv_loss[mask])
+            _add_metric_stats(row, "attack_loss_gain", gain[mask])
+            _add_metric_stats(row, "loss_increase", gain[mask])
+            _add_metric_stats(row, "attack_loss_gain_relative", relative_gain[mask])
+            _add_metric_stats(row, "loss_increase_relative", relative_gain[mask])
+        else:
+            for prefix in (
+                "bucket_value",
+                "epsilon",
+                "epsilon_jitter_factor",
+                "alpha",
+                "clean_loss_before_attack",
+                "adv_loss_after_attack",
+                "attack_loss_gain",
+                "loss_increase",
+                "attack_loss_gain_relative",
+                "loss_increase_relative",
+            ):
+                for op in ("mean", "std", "min", "max"):
+                    row[f"{prefix}_{op}"] = float("nan")
+        write_csv_row(path, row)
 
 
 def write_eval_split_summary(path: Path, rows: list[dict[str, Any]], *, phase: str, epoch: int, global_step: int, progress_fraction: float, eval_wall_sec: float) -> None:
@@ -1778,6 +2001,7 @@ def train_one_task(
             "attack_probe_indices": args.attack_probe_indices,
             "attack_probe_every_n_epochs": args.attack_probe_every_n_epochs,
             "attack_probe_save_targets": bool(args.attack_probe_save_targets),
+            "epsilon_bucket_count": int(args.epsilon_bucket_count),
             "binary_pool_multiplier": args.binary_pool_multiplier,
             "binary_score_noise": args.binary_score_noise,
             "ns_attack_frames": args.ns_attack_frames,
@@ -1827,6 +2051,12 @@ def train_one_task(
     override_alpha_jitter_high = getattr(args, f"{task}_alpha_jitter_high", None)
     if override_alpha_jitter_high is not None:
         task_cfg["alpha_jitter_high"] = float(override_alpha_jitter_high)
+    override_eps_jitter_low = getattr(args, f"{task}_eps_jitter_low", None)
+    if override_eps_jitter_low is not None:
+        task_cfg["eps_jitter_low"] = float(override_eps_jitter_low)
+    override_eps_jitter_high = getattr(args, f"{task}_eps_jitter_high", None)
+    if override_eps_jitter_high is not None:
+        task_cfg["eps_jitter_high"] = float(override_eps_jitter_high)
     override_optimizer_batch = getattr(args, f"{task}_optimizer_batch_size", None)
     if override_optimizer_batch is not None:
         task_cfg["optimizer_batch_size"] = int(override_optimizer_batch)
@@ -1879,6 +2109,7 @@ def train_one_task(
     probe_index_to_rank = {int(source_index): rank for rank, source_index in enumerate(probe_indices.tolist())}
     probe_every_n_epochs = max(1, int(task_cfg.get("attack_probe_every_n_epochs", 1)))
     probe_save_targets = bool(task_cfg.get("attack_probe_save_targets", False))
+    epsilon_bucket_count = max(0, int(task_cfg.get("epsilon_bucket_count", 5)))
 
     train_csv = out_dir / "train_steps.csv"
     attack_csv = out_dir / "attack_batches.csv"
@@ -1887,6 +2118,7 @@ def train_one_task(
     eval_split_csv = out_dir / "eval_split_summary.csv"
     eval_pass_csv = out_dir / "evaluation_passes.csv"
     attack_epoch_csv = out_dir / "attack_epoch_summary.csv"
+    attack_epsilon_bucket_csv = out_dir / "attack_epsilon_bucket_summary.csv"
     memory_csv = out_dir / "memory.csv"
 
     (out_dir / "attack_probe_config.json").write_text(
@@ -1898,7 +2130,9 @@ def train_one_task(
                     "probe_count": int(len(probe_indices)),
                     "save_every_n_epochs": probe_every_n_epochs,
                     "save_targets": probe_save_targets,
-                    "note": "For each epoch, these fixed training source indices are captured from the actual attacked training batch. NPZ files contain x_clean, x_adv, delta=x_adv-x_clean, optional y_clean/y_adv targets, and task-specific tensors such as NS2D x0_clean/x0_adv/delta_initial.",
+                    "epsilon_bucket_count": epsilon_bucket_count,
+                    "epsilon_bucket_summary_csv": project_path(attack_epsilon_bucket_csv),
+                    "note": "For each epoch, these fixed training source indices are captured from the actual attacked training batch. NPZ files contain x_clean, x_adv, delta=x_adv-x_clean, optional y_clean/y_adv targets, and task-specific tensors such as NS2D x0_clean/x0_adv/delta_initial. Epsilon bucket summaries aggregate per-sample clean loss, attacked loss, and loss increase by epsilon jitter bucket.",
                 }
             ),
             indent=2,
@@ -1960,6 +2194,7 @@ def train_one_task(
         probe_this_epoch = bool(probe_index_to_rank) and (epoch % probe_every_n_epochs == 0 or epoch == int(task_cfg["epochs"]))
         epoch_probe_records: list[dict[str, Any]] = []
         epoch_attack_rows: list[dict[str, Any]] = []
+        epoch_attack_sample_infos: list[dict[str, torch.Tensor]] = []
         generator = torch.Generator().manual_seed(seed_base + epoch * 1009 + TASK_SEED_OFFSETS.get(task, 0))
         batches = make_indices(n_train, batch_size, generator)
         if max_batches is not None:
@@ -1973,6 +2208,8 @@ def train_one_task(
             attack_start = time.perf_counter()
             attack_result = attack_batch(model, xb, yb, task, task_cfg)
             attack_info = attack_result.info
+            if attack_result.sample_info:
+                epoch_attack_sample_infos.append(attack_result.sample_info)
             attack_sec = time.perf_counter() - attack_start
             if probe_this_epoch:
                 epoch_probe_records.extend(
@@ -2083,6 +2320,15 @@ def train_one_task(
 
         epoch_progress = global_step / max(1, total_steps)
         write_attack_epoch_summary(attack_epoch_csv, task, epoch, global_step, epoch_attack_rows)
+        write_attack_epsilon_bucket_summary(
+            attack_epsilon_bucket_csv,
+            task,
+            epoch,
+            global_step,
+            epoch_attack_sample_infos,
+            task_cfg,
+            epsilon_bucket_count,
+        )
         if probe_this_epoch:
             save_attack_probe_epoch(
                 out_dir,
@@ -2237,6 +2483,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--attack-probe-every-n-epochs", type=int, default=1, help="Save attack probe arrays every N epochs; default 1 saves every epoch.")
     parser.add_argument("--attack-probe-save-targets", dest="attack_probe_save_targets", action="store_true", default=True, help="Save y_clean and y_adv arrays in attack probe NPZ files. On by default for same-index attack diagnostics.")
     parser.add_argument("--no-attack-probe-save-targets", dest="attack_probe_save_targets", action="store_false", help="Disable y_clean/y_adv arrays in attack probe NPZ files to reduce disk usage.")
+    parser.add_argument("--epsilon-bucket-count", type=int, default=5, help="Number of per-epoch epsilon jitter buckets to summarize for clean loss, attacked loss, and loss increase; set 0 to disable.")
     parser.add_argument("--allow-clean-label", action="store_true", help="Allow the intentionally non-physical x_adv -> y_clean objective for ablation/debug only.")
     parser.add_argument("--ns-attack-frames", choices=["first", "all"], default="first")
     parser.add_argument("--burgers-solver-remat", choices=["none", "micro", "step", "chunk", "all"], default="none")
@@ -2266,6 +2513,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--darcy-alpha-jitter-high", type=float, default=None)
     parser.add_argument("--ns2d-alpha-jitter-low", type=float, default=None)
     parser.add_argument("--ns2d-alpha-jitter-high", type=float, default=None)
+    parser.add_argument("--burgers-eps-jitter-low", type=float, default=None)
+    parser.add_argument("--burgers-eps-jitter-high", type=float, default=None)
+    parser.add_argument("--darcy-eps-jitter-low", type=float, default=None)
+    parser.add_argument("--darcy-eps-jitter-high", type=float, default=None)
+    parser.add_argument("--ns2d-eps-jitter-low", type=float, default=None)
+    parser.add_argument("--ns2d-eps-jitter-high", type=float, default=None)
     return parser.parse_args()
 
 
@@ -2320,6 +2573,7 @@ def main() -> None:
             "every_n_epochs": int(args.attack_probe_every_n_epochs),
             "save_targets": bool(args.attack_probe_save_targets),
         },
+        "epsilon_bucket_count": int(args.epsilon_bucket_count),
         "remat_options": {
             "burgers_solver_remat": args.burgers_solver_remat,
             "burgers_solver_remat_chunk_steps": args.burgers_solver_remat_chunk_steps,
@@ -2365,7 +2619,7 @@ def main() -> None:
         f"- Label mode: `{args.label_mode}`",
         f"- Training data mode: `{args.training_data_mode}`",
         "",
-        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
+        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
         "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
@@ -2375,6 +2629,7 @@ def main() -> None:
         "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default, epsilon/alpha are fixed, and random start is off for comparable same-index probes.",
         "",
         "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch, giving 52 dataset-level curves per task when all 50 generated sets are present; checkpoints default to every 200 epochs plus final.",
+        "`attack_epsilon_bucket_summary.csv` writes one row per epsilon bucket per epoch. With the default 5 buckets, the random epsilon jitter range is split into 0-20%, 20-40%, 40-60%, 60-80%, and 80-100% bands, each with clean loss, attacked loss, loss increase, and relative loss increase statistics.",
         "Attack probes save fixed train-set source indices after their actual training attack each probe epoch, including x_clean, x_adv, delta, y_clean/y_adv targets by default, per-sample clean/adv attack loss gain, and delta high-frequency summary metrics. NS2D probes also save x0_clean, x0_adv, and delta_initial.",
     ]
     (out_root / "README.md").write_text("\n".join(readme_lines) + "\n", encoding="utf-8")
