@@ -18,7 +18,7 @@ import os
 import random
 import sys
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -75,7 +75,7 @@ DEFAULTS: dict[str, TaskDefaults] = {
         batch_size=256,
         optimizer_batch_size=32,
         eval_batch_size=512,
-        epochs=500,
+        epochs=1000,
         train_max_samples=None,
         attack_method="fast_replace_linf",
         attack_steps=3,
@@ -86,16 +86,16 @@ DEFAULTS: dict[str, TaskDefaults] = {
         alpha_jitter_high=1.0,
         learning_rate=2e-4,
         weight_decay=1e-5,
-        random_start_fraction=0.35,
-        eps_jitter_low=0.75,
-        eps_jitter_high=1.25,
+        random_start_fraction=0.0,
+        eps_jitter_low=1.0,
+        eps_jitter_high=1.0,
     ),
     "darcy": TaskDefaults(
         # Exact solver-gradient attack is memory bound; batch 256 is tested safe on the 31.7GB GPU.
         batch_size=256,
         optimizer_batch_size=32,
         eval_batch_size=256,
-        epochs=500,
+        epochs=1000,
         train_max_samples=None,
         attack_method="binary_steepest_replace",
         attack_steps=1,
@@ -107,31 +107,33 @@ DEFAULTS: dict[str, TaskDefaults] = {
         learning_rate=1e-4,
         weight_decay=1e-5,
         random_start_fraction=0.0,
-        eps_jitter_low=0.75,
-        eps_jitter_high=1.35,
+        eps_jitter_low=1.0,
+        eps_jitter_high=1.0,
     ),
     "ns2d": TaskDefaults(
         # Exact NS2D solver-gradient rollout is very memory heavy; batch 2 OOMed on the 31.7GB GPU.
         batch_size=1,
         optimizer_batch_size=1,
         eval_batch_size=5,
-        epochs=500,
+        epochs=1000,
         train_max_samples=None,
         attack_method="fast_add_linf",
         attack_steps=5,
         epsilon_fraction=0.035,
         epsilon_abs=0.0,
         alpha_ratio=0.45,
-        alpha_jitter_low=0.75,
-        alpha_jitter_high=1.25,
+        alpha_jitter_low=1.0,
+        alpha_jitter_high=1.0,
         learning_rate=5e-5,
         weight_decay=1e-5,
-        random_start_fraction=0.20,
-        eps_jitter_low=0.75,
-        eps_jitter_high=1.25,
+        random_start_fraction=0.0,
+        eps_jitter_low=1.0,
+        eps_jitter_high=1.0,
     ),
 }
 
+
+TASK_SEED_OFFSETS = {"burgers": 17, "darcy": 31, "ns2d": 47}
 
 SMOKE_LIMITS = {
     "burgers": {"train_max_samples": 8, "max_batches": 1, "eval_max_samples": 4},
@@ -192,6 +194,14 @@ def to_jsonable(value: Any) -> Any:
     if isinstance(value, (list, tuple)):
         return [to_jsonable(v) for v in value]
     return value
+
+
+def project_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(resolved)
 
 
 def memory_stats(device: torch.device) -> dict[str, float]:
@@ -316,7 +326,14 @@ def compute_batch_eps(
         base = torch.full((x.shape[0],), float(epsilon_abs), device=x.device, dtype=x.dtype)
     else:
         base = per_sample_range(x).to(device=x.device, dtype=x.dtype) * float(epsilon_fraction)
-    jitter = torch.empty_like(base).uniform_(float(jitter_low), float(jitter_high))
+    low = float(jitter_low)
+    high = float(jitter_high)
+    if high < low:
+        raise ValueError(f"epsilon jitter high must be >= low, got low={low}, high={high}")
+    if low == high:
+        jitter = torch.full_like(base, low)
+    else:
+        jitter = torch.empty_like(base).uniform_(low, high)
     return (base * jitter).clamp_min(1e-8)
 
 
@@ -349,6 +366,7 @@ class AttackBatchResult:
     x_train: torch.Tensor
     y_train: torch.Tensor
     info: dict[str, Any]
+    probe_tensors: dict[str, torch.Tensor] = field(default_factory=dict)
 
 
 def parse_int_list(value: str | None) -> list[int] | None:
@@ -455,8 +473,30 @@ def attack_probe_delta_stats(delta: np.ndarray) -> dict[str, float]:
     }
 
 
+def per_sample_finite_mse(pred: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+    diff = pred - y
+    finite = torch.isfinite(diff)
+    flat_diff = torch.nan_to_num(diff).reshape(diff.shape[0], -1)
+    flat_finite = finite.reshape(finite.shape[0], -1)
+    numerator = (flat_diff.pow(2) * flat_finite.float()).sum(dim=1)
+    denominator = flat_finite.float().sum(dim=1).clamp_min(1.0)
+    return numerator / denominator
+
+
+def selected_clean_pair_for_probe(
+    task: str,
+    xb_selected: torch.Tensor,
+    yb_selected: torch.Tensor,
+    cfg: dict[str, Any],
+) -> tuple[torch.Tensor, torch.Tensor]:
+    # Same clean solver-label convention as optimizer training, so the
+    # per-probe gain is clean model-vs-solver loss -> attacked model-vs-solver loss.
+    return clean_solver_training_pair(task, xb_selected, yb_selected, cfg)
+
+
 def collect_attack_probe_records(
     *,
+    model,
     task: str,
     epoch: int,
     global_step: int,
@@ -465,6 +505,7 @@ def collect_attack_probe_records(
     xb: torch.Tensor,
     yb: torch.Tensor,
     attack_result: AttackBatchResult,
+    cfg: dict[str, Any],
     probe_index_to_rank: dict[int, int],
     save_targets: bool,
 ) -> list[dict[str, Any]]:
@@ -472,6 +513,31 @@ def collect_attack_probe_records(
         return []
     records: list[dict[str, Any]] = []
     source_indices = [int(x) for x in batch_indices.detach().cpu().tolist()]
+    selected_positions: list[int] = []
+    for batch_pos, source_index in enumerate(source_indices):
+        probe_rank = probe_index_to_rank.get(source_index)
+        if probe_rank is None:
+            continue
+        selected_positions.append(batch_pos)
+
+    clean_loss_by_pos: dict[int, float] = {}
+    adv_loss_by_pos: dict[int, float] = {}
+    if selected_positions:
+        pos_tensor = torch.as_tensor(selected_positions, device=xb.device, dtype=torch.long)
+        was_training = model.training
+        model.eval()
+        with torch.no_grad():
+            x_clean_loss, y_clean_loss = selected_clean_pair_for_probe(task, xb.index_select(0, pos_tensor), yb.index_select(0, pos_tensor), cfg)
+            x_adv_loss = attack_result.x_train.index_select(0, pos_tensor)
+            y_adv_loss = attack_result.y_train.index_select(0, pos_tensor)
+            clean_losses = per_sample_finite_mse(model(x_clean_loss), y_clean_loss).detach().cpu().tolist()
+            adv_losses = per_sample_finite_mse(model(x_adv_loss), y_adv_loss).detach().cpu().tolist()
+        if was_training:
+            model.train()
+        for batch_pos, clean_loss, adv_loss in zip(selected_positions, clean_losses, adv_losses):
+            clean_loss_by_pos[int(batch_pos)] = float(clean_loss)
+            adv_loss_by_pos[int(batch_pos)] = float(adv_loss)
+
     for batch_pos, source_index in enumerate(source_indices):
         probe_rank = probe_index_to_rank.get(source_index)
         if probe_rank is None:
@@ -479,6 +545,8 @@ def collect_attack_probe_records(
         x_clean = tensor_to_probe_array(xb[batch_pos])
         x_adv = tensor_to_probe_array(attack_result.x_train[batch_pos])
         delta = x_adv - x_clean
+        clean_loss_sample = clean_loss_by_pos.get(batch_pos, float("nan"))
+        adv_loss_sample = adv_loss_by_pos.get(batch_pos, float("nan"))
         record: dict[str, Any] = {
             "task": task,
             "epoch": int(epoch),
@@ -489,8 +557,16 @@ def collect_attack_probe_records(
             "x_clean": x_clean,
             "x_adv": x_adv,
             "delta": delta,
+            "clean_loss_before_attack_sample": clean_loss_sample,
+            "adv_loss_after_attack_sample": adv_loss_sample,
+            "attack_loss_gain_sample": adv_loss_sample - clean_loss_sample,
+            "attack_loss_gain_relative_sample": (adv_loss_sample - clean_loss_sample) / max(abs(clean_loss_sample), 1e-20),
             **attack_probe_delta_stats(delta),
         }
+        for extra_key, extra_tensor in attack_result.probe_tensors.items():
+            if not isinstance(extra_tensor, torch.Tensor) or int(extra_tensor.shape[0]) != len(source_indices):
+                continue
+            record[extra_key] = tensor_to_probe_array(extra_tensor[batch_pos])
         for key in (
             "attack_type",
             "attack_method",
@@ -546,12 +622,23 @@ def save_attack_probe_epoch(
             "x_adv": np.stack([row["x_adv"] for row in records]).astype(np.float32, copy=False),
             "delta": np.stack([row["delta"] for row in records]).astype(np.float32, copy=False),
         }
+        array_keys = sorted(
+            {
+                key
+                for row in records
+                for key, value in row.items()
+                if isinstance(value, np.ndarray) and key not in payload
+            }
+        )
+        for key in array_keys:
+            if all(key in row and isinstance(row[key], np.ndarray) for row in records):
+                payload[key] = np.stack([row[key] for row in records]).astype(np.float32, copy=False)
         if save_targets and all("y_clean" in row and "y_adv" in row for row in records):
             payload["y_clean"] = np.stack([row["y_clean"] for row in records]).astype(np.float32, copy=False)
             payload["y_adv"] = np.stack([row["y_adv"] for row in records]).astype(np.float32, copy=False)
         np.savez_compressed(npz_path, **payload)
         try:
-            rel_npz = str(npz_path.relative_to(PROJECT_ROOT))
+            rel_npz = project_path(npz_path)
         except ValueError:
             rel_npz = str(npz_path)
 
@@ -571,7 +658,7 @@ def save_attack_probe_epoch(
         csv_row = {
             key: value
             for key, value in row.items()
-            if key not in {"x_clean", "x_adv", "delta", "y_clean", "y_adv"}
+            if not isinstance(value, np.ndarray)
         }
         csv_row["epoch_end_global_step"] = int(epoch_end_global_step)
         csv_row["npz_path"] = rel_npz
@@ -933,7 +1020,14 @@ def binary_darcy_replace_attack(
     b = x0.shape[0]
     spatial_shape = x0.shape[1:-1] if x0.ndim == 4 else x0.shape[1:]
     n_pix = int(np.prod(spatial_shape))
-    jitter = torch.empty((b,), device=x0.device, dtype=x0.dtype).uniform_(float(jitter_low), float(jitter_high))
+    jitter_low_f = float(jitter_low)
+    jitter_high_f = float(jitter_high)
+    if jitter_high_f < jitter_low_f:
+        raise ValueError(f"Darcy epsilon jitter high must be >= low, got low={jitter_low_f}, high={jitter_high_f}")
+    if jitter_low_f == jitter_high_f:
+        jitter = torch.full((b,), jitter_low_f, device=x0.device, dtype=x0.dtype)
+    else:
+        jitter = torch.empty((b,), device=x0.device, dtype=x0.dtype).uniform_(jitter_low_f, jitter_high_f)
     budgets = torch.clamp((float(epsilon_fraction) * jitter * n_pix).round().long(), min=1, max=n_pix)
     used_steps = max(1, int(steps))
 
@@ -1040,6 +1134,8 @@ def ns2d_solver_consistent_attack(
     epsilon_fraction: float,
     epsilon_abs: float,
     alpha_ratio: float,
+    alpha_jitter_low: float,
+    alpha_jitter_high: float,
     random_start_fraction: float,
     jitter_low: float,
     jitter_high: float,
@@ -1131,7 +1227,16 @@ def ns2d_solver_consistent_attack(
     }
     info.update(tensor_stats("target", y_train))
     info.update(tensor_stats("x_train", x_train))
-    return AttackBatchResult(x_train.detach(), y_train.detach(), info)
+    return AttackBatchResult(
+        x_train.detach(),
+        y_train.detach(),
+        info,
+        probe_tensors={
+            "x0_clean": x0.detach(),
+            "x0_adv": x0_adv.detach(),
+            "delta_initial": (x0_adv - x0).detach(),
+        },
+    )
 
 
 def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict[str, Any]) -> AttackBatchResult:
@@ -1361,10 +1466,12 @@ def build_planned_workload_estimate(
         eval_every_steps = max(1, batches_per_epoch)
         eval_steps = [epoch * max(1, batches_per_epoch) for epoch in range(1, int(cfg["epochs"]) + 1)]
         eval_passes = 1 + len(eval_steps)
+        checkpoint_every_epochs = int(args.checkpoint_every_epochs or 0)
         checkpoint_fraction = args.checkpoint_every_fraction
-        if checkpoint_fraction is None:
-            checkpoint_fraction = args.eval_every_fraction
-        if checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
+        if checkpoint_every_epochs > 0:
+            checkpoint_every_steps = max(1, checkpoint_every_epochs * max(1, batches_per_epoch))
+            checkpoint_steps = sorted(set([epoch * max(1, batches_per_epoch) for epoch in range(checkpoint_every_epochs, int(cfg["epochs"]) + 1, checkpoint_every_epochs)] + [total_steps]))
+        elif checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
             checkpoint_every_steps = max(1, int(math.ceil(total_steps * float(checkpoint_fraction))))
             checkpoint_steps = sorted(set(list(range(checkpoint_every_steps, total_steps + 1, checkpoint_every_steps)) + [total_steps]))
         else:
@@ -1415,6 +1522,7 @@ def build_planned_workload_estimate(
             "eval_every_steps": eval_every_steps,
             "eval_steps_after_baseline": eval_steps,
             "eval_pass_count_including_baseline": eval_passes,
+            "checkpoint_every_epochs": checkpoint_every_epochs,
             "checkpoint_every_fraction": None if checkpoint_fraction is None else float(checkpoint_fraction),
             "checkpoint_every_steps": checkpoint_every_steps,
             "checkpoint_steps": checkpoint_steps,
@@ -1437,6 +1545,88 @@ def build_planned_workload_estimate(
     }
 
 
+def _finite_float(value: Any) -> float:
+    try:
+        out = float(value)
+    except Exception:
+        return float("nan")
+    return out if math.isfinite(out) else float("nan")
+
+
+def _weighted_mean(rows: list[dict[str, Any]], key: str, weight_key: str = "batch_size") -> float:
+    total = 0.0
+    weight_total = 0.0
+    for row in rows:
+        value = _finite_float(row.get(key))
+        if not math.isfinite(value):
+            continue
+        weight = _finite_float(row.get(weight_key, 1.0))
+        if not math.isfinite(weight) or weight <= 0:
+            weight = 1.0
+        total += value * weight
+        weight_total += weight
+    return total / weight_total if weight_total > 0 else float("nan")
+
+
+def write_attack_epoch_summary(path: Path, task: str, epoch: int, global_step: int, rows: list[dict[str, Any]]) -> None:
+    attack_samples = sum(int(row.get("batch_size", 0)) for row in rows)
+    clean_mean = _weighted_mean(rows, "clean_loss_before_attack")
+    adv_mean = _weighted_mean(rows, "adv_loss_after_attack")
+    gain_mean = adv_mean - clean_mean if math.isfinite(clean_mean) and math.isfinite(adv_mean) else float("nan")
+    attack_wall_sec_total = sum(_finite_float(row.get("attack_wall_sec")) for row in rows if math.isfinite(_finite_float(row.get("attack_wall_sec"))))
+    row = {
+        "task": task,
+        "epoch": int(epoch),
+        "global_step_last": int(global_step),
+        "attack_batches": int(len(rows)),
+        "attack_samples": int(attack_samples),
+        "clean_loss_before_attack_mean": clean_mean,
+        "adv_loss_after_attack_mean": adv_mean,
+        "attack_loss_gain_mean": gain_mean,
+        "attack_loss_gain_relative_mean": gain_mean / max(abs(clean_mean), 1e-20) if math.isfinite(gain_mean) and math.isfinite(clean_mean) else float("nan"),
+        "train_loss_used_for_optimizer_updates_mean": _weighted_mean(rows, "train_loss_on_adv_mean"),
+        "epsilon_mean": _weighted_mean(rows, "epsilon_mean"),
+        "epsilon_min_observed": min((_finite_float(row.get("epsilon_min")) for row in rows), default=float("nan")),
+        "epsilon_max_observed": max((_finite_float(row.get("epsilon_max")) for row in rows), default=float("nan")),
+        "alpha_mean": _weighted_mean(rows, "alpha_mean"),
+        "alpha_min_observed": min((_finite_float(row.get("alpha_min")) for row in rows), default=float("nan")),
+        "alpha_max_observed": max((_finite_float(row.get("alpha_max")) for row in rows), default=float("nan")),
+        "delta_linf_mean": _weighted_mean(rows, "delta_linf_mean"),
+        "delta_l2_rms_mean": _weighted_mean(rows, "delta_l2_rms_mean"),
+        "boundary_ratio_mean": _weighted_mean(rows, "boundary_ratio_mean"),
+        "grad_abs_mean_last_mean": _weighted_mean(rows, "grad_abs_mean_last"),
+        "attack_wall_sec_total": attack_wall_sec_total,
+    }
+    row["attack_samples_per_sec"] = row["attack_samples"] / max(row["attack_wall_sec_total"], 1e-12)
+    write_csv_row(path, row)
+
+
+def write_eval_split_summary(path: Path, rows: list[dict[str, Any]], *, phase: str, epoch: int, global_step: int, progress_fraction: float, eval_wall_sec: float) -> None:
+    groups: dict[str, list[dict[str, Any]]] = {"ALL": rows}
+    for row in rows:
+        groups.setdefault(str(row.get("split", "unknown")), []).append(row)
+    metric_keys = ["rmse", "mae", "relative_l2", "accuracy_score", "invalid_value_fraction"]
+    for split, split_rows in groups.items():
+        out = {
+            "task": rows[0].get("task") if rows else "",
+            "phase": phase,
+            "epoch": int(epoch),
+            "global_step": int(global_step),
+            "progress_fraction": float(progress_fraction),
+            "split": split,
+            "dataset_count": int(len(split_rows)),
+            "total_samples_evaluated": int(sum(int(row.get("num_samples_evaluated", 0)) for row in split_rows)),
+            "eval_wall_sec": float(eval_wall_sec),
+        }
+        for key in metric_keys:
+            values = [_finite_float(row.get(key)) for row in split_rows]
+            values = [value for value in values if math.isfinite(value)]
+            out[f"{key}_dataset_mean"] = float(np.mean(values)) if values else float("nan")
+            out[f"{key}_dataset_min"] = float(np.min(values)) if values else float("nan")
+            out[f"{key}_dataset_max"] = float(np.max(values)) if values else float("nan")
+        write_csv_row(path, out)
+
+
 def evaluate_task(
     model,
     task: str,
@@ -1457,7 +1647,7 @@ def evaluate_task(
     was_training = model.training
     model.eval()
     for spec in task_eval_specs(specs, task, max_generalization_eval):
-        max_samples = eval_max_samples
+        max_samples = normalize_max_samples(eval_max_samples)
         result = evaluate_dataset(model, spec, device, eval_batch_size, max_samples)
         row = {
             "phase": phase,
@@ -1580,7 +1770,8 @@ def train_one_task(
             "device": str(device),
             "evaluation_schedule": "every_epoch",
             "eval_every_fraction": args.eval_every_fraction,
-            "checkpoint_every_fraction": args.checkpoint_every_fraction if args.checkpoint_every_fraction is not None else args.eval_every_fraction,
+            "checkpoint_every_epochs": args.checkpoint_every_epochs,
+            "checkpoint_every_fraction": args.checkpoint_every_fraction,
             "eval_max_samples": args.eval_max_samples,
             "max_generalization_eval": args.max_generalization_eval,
             "attack_probe_samples": args.attack_probe_samples,
@@ -1672,8 +1863,11 @@ def train_one_task(
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
     total_optimizer_steps = int(task_cfg["epochs"]) * max(1, optimizer_steps_per_epoch)
     eval_every_steps = max(1, batches_per_epoch)
-    checkpoint_fraction = task_cfg.get("checkpoint_every_fraction", args.eval_every_fraction)
-    if checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
+    checkpoint_every_epochs = int(task_cfg.get("checkpoint_every_epochs") or 0)
+    checkpoint_fraction = task_cfg.get("checkpoint_every_fraction")
+    if checkpoint_every_epochs > 0:
+        checkpoint_every_steps = max(1, checkpoint_every_epochs * max(1, batches_per_epoch))
+    elif checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
         checkpoint_every_steps = max(1, int(math.ceil(total_steps * float(checkpoint_fraction))))
     else:
         checkpoint_every_steps = None
@@ -1690,7 +1884,9 @@ def train_one_task(
     attack_csv = out_dir / "attack_batches.csv"
     optimizer_csv = out_dir / "optimizer_steps.csv"
     eval_csv = out_dir / "eval_metrics.csv"
+    eval_split_csv = out_dir / "eval_split_summary.csv"
     eval_pass_csv = out_dir / "evaluation_passes.csv"
+    attack_epoch_csv = out_dir / "attack_epoch_summary.csv"
     memory_csv = out_dir / "memory.csv"
 
     (out_dir / "attack_probe_config.json").write_text(
@@ -1702,7 +1898,7 @@ def train_one_task(
                     "probe_count": int(len(probe_indices)),
                     "save_every_n_epochs": probe_every_n_epochs,
                     "save_targets": probe_save_targets,
-                    "note": "For each epoch, these fixed training source indices are captured from the actual attacked training batch. NPZ files contain x_clean, x_adv, and delta=x_adv-x_clean.",
+                    "note": "For each epoch, these fixed training source indices are captured from the actual attacked training batch. NPZ files contain x_clean, x_adv, delta=x_adv-x_clean, optional y_clean/y_adv targets, and task-specific tensors such as NS2D x0_clean/x0_adv/delta_initial.",
                 }
             ),
             indent=2,
@@ -1726,6 +1922,15 @@ def train_one_task(
         max_generalization_eval=task_cfg["max_generalization_eval"],
     )
     eval_seconds.append(seconds)
+    write_eval_split_summary(
+        eval_split_csv,
+        eval_rows,
+        phase="baseline_before_adversarial_training",
+        epoch=0,
+        global_step=0,
+        progress_fraction=0.0,
+        eval_wall_sec=seconds,
+    )
     write_csv_row(
         eval_pass_csv,
         {
@@ -1754,7 +1959,8 @@ def train_one_task(
     for epoch in range(1, int(task_cfg["epochs"]) + 1):
         probe_this_epoch = bool(probe_index_to_rank) and (epoch % probe_every_n_epochs == 0 or epoch == int(task_cfg["epochs"]))
         epoch_probe_records: list[dict[str, Any]] = []
-        generator = torch.Generator().manual_seed(seed_base + epoch * 1009 + hash(task) % 1000)
+        epoch_attack_rows: list[dict[str, Any]] = []
+        generator = torch.Generator().manual_seed(seed_base + epoch * 1009 + TASK_SEED_OFFSETS.get(task, 0))
         batches = make_indices(n_train, batch_size, generator)
         if max_batches is not None:
             batches = batches[: int(max_batches)]
@@ -1771,6 +1977,7 @@ def train_one_task(
             if probe_this_epoch:
                 epoch_probe_records.extend(
                     collect_attack_probe_records(
+                        model=model,
                         task=task,
                         epoch=epoch,
                         global_step=global_step,
@@ -1779,6 +1986,7 @@ def train_one_task(
                         xb=xb,
                         yb=yb,
                         attack_result=attack_result,
+                        cfg=task_cfg,
                         probe_index_to_rank=probe_index_to_rank,
                         save_targets=probe_save_targets,
                     )
@@ -1870,9 +2078,11 @@ def train_one_task(
             write_csv_row(attack_csv, {k: row[k] for k in row if k.startswith("attack") or k.startswith("epsilon") or k.startswith("alpha") or k.startswith("delta") or k.startswith("darcy") or k.startswith("target") or k.startswith("solver") or k.startswith("x_train") or k in {"task", "epoch", "global_step", "label_mode", "boundary_ratio_mean", "clean_loss_before_attack", "adv_loss_after_attack"}})
             write_csv_row(memory_csv, {"task": task, "epoch": epoch, "global_step": global_step, **memory_stats(device)})
             train_rows.append(row)
+            epoch_attack_rows.append(row)
 
 
         epoch_progress = global_step / max(1, total_steps)
+        write_attack_epoch_summary(attack_epoch_csv, task, epoch, global_step, epoch_attack_rows)
         if probe_this_epoch:
             save_attack_probe_epoch(
                 out_dir,
@@ -1892,7 +2102,7 @@ def train_one_task(
             ckpt = checkpoint_model(model, out_dir, task, epoch, global_step, task_cfg)
             last_checkpoint_path = ckpt
             last_checkpoint_epoch = epoch
-            checkpoint_path = str(ckpt.relative_to(PROJECT_ROOT))
+            checkpoint_path = project_path(ckpt)
 
         eval_rows, seconds = evaluate_task(
             model,
@@ -1909,6 +2119,15 @@ def train_one_task(
             max_generalization_eval=task_cfg["max_generalization_eval"],
         )
         eval_seconds.append(seconds)
+        write_eval_split_summary(
+            eval_split_csv,
+            eval_rows,
+            phase="during_adversarial_training",
+            epoch=epoch,
+            global_step=global_step,
+            progress_fraction=epoch_progress,
+            eval_wall_sec=seconds,
+        )
         write_csv_row(
             eval_pass_csv,
             {
@@ -1952,7 +2171,7 @@ def train_one_task(
     )
     summary = {
         "task": task,
-        "run_dir": str(out_dir.relative_to(PROJECT_ROOT)),
+        "run_dir": project_path(out_dir),
         "train_samples": n_train,
         "train_max_samples": "full" if train_max_samples is None else train_max_samples,
         "batch_size": batch_size,
@@ -1966,6 +2185,7 @@ def train_one_task(
         "total_steps": global_step,
         "evaluation_schedule": "every_epoch",
         "eval_pass_count_including_baseline": int(len(eval_seconds)),
+        "checkpoint_every_epochs": checkpoint_every_epochs,
         "checkpoint_every_fraction": None if checkpoint_fraction is None else float(checkpoint_fraction),
         "checkpoint_every_steps": checkpoint_every_steps,
         "attack_probe_indices": probe_indices.tolist(),
@@ -1974,7 +2194,7 @@ def train_one_task(
         "attack_probe_save_targets": probe_save_targets,
         "elapsed_seconds": elapsed,
         "elapsed_minutes": elapsed / 60.0,
-        "final_checkpoint": str(final_ckpt.relative_to(PROJECT_ROOT)),
+        "final_checkpoint": project_path(final_ckpt),
         "memory": memory_stats(device),
         "data_range_summary": data_summary,
         "smoke_based_estimate": estimate,
@@ -2004,25 +2224,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=20260530)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--epochs", type=int, default=None)
-    parser.add_argument("--eval-every-fraction", type=float, default=0.2, help="Deprecated scheduling knob kept for old scripts; evaluation now runs every epoch. If --checkpoint-every-fraction is omitted, this value controls checkpoint frequency.")
-    parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Save checkpoints every this fraction of total training progress; default reuses --eval-every-fraction. Evaluation still runs every epoch.")
-    parser.add_argument("--eval-max-samples", type=int, default=50)
+    parser.add_argument("--eval-every-fraction", type=float, default=0.2, help="Deprecated scheduling knob kept for old scripts; evaluation now runs every epoch.")
+    parser.add_argument("--checkpoint-every-epochs", type=int, default=200, help="Save a model checkpoint every N epochs; default 200, plus final checkpoint.")
+    parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Legacy fallback: save checkpoints every this fraction of total training progress. Used only when --checkpoint-every-epochs <= 0.")
+    parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
     parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs.")
-    parser.add_argument("--attack-probe-samples", type=int, default=10, help="Number of fixed train-set source indices whose attacked x_adv and delta are saved each probe epoch; set 0 to disable.")
+    parser.add_argument("--attack-probe-samples", type=int, default=5, help="Number of fixed train-set source indices whose attacked x_adv and delta are saved each probe epoch; set 0 to disable.")
     parser.add_argument("--attack-probe-indices", default=None, help="Optional comma-separated explicit train-set source indices for attack probe saving. Overrides --attack-probe-samples.")
     parser.add_argument("--attack-probe-every-n-epochs", type=int, default=1, help="Save attack probe arrays every N epochs; default 1 saves every epoch.")
-    parser.add_argument("--attack-probe-save-targets", action="store_true", help="Also save y_clean and y_adv arrays in attack probe NPZ files. Off by default to reduce disk usage.")
+    parser.add_argument("--attack-probe-save-targets", dest="attack_probe_save_targets", action="store_true", default=True, help="Save y_clean and y_adv arrays in attack probe NPZ files. On by default for same-index attack diagnostics.")
+    parser.add_argument("--no-attack-probe-save-targets", dest="attack_probe_save_targets", action="store_false", help="Disable y_clean/y_adv arrays in attack probe NPZ files to reduce disk usage.")
     parser.add_argument("--allow-clean-label", action="store_true", help="Allow the intentionally non-physical x_adv -> y_clean objective for ablation/debug only.")
     parser.add_argument("--ns-attack-frames", choices=["first", "all"], default="first")
     parser.add_argument("--burgers-solver-remat", choices=["none", "micro", "step", "chunk", "all"], default="none")
     parser.add_argument("--burgers-solver-remat-chunk-steps", type=int, default=20)
     parser.add_argument("--ns2d-solver-remat", choices=["none", "micro", "step", "chunk", "second"], default="chunk")
     parser.add_argument("--ns2d-solver-remat-chunk-steps", type=int, default=20)
-    parser.add_argument("--binary-pool-multiplier", type=float, default=2.5)
-    parser.add_argument("--binary-score-noise", type=float, default=0.10)
+    parser.add_argument("--binary-pool-multiplier", type=float, default=1.0, help="Darcy binary attack candidate pool multiplier. Default 1.0 is deterministic top-k for comparable same-index probes.")
+    parser.add_argument("--binary-score-noise", type=float, default=0.0, help="Darcy binary attack score noise. Default 0.0 keeps same epsilon/model changes as the main source of probe variation.")
     parser.add_argument("--burgers-train-max", type=int, default=None)
     parser.add_argument("--darcy-train-max", type=int, default=None)
     parser.add_argument("--ns2d-train-max", type=int, default=None)
@@ -2090,7 +2312,8 @@ def main() -> None:
         "training_data_mode": args.training_data_mode,
         "evaluation_schedule": "every_epoch",
         "eval_every_fraction_deprecated": args.eval_every_fraction,
-        "checkpoint_every_fraction": args.checkpoint_every_fraction if args.checkpoint_every_fraction is not None else args.eval_every_fraction,
+        "checkpoint_every_epochs": int(args.checkpoint_every_epochs),
+        "checkpoint_every_fraction": args.checkpoint_every_fraction,
         "attack_probe": {
             "samples": int(args.attack_probe_samples),
             "indices": args.attack_probe_indices,
@@ -2125,7 +2348,7 @@ def main() -> None:
         summaries.append(train_one_task(task, all_specs, device, out_root, args, run_cfg))
     total_wall = time.perf_counter() - wall_start
     final_summary = {
-        "run_dir": str(out_root.relative_to(PROJECT_ROOT)),
+        "run_dir": project_path(out_root),
         "tasks": summaries,
         "total_wall_seconds": total_wall,
         "total_wall_minutes": total_wall / 60.0,
@@ -2136,23 +2359,23 @@ def main() -> None:
     readme_lines = [
         "# Adversarial Training Run",
         "",
-        f"- Run directory: `{out_root.relative_to(PROJECT_ROOT)}`",
+        f"- Run directory: `{project_path(out_root)}`",
         f"- Tasks: `{','.join(tasks)}`",
         f"- Smoke: `{bool(args.smoke)}`",
         f"- Label mode: `{args.label_mode}`",
         f"- Training data mode: `{args.training_data_mode}`",
         "",
-        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
+        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
         "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
         "Default attack policy:",
-        "- Burgers: short L-infinity fast-replace attack; default attack batch covers the full 1350-sample train split, optimizer microbatch is 300, with per-sample epsilon jitter and alpha=epsilon*ratio.",
-        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 384 because 512/1200 OOM on the 31.7GB GPU, optimizer microbatch is 80, with jittered flip budgets.",
-        "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default.",
+        "- Burgers: short L-infinity fast-replace attack; default attack batch is 256, optimizer microbatch is 32, epsilon is fixed per sample from input range, alpha=epsilon*ratio, and random start is off for comparable same-index probes.",
+        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default.",
+        "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default, epsilon/alpha are fixed, and random start is off for comparable same-index probes.",
         "",
-        "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch; checkpoints stay on the configured checkpoint fraction schedule.",
-        "Attack probes save fixed train-set source indices after their actual training attack each probe epoch, including x_clean, x_adv, delta, and delta high-frequency summary metrics.",
+        "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch, giving 52 dataset-level curves per task when all 50 generated sets are present; checkpoints default to every 200 epochs plus final.",
+        "Attack probes save fixed train-set source indices after their actual training attack each probe epoch, including x_clean, x_adv, delta, y_clean/y_adv targets by default, per-sample clean/adv attack loss gain, and delta high-frequency summary metrics. NS2D probes also save x0_clean, x0_adv, and delta_initial.",
     ]
     (out_root / "README.md").write_text("\n".join(readme_lines) + "\n", encoding="utf-8")
     print(f"[done] wrote {out_root}", flush=True)
