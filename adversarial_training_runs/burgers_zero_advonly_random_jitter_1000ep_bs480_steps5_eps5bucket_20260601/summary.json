@@ -1,0 +1,81 @@
+{
+  "run_dir": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601",
+  "tasks": [
+    {
+      "task": "burgers",
+      "run_dir": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601/burgers",
+      "train_samples": 1350,
+      "train_max_samples": "full",
+      "batch_size": 480,
+      "attack_batch_size": 480,
+      "training_data_mode": "adv-only",
+      "effective_train_samples_per_full_attack_batch": 480,
+      "optimizer_batch_size": 32,
+      "optimizer_steps_per_epoch": 43,
+      "total_optimizer_steps": 43000,
+      "epochs": 1000,
+      "total_steps": 3000,
+      "evaluation_schedule": "every_epoch",
+      "eval_pass_count_including_baseline": 1001,
+      "checkpoint_every_epochs": 200,
+      "checkpoint_every_fraction": null,
+      "checkpoint_every_steps": 600,
+      "attack_probe_indices": [
+        0,
+        337,
+        674,
+        1012,
+        1349
+      ],
+      "attack_probe_count": 5,
+      "attack_probe_every_n_epochs": 1,
+      "attack_probe_save_targets": true,
+      "elapsed_seconds": 51139.143410257995,
+      "elapsed_minutes": 852.3190568376333,
+      "final_checkpoint": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601/burgers/checkpoints/burgers_epoch1000_step003000.pt",
+      "memory": {
+        "cuda_allocated_mb": 33.2841796875,
+        "cuda_reserved_mb": 30328.0,
+        "cuda_peak_allocated_mb": 28307.12841796875
+      },
+      "data_range_summary": {
+        "x_min": 0.0,
+        "x_max": 1.0,
+        "x_mean": 0.5004172921180725,
+        "x_std": 0.25707370042800903,
+        "x_median_sample_range": 1.0,
+        "x_mean_sample_range": 1.0,
+        "y_min": 0.01771804690361023,
+        "y_max": 0.9821581244468689,
+        "y_mean": 0.5004172921180725,
+        "y_std": 0.179603710770607,
+        "y_median_sample_range": 0.6368852853775024,
+        "y_mean_sample_range": 0.6352493166923523
+      },
+      "smoke_based_estimate": {
+        "task": "burgers",
+        "estimate_available": true,
+        "smoke_per_batch_sec": 16.800637687122023,
+        "smoke_attack_sec": 15.673640075551463,
+        "smoke_train_sec": 0.3769552193202544,
+        "smoke_eval_sec": 0.7110162008555837,
+        "full_epochs": 1000,
+        "full_train_samples": 1350,
+        "batch_size": 480,
+        "attack_batch_size": 480,
+        "optimizer_batch_size": 32,
+        "optimizer_microbatches_per_attack_batch": 15,
+        "optimizer_steps_per_epoch": 43,
+        "batches_per_epoch": 3,
+        "estimated_train_batches": 3000,
+        "estimated_optimizer_steps": 43000,
+        "estimated_eval_count": 1001,
+        "estimated_total_seconds": 51113.64027842251,
+        "estimated_total_minutes": 851.8940046403751
+      }
+    }
+  ],
+  "total_wall_seconds": 51142.08996374498,
+  "total_wall_minutes": 852.3681660624163,
+  "finished_utc": "20260601_143839_UTC"
+}
