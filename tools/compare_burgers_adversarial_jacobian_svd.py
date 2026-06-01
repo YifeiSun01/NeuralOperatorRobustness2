@@ -32,6 +32,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from scipy.sparse.linalg import svds
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -221,6 +222,60 @@ def singular_rows(sample: dict[str, Any], model_name: str, jacobian_kind: str, s
     return rows
 
 
+def save_topk_svd(name: str, J: np.ndarray, out_dir: Path, index: int, top_k: int, solver: str = "propack") -> dict[str, np.ndarray]:
+    """Save only the top-k singular triplets for a dense local Jacobian.
+
+    The old path used a full SVD through analyze_jacobian.  For the Burgers
+    Jacobians here, callers often only need the leading singular triplets, so
+    svds avoids computing the remaining ~1000 directions.
+    """
+    model_dir = out_dir / name
+    model_dir.mkdir(parents=True, exist_ok=True)
+    A = np.asarray(J, dtype=np.float64)
+    k = int(min(max(1, top_k), min(A.shape) - 1))
+    started = time.perf_counter()
+    try:
+        U, s, Vh = svds(A, k=k, which="LM", solver=solver)
+        used_solver = solver
+    except Exception as exc:
+        print(f"[topk-svd] {name}_index{index} solver={solver} failed: {exc!r}; falling back to arpack", flush=True)
+        U, s, Vh = svds(A, k=k, which="LM", solver="arpack")
+        used_solver = "arpack"
+    order = np.argsort(s)[::-1]
+    s = np.asarray(s[order], dtype=np.float64)
+    U = np.asarray(U[:, order], dtype=np.float32)
+    Vh = np.asarray(Vh[order, :], dtype=np.float32)
+    np.savez_compressed(
+        model_dir / f"{name}_index{index}_jacobian_svd.npz",
+        jacobian=A.astype(np.float32),
+        singular_values=s.astype(np.float64),
+        left_singular_vectors=U,
+        right_singular_vectors=Vh,
+        svd_method=np.array("topk_svds"),
+        svd_solver=np.array(used_solver),
+        top_k=np.array(k, dtype=np.int32),
+    )
+    energy = s * s
+    summary = {
+        "model_name": name,
+        "sample_index": int(index),
+        "svd_method": "topk_svds",
+        "svd_solver": used_solver,
+        "top_k": k,
+        "elapsed_sec": time.perf_counter() - started,
+        "largest_singular_value": float(s[0]) if s.size else None,
+        "top20_energy_partial": float(energy[:20].sum()),
+    }
+    save_json(model_dir / f"{name}_index{index}_summary.json", summary)
+    return {"J": A, "s": s, "U": U.astype(np.float64), "Vh": Vh.astype(np.float64)}
+
+
+def save_configured_svd(name: str, J: np.ndarray, out_dir: Path, index: int, args: argparse.Namespace) -> dict[str, np.ndarray]:
+    if getattr(args, "svd_method", "full") == "topk":
+        return save_topk_svd(name, J, out_dir, index, int(args.top_k), solver=getattr(args, "svd_solver", "propack"))
+    return save_standard_svd(name, J, out_dir, index)
+
+
 def plot_aggregate_spectra(out_root: Path, top_rows: list[dict[str, Any]]) -> None:
     plot_dir = out_root / "plots"
     plot_dir.mkdir(parents=True, exist_ok=True)
@@ -321,6 +376,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=20260531)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--top-k", type=int, default=20)
+    parser.add_argument("--svd-method", choices=["full", "topk"], default="full")
+    parser.add_argument("--svd-solver", choices=["propack", "arpack", "lobpcg"], default="propack")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--skip-solver", action="store_true", help="Debug mode: compute model Jacobians only; J_error is skipped.")
     parser.add_argument("--reuse-existing", action=argparse.BooleanOptionalAction, default=True)
@@ -354,6 +411,8 @@ def main() -> None:
             "generalization_samples": args.generalization_samples,
             "seed": args.seed,
             "top_k": args.top_k,
+            "svd_method": args.svd_method,
+            "svd_solver": args.svd_solver,
             "skip_solver": args.skip_solver,
         },
     )
@@ -404,7 +463,7 @@ def main() -> None:
                 start = time.perf_counter()
                 J_solver = compute_solver_jacobian(x, solver_args, device, progress_prefix=f"solver_sample{sample_id}")
                 solver_seconds = time.perf_counter() - start
-                s_solver = save_standard_svd("solver", J_solver, sample_dir, sample_id)["s"]
+                s_solver = save_configured_svd("solver", J_solver, sample_dir, sample_id, args)["s"]
                 solver_source = "computed"
             summary_rows.append(sv_summary("solver", s_solver, sample=sample, model_name="solver"))
             top_rows.extend(singular_rows(sample, "solver", "solver", s_solver, int(args.top_k)))
@@ -422,7 +481,7 @@ def main() -> None:
                 start = time.perf_counter()
                 J_model = compute_explicit_jacobian(models[model_name], x, device, progress_prefix=f"{model_name}_sample{sample_id}")
                 model_seconds = time.perf_counter() - start
-                s_model = save_standard_svd(model_name, J_model, sample_dir, sample_id)["s"]
+                s_model = save_configured_svd(model_name, J_model, sample_dir, sample_id, args)["s"]
                 model_source = "computed"
             summary_rows.append(sv_summary(f"{model_name}_model", s_model, sample=sample, model_name=model_name))
             top_rows.extend(singular_rows(sample, model_name, "model", s_model, int(args.top_k)))
@@ -439,7 +498,7 @@ def main() -> None:
                 else:
                     start = time.perf_counter()
                     J_error = J_model.astype(np.float64) - J_solver.astype(np.float64)
-                    s_error = save_standard_svd(error_name, J_error, sample_dir, sample_id)["s"]
+                    s_error = save_configured_svd(error_name, J_error, sample_dir, sample_id, args)["s"]
                     error_seconds = time.perf_counter() - start
                     error_source = "computed"
                 summary_rows.append(sv_summary(error_name, s_error, sample=sample, model_name=model_name))

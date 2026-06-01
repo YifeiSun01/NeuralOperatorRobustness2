@@ -1,0 +1,14 @@
+{
+  "baseline_checkpoint": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+  "adv_only_checkpoint": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601/burgers/checkpoints/burgers_epoch1000_step003000.pt",
+  "clean_plus_adv_checkpoint": "adversarial_training_runs/full10_burgers_clean_plus_adv_20260530/burgers/checkpoints/burgers_epoch500_step000500.pt",
+  "sample_count": 10,
+  "train_samples": 10,
+  "test_samples": 0,
+  "generalization_samples": 10,
+  "seed": 20260531,
+  "top_k": 100,
+  "svd_method": "topk",
+  "svd_solver": "propack",
+  "skip_solver": false
+}
