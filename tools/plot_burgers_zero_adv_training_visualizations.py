@@ -157,6 +157,70 @@ def plot_grouped_dataset_panels(eval_df: pd.DataFrame, metric: str, out_path: Pa
     plt.close(fig)
 
 
+def plot_grouped_dataset_panels_distinct_datasets(eval_df: pd.DataFrame, metric: str, out_path: Path) -> None:
+    ylo, yhi = metric_limits(eval_df, metric)
+    present = [tier for tier in TIER_ORDER if tier in set(eval_df["manual_tier"])]
+    rows, cols = 3, 3
+    fig, axes = plt.subplots(rows, cols, figsize=(17.2, 11.8), sharex=True, sharey=True)
+    axes = axes.ravel()
+    cmap_names = ["tab20", "tab20b", "tab20c"]
+    for ax, tier in zip(axes, present):
+        d_tier = sort_eval_rows(eval_df[eval_df["manual_tier"] == tier])
+        datasets = list(d_tier.drop_duplicates("dataset_id")["dataset_id"])
+        n = max(len(datasets), 1)
+        cmap = plt.get_cmap(cmap_names[present.index(tier) % len(cmap_names)])
+        for idx, dataset_id in enumerate(datasets):
+            d = d_tier[d_tier["dataset_id"] == dataset_id]
+            if tier in {"train", "test"}:
+                color = TIER_COLORS.get(tier, "#111111")
+                lw = 2.4
+                alpha = 0.98
+            else:
+                color = cmap(idx / max(n - 1, 1))
+                lw = 1.45
+                alpha = 0.92
+            label = f"{idx + 1:02d} {shorten_dataset_id(dataset_id)}"
+            ax.plot(d["epoch"], d[metric], color=color, alpha=alpha, lw=lw, label=label)
+            # Add a tiny number tag at the final point so dense panels remain traceable.
+            end = d.sort_values("epoch").iloc[-1]
+            ax.text(
+                1004,
+                float(end[metric]),
+                f"{idx + 1}",
+                color=color,
+                fontsize=5.6,
+                va="center",
+                ha="left",
+                clip_on=False,
+            )
+        ax.set_title(f"{tier}: distinct dataset colors ({len(datasets)} datasets)")
+        ax.set_xlim(0, 1035)
+        ax.set_ylim(ylo, yhi)
+        for x in [200, 400, 600, 800]:
+            ax.axvline(x, color="#555555", alpha=0.13, lw=1)
+        legend_cols = 1 if len(datasets) <= 8 else 2
+        ax.legend(
+            loc="upper right",
+            ncol=legend_cols,
+            fontsize=4.8 if len(datasets) > 12 else 5.8,
+            handlelength=1.1,
+            handletextpad=0.25,
+            borderaxespad=0.2,
+            frameon=True,
+            framealpha=0.68,
+            facecolor="white",
+            edgecolor="none",
+        )
+    for ax in axes[len(present) :]:
+        ax.axis("off")
+    fig.supxlabel("evaluation epoch")
+    fig.supylabel(metric)
+    fig.suptitle(f"{metric} by dataset group, shared y-axis, distinct color per dataset", y=0.995)
+    fig.tight_layout(rect=[0, 0, 1, 0.982])
+    fig.savefig(out_path)
+    plt.close(fig)
+
+
 def plot_group_mean_std(eval_df: pd.DataFrame, metric: str, out_path: Path) -> pd.DataFrame:
     grouped = (
         eval_df.groupby(["manual_tier", "epoch"], as_index=False)[metric]
@@ -661,6 +725,8 @@ def write_summary(
         "- `rmse_all_52_datasets.png`",
         "- `relative_l2_grouped_shared_y.png`",
         "- `rmse_grouped_shared_y.png`",
+        "- `relative_l2_grouped_shared_y_distinct_datasets.png`",
+        "- `rmse_grouped_shared_y_distinct_datasets.png`",
         "- `relative_l2_group_mean_std.png`",
         "- `rmse_group_mean_std.png`",
         "- `relative_l2_heatmap_52_datasets.png`",
@@ -712,6 +778,12 @@ def main() -> None:
     plot_all_dataset_lines(eval_df, "rmse", out_dir / "rmse_all_52_datasets.png")
     plot_grouped_dataset_panels(eval_df, "relative_l2", out_dir / "relative_l2_grouped_shared_y.png")
     plot_grouped_dataset_panels(eval_df, "rmse", out_dir / "rmse_grouped_shared_y.png")
+    plot_grouped_dataset_panels_distinct_datasets(
+        eval_df, "relative_l2", out_dir / "relative_l2_grouped_shared_y_distinct_datasets.png"
+    )
+    plot_grouped_dataset_panels_distinct_datasets(
+        eval_df, "rmse", out_dir / "rmse_grouped_shared_y_distinct_datasets.png"
+    )
     rel_group = plot_group_mean_std(eval_df, "relative_l2", out_dir / "relative_l2_group_mean_std.png")
     rmse_group = plot_group_mean_std(eval_df, "rmse", out_dir / "rmse_group_mean_std.png")
     rel_group.to_csv(out_dir / "relative_l2_group_mean_std.csv", index=False)

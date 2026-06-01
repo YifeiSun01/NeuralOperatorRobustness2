@@ -37,6 +37,8 @@ adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5
 - `rmse_all_52_datasets.png`
 - `relative_l2_grouped_shared_y.png`
 - `rmse_grouped_shared_y.png`
+- `relative_l2_grouped_shared_y_distinct_datasets.png`
+- `rmse_grouped_shared_y_distinct_datasets.png`
 - `relative_l2_group_mean_std.png`
 - `rmse_group_mean_std.png`
 - `relative_l2_heatmap_52_datasets.png`
