@@ -55,3 +55,4 @@ adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5
 - `delta_checkpoint_shapes_all_probes.png`
 - `delta_checkpoint_shapes_probe0.png`
 - `delta_checkpoint_fft_probe0.png`
+- `delta_fft_power_25epoch_moving_average.png`

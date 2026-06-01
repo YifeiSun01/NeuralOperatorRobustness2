@@ -694,6 +694,97 @@ def plot_delta_probe_detail(run_dir: Path, probe_rank: int, out_shape_path: Path
     plt.close(fig)
 
 
+def rolling_mean_matrix(matrix: np.ndarray, window: int = 25) -> np.ndarray:
+    return pd.DataFrame(matrix).rolling(window, min_periods=1, center=True).mean().to_numpy(dtype=float)
+
+
+def plot_delta_fft_power_moving_average(
+    run_dir: Path,
+    epochs: list[int],
+    out_path: Path,
+    out_selected_csv: Path,
+    window: int = 25,
+) -> None:
+    epochs = sorted(int(e) for e in epochs)
+    all_power = []
+    probe_ranks = None
+    freq_modes = None
+    for epoch in epochs:
+        data = load_probe_npz(run_dir, epoch)
+        deltas = data["delta"]
+        if probe_ranks is None:
+            probe_ranks = [int(x) for x in data["probe_rank"]]
+        probe_power = []
+        for sample_idx in range(deltas.shape[0]):
+            freq, power = fft_power(deltas[sample_idx])
+            if freq_modes is None:
+                freq_modes = freq[1:]
+            probe_power.append(power[1:])
+        all_power.append(probe_power)
+    power_arr = np.asarray(all_power, dtype=float)  # epoch x probe x Fourier mode
+    mean_power = np.nanmean(power_arr, axis=1)
+    mean_power_smooth = rolling_mean_matrix(mean_power, window=window)
+
+    if probe_ranks and 0 in probe_ranks:
+        probe0_idx = probe_ranks.index(0)
+    else:
+        probe0_idx = 0
+    probe0_power_smooth = rolling_mean_matrix(power_arr[:, probe0_idx, :], window=window)
+
+    selected_modes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 384, 512]
+    selected_rows = []
+    for label, matrix in [("mean_5_fixed_probes", mean_power_smooth), (f"probe_{probe_ranks[probe0_idx] if probe_ranks else probe0_idx}", probe0_power_smooth)]:
+        for row_idx, epoch in enumerate(epochs):
+            row = {"epoch": epoch, "series": label}
+            for mode in selected_modes:
+                mode_idx = min(max(mode - 1, 0), matrix.shape[1] - 1)
+                row[f"mode_{mode}"] = float(matrix[row_idx, mode_idx])
+            selected_rows.append(row)
+    pd.DataFrame(selected_rows).to_csv(out_selected_csv, index=False)
+
+    log_power = np.log10(np.clip(mean_power_smooth, 1e-18, None))
+    finite = log_power[np.isfinite(log_power)]
+    vmin, vmax = np.nanpercentile(finite, [2, 99.5])
+
+    fig = plt.figure(figsize=(15.5, 10.2))
+    gs = fig.add_gridspec(2, 1, height_ratios=[1.35, 0.9], hspace=0.28)
+    ax0 = fig.add_subplot(gs[0, 0])
+    im = ax0.imshow(
+        log_power,
+        aspect="auto",
+        origin="lower",
+        interpolation="nearest",
+        extent=[float(freq_modes[0]), float(freq_modes[-1]), float(epochs[0]), float(epochs[-1])],
+        cmap="magma",
+        vmin=float(vmin),
+        vmax=float(vmax),
+    )
+    cbar = fig.colorbar(im, ax=ax0, fraction=0.023, pad=0.018)
+    cbar.set_label("log10 normalized FFT power")
+    ax0.set_title(f"Delta normalized FFT power, {window}-epoch moving average, mean across 5 fixed probes")
+    ax0.set_xlabel("Fourier mode")
+    ax0.set_ylabel("training epoch")
+    ax0.set_xlim(1, 512)
+
+    ax1 = fig.add_subplot(gs[1, 0])
+    selected_epochs = [50, 200, 400, 600, 800, 1000]
+    colors = plt.get_cmap("viridis")(np.linspace(0.05, 0.95, len(selected_epochs)))
+    for epoch, color in zip(selected_epochs, colors):
+        idx = int(np.argmin(np.abs(np.asarray(epochs) - epoch)))
+        ax1.plot(freq_modes, mean_power_smooth[idx] + 1e-18, color=color, lw=1.8, label=f"epoch {epochs[idx]}")
+    ax1.set_yscale("log")
+    ax1.set_xlim(1, 512)
+    ax1.set_title("Smoothed spectra at selected epochs, same 25-epoch moving average")
+    ax1.set_xlabel("Fourier mode")
+    ax1.set_ylabel("normalized power, log scale")
+    ax1.legend(ncol=3, frameon=False)
+
+    fig.suptitle("Moving-average view of fixed-probe delta FFT power", y=0.995)
+    fig.tight_layout(rect=[0, 0, 1, 0.985])
+    fig.savefig(out_path)
+    plt.close(fig)
+
+
 def write_summary(
     out_dir: Path,
     reduction_rel: pd.DataFrame,
@@ -781,6 +872,7 @@ def write_summary(
         "- `delta_checkpoint_shapes_all_probes.png`",
         "- `delta_checkpoint_shapes_probe0.png`",
         "- `delta_checkpoint_fft_probe0.png`",
+        "- `delta_fft_power_25epoch_moving_average.png`",
         "",
     ]
     (out_dir / "README.md").write_text("\n".join(lines), encoding="utf-8")
@@ -872,6 +964,13 @@ def main() -> None:
         probe_rank=0,
         out_shape_path=out_dir / "delta_checkpoint_shapes_probe0.png",
         out_fft_path=out_dir / "delta_checkpoint_fft_probe0.png",
+    )
+    plot_delta_fft_power_moving_average(
+        run_dir,
+        sorted(probe_df["epoch"].unique()),
+        out_path=out_dir / "delta_fft_power_25epoch_moving_average.png",
+        out_selected_csv=out_dir / "delta_fft_power_25epoch_moving_average_selected_modes.csv",
+        window=25,
     )
 
     final_split = split_df[split_df["epoch"] == 1000].copy()
