@@ -1,0 +1,81 @@
+{
+  "run_dir": "adversarial_training_runs/burgers_p2q2_smoke_20260601",
+  "tasks": [
+    {
+      "task": "burgers",
+      "run_dir": "adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers",
+      "train_samples": 480,
+      "train_max_samples": 480,
+      "batch_size": 480,
+      "attack_batch_size": 480,
+      "training_data_mode": "adv-only",
+      "effective_train_samples_per_full_attack_batch": 480,
+      "optimizer_batch_size": 32,
+      "optimizer_steps_per_epoch": 15,
+      "total_optimizer_steps": 15,
+      "epochs": 1,
+      "total_steps": 1,
+      "evaluation_schedule": "every_epoch",
+      "eval_pass_count_including_baseline": 2,
+      "checkpoint_every_epochs": 200,
+      "checkpoint_every_fraction": null,
+      "checkpoint_every_steps": 200,
+      "attack_probe_indices": [
+        0,
+        120,
+        240,
+        359,
+        479
+      ],
+      "attack_probe_count": 5,
+      "attack_probe_every_n_epochs": 1,
+      "attack_probe_save_targets": true,
+      "elapsed_seconds": 18.367136884015054,
+      "elapsed_minutes": 0.3061189480669176,
+      "final_checkpoint": "adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers/checkpoints/burgers_epoch001_step000001.pt",
+      "memory": {
+        "cuda_allocated_mb": 32.94091796875,
+        "cuda_reserved_mb": 30418.0,
+        "cuda_peak_allocated_mb": 28284.599609375
+      },
+      "data_range_summary": {
+        "x_min": 0.0,
+        "x_max": 1.0,
+        "x_mean": 0.5000206232070923,
+        "x_std": 0.2552095949649811,
+        "x_median_sample_range": 1.0,
+        "x_mean_sample_range": 1.0,
+        "y_min": 0.031113222241401672,
+        "y_max": 0.9783932566642761,
+        "y_mean": 0.5000206232070923,
+        "y_std": 0.17710083723068237,
+        "y_median_sample_range": 0.6269034147262573,
+        "y_mean_sample_range": 0.6298390626907349
+      },
+      "smoke_based_estimate": {
+        "task": "burgers",
+        "estimate_available": true,
+        "smoke_per_batch_sec": 18.313872325001284,
+        "smoke_attack_sec": 16.94885282800533,
+        "smoke_train_sec": 0.5471019700635225,
+        "smoke_eval_sec": 0.23603339598048478,
+        "full_epochs": 1,
+        "full_train_samples": 480,
+        "batch_size": 480,
+        "attack_batch_size": 480,
+        "optimizer_batch_size": 32,
+        "optimizer_microbatches_per_attack_batch": 15,
+        "optimizer_steps_per_epoch": 15,
+        "batches_per_epoch": 1,
+        "estimated_train_batches": 1,
+        "estimated_optimizer_steps": 15,
+        "estimated_eval_count": 2,
+        "estimated_total_seconds": 18.785939116962254,
+        "estimated_total_minutes": 0.31309898528270425
+      }
+    }
+  ],
+  "total_wall_seconds": 20.700898814946413,
+  "total_wall_minutes": 0.3450149802491069,
+  "finished_utc": "20260601_184351_UTC"
+}

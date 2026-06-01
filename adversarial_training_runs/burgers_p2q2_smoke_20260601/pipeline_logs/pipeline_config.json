@@ -1,0 +1,39 @@
+{
+  "run_name": "burgers_p2q2_smoke_20260601",
+  "run_dir": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_p2q2_smoke_20260601",
+  "attack_geometry": "p=2,q=2 RMS-L2 via fast_replace_l2",
+  "old_linf_failure_mode": "fast_replace_linf creates coordinatewise sign/rectangular deltas",
+  "training": {
+    "epochs": 1000,
+    "checkpoint_every_epochs": 200,
+    "training_data_mode": "adv-only",
+    "label_mode": "solver",
+    "batch_size": 480,
+    "optimizer_batch_size": 32,
+    "attack_steps": 5,
+    "epsilon_fraction": 0.06,
+    "epsilon_jitter": [
+      0.75,
+      1.25
+    ],
+    "alpha_ratio": 1.0,
+    "alpha_jitter": [
+      0.75,
+      1.25
+    ],
+    "epsilon_bucket_count": 5
+  },
+  "visualizations": "/workspace/NeuralOperatorRobustness2/visualizations/burgers_p2q2_adv_training_20260601",
+  "jacobian_svd": {
+    "sample_manifest": "/workspace/NeuralOperatorRobustness2/forensics/burgers_adv_training_jacobian_svd_20260531_representative20_same_points/representative20_sample_manifest.csv",
+    "reuse_root": "/workspace/NeuralOperatorRobustness2/forensics/burgers_adv_training_jacobian_svd_20260531_representative20_same_points",
+    "top_k": 100,
+    "checkpoint_epochs": [
+      200,
+      400,
+      600,
+      800,
+      1000
+    ]
+  }
+}

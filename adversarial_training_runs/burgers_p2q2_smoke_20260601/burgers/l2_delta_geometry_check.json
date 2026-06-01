@@ -1,0 +1,51 @@
+{
+  "run_root": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_p2q2_smoke_20260601",
+  "burgers_dir": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers",
+  "probe_csv": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers/attack_probe_samples.csv",
+  "metadata_attack_methods": [
+    "fast_replace_l2"
+  ],
+  "metadata_attack_types": [
+    "continuous_l2_rms"
+  ],
+  "metadata_ok_l2": true,
+  "inspected_npz_files": [
+    "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers/attack_probe_samples/burgers_epoch001_step000001_attack_probe.npz"
+  ],
+  "sample_count": 5,
+  "unique_rounded_values": {
+    "mean": 1012.6,
+    "std": 7.635443667528429,
+    "min": 1003.0,
+    "median": 1013.0,
+    "max": 1023.0
+  },
+  "top_abs_fraction": {
+    "mean": 0.0009765625,
+    "std": 0.0,
+    "min": 0.0009765625,
+    "median": 0.0009765625,
+    "max": 0.0009765625
+  },
+  "l2_rms": {
+    "mean": 0.05225676265936478,
+    "std": 0.010179482317534084,
+    "min": 0.04530362853497115,
+    "median": 0.04752237630450783,
+    "max": 0.07004381510566167
+  },
+  "linf": {
+    "mean": 0.27117156982421875,
+    "std": 0.07228805141486266,
+    "min": 0.21859198808670044,
+    "median": 0.227588951587677,
+    "max": 0.38538116216659546
+  },
+  "thresholds": {
+    "round_decimals": 6,
+    "min_median_unique_values": 16,
+    "max_median_top_abs_fraction": 0.45
+  },
+  "passed_l2_non_rectangular_check": true,
+  "interpretation": "pass means the attack metadata is L2 and saved deltas have many amplitudes; fail means the run is likely still Linf/sign-like or no valid probes were saved."
+}

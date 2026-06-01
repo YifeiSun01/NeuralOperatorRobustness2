@@ -1,0 +1,2 @@
+task,epoch,epoch_end_global_step,expected_probe_count,captured_probe_count,missing_source_indices,npz_path
+burgers,1,1,5,5,[],adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers/attack_probe_samples/burgers_epoch001_step000001_attack_probe.npz

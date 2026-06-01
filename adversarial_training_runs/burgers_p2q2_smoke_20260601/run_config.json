@@ -1,0 +1,190 @@
+{
+  "run_name": "burgers_p2q2_smoke_20260601",
+  "tasks": [
+    "burgers"
+  ],
+  "project_root": "/workspace/NeuralOperatorRobustness2",
+  "generalization_root": "/workspace/NeuralOperatorRobustness2/generalization_datasets_rmse_1p5_3x_all_ns50",
+  "output_root": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_p2q2_smoke_20260601",
+  "device": "cuda",
+  "seed": 20260601,
+  "smoke": false,
+  "started_utc": "20260601_184330_UTC",
+  "defaults": {
+    "burgers": {
+      "batch_size": 256,
+      "optimizer_batch_size": 32,
+      "eval_batch_size": 512,
+      "epochs": 1000,
+      "train_max_samples": null,
+      "attack_method": "fast_replace_l2",
+      "attack_steps": 3,
+      "epsilon_fraction": 0.06,
+      "epsilon_abs": 0.0,
+      "alpha_ratio": 1.0,
+      "alpha_jitter_low": 1.0,
+      "alpha_jitter_high": 1.0,
+      "learning_rate": 0.0002,
+      "weight_decay": 1e-05,
+      "random_start_fraction": 0.0,
+      "eps_jitter_low": 1.0,
+      "eps_jitter_high": 1.0
+    }
+  },
+  "baseline_checkpoints": {
+    "burgers": {
+      "path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+      "checkpoint_role": "retained_trained_baseline",
+      "note": "No separate Burgers best.pt exists in this workspace; this is the retained trained baseline loaded by evaluate_generalization_models.py."
+    },
+    "darcy": {
+      "path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt",
+      "checkpoint_role": "best",
+      "note": "Darcy best checkpoint."
+    },
+    "ns2d": {
+      "path": "/workspace/NeuralOperatorRobustness2/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/best.pt",
+      "checkpoint_role": "best",
+      "note": "NS2D recurrent best checkpoint."
+    }
+  },
+  "preflight_dataset_counts": [
+    {
+      "task": "burgers",
+      "train_count": 1,
+      "test_count": 1,
+      "generalization_count": 50,
+      "eval_dataset_count_per_pass": 52,
+      "expected_generalization_count": 50,
+      "expected_eval_dataset_count_per_pass": 52,
+      "generalization_ids": [
+        "burgers_far_centered_scale_shift_scale1_shift0p4",
+        "burgers_far_sawtooth_add_scale0p3_shift0",
+        "burgers_mid_matern_corr0p75_nu2p5",
+        "burgers_mid_matern_corr1_nu4",
+        "burgers_near_gaussian_corr0p08",
+        "burgers_near_gaussian_corr0p1",
+        "burgers_near_gaussian_corr0p12",
+        "burgers_near_gaussian_corr0p18",
+        "burgers_near_gaussian_corr0p24",
+        "burgers_near_gaussian_corr0p3",
+        "burgers_near_gaussian_corr0p4",
+        "burgers_near_gaussian_corr0p5",
+        "burgers_target_gaussian_corr0p085",
+        "burgers_target_gaussian_corr0p09",
+        "burgers_target_gaussian_corr0p095",
+        "burgers_target_gaussian_corr0p105",
+        "burgers_target_gaussian_corr0p11",
+        "burgers_target_gaussian_corr0p115",
+        "burgers_target_gaussian_corr0p13",
+        "burgers_target_gaussian_corr0p14",
+        "burgers_target_gaussian_corr0p15",
+        "burgers_target_gaussian_corr0p16",
+        "burgers_target_gaussian_corr0p17",
+        "burgers_target_gaussian_corr0p19",
+        "burgers_target_gaussian_corr0p2",
+        "burgers_target_gaussian_corr0p21",
+        "burgers_target_gaussian_corr0p22",
+        "burgers_target_gaussian_corr0p26",
+        "burgers_target_gaussian_corr0p28",
+        "burgers_target_gaussian_corr0p32",
+        "burgers_target_gaussian_corr0p35",
+        "burgers_target_gaussian_corr0p45",
+        "burgers_target_gaussian_corr0p55",
+        "burgers_target_gaussian_corr0p6",
+        "burgers_target_gaussian_corr0p65",
+        "burgers_target_matern_corr0p28_nu5",
+        "burgers_target_matern_corr0p34_nu4",
+        "burgers_target_matern_corr0p34_nu5",
+        "burgers_target_matern_corr0p38_nu4",
+        "burgers_target_matern_corr0p38_nu5",
+        "burgers_target_matern_corr0p3_nu5",
+        "burgers_target_matern_corr0p42_nu3",
+        "burgers_target_matern_corr0p42_nu4",
+        "burgers_target_matern_corr0p42_nu5",
+        "burgers_target_matern_corr0p6_nu2p5",
+        "burgers_target_matern_corr0p6_nu3",
+        "burgers_target_matern_corr0p6_nu4",
+        "burgers_target_matern_corr0p6_nu5",
+        "burgers_target_matern_corr0p8_nu2",
+        "burgers_target_matern_corr0p8_nu2p5"
+      ]
+    }
+  ],
+  "planned_workload_estimate": {
+    "created_utc": "20260601_184330_UTC",
+    "expected_generalization_datasets_per_task": 50,
+    "expected_eval_datasets_per_pass": 52,
+    "smoke_reference_summary": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/smoke_burgers_p2_attack_check_20260601/summary.json",
+    "tasks": [
+      {
+        "task": "burgers",
+        "baseline_checkpoint": {
+          "path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+          "checkpoint_role": "retained_trained_baseline",
+          "note": "No separate Burgers best.pt exists in this workspace; this is the retained trained baseline loaded by evaluate_generalization_models.py."
+        },
+        "full_train_dataset_samples": 1350,
+        "train_max_samples": 480,
+        "effective_train_samples": 480,
+        "batch_size": 480,
+        "attack_batch_size": 480,
+        "optimizer_batch_size": 32,
+        "optimizer_microbatches_per_full_attack_batch": 15,
+        "optimizer_steps_per_epoch": 15,
+        "total_optimizer_steps": 15,
+        "epochs": 1,
+        "attack_method": "fast_replace_l2",
+        "attack_steps": 5,
+        "epsilon_fraction": 0.06,
+        "epsilon_abs": 0.0,
+        "alpha_ratio": 1.0,
+        "alpha_jitter_low": 0.75,
+        "alpha_jitter_high": 1.25,
+        "full_solver_gradient": true,
+        "batches_per_epoch": 1,
+        "total_train_steps": 1,
+        "evaluation_schedule": "every_epoch",
+        "eval_every_steps": 1,
+        "eval_steps_after_baseline": [
+          1
+        ],
+        "eval_pass_count_including_baseline": 2,
+        "checkpoint_every_epochs": 200,
+        "checkpoint_every_fraction": null,
+        "checkpoint_every_steps": 200,
+        "checkpoint_steps": [
+          1
+        ],
+        "eval_dataset_count_per_pass": 52,
+        "estimated_train_seconds_from_smoke": 18.393953316030093,
+        "estimated_eval_seconds_from_smoke_scaled_to_52_datasets": 11.853569677798077,
+        "estimated_total_seconds_from_smoke": 30.24752299382817,
+        "estimated_total_minutes_from_smoke": 0.5041253832304695,
+        "smoke_peak_cuda_allocated_mb": 0.0
+      }
+    ],
+    "estimated_total_seconds_from_smoke": 30.24752299382817,
+    "estimated_total_minutes_from_smoke": 0.5041253832304695
+  },
+  "training_data_mode": "adv-only",
+  "evaluation_schedule": "every_epoch",
+  "eval_every_fraction_deprecated": 0.2,
+  "checkpoint_every_epochs": 200,
+  "checkpoint_every_fraction": null,
+  "attack_probe": {
+    "samples": 5,
+    "indices": null,
+    "every_n_epochs": 1,
+    "save_targets": true
+  },
+  "epsilon_bucket_count": 5,
+  "remat_options": {
+    "burgers_solver_remat": "none",
+    "burgers_solver_remat_chunk_steps": 20,
+    "ns2d_solver_remat": "chunk",
+    "ns2d_solver_remat_chunk_steps": 20,
+    "darcy_note": "Darcy/C-flow uses a JAX CG solver with implicit differentiation; this path is tuned by batch and optimizer microbatch rather than a time-rollout remat mode."
+  },
+  "note": "Online adversarial training. The default label mode is solver-label: the attack objective uses solver(x_adv), then training uses either model(x_adv) -> solver(x_adv) for --training-data-mode adv-only, or both model(x_clean) -> solver(x_clean) and model(x_adv) -> solver(x_adv) for --training-data-mode clean-plus-adv. For NS2D the attack variable is the initial vorticity frame and both model input frames and target frames are regenerated by solver rollout from the attacked initial state. The old clean-label x_adv -> y_clean objective requires the explicit --allow-clean-label ablation flag."
+}

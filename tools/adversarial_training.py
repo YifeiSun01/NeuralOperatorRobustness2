@@ -72,12 +72,13 @@ class TaskDefaults:
 DEFAULTS: dict[str, TaskDefaults] = {
     "burgers": TaskDefaults(
         # Exact solver-gradient attack is memory bound; batch 256 is tested safe on the 31.7GB GPU.
+        # Burgers defaults to the p=2 replace geometry used by the older Loss3 p2/q2 sweeps.
         batch_size=256,
         optimizer_batch_size=32,
         eval_batch_size=512,
         epochs=1000,
         train_max_samples=None,
-        attack_method="fast_replace_linf",
+        attack_method="fast_replace_l2",
         attack_steps=3,
         epsilon_fraction=0.06,
         epsilon_abs=0.0,
@@ -313,6 +314,35 @@ def per_sample_range(x: torch.Tensor) -> torch.Tensor:
 def expand_per_sample(values: torch.Tensor, like: torch.Tensor) -> torch.Tensor:
     shape = [values.shape[0]] + [1] * (like.ndim - 1)
     return values.reshape(shape)
+
+
+def per_sample_active_count(mask: torch.Tensor) -> torch.Tensor:
+    return mask.detach().reshape(mask.shape[0], -1).sum(dim=1).clamp_min(1.0)
+
+
+def per_sample_l2_total(delta: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
+    flat = (delta * mask).reshape(delta.shape[0], -1)
+    return torch.sqrt(flat.pow(2).sum(dim=1).clamp_min(1e-24))
+
+
+def rms_eps_to_l2_total(eps_rms: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
+    return eps_rms * torch.sqrt(per_sample_active_count(mask).to(device=eps_rms.device, dtype=eps_rms.dtype))
+
+
+def l2_rms_project(delta: torch.Tensor, mask: torch.Tensor, eps_rms: torch.Tensor) -> torch.Tensor:
+    delta = delta * mask
+    norm = per_sample_l2_total(delta, mask)
+    max_norm = rms_eps_to_l2_total(eps_rms, mask)
+    scale = torch.minimum(torch.ones_like(norm), max_norm / norm.clamp_min(1e-12))
+    return delta * expand_per_sample(scale, delta)
+
+
+def l2_rms_direction(direction: torch.Tensor, mask: torch.Tensor, step_rms: torch.Tensor) -> torch.Tensor:
+    direction = direction * mask
+    norm = per_sample_l2_total(direction, mask)
+    step_norm = rms_eps_to_l2_total(step_rms, mask)
+    scale = step_norm / norm.clamp_min(1e-12)
+    return direction * expand_per_sample(scale, direction)
 
 
 def compute_batch_eps(
@@ -981,6 +1011,11 @@ def continuous_attack(
             elif method.endswith("add_linf"):
                 delta = (x_adv.detach() - xb) + alpha_view * grad.sign()
                 delta = torch.clamp(delta, -eps_view, eps_view)
+            elif method.endswith("replace_l2"):
+                delta = l2_rms_direction(grad, mask, eps)
+            elif method.endswith("add_l2"):
+                step_delta = l2_rms_direction(grad, mask, alpha_values)
+                delta = l2_rms_project((x_adv.detach() - xb) + step_delta, mask, eps)
             else:
                 raise ValueError(f"unknown continuous attack method: {method}")
             delta = delta * mask
@@ -991,12 +1026,17 @@ def continuous_attack(
             adv_pred = model(x_adv)
             adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
             final_loss_value = float(finite_mse(adv_pred, y_train).detach().cpu())
-            delta = x_adv - xb
+            delta = (x_adv - xb) * mask
             active = mask > 0
-            denom = eps_view.expand_as(delta).clamp_min(1e-12)
-            boundary_ratio = float((delta.detach().abs()[active] / denom[active]).mean().cpu()) if active.any() else 0.0
             linf = float(delta.detach().abs().reshape(delta.shape[0], -1).max(dim=1).values.mean().cpu())
             l2 = float(torch.sqrt(delta.detach().pow(2).reshape(delta.shape[0], -1).mean(dim=1)).mean().cpu())
+            l2_total = float(per_sample_l2_total(delta.detach(), mask).mean().cpu())
+            eps_l2_total = float(rms_eps_to_l2_total(eps, mask).mean().cpu())
+            if method.endswith("_l2"):
+                boundary_ratio = float((per_sample_l2_total(delta.detach(), mask) / rms_eps_to_l2_total(eps, mask).clamp_min(1e-12)).mean().cpu())
+            else:
+                denom = eps_view.expand_as(delta).clamp_min(1e-12)
+                boundary_ratio = float((delta.detach().abs()[active] / denom[active]).mean().cpu()) if active.any() else 0.0
 
     finally:
         for param, flag in zip(model.parameters(), original_requires_grad):
@@ -1008,8 +1048,11 @@ def continuous_attack(
         "label_mode": str(cfg.get("label_mode", "solver")),
         "target_source": str(cfg.get("label_mode", "solver")),
         "full_solver_gradient": True,
-        "attack_type": "continuous_linf",
+        "attack_type": "continuous_l2_rms" if method.endswith("_l2") else "continuous_linf",
         "attack_method": method,
+        "attack_p_order": 2 if method.endswith("_l2") else "inf",
+        "attack_q_order": 2,
+        "epsilon_semantics": "per-sample RMS L2 radius" if method.endswith("_l2") else "per-coordinate Linf radius",
         "attack_steps": used_steps,
         "epsilon_mean": float(eps.mean().detach().cpu()),
         "epsilon_min": float(eps.min().detach().cpu()),
@@ -1029,6 +1072,8 @@ def continuous_attack(
         "boundary_ratio_mean": boundary_ratio,
         "delta_linf_mean": linf,
         "delta_l2_rms_mean": l2,
+        "delta_l2_total_mean": l2_total,
+        "epsilon_l2_total_mean": eps_l2_total,
     }
     info.update(tensor_stats("target", y_train))
     sample_info = make_attack_sample_info(
@@ -1499,6 +1544,15 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
     override_attack_steps = getattr(args, f"{task}_attack_steps", None)
     if override_attack_steps is not None:
         cfg["attack_steps"] = int(override_attack_steps)
+    override_attack_method = getattr(args, f"{task}_attack_method", None)
+    if override_attack_method is not None:
+        cfg["attack_method"] = str(override_attack_method)
+    override_epsilon_fraction = getattr(args, f"{task}_epsilon_fraction", None)
+    if override_epsilon_fraction is not None:
+        cfg["epsilon_fraction"] = float(override_epsilon_fraction)
+    override_epsilon_abs = getattr(args, f"{task}_epsilon_abs", None)
+    if override_epsilon_abs is not None:
+        cfg["epsilon_abs"] = float(override_epsilon_abs)
     override_alpha_ratio = getattr(args, f"{task}_alpha_ratio", None)
     if override_alpha_ratio is not None:
         cfg["alpha_ratio"] = float(override_alpha_ratio)
@@ -1596,6 +1650,7 @@ def build_planned_workload_estimate(
             "attack_method": cfg["attack_method"],
             "attack_steps": int(cfg["attack_steps"]),
             "epsilon_fraction": float(cfg["epsilon_fraction"]),
+            "epsilon_abs": float(cfg["epsilon_abs"]),
             "alpha_ratio": float(cfg["alpha_ratio"]),
             "alpha_jitter_low": float(cfg.get("alpha_jitter_low", 1.0)),
             "alpha_jitter_high": float(cfg.get("alpha_jitter_high", 1.0)),
@@ -2042,6 +2097,15 @@ def train_one_task(
     override_attack_steps = getattr(args, f"{task}_attack_steps", None)
     if override_attack_steps is not None:
         task_cfg["attack_steps"] = int(override_attack_steps)
+    override_attack_method = getattr(args, f"{task}_attack_method", None)
+    if override_attack_method is not None:
+        task_cfg["attack_method"] = str(override_attack_method)
+    override_epsilon_fraction = getattr(args, f"{task}_epsilon_fraction", None)
+    if override_epsilon_fraction is not None:
+        task_cfg["epsilon_fraction"] = float(override_epsilon_fraction)
+    override_epsilon_abs = getattr(args, f"{task}_epsilon_abs", None)
+    if override_epsilon_abs is not None:
+        task_cfg["epsilon_abs"] = float(override_epsilon_abs)
     override_alpha_ratio = getattr(args, f"{task}_alpha_ratio", None)
     if override_alpha_ratio is not None:
         task_cfg["alpha_ratio"] = float(override_alpha_ratio)
@@ -2504,6 +2568,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--burgers-attack-steps", type=int, default=None)
     parser.add_argument("--darcy-attack-steps", type=int, default=None)
     parser.add_argument("--ns2d-attack-steps", type=int, default=None)
+    parser.add_argument("--burgers-attack-method", choices=["fast_replace_l2", "fast_add_l2", "fast_replace_linf", "fast_add_linf"], default=None)
+    parser.add_argument("--burgers-require-p2q2", action="store_true", help="Require Burgers continuous attack geometry to be p=2,q=2; rejects *_linf methods before training starts.")
+    parser.add_argument("--darcy-attack-method", choices=["binary_steepest_replace"], default=None)
+    parser.add_argument("--ns2d-attack-method", choices=["fast_replace_linf", "fast_add_linf"], default=None)
+    parser.add_argument("--burgers-epsilon-fraction", type=float, default=None)
+    parser.add_argument("--darcy-epsilon-fraction", type=float, default=None)
+    parser.add_argument("--ns2d-epsilon-fraction", type=float, default=None)
+    parser.add_argument("--burgers-epsilon-abs", type=float, default=None)
+    parser.add_argument("--darcy-epsilon-abs", type=float, default=None)
+    parser.add_argument("--ns2d-epsilon-abs", type=float, default=None)
     parser.add_argument("--burgers-alpha-ratio", type=float, default=None)
     parser.add_argument("--darcy-alpha-ratio", type=float, default=None)
     parser.add_argument("--ns2d-alpha-ratio", type=float, default=None)
@@ -2528,6 +2602,10 @@ def main() -> None:
         raise ValueError("--label-mode clean is the old non-physical x_adv -> y_clean objective. Pass --allow-clean-label only for an explicit ablation.")
     if args.training_data_mode == "clean-plus-adv" and args.label_mode != "solver":
         raise ValueError("--training-data-mode clean-plus-adv requires --label-mode solver so both clean and attacked pairs use solver-generated Y.")
+    if args.burgers_require_p2q2:
+        burgers_method = args.burgers_attack_method or DEFAULTS["burgers"].attack_method
+        if not str(burgers_method).endswith("_l2"):
+            raise ValueError("--burgers-require-p2q2 requires --burgers-attack-method fast_replace_l2 or fast_add_l2; got " + str(burgers_method))
     set_seed(int(args.seed))
     tasks = parse_tasks(args.tasks)
     device = torch.device(args.device)

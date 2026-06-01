@@ -1,0 +1,3 @@
+task,phase,epoch,global_step,progress_fraction,eval_wall_sec,checkpoint_saved,checkpoint_path
+burgers,baseline_before_adversarial_training,0,0,0.0,0.44645530194975436,0,
+burgers,during_adversarial_training,1,1,1.0,0.02561149001121521,1,adversarial_training_runs/burgers_p2q2_smoke_20260601/burgers/checkpoints/burgers_epoch001_step000001.pt
