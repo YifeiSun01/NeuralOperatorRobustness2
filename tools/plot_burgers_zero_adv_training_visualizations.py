@@ -511,7 +511,7 @@ def plot_high_frequency_energy_share_progress(
     ax.set_xlabel("training epoch")
     ax.set_ylabel("energy share in highest Fourier modes")
     ax.set_xlim(1, 1000)
-    ax.set_ylim(0, 1.0)
+    ax.set_ylim(0, 0.05)
     ax.legend(ncol=2, frameon=False)
     fig.tight_layout()
     fig.savefig(out_path)

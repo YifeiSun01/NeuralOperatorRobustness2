@@ -382,7 +382,7 @@ def plot_high_frequency(highfreq_df: pd.DataFrame) -> Path:
     ax.set_xlabel("training epoch")
     ax.set_ylabel("energy share in highest Fourier modes")
     ax.set_xlim(1, 1000)
-    ax.set_ylim(bottom=0)
+    ax.set_ylim(0, 0.05)
     ax.legend(ncol=2, loc="upper left")
     ax.text(
         0.98,
@@ -572,6 +572,7 @@ def plot_dashboard(data: dict[str, pd.DataFrame]) -> Path:
     ax6.set_xlabel("epoch")
     ax6.set_ylabel("energy share")
     ax6.set_xlim(1, 1000)
+    ax6.set_ylim(0, 0.05)
     ax6.legend(ncol=3, fontsize=7)
 
     fig.tight_layout(rect=[0, 0, 1, 0.945])
