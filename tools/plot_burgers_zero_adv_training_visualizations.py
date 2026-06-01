@@ -35,6 +35,7 @@ TIER_COLORS = {
 
 CHECKPOINT_EPOCHS = [0, 200, 400, 600, 800, 1000]
 DELTA_EPOCHS = [200, 400, 600, 800, 1000]
+HIGH_FREQ_TOP_FRACTIONS = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50]
 
 
 def setup_matplotlib() -> None:
@@ -417,6 +418,107 @@ def load_probe_npz(run_dir: Path, epoch: int) -> dict[str, np.ndarray]:
     return dict(np.load(matches[0], allow_pickle=True))
 
 
+def high_frequency_energy_shares(delta: np.ndarray, fractions: list[float]) -> dict[float, float]:
+    d = np.asarray(delta, dtype=float).reshape(-1)
+    d = d - np.mean(d)
+    power = np.abs(np.fft.rfft(d)) ** 2
+    non_dc_power = power[1:]
+    total = float(np.sum(non_dc_power))
+    if total <= 0 or not np.isfinite(total):
+        return {fraction: np.nan for fraction in fractions}
+    shares = {}
+    mode_count = non_dc_power.size
+    for fraction in fractions:
+        top_count = max(1, int(math.ceil(mode_count * fraction)))
+        shares[fraction] = float(np.sum(non_dc_power[-top_count:]) / total)
+    return shares
+
+
+def compute_high_frequency_energy_share_trends(
+    run_dir: Path,
+    epochs: list[int],
+    fractions: list[float],
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    sample_rows = []
+    for epoch in epochs:
+        data = load_probe_npz(run_dir, int(epoch))
+        deltas = data["delta"]
+        probe_ranks = [int(x) for x in data["probe_rank"]]
+        source_indices = [int(x) for x in data["source_index"]]
+        for sample_idx, (probe_rank, source_index) in enumerate(zip(probe_ranks, source_indices)):
+            shares = high_frequency_energy_shares(deltas[sample_idx], fractions)
+            for fraction, share in shares.items():
+                sample_rows.append(
+                    {
+                        "epoch": int(epoch),
+                        "probe_rank": probe_rank,
+                        "source_index": source_index,
+                        "top_frequency_fraction": fraction,
+                        "top_frequency_percent": fraction * 100.0,
+                        "energy_share": share,
+                    }
+                )
+    sample_df = pd.DataFrame(sample_rows)
+    summary_df = (
+        sample_df.groupby(["epoch", "top_frequency_fraction", "top_frequency_percent"], as_index=False)["energy_share"]
+        .agg(["mean", "std", "min", "max", "count"])
+        .reset_index()
+    )
+    summary_df["std"] = summary_df["std"].fillna(0.0)
+    return sample_df, summary_df
+
+
+def plot_high_frequency_energy_share_progress(
+    summary_df: pd.DataFrame,
+    out_path: Path,
+) -> pd.DataFrame:
+    colors = ["#0072B2", "#009E73", "#E69F00", "#D55E00", "#6A3D9A", "#CC79A7"]
+    fig, ax = plt.subplots(figsize=(13.5, 7.2))
+    trend_rows = []
+    for color, (fraction, d) in zip(colors, summary_df.groupby("top_frequency_fraction", sort=True)):
+        d = d.sort_values("epoch")
+        x = d["epoch"].to_numpy(dtype=float)
+        mean = d["mean"].to_numpy(dtype=float)
+        std = d["std"].to_numpy(dtype=float)
+        label = f"top {fraction * 100:g}% highest modes"
+        ax.plot(x, mean, color=color, lw=2.2, label=label)
+        ax.fill_between(x, mean - std, mean + std, color=color, alpha=0.14, lw=0)
+        finite = np.isfinite(mean)
+        xx = x[finite]
+        yy = mean[finite]
+        if len(xx) > 1 and np.nanstd(yy) > 0:
+            slope = float(np.polyfit(xx, yy, 1)[0])
+            corr = float(np.corrcoef(xx, yy)[0, 1])
+        else:
+            slope = 0.0
+            corr = 0.0
+        epoch1 = d[d["epoch"] == 1]["mean"]
+        epoch1000 = d[d["epoch"] == 1000]["mean"]
+        start = float(epoch1.iloc[0]) if not epoch1.empty else np.nan
+        end = float(epoch1000.iloc[0]) if not epoch1000.empty else np.nan
+        trend_rows.append(
+            {
+                "top_frequency_fraction": float(fraction),
+                "top_frequency_percent": float(fraction * 100.0),
+                "epoch1_mean": start,
+                "epoch1000_mean": end,
+                "absolute_change": end - start if np.isfinite(start) and np.isfinite(end) else np.nan,
+                "linear_slope_per_epoch": slope,
+                "pearson_corr_with_epoch": corr,
+            }
+        )
+    ax.set_title("High-frequency energy share of fixed-probe adversarial deltas")
+    ax.set_xlabel("training epoch")
+    ax.set_ylabel("energy share in highest Fourier modes")
+    ax.set_xlim(1, 1000)
+    ax.set_ylim(0, 1.0)
+    ax.legend(ncol=2, frameon=False)
+    fig.tight_layout()
+    fig.savefig(out_path)
+    plt.close(fig)
+    return pd.DataFrame(trend_rows)
+
+
 def plot_delta_checkpoint_grid(run_dir: Path, out_path: Path) -> None:
     data = {epoch: load_probe_npz(run_dir, epoch) for epoch in DELTA_EPOCHS}
     probe_ranks = [int(x) for x in data[DELTA_EPOCHS[0]]["probe_rank"]]
@@ -495,6 +597,7 @@ def write_summary(
     reduction_rel: pd.DataFrame,
     reduction_rmse: pd.DataFrame,
     probe_trends: pd.DataFrame,
+    high_freq_band_trends: pd.DataFrame,
     final_split: pd.DataFrame,
 ) -> None:
     def markdown_table(frame: pd.DataFrame) -> str:
@@ -520,6 +623,9 @@ def write_summary(
     rmse_mean_drop = float(reduction_rmse["absolute_drop"].mean())
     high_freq = probe_trends[probe_trends["metric"] == "delta_fft_high_freq_ratio"].iloc[0]
     attack_gain = probe_trends[probe_trends["metric"] == "attack_loss_gain_sample"].iloc[0]
+    top_1 = high_freq_band_trends[high_freq_band_trends["top_frequency_fraction"] == 0.01].iloc[0]
+    top_10 = high_freq_band_trends[high_freq_band_trends["top_frequency_fraction"] == 0.10].iloc[0]
+    top_50 = high_freq_band_trends[high_freq_band_trends["top_frequency_fraction"] == 0.50].iloc[0]
     lines = [
         "# Burgers zero adversarial-training visualization summary",
         "",
@@ -545,6 +651,9 @@ def write_summary(
         f"- Mean fixed-probe high-frequency ratio changed from `{high_freq['epoch1_mean']:.6g}` to `{high_freq['epoch1000_mean']:.6g}`.",
         f"- High-frequency ratio slope per epoch: `{high_freq['linear_slope_per_epoch']:.6g}`.",
         f"- High-frequency ratio Pearson correlation with epoch: `{high_freq['pearson_corr_with_epoch']:.6g}`.",
+        f"- Top 1% highest-mode energy share changed from `{top_1['epoch1_mean']:.6g}` to `{top_1['epoch1000_mean']:.6g}`.",
+        f"- Top 10% highest-mode energy share changed from `{top_10['epoch1_mean']:.6g}` to `{top_10['epoch1000_mean']:.6g}`.",
+        f"- Top 50% highest-mode energy share changed from `{top_50['epoch1_mean']:.6g}` to `{top_50['epoch1000_mean']:.6g}`.",
         "",
         "## Main figures",
         "",
@@ -562,6 +671,7 @@ def write_summary(
         "- `epsilon_bucket_attack_loss_gain.png`",
         "- `epsilon_bucket_attack_loss_gain_relative.png`",
         "- `fixed_probe_delta_frequency_metrics.png`",
+        "- `delta_high_frequency_energy_share_progress.png`",
         "- `delta_checkpoint_shapes_all_probes.png`",
         "- `delta_checkpoint_shapes_probe0.png`",
         "- `delta_checkpoint_fft_probe0.png`",
@@ -627,6 +737,15 @@ def main() -> None:
     # Fixed-probe delta and frequency visualizations.
     probe_trends = plot_probe_metric_trends(probe_df, out_dir / "fixed_probe_delta_frequency_metrics.png")
     probe_trends.to_csv(out_dir / "fixed_probe_delta_frequency_trend_summary.csv", index=False)
+    high_freq_sample_shares, high_freq_band_summary = compute_high_frequency_energy_share_trends(
+        run_dir, sorted(probe_df["epoch"].unique()), HIGH_FREQ_TOP_FRACTIONS
+    )
+    high_freq_sample_shares.to_csv(out_dir / "delta_high_frequency_energy_share_samples.csv", index=False)
+    high_freq_band_summary.to_csv(out_dir / "delta_high_frequency_energy_share_by_epoch.csv", index=False)
+    high_freq_band_trends = plot_high_frequency_energy_share_progress(
+        high_freq_band_summary, out_dir / "delta_high_frequency_energy_share_progress.png"
+    )
+    high_freq_band_trends.to_csv(out_dir / "delta_high_frequency_energy_share_trend_summary.csv", index=False)
     plot_delta_checkpoint_grid(run_dir, out_dir / "delta_checkpoint_shapes_all_probes.png")
     plot_delta_probe_detail(
         run_dir,
@@ -637,7 +756,7 @@ def main() -> None:
 
     final_split = split_df[split_df["epoch"] == 1000].copy()
     final_split.to_csv(out_dir / "epoch1000_split_summary.csv", index=False)
-    write_summary(out_dir, reduction_rel, reduction_rmse, probe_trends, final_split)
+    write_summary(out_dir, reduction_rel, reduction_rmse, probe_trends, high_freq_band_trends, final_split)
 
     manifest = {
         "run_dir": str(run_dir),

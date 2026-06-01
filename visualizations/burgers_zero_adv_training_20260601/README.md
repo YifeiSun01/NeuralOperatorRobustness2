@@ -27,6 +27,9 @@ adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5
 - Mean fixed-probe high-frequency ratio changed from `0.014817` to `0.0351265`.
 - High-frequency ratio slope per epoch: `2.67527e-05`.
 - High-frequency ratio Pearson correlation with epoch: `0.936544`.
+- Top 1% highest-mode energy share changed from `0.000246505` to `0.000628912`.
+- Top 10% highest-mode energy share changed from `0.00229428` to `0.0053782`.
+- Top 50% highest-mode energy share changed from `0.0147294` to `0.0349194`.
 
 ## Main figures
 
@@ -44,6 +47,7 @@ adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5
 - `epsilon_bucket_attack_loss_gain.png`
 - `epsilon_bucket_attack_loss_gain_relative.png`
 - `fixed_probe_delta_frequency_metrics.png`
+- `delta_high_frequency_energy_share_progress.png`
 - `delta_checkpoint_shapes_all_probes.png`
 - `delta_checkpoint_shapes_probe0.png`
 - `delta_checkpoint_fft_probe0.png`

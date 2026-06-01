@@ -1,6 +1,6 @@
 {
   "run_dir": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601",
   "out_dir": "visualizations/burgers_zero_adv_training_20260601",
-  "figure_count": 18,
-  "csv_count": 7
+  "figure_count": 19,
+  "csv_count": 10
 }
