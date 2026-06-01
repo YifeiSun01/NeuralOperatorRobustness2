@@ -36,7 +36,7 @@ DEFAULT_VIZ_ROOT = PROJECT_ROOT / 'visualizations' / 'burgers_p2q2_adv_training_
 DEFAULT_FORENSICS_ROOT = PROJECT_ROOT / 'forensics' / 'burgers_p2q2_checkpoint_series_jacobian_svd_20260601'
 DEFAULT_SELECTED_TOP = Path('/workspace/polished_selected_download_burgers_p2q2_20260601')
 DEFAULT_SELECTED_ZIP = Path('/workspace/polished_selected_download_burgers_p2q2_20260601.zip')
-DEFAULT_R2_PREFIX = 'neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/20260601_burgers_p2q2_adv_training_full_pipeline'
+DEFAULT_R2_PREFIX = 'machine-sync/NeuralOperatorRobustness2-selected/20260601_burgers_p2q2_adv_training_full_pipeline'
 
 SELECTED_FIGURES = [
     'corrected_attack_loss_three_lines_plus_buckets.png',
@@ -240,7 +240,7 @@ def sync_to_r2(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) -> Non
     for path, name in targets:
         if not path.exists():
             continue
-        cmd = [str(upload_script), str(path), f'{args.r2_prefix}/{name}/']
+        cmd = ['env', f'R2_PREFIX={args.r2_prefix}/{name}', str(upload_script), str(path)]
         run_cmd(cmd, dry_run=dry_run, log_path=run_dir / 'pipeline_logs' / 'r2_upload.log')
 
 
