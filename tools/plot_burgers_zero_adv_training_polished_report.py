@@ -18,6 +18,7 @@ RAW_VIZ_DIR = Path("visualizations/burgers_zero_adv_training_20260601")
 OUT_DIR = RAW_VIZ_DIR / "polished_report"
 BURGERS_DIR = RUN_DIR / "burgers"
 CHECKPOINTS = [0, 200, 400, 600, 800, 1000]
+CHECKPOINTS_FINE = list(range(0, 1001, 50))
 DELTA_EPOCHS = [200, 400, 600, 800, 1000]
 
 TIER_ORDER = [
@@ -241,16 +242,19 @@ def plot_heatmap(eval_df: pd.DataFrame) -> Path:
 
 
 def plot_checkpoint_summary(eval_df: pd.DataFrame) -> Path:
-    d = eval_df[eval_df["epoch"].isin(CHECKPOINTS)]
+    checkpoints = CHECKPOINTS_FINE
+    d = eval_df[eval_df["epoch"].isin(checkpoints)]
     g = group_mean_std(d, "relative_l2")
     full = tier_sorted(d)
     order = full.drop_duplicates("dataset_id")["dataset_id"].tolist()
     pivot = full.pivot_table(index="dataset_id", columns="epoch", values="relative_l2", aggfunc="mean").reindex(order)
+    pivot = pivot.reindex(columns=checkpoints)
     diffs = pivot.diff(axis=1).iloc[:, 1:]
-    diffs.columns = [f"{CHECKPOINTS[i-1]}->{CHECKPOINTS[i]}" for i in range(1, len(CHECKPOINTS))]
+    diffs.columns = [f"{checkpoints[i-1]}->{checkpoints[i]}" for i in range(1, len(checkpoints))]
     diffs.to_csv(OUT_DIR / "polished_checkpoint_relative_l2_changes.csv")
+    diffs.to_csv(OUT_DIR / "polished_checkpoint_relative_l2_changes_50epoch.csv")
 
-    fig, axes = plt.subplots(1, 2, figsize=(18, 8.4), gridspec_kw={"width_ratios": [1.15, 1.05]})
+    fig, axes = plt.subplots(1, 2, figsize=(20, 9.2), gridspec_kw={"width_ratios": [1.05, 1.25]})
     ax = axes[0]
     for tier in TIER_ORDER:
         dd = g[g["manual_tier"] == tier].sort_values("epoch")
@@ -260,9 +264,9 @@ def plot_checkpoint_summary(eval_df: pd.DataFrame) -> Path:
         mean = dd["mean"].to_numpy(dtype=float)
         std = dd["std"].to_numpy(dtype=float)
         color = TIER_COLORS[tier]
-        ax.plot(x, mean, color=color, lw=2.4, marker="o", ms=4.5, label=tier)
+        ax.plot(x, mean, color=color, lw=2.15, marker="o", ms=3.2, label=tier)
         ax.fill_between(x, mean - std, mean + std, color=color, alpha=0.12, lw=0)
-    ax.set_title("Checkpoint loss summary: group mean +/- std", loc="left", fontweight="bold")
+    ax.set_title("50-epoch checkpoint loss summary: group mean +/- std", loc="left", fontweight="bold")
     ax.set_xlabel("evaluation epoch")
     ax.set_ylabel("Relative L2")
     ax.set_xlim(0, 1000)
@@ -272,14 +276,14 @@ def plot_checkpoint_summary(eval_df: pd.DataFrame) -> Path:
     vals = diffs.to_numpy(dtype=float)
     max_abs = float(np.nanmax(np.abs(vals)))
     im = ax2.imshow(vals, aspect="auto", cmap="RdBu_r", vmin=-max_abs, vmax=max_abs)
-    ax2.set_title("Checkpoint-to-checkpoint change\nblue = lower loss, red = higher loss", loc="left", fontweight="bold")
+    ax2.set_title("50-epoch checkpoint-to-checkpoint change\nblue = lower loss, red = higher loss", loc="left", fontweight="bold")
     ax2.set_xticks(np.arange(len(diffs.columns)))
-    ax2.set_xticklabels(diffs.columns, rotation=25, ha="right")
+    ax2.set_xticklabels(diffs.columns, rotation=42, ha="right", fontsize=7.5)
     ax2.set_yticks(np.arange(len(order)))
-    ax2.set_yticklabels([shorten(x, 30) for x in order], fontsize=5.8)
-    cbar = fig.colorbar(im, ax=ax2, fraction=0.038, pad=0.025)
-    cbar.set_label("Δ Relative L2")
-    fig.suptitle("Burgers ADV-only: checkpoint loss behavior", fontsize=17, fontweight="bold", y=0.995)
+    ax2.set_yticklabels([shorten(x, 30) for x in order], fontsize=5.6)
+    cbar = fig.colorbar(im, ax=ax2, fraction=0.03, pad=0.02)
+    cbar.set_label("Delta Relative L2")
+    fig.suptitle("Burgers ADV-only: 50-epoch checkpoint loss behavior", fontsize=17, fontweight="bold", y=0.995)
     fig.tight_layout(rect=[0, 0, 1, 0.965])
     return savefig(fig, "polished_checkpoint_loss_summary.png")
 
@@ -625,6 +629,7 @@ def write_readme(paths: list[Path], data: dict[str, pd.DataFrame]) -> None:
             "",
             "- `polished_attack_loss_epoch_decile_summary.csv`",
             "- `polished_checkpoint_relative_l2_changes.csv`",
+            "- `polished_checkpoint_relative_l2_changes_50epoch.csv`",
             "- `polished_high_frequency_energy_share_trend_summary.csv`",
             "- `polished_relative_l2_reduction_by_dataset.csv`",
             "- `polished_rmse_reduction_by_dataset.csv`",

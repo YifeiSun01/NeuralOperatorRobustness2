@@ -25,6 +25,7 @@ This folder contains presentation-style visualizations for the completed Burgers
 
 - `polished_attack_loss_epoch_decile_summary.csv`
 - `polished_checkpoint_relative_l2_changes.csv`
+- `polished_checkpoint_relative_l2_changes_50epoch.csv`
 - `polished_high_frequency_energy_share_trend_summary.csv`
 - `polished_relative_l2_reduction_by_dataset.csv`
 - `polished_rmse_reduction_by_dataset.csv`
