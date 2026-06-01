@@ -34,6 +34,7 @@ TIER_COLORS = {
 }
 
 CHECKPOINT_EPOCHS = [0, 200, 400, 600, 800, 1000]
+FINE_CHANGE_EPOCHS = list(range(0, 1001, 50))
 DELTA_EPOCHS = [200, 400, 600, 800, 1000]
 HIGH_FREQ_TOP_FRACTIONS = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50]
 
@@ -334,6 +335,43 @@ def plot_checkpoint_change_heatmap(eval_df: pd.DataFrame, metric: str, out_path:
     plt.close(fig)
     out = diffs.reset_index()
     return out
+
+
+def plot_fine_checkpoint_change_heatmap(
+    eval_df: pd.DataFrame,
+    metric: str,
+    out_path: Path,
+    epochs: list[int] | None = None,
+) -> pd.DataFrame:
+    epochs = epochs or FINE_CHANGE_EPOCHS
+    d = sort_eval_rows(eval_df[eval_df["epoch"].isin(epochs)])
+    order = d.drop_duplicates("dataset_id")["dataset_id"].tolist()
+    pivot = d.pivot_table(index="dataset_id", columns="epoch", values=metric, aggfunc="mean").reindex(order)
+    pivot = pivot.reindex(columns=epochs)
+    diffs = pivot.diff(axis=1).iloc[:, 1:]
+    diffs.columns = [f"{epochs[i-1]}->{epochs[i]}" for i in range(1, len(epochs))]
+    vals = diffs.to_numpy(dtype=float)
+    max_abs = float(np.nanmax(np.abs(vals)))
+    fig, ax = plt.subplots(figsize=(16.5, 11.5))
+    im = ax.imshow(vals, aspect="auto", cmap="RdBu_r", vmin=-max_abs, vmax=max_abs, interpolation="nearest")
+    cbar = fig.colorbar(im, ax=ax, fraction=0.025, pad=0.018)
+    cbar.set_label(f"change in {metric}; blue = lower loss, red = higher loss")
+    ax.set_xticks(np.arange(len(diffs.columns)))
+    ax.set_xticklabels(diffs.columns, rotation=42, ha="right", fontsize=8)
+    ax.set_yticks(np.arange(len(order)))
+    ax.set_yticklabels([shorten_dataset_id(x) for x in order], fontsize=6)
+    ax.set_title(f"50-epoch checkpoint-to-checkpoint change in {metric}")
+    # Add separators between dataset groups.
+    tiers = d.drop_duplicates("dataset_id")["manual_tier"].tolist()
+    for i in range(1, len(tiers)):
+        if tiers[i] != tiers[i - 1]:
+            ax.axhline(i - 0.5, color="#111111", lw=0.75, alpha=0.35)
+    for x in [3.5, 7.5, 11.5, 15.5]:
+        ax.axvline(x, color="#111111", lw=0.7, alpha=0.18)
+    fig.tight_layout()
+    fig.savefig(out_path)
+    plt.close(fig)
+    return diffs.reset_index()
 
 
 def plot_attack_losses(attack_df: pd.DataFrame, out_path: Path) -> None:
@@ -732,6 +770,8 @@ def write_summary(
         "- `relative_l2_heatmap_52_datasets.png`",
         "- `relative_l2_reduction_by_dataset.png`",
         "- `relative_l2_checkpoint_change_heatmap.png`",
+        "- `relative_l2_checkpoint_change_heatmap_50epoch.png`",
+        "- `rmse_checkpoint_change_heatmap_50epoch.png`",
         "- `attack_losses_progress.png`",
         "- `attack_relative_gain_progress.png`",
         "- `epsilon_bucket_attack_loss_gain.png`",
@@ -797,6 +837,14 @@ def main() -> None:
         eval_df, "relative_l2", out_dir / "relative_l2_checkpoint_change_heatmap.png"
     )
     checkpoint_change.to_csv(out_dir / "relative_l2_checkpoint_change_by_dataset.csv", index=False)
+    fine_checkpoint_rel = plot_fine_checkpoint_change_heatmap(
+        eval_df, "relative_l2", out_dir / "relative_l2_checkpoint_change_heatmap_50epoch.png"
+    )
+    fine_checkpoint_rmse = plot_fine_checkpoint_change_heatmap(
+        eval_df, "rmse", out_dir / "rmse_checkpoint_change_heatmap_50epoch.png"
+    )
+    fine_checkpoint_rel.to_csv(out_dir / "relative_l2_checkpoint_change_by_dataset_50epoch.csv", index=False)
+    fine_checkpoint_rmse.to_csv(out_dir / "rmse_checkpoint_change_by_dataset_50epoch.csv", index=False)
 
     # Attack and epsilon-bucket visualizations.
     plot_attack_losses(attack_df, out_dir / "attack_losses_progress.png")

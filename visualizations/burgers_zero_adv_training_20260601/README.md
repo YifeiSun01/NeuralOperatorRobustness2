@@ -44,6 +44,8 @@ adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5
 - `relative_l2_heatmap_52_datasets.png`
 - `relative_l2_reduction_by_dataset.png`
 - `relative_l2_checkpoint_change_heatmap.png`
+- `relative_l2_checkpoint_change_heatmap_50epoch.png`
+- `rmse_checkpoint_change_heatmap_50epoch.png`
 - `attack_losses_progress.png`
 - `attack_relative_gain_progress.png`
 - `epsilon_bucket_attack_loss_gain.png`
