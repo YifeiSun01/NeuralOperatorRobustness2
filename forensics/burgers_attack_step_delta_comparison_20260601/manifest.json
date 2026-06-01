@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-06-01",
+  "task": "burgers",
+  "device": "cpu",
+  "model": "baseline retained trained checkpoint loaded by adversarial_training.load_model",
+  "method": "fast_replace_linf",
+  "steps_list": [
+    1,
+    2,
+    3,
+    5,
+    10
+  ],
+  "reference_steps": 10,
+  "seed": 20260601,
+  "sample_count": 8,
+  "source_indices": [
+    39,
+    341,
+    557,
+    796,
+    924,
+    1015,
+    1277,
+    1296
+  ],
+  "epsilon_fraction": 0.06,
+  "eps_jitter_low": 0.75,
+  "eps_jitter_high": 1.25,
+  "random_start_fraction": 0.0,
+  "note": "torch.manual_seed is reset before each attack_steps run so epsilon jitter is identical across step counts."
+}
