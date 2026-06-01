@@ -1,0 +1,16 @@
+{
+  "run_dir": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601",
+  "out_dir": "visualizations/burgers_zero_adv_training_20260601/polished_report",
+  "png_count": 7,
+  "csv_count": 5,
+  "pdf": "polished_report.pdf",
+  "figures": [
+    "polished_report_dashboard.png",
+    "polished_loss_reduction_by_dataset.png",
+    "polished_relative_l2_heatmap.png",
+    "polished_checkpoint_loss_summary.png",
+    "polished_attack_loss_buckets.png",
+    "polished_high_frequency_energy_share.png",
+    "polished_delta_probe_checkpoint.png"
+  ]
+}
