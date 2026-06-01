@@ -28,3 +28,11 @@ This folder contains presentation-style visualizations for the completed Burgers
 - `polished_high_frequency_energy_share_trend_summary.csv`
 - `polished_relative_l2_reduction_by_dataset.csv`
 - `polished_rmse_reduction_by_dataset.csv`
+
+## Raw Attack-Loss Addendum
+
+These figures remove the 25-epoch moving average and show raw epoch means with standard-deviation shading.
+
+- `polished_attack_loss_raw_std_no_moving_average.png`
+- `polished_epsilon_bucket_adv_after_and_gain_raw_std.png`
+- `polished_attack_loss_raw_std_summary.csv`

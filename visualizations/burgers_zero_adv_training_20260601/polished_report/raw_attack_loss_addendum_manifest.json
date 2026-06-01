@@ -1,0 +1,11 @@
+{
+  "run_dir": "adversarial_training_runs/burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601",
+  "out_dir": "visualizations/burgers_zero_adv_training_20260601/polished_report",
+  "figures": [
+    "polished_attack_loss_raw_std_no_moving_average.png",
+    "polished_epsilon_bucket_adv_after_and_gain_raw_std.png"
+  ],
+  "csv": "polished_attack_loss_raw_std_summary.csv",
+  "bucket_count": 5,
+  "notes": "No moving average; shaded bands are mean +/- std. Overall std is pooled from epsilon-bucket sample stats."
+}
