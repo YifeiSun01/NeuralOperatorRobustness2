@@ -425,6 +425,12 @@ NotImplemented: Not Implemented
 
 This is a Cloudflare R2/S3 compatibility issue, not a training failure.  R2 does not implement every AWS S3 feature.  A common trigger is sending an unsupported ACL-related S3 option/header.  The upload should be retried with R2-compatible options and without ACL headers.
 
+Manual retry on 2026-06-02 succeeded after removing ACL use and letting rclone retry the first-round `501` object-copy failures.  The first GitHub commit containing this document and the related code changes was:
+
+```text
+b53afde Document Burgers p2q2 adversarial analysis
+```
+
 R2 backup target prefix:
 
 ```text
@@ -438,6 +444,8 @@ adversarial_training_runs/burgers_p2q2_advonly_random_jitter_1000ep_bs480_steps5
 visualizations/burgers_p2q2_adv_training_20260601
 forensics/burgers_p2q2_checkpoint_series_jacobian_svd_20260601
 ```
+
+These three R2 prefixes were verified with `rclone lsf` after upload.
 
 GitHub should receive lightweight reproducibility files:
 
