@@ -110,8 +110,10 @@ def plot_high_transparency_max5(
         ax.axis("off")
     fig.supxlabel("evaluation epoch")
     fig.supylabel(metric)
+    metric_label = "Relative L2 loss" if metric == "relative_l2" else "RMSE"
+    trend_prefix = "Smoothed" if smooth_window else "Raw"
     fig.suptitle(
-        f"{metric} grouped by dataset class: max {max_lines_per_panel} lines per subplot{suffix}, shared y-axis, high transparency",
+        f"{trend_prefix} {metric_label} trajectories by dataset family during adversarial training",
         y=0.997,
     )
     fig.tight_layout(rect=[0, 0, 1, 0.985])

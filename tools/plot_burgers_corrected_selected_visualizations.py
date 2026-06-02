@@ -186,7 +186,7 @@ def plot_corrected_attack(summary: pd.DataFrame, bucket_df: pd.DataFrame) -> Pat
     ax_top.set_xlim(1, 1000)
     ax_top.set_xlabel("training epoch")
     ax_top.set_ylabel("MSE, log scale")
-    ax_top.set_title("Raw attack loss progress, one axis, no moving average", loc="left", fontweight="bold")
+    ax_top.set_title("Attack loss before perturbation, attack loss after perturbation, and attack gain", loc="left", fontweight="bold")
     ax_top.legend(loc="upper right", ncol=3)
 
     bucket_df = bucket_df.sort_values(["bucket_index", "epoch"])
@@ -216,9 +216,9 @@ def plot_corrected_attack(summary: pd.DataFrame, bucket_df: pd.DataFrame) -> Pat
             ax.set_xlabel("training epoch")
             ax.set_ylabel(ylabel)
             ax.set_title(title, loc="left", fontweight="bold")
+    axes_bottom[1].set_ylim(0, 10)
     axes_bottom[1].legend(title="epsilon jitter bucket", loc="upper right", fontsize=7.6, title_fontsize=8)
-    fig.suptitle("Corrected attack loss view: raw three-line axis above, epsilon buckets below", fontsize=18, fontweight="bold", y=0.995)
-    fig.text(0.5, 0.962, "Top panel matches the three-lines-one-axis raw/std view; bottom panels keep the viridis epsilon-bucket colors.", ha="center", color=MUTED)
+    fig.suptitle("Attack loss and attack gain during 1,000 epochs of adversarial training", fontsize=18, fontweight="bold", y=0.995)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     return savefig(fig, "corrected_attack_loss_three_lines_plus_buckets.png")
 
@@ -251,7 +251,7 @@ def plot_corrected_loss(eval_df: pd.DataFrame, metric: str, filename: str) -> Pa
     im = ax_heat.imshow(matrix, aspect="auto", interpolation="nearest", cmap="magma")
     cbar = fig.colorbar(im, cax=cax, label=label)
     cbar.ax.tick_params(labelsize=8)
-    ax_heat.set_title(f"Raw {label} heatmap: 52 datasets x 1001 evaluation epochs", loc="left", fontweight="bold")
+    ax_heat.set_title(f"{label} across 52 train, test, and generalization datasets", loc="left", fontweight="bold")
     ax_heat.set_xlabel("evaluation epoch")
     ax_heat.set_ylabel("")
     xticks = [0, 200, 400, 600, 800, 1000]
@@ -282,12 +282,12 @@ def plot_corrected_loss(eval_df: pd.DataFrame, metric: str, filename: str) -> Pa
     pad = 0.05 * (ymax - ymin if ymax > ymin else 1.0)
     ax_line.set_xlim(0, 1000)
     ax_line.set_ylim(max(0.0, ymin - pad), ymax + pad)
-    ax_line.set_title("Group mean lineplot, no epoch moving average", loc="left", fontweight="bold", fontsize=10.5)
+    ax_line.set_title("Group mean loss trends by dataset family", loc="left", fontweight="bold", fontsize=10.5)
     ax_line.set_xlabel("evaluation epoch")
     ax_line.set_ylabel(label)
     ax_line.legend(ncol=4, loc="upper right", fontsize=7.5)
 
-    fig.suptitle(f"Corrected {label} view: raw heatmap with one raw group lineplot below", fontsize=18, fontweight="bold", y=0.995)
+    fig.suptitle(f"{label} decrease across train, test, and generalization datasets during 1,000 epochs of adversarial training", fontsize=18, fontweight="bold", y=0.995)
     fig.tight_layout(rect=[0, 0, 1, 0.965])
     return savefig(fig, filename)
 

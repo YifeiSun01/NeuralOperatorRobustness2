@@ -88,8 +88,8 @@ DEFAULTS: dict[str, TaskDefaults] = {
         learning_rate=2e-4,
         weight_decay=1e-5,
         random_start_fraction=0.0,
-        eps_jitter_low=1.0,
-        eps_jitter_high=1.0,
+        eps_jitter_low=0.5,
+        eps_jitter_high=2.5,
     ),
     "darcy": TaskDefaults(
         # Exact solver-gradient attack is memory bound; batch 256 is tested safe on the 31.7GB GPU.

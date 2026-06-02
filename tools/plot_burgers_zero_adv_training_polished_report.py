@@ -201,16 +201,18 @@ def plot_loss_reduction(eval_df: pd.DataFrame) -> Path:
     return savefig(fig, "polished_loss_reduction_by_dataset.png")
 
 
-def plot_heatmap(eval_df: pd.DataFrame) -> Path:
+def plot_heatmap(eval_df: pd.DataFrame, metric: str = "relative_l2", filename: str | None = None) -> Path:
     d = tier_sorted(eval_df)
     order = d.drop_duplicates("dataset_id")["dataset_id"].tolist()
-    pivot = d.pivot_table(index="dataset_id", columns="epoch", values="relative_l2", aggfunc="mean").reindex(order)
+    pivot = d.pivot_table(index="dataset_id", columns="epoch", values=metric, aggfunc="mean").reindex(order)
     matrix = pivot.to_numpy(dtype=float)
     tiers = d.drop_duplicates("dataset_id")["manual_tier"].tolist()
     tier_nums = np.array([TIER_ORDER.index(t) if t in TIER_ORDER else -1 for t in tiers]).reshape(-1, 1)
+    label = "Relative L2" if metric == "relative_l2" else "RMSE"
+    filename = filename or f"polished_{metric}_heatmap.png"
 
-    fig = plt.figure(figsize=(18, 12))
-    gs = fig.add_gridspec(1, 3, width_ratios=[0.16, 5.8, 0.2], wspace=0.04)
+    fig = plt.figure(figsize=(18.5, 12))
+    gs = fig.add_gridspec(1, 3, width_ratios=[0.22, 5.8, 0.2], wspace=0.045)
     ax_strip = fig.add_subplot(gs[0, 0])
     ax = fig.add_subplot(gs[0, 1])
     cax = fig.add_subplot(gs[0, 2])
@@ -218,18 +220,20 @@ def plot_heatmap(eval_df: pd.DataFrame) -> Path:
     tier_cmap = plt.matplotlib.colors.ListedColormap([TIER_COLORS[t] for t in TIER_ORDER])
     ax_strip.imshow(tier_nums, aspect="auto", cmap=tier_cmap, vmin=0, vmax=len(TIER_ORDER) - 1)
     ax_strip.set_xticks([])
-    ax_strip.set_yticks([])
+    ax_strip.set_yticks(np.arange(len(order)))
+    ax_strip.set_yticklabels([shorten(x, 42) for x in order], fontsize=6.3)
+    ax_strip.tick_params(axis="y", length=0, pad=4)
+    ax_strip.yaxis.tick_left()
     ax_strip.set_title("group", fontsize=9)
 
-    im = ax.imshow(matrix, aspect="auto", interpolation="nearest", cmap="magma_r")
-    fig.colorbar(im, cax=cax, label="Relative L2")
-    ax.set_title("Relative L2 across 52 datasets and 1001 evaluation epochs", loc="left", fontweight="bold")
+    im = ax.imshow(matrix, aspect="auto", interpolation="nearest", cmap="magma")
+    fig.colorbar(im, cax=cax, label=label)
+    ax.set_title(f"{label} across 52 datasets and 1001 evaluation epochs", loc="left", fontweight="bold")
     ax.set_xlabel("evaluation epoch")
-    ax.set_ylabel("dataset")
+    ax.set_ylabel("")
     ax.set_xticks(CHECKPOINTS)
     ax.set_xticklabels([str(x) for x in CHECKPOINTS])
-    ax.set_yticks(np.arange(len(order)))
-    ax.set_yticklabels([shorten(x, 42) for x in order], fontsize=6.3)
+    ax.set_yticks([])
     for i in range(1, len(tiers)):
         if tiers[i] != tiers[i - 1]:
             ax.axhline(i - 0.5, color="white", lw=1.3, alpha=0.75)
@@ -238,24 +242,137 @@ def plot_heatmap(eval_df: pd.DataFrame) -> Path:
     labels = [t for t in TIER_ORDER if t in set(tiers)]
     ax.legend(handles, labels, ncol=2, loc="lower right", frameon=True, facecolor="#ffffff", framealpha=0.88)
     fig.tight_layout()
-    return savefig(fig, "polished_relative_l2_heatmap.png")
+    return savefig(fig, filename)
 
 
-def plot_checkpoint_summary(eval_df: pd.DataFrame) -> Path:
-    checkpoints = CHECKPOINTS_FINE
+def plot_loss_hybrid(
+    eval_df: pd.DataFrame,
+    metric: str = "relative_l2",
+    filename: str | None = None,
+    line_window: int = 25,
+) -> Path:
+    d = tier_sorted(eval_df)
+    order = d.drop_duplicates("dataset_id")["dataset_id"].tolist()
+    pivot = d.pivot_table(index="dataset_id", columns="epoch", values=metric, aggfunc="mean").reindex(order)
+    matrix = pivot.to_numpy(dtype=float)
+    tiers = d.drop_duplicates("dataset_id")["manual_tier"].tolist()
+    tier_nums = np.array([TIER_ORDER.index(t) if t in TIER_ORDER else -1 for t in tiers]).reshape(-1, 1)
+    label = "Relative L2" if metric == "relative_l2" else "RMSE"
+    filename = filename or f"polished_{metric}_hybrid_heatmap_line.png"
+
+    fig = plt.figure(figsize=(19, 14))
+    gs = fig.add_gridspec(
+        2,
+        3,
+        height_ratios=[1.42, 0.92],
+        width_ratios=[0.22, 5.8, 0.22],
+        hspace=0.25,
+        wspace=0.045,
+    )
+    ax_strip = fig.add_subplot(gs[0, 0])
+    ax_heat = fig.add_subplot(gs[0, 1])
+    cax = fig.add_subplot(gs[0, 2])
+    ax_line = fig.add_subplot(gs[1, :])
+
+    tier_cmap = plt.matplotlib.colors.ListedColormap([TIER_COLORS[t] for t in TIER_ORDER])
+    ax_strip.imshow(tier_nums, aspect="auto", cmap=tier_cmap, vmin=0, vmax=len(TIER_ORDER) - 1)
+    ax_strip.set_xticks([])
+    ax_strip.set_yticks(np.arange(len(order)))
+    ax_strip.set_yticklabels([shorten(x, 42) for x in order], fontsize=6.2)
+    ax_strip.tick_params(axis="y", length=0, pad=4)
+    ax_strip.yaxis.tick_left()
+    ax_strip.set_title("group", fontsize=9)
+
+    im = ax_heat.imshow(matrix, aspect="auto", interpolation="nearest", cmap="magma")
+    fig.colorbar(im, cax=cax, label=label)
+    ax_heat.set_title(f"Raw {label} heatmap: 52 datasets x 1001 evaluation epochs", loc="left", fontweight="bold")
+    ax_heat.set_xlabel("evaluation epoch")
+    ax_heat.set_ylabel("")
+    ax_heat.set_xticks(CHECKPOINTS)
+    ax_heat.set_xticklabels([str(x) for x in CHECKPOINTS])
+    ax_heat.set_yticks([])
+    for i in range(1, len(tiers)):
+        if tiers[i] != tiers[i - 1]:
+            ax_heat.axhline(i - 0.5, color="white", lw=1.25, alpha=0.72)
+            ax_strip.axhline(i - 0.5, color="white", lw=1.25, alpha=0.72)
+
+    g = group_mean_std(eval_df, metric)
+    for tier in TIER_ORDER:
+        dd = g[g["manual_tier"] == tier].sort_values("epoch")
+        if dd.empty:
+            continue
+        x = dd["epoch"].to_numpy(dtype=float)
+        mean = rolling(dd["mean"], line_window)
+        std = rolling(dd["std"].fillna(0.0), line_window)
+        color = TIER_COLORS[tier]
+        ax_line.plot(x, mean, color=color, lw=2.15, alpha=0.84, label=tier)
+        ax_line.fill_between(x, np.maximum(mean - std, 0), mean + std, color=color, alpha=0.12, lw=0)
+    ax_line.set_title(
+        f"{label} group lineplot: {line_window}-epoch rolling mean, shaded group standard deviation",
+        loc="left",
+        fontweight="bold",
+    )
+    ax_line.set_xlabel("evaluation epoch")
+    ax_line.set_ylabel(label)
+    ax_line.set_xlim(0, 1000)
+    ax_line.legend(ncol=4, loc="upper right")
+    fig.suptitle(
+        f"Burgers ADV-only: raw heatmap plus smoothed {label} lineplot",
+        fontsize=18,
+        fontweight="bold",
+        y=0.995,
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.965])
+    return savefig(fig, filename)
+
+
+def plot_checkpoint_summary(
+    eval_df: pd.DataFrame,
+    step: int = 50,
+    filename: str | None = None,
+    heatmap_mode: str = "change",
+) -> Path:
+    checkpoints = list(range(0, 1001, int(step)))
+    if checkpoints[-1] != 1000:
+        checkpoints.append(1000)
+    suffix = "absolute" if heatmap_mode == "absolute" else "change"
+    filename = filename or f"polished_checkpoint_loss_summary_{suffix}_{step}epoch.png"
     d = eval_df[eval_df["epoch"].isin(checkpoints)]
     g = group_mean_std(d, "relative_l2")
     full = tier_sorted(d)
     order = full.drop_duplicates("dataset_id")["dataset_id"].tolist()
     pivot = full.pivot_table(index="dataset_id", columns="epoch", values="relative_l2", aggfunc="mean").reindex(order)
     pivot = pivot.reindex(columns=checkpoints)
-    diffs = pivot.diff(axis=1).iloc[:, 1:]
-    diffs.columns = [f"{checkpoints[i-1]}->{checkpoints[i]}" for i in range(1, len(checkpoints))]
-    diffs.to_csv(OUT_DIR / "polished_checkpoint_relative_l2_changes.csv")
-    diffs.to_csv(OUT_DIR / "polished_checkpoint_relative_l2_changes_50epoch.csv")
 
-    fig, axes = plt.subplots(1, 2, figsize=(20, 9.2), gridspec_kw={"width_ratios": [1.05, 1.25]})
+    if heatmap_mode == "absolute":
+        heat = pivot.copy()
+        heat.columns = [str(c) for c in heat.columns]
+        heat.to_csv(OUT_DIR / f"polished_checkpoint_relative_l2_absolute_{step}epoch.csv")
+        cmap = "magma"
+        vmin = float(np.nanmin(heat.to_numpy(dtype=float)))
+        vmax = float(np.nanmax(heat.to_numpy(dtype=float)))
+        right_title = f"{step}-epoch absolute Relative L2 at checkpoints\nbrighter = larger loss"
+        cbar_label = "Relative L2"
+        suptitle_tail = "absolute checkpoint loss values"
+    else:
+        heat = pivot.diff(axis=1).iloc[:, 1:]
+        heat.columns = [f"{checkpoints[i-1]}->{checkpoints[i]}" for i in range(1, len(checkpoints))]
+        if step == 50:
+            heat.to_csv(OUT_DIR / "polished_checkpoint_relative_l2_changes.csv")
+        heat.to_csv(OUT_DIR / f"polished_checkpoint_relative_l2_changes_{step}epoch.csv")
+        vals_for_scale = heat.to_numpy(dtype=float)
+        max_abs = float(np.nanmax(np.abs(vals_for_scale)))
+        cmap = "RdBu_r"
+        vmin = -max_abs
+        vmax = max_abs
+        right_title = f"{step}-epoch checkpoint-to-checkpoint change\nblue = lower loss, red = higher loss"
+        cbar_label = "Delta Relative L2"
+        suptitle_tail = "checkpoint-to-checkpoint loss change"
+
+    fig_width = 20 if step >= 50 else 22
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, 9.2), gridspec_kw={"width_ratios": [1.0, 1.35]})
     ax = axes[0]
+    show_markers = len(checkpoints) <= 60
     for tier in TIER_ORDER:
         dd = g[g["manual_tier"] == tier].sort_values("epoch")
         if dd.empty:
@@ -264,28 +381,36 @@ def plot_checkpoint_summary(eval_df: pd.DataFrame) -> Path:
         mean = dd["mean"].to_numpy(dtype=float)
         std = dd["std"].to_numpy(dtype=float)
         color = TIER_COLORS[tier]
-        ax.plot(x, mean, color=color, lw=2.15, marker="o", ms=3.2, label=tier)
+        marker = "o" if show_markers else None
+        ms = 3.0 if show_markers else 0.0
+        ax.plot(x, mean, color=color, lw=1.9, marker=marker, ms=ms, alpha=0.68, label=tier)
         ax.fill_between(x, mean - std, mean + std, color=color, alpha=0.12, lw=0)
-    ax.set_title("50-epoch checkpoint loss summary: group mean +/- std", loc="left", fontweight="bold")
+    ax.set_title(f"{step}-epoch checkpoint loss summary: group mean +/- std", loc="left", fontweight="bold")
     ax.set_xlabel("evaluation epoch")
     ax.set_ylabel("Relative L2")
     ax.set_xlim(0, 1000)
     ax.legend(ncol=2)
 
     ax2 = axes[1]
-    vals = diffs.to_numpy(dtype=float)
-    max_abs = float(np.nanmax(np.abs(vals)))
-    im = ax2.imshow(vals, aspect="auto", cmap="RdBu_r", vmin=-max_abs, vmax=max_abs)
-    ax2.set_title("50-epoch checkpoint-to-checkpoint change\nblue = lower loss, red = higher loss", loc="left", fontweight="bold")
-    ax2.set_xticks(np.arange(len(diffs.columns)))
-    ax2.set_xticklabels(diffs.columns, rotation=42, ha="right", fontsize=7.5)
+    vals = heat.to_numpy(dtype=float)
+    im = ax2.imshow(vals, aspect="auto", cmap=cmap, vmin=vmin, vmax=vmax, interpolation="nearest")
+    ax2.set_title(right_title, loc="left", fontweight="bold")
+    labels = list(heat.columns)
+    if labels:
+        max_tick_labels = 24
+        stride = max(1, math.ceil(len(labels) / max_tick_labels))
+        tick_positions = list(range(0, len(labels), stride))
+        if tick_positions[-1] != len(labels) - 1:
+            tick_positions.append(len(labels) - 1)
+        ax2.set_xticks(tick_positions)
+        ax2.set_xticklabels([labels[i] for i in tick_positions], rotation=42, ha="right", fontsize=7.2)
     ax2.set_yticks(np.arange(len(order)))
     ax2.set_yticklabels([shorten(x, 30) for x in order], fontsize=5.6)
     cbar = fig.colorbar(im, ax=ax2, fraction=0.03, pad=0.02)
-    cbar.set_label("Delta Relative L2")
-    fig.suptitle("Burgers ADV-only: 50-epoch checkpoint loss behavior", fontsize=17, fontweight="bold", y=0.995)
+    cbar.set_label(cbar_label)
+    fig.suptitle(f"Burgers ADV-only: {step}-epoch checkpoint loss behavior, {suptitle_tail}", fontsize=17, fontweight="bold", y=0.995)
     fig.tight_layout(rect=[0, 0, 1, 0.965])
-    return savefig(fig, "polished_checkpoint_loss_summary.png")
+    return savefig(fig, filename)
 
 
 def plot_attack_buckets(attack_df: pd.DataFrame, bucket_df: pd.DataFrame) -> Path:
@@ -320,17 +445,16 @@ def plot_attack_buckets(attack_df: pd.DataFrame, bucket_df: pd.DataFrame) -> Pat
             (ax1, "attack_loss_gain", "attack gain, MSE"),
             (ax2, "attack_loss_gain_relative", "relative gain"),
         ]:
-            mean = rolling(dd[f"{col}_mean"], 25)
-            raw_std = dd[f"{col}_std"].fillna(0).to_numpy(dtype=float)
-            std = rolling(raw_std, 25)
-            ax.plot(x, mean, color=color, lw=2.1, label=label)
+            mean = dd[f"{col}_mean"].to_numpy(dtype=float)
+            std = dd[f"{col}_std"].fillna(0).to_numpy(dtype=float)
+            ax.plot(x, mean, color=color, lw=1.65, alpha=0.92, label=label)
             ax.fill_between(x, np.maximum(mean - std, 0), mean + std, color=color, alpha=0.12, lw=0)
             ax.set_xlabel("training epoch")
             ax.set_ylabel(ylabel)
             ax.set_xlim(1, 1000)
     ax1.set_yscale("log")
-    ax1.set_title("5 epsilon buckets: attack loss gain", loc="left", fontweight="bold")
-    ax2.set_title("5 epsilon buckets: relative attack gain", loc="left", fontweight="bold")
+    ax1.set_title("5 epsilon buckets: raw attack loss gain", loc="left", fontweight="bold")
+    ax2.set_title("5 epsilon buckets: raw relative attack gain", loc="left", fontweight="bold")
     ax2.legend(ncol=1, loc="upper right")
 
     x = np.arange(len(dec_summary))
@@ -350,7 +474,8 @@ def plot_attack_buckets(attack_df: pd.DataFrame, bucket_df: pd.DataFrame) -> Pat
     ax3.set_ylabel("MSE, log scale")
     ax3.set_title("10 training-progress buckets: clean / adv / gain", loc="left", fontweight="bold")
     ax3.legend(ncol=3)
-    fig.suptitle("Attack loss bucket analysis", fontsize=18, fontweight="bold", y=0.995)
+    fig.suptitle("Attack loss bucket analysis, raw epoch means, no moving average", fontsize=18, fontweight="bold", y=0.995)
+    fig.text(0.5, 0.965, "Top panels use raw per-epoch bucket means and mean +/- std shading; no 25-epoch moving average.", ha="center", color="#666666")
     fig.tight_layout(rect=[0, 0, 1, 0.965])
     return savefig(fig, "polished_attack_loss_buckets.png")
 
@@ -503,7 +628,7 @@ def plot_dashboard(data: dict[str, pd.DataFrame]) -> Path:
         mean = dd["mean"].to_numpy(dtype=float)
         std = dd["std"].to_numpy(dtype=float)
         c = TIER_COLORS[tier]
-        ax1.plot(x, mean, color=c, lw=2.0, label=tier)
+        ax1.plot(x, mean, color=c, lw=2.0, alpha=0.68, label=tier)
         ax1.fill_between(x, mean - std, mean + std, color=c, alpha=0.10, lw=0)
     add_panel_label(ax1, "A")
     ax1.set_title("Relative L2 mean +/- std by dataset group", loc="left", fontweight="bold")
@@ -532,7 +657,7 @@ def plot_dashboard(data: dict[str, pd.DataFrame]) -> Path:
     d = tier_sorted(eval_df)
     order = d.drop_duplicates("dataset_id")["dataset_id"].tolist()
     piv = d.pivot_table(index="dataset_id", columns="epoch", values="relative_l2", aggfunc="mean").reindex(order)
-    im = ax3.imshow(piv.to_numpy(dtype=float), aspect="auto", interpolation="nearest", cmap="magma_r")
+    im = ax3.imshow(piv.to_numpy(dtype=float), aspect="auto", interpolation="nearest", cmap="magma")
     add_panel_label(ax3, "C")
     ax3.set_title("Relative L2 heatmap", loc="left", fontweight="bold")
     ax3.set_xlabel("epoch")
@@ -607,6 +732,10 @@ def write_readme(paths: list[Path], data: dict[str, pd.DataFrame]) -> None:
     lines = [
         "# Polished Burgers Adversarial Training Visualizations",
         "",
+        "## Geometry Warning",
+        "",
+        "This visualization folder is from the completed `burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601` run. That run used `fast_replace_linf`, i.e. an L-infinity/sign-gradient replacement attack. It is not the intended `p=2,q=2` Burgers adversarial-training main experiment. Treat these figures as an accidental L-infinity ablation only. Do not cite them as evidence for the intended L2/L2 run.",
+        "",
         "This folder contains presentation-style visualizations for the completed Burgers ADV-only run.",
         "",
         "## Key Numbers",
@@ -630,6 +759,13 @@ def write_readme(paths: list[Path], data: dict[str, pd.DataFrame]) -> None:
             "- `polished_attack_loss_epoch_decile_summary.csv`",
             "- `polished_checkpoint_relative_l2_changes.csv`",
             "- `polished_checkpoint_relative_l2_changes_50epoch.csv`",
+            "- `polished_checkpoint_relative_l2_changes_10epoch.csv`",
+            "- `polished_checkpoint_relative_l2_changes_5epoch.csv`",
+            "- `polished_checkpoint_relative_l2_changes_2epoch.csv`",
+            "- `polished_checkpoint_relative_l2_absolute_50epoch.csv`",
+            "- `polished_checkpoint_relative_l2_absolute_10epoch.csv`",
+            "- `polished_checkpoint_relative_l2_absolute_5epoch.csv`",
+            "- `polished_checkpoint_relative_l2_absolute_2epoch.csv`",
             "- `polished_high_frequency_energy_share_trend_summary.csv`",
             "- `polished_relative_l2_reduction_by_dataset.csv`",
             "- `polished_rmse_reduction_by_dataset.csv`",
@@ -644,8 +780,18 @@ def main() -> None:
     paths = [
         plot_dashboard(data),
         plot_loss_reduction(data["eval"]),
-        plot_heatmap(data["eval"]),
-        plot_checkpoint_summary(data["eval"]),
+        plot_heatmap(data["eval"], metric="relative_l2", filename="polished_relative_l2_heatmap.png"),
+        plot_heatmap(data["eval"], metric="rmse", filename="polished_rmse_heatmap.png"),
+        plot_loss_hybrid(data["eval"], metric="relative_l2", filename="polished_relative_l2_hybrid_raw_heatmap_smoothed_line.png", line_window=25),
+        plot_loss_hybrid(data["eval"], metric="rmse", filename="polished_rmse_hybrid_raw_heatmap_smoothed_line.png", line_window=25),
+        plot_checkpoint_summary(data["eval"], step=50, filename="polished_checkpoint_loss_summary.png", heatmap_mode="change"),
+        plot_checkpoint_summary(data["eval"], step=10, filename="polished_checkpoint_loss_summary_10epoch.png", heatmap_mode="change"),
+        plot_checkpoint_summary(data["eval"], step=5, filename="polished_checkpoint_loss_summary_5epoch.png", heatmap_mode="change"),
+        plot_checkpoint_summary(data["eval"], step=2, filename="polished_checkpoint_loss_summary_2epoch.png", heatmap_mode="change"),
+        plot_checkpoint_summary(data["eval"], step=50, filename="polished_checkpoint_loss_summary_absolute_50epoch.png", heatmap_mode="absolute"),
+        plot_checkpoint_summary(data["eval"], step=10, filename="polished_checkpoint_loss_summary_absolute_10epoch.png", heatmap_mode="absolute"),
+        plot_checkpoint_summary(data["eval"], step=5, filename="polished_checkpoint_loss_summary_absolute_5epoch.png", heatmap_mode="absolute"),
+        plot_checkpoint_summary(data["eval"], step=2, filename="polished_checkpoint_loss_summary_absolute_2epoch.png", heatmap_mode="absolute"),
         plot_attack_buckets(data["attack"], data["bucket"]),
         plot_high_frequency(data["highfreq"]),
         plot_delta_probe_checkpoints(),

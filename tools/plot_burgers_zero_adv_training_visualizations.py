@@ -104,7 +104,7 @@ def plot_all_dataset_lines(eval_df: pd.DataFrame, metric: str, out_path: Path) -
         tier = str(d["manual_tier"].iloc[0])
         color = TIER_COLORS.get(tier, "#666666")
         lw = 1.8 if tier in {"train", "test"} else 0.9
-        alpha = 0.95 if tier in {"train", "test"} else 0.58
+        alpha = 0.50 if tier in {"train", "test"} else 0.42
         ax.plot(d["epoch"], d[metric], color=color, alpha=alpha, lw=lw)
 
     handles = []
@@ -139,7 +139,7 @@ def plot_grouped_dataset_panels(eval_df: pd.DataFrame, metric: str, out_path: Pa
         for dataset_id, d in d_tier.groupby("dataset_id", sort=False):
             color = TIER_COLORS.get(tier, "#666666")
             lw = 1.8 if tier in {"train", "test"} else 1.0
-            alpha = 0.95 if tier in {"train", "test"} else 0.72
+            alpha = 0.50 if tier in {"train", "test"} else 0.42
             ax.plot(d["epoch"], d[metric], color=color, alpha=alpha, lw=lw)
         ax.set_title(f"{tier} ({d_tier['dataset_id'].nunique()} datasets)")
         ax.set_xlim(0, 1000)
@@ -175,11 +175,11 @@ def plot_grouped_dataset_panels_distinct_datasets(eval_df: pd.DataFrame, metric:
             if tier in {"train", "test"}:
                 color = TIER_COLORS.get(tier, "#111111")
                 lw = 2.4
-                alpha = 0.98
+                alpha = 0.50
             else:
                 color = cmap(idx / max(n - 1, 1))
                 lw = 1.45
-                alpha = 0.92
+                alpha = 0.45
             label = f"{idx + 1:02d} {shorten_dataset_id(dataset_id)}"
             ax.plot(d["epoch"], d[metric], color=color, alpha=alpha, lw=lw, label=label)
             # Add a tiny number tag at the final point so dense panels remain traceable.
@@ -208,7 +208,7 @@ def plot_grouped_dataset_panels_distinct_datasets(eval_df: pd.DataFrame, metric:
             handletextpad=0.25,
             borderaxespad=0.2,
             frameon=True,
-            framealpha=0.68,
+            framealpha=0.62,
             facecolor="white",
             edgecolor="none",
         )
@@ -220,6 +220,269 @@ def plot_grouped_dataset_panels_distinct_datasets(eval_df: pd.DataFrame, metric:
     fig.tight_layout(rect=[0, 0, 1, 0.982])
     fig.savefig(out_path)
     plt.close(fig)
+
+
+
+def plot_dataset_line_chunks(
+    eval_df: pd.DataFrame,
+    metric: str,
+    out_dir: Path,
+    max_lines: int = 5,
+) -> pd.DataFrame:
+    ylo, yhi = metric_limits(eval_df, metric)
+    sorted_df = sort_eval_rows(eval_df)
+    dataset_rows = sorted_df.drop_duplicates("dataset_id")[
+        ["dataset_id", "manual_tier", "manual_rank"]
+    ].reset_index(drop=True)
+    datasets = list(dataset_rows["dataset_id"])
+    index_rows: list[dict[str, object]] = []
+    cmap = plt.get_cmap("tab10")
+
+    for page_idx, start in enumerate(range(0, len(datasets), max_lines), start=1):
+        chunk = datasets[start : start + max_lines]
+        fig, ax = plt.subplots(figsize=(12.8, 7.2))
+        for local_idx, dataset_id in enumerate(chunk):
+            d = sorted_df[sorted_df["dataset_id"] == dataset_id].sort_values("epoch")
+            tier = str(d["manual_tier"].iloc[0])
+            rank = d["manual_rank"].iloc[0]
+            color = cmap(local_idx % 10)
+            lw = 2.2 if tier in {"train", "test"} else 1.8
+            alpha = 0.45
+            global_idx = start + local_idx + 1
+            label = f"{global_idx:02d} {shorten_dataset_id(dataset_id)}"
+            ax.plot(d["epoch"], d[metric], color=color, alpha=alpha, lw=lw, label=label)
+            end = d.iloc[-1]
+            ax.text(
+                1005,
+                float(end[metric]),
+                f"{global_idx}",
+                color=color,
+                alpha=0.72,
+                fontsize=8,
+                va="center",
+                ha="left",
+                clip_on=False,
+            )
+            index_rows.append(
+                {
+                    "metric": metric,
+                    "page": page_idx,
+                    "line_on_page": local_idx + 1,
+                    "global_line": global_idx,
+                    "dataset_id": dataset_id,
+                    "manual_tier": tier,
+                    "manual_rank": rank,
+                    "figure": f"{metric}_dataset_lines_max5_page{page_idx:02d}.png",
+                }
+            )
+
+        for x in [200, 400, 600, 800]:
+            ax.axvline(x, color="#555555", alpha=0.16, lw=1)
+        ax.set_title(
+            f"{metric}: datasets {start + 1}-{start + len(chunk)} of {len(datasets)} "
+            f"(max {max_lines} lines, shared y-axis)"
+        )
+        ax.set_xlabel("evaluation epoch")
+        ax.set_ylabel(metric)
+        ax.set_xlim(0, 1035)
+        ax.set_ylim(ylo, yhi)
+        ax.legend(
+            loc="upper right",
+            frameon=True,
+            framealpha=0.60,
+            facecolor="white",
+            edgecolor="none",
+            handlelength=1.5,
+        )
+        fig.tight_layout()
+        fig.savefig(out_dir / f"{metric}_dataset_lines_max5_page{page_idx:02d}.png")
+        plt.close(fig)
+
+    return pd.DataFrame(index_rows)
+
+
+def plot_dataset_line_chunk_panels(
+    eval_df: pd.DataFrame,
+    metric: str,
+    out_path: Path,
+    max_lines_per_panel: int = 5,
+) -> pd.DataFrame:
+    ylo, yhi = metric_limits(eval_df, metric)
+    sorted_df = sort_eval_rows(eval_df)
+    dataset_rows = sorted_df.drop_duplicates("dataset_id")[
+        ["dataset_id", "manual_tier", "manual_rank"]
+    ].reset_index(drop=True)
+    datasets = list(dataset_rows["dataset_id"])
+    chunks = [datasets[i : i + max_lines_per_panel] for i in range(0, len(datasets), max_lines_per_panel)]
+    cols = 3
+    rows = math.ceil(len(chunks) / cols)
+    fig, axes = plt.subplots(rows, cols, figsize=(18.5, 4.25 * rows), sharex=True, sharey=True)
+    axes = np.asarray(axes).ravel()
+    cmap = plt.get_cmap("tab10")
+    index_rows: list[dict[str, object]] = []
+
+    for panel_idx, (ax, chunk) in enumerate(zip(axes, chunks), start=1):
+        start = (panel_idx - 1) * max_lines_per_panel
+        for local_idx, dataset_id in enumerate(chunk):
+            d = sorted_df[sorted_df["dataset_id"] == dataset_id].sort_values("epoch")
+            tier = str(d["manual_tier"].iloc[0])
+            rank = d["manual_rank"].iloc[0]
+            color = cmap(local_idx % 10)
+            lw = 2.05 if tier in {"train", "test"} else 1.55
+            alpha = 0.45
+            global_idx = start + local_idx + 1
+            label = f"{global_idx:02d} {shorten_dataset_id(dataset_id)}"
+            ax.plot(d["epoch"], d[metric], color=color, alpha=alpha, lw=lw, label=label)
+            end = d.iloc[-1]
+            ax.text(
+                1005,
+                float(end[metric]),
+                f"{global_idx}",
+                color=color,
+                alpha=0.72,
+                fontsize=6.2,
+                va="center",
+                ha="left",
+                clip_on=False,
+            )
+            index_rows.append(
+                {
+                    "metric": metric,
+                    "panel": panel_idx,
+                    "line_on_panel": local_idx + 1,
+                    "global_line": global_idx,
+                    "dataset_id": dataset_id,
+                    "manual_tier": tier,
+                    "manual_rank": rank,
+                    "figure": out_path.name,
+                }
+            )
+
+        for x in [200, 400, 600, 800]:
+            ax.axvline(x, color="#555555", alpha=0.13, lw=0.9)
+        ax.set_title(
+            f"panel {panel_idx}: datasets {start + 1}-{start + len(chunk)}",
+            fontsize=10,
+        )
+        ax.set_xlim(0, 1035)
+        ax.set_ylim(ylo, yhi)
+        ax.legend(
+            loc="upper right",
+            fontsize=5.4,
+            frameon=True,
+            framealpha=0.62,
+            facecolor="white",
+            edgecolor="none",
+            handlelength=1.1,
+            handletextpad=0.25,
+            borderaxespad=0.2,
+        )
+
+    for ax in axes[len(chunks) :]:
+        ax.axis("off")
+    fig.supxlabel("evaluation epoch")
+    fig.supylabel(metric)
+    fig.suptitle(
+        f"{metric} on all 52 datasets: max {max_lines_per_panel} lines per subplot, shared y-axis",
+        y=0.997,
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.985])
+    fig.savefig(out_path)
+    plt.close(fig)
+    return pd.DataFrame(index_rows)
+
+def plot_grouped_dataset_panels_distinct_max5(
+    eval_df: pd.DataFrame,
+    metric: str,
+    out_path: Path,
+    max_lines_per_panel: int = 5,
+    smooth_window: int | None = None,
+) -> pd.DataFrame:
+    ylo, yhi = metric_limits(eval_df, metric)
+    sorted_df = sort_eval_rows(eval_df)
+    present = [tier for tier in TIER_ORDER if tier in set(eval_df["manual_tier"])]
+    panel_defs: list[tuple[str, int, list[str]]] = []
+    for tier in present:
+        d_tier = sorted_df[sorted_df["manual_tier"] == tier]
+        datasets = list(d_tier.drop_duplicates("dataset_id")["dataset_id"])
+        for chunk_idx, start in enumerate(range(0, len(datasets), max_lines_per_panel), start=1):
+            panel_defs.append((tier, chunk_idx, datasets[start : start + max_lines_per_panel]))
+
+    cols = 3
+    rows = math.ceil(len(panel_defs) / cols)
+    fig, axes = plt.subplots(rows, cols, figsize=(18.8, 4.15 * rows), sharex=True, sharey=True)
+    axes = np.asarray(axes).ravel()
+    cmap = plt.get_cmap("tab10")
+    index_rows: list[dict[str, object]] = []
+    suffix = f", {smooth_window}-epoch moving average" if smooth_window else ", raw epoch values"
+
+    for panel_idx, (ax, (tier, chunk_idx, chunk)) in enumerate(zip(axes, panel_defs), start=1):
+        for local_idx, dataset_id in enumerate(chunk):
+            d = sorted_df[sorted_df["dataset_id"] == dataset_id].sort_values("epoch")
+            x = d["epoch"].to_numpy(dtype=float)
+            y = d[metric].astype(float)
+            y_plot = y.rolling(smooth_window, min_periods=1, center=True).mean() if smooth_window else y
+            y_arr = y_plot.to_numpy(dtype=float)
+            color = cmap(local_idx % 10)
+            lw = 2.0 if tier in {"train", "test"} else 1.55
+            alpha = 0.45
+            rank = d["manual_rank"].iloc[0]
+            label = f"{local_idx + 1:02d} {shorten_dataset_id(dataset_id)}"
+            ax.plot(x, y_arr, color=color, alpha=alpha, lw=lw, label=label)
+            ax.text(
+                1005,
+                float(y_arr[-1]),
+                f"{local_idx + 1}",
+                color=color,
+                alpha=0.72,
+                fontsize=6.3,
+                va="center",
+                ha="left",
+                clip_on=False,
+            )
+            index_rows.append(
+                {
+                    "metric": metric,
+                    "panel": panel_idx,
+                    "tier": tier,
+                    "tier_chunk": chunk_idx,
+                    "line_on_panel": local_idx + 1,
+                    "dataset_id": dataset_id,
+                    "manual_rank": rank,
+                    "smooth_window": smooth_window or 0,
+                    "figure": out_path.name,
+                }
+            )
+
+        for xline in [200, 400, 600, 800]:
+            ax.axvline(xline, color="#555555", alpha=0.13, lw=0.9)
+        ax.set_title(f"{tier} chunk {chunk_idx}: {len(chunk)} datasets", fontsize=9.8)
+        ax.set_xlim(0, 1035)
+        ax.set_ylim(ylo, yhi)
+        ax.legend(
+            loc="upper right",
+            fontsize=5.5,
+            frameon=True,
+            framealpha=0.60,
+            facecolor="white",
+            edgecolor="none",
+            handlelength=1.05,
+            handletextpad=0.25,
+            borderaxespad=0.22,
+        )
+
+    for ax in axes[len(panel_defs) :]:
+        ax.axis("off")
+    fig.supxlabel("evaluation epoch")
+    fig.supylabel(metric)
+    fig.suptitle(
+        f"{metric} grouped by dataset class: max {max_lines_per_panel} lines per subplot{suffix}, shared y-axis",
+        y=0.997,
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.985])
+    fig.savefig(out_path)
+    plt.close(fig)
+    return pd.DataFrame(index_rows)
 
 
 def plot_group_mean_std(eval_df: pd.DataFrame, metric: str, out_path: Path) -> pd.DataFrame:
@@ -239,7 +502,7 @@ def plot_group_mean_std(eval_df: pd.DataFrame, metric: str, out_path: Path) -> p
         x = d["epoch"].to_numpy(dtype=float)
         mean = d["mean"].to_numpy(dtype=float)
         std = d["std"].to_numpy(dtype=float)
-        ax.plot(x, mean, color=color, lw=2.2, label=f"{tier} mean")
+        ax.plot(x, mean, color=color, lw=2.2, alpha=0.72, label=f"{tier} mean")
         if np.nanmax(std) > 0:
             ax.fill_between(x, mean - std, mean + std, color=color, alpha=0.15, lw=0)
     ax.set_title(f"{metric}: mean with standard-deviation shadow by dataset group")
@@ -652,7 +915,14 @@ def plot_delta_checkpoint_grid(run_dir: Path, out_path: Path) -> None:
     plt.close(fig)
 
 
-def plot_delta_probe_detail(run_dir: Path, probe_rank: int, out_shape_path: Path, out_fft_path: Path) -> None:
+def plot_delta_probe_detail(
+    run_dir: Path,
+    probe_rank: int,
+    out_shape_path: Path,
+    out_fft_path: Path,
+    out_fft_mode_smooth_path: Path | None = None,
+    fft_mode_window: int = 25,
+) -> None:
     data = {epoch: load_probe_npz(run_dir, epoch) for epoch in DELTA_EPOCHS}
     ranks = list(map(int, data[DELTA_EPOCHS[0]]["probe_rank"]))
     if probe_rank not in ranks:
@@ -692,6 +962,31 @@ def plot_delta_probe_detail(run_dir: Path, probe_rank: int, out_shape_path: Path
     fig.tight_layout()
     fig.savefig(out_fft_path)
     plt.close(fig)
+
+    if out_fft_mode_smooth_path is not None:
+        fig, ax = plt.subplots(figsize=(13, 7))
+        for epoch, color in zip(DELTA_EPOCHS, colors):
+            delta = data[epoch]["delta"][idx].reshape(-1)
+            freq, power = fft_power(delta)
+            smooth_power = (
+                pd.Series(power[1:])
+                .rolling(fft_mode_window, min_periods=1, center=True)
+                .mean()
+                .to_numpy(dtype=float)
+            )
+            ax.plot(freq[1:], smooth_power + 1e-18, color=color, lw=1.9, label=f"epoch {epoch}")
+        ax.set_yscale("log")
+        ax.set_xlim(1, 512)
+        ax.set_title(
+            f"Probe {probe_rank}, source index {source_index}: normalized FFT power, "
+            f"{fft_mode_window}-Fourier-mode moving average"
+        )
+        ax.set_xlabel("Fourier mode")
+        ax.set_ylabel("normalized power, log scale")
+        ax.legend(frameon=False)
+        fig.tight_layout()
+        fig.savefig(out_fft_mode_smooth_path)
+        plt.close(fig)
 
 
 def rolling_mean_matrix(matrix: np.ndarray, window: int = 25) -> np.ndarray:
@@ -785,6 +1080,166 @@ def plot_delta_fft_power_moving_average(
     plt.close(fig)
 
 
+
+def rolling_mean_fourier_modes(matrix: np.ndarray, window: int = 25) -> np.ndarray:
+    return pd.DataFrame(matrix.T).rolling(window, min_periods=1, center=True).mean().to_numpy(dtype=float).T
+
+
+def plot_delta_fft_power_raw_and_mode_average(
+    run_dir: Path,
+    epochs: list[int],
+    raw_out_path: Path,
+    raw_selected_csv: Path,
+    mode_out_path: Path,
+    mode_selected_csv: Path,
+    hybrid_out_path: Path | None = None,
+    window: int = 25,
+) -> None:
+    epochs = sorted(int(e) for e in epochs)
+    all_power = []
+    probe_ranks = None
+    freq_modes = None
+    for epoch in epochs:
+        data = load_probe_npz(run_dir, epoch)
+        deltas = data["delta"]
+        if probe_ranks is None:
+            probe_ranks = [int(x) for x in data["probe_rank"]]
+        probe_power = []
+        for sample_idx in range(deltas.shape[0]):
+            freq, power = fft_power(deltas[sample_idx])
+            if freq_modes is None:
+                freq_modes = freq[1:]
+            probe_power.append(power[1:])
+        all_power.append(probe_power)
+
+    power_arr = np.asarray(all_power, dtype=float)  # epoch x probe x Fourier mode
+    mean_power_raw = np.nanmean(power_arr, axis=1)
+    if probe_ranks and 0 in probe_ranks:
+        probe0_idx = probe_ranks.index(0)
+    else:
+        probe0_idx = 0
+    probe0_power_raw = power_arr[:, probe0_idx, :]
+    mean_power_mode_smooth = rolling_mean_fourier_modes(mean_power_raw, window=window)
+    probe0_power_mode_smooth = rolling_mean_fourier_modes(probe0_power_raw, window=window)
+
+    selected_modes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 384, 512]
+    selected_epochs = [50, 200, 400, 600, 800, 1000]
+
+    def save_selected_csv(mean_matrix: np.ndarray, probe_matrix: np.ndarray, out_csv: Path) -> None:
+        selected_rows = []
+        series_label = f"probe_{probe_ranks[probe0_idx] if probe_ranks else probe0_idx}"
+        for label, matrix in [("mean_5_fixed_probes", mean_matrix), (series_label, probe_matrix)]:
+            for row_idx, epoch in enumerate(epochs):
+                row = {"epoch": epoch, "series": label}
+                for mode in selected_modes:
+                    mode_idx = min(max(mode - 1, 0), matrix.shape[1] - 1)
+                    row[f"mode_{mode}"] = float(matrix[row_idx, mode_idx])
+                selected_rows.append(row)
+        pd.DataFrame(selected_rows).to_csv(out_csv, index=False)
+
+    def save_plot(mean_matrix: np.ndarray, out_path: Path, heat_title: str, line_title: str) -> None:
+        log_power = np.log10(np.clip(mean_matrix, 1e-18, None))
+        finite = log_power[np.isfinite(log_power)]
+        vmin, vmax = np.nanpercentile(finite, [2, 99.5])
+
+        fig = plt.figure(figsize=(15.5, 10.2))
+        gs = fig.add_gridspec(2, 1, height_ratios=[1.35, 0.9], hspace=0.28)
+        ax0 = fig.add_subplot(gs[0, 0])
+        im = ax0.imshow(
+            log_power,
+            aspect="auto",
+            origin="lower",
+            interpolation="nearest",
+            extent=[float(freq_modes[0]), float(freq_modes[-1]), float(epochs[0]), float(epochs[-1])],
+            cmap="magma",
+            vmin=float(vmin),
+            vmax=float(vmax),
+        )
+        cbar = fig.colorbar(im, ax=ax0, fraction=0.023, pad=0.018)
+        cbar.set_label("log10 normalized FFT power")
+        ax0.set_title(heat_title)
+        ax0.set_xlabel("Fourier mode")
+        ax0.set_ylabel("training epoch")
+        ax0.set_xlim(1, 512)
+
+        ax1 = fig.add_subplot(gs[1, 0])
+        colors = plt.get_cmap("viridis")(np.linspace(0.05, 0.95, len(selected_epochs)))
+        epoch_array = np.asarray(epochs)
+        for epoch, color in zip(selected_epochs, colors):
+            idx = int(np.argmin(np.abs(epoch_array - epoch)))
+            ax1.plot(freq_modes, mean_matrix[idx] + 1e-18, color=color, lw=1.8, label=f"epoch {epochs[idx]}")
+        ax1.set_yscale("log")
+        ax1.set_xlim(1, 512)
+        ax1.set_title(line_title)
+        ax1.set_xlabel("Fourier mode")
+        ax1.set_ylabel("normalized power, log scale")
+        ax1.legend(ncol=3, frameon=False)
+
+        fig.suptitle("Fixed-probe delta FFT power", y=0.995)
+        fig.tight_layout(rect=[0, 0, 1, 0.985])
+        fig.savefig(out_path)
+        plt.close(fig)
+
+    def save_hybrid_plot(raw_heat_matrix: np.ndarray, line_matrix: np.ndarray, out_path: Path) -> None:
+        log_power = np.log10(np.clip(raw_heat_matrix, 1e-18, None))
+        finite = log_power[np.isfinite(log_power)]
+        vmin, vmax = np.nanpercentile(finite, [2, 99.5])
+
+        fig = plt.figure(figsize=(15.5, 10.2))
+        gs = fig.add_gridspec(2, 1, height_ratios=[1.35, 0.9], hspace=0.28)
+        ax0 = fig.add_subplot(gs[0, 0])
+        im = ax0.imshow(
+            log_power,
+            aspect="auto",
+            origin="lower",
+            interpolation="nearest",
+            extent=[float(freq_modes[0]), float(freq_modes[-1]), float(epochs[0]), float(epochs[-1])],
+            cmap="magma",
+            vmin=float(vmin),
+            vmax=float(vmax),
+        )
+        cbar = fig.colorbar(im, ax=ax0, fraction=0.023, pad=0.018)
+        cbar.set_label("log10 normalized FFT power")
+        ax0.set_title("Raw delta normalized FFT power heatmap, mean across 5 fixed probes")
+        ax0.set_xlabel("Fourier mode")
+        ax0.set_ylabel("training epoch")
+        ax0.set_xlim(1, 512)
+
+        ax1 = fig.add_subplot(gs[1, 0])
+        colors = plt.get_cmap("viridis")(np.linspace(0.05, 0.95, len(selected_epochs)))
+        epoch_array = np.asarray(epochs)
+        for epoch, color in zip(selected_epochs, colors):
+            idx = int(np.argmin(np.abs(epoch_array - epoch)))
+            ax1.plot(freq_modes, line_matrix[idx] + 1e-18, color=color, lw=1.9, label=f"epoch {epochs[idx]}")
+        ax1.set_yscale("log")
+        ax1.set_xlim(1, 512)
+        ax1.set_title(f"Selected spectra, {window}-Fourier-mode moving average for line readability")
+        ax1.set_xlabel("Fourier mode")
+        ax1.set_ylabel("normalized power, log scale")
+        ax1.legend(ncol=3, frameon=False)
+
+        fig.suptitle("Hybrid delta FFT view: raw heatmap plus mode-smoothed lineplot", y=0.995)
+        fig.tight_layout(rect=[0, 0, 1, 0.985])
+        fig.savefig(out_path)
+        plt.close(fig)
+
+    save_selected_csv(mean_power_raw, probe0_power_raw, raw_selected_csv)
+    save_plot(
+        mean_power_raw,
+        raw_out_path,
+        "Delta normalized FFT power, no moving average, mean across 5 fixed probes",
+        "Raw spectra at selected epochs, no moving average",
+    )
+    save_selected_csv(mean_power_mode_smooth, probe0_power_mode_smooth, mode_selected_csv)
+    save_plot(
+        mean_power_mode_smooth,
+        mode_out_path,
+        f"Delta normalized FFT power, {window}-Fourier-mode moving average, mean across 5 fixed probes",
+        f"Spectra at selected epochs, same {window}-mode moving average",
+    )
+    if hybrid_out_path is not None:
+        save_hybrid_plot(mean_power_raw, mean_power_mode_smooth, hybrid_out_path)
+
 def write_summary(
     out_dir: Path,
     reduction_rel: pd.DataFrame,
@@ -822,6 +1277,10 @@ def write_summary(
     lines = [
         "# Burgers zero adversarial-training visualization summary",
         "",
+        "## Geometry Warning",
+        "",
+        "This visualization folder is from the completed `burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601` run. That run used `fast_replace_linf`, i.e. an L-infinity/sign-gradient replacement attack. It is not the intended `p=2,q=2` Burgers adversarial-training main experiment. Treat these figures as an accidental L-infinity ablation only. Do not cite them as evidence for the intended L2/L2 run.",
+        "",
         "Generated from:",
         "",
         "```text",
@@ -856,9 +1315,26 @@ def write_summary(
         "- `rmse_grouped_shared_y.png`",
         "- `relative_l2_grouped_shared_y_distinct_datasets.png`",
         "- `rmse_grouped_shared_y_distinct_datasets.png`",
+        "- `relative_l2_grouped_shared_y_distinct_datasets_max5.png`",
+        "- `rmse_grouped_shared_y_distinct_datasets_max5.png`",
+        "- `relative_l2_grouped_shared_y_distinct_datasets_max5_ma25.png`",
+        "- `rmse_grouped_shared_y_distinct_datasets_max5_ma25.png`",
+        "- `relative_l2_grouped_shared_y_distinct_datasets_max5_index.csv`",
+        "- `rmse_grouped_shared_y_distinct_datasets_max5_index.csv`",
+        "- `relative_l2_grouped_shared_y_distinct_datasets_max5_ma25_index.csv`",
+        "- `rmse_grouped_shared_y_distinct_datasets_max5_ma25_index.csv`",
+        "- `relative_l2_dataset_lines_max5_page*.png`",
+        "- `rmse_dataset_lines_max5_page*.png`",
+        "- `relative_l2_dataset_lines_max5_subplots.png`",
+        "- `rmse_dataset_lines_max5_subplots.png`",
+        "- `relative_l2_dataset_lines_max5_index.csv`",
+        "- `rmse_dataset_lines_max5_index.csv`",
+        "- `relative_l2_dataset_lines_max5_subplots_index.csv`",
+        "- `rmse_dataset_lines_max5_subplots_index.csv`",
         "- `relative_l2_group_mean_std.png`",
         "- `rmse_group_mean_std.png`",
         "- `relative_l2_heatmap_52_datasets.png`",
+        "- `rmse_heatmap_52_datasets.png`",
         "- `relative_l2_reduction_by_dataset.png`",
         "- `relative_l2_checkpoint_change_heatmap.png`",
         "- `relative_l2_checkpoint_change_heatmap_50epoch.png`",
@@ -872,6 +1348,10 @@ def write_summary(
         "- `delta_checkpoint_shapes_all_probes.png`",
         "- `delta_checkpoint_shapes_probe0.png`",
         "- `delta_checkpoint_fft_probe0.png`",
+        "- `delta_checkpoint_fft_probe0_25mode_moving_average.png`",
+        "- `delta_fft_power_raw_no_moving_average.png`",
+        "- `delta_fft_power_25mode_moving_average.png`",
+        "- `delta_fft_power_raw_heatmap_25mode_smoothed_lines.png`",
         "- `delta_fft_power_25epoch_moving_average.png`",
         "",
     ]
@@ -916,11 +1396,40 @@ def main() -> None:
     plot_grouped_dataset_panels_distinct_datasets(
         eval_df, "rmse", out_dir / "rmse_grouped_shared_y_distinct_datasets.png"
     )
+    rel_grouped_max5 = plot_grouped_dataset_panels_distinct_max5(
+        eval_df, "relative_l2", out_dir / "relative_l2_grouped_shared_y_distinct_datasets_max5.png", max_lines_per_panel=5
+    )
+    rmse_grouped_max5 = plot_grouped_dataset_panels_distinct_max5(
+        eval_df, "rmse", out_dir / "rmse_grouped_shared_y_distinct_datasets_max5.png", max_lines_per_panel=5
+    )
+    rel_grouped_max5_ma25 = plot_grouped_dataset_panels_distinct_max5(
+        eval_df, "relative_l2", out_dir / "relative_l2_grouped_shared_y_distinct_datasets_max5_ma25.png", max_lines_per_panel=5, smooth_window=25
+    )
+    rmse_grouped_max5_ma25 = plot_grouped_dataset_panels_distinct_max5(
+        eval_df, "rmse", out_dir / "rmse_grouped_shared_y_distinct_datasets_max5_ma25.png", max_lines_per_panel=5, smooth_window=25
+    )
+    rel_grouped_max5.to_csv(out_dir / "relative_l2_grouped_shared_y_distinct_datasets_max5_index.csv", index=False)
+    rmse_grouped_max5.to_csv(out_dir / "rmse_grouped_shared_y_distinct_datasets_max5_index.csv", index=False)
+    rel_grouped_max5_ma25.to_csv(out_dir / "relative_l2_grouped_shared_y_distinct_datasets_max5_ma25_index.csv", index=False)
+    rmse_grouped_max5_ma25.to_csv(out_dir / "rmse_grouped_shared_y_distinct_datasets_max5_ma25_index.csv", index=False)
+    rel_line_chunks = plot_dataset_line_chunks(eval_df, "relative_l2", out_dir, max_lines=5)
+    rmse_line_chunks = plot_dataset_line_chunks(eval_df, "rmse", out_dir, max_lines=5)
+    rel_line_chunks.to_csv(out_dir / "relative_l2_dataset_lines_max5_index.csv", index=False)
+    rmse_line_chunks.to_csv(out_dir / "rmse_dataset_lines_max5_index.csv", index=False)
+    rel_line_panels = plot_dataset_line_chunk_panels(
+        eval_df, "relative_l2", out_dir / "relative_l2_dataset_lines_max5_subplots.png", max_lines_per_panel=5
+    )
+    rmse_line_panels = plot_dataset_line_chunk_panels(
+        eval_df, "rmse", out_dir / "rmse_dataset_lines_max5_subplots.png", max_lines_per_panel=5
+    )
+    rel_line_panels.to_csv(out_dir / "relative_l2_dataset_lines_max5_subplots_index.csv", index=False)
+    rmse_line_panels.to_csv(out_dir / "rmse_dataset_lines_max5_subplots_index.csv", index=False)
     rel_group = plot_group_mean_std(eval_df, "relative_l2", out_dir / "relative_l2_group_mean_std.png")
     rmse_group = plot_group_mean_std(eval_df, "rmse", out_dir / "rmse_group_mean_std.png")
     rel_group.to_csv(out_dir / "relative_l2_group_mean_std.csv", index=False)
     rmse_group.to_csv(out_dir / "rmse_group_mean_std.csv", index=False)
     plot_heatmap(eval_df, "relative_l2", out_dir / "relative_l2_heatmap_52_datasets.png")
+    plot_heatmap(eval_df, "rmse", out_dir / "rmse_heatmap_52_datasets.png")
     reduction_rel = plot_reduction_bars(eval_df, "relative_l2", out_dir / "relative_l2_reduction_by_dataset.png")
     reduction_rmse = plot_reduction_bars(eval_df, "rmse", out_dir / "rmse_reduction_by_dataset.png")
     reduction_rel.to_csv(out_dir / "relative_l2_reduction_by_dataset.csv", index=False)
@@ -964,12 +1473,24 @@ def main() -> None:
         probe_rank=0,
         out_shape_path=out_dir / "delta_checkpoint_shapes_probe0.png",
         out_fft_path=out_dir / "delta_checkpoint_fft_probe0.png",
+        out_fft_mode_smooth_path=out_dir / "delta_checkpoint_fft_probe0_25mode_moving_average.png",
+        fft_mode_window=25,
     )
     plot_delta_fft_power_moving_average(
         run_dir,
         sorted(probe_df["epoch"].unique()),
         out_path=out_dir / "delta_fft_power_25epoch_moving_average.png",
         out_selected_csv=out_dir / "delta_fft_power_25epoch_moving_average_selected_modes.csv",
+        window=25,
+    )
+    plot_delta_fft_power_raw_and_mode_average(
+        run_dir,
+        sorted(probe_df["epoch"].unique()),
+        raw_out_path=out_dir / "delta_fft_power_raw_no_moving_average.png",
+        raw_selected_csv=out_dir / "delta_fft_power_raw_no_moving_average_selected_modes.csv",
+        mode_out_path=out_dir / "delta_fft_power_25mode_moving_average.png",
+        mode_selected_csv=out_dir / "delta_fft_power_25mode_moving_average_selected_modes.csv",
+        hybrid_out_path=out_dir / "delta_fft_power_raw_heatmap_25mode_smoothed_lines.png",
         window=25,
     )
 
