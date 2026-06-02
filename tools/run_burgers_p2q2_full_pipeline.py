@@ -17,6 +17,7 @@ configuration.
 from __future__ import annotations
 
 import argparse
+import csv
 import importlib
 import json
 import os
@@ -34,9 +35,11 @@ DEFAULT_RUN_NAME = 'burgers_p2q2_advonly_random_jitter_1000ep_bs480_steps5_eps5b
 DEFAULT_OUTPUT_ROOT = PROJECT_ROOT / 'adversarial_training_runs'
 DEFAULT_VIZ_ROOT = PROJECT_ROOT / 'visualizations' / 'burgers_p2q2_adv_training_20260601'
 DEFAULT_FORENSICS_ROOT = PROJECT_ROOT / 'forensics' / 'burgers_p2q2_checkpoint_series_jacobian_svd_20260601'
+DEFAULT_ATTACK_GIF_ROOT = PROJECT_ROOT / 'forensics' / 'burgers_p2q2_baseline_vs_epoch1000_attack_visualization_20260602'
 DEFAULT_SELECTED_TOP = Path('/workspace/polished_selected_download_burgers_p2q2_20260601')
 DEFAULT_SELECTED_ZIP = Path('/workspace/polished_selected_download_burgers_p2q2_20260601.zip')
 DEFAULT_R2_PREFIX = 'machine-sync/NeuralOperatorRobustness2-selected/20260601_burgers_p2q2_adv_training_full_pipeline'
+IMAGE_SUFFIXES = {'.png', '.gif'}
 
 SELECTED_FIGURES = [
     'corrected_attack_loss_three_lines_plus_buckets.png',
@@ -156,12 +159,6 @@ def collect_selected_figures(viz_root: Path, selected_repo: Path, selected_top: 
         shutil.copy2(src, selected_repo / name)
         shutil.copy2(src, selected_top / name)
         copied.append(name)
-    for zip_path, folder in [(zip_repo, selected_repo), (zip_top, selected_top)]:
-        if zip_path.exists():
-            zip_path.unlink()
-        with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
-            for p in sorted(folder.glob('*.png')):
-                zf.write(p, arcname=p.name)
     manifest = {
         'selected_repo': selected_repo,
         'selected_top': selected_top,
@@ -171,7 +168,35 @@ def collect_selected_figures(viz_root: Path, selected_repo: Path, selected_top: 
         'missing': missing,
     }
     (selected_repo / 'selected_figures_manifest.json').write_text(json.dumps(to_jsonable(manifest), indent=2), encoding='utf-8')
+    package = refresh_selected_package(selected_repo, selected_top, zip_repo, zip_top)
+    manifest['package'] = package
     return manifest
+
+
+def refresh_selected_package(selected_repo: Path, selected_top: Path, zip_repo: Path, zip_top: Path) -> dict[str, Any]:
+    """Mirror selected image artifacts to /workspace and refresh image-only zips."""
+    selected_repo.mkdir(parents=True, exist_ok=True)
+    selected_top.mkdir(parents=True, exist_ok=True)
+    for p in selected_top.iterdir():
+        if p.is_file():
+            p.unlink()
+    images = sorted(p for p in selected_repo.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_SUFFIXES)
+    for p in images:
+        shutil.copy2(p, selected_top / p.name)
+    for zip_path, folder in [(zip_repo, selected_repo), (zip_top, selected_top)]:
+        if zip_path.exists():
+            zip_path.unlink()
+        with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
+            for p in sorted(folder.iterdir()):
+                if p.is_file() and p.suffix.lower() in IMAGE_SUFFIXES:
+                    zf.write(p, arcname=p.name)
+    return {
+        'image_count': len(images),
+        'selected_repo': selected_repo,
+        'selected_top': selected_top,
+        'zip_repo': zip_repo,
+        'zip_top': zip_top,
+    }
 
 
 def run_plots(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) -> dict[str, Any]:
@@ -230,11 +255,72 @@ def run_jacobian_svd(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) 
     run_cmd(cmd, dry_run=dry_run, log_path=run_dir / 'pipeline_logs' / 'jacobian_svd.log')
 
 
+def run_svd_visualizations(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) -> None:
+    if dry_run:
+        print(f'[dry-run] would render polished SVD figures from {args.forensics_root}', flush=True)
+        return
+    selected_repo = args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601'
+    selected_repo.mkdir(parents=True, exist_ok=True)
+    mod = import_plot_module('plot_burgers_p2q2_svd_polished_visualizations')
+    mod.FORENSICS = args.forensics_root.resolve()
+    mod.OUT_DIR = selected_repo
+    mod.main()
+    refresh_selected_package(
+        selected_repo,
+        args.selected_top.resolve(),
+        args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601.zip',
+        args.selected_zip.resolve(),
+    )
+
+
+def checkpoint_for_epoch(run_dir: Path, epoch: int) -> Path:
+    csv_path = run_dir / 'burgers' / 'checkpoints.csv'
+    if not csv_path.exists():
+        raise FileNotFoundError(f'checkpoint csv not found: {csv_path}')
+    with csv_path.open('r', newline='', encoding='utf-8') as f:
+        rows = list(csv.DictReader(f))
+    if not rows:
+        raise ValueError(f'empty checkpoint csv: {csv_path}')
+    path_col = 'path' if 'path' in rows[0] else 'checkpoint_path'
+    for row in rows:
+        if int(float(row.get('epoch', -1))) == int(epoch) and row.get(path_col):
+            p = Path(row[path_col])
+            if not p.is_absolute():
+                p = PROJECT_ROOT / p
+            return p.resolve()
+    raise FileNotFoundError(f'epoch {epoch} checkpoint not found in {csv_path}')
+
+
+def run_attack_gif_visualization(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) -> None:
+    if dry_run:
+        print(f'[dry-run] would render baseline-vs-checkpoint attack GIF/PNG for epoch {args.attack_gif_checkpoint_epoch}', flush=True)
+        return
+    selected_repo = args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601'
+    selected_repo.mkdir(parents=True, exist_ok=True)
+    mod = import_plot_module('plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif')
+    mod.SELECTED_DIR = selected_repo
+    mod.OUT_DIR = args.attack_gif_root.resolve()
+    mod.EPOCH1000_CKPT = checkpoint_for_epoch(run_dir, args.attack_gif_checkpoint_epoch)
+    mod.ATTACK_STEPS = int(args.attack_gif_steps)
+    mod.FRAME_EVERY = int(args.attack_gif_frame_every)
+    mod.EPSILON_RMS = float(args.attack_gif_epsilon_rms)
+    mod.ALPHA_RMS = float(args.attack_gif_alpha_rms) if args.attack_gif_alpha_rms is not None else float(args.attack_gif_epsilon_rms) * float(args.attack_gif_alpha_ratio)
+    mod._SOLVER_CACHE = {}
+    mod.main()
+    refresh_selected_package(
+        selected_repo,
+        args.selected_top.resolve(),
+        args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601.zip',
+        args.selected_zip.resolve(),
+    )
+
+
 def sync_to_r2(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) -> None:
     targets = [
         (run_dir, 'run'),
         (args.viz_root.resolve(), 'visualizations'),
         (args.forensics_root.resolve(), 'forensics'),
+        (args.attack_gif_root.resolve(), 'attack_gif_forensics'),
     ]
     upload_script = PROJECT_ROOT / 'tools' / 'upload_path_to_r2_20260525.sh'
     for path, name in targets:
@@ -257,6 +343,8 @@ def git_push_outputs(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) 
         PROJECT_ROOT / 'tools' / 'adversarial_training.py',
         PROJECT_ROOT / 'tools' / 'validate_burgers_l2_delta_geometry.py',
         PROJECT_ROOT / 'tools' / 'compare_burgers_checkpoint_series_jacobian_svd.py',
+        PROJECT_ROOT / 'tools' / 'plot_burgers_p2q2_svd_polished_visualizations.py',
+        PROJECT_ROOT / 'tools' / 'plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif.py',
         PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_full_pipeline.py',
         PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_full_pipeline.sh',
         PROJECT_ROOT / 'tools' / 'plot_burgers_checkpoint_style_hybrid_visualizations.py',
@@ -274,6 +362,9 @@ def git_push_outputs(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) 
         args.forensics_root.resolve() / 'checkpoint_series_solver_similarity_rankwise.csv',
         args.forensics_root.resolve() / 'checkpoint_series_solver_similarity_subspaces.csv',
         args.forensics_root.resolve() / 'config.json',
+        args.attack_gif_root.resolve() / 'summary.json',
+        args.attack_gif_root.resolve() / 'attack_loss_curves.csv',
+        args.attack_gif_root.resolve() / 'sample_manifest.json',
     ]
     existing = [p for p in paths if p.exists()]
     if not existing:
@@ -311,6 +402,19 @@ def write_pipeline_config(args: argparse.Namespace, run_dir: Path) -> None:
             'top_k': args.svd_top_k,
             'checkpoint_epochs': [200, 400, 600, 800, 1000],
         },
+        'postprocess': {
+            'svd_polished_figures': not args.skip_svd_plots,
+            'attack_gif': {
+                'enabled': not args.skip_attack_gif,
+                'out_root': args.attack_gif_root,
+                'checkpoint_epoch': args.attack_gif_checkpoint_epoch,
+                'epsilon_rms': args.attack_gif_epsilon_rms,
+                'alpha_rms': args.attack_gif_alpha_rms,
+                'alpha_ratio_if_alpha_rms_unset': args.attack_gif_alpha_ratio,
+                'attack_steps': args.attack_gif_steps,
+                'frame_every': args.attack_gif_frame_every,
+            },
+        },
     }
     (run_dir / 'pipeline_logs').mkdir(parents=True, exist_ok=True)
     (run_dir / 'pipeline_logs' / 'pipeline_config.json').write_text(json.dumps(to_jsonable(payload), indent=2), encoding='utf-8')
@@ -323,6 +427,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--output-root', type=Path, default=DEFAULT_OUTPUT_ROOT)
     parser.add_argument('--viz-root', type=Path, default=DEFAULT_VIZ_ROOT)
     parser.add_argument('--forensics-root', type=Path, default=DEFAULT_FORENSICS_ROOT)
+    parser.add_argument('--attack-gif-root', type=Path, default=DEFAULT_ATTACK_GIF_ROOT)
     parser.add_argument('--sample-manifest', type=Path, default=PROJECT_ROOT / 'forensics' / 'burgers_adv_training_jacobian_svd_20260531_representative20_same_points' / 'representative20_sample_manifest.csv')
     parser.add_argument('--reuse-root', type=Path, default=PROJECT_ROOT / 'forensics' / 'burgers_adv_training_jacobian_svd_20260531_representative20_same_points')
     parser.add_argument('--selected-top', type=Path, default=DEFAULT_SELECTED_TOP)
@@ -345,6 +450,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--skip-training', action='store_true')
     parser.add_argument('--skip-plots', action='store_true')
     parser.add_argument('--skip-jacobian', action='store_true')
+    parser.add_argument('--skip-svd-plots', action='store_true')
+    parser.add_argument('--skip-attack-gif', action='store_true')
     parser.add_argument('--skip-r2-upload', action='store_true')
     parser.add_argument('--skip-git-push', action='store_true')
     parser.add_argument('--r2-prefix', default=DEFAULT_R2_PREFIX)
@@ -352,6 +459,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--git-commit-message', default=None)
     parser.add_argument('--svd-top-k', type=int, default=100)
     parser.add_argument('--svd-solver', choices=['propack', 'arpack', 'lobpcg'], default='propack')
+    parser.add_argument('--attack-gif-checkpoint-epoch', type=int, default=1000)
+    parser.add_argument('--attack-gif-epsilon-rms', type=float, default=0.12)
+    parser.add_argument('--attack-gif-alpha-ratio', type=float, default=0.10)
+    parser.add_argument('--attack-gif-alpha-rms', type=float, default=None)
+    parser.add_argument('--attack-gif-steps', type=int, default=100)
+    parser.add_argument('--attack-gif-frame-every', type=int, default=2)
     parser.add_argument('--dry-run', action='store_true')
     return parser.parse_args()
 
@@ -371,6 +484,10 @@ def main() -> None:
         run_plots(args, run_dir, dry_run=args.dry_run)
     if args.mode != 'smoke' and not args.skip_jacobian:
         run_jacobian_svd(args, run_dir, dry_run=args.dry_run)
+    if args.mode != 'smoke' and not args.skip_svd_plots:
+        run_svd_visualizations(args, run_dir, dry_run=args.dry_run)
+    if args.mode != 'smoke' and not args.skip_attack_gif:
+        run_attack_gif_visualization(args, run_dir, dry_run=args.dry_run)
     if args.mode != 'smoke' and not args.skip_r2_upload:
         sync_to_r2(args, run_dir, dry_run=args.dry_run)
     if args.mode != 'smoke' and not args.skip_git_push:

@@ -102,3 +102,35 @@ The rankwise similarity tables compare singular values and left/right singular v
 ## Sync behavior
 
 The pipeline can upload to R2 and push to GitHub, but credentials are not written into the code or this document.  R2 sync uses `tools/upload_path_to_r2_20260525.sh` and expects credentials through environment variables or an rclone config.  R2 receives the full run, visualization, and forensics directories under `machine-sync/NeuralOperatorRobustness2-selected/20260601_burgers_p2q2_adv_training_full_pipeline/`.  GitHub receives lightweight reproducibility artifacts only: code, markdown, manifests, selected figures, and CSV/Markdown summaries.  Large checkpoint and SVD NPZ payloads stay on R2 rather than being committed to Git.
+
+
+## 2026-06-02 automation update
+
+The full pipeline now performs two additional post-training visualization stages automatically after the standard evaluation/loss visualizations and checkpoint-series Jacobian/SVD computation:
+
+1. Polished Jacobian/SVD visualizations are rendered from `checkpoint_series_*` and `sample_*/..._jacobian_svd.npz` outputs. These include top-100 singular-value curves with mean/std bands, singular-vector frequency metrics, and FFT spectra for selected left/right singular vectors.
+
+2. A baseline-vs-epoch1000 attack visualization is rendered automatically. It loads the saved epoch-1000 checkpoint, attacks the same six fixed initial conditions for the baseline model and the adversarial-trained model, then saves one GIF plus the first and final PNG frames. The default GIF attack uses RMS-L2 geometry with `epsilon_rms = 0.12`, `attack_steps = 100`, and `frame_every = 2`.
+
+The selected download package is refreshed after each added stage, so it contains the previous polished loss/heatmap figures, the SVD figures, and the attack GIF/PNG figures. The zip files are image-only and include both `.png` and `.gif` artifacts:
+
+```text
+visualizations/burgers_p2q2_adv_training_20260601/polished_selected_download_burgers_p2q2_20260601.zip
+/workspace/polished_selected_download_burgers_p2q2_20260601.zip
+```
+
+New command-line controls:
+
+```text
+--skip-svd-plots
+--skip-attack-gif
+--attack-gif-root
+--attack-gif-checkpoint-epoch
+--attack-gif-epsilon-rms
+--attack-gif-alpha-ratio
+--attack-gif-alpha-rms
+--attack-gif-steps
+--attack-gif-frame-every
+```
+
+R2 sync now includes the attack-GIF forensics directory in addition to the run, visualization, and checkpoint-series SVD forensics directories. GitHub sync includes the new plotting scripts plus lightweight summary files for the GIF attack (`summary.json`, `attack_loss_curves.csv`, and `sample_manifest.json`); large `.npz` traces remain R2/data artifacts rather than Git payloads.
