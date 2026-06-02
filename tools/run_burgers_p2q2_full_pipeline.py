@@ -24,6 +24,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import zipfile
 from pathlib import Path
@@ -63,20 +64,32 @@ def to_jsonable(value: Any) -> Any:
     return value
 
 
-def run_cmd(cmd: list[str | Path], *, cwd: Path = PROJECT_ROOT, dry_run: bool = False, log_path: Path | None = None) -> None:
-    printable = ' '.join(str(x) for x in cmd)
+def run_cmd(
+    cmd: list[str | Path],
+    *,
+    cwd: Path = PROJECT_ROOT,
+    dry_run: bool = False,
+    log_path: Path | None = None,
+    display_cmd: list[str | Path] | None = None,
+    env: dict[str, str] | None = None,
+) -> None:
+    shown = display_cmd or cmd
+    printable = ' '.join(str(x) for x in shown)
     if dry_run:
         print(f'[dry-run] {printable}', flush=True)
         return
     print(f'[run] {printable}', flush=True)
+    run_env = os.environ.copy()
+    if env:
+        run_env.update(env)
     if log_path:
         log_path.parent.mkdir(parents=True, exist_ok=True)
         with log_path.open('a', encoding='utf-8') as f:
             f.write(f'\n$ {printable}\n')
             f.flush()
-            subprocess.run([str(x) for x in cmd], cwd=str(cwd), check=True, stdout=f, stderr=subprocess.STDOUT)
+            subprocess.run([str(x) for x in cmd], cwd=str(cwd), check=True, stdout=f, stderr=subprocess.STDOUT, env=run_env)
     else:
-        subprocess.run([str(x) for x in cmd], cwd=str(cwd), check=True)
+        subprocess.run([str(x) for x in cmd], cwd=str(cwd), check=True, env=run_env)
 
 
 def burgers_run_dir(args: argparse.Namespace) -> Path:
@@ -372,7 +385,35 @@ def git_push_outputs(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) 
     run_cmd(['git', 'add', *existing], dry_run=dry_run)
     msg = args.git_commit_message or 'Add Burgers p2q2 adversarial training pipeline outputs'
     run_cmd(['git', 'commit', '-m', msg], dry_run=dry_run)
-    run_cmd(['git', 'push', 'origin', args.git_branch], dry_run=dry_run)
+    push_env = github_push_env()
+    run_cmd(['git', 'push', 'origin', args.git_branch], dry_run=dry_run, env=push_env, display_cmd=['git', 'push', 'origin', args.git_branch])
+
+
+def github_push_env() -> dict[str, str]:
+    """Return a non-persistent GitHub askpass environment if a token is available.
+
+    The token is read only from process environment (`GITHUB_TOKEN` or
+    `GH_TOKEN`). It is not written to repository files or command logs.
+    """
+    token = os.environ.get('GITHUB_TOKEN') or os.environ.get('GH_TOKEN')
+    if not token:
+        return {'GIT_TERMINAL_PROMPT': '0'}
+    askpass = Path(tempfile.gettempdir()) / 'neural_operator_git_askpass.sh'
+    askpass.write_text(
+        '#!/usr/bin/env sh\n'
+        'case "$1" in\n'
+        '  *Username*) printf "%s\\n" "x-access-token" ;;\n'
+        '  *Password*) printf "%s\\n" "$GITHUB_TOKEN" ;;\n'
+        '  *) printf "%s\\n" "$GITHUB_TOKEN" ;;\n'
+        'esac\n',
+        encoding='utf-8',
+    )
+    askpass.chmod(0o700)
+    return {
+        'GIT_TERMINAL_PROMPT': '0',
+        'GIT_ASKPASS': str(askpass),
+        'GITHUB_TOKEN': token,
+    }
 
 
 def write_pipeline_config(args: argparse.Namespace, run_dir: Path) -> None:
