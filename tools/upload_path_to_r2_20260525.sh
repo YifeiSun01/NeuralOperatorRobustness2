@@ -29,6 +29,19 @@ R2_PREFIX="${R2_PREFIX:-machine-sync/NeuralOperatorRobustness2-selected}"
 R2_REMOTE_NAME="${R2_REMOTE_NAME:-r2auto}"
 REMOTE_UPPER="${R2_REMOTE_NAME^^}"
 REPO_ROOT="/workspace/NeuralOperatorRobustness2"
+
+# Cloudflare R2 can return 501 Not Implemented when clients send optional
+# S3 checksum/system-metadata/head verification requests that R2 does not
+# implement consistently across older rclone builds. Keep the upload path
+# conservative by default; callers can still override cutoff/concurrency.
+RCLONE_R2_SAFE_ARGS=(
+  --s3-no-check-bucket
+  --s3-disable-checksum
+  --s3-no-system-metadata
+  --s3-no-head
+  --s3-upload-cutoff "${R2_UPLOAD_CUTOFF:-5G}"
+  --ignore-checksum
+)
 SRC_ABS="$(realpath "$SRC")"
 REL_SRC="${SRC_ABS#${REPO_ROOT}/}"
 DEST="${R2_REMOTE_NAME}:${R2_BUCKET}/${R2_PREFIX}/${REL_SRC}"
@@ -52,6 +65,8 @@ else
   export "RCLONE_CONFIG_${REMOTE_UPPER}_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}"
   export "RCLONE_CONFIG_${REMOTE_UPPER}_ENDPOINT=${R2_ENDPOINT}"
   # Cloudflare R2 does not implement S3 ACLs; sending x-amz-acl can return 501.
+  # Leave ACL unset unless the caller explicitly asks for it.
+  unset "RCLONE_CONFIG_${REMOTE_UPPER}_ACL" || true
   if [[ -n "${R2_ACL:-}" ]]; then
     export "RCLONE_CONFIG_${REMOTE_UPPER}_ACL=${R2_ACL}"
   fi
@@ -67,14 +82,14 @@ fi
       --transfers "${R2_TRANSFERS:-4}" \
       --checkers "${R2_CHECKERS:-8}" \
       --fast-list \
-      --s3-no-check-bucket \
+      "${RCLONE_R2_SAFE_ARGS[@]}" \
       --exclude '.r2_upload_done' \
       --stats 30s \
       --stats-one-line
   else
     rclone copyto "$SRC_ABS" "$DEST" \
       "${RCLONE_CONFIG_ARGS[@]}" \
-      --s3-no-check-bucket \
+      "${RCLONE_R2_SAFE_ARGS[@]}" \
       --stats 30s \
       --stats-one-line
   fi
