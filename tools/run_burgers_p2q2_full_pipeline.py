@@ -32,14 +32,9 @@ from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PYTHON = Path(sys.executable)
-DEFAULT_RUN_NAME = 'burgers_p2q2_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601'
+DEFAULT_ARTIFACT_DATE = '20260602'
+DEFAULT_LOSS3_RUN_NAME = 'burgers_p2q2_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601'
 DEFAULT_OUTPUT_ROOT = PROJECT_ROOT / 'adversarial_training_runs'
-DEFAULT_VIZ_ROOT = PROJECT_ROOT / 'visualizations' / 'burgers_p2q2_adv_training_20260601'
-DEFAULT_FORENSICS_ROOT = PROJECT_ROOT / 'forensics' / 'burgers_p2q2_checkpoint_series_jacobian_svd_20260601'
-DEFAULT_ATTACK_GIF_ROOT = PROJECT_ROOT / 'forensics' / 'burgers_p2q2_baseline_vs_epoch1000_attack_visualization_20260602'
-DEFAULT_SELECTED_TOP = Path('/workspace/polished_selected_download_burgers_p2q2_20260601')
-DEFAULT_SELECTED_ZIP = Path('/workspace/polished_selected_download_burgers_p2q2_20260601.zip')
-DEFAULT_R2_PREFIX = 'machine-sync/NeuralOperatorRobustness2-selected/20260601_burgers_p2q2_adv_training_full_pipeline'
 IMAGE_SUFFIXES = {'.png', '.gif'}
 
 SELECTED_FIGURES = [
@@ -92,6 +87,44 @@ def run_cmd(
         subprocess.run([str(x) for x in cmd], cwd=str(cwd), check=True, env=run_env)
 
 
+def default_run_name(attack_loss: str) -> str:
+    if attack_loss == 'loss3':
+        return DEFAULT_LOSS3_RUN_NAME
+    return f'burgers_p2q2_{attack_loss}_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_{DEFAULT_ARTIFACT_DATE}'
+
+
+def selected_package_name(args: argparse.Namespace) -> str:
+    return f'polished_selected_download_burgers_p2q2_{args.attack_loss}_{DEFAULT_ARTIFACT_DATE}'
+
+
+def selected_repo_dir(args: argparse.Namespace) -> Path:
+    return args.viz_root.resolve() / selected_package_name(args)
+
+
+def selected_repo_zip(args: argparse.Namespace) -> Path:
+    return args.viz_root.resolve() / f'{selected_package_name(args)}.zip'
+
+
+def resolve_default_paths(args: argparse.Namespace) -> None:
+    args.attack_loss = str(args.attack_loss).lower().strip()
+    if args.attack_loss not in {'loss1', 'loss2', 'loss3'}:
+        raise ValueError(f'unknown --attack-loss {args.attack_loss!r}')
+    if args.run_name is None:
+        args.run_name = default_run_name(args.attack_loss)
+    if args.viz_root is None:
+        args.viz_root = PROJECT_ROOT / 'visualizations' / f'burgers_p2q2_{args.attack_loss}_adv_training_{DEFAULT_ARTIFACT_DATE}'
+    if args.forensics_root is None:
+        args.forensics_root = PROJECT_ROOT / 'forensics' / f'burgers_p2q2_{args.attack_loss}_checkpoint_series_jacobian_svd_{DEFAULT_ARTIFACT_DATE}'
+    if args.attack_gif_root is None:
+        args.attack_gif_root = PROJECT_ROOT / 'forensics' / f'burgers_p2q2_{args.attack_loss}_baseline_vs_epoch1000_attack_visualization_{DEFAULT_ARTIFACT_DATE}'
+    if args.selected_top is None:
+        args.selected_top = Path('/workspace') / selected_package_name(args)
+    if args.selected_zip is None:
+        args.selected_zip = Path('/workspace') / f'{selected_package_name(args)}.zip'
+    if args.r2_prefix is None:
+        args.r2_prefix = f'machine-sync/NeuralOperatorRobustness2-selected/{DEFAULT_ARTIFACT_DATE}_burgers_p2q2_{args.attack_loss}_adv_training_full_pipeline'
+
+
 def burgers_run_dir(args: argparse.Namespace) -> Path:
     return (args.output_root / args.run_name).resolve()
 
@@ -108,6 +141,7 @@ def training_command(args: argparse.Namespace, *, smoke: bool = False) -> list[s
         '--checkpoint-every-epochs', '200',
         '--training-data-mode', 'adv-only',
         '--label-mode', 'solver',
+        '--burgers-attack-loss-objective', args.attack_loss,
         '--epsilon-bucket-count', '5',
         '--attack-probe-samples', str(args.attack_probe_samples),
         '--attack-probe-every-n-epochs', '1',
@@ -122,6 +156,7 @@ def training_command(args: argparse.Namespace, *, smoke: bool = False) -> list[s
         '--burgers-alpha-ratio', str(args.alpha_ratio),
         '--burgers-alpha-jitter-low', str(args.alpha_jitter_low),
         '--burgers-alpha-jitter-high', str(args.alpha_jitter_high),
+        '--burgers-random-start-fraction', str(args.random_start_fraction),
     ]
     if smoke:
         cmd.extend(
@@ -218,8 +253,8 @@ def run_plots(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) -> dict
         return {}
     viz_root = args.viz_root.resolve()
     report_dir = viz_root / 'polished_report'
-    selected_repo = viz_root / 'polished_selected_download_burgers_p2q2_20260601'
-    zip_repo = viz_root / 'polished_selected_download_burgers_p2q2_20260601.zip'
+    selected_repo = selected_repo_dir(args)
+    zip_repo = selected_repo_zip(args)
     viz_root.mkdir(parents=True, exist_ok=True)
     report_dir.mkdir(parents=True, exist_ok=True)
 
@@ -272,7 +307,7 @@ def run_svd_visualizations(args: argparse.Namespace, run_dir: Path, *, dry_run: 
     if dry_run:
         print(f'[dry-run] would render polished SVD figures from {args.forensics_root}', flush=True)
         return
-    selected_repo = args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601'
+    selected_repo = selected_repo_dir(args)
     selected_repo.mkdir(parents=True, exist_ok=True)
     mod = import_plot_module('plot_burgers_p2q2_svd_polished_visualizations')
     mod.FORENSICS = args.forensics_root.resolve()
@@ -281,7 +316,7 @@ def run_svd_visualizations(args: argparse.Namespace, run_dir: Path, *, dry_run: 
     refresh_selected_package(
         selected_repo,
         args.selected_top.resolve(),
-        args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601.zip',
+        selected_repo_zip(args),
         args.selected_zip.resolve(),
     )
 
@@ -308,7 +343,7 @@ def run_attack_gif_visualization(args: argparse.Namespace, run_dir: Path, *, dry
     if dry_run:
         print(f'[dry-run] would render baseline-vs-checkpoint attack GIF/PNG for epoch {args.attack_gif_checkpoint_epoch}', flush=True)
         return
-    selected_repo = args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601'
+    selected_repo = selected_repo_dir(args)
     selected_repo.mkdir(parents=True, exist_ok=True)
     mod = import_plot_module('plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif')
     mod.SELECTED_DIR = selected_repo
@@ -323,7 +358,7 @@ def run_attack_gif_visualization(args: argparse.Namespace, run_dir: Path, *, dry
     refresh_selected_package(
         selected_repo,
         args.selected_top.resolve(),
-        args.viz_root.resolve() / 'polished_selected_download_burgers_p2q2_20260601.zip',
+        selected_repo_zip(args),
         args.selected_zip.resolve(),
     )
 
@@ -351,7 +386,7 @@ def git_push_outputs(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) 
     reproducible without trying to commit multi-GB binary diagnostics.
     """
     viz_root = args.viz_root.resolve()
-    selected_repo = viz_root / 'polished_selected_download_burgers_p2q2_20260601'
+    selected_repo = selected_repo_dir(args)
     paths: list[Path] = [
         PROJECT_ROOT / 'tools' / 'adversarial_training.py',
         PROJECT_ROOT / 'tools' / 'validate_burgers_l2_delta_geometry.py',
@@ -360,14 +395,19 @@ def git_push_outputs(args: argparse.Namespace, run_dir: Path, *, dry_run: bool) 
         PROJECT_ROOT / 'tools' / 'plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif.py',
         PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_full_pipeline.py',
         PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_full_pipeline.sh',
+        PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_loss1_full_pipeline.sh',
+        PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_loss2_full_pipeline.sh',
+        PROJECT_ROOT / 'tools' / 'run_burgers_p2q2_loss12_full_pipelines.sh',
+        PROJECT_ROOT / 'tools' / 'upload_path_to_r2_20260525.sh',
         PROJECT_ROOT / 'tools' / 'plot_burgers_checkpoint_style_hybrid_visualizations.py',
         PROJECT_ROOT / 'tools' / 'plot_burgers_corrected_selected_visualizations.py',
         PROJECT_ROOT / 'docs' / 'burgers_p2q2_full_pipeline_20260601.md',
+        PROJECT_ROOT / 'docs' / 'burgers_p2q2_loss1_loss2_loss3_training_pipeline_20260602.md',
         run_dir / 'pipeline_logs' / 'pipeline_config.json',
         run_dir / 'pipeline_logs' / 'pipeline_done.json',
         run_dir / 'burgers' / 'l2_delta_geometry_check.json',
         run_dir / 'burgers' / 'l2_delta_geometry_check_samples.csv',
-        viz_root / 'polished_selected_download_burgers_p2q2_20260601.zip',
+        selected_repo_zip(args),
         selected_repo,
         args.forensics_root.resolve() / 'checkpoint_series_summary.md',
         args.forensics_root.resolve() / 'checkpoint_series_jacobian_svd_summary.csv',
@@ -421,6 +461,13 @@ def write_pipeline_config(args: argparse.Namespace, run_dir: Path) -> None:
         'run_name': args.run_name,
         'run_dir': run_dir,
         'attack_geometry': 'p=2,q=2 RMS-L2 via fast_replace_l2',
+        'attack_loss_objective': args.attack_loss,
+        'attack_loss_definitions': {
+            'loss1': 'MSE(model(x_adv), model(x_clean).detach()); no solver in attack',
+            'loss2': 'MSE(model(x_adv), solver(x_clean).detach()); solver forward only, no solver backward in attack',
+            'loss3': 'MSE(model(x_adv), solver(x_adv)); solver forward and backward in attack',
+        },
+        'optimizer_training_target': 'model(x_adv) -> solver(x_adv).detach(); loss choice changes attack generation, not the supervised optimizer target',
         'old_linf_failure_mode': 'fast_replace_linf creates coordinatewise sign/rectangular deltas',
         'training': {
             'epochs': 1000,
@@ -434,6 +481,7 @@ def write_pipeline_config(args: argparse.Namespace, run_dir: Path) -> None:
             'epsilon_jitter': [args.eps_jitter_low, args.eps_jitter_high],
             'alpha_ratio': args.alpha_ratio,
             'alpha_jitter': [args.alpha_jitter_low, args.alpha_jitter_high],
+            'random_start_fraction': args.random_start_fraction,
             'epsilon_bucket_count': 5,
         },
         'visualizations': args.viz_root,
@@ -464,15 +512,16 @@ def write_pipeline_config(args: argparse.Namespace, run_dir: Path) -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', choices=['full', 'smoke', 'postprocess'], default='full')
-    parser.add_argument('--run-name', default=DEFAULT_RUN_NAME)
+    parser.add_argument('--attack-loss', choices=['loss1', 'loss2', 'loss3'], default='loss3', help='Burgers attack objective used to generate adversarial samples. loss1 uses no solver; loss2 uses solver forward only; loss3 uses solver forward/backward.')
+    parser.add_argument('--run-name', default=None)
     parser.add_argument('--output-root', type=Path, default=DEFAULT_OUTPUT_ROOT)
-    parser.add_argument('--viz-root', type=Path, default=DEFAULT_VIZ_ROOT)
-    parser.add_argument('--forensics-root', type=Path, default=DEFAULT_FORENSICS_ROOT)
-    parser.add_argument('--attack-gif-root', type=Path, default=DEFAULT_ATTACK_GIF_ROOT)
+    parser.add_argument('--viz-root', type=Path, default=None)
+    parser.add_argument('--forensics-root', type=Path, default=None)
+    parser.add_argument('--attack-gif-root', type=Path, default=None)
     parser.add_argument('--sample-manifest', type=Path, default=PROJECT_ROOT / 'forensics' / 'burgers_adv_training_jacobian_svd_20260531_representative20_same_points' / 'representative20_sample_manifest.csv')
     parser.add_argument('--reuse-root', type=Path, default=PROJECT_ROOT / 'forensics' / 'burgers_adv_training_jacobian_svd_20260531_representative20_same_points')
-    parser.add_argument('--selected-top', type=Path, default=DEFAULT_SELECTED_TOP)
-    parser.add_argument('--selected-zip', type=Path, default=DEFAULT_SELECTED_ZIP)
+    parser.add_argument('--selected-top', type=Path, default=None)
+    parser.add_argument('--selected-zip', type=Path, default=None)
     parser.add_argument('--seed', type=int, default=20260601)
     parser.add_argument('--batch-size', type=int, default=480)
     parser.add_argument('--optimizer-batch-size', type=int, default=32)
@@ -483,6 +532,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--alpha-ratio', type=float, default=1.0)
     parser.add_argument('--alpha-jitter-low', type=float, default=0.75)
     parser.add_argument('--alpha-jitter-high', type=float, default=1.25)
+    parser.add_argument('--random-start-fraction', type=float, default=0.0, help='Burgers attack random start fraction of epsilon. Default 0.0 keeps loss3-compatible settings; loss1 has zero gradient at delta=0 unless this is positive.')
     parser.add_argument('--attack-probe-samples', type=int, default=5)
     parser.add_argument('--smoke-epochs', type=int, default=1)
     parser.add_argument('--smoke-batches-per-epoch', type=int, default=1)
@@ -495,7 +545,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--skip-attack-gif', action='store_true')
     parser.add_argument('--skip-r2-upload', action='store_true')
     parser.add_argument('--skip-git-push', action='store_true')
-    parser.add_argument('--r2-prefix', default=DEFAULT_R2_PREFIX)
+    parser.add_argument('--r2-prefix', default=None)
     parser.add_argument('--git-branch', default='vast-ai')
     parser.add_argument('--git-commit-message', default=None)
     parser.add_argument('--svd-top-k', type=int, default=100)
@@ -512,6 +562,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    resolve_default_paths(args)
     run_dir = burgers_run_dir(args)
     run_dir.mkdir(parents=True, exist_ok=True)
     write_pipeline_config(args, run_dir)
@@ -538,6 +589,7 @@ def main() -> None:
     summary = {
         'run_dir': run_dir,
         'mode': args.mode,
+        'attack_loss_objective': args.attack_loss,
         'elapsed_sec': elapsed,
         'geometry': 'fast_replace_l2 / p=2,q=2',
         'next_full_command': [str(x) for x in training_command(args, smoke=False)],

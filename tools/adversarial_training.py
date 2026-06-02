@@ -414,7 +414,11 @@ def make_attack_sample_info(
     clean_cpu = clean_loss.detach().reshape(-1).float().cpu()
     adv_cpu = adv_loss.detach().reshape(-1).float().cpu()
     gain_cpu = adv_cpu - clean_cpu
-    relative_cpu = gain_cpu / clean_cpu.abs().clamp_min(1e-20)
+    relative_cpu = torch.where(
+        clean_cpu.abs() > 1e-20,
+        gain_cpu / clean_cpu.abs().clamp_min(1e-20),
+        torch.full_like(gain_cpu, float("nan")),
+    )
     return {
         "epsilon": epsilon_cpu,
         "epsilon_jitter_factor": jitter_cpu,
@@ -584,11 +588,13 @@ def collect_attack_probe_records(
         was_training = model.training
         model.eval()
         with torch.no_grad():
-            x_clean_loss, y_clean_loss = selected_clean_pair_for_probe(task, xb.index_select(0, pos_tensor), yb.index_select(0, pos_tensor), cfg)
+            xb_sel = xb.index_select(0, pos_tensor)
+            yb_sel = yb.index_select(0, pos_tensor)
             x_adv_loss = attack_result.x_train.index_select(0, pos_tensor)
             y_adv_loss = attack_result.y_train.index_select(0, pos_tensor)
-            clean_losses = per_sample_finite_mse(model(x_clean_loss), y_clean_loss).detach().cpu().tolist()
-            adv_losses = per_sample_finite_mse(model(x_adv_loss), y_adv_loss).detach().cpu().tolist()
+            clean_tensor, adv_tensor = attack_objective_losses_for_probe(model, task, xb_sel, yb_sel, x_adv_loss, y_adv_loss, cfg)
+            clean_losses = clean_tensor.detach().cpu().tolist()
+            adv_losses = adv_tensor.detach().cpu().tolist()
         if was_training:
             model.train()
         for batch_pos, clean_loss, adv_loss in zip(selected_positions, clean_losses, adv_losses):
@@ -617,7 +623,7 @@ def collect_attack_probe_records(
             "clean_loss_before_attack_sample": clean_loss_sample,
             "adv_loss_after_attack_sample": adv_loss_sample,
             "attack_loss_gain_sample": adv_loss_sample - clean_loss_sample,
-            "attack_loss_gain_relative_sample": (adv_loss_sample - clean_loss_sample) / max(abs(clean_loss_sample), 1e-20),
+            "attack_loss_gain_relative_sample": ((adv_loss_sample - clean_loss_sample) / abs(clean_loss_sample)) if math.isfinite(clean_loss_sample) and abs(clean_loss_sample) > 1e-20 else float("nan"),
             **attack_probe_delta_stats(delta),
         }
         for extra_key, extra_tensor in attack_result.probe_tensors.items():
@@ -627,6 +633,12 @@ def collect_attack_probe_records(
         for key in (
             "attack_type",
             "attack_method",
+            "attack_loss_objective",
+            "attack_objective_definition",
+            "attack_target_source",
+            "attack_uses_solver_forward",
+            "attack_uses_solver_backward",
+            "training_target_source",
             "attack_steps",
             "epsilon_mean",
             "epsilon_min",
@@ -937,6 +949,141 @@ def ns_attack_mask(x: torch.Tensor, mode: str) -> torch.Tensor:
     return mask
 
 
+
+def burgers_attack_loss_objective(cfg: dict[str, Any]) -> str:
+    objective = str(cfg.get("attack_loss_objective", "loss3")).lower().strip()
+    aliases = {
+        "1": "loss1",
+        "l1": "loss1",
+        "loss_1": "loss1",
+        "2": "loss2",
+        "l2": "loss2",
+        "loss_2": "loss2",
+        "3": "loss3",
+        "l3": "loss3",
+        "loss_3": "loss3",
+    }
+    objective = aliases.get(objective, objective)
+    if objective not in {"loss1", "loss2", "loss3"}:
+        raise ValueError(f"unknown Burgers attack_loss_objective={objective!r}; expected loss1/loss2/loss3")
+    return objective
+
+
+def burgers_attack_loss_metadata(objective: str) -> dict[str, Any]:
+    if objective == "loss1":
+        return {
+            "attack_loss_objective": "loss1",
+            "attack_objective_definition": "MSE(model(x_adv), model(x_clean).detach())",
+            "attack_uses_solver_forward": 0,
+            "attack_uses_solver_backward": 0,
+            "full_solver_gradient": False,
+            "attack_target_source": "fixed clean model output; no solver in attack",
+        }
+    if objective == "loss2":
+        return {
+            "attack_loss_objective": "loss2",
+            "attack_objective_definition": "MSE(model(x_adv), solver(x_clean).detach())",
+            "attack_uses_solver_forward": 1,
+            "attack_uses_solver_backward": 0,
+            "full_solver_gradient": False,
+            "attack_target_source": "fixed clean solver output; solver forward only in attack",
+        }
+    return {
+        "attack_loss_objective": "loss3",
+        "attack_objective_definition": "MSE(model(x_adv), solver(x_adv))",
+        "attack_uses_solver_forward": 1,
+        "attack_uses_solver_backward": 1,
+        "full_solver_gradient": True,
+        "attack_target_source": "attacked solver output; solver forward and backward in attack",
+    }
+
+
+def attack_objective_target(
+    model,
+    task: str,
+    xb: torch.Tensor,
+    x_adv: torch.Tensor,
+    yb: torch.Tensor,
+    cfg: dict[str, Any],
+    *,
+    allow_solver_backward: bool,
+) -> tuple[torch.Tensor, str, dict[str, Any]]:
+    """Return the target used only for the adversarial attack objective.
+
+    For Burgers this implements the three historical objectives:
+    loss1: no solver; fixed clean model output.
+    loss2: solver forward at clean x only; target detached, no solver backward.
+    loss3: solver forward at attacked x; solver gradient participates.
+
+    The optimizer training target is intentionally handled separately below by
+    solver_target_for_model_input(..., x_adv, allow_target_grad=False), because
+    these objectives are attack-generation choices.
+    """
+    if task != "burgers":
+        target = solver_target_for_model_input(
+            task,
+            x_adv,
+            yb,
+            cfg,
+            allow_target_grad=allow_solver_backward and solver_target_grad_enabled(cfg),
+        )
+        return target, "loss3", {
+            "attack_loss_objective": "loss3",
+            "attack_objective_definition": "MSE(model(x_adv), solver(x_adv))",
+            "attack_uses_solver_forward": 1,
+            "attack_uses_solver_backward": int(bool(allow_solver_backward and solver_target_grad_enabled(cfg))),
+            "full_solver_gradient": bool(allow_solver_backward and solver_target_grad_enabled(cfg)),
+            "attack_target_source": "attacked solver output",
+        }
+
+    objective = burgers_attack_loss_objective(cfg)
+    if objective == "loss1":
+        with torch.no_grad():
+            target = model(xb).detach()
+        return target, objective, burgers_attack_loss_metadata(objective)
+    if objective == "loss2":
+        target = solver_target_for_model_input(task, xb, yb, cfg, allow_target_grad=False).detach()
+        return target, objective, burgers_attack_loss_metadata(objective)
+
+    target = solver_target_for_model_input(
+        task,
+        x_adv,
+        yb,
+        cfg,
+        allow_target_grad=allow_solver_backward and solver_target_grad_enabled(cfg),
+    )
+    return target, objective, burgers_attack_loss_metadata(objective)
+
+
+def attack_objective_losses_for_probe(
+    model,
+    task: str,
+    xb_selected: torch.Tensor,
+    yb_selected: torch.Tensor,
+    x_adv_selected: torch.Tensor,
+    y_adv_training: torch.Tensor,
+    cfg: dict[str, Any],
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Per-sample clean/attacked losses using the configured attack objective."""
+    if task == "burgers":
+        objective = burgers_attack_loss_objective(cfg)
+        if objective == "loss1":
+            clean_pred = model(xb_selected)
+            clean_target = clean_pred.detach()
+            adv_pred = model(x_adv_selected)
+            return per_sample_finite_mse(clean_pred, clean_target), per_sample_finite_mse(adv_pred, clean_target)
+        if objective == "loss2":
+            fixed_solver_target = solver_target_for_model_input(task, xb_selected, yb_selected, cfg, allow_target_grad=False).detach()
+            clean_pred = model(xb_selected)
+            adv_pred = model(x_adv_selected)
+            return per_sample_finite_mse(clean_pred, fixed_solver_target), per_sample_finite_mse(adv_pred, fixed_solver_target)
+
+    x_clean_loss, y_clean_loss = clean_solver_training_pair(task, xb_selected, yb_selected, cfg)
+    clean_losses = per_sample_finite_mse(model(x_clean_loss), y_clean_loss)
+    adv_losses = per_sample_finite_mse(model(x_adv_selected), y_adv_training)
+    return clean_losses, adv_losses
+
+
 def continuous_attack(
     model,
     xb: torch.Tensor,
@@ -987,18 +1134,28 @@ def continuous_attack(
     try:
         for step in range(used_steps):
             x_adv = x_adv.detach().requires_grad_(True)
-            target = solver_target_for_model_input(
+            target, attack_objective, attack_objective_info = attack_objective_target(
+                model,
                 task,
+                xb,
                 x_adv,
                 yb,
                 cfg,
-                allow_target_grad=solver_target_grad_enabled(cfg),
+                allow_solver_backward=True,
             )
             pred = model(x_adv)
             loss = finite_mse(pred, target)
             if step == 0:
                 with torch.no_grad():
-                    clean_target = solver_target_for_model_input(task, xb, yb, cfg, allow_target_grad=False)
+                    clean_target, _, _ = attack_objective_target(
+                        model,
+                        task,
+                        xb,
+                        xb,
+                        yb,
+                        cfg,
+                        allow_solver_backward=False,
+                    )
                     clean_pred = model(xb)
                     clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
                     clean_loss_value = float(finite_mse(clean_pred, clean_target).detach().cpu())
@@ -1023,9 +1180,18 @@ def continuous_attack(
 
         with torch.no_grad():
             y_train = solver_target_for_model_input(task, x_adv, yb, cfg, allow_target_grad=False).detach()
+            objective_target, attack_objective, attack_objective_info = attack_objective_target(
+                model,
+                task,
+                xb,
+                x_adv,
+                yb,
+                cfg,
+                allow_solver_backward=False,
+            )
             adv_pred = model(x_adv)
-            adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
-            final_loss_value = float(finite_mse(adv_pred, y_train).detach().cpu())
+            adv_loss_samples = per_sample_finite_mse(adv_pred, objective_target)
+            final_loss_value = float(finite_mse(adv_pred, objective_target).detach().cpu())
             delta = (x_adv - xb) * mask
             active = mask > 0
             linf = float(delta.detach().abs().reshape(delta.shape[0], -1).max(dim=1).values.mean().cpu())
@@ -1046,8 +1212,9 @@ def continuous_attack(
 
     info = {
         "label_mode": str(cfg.get("label_mode", "solver")),
-        "target_source": str(cfg.get("label_mode", "solver")),
-        "full_solver_gradient": True,
+        "target_source": "solver_x_adv_training_target" if str(cfg.get("label_mode", "solver")) == "solver" else str(cfg.get("label_mode", "solver")),
+        "training_target_source": "solver(x_adv).detach() for optimizer update" if str(cfg.get("label_mode", "solver")) == "solver" else str(cfg.get("label_mode", "solver")),
+        **attack_objective_info,
         "attack_type": "continuous_l2_rms" if method.endswith("_l2") else "continuous_linf",
         "attack_method": method,
         "attack_p_order": 2 if method.endswith("_l2") else "inf",
@@ -1547,6 +1714,11 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
     override_attack_method = getattr(args, f"{task}_attack_method", None)
     if override_attack_method is not None:
         cfg["attack_method"] = str(override_attack_method)
+    if task == "burgers":
+        cfg["attack_loss_objective"] = str(getattr(args, "burgers_attack_loss_objective", "loss3"))
+    override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
+    if override_random_start_fraction is not None:
+        cfg["random_start_fraction"] = float(override_random_start_fraction)
     override_epsilon_fraction = getattr(args, f"{task}_epsilon_fraction", None)
     if override_epsilon_fraction is not None:
         cfg["epsilon_fraction"] = float(override_epsilon_fraction)
@@ -1719,10 +1891,14 @@ def write_attack_epoch_summary(path: Path, task: str, epoch: int, global_step: i
         "global_step_last": int(global_step),
         "attack_batches": int(len(rows)),
         "attack_samples": int(attack_samples),
+        "attack_loss_objective": str(rows[0].get("attack_loss_objective", "")) if rows else "",
+        "attack_objective_definition": str(rows[0].get("attack_objective_definition", "")) if rows else "",
+        "attack_uses_solver_forward": rows[0].get("attack_uses_solver_forward", "") if rows else "",
+        "attack_uses_solver_backward": rows[0].get("attack_uses_solver_backward", "") if rows else "",
         "clean_loss_before_attack_mean": clean_mean,
         "adv_loss_after_attack_mean": adv_mean,
         "attack_loss_gain_mean": gain_mean,
-        "attack_loss_gain_relative_mean": gain_mean / max(abs(clean_mean), 1e-20) if math.isfinite(gain_mean) and math.isfinite(clean_mean) else float("nan"),
+        "attack_loss_gain_relative_mean": (gain_mean / abs(clean_mean)) if math.isfinite(gain_mean) and math.isfinite(clean_mean) and abs(clean_mean) > 1e-20 else float("nan"),
         "train_loss_used_for_optimizer_updates_mean": _weighted_mean(rows, "train_loss_on_adv_mean"),
         "epsilon_mean": _weighted_mean(rows, "epsilon_mean"),
         "epsilon_min_observed": min((_finite_float(row.get("epsilon_min")) for row in rows), default=float("nan")),
@@ -1840,6 +2016,7 @@ def write_attack_epsilon_bucket_summary(
             "task": task,
             "epoch": int(epoch),
             "global_step_last": int(global_step),
+            "attack_loss_objective": str(cfg.get("attack_loss_objective", "loss3")),
             "bucket_basis": bucket_basis,
             "bucket_index": int(bucket_idx),
             "bucket_count": int(bucket_count),
@@ -2100,6 +2277,11 @@ def train_one_task(
     override_attack_method = getattr(args, f"{task}_attack_method", None)
     if override_attack_method is not None:
         task_cfg["attack_method"] = str(override_attack_method)
+    if task == "burgers":
+        task_cfg["attack_loss_objective"] = str(getattr(args, "burgers_attack_loss_objective", "loss3"))
+    override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
+    if override_random_start_fraction is not None:
+        task_cfg["random_start_fraction"] = float(override_random_start_fraction)
     override_epsilon_fraction = getattr(args, f"{task}_epsilon_fraction", None)
     if override_epsilon_fraction is not None:
         task_cfg["epsilon_fraction"] = float(override_epsilon_fraction)
@@ -2569,6 +2751,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--darcy-attack-steps", type=int, default=None)
     parser.add_argument("--ns2d-attack-steps", type=int, default=None)
     parser.add_argument("--burgers-attack-method", choices=["fast_replace_l2", "fast_add_l2", "fast_replace_linf", "fast_add_linf"], default=None)
+    parser.add_argument("--burgers-attack-loss-objective", choices=["loss1", "loss2", "loss3"], default="loss3", help="Burgers attack objective: loss1=MSE(model(x_adv), model(x_clean)); loss2=MSE(model(x_adv), solver(x_clean).detach()); loss3=MSE(model(x_adv), solver(x_adv)) with solver gradient.")
+    parser.add_argument("--burgers-random-start-fraction", type=float, default=None, help="Optional Burgers attack random-start radius as a fraction of epsilon. Default keeps the task default; loss1 has zero gradient at exactly delta=0, so a tiny value is useful for a dedicated loss1 run.")
     parser.add_argument("--burgers-require-p2q2", action="store_true", help="Require Burgers continuous attack geometry to be p=2,q=2; rejects *_linf methods before training starts.")
     parser.add_argument("--darcy-attack-method", choices=["binary_steepest_replace"], default=None)
     parser.add_argument("--ns2d-attack-method", choices=["fast_replace_linf", "fast_add_linf"], default=None)
@@ -2661,7 +2845,9 @@ def main() -> None:
         },
         "note": (
             "Online adversarial training. The default label mode is solver-label: "
-            "the attack objective uses solver(x_adv), then training uses either "
+            "for Burgers the attack objective can be --burgers-attack-loss-objective loss1/loss2/loss3. "
+            "Loss1 uses no solver in the attack; loss2 uses solver(x_clean).detach() forward only; "
+            "loss3 uses solver(x_adv) with solver forward/backward. Training still uses either "
             "model(x_adv) -> solver(x_adv) for --training-data-mode adv-only, "
             "or both model(x_clean) -> solver(x_clean) and model(x_adv) -> solver(x_adv) "
             "for --training-data-mode clean-plus-adv. For NS2D the attack variable is the "
@@ -2696,13 +2882,14 @@ def main() -> None:
         f"- Smoke: `{bool(args.smoke)}`",
         f"- Label mode: `{args.label_mode}`",
         f"- Training data mode: `{args.training_data_mode}`",
+        f"- Burgers attack loss objective: `{args.burgers_attack_loss_objective}`",
         "",
         "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
         "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
         "Default attack policy:",
-        "- Burgers: short L-infinity fast-replace attack; default attack batch is 256, optimizer microbatch is 32, epsilon is fixed per sample from input range, alpha=epsilon*ratio, and random start is off for comparable same-index probes.",
+        "- Burgers: p=2/q=2 RMS-L2 fast-replace attack in the corrected pipeline. The attack objective can be loss1, loss2, or loss3: loss1 uses no solver; loss2 uses fixed clean solver output without solver backward; loss3 uses attacked solver output with solver backward. Optimizer training remains on attacked solver pairs unless training-data-mode is changed.",
         "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default.",
         "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default, epsilon/alpha are fixed, and random start is off for comparable same-index probes.",
         "",
