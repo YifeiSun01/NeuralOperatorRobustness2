@@ -137,8 +137,8 @@ def training_command(args: argparse.Namespace, *, smoke: bool = False) -> list[s
         '--output-root', args.output_root,
         '--run-name', args.run_name,
         '--seed', str(args.seed),
-        '--epochs', '1000' if not smoke else str(args.smoke_epochs),
-        '--checkpoint-every-epochs', '200',
+        '--epochs', str(args.smoke_epochs if smoke else args.training_epochs),
+        '--checkpoint-every-epochs', str(args.checkpoint_every_epochs),
         '--training-data-mode', 'adv-only',
         '--label-mode', 'solver',
         '--burgers-attack-loss-objective', args.attack_loss,
@@ -158,6 +158,10 @@ def training_command(args: argparse.Namespace, *, smoke: bool = False) -> list[s
         '--burgers-alpha-jitter-high', str(args.alpha_jitter_high),
         '--burgers-random-start-fraction', str(args.random_start_fraction),
     ]
+    if args.checkpoint_wall_seconds:
+        cmd.extend(['--checkpoint-wall-seconds', str(args.checkpoint_wall_seconds)])
+    if args.checkpoint_wall_hours:
+        cmd.extend(['--checkpoint-wall-hours', str(args.checkpoint_wall_hours)])
     if smoke:
         cmd.extend(
             [
@@ -470,8 +474,10 @@ def write_pipeline_config(args: argparse.Namespace, run_dir: Path) -> None:
         'optimizer_training_target': 'model(x_adv) -> solver(x_adv).detach(); loss choice changes attack generation, not the supervised optimizer target',
         'old_linf_failure_mode': 'fast_replace_linf creates coordinatewise sign/rectangular deltas',
         'training': {
-            'epochs': 1000,
-            'checkpoint_every_epochs': 200,
+            'epochs': args.training_epochs,
+            'checkpoint_every_epochs': args.checkpoint_every_epochs,
+            'checkpoint_wall_seconds': args.checkpoint_wall_seconds,
+            'checkpoint_wall_hours': args.checkpoint_wall_hours,
             'training_data_mode': 'adv-only',
             'label_mode': 'solver',
             'batch_size': args.batch_size,
@@ -523,6 +529,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--selected-top', type=Path, default=None)
     parser.add_argument('--selected-zip', type=Path, default=None)
     parser.add_argument('--seed', type=int, default=20260601)
+    parser.add_argument('--training-epochs', type=int, default=1000)
+    parser.add_argument('--checkpoint-every-epochs', type=int, default=200)
+    parser.add_argument('--checkpoint-wall-seconds', default=None, help='Comma-separated wall-clock seconds passed through to adversarial_training.py.')
+    parser.add_argument('--checkpoint-wall-hours', default=None, help='Comma-separated wall-clock hours passed through to adversarial_training.py.')
     parser.add_argument('--batch-size', type=int, default=480)
     parser.add_argument('--optimizer-batch-size', type=int, default=32)
     parser.add_argument('--attack-steps', type=int, default=5)

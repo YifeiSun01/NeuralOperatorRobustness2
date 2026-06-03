@@ -442,6 +442,37 @@ def parse_int_list(value: str | None) -> list[int] | None:
     return out
 
 
+def parse_float_list(value: Any) -> list[float]:
+    if value is None:
+        return []
+    if isinstance(value, (list, tuple)):
+        parts = value
+    else:
+        text = str(value).strip()
+        if not text:
+            return []
+        parts = text.split(",")
+    out: list[float] = []
+    for part in parts:
+        if part is None:
+            continue
+        text = str(part).strip()
+        if not text:
+            continue
+        out.append(float(text))
+    return out
+
+
+def wall_clock_checkpoint_targets(seconds_value: Any, hours_value: Any) -> list[float]:
+    targets = parse_float_list(seconds_value)
+    targets.extend(3600.0 * hours for hours in parse_float_list(hours_value))
+    return sorted({float(target) for target in targets if float(target) > 0})
+
+
+def wall_checkpoint_suffix(target_seconds: float) -> str:
+    return f"wall_{int(round(float(target_seconds))):07d}s"
+
+
 def select_attack_probe_indices(n_train: int, requested_count: int, explicit: str | None) -> np.ndarray:
     explicit_indices = parse_int_list(explicit)
     if explicit_indices is not None:
@@ -2146,10 +2177,23 @@ def count_optimizer_steps_for_epoch(
     return sum(int(math.ceil(size / optimizer_batch_size)) for size in epoch_attack_batch_sizes(n, attack_batch_size, max_batches))
 
 
-def checkpoint_model(model, out_dir: Path, task: str, epoch: int, global_step: int, cfg: dict[str, Any]) -> Path:
+def checkpoint_model(
+    model,
+    out_dir: Path,
+    task: str,
+    epoch: int,
+    global_step: int,
+    cfg: dict[str, Any],
+    *,
+    suffix: str | None = None,
+) -> Path:
     ckpt_dir = out_dir / "checkpoints"
     ckpt_dir.mkdir(parents=True, exist_ok=True)
-    path = ckpt_dir / f"{task}_epoch{epoch:03d}_step{global_step:06d}.pt"
+    safe_suffix = ""
+    if suffix:
+        safe = "".join(ch if ch.isalnum() or ch in {"_", "-"} else "_" for ch in str(suffix))
+        safe_suffix = f"_{safe}"
+    path = ckpt_dir / f"{task}_epoch{epoch:03d}_step{global_step:06d}{safe_suffix}.pt"
     torch.save(
         {
             "task": task,
@@ -2227,6 +2271,8 @@ def train_one_task(
             "eval_every_fraction": args.eval_every_fraction,
             "checkpoint_every_epochs": args.checkpoint_every_epochs,
             "checkpoint_every_fraction": args.checkpoint_every_fraction,
+            "checkpoint_wall_seconds": args.checkpoint_wall_seconds,
+            "checkpoint_wall_hours": args.checkpoint_wall_hours,
             "eval_max_samples": args.eval_max_samples,
             "max_generalization_eval": args.max_generalization_eval,
             "attack_probe_samples": args.attack_probe_samples,
@@ -2306,6 +2352,13 @@ def train_one_task(
     override_optimizer_batch = getattr(args, f"{task}_optimizer_batch_size", None)
     if override_optimizer_batch is not None:
         task_cfg["optimizer_batch_size"] = int(override_optimizer_batch)
+
+    checkpoint_wall_seconds = wall_clock_checkpoint_targets(
+        task_cfg.get("checkpoint_wall_seconds"),
+        task_cfg.get("checkpoint_wall_hours"),
+    )
+    task_cfg["checkpoint_wall_seconds"] = checkpoint_wall_seconds
+    task_cfg["checkpoint_wall_hours"] = [seconds / 3600.0 for seconds in checkpoint_wall_seconds]
 
     out_dir = out_root / task
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -2435,6 +2488,8 @@ def train_one_task(
     train_start_wall = time.perf_counter()
     last_checkpoint_path: Path | None = None
     last_checkpoint_epoch = -1
+    pending_wall_checkpoints = list(checkpoint_wall_seconds)
+    saved_wall_checkpoints: list[dict[str, Any]] = []
 
     for epoch in range(1, int(task_cfg["epochs"]) + 1):
         probe_this_epoch = bool(probe_index_to_rank) and (epoch % probe_every_n_epochs == 0 or epoch == int(task_cfg["epochs"]))
@@ -2633,6 +2688,7 @@ def train_one_task(
                 "checkpoint_path": checkpoint_path,
             },
         )
+        wall_elapsed_after_eval = time.perf_counter() - train_start_wall
         if ckpt is not None:
             write_csv_row(
                 out_dir / "checkpoints.csv",
@@ -2643,8 +2699,36 @@ def train_one_task(
                     "progress_fraction": epoch_progress,
                     "checkpoint_path": checkpoint_path,
                     "eval_wall_sec": seconds,
+                    "checkpoint_reason": "final" if is_final_step else "periodic",
+                    "checkpoint_wall_target_seconds": "",
+                    "wall_elapsed_seconds": wall_elapsed_after_eval,
                 },
             )
+        while pending_wall_checkpoints and wall_elapsed_after_eval >= pending_wall_checkpoints[0]:
+            target_seconds = pending_wall_checkpoints.pop(0)
+            wall_ckpt = checkpoint_model(
+                model,
+                out_dir,
+                task,
+                epoch,
+                global_step,
+                task_cfg,
+                suffix=wall_checkpoint_suffix(target_seconds),
+            )
+            wall_checkpoint_path = project_path(wall_ckpt)
+            wall_row = {
+                "task": task,
+                "epoch": epoch,
+                "global_step": global_step,
+                "progress_fraction": epoch_progress,
+                "checkpoint_path": wall_checkpoint_path,
+                "eval_wall_sec": seconds,
+                "checkpoint_reason": "wall_clock",
+                "checkpoint_wall_target_seconds": target_seconds,
+                "wall_elapsed_seconds": wall_elapsed_after_eval,
+            }
+            write_csv_row(out_dir / "checkpoints.csv", wall_row)
+            saved_wall_checkpoints.append(wall_row)
 
     if last_checkpoint_path is not None and last_checkpoint_epoch == int(task_cfg["epochs"]):
         final_ckpt = last_checkpoint_path
@@ -2680,6 +2764,9 @@ def train_one_task(
         "checkpoint_every_epochs": checkpoint_every_epochs,
         "checkpoint_every_fraction": None if checkpoint_fraction is None else float(checkpoint_fraction),
         "checkpoint_every_steps": checkpoint_every_steps,
+        "checkpoint_wall_seconds": checkpoint_wall_seconds,
+        "checkpoint_wall_hours": [seconds / 3600.0 for seconds in checkpoint_wall_seconds],
+        "wall_clock_checkpoints": saved_wall_checkpoints,
         "attack_probe_indices": probe_indices.tolist(),
         "attack_probe_count": int(len(probe_indices)),
         "attack_probe_every_n_epochs": probe_every_n_epochs,
@@ -2719,6 +2806,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--eval-every-fraction", type=float, default=0.2, help="Deprecated scheduling knob kept for old scripts; evaluation now runs every epoch.")
     parser.add_argument("--checkpoint-every-epochs", type=int, default=200, help="Save a model checkpoint every N epochs; default 200, plus final checkpoint.")
     parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Legacy fallback: save checkpoints every this fraction of total training progress. Used only when --checkpoint-every-epochs <= 0.")
+    parser.add_argument("--checkpoint-wall-seconds", default=None, help="Comma-separated elapsed wall-clock seconds. After an epoch/eval crosses each target, save an extra checkpoint with checkpoint_reason=wall_clock.")
+    parser.add_argument("--checkpoint-wall-hours", default=None, help="Comma-separated elapsed wall-clock hours; converted to --checkpoint-wall-seconds targets.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
@@ -2829,6 +2918,7 @@ def main() -> None:
         "eval_every_fraction_deprecated": args.eval_every_fraction,
         "checkpoint_every_epochs": int(args.checkpoint_every_epochs),
         "checkpoint_every_fraction": args.checkpoint_every_fraction,
+        "checkpoint_wall_seconds": wall_clock_checkpoint_targets(args.checkpoint_wall_seconds, args.checkpoint_wall_hours),
         "attack_probe": {
             "samples": int(args.attack_probe_samples),
             "indices": args.attack_probe_indices,
