@@ -437,6 +437,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--burgers-solver-remat-chunk-steps", type=int, default=20)
     parser.add_argument("--lowpass-keep-modes", type=int, default=16)
     parser.add_argument("--lowpass-preserve-rms", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--variants", default=",".join(v["variant"] for v in VARIANTS), help="Comma-separated variants to run, e.g. loss1_raw,loss2_raw,loss3_raw")
     parser.add_argument("--progress-every", type=int, default=5)
     return parser.parse_args()
 
@@ -462,7 +463,15 @@ def main() -> None:
             for item in eval_sets
         },
     )
-    for variant_cfg in VARIANTS:
+    wanted_variants = [v.strip() for v in str(args.variants).split(",") if v.strip()]
+    available = {v["variant"] for v in VARIANTS}
+    missing_variants = [v for v in wanted_variants if v not in available]
+    if missing_variants:
+        raise ValueError(f"unknown variants: {missing_variants}; available={sorted(available)}")
+    selected_variants = [v for v in VARIANTS if v["variant"] in set(wanted_variants)]
+    if not selected_variants:
+        raise ValueError("no variants selected")
+    for variant_cfg in selected_variants:
         print(f"[start] {variant_cfg['variant']}", flush=True)
         run_variant(args, variant_cfg, device, specs, eval_sets, args.out_dir)
         print(f"[done] {variant_cfg['variant']}", flush=True)

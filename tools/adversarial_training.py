@@ -2207,6 +2207,24 @@ def checkpoint_model(
     return path
 
 
+def load_model_checkpoint_state(model, checkpoint_path: Path, device: torch.device) -> dict[str, Any]:
+    checkpoint_path = checkpoint_path.expanduser().resolve()
+    ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+    if isinstance(ckpt, dict) and "model_state_dict" in ckpt:
+        state = ckpt["model_state_dict"]
+        metadata = {k: v for k, v in ckpt.items() if k != "model_state_dict"}
+    elif isinstance(ckpt, dict):
+        state = ckpt
+        metadata = {}
+    else:
+        raise TypeError(f"checkpoint is not a dict-like object: {checkpoint_path}")
+    model.load_state_dict(state, strict=True)
+    return {
+        "path": project_path(checkpoint_path),
+        "metadata": to_jsonable(metadata),
+    }
+
+
 def estimate_from_smoke(
     task: str,
     train_rows: list[dict[str, Any]],
@@ -2359,12 +2377,26 @@ def train_one_task(
     )
     task_cfg["checkpoint_wall_seconds"] = checkpoint_wall_seconds
     task_cfg["checkpoint_wall_hours"] = [seconds / 3600.0 for seconds in checkpoint_wall_seconds]
+    initial_checkpoint = getattr(args, f"{task}_initial_checkpoint", None)
+    resume_epoch_offset = int(args.resume_epoch_offset or 0)
+    resume_global_step_offset = int(args.resume_global_step_offset or 0)
+    if initial_checkpoint is None:
+        resume_epoch_offset = 0
+        resume_global_step_offset = 0
+    task_cfg["initial_checkpoint"] = None if initial_checkpoint is None else str(initial_checkpoint)
+    task_cfg["resume_epoch_offset"] = resume_epoch_offset
+    task_cfg["resume_global_step_offset"] = resume_global_step_offset
 
     out_dir = out_root / task
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "config.json").write_text(json.dumps(to_jsonable({**run_cfg, **task_cfg}), indent=2), encoding="utf-8")
 
     model = load_model(task, device)
+    initial_checkpoint_info: dict[str, Any] | None = None
+    if initial_checkpoint is not None:
+        initial_checkpoint_info = load_model_checkpoint_state(model, Path(initial_checkpoint), device)
+        task_cfg["initial_checkpoint"] = initial_checkpoint_info["path"]
+        task_cfg["initial_checkpoint_metadata"] = initial_checkpoint_info["metadata"]
+    (out_dir / "config.json").write_text(json.dumps(to_jsonable({**run_cfg, **task_cfg}), indent=2), encoding="utf-8")
     model.train()
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -2388,9 +2420,11 @@ def train_one_task(
         batches_per_epoch = min(batches_per_epoch_nominal, int(max_batches))
     else:
         batches_per_epoch = batches_per_epoch_nominal
-    total_steps = int(task_cfg["epochs"]) * max(1, batches_per_epoch)
+    local_epochs = int(task_cfg["epochs"])
+    total_epochs_for_progress = resume_epoch_offset + local_epochs
+    total_steps = total_epochs_for_progress * max(1, batches_per_epoch)
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
-    total_optimizer_steps = int(task_cfg["epochs"]) * max(1, optimizer_steps_per_epoch)
+    total_optimizer_steps = local_epochs * max(1, optimizer_steps_per_epoch)
     eval_every_steps = max(1, batches_per_epoch)
     checkpoint_every_epochs = int(task_cfg.get("checkpoint_every_epochs") or 0)
     checkpoint_fraction = task_cfg.get("checkpoint_every_fraction")
@@ -2440,6 +2474,8 @@ def train_one_task(
     )
 
     eval_seconds: list[float] = []
+    initial_phase = "resume_checkpoint_before_adversarial_training" if initial_checkpoint is not None else "baseline_before_adversarial_training"
+    initial_progress = resume_global_step_offset / max(1, total_steps)
     eval_rows, seconds = evaluate_task(
         model,
         task,
@@ -2448,30 +2484,30 @@ def train_one_task(
         int(task_cfg["eval_batch_size"]),
         task_cfg["eval_max_samples"],
         eval_csv,
-        global_step=0,
-        epoch=0,
-        progress_fraction=0.0,
-        phase="baseline_before_adversarial_training",
+        global_step=resume_global_step_offset,
+        epoch=resume_epoch_offset,
+        progress_fraction=initial_progress,
+        phase=initial_phase,
         max_generalization_eval=task_cfg["max_generalization_eval"],
     )
     eval_seconds.append(seconds)
     write_eval_split_summary(
         eval_split_csv,
         eval_rows,
-        phase="baseline_before_adversarial_training",
-        epoch=0,
-        global_step=0,
-        progress_fraction=0.0,
+        phase=initial_phase,
+        epoch=resume_epoch_offset,
+        global_step=resume_global_step_offset,
+        progress_fraction=initial_progress,
         eval_wall_sec=seconds,
     )
     write_csv_row(
         eval_pass_csv,
         {
             "task": task,
-            "phase": "baseline_before_adversarial_training",
-            "epoch": 0,
-            "global_step": 0,
-            "progress_fraction": 0.0,
+            "phase": initial_phase,
+            "epoch": resume_epoch_offset,
+            "global_step": resume_global_step_offset,
+            "progress_fraction": initial_progress,
             "eval_wall_sec": seconds,
             "checkpoint_saved": 0,
             "checkpoint_path": "",
@@ -2481,7 +2517,7 @@ def train_one_task(
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
 
-    global_step = 0
+    global_step = resume_global_step_offset
     optimizer_global_step = 0
     train_rows: list[dict[str, Any]] = []
     seed_base = int(args.seed)
@@ -2491,8 +2527,9 @@ def train_one_task(
     pending_wall_checkpoints = list(checkpoint_wall_seconds)
     saved_wall_checkpoints: list[dict[str, Any]] = []
 
-    for epoch in range(1, int(task_cfg["epochs"]) + 1):
-        probe_this_epoch = bool(probe_index_to_rank) and (epoch % probe_every_n_epochs == 0 or epoch == int(task_cfg["epochs"]))
+    for local_epoch in range(1, local_epochs + 1):
+        epoch = resume_epoch_offset + local_epoch
+        probe_this_epoch = bool(probe_index_to_rank) and (epoch % probe_every_n_epochs == 0 or local_epoch == local_epochs)
         epoch_probe_records: list[dict[str, Any]] = []
         epoch_attack_rows: list[dict[str, Any]] = []
         epoch_attack_sample_infos: list[dict[str, torch.Tensor]] = []
@@ -2641,7 +2678,7 @@ def train_one_task(
                 save_targets=probe_save_targets,
             )
 
-        is_final_step = global_step == total_steps
+        is_final_step = local_epoch == local_epochs
         should_checkpoint = is_final_step or (checkpoint_every_steps is not None and global_step % checkpoint_every_steps == 0)
         ckpt: Path | None = None
         checkpoint_path = ""
@@ -2730,10 +2767,11 @@ def train_one_task(
             write_csv_row(out_dir / "checkpoints.csv", wall_row)
             saved_wall_checkpoints.append(wall_row)
 
-    if last_checkpoint_path is not None and last_checkpoint_epoch == int(task_cfg["epochs"]):
+    final_epoch = resume_epoch_offset + local_epochs
+    if last_checkpoint_path is not None and last_checkpoint_epoch == final_epoch:
         final_ckpt = last_checkpoint_path
     else:
-        final_ckpt = checkpoint_model(model, out_dir, task, int(task_cfg["epochs"]), global_step, task_cfg)
+        final_ckpt = checkpoint_model(model, out_dir, task, final_epoch, global_step, task_cfg)
     elapsed = time.perf_counter() - train_start_wall
     estimate = estimate_from_smoke(
         task,
@@ -2757,7 +2795,10 @@ def train_one_task(
         "optimizer_batch_size": optimizer_batch_size,
         "optimizer_steps_per_epoch": optimizer_steps_per_epoch,
         "total_optimizer_steps": total_optimizer_steps,
-        "epochs": int(task_cfg["epochs"]),
+        "epochs": local_epochs,
+        "resume_epoch_offset": resume_epoch_offset,
+        "resume_global_step_offset": resume_global_step_offset,
+        "total_epochs_for_progress": total_epochs_for_progress,
         "total_steps": global_step,
         "evaluation_schedule": "every_epoch",
         "eval_pass_count_including_baseline": int(len(eval_seconds)),
@@ -2808,6 +2849,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Legacy fallback: save checkpoints every this fraction of total training progress. Used only when --checkpoint-every-epochs <= 0.")
     parser.add_argument("--checkpoint-wall-seconds", default=None, help="Comma-separated elapsed wall-clock seconds. After an epoch/eval crosses each target, save an extra checkpoint with checkpoint_reason=wall_clock.")
     parser.add_argument("--checkpoint-wall-hours", default=None, help="Comma-separated elapsed wall-clock hours; converted to --checkpoint-wall-seconds targets.")
+    parser.add_argument("--resume-epoch-offset", type=int, default=0, help="Epoch number represented by the loaded initial checkpoint; resumed epochs are logged after this offset.")
+    parser.add_argument("--resume-global-step-offset", type=int, default=0, help="Global train-step number represented by the loaded initial checkpoint.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
@@ -2827,6 +2870,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ns2d-solver-remat-chunk-steps", type=int, default=20)
     parser.add_argument("--binary-pool-multiplier", type=float, default=1.0, help="Darcy binary attack candidate pool multiplier. Default 1.0 is deterministic top-k for comparable same-index probes.")
     parser.add_argument("--binary-score-noise", type=float, default=0.0, help="Darcy binary attack score noise. Default 0.0 keeps same epsilon/model changes as the main source of probe variation.")
+    parser.add_argument("--burgers-initial-checkpoint", type=Path, default=None, help="Optional Burgers checkpoint to load before adversarial training; used for resume/continuation runs.")
     parser.add_argument("--burgers-train-max", type=int, default=None)
     parser.add_argument("--darcy-train-max", type=int, default=None)
     parser.add_argument("--ns2d-train-max", type=int, default=None)
