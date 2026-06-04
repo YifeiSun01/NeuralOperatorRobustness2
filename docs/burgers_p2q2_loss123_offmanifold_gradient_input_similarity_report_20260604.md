@@ -9,6 +9,7 @@ The short version is:
 - Raw loss3 does not merely make a larger RMS-L2 perturbation. It uses the same RMS-L2 budget but concentrates it into much larger coordinate spikes.
 - Those spikes push the attacked input `x_adv` farther outside the normal clean input range `[0,1]`.
 - The parameter gradient induced by raw loss3 adversarial samples is poorly aligned with the gradients that would reduce clean train/test/generalization loss; for generalization it is negative in the quick gradient-alignment probe.
+- In the 50-step strict gradient-trajectory probe, raw loss3 also has the weakest mean generalization alignment and the most negative-alignment steps among the six variants.
 - Clipping raw loss3 `x_adv` back to `[0,1]` removes the epoch-1 jump. Over 50 attack-batch steps, lowpass+clip is best, so both range and peakiness matter.
 
 ## Artifacts
@@ -19,10 +20,12 @@ Main local result directories:
 - `forensics/burgers_p2q2_epoch1_jump_causal_probe_20260604`
 - `forensics/burgers_p2q2_loss123_delta_manifold_probe_20260603`
 - `forensics/burgers_p2q2_loss123_50step_input_similarity_probe_20260604`
+- `forensics/burgers_p2q2_loss123_50step_gradient_alignment_trajectory_20260604`
 
-New reusable script:
+New reusable scripts:
 
 - `tools/probe_burgers_p2q2_loss123_50step_input_similarity.py`
+- `tools/probe_burgers_p2q2_loss123_50step_gradient_alignment_trajectory.py`
 
 The 50-step run contains the full per-step/per-dataset CSV files:
 
@@ -138,7 +141,7 @@ g_eval = concatenate_parameter_grads(model)
 cosine = dot(g_adv, g_eval) / (norm(g_adv) * norm(g_eval))
 ```
 
-Caveat: the quick diagnostic flattened complex FNO spectral gradients with `.float()`, which can discard imaginary components. The direct epoch-1 and 50-step replay experiments below do not depend on this cosine approximation.
+Caveat: the quick diagnostic flattened complex FNO spectral gradients with `.float()`, which can discard imaginary components. The direct epoch-1 and 50-step replay experiments below do not depend on this cosine approximation. The later 50-step gradient-trajectory probe fixes this by flattening complex gradients as separate real and imaginary components.
 
 ## Attack Objectives
 
@@ -341,10 +344,49 @@ Across all variant-step points except baseline:
 
 The strongest of these simple geometry correlations is `delta Linf`, which supports the peakiness explanation.
 
+## 50-Step Gradient-Alignment Trajectory
+
+This run repeats the same 50 attack-batch training schedule but records parameter-gradient cosine before every optimizer update. Each variant starts from the same baseline. The eval-gradient sets are fixed:
+
+- `clean_train`: 64 samples from `train_original_gaussian_corr0p03`
+- `clean_test`: 64 samples from `test_original_gaussian_corr0p03`
+- `generalization_mixed4`: 128 samples from four generated/generalization datasets
+
+This is not the full generated-50 eval set used in the RMSE tables above; it is a smaller fixed gradient subset, chosen so every step can afford repeated backward passes.
+
+### Mean Cosine Over 50 Steps
+
+| variant | clean train | clean test | generalization mixed4 |
+| --- | ---: | ---: | ---: |
+| loss1_raw | 0.904479 | 0.893988 | 0.588985 |
+| loss2_raw | 0.873912 | 0.877328 | 0.693592 |
+| loss3_raw | 0.948028 | 0.873137 | 0.242348 |
+| loss3_clip01 | 0.881226 | 0.828796 | 0.520322 |
+| loss3_lowpass | 0.907376 | 0.736374 | 0.472702 |
+| loss3_lowpass_clip01 | 0.896101 | 0.852410 | 0.568615 |
+
+### Generalization Cosine At Selected Steps
+
+| variant | step 1 | step 10 | step 25 | step 50 | mean | min | negative steps |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| loss1_raw | 0.866072 | -0.401344 | 0.878706 | 0.386690 | 0.588985 | -0.709740 | 8 |
+| loss2_raw | 0.608182 | 0.943428 | 0.909302 | 0.962086 | 0.693592 | -0.521755 | 3 |
+| loss3_raw | 0.930254 | 0.147082 | -0.710233 | 0.881232 | 0.242348 | -0.835016 | 21 |
+| loss3_clip01 | 0.934359 | -0.575529 | 0.420151 | 0.811395 | 0.520322 | -0.724347 | 7 |
+| loss3_lowpass | 0.932541 | 0.765424 | 0.936271 | 0.929137 | 0.472702 | -0.740225 | 13 |
+| loss3_lowpass_clip01 | 0.931890 | 0.945477 | -0.461261 | -0.331577 | 0.568615 | -0.845255 | 8 |
+
+Interpretation:
+
+- The quick single-batch probe showed raw loss3 negatively aligned with `generalization_mixed4` at baseline. The 50-step trajectory gives a more nuanced picture: raw loss3 is not negative at every selected step, but it has the lowest mean generalization cosine and the most negative steps.
+- Therefore the strongest statement is not "raw loss3 is always negative." The stronger, better-supported statement is: raw loss3 produces an unstable and often conflicting parameter-update direction for generalization, while loss1/loss2 and clipped variants are much more consistently aligned.
+- This gradient-trajectory result agrees with the direct RMSE replay: raw loss3 is the worst 50-step prediction-loss variant, while lowpass+clip is best.
+- The step-1 RMSE jump is still most directly established by the replay experiment: raw loss3 sends generated-50 RMSE from `0.017932` to `0.050429`, while clipping or lowpass+clip removes that jump.
+
 ## Consolidated Interpretation
 
 1. Raw loss3 creates an adversarial input distribution that is much more peak-like and more off-range than loss1/loss2 under the same RMS-L2 budget.
-2. In the quick gradient-alignment test, raw loss3's parameter gradient is negatively aligned with the generalization gradient. That means a small training step on raw loss3 samples is predicted, to first order, to worsen generalization loss.
+2. In the quick gradient-alignment test, raw loss3's parameter gradient is negatively aligned with the generalization gradient. In the stricter 50-step trajectory, raw loss3 has the weakest mean generalization alignment and the most negative-alignment steps.
 3. The direct epoch-1 replay confirms the sign: raw loss3 increases train/test/generalization RMSE immediately, while loss1/loss2 reduce it.
 4. Clipping raw loss3 `x_adv` back to `[0,1]` removes the epoch-1 jump and turns the generalization gradient cosine from negative to strongly positive.
 5. Lowpass without clipping does not fix the gradient-alignment problem in the quick cosine probe, but over 50 steps it partially helps, suggesting shape/peakiness matters too.
