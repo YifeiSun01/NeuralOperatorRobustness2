@@ -1,3 +1,135 @@
+## 2026-06-05 - Burgers round03 consolidated Markdown report for GitHub
+
+Status: created a single consolidated Markdown report for the round03 loss3-selective Burgers generalization work and prepared it for GitHub push.
+
+Source files summarized:
+- `docs/burgers_generalization_round00_round01_direction_analysis_20260605.md`
+- `docs/burgers_loss3_selective_round03_screening_20260605.md`
+- `docs/burgers_round03_characteristics_vs_round01_round02_train_test_20260605.md`
+- `forensics/burgers_loss3_selective_round03_per_dataset_loss3_advantage_20260605/per_dataset_loss3_vs_loss12.csv`
+- `forensics/burgers_loss3_selective_round03_per_dataset_loss3_advantage_20260605/per_dataset_advantage_summary.csv`
+- `forensics/burgers_round03_characteristics_vs_round01_round02_train_test_20260605/group_characteristics_summary.csv`
+- `forensics/burgers_loss3_selective_round03_final_jacobian_svd_gen5_top20_20260605/round01_error_spectral_norm_aggregate.csv`
+
+Output file:
+- `docs/burgers_loss3_selective_round03_complete_report_20260605.md`
+
+Observed evidence captured in the report:
+- Round03 generated-generalization baseline RMSE mean `0.088998`, about `2.09x` round01.
+- Round03 selected-set cosine means loss1/loss2/loss3 `0.364237 / 0.152738 / 0.740184`.
+- Epoch10 generated RMSE loss1/loss2/loss3 `0.068384 / 0.065954 / 0.050512`.
+- Epoch50 generated RMSE loss1/loss2/loss3 `0.055974 / 0.056011 / 0.045295`.
+- Per-dataset audit: loss3 wins `50/50` generated datasets at epoch10 and `50/50` at epoch50; original train/test are won by loss2, so all-52 count is `50/52`.
+- Small rep5/top20 SVD mean error spectral norm baseline/loss1/loss2/loss3 `6.639156 / 5.407318 / 5.620033 / 4.979735`.
+
+Inference:
+- The report frames the result as a generated-OOD/generalization advantage for loss3, not universal train/test superiority.
+
+## 2026-06-05 - Burgers round03 dataset characteristics comparison
+
+Status: completed lightweight data-characteristics audit comparing round03 against train/test, round01, and local partial round02. No training, solver generation, or model evaluation was launched in this audit; metrics were read from existing `.pt`, JSON, and CSV artifacts.
+
+Source files:
+- Train/test: `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt`, `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt`
+- Round01 dataset: `generalization_datasets_burgers_loss3_aligned_search/round_01`
+- Round02 local partial files: `generalization_datasets_burgers_loss3_aligned_search/round_02`
+- Round03 dataset: `generalization_datasets_burgers_loss3_selective_search/round_03`
+- Existing eval/selection sources: `generalization_eval_burgers_loss3_aligned_search_round01/metrics_sorted_by_similarity.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_50ep_20260605/burgers/eval_metrics.csv`, `generalization_datasets_burgers_loss3_selective_search/round_03/selection_summary.json`
+
+Output files:
+- Report: `docs/burgers_round03_characteristics_vs_round01_round02_train_test_20260605.md`
+- Detail CSV: `forensics/burgers_round03_characteristics_vs_round01_round02_train_test_20260605/dataset_characteristics_detail.csv`
+- Group summary CSV: `forensics/burgers_round03_characteristics_vs_round01_round02_train_test_20260605/group_characteristics_summary.csv`
+- Baseline difficulty sources: `forensics/burgers_round03_characteristics_vs_round01_round02_train_test_20260605/baseline_difficulty_sources.csv`
+
+Observed evidence:
+- Train/test inputs are bounded in `[0,1]`; x_oob amount/fraction are zero in this audit.
+- Round01 official set: 50 datasets; baseline generated RMSE mean `0.042543`; x_oob_mean `0.006013`; delta RMS `0.060071`; delta L_inf `0.280736`.
+- Round03 official set: 50 datasets; baseline generated RMSE mean `0.088998`; x_oob_mean `0.019239`; delta RMS `0.114373`; delta L_inf `0.476434`.
+- Round03/round01 ratios: baseline RMSE `2.09x`; x_oob_mean `3.20x`; delta RMS `1.90x`; delta L_inf `1.70x`.
+- Round02 is local partial only: 10 `.pt` files and no manifest/summary/evaluation record.
+
+Inference:
+- Round03 is a stronger, mixed-source, loss3-selective adversarial generalization shift: more out-of-bound and harder than round01, but selected for loss3 gradient direction rather than raw difficulty alone.
+- The correct performance claim remains generated-generalization advantage, not clean train/test advantage.
+
+## 2026-06-05 - Burgers round03 per-dataset loss3 advantage audit
+
+Status: completed per-dataset audit over train/test plus all 50 round03 generated generalization datasets.
+
+Source metric files:
+- 10 epoch `eval_metrics.csv`: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_10ep_20260605/burgers/eval_metrics.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_10ep_20260605/burgers/eval_metrics.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_10ep_20260605/burgers/eval_metrics.csv`
+- 50 epoch `eval_metrics.csv`: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_50ep_20260605/burgers/eval_metrics.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_50ep_20260605/burgers/eval_metrics.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_50ep_20260605/burgers/eval_metrics.csv`
+
+Output files:
+- Detail CSV: `forensics/burgers_loss3_selective_round03_per_dataset_loss3_advantage_20260605/per_dataset_loss3_vs_loss12.csv`
+- Summary CSV: `forensics/burgers_loss3_selective_round03_per_dataset_loss3_advantage_20260605/per_dataset_advantage_summary.csv`
+- Generated RMSE exceptions CSV: `forensics/burgers_loss3_selective_round03_per_dataset_loss3_advantage_20260605/generalization_rmse_loss3_not_best.csv`
+- Updated report: `docs/burgers_loss3_selective_round03_screening_20260605.md`
+
+Observed evidence:
+- Epoch10 generated generalization RMSE: loss3 wins 50/50; top20 generated datasets `d00`-`d19` win 20/20; all 50 generated datasets exceed 10% advantage over the better of loss1/loss2.
+- Epoch50 generated generalization RMSE: loss3 wins 50/50; top20 generated datasets win 20/20; 49/50 generated datasets exceed 10% advantage. `burgers_loss3_selective_r03_d48` is positive but weak at 2.915%.
+- All 52 datasets are not loss3 wins: the original train and test datasets are both won by loss2 at epoch10 and epoch50.
+
+Inference:
+- The defensible claim is strong round03 generated-generalization advantage for loss3, not universal superiority on train/test/generalization together.
+
+## 2026-06-05 - Burgers round03 loss3-selective generalization search and confirmation
+
+Status: complete for round03 search, 10 epoch screening, 50 epoch confirmation, 10-step gradient trajectory, and small rep5/top20 Jacobian/SVD diagnostic.
+
+Source files:
+- `tools/generate_burgers_loss3_selective_generalization.py`
+- `tools/compare_burgers_round01_final_jacobian_svd.py` (updated to allow custom loss labels/epochs for round03 checkpoints)
+- `docs/burgers_loss3_selective_round03_screening_20260605.md`
+
+Output files and exact metric sources:
+- Dataset: `generalization_datasets_burgers_loss3_selective_search/round_03`
+- Candidate pool: `generalization_datasets_burgers_loss3_selective_search/round_03_candidate_pool`
+- Selection summary: `generalization_datasets_burgers_loss3_selective_search/round_03/selection_summary.json`
+- Gradient trajectory: `forensics/burgers_loss3_selective_round03_loss123_gradient_alignment_10step_20260605/gradient_alignment_mean_by_variant.csv`
+- 10 epoch eval CSVs: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_10ep_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_10ep_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_10ep_20260605/burgers/eval_split_summary.csv`
+- 50 epoch eval CSVs: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_50ep_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_50ep_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_50ep_20260605/burgers/eval_split_summary.csv`
+- Jacobian/SVD: `forensics/burgers_loss3_selective_round03_final_jacobian_svd_gen5_top20_20260605`
+
+Key settings:
+- GPU verified on Tesla V100-SXM2-32GB; PyTorch `2.8.0+cu126` with `sm_70`; JAX backend `gpu`.
+- Round03 selected 50 datasets from 60 candidates; candidate settings included epsilon/steps `0.08:8`, `0.10:8`, `0.12:10`; selected datasets have 50 samples each.
+- Screening and confirmation used Burgers p2q2, adv-only, solver labels, fast_replace_l2, attack steps 5, epsilon fraction 0.06, batch size 480, optimizer batch size 32, full 50 dataset generalization eval.
+- SVD diagnostic used generalization samples=5, top_k=20, solver Jacobians recomputed on round03 X.
+
+Observed evidence:
+- From `generalization_datasets_burgers_loss3_selective_search/round_03/selection_summary.json`: baseline generalization RMSE mean `0.088998`, relative L2 mean `0.159756`, cosine means loss1/loss2/loss3 `0.364237` / `0.152738` / `0.740184`.
+- From `forensics/burgers_loss3_selective_round03_loss123_gradient_alignment_10step_20260605/gradient_alignment_mean_by_variant.csv`: 10-step trajectory generalization cosine means loss1/loss2/loss3 `0.093088` / `0.091060` / `0.231641`.
+- From 10 epoch CSVs: epoch10 generalization RMSE loss1/loss2/loss3 `0.068384` / `0.065954` / `0.050512`; improvement from baseline `23.16%` / `25.89%` / `43.24%`.
+- From 50 epoch CSVs: final epoch50 generalization RMSE loss1/loss2/loss3 `0.055974` / `0.056011` / `0.045295`; final improvement `37.11%` / `37.06%` / `49.11%`.
+- From 50 epoch CSVs: best generalization RMSE loss1 epoch49 `0.055525`, loss2 epoch49 `0.054623`, loss3 epoch42 `0.041589`.
+- From `forensics/burgers_loss3_selective_round03_final_jacobian_svd_gen5_top20_20260605/round01_error_spectral_norm_aggregate.csv`: rep5/top20 mean error spectral norm baseline/loss1/loss2/loss3 `6.639156` / `5.407318` / `5.620033` / `4.979735`.
+
+Inference from the observed evidence:
+- Round03 is a substantially better dataset for showing loss3 generalization advantage than round01.
+- The advantage is generalization-selective; loss3 final clean train/test metrics are worse than loss1/loss2, so report it as a round03 OOD/generalization advantage rather than an all-split win.
+- The small SVD result supports follow-up but is not final; run rep20/top100 and include loss3 best epoch42 if a stronger Jacobian/subspace claim is needed.
+
+Remaining work:
+- Optional official diagnostic: round03 rep20/top100 Jacobian/SVD with recomputed solver Jacobians.
+- Optional checkpoint comparison: loss3 epoch42 vs loss1/loss2 best-gen checkpoints.
+- Keep large `.pt`, `.npz`, generated data, and images out of Git unless explicitly requested.
+
+## 2026-06-05 - Burgers round00/round01 generalization direction analysis
+
+- Status: completed read-only analysis and stopped an accidental partial `round_02` generation; no new training run, evaluation run, Jacobian/SVD run, or official dataset generation was completed.
+- Result document: `docs/burgers_generalization_round00_round01_direction_analysis_20260605.md`.
+- Source files inspected: `generalization_datasets_burgers_aggressive_loss3_search/round_00/manifest.json`, `generalization_datasets_burgers_loss3_aligned_search/round_01/manifest.json`, `generalization_datasets_burgers_loss3_aligned_search/round_01/loss3_aligned_geometry_summary.json`, `generalization_eval_burgers_aggressive_loss3_search_round00/metrics_sorted_by_similarity.csv`, `generalization_eval_burgers_loss3_aligned_search_round01/metrics_sorted_by_similarity.csv`, round00/round01 gradient-alignment forensics, round01 training reports, round01 final Jacobian/SVD reports, and Burgers loss1/loss2/loss3 mechanism probes under `forensics/`.
+- Observed from round00 evaluation: the hand-crafted aggressive set is very hard for the baseline model, with generated mean RMSE `0.3743` and mean relative L2 `0.7405`, but 10-step generalization-gradient cosines are near zero for all raw variants: loss1 `-0.0155`, loss2 `0.0374`, loss3 `0.0342`.
+- Observed from round01 evaluation and probes: the loss3-aligned set is less extreme, with generated mean RMSE `0.04254`, mean relative L2 `0.07883`, `x_adv` range about `[-0.2873, 1.3078]`, `oob_mean = 0.0060`, and `linf/RMS = 4.6810`; its 50-step generalization-gradient cosine strongly favors loss3, with means loss1 `0.2357`, loss2 `0.1667`, loss3 `0.7354`.
+- Observed from round01 training: loss3 has the best seen generalization RMSE at epoch 463 (`0.007302`), but final checkpoints are mixed: loss1 epoch1000 gen RMSE `0.009127`, loss3 epoch500 `0.009939`, loss2 epoch500 `0.012053`; equal wall-clock comparisons still favor loss1/loss2.
+- Observed from round01 Jacobian/SVD: loss3 has the best generalization top-10/top-20 right model-subspace similarity to the solver, but loss1 still has lower generalization `||J_model - J_solver||_2` mean (`1.3575` vs loss3 `1.6195`).
+- Inference: the next search should be more aggressive than round01, but should preserve loss3-selective geometry rather than repeating round00-style arbitrary range/sign shifts. Candidate filtering should prioritize high loss3 cosine and low/negative loss1/loss2 cosine, with moderate baseline generated RMSE rather than maximum raw difficulty.
+- Partial-state note: interrupted `generalization_datasets_burgers_loss3_aligned_search/round_02` currently has 10 `.pt` files and no manifest/summary; it is incomplete and should not be treated as an official dataset.
+- Remaining work: generate a deliberate next candidate pool only after choosing the round id/overwrite policy, then run 5/10 epoch screening before any 50 epoch training.
+
 ## 2026-05-22 - NS2D dictionary solver batch-size probe
 
 - Status: ran forward-only GPU probes for true NS2D solver batch sizes; no full dictionary generation and no R2 upload were launched.
