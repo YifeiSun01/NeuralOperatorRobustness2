@@ -9870,3 +9870,278 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Equivalence conclusion: for `p = 2`, `raw_replace` and `steepest_replace` are the same current update because both use the normalized raw/L2-steepest direction and replacement to the L2 boundary; `raw_add` is related but not identical to `steepest_add` because raw gradient magnitude is retained.
 - Remaining work: a stronger cross-`p/q` statement requires complete same-protocol four-method tables beyond the currently evidenced p2q2 core comparisons.
 - Dedicated result file: `docs/ns_burgers_optimizer_winner_and_equivalence_summary_20260524.md`.
+
+## Burgers Round03 Full Long Pipeline Code - 2026-06-05T04:53:00Z
+
+- Status: pipeline code prepared; long training is in progress, not yet complete.
+- Source files added/updated: `tools/run_burgers_loss3_selective_round03_long_training_20260605.sh`, `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py`, `tools/summarize_burgers_round03_long_training.py`, and `tools/compare_burgers_round01_final_jacobian_svd.py`.
+- Dedicated record file: `docs/burgers_loss3_selective_round03_full_pipeline_code_plan_20260605.md`.
+- Target dataset: `generalization_datasets_burgers_loss3_selective_search/round_03`, observed locally with `50` Burgers generated `.pt` files.
+- GPU preflight observed before launch: `nvidia-smi` reported Tesla V100-SXM2-32GB; PyTorch `2.8.0+cu126`, CUDA `12.6`, device capability `(7, 0)`, architecture list includes `sm_70`; JAX `0.10.0` backend `gpu` with one CUDA device.
+- Training settings encoded in pipeline: `loss1` 1000 epochs, `loss2` 500 epochs, `loss3` 500 epochs; `adv-only`, solver labels, p2q2 `fast_replace_l2`, attack steps 5, Burgers batch size 480, optimizer batch size 32, epsilon fraction 0.06, jittered epsilon/alpha, full train/test/generated50 evaluation every epoch.
+- Checkpoint settings encoded in pipeline: periodic every 100 epochs plus wall-clock targets `0.5,1.0,1.38,1.4,2.0,3.0,3.05,3.1,4.0,5.0,6.0,6.3` hours.
+- Posthoc settings encoded in pipeline: same-epoch and same-wall-clock prediction summaries; per-generated-dataset loss3 advantage counts; best epoch by split; attack delta summaries; 50-step gradient-alignment replay; final checkpoint Jacobian/SVD; same-wall-as-loss1-final and same-wall-as-loss2-final Jacobian/SVD.
+- Observed active process while recording: `tools/adversarial_training.py` is running `burgers_loss3_selective_round03_loss1_1000ep_long_20260605`; latest inspected `eval_split_summary.csv` had reached epoch `191` with generated generalization RMSE mean about `0.044395` and test RMSE about `0.00339045` for the live loss1 run.
+- Evidence separation: the live epoch-191 numbers are status/progress observations only, not final conclusions. No final long-run comparison, gradient trajectory, or long-run Jacobian/SVD result is complete yet.
+- Remaining work: let loss1 finish, then run loss2/loss3; after all three `summary.json` files exist, run `summarize`, `gradient`, `svd-final`, and `svd-wall` stages; then write/update the final long-training report and decide which source/Markdown files to commit.
+
+## Burgers Round03 Long Training 10-Minute Monitor - 2026-06-05T05:54:30Z
+
+- Status: completed 10-minute health monitor; no anomaly observed during the monitoring window.
+- Source evidence: `forensics/burgers_loss3_selective_round03_long_training_monitor_20260605/loss1_10min_monitor_20260605_054458_UTC.log`, `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605/burgers/eval_split_summary.csv`, and `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605/burgers/checkpoints.csv`.
+- Active run observed: `burgers_loss3_selective_round03_loss1_1000ep_long_20260605` under `tools/run_burgers_loss3_selective_round03_long_training_20260605.sh`; no duplicate training process was started.
+- GPU evidence: Tesla V100-SXM2-32GB remained active; observed memory stayed about `4896 MiB / 32768 MiB`, with utilization varying by train/eval/attack phase and reaching `99%` in the final sample.
+- Key observed progress: latest eval epoch advanced from `786` at sample 1 to `901` at sample 20; the epoch 900 periodic checkpoint was observed at `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605/burgers/checkpoints/burgers_epoch900_step002700.pt`.
+- Latest observed metrics from sample 20 / epoch 901: train RMSE `0.00165605`, test RMSE `0.0017759`, generated50 generalization RMSE `0.0371724`; invalid-value fractions were `0.0` for train/test/generalization.
+- Conclusion: observed evidence indicates the loss1 long-training stage was healthy over the 10-minute window. This is not a final loss1/loss2/loss3 comparison.
+- Dedicated result file: `docs/burgers_loss3_selective_round03_long_training_10min_monitor_20260605.md`.
+- Remaining work: allow the long-training driver to finish loss1, then loss2 and loss3; after all three summaries exist, run `summarize`, `gradient`, `svd-final`, and `svd-wall` stages.
+
+## Burgers Round03 Long Training Live Status - 2026-06-05T14:57:18Z
+
+- Status: live status inspection; long-training driver is still running and currently in the `loss3` stage.
+- Source evidence: process table, `nvidia-smi`, `adversarial_training_runs/burgers_loss3_selective_round03_long_training_20260605_logs/driver.log`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/burgers/eval_split_summary.csv`, and `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/burgers/checkpoints.csv`.
+- Observed completed stages: `loss1` completed at `2026-06-05T06:02:44Z` with final checkpoint `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605/burgers/checkpoints/burgers_epoch1000_step003000.pt`; `loss2` completed at `2026-06-05T09:04:28Z` with final checkpoint `adversarial_training_runs/burgers_loss3_selective_round03_loss2_500ep_long_20260605/burgers/checkpoints/burgers_epoch500_step001500.pt`.
+- Observed active stage: `loss3` process `tools/adversarial_training.py ... --run-name burgers_loss3_selective_round03_loss3_500ep_long_20260605 --epochs 500 --burgers-attack-loss-objective loss3` with elapsed process time about `05:52:48` at inspection.
+- GPU evidence: Tesla V100-SXM2-32GB, approximately `30732 MiB / 32768 MiB` memory used and `34%` utilization at the sampled instant; high memory use is expected for loss3 because solver-gradient/JAX path is active.
+- Latest observed loss3 eval row: epoch `444/500`, generated50 generalization RMSE mean `0.0252264`, generated50 relative L2 mean `0.0452496`, test RMSE `0.0063075`, test relative L2 `0.0117345`; invalid-value fractions were `0.0`.
+- Latest observed loss3 checkpoint evidence: periodic checkpoints through epoch `400`, plus wall-clock checkpoints including epoch `378` for target `18000s`; the final checkpoint is not yet present because loss3 has not reached epoch 500.
+- Inference: at the current pace, loss3 should finish after the remaining epochs, then posthoc summarize/gradient/SVD stages still need to be run separately.
+
+## Burgers Round03 Automatic Posthoc Watcher - 2026-06-05T15:08:14Z
+
+- Status: watcher launched to automatically run post-training analysis after `loss3` finishes.
+- Reason: the active long-training process was launched via `tools/run_burgers_loss3_selective_round03_long_training_20260605.sh`, which only runs training. The full pipeline code includes posthoc stages, but the already-running shell would not automatically invoke them without a watcher.
+- Watcher PID: `477572`.
+- Watcher log: `adversarial_training_runs/burgers_loss3_selective_round03_full_pipeline_20260605_logs/posthoc_after_loss3_watcher_20260605_150814_UTC.log`.
+- Wait condition: `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/summary.json`.
+- Automatic command after wait: `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py --stages summarize,plots,gradient,svd-final,svd-wall --skip-existing`.
+- Source updates: added `tools/plot_burgers_round03_long_training_comparison.py` and added the `plots` stage to `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py`.
+- Expected posthoc outputs: comparison CSV/Markdown under `forensics/burgers_loss3_selective_round03_long_training_comparison_20260605/` and `docs/burgers_loss3_selective_round03_long_training_report_20260605.md`; per-run plots under `visualizations/burgers_loss3_selective_round03_loss*_long_20260605_plots/`; cross-loss plots under `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/`; gradient alignment under `forensics/burgers_loss3_selective_round03_loss123_gradient_alignment_50step_long_pipeline_20260605/`; SVD diagnostics under the configured round03 long final/same-wall forensics directories.
+- Evidence separation: this entry records automation setup only; final numerical conclusions are pending completion of the watcher-run posthoc stages.
+
+## Burgers Round03 Automatic Posthoc Watcher v2 - 2026-06-05T15:09:59Z
+
+- Status: watcher v2 launched and verified alive; watcher v1 (`PID 477572`) exited after its first status check and did not remain active.
+- Source script: `tools/watch_burgers_round03_posthoc_after_loss3_20260605.sh`.
+- Watcher v2 PID: `478981`; verification showed `PPID 1` and independent `SID 478981`, so it is detached from the launching shell.
+- Watcher v2 log: `adversarial_training_runs/burgers_loss3_selective_round03_full_pipeline_20260605_logs/posthoc_after_loss3_watcher_v2_20260605_150959_UTC.log`.
+- Wait condition: `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/summary.json`.
+- Automatic posthoc command after loss3 completion: `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py --stages summarize,plots,gradient,svd-final,svd-wall --skip-existing`.
+- Latest observed loss3 progress near watcher verification: epoch `460/500`, generated50 generalization RMSE mean `0.0251923`, generated50 relative L2 mean `0.0451943`, invalid-value fractions `0.0`.
+- Evidence separation: this records automation setup and live progress only; final conclusions are pending posthoc completion.
+
+## Burgers Round03 Automatic Posthoc Status Check - 2026-06-05T15:12:08Z
+
+- Status: watcher v2 is still alive and waiting for the loss3 long-training summary before starting posthoc analysis.
+- Observed from process table: watcher v2 `PID 478981` has `PPID 1`, `SID 478981`, state `Ss`, and elapsed time about `02:09`.
+- Observed from watcher log: latest recorded loss3 eval rows reached epoch `462/500`; generated50 generalization RMSE mean `0.0251355`, generated50 relative L2 mean `0.0451007`, test RMSE `0.00632662`, and invalid-value fractions were `0.0`.
+- Observed from long-training driver log: `loss1` finished at `2026-06-05T06:02:44Z`, `loss2` finished at `2026-06-05T09:04:28Z`, and `loss3` started at `2026-06-05T09:04:28Z`.
+- Observed from file check: `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/summary.json` is not present yet, so automatic posthoc has not started yet.
+- Inference: no separate manual posthoc command should be needed if watcher v2 remains alive; it will run `summarize,plots,gradient,svd-final,svd-wall` after the loss3 summary appears. Final numerical conclusions remain pending.
+
+## Burgers Round03 Loss3 Completion Status Check - 2026-06-05T16:09:00Z
+
+- Status: `loss3` long training is complete; automatic posthoc analysis is in progress.
+- Observed from `adversarial_training_runs/burgers_loss3_selective_round03_long_training_20260605_logs/driver.log`: `loss3` started at `2026-06-05T09:04:28Z`, finished at `2026-06-05T15:42:40Z`, and the driver then wrote `all done`.
+- Observed files: `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/summary.json` exists, and final checkpoint `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/burgers/checkpoints/burgers_epoch500_step001500.pt` exists.
+- Observed final loss3 epoch-500 eval from `eval_split_summary.csv`: train RMSE `0.00588098`, train relative L2 `0.0110613`; test RMSE `0.00616881`, test relative L2 `0.0114765`; generated50 generalization RMSE mean `0.0236606`, generated50 relative L2 mean `0.0424415`; invalid-value fractions were `0.0`.
+- Observed posthoc progress from watcher log: after detecting the loss3 summary at `2026-06-05T15:42:59Z`, the watcher started `summarize`, `plots`, `gradient`, and `svd-final`; the active posthoc process is currently `svd_final_rep20_top100`.
+- Observed outputs already present: `docs/burgers_loss3_selective_round03_long_training_report_20260605.md`, `forensics/burgers_loss3_selective_round03_long_training_comparison_20260605/epoch_aligned_split_metrics.csv`, and cross-loss PNG plots under `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/`.
+- Inference: no further training is running for loss1/loss2/loss3; remaining work is posthoc SVD and same-wall SVD completion, followed by final interpretation and Git/R2 recording as appropriate.
+
+## Burgers Round03 Current Advantage Assessment - 2026-06-05T16:14:00Z
+
+- Status: completed current interpretation of available round03 long-training prediction and gradient-alignment evidence; final Jacobian/SVD evidence is still pending.
+- Dedicated result file: `docs/burgers_loss3_selective_round03_current_advantage_assessment_20260605.md`.
+- Observed from `docs/burgers_loss3_selective_round03_long_training_report_20260605.md`: final generated50 generalization RMSE is `0.0236606` for loss3, compared with `0.0365568` for loss1 final and `0.0396661` for loss2 final.
+- Observed from `per_dataset_generated_advantage_summary.csv`: at final comparison loss3 wins all `50/50` generated datasets against both loss1 and loss2; mean RMSE advantage is `35.93%` versus loss1 final and `41.32%` versus loss2 final.
+- Observed from `best_epoch_by_split.csv`: best generated50 RMSE is `0.0230768` for loss3, compared with `0.0351621` for loss1 and `0.0383002` for loss2.
+- Observed from `wall_clock_pairwise_ratios.csv`: loss3 is worse at the loss1-final wall-clock budget on generated50, but beats both observed baselines at the loss2-final wall-clock budget on generated50.
+- Observed from `gradient_alignment_mean_by_variant.csv`: generalization-mixed4 cosine is `0.276633` for loss3, `0.119059` for loss2, and `0.0338632` for loss1.
+- Observed caveat: final train/test RMSE is worse for loss3 (`0.0058810` train, `0.0061688` test) than for loss1/loss2, so the current advantage is a targeted round03 generated-generalization advantage, not a uniform in-distribution advantage.
+- Inference: current completed prediction and gradient evidence clearly supports loss3 on the intended round03 generated50 generalization target; final spectral/subspace claims should wait for the active Jacobian/SVD posthoc job.
+
+## Burgers Round03 Wall-Clock Analysis - 2026-06-05T16:28:00Z
+
+- Status: completed detailed wall-clock interpretation for the completed prediction/gradient evidence; final Jacobian/SVD evidence remains pending.
+- Dedicated result file: `docs/burgers_loss3_selective_round03_wall_clock_analysis_20260605.md`.
+- Observed runtime from checkpoint tables: loss1 final is `1000` epochs in `1.39523 h` (`5.02 s/epoch`), loss2 final is `500` epochs in `3.02754 h` (`21.80 s/epoch`), and loss3 final is `500` epochs in `6.63540 h` (`47.77 s/epoch`).
+- Observed train-step timing from `train_steps.csv`: mean attack sec/step is `1.1975` for loss1, `6.1675` for loss2, and `14.7681` for loss3; loss3 attack uses solver forward and solver backward.
+- Observed same-wall result: at the loss1-final budget, loss3 selected epoch `104` has generated50 RMSE `0.046274`, worse than loss1 final `0.036557`; at the loss2-final budget, loss3 selected epoch `229` has generated50 RMSE `0.034025`, better than loss1 final and loss2 final `0.039666`.
+- Observed volatility: loss3 generated50 RMSE around epochs `100-115` oscillates strongly (`0.034832` to `0.046274`), so the 1.4 h region is a transition zone rather than stable dominance.
+- Observed rolling-window trend: loss3 10-epoch RMSE mean first goes below loss2 final around epochs `136-145` and below loss1 final around epochs `208-217`; by the loss2-final wall-clock budget, it is after the stable crossover against both final baselines.
+- Inference: loss3 pays a large compute tax early, but its more OOD-aligned gradient direction eventually dominates on round03 generated50 generalization. This is not a train/test win; final train/test RMSE remains worse for loss3 than for loss1/loss2.
+
+## Burgers Round03 Plot And Jacobian/SVD Status Check - 2026-06-05T16:28:12Z
+
+- Status: plotting stages are complete; final Jacobian/SVD posthoc is actively running and not complete yet.
+- Observed plot outputs: cross-loss comparison plots exist under `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/`, including same-epoch RMSE/relative-L2, wall-clock RMSE/relative-L2, final RMSE/relative-L2 bars, generated50 loss3-advantage histogram, and the plot manifest.
+- Observed per-run plot outputs: per-loss plot directories exist for `loss1`, `loss2`, and `loss3`, each with RMSE and relative-L2 raw/MA25 PNG+CSV outputs.
+- Observed active process: `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py --stages summarize,plots,gradient,svd-final,svd-wall --skip-existing` is still running with child process `tools/compare_burgers_round01_final_jacobian_svd.py` for `svd_final_rep20_top100`.
+- Observed SVD progress from `svd_final_rep20_top100.log`: final Jacobian/SVD is processing `sample_002/019`; `sample_000` and `sample_001` directories are present with solver/model/error subdirectories.
+- Observed partial SVD outputs: `round03_long_final_jacobian_svd_summary.partial.csv`, `round03_long_final_top_singular_values_long.partial.csv`, `round03_long_final_solver_similarity_rankwise.partial.csv`, `round03_long_final_solver_similarity_subspaces.partial.csv`, and `round03_long_final_runtime.partial.csv` exist in `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/`.
+- Observed same-wall SVD status: no same-wall SVD log has been created yet; only `svd_final_rep20_top100.log` exists, so same-wall SVD is queued after final SVD completes.
+- GPU status: `nvidia-smi` showed Tesla V100-SXM2-32GB active with `98%` utilization at inspection.
+- Inference: do not treat Jacobian/SVD spectral/subspace conclusions as final yet; only plotting, summary, and gradient-alignment posthoc stages are complete.
+
+## Burgers Round03 Dense Plot Generation - 2026-06-05T16:43:00Z
+
+- Status: completed dense plotting requested after preserving existing sparse plots.
+- Source script: `tools/plot_burgers_round03_dense_training_comparison.py`.
+- Dedicated record file: `docs/burgers_loss3_selective_round03_dense_plot_outputs_20260605.md`.
+- Preserved sparse plots: copied existing sparse plots and manifest to `visualizations/burgers_loss3_selective_round03_long_training_comparison_sparse_saved_20260605/`; the original sparse directory remains unchanged.
+- New dense outputs: generated every-1-epoch and every-5-epoch RMSE/relative-L2 plots under `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/`.
+- New dense plot families: same-epoch and wall-clock plots for test/generalization panels, plus train/test/generalization panels to show loss3 test/train degradation alongside generated generalization behavior.
+- Dense CSV evidence: `round03_dense_epoch_metrics_every1.csv` has `8013` lines including header; `round03_dense_epoch_metrics_every5.csv` has `1613` lines including header.
+- Wall-clock construction: per-epoch wall-clock is reconstructed from `train_steps.csv` plus `evaluation_passes.csv`, with checkpoint epochs pinned to `checkpoints.csv` `wall_elapsed_seconds`; prior spot check showed checkpoint agreement within seconds.
+- Verification: PIL extrema check showed all `16` dense PNG files are nonblank, with expected image sizes `3286x1181` for 2-panel plots and `4942x1181` for 3-panel plots.
+- Evidence separation: this entry records plot generation only; final Jacobian/SVD spectral conclusions are still pending the active SVD posthoc job.
+
+## Burgers Round03 Dense Plot Cleanup - 2026-06-05T16:50:00Z
+
+- Status: corrected dense-plot output layout per user request.
+- Removed unnecessary copied sparse directory: `visualizations/burgers_loss3_selective_round03_long_training_comparison_sparse_saved_20260605/`. The original sparse plot directory remains unchanged.
+- Removed redundant dense two-panel `test_generalization` PNGs because the three-panel `train_test_generalization` PNGs already include test and generalization.
+- Updated `tools/plot_burgers_round03_dense_training_comparison.py` so future runs do not create a sparse copy and only emit the three-panel dense plots.
+- Updated `docs/burgers_loss3_selective_round03_dense_plot_outputs_20260605.md` and the dense manifest accordingly.
+- Evidence separation: this cleanup changes only plot file organization and docs; it does not change training metrics, generated CSV values, gradient alignment, or the active Jacobian/SVD job.
+
+## Burgers Round03 Dense Plot Cleanup Verification - 2026-06-05T16:55:00Z
+
+- Status: verified cleanup after removing the unnecessary sparse-copy directory and redundant dense two-panel plots.
+- Observed filesystem: `visualizations/burgers_loss3_selective_round03_long_training_comparison_sparse_saved_20260605/` no longer exists.
+- Observed dense PNG set: `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/` contains exactly `8` PNG files, all named with `train_test_generalization`, covering RMSE/relative-L2, same-epoch/wall-clock, and every-1/every-5 epoch sampling.
+- Observed verification: precise search for PNGs not matching `*train_test_generalization.png` returned no files; PIL check showed all 8 remaining PNGs are nonblank at `4942x1181`.
+- Source updates remain: `tools/plot_burgers_round03_dense_training_comparison.py` now emits only the three-panel dense plots and does not copy sparse plots.
+- Evidence separation: plot cleanup only; training metrics and active Jacobian/SVD computation are unchanged.
+
+## Burgers Round03 Loss1/Loss2 Continuation Code Prepared - 2026-06-05T17:05:00Z
+
+- Status: code prepared only; continuation training has not been started because the active Jacobian/SVD job is still running.
+- Source script added: `tools/run_burgers_loss3_selective_round03_loss12_continuation_20260605.sh`.
+- Posthoc plotting script added: `tools/plot_burgers_round03_loss12_continuation_dense_comparison.py`.
+- Dedicated plan doc: `docs/burgers_loss3_selective_round03_loss12_continuation_code_plan_20260605.md`.
+- Continuation targets encoded: loss1 loads `burgers_epoch1000_step003000.pt` and trains 2000 more local epochs with epoch offset 1000/global-step offset 3000, reaching logged epoch 3000; loss2 loads `burgers_epoch500_step001500.pt` and trains 500 more local epochs with epoch offset 500/global-step offset 1500, reaching logged epoch 1000.
+- Guard encoded: continuation script refuses to start until `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.csv` exists, unless explicitly overridden by `ALLOW_BEFORE_SVD_COMPLETE=1`.
+- Settings preserved: same round03 generalization root, adv-only solver labels, p2q2 `fast_replace_l2`, attack steps 5, Burgers batch size 480, optimizer batch size 32, epsilon fraction 0.06, jitter settings, full train/test/generated50 evaluation, and 100-epoch checkpoints.
+- Optimizer caveat: existing checkpoints store model weights/config but not AdamW optimizer state, so continuation resumes model weights and epoch/global-step numbering while optimizer moments restart.
+- Plotting support: new merged dense plotting script will join original and continuation runs, add original final wall time to continuation-local wall time, and emit every-1/every-5 epoch train/test/generalization RMSE/relative-L2 curves.
+- Static checks observed: `bash -n` passed for the continuation shell script; `py_compile` passed for the new plotting script; `--check-inputs` reports expected missing continuation outputs because training has intentionally not been run.
+- Current SVD status observed while preparing code: `svd_final_rep20_top100` was still active around `sample_007/019`; no continuation training process was started.
+
+## Burgers Round03 Loss1/Loss2/Loss3 Continuation Code Prepared - 2026-06-05T17:28:21Z
+
+- Status: code prepared only; continuation training has not been started because the active final Jacobian/SVD job is still running.
+- Source script added: `tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh`.
+- Posthoc plotting script added: `tools/plot_burgers_round03_loss123_continuation_dense_comparison.py`.
+- Dedicated plan doc: `docs/burgers_loss3_selective_round03_loss123_continuation_code_plan_20260605.md`.
+- Continuation targets encoded: loss1 loads `burgers_epoch1000_step003000.pt` and trains 2000 more local epochs with epoch offset 1000/global-step offset 3000, reaching logged epoch 3000; loss2 loads `burgers_epoch500_step001500.pt` and trains 500 more local epochs with epoch offset 500/global-step offset 1500, reaching logged epoch 1000; loss3 loads `burgers_epoch500_step001500.pt` and trains 500 more local epochs with epoch offset 500/global-step offset 1500, reaching logged epoch 1000.
+- Guard encoded: continuation script refuses to start until `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.csv` exists, unless explicitly overridden by `ALLOW_BEFORE_SVD_COMPLETE=1`.
+- Settings preserved: same round03 generalization root, adv-only solver labels, p2q2 `fast_replace_l2`, attack steps 5, Burgers batch size 480, optimizer batch size 32, epsilon fraction 0.06, jitter settings, full train/test/generated50 evaluation, 100-epoch checkpoints, and wall-hour checkpoint cuts extended through 7.0 h for the extra loss3 continuation.
+- Optimizer caveat: existing checkpoints store model weights/config but not AdamW optimizer state, so continuation resumes model weights and epoch/global-step numbering while optimizer moments restart.
+- Plotting support: the new merged dense plotting script joins original and continuation runs for all three objectives, adds each original run's final wall time to its continuation-local wall time, and emits every-1/every-5 epoch train/test/generalization RMSE/relative-L2 curves.
+- Static checks observed: `bash -n tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh` passed; `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python -m py_compile tools/plot_burgers_round03_loss123_continuation_dense_comparison.py` passed; `tools/plot_burgers_round03_loss123_continuation_dense_comparison.py --check-inputs` reports the expected missing continuation outputs for loss1/loss2/loss3 because training has intentionally not been run.
+- Current SVD status observed from `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/`: only `.partial.csv` outputs exist, `round03_long_final_jacobian_svd_summary.csv` does not exist yet, and `sample_007` is in progress. Therefore no continuation training process was started.
+
+## Burgers Round03 Jacobian/SVD Runtime Status - 2026-06-05T17:52:39Z
+
+- Status: inspected active posthoc runtime only; no continuation training was started.
+- Dedicated status file: `docs/burgers_loss3_selective_round03_jacobian_svd_runtime_status_20260605.md`.
+- Observed active process: `tools/compare_burgers_round01_final_jacobian_svd.py` is still running under `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py --stages summarize,plots,gradient,svd-final,svd-wall --skip-existing`.
+- Observed final SVD progress: output directory `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/` has partial CSV outputs only and sample directories through `sample_010`; the completed final summary `round03_long_final_jacobian_svd_summary.csv` does not exist yet.
+- Observed log progress: `svd_final_rep20_top100.log` is at `[sample] 010/019`, with solver Jacobian row `384/1024` observed for `round03_long_final_solver_sample10`.
+- Observed queued work from the pipeline script: after final rep20/top100, two same-wall rep10/top50 SVD jobs remain, each with 10 samples.
+- Inference: final SVD likely needs about 1.5 to 2 more hours; the two queued same-wall SVD jobs likely need about 1.5 to 2 more hours total. Total remaining Jacobian/SVD posthoc time is roughly 3 to 4 hours if the current pace holds.
+
+## Burgers Round03 Same-Wall SVD Cancelled - 2026-06-05T18:26:20Z
+
+- Status: user requested cancelling same-wall/time-matched Jacobian/SVD; only the basic final checkpoint SVD remains active.
+- Dedicated status file: `docs/burgers_loss3_selective_round03_samewall_svd_cancelled_20260605.md`.
+- Observed before cancellation: parent pipeline was running `--stages summarize,plots,gradient,svd-final,svd-wall --skip-existing`, with active child `tools/compare_burgers_round01_final_jacobian_svd.py` for `svd_final_rep20_top100`.
+- Action taken: sent `SIGTERM` only to the parent pipeline process so queued `svd-wall` work cannot start after the current final SVD completes. The active final SVD child process was not killed.
+- Observed after cancellation: watcher/pipeline exited rc `143` at `2026-06-05T18:25:28Z`; final SVD process remains running as PPID 1; no same-wall log files or same-wall output directories were created.
+- Source update: `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py` now treats `svd-wall` as optional and excludes it from `all`; `tools/watch_burgers_round03_posthoc_after_loss3_20260605.sh` now requests only `summarize,plots,gradient,svd-final`.
+- Static checks observed: `py_compile` passed for `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py`; `bash -n` passed for `tools/watch_burgers_round03_posthoc_after_loss3_20260605.sh`.
+
+## Burgers Round03 Final SVD Runtime Status - 2026-06-05T18:41:21Z
+
+- Status: inspected active final/basic Jacobian/SVD runtime only; no new jobs were started.
+- Dedicated status file updated: `docs/burgers_loss3_selective_round03_jacobian_svd_runtime_status_20260605.md`.
+- Observed active process: only `tools/compare_burgers_round01_final_jacobian_svd.py` for `svd_final_rep20_top100` remains active; it is running as PPID 1 after the parent pipeline was cancelled.
+- Observed final SVD progress: output directory `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/` has partial CSV outputs only, sample directories through `sample_015`, and no completed `round03_long_final_jacobian_svd_summary.csv` yet.
+- Observed log progress: `svd_final_rep20_top100.log` is at `[sample] 015/019`; the slow solver Jacobian section for sample15 reached row `1024/1024`, elapsed about `276.0s`.
+- Inference: remaining final SVD time is roughly 45-60 minutes from this inspection, with expected completion around `2026-06-05T19:25:00Z` to `2026-06-05T19:45:00Z` if pace holds. Same-wall/time-matched SVD remains cancelled.
+
+## Burgers Round03 Final SVD Complete - 2026-06-05T20:19:34Z
+
+- Status: completed the basic/final Jacobian/SVD requested by the user; no same-wall/time-matched SVD was run.
+- Dedicated status file updated: `docs/burgers_loss3_selective_round03_jacobian_svd_runtime_status_20260605.md`.
+- Output directory: `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/`.
+- Completed report: `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.md`.
+- Completed key CSVs: `round03_long_final_jacobian_svd_summary.csv`, `round03_long_final_top_singular_values_long.csv`, `round03_long_final_solver_similarity_rankwise.csv`, `round03_long_final_solver_similarity_subspaces.csv`, `round03_long_final_jacobian_spectral_norm_aggregate.csv`, `round03_long_final_error_spectral_norm_aggregate.csv`, and `round03_long_final_runtime.csv`.
+- Observed line counts: summary CSV 181 lines, top singular values 18001 lines, rankwise similarity 16001 lines, subspace similarity 961 lines, runtime 181 lines.
+- Observed log completion: `svd_final_rep20_top100.log` reached `[sample] 019/019` and printed the final JSON summary with `samples: 20`, models `baseline`, `loss1_epoch1000`, `loss2_epoch0500`, `loss3_epoch0500`, and `top_k: 100`.
+- Evidence separation: this entry records completion and file existence/shape only; detailed interpretation of the SVD metrics should be made from the generated Markdown/CSV report.
+
+## Burgers Round03 Loss123 Continuation Started - 2026-06-05T20:25:10Z
+
+- Status: continuation training has started after the basic/final Jacobian/SVD completed.
+- User context: the user previously requested continuation after SVD completion, with loss1 epoch1000 -> epoch3000, loss2 epoch500 -> epoch1000, and loss3 epoch500 -> epoch1000.
+- Launch method: started a persistent tmux session `round03_loss123_continuation` because a short `nohup` launch attempt exited before training and only created an empty preflight file; no training run directory was created by that failed launch.
+- Active script: `tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh`.
+- Active run at inspection: `burgers_loss3_selective_round03_loss1_continue1000to3000_20260605`.
+- Active process observed: `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python tools/adversarial_training.py ... --run-name burgers_loss3_selective_round03_loss1_continue1000to3000_20260605 --epochs 2000 --resume-epoch-offset 1000 --resume-global-step-offset 3000 --burgers-attack-loss-objective loss1`.
+- GPU preflight outputs created: `forensics/burgers_loss3_selective_round03_loss123_continuation_gpu_preflight_20260605/gpu_preflight.json` and `nvidia_smi.txt`.
+- Driver/log outputs: `adversarial_training_runs/burgers_loss3_selective_round03_loss123_continuation_20260605_logs/driver.log`, `launcher.log`, and `burgers_loss3_selective_round03_loss1_continue1000to3000_20260605.log`.
+- Observed log evidence: loss1 continuation log passed dataset-count preflight, wrote `planned_workload_estimate.json`, and entered `[run] task=burgers`.
+- Next expected sequence if no failure: loss1 continuation completes, then the same driver starts loss2 continuation, then loss3 continuation.
+
+## Burgers Round03 Final SVD Interpretation - 2026-06-05T20:30:00Z
+
+- Status: interpreted the completed basic/final Jacobian/SVD evidence; no new experiment was started by this interpretation step.
+- Dedicated interpretation file: `docs/burgers_loss3_selective_round03_final_svd_interpretation_20260605.md`.
+- Observed from `round03_long_final_error_spectral_norm_aggregate.csv`: on generalization, `J_model - J_solver` spectral norm mean is loss1 `3.3956`, loss2 `3.9365`, loss3 `2.6563`, so loss3 is best on generated OOD generalization.
+- Observed from the same CSV: on train/test, loss3 is worse than loss1/loss2 (`train 0.8854`, `test 0.6825`) while loss2 is best (`train 0.2885`, `test 0.3650`).
+- Observed from per-sample final SVD summary: loss3 has lower generalization error spectral norm than loss1 on 8/10 samples, lower than loss2 on 8/10 samples, and is best among loss1/loss2/loss3 on 7/10 samples.
+- Observed from `round03_long_final_solver_similarity_subspaces.csv`: on generalization, loss3 has the strongest model-vs-solver subspace alignment at top5/top10/top20 for both right and left singular subspaces; e.g. top20 right mean principal cosine is loss3 `0.8438` vs loss1 `0.7774` and loss2 `0.7747`.
+- Observed from `round03_long_final_solver_similarity_rankwise.csv`: on generalization, selected rankwise right/left vector cosines also favor loss3, e.g. rank5 right/left `0.8102/0.7996` vs loss1 `0.7410/0.7382` and loss2 `0.7280/0.7243`.
+- Inference: final SVD supports a targeted round03 generated-generalization advantage for loss3 in local Jacobian geometry and modal/subspace alignment, especially right/input singular directions. It does not support a uniform train/test advantage, and singular-value magnitude matching alone is mixed.
+
+## Burgers Round03 Final SVD Baseline-Relative Drop - 2026-06-05T20:34:00Z
+
+- Status: computed baseline-relative `J_model - J_solver` spectral norm drops from completed final SVD CSV; no new experiment was started.
+- Dedicated interpretation file updated: `docs/burgers_loss3_selective_round03_final_svd_interpretation_20260605.md`.
+- Observed baseline error means from `round03_long_final_error_spectral_norm_aggregate.csv`: train `1.08462`, test `1.23788`, generalization `5.77462`.
+- Observed mean-value drops vs baseline: train loss1/loss2/loss3 `61.69%` / `73.40%` / `18.37%`; test `59.59%` / `70.52%` / `44.86%`; generalization `41.20%` / `31.83%` / `54.00%`.
+- Inference: loss3 has the largest baseline-relative Jacobian-error reduction on round03 generated generalization, while loss2 has the largest reduction on train/test.
+
+## Burgers Round03 Final SVD Baseline Singular-Vector Similarity - 2026-06-05T20:38:00Z
+
+- Status: extracted baseline model-vs-solver singular-vector/subspace similarity from completed final SVD CSVs; no new experiment was started.
+- Dedicated interpretation file updated: `docs/burgers_loss3_selective_round03_final_svd_interpretation_20260605.md`.
+- Observed baseline top-k model-vs-solver subspace mean cosines from `round03_long_final_solver_similarity_subspaces.csv`: train top5/top10/top20 right `0.990330/0.964643/0.786076`, left `0.981085/0.968771/0.858951`; test right `0.995983/0.981244/0.772706`, left `0.977436/0.974644/0.844117`; generalization right `0.914152/0.876361/0.732393`, left `0.714969/0.770438/0.767185`.
+- Observed baseline generalization selected rankwise right/left vector cosines from `round03_long_final_solver_similarity_rankwise.csv`: rank1 `0.684916/0.244388`, rank5 `0.616740/0.605843`, rank10 `0.259214/0.286939`, rank20 `0.050181/0.071082`.
+- Inference: baseline is already strong on train/test top-5/top-10 subspaces, but is weak on generated-generalization singular-vector alignment, especially left/output directions and rank/top20 tail directions.
+
+## Burgers Round03 Final SVD Baseline-vs-Loss123 Subspace Improvement - 2026-06-05T20:42:00Z
+
+- Status: computed top-5/top-10/top-20 model-vs-solver singular subspace improvement for baseline/loss1/loss2/loss3 from completed final SVD CSVs; no new experiment was started.
+- Derived CSV: `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_baseline_vs_loss123_subspace_topk_improvement.csv`.
+- Dedicated interpretation file updated: `docs/burgers_loss3_selective_round03_final_svd_interpretation_20260605.md`.
+- Observed generalization top20 right/left mean cosines: baseline `0.732393/0.767185`, loss1 `0.777392/0.850798`, loss2 `0.774694/0.849171`, loss3 `0.843830/0.875296`; loss3 has the largest absolute improvements over baseline, `+0.111437/+0.108110`.
+- Observed generalization top5 right/left improvements over baseline: loss1 `+0.053308/+0.189226`, loss2 `+0.034997/+0.154670`, loss3 `+0.061395/+0.192572`; loss3 is largest.
+- Observed generalization top10 right/left improvements over baseline: loss1 `+0.049549/+0.126997`, loss2 `+0.053487/+0.119395`, loss3 `+0.074465/+0.150007`; loss3 is largest.
+- Inference: for singular subspace similarity, loss3 improves over baseline most clearly on round03 generalization. Train/test top20 subspace similarity also favors loss3, although train/test Jacobian error spectral norm still favors loss2.
+
+## Burgers Round03 Loss3 Advantage GitHub Summary - 2026-06-05T20:55:00Z
+
+- Status: created a consolidated Markdown summary for the user's request to record why round03 shows a clearer `loss3` advantage than the earlier generalization datasets; no new training/SVD job was started.
+- Dedicated summary file: `docs/burgers_loss3_selective_round03_loss3_advantage_summary_for_github_20260605.md`.
+- Observed from prior round00/round01 records: round00 is very hard but not loss3-selective; round01 is loss3-selective in gradient/subspace geometry but final prediction and `J_model - J_solver` spectral norm remained mixed.
+- Observed round03 prediction evidence recorded in the summary: final generated50 RMSE is loss1 `0.0365568`, loss2 `0.0396661`, loss3 `0.0236606`; loss3 wins all 50 generated datasets against both loss1 and loss2 at checked epochs/final comparisons.
+- Observed round03 gradient evidence recorded in the summary: generalization mixed4 gradient cosine is loss1 `0.0338632`, loss2 `0.119059`, loss3 `0.276633`.
+- Observed round03 SVD evidence recorded in the summary: generalization `J_model - J_solver` mean spectral norm is baseline `5.77462`, loss1 `3.39560`, loss2 `3.93652`, loss3 `2.65625`; loss3 has the largest baseline-relative generalization drop, `54.00%`.
+- Observed round03 subspace evidence recorded in the summary: generalization top20 right/left mean principal cosines are baseline `0.732393/0.767185`, loss1 `0.777392/0.850798`, loss2 `0.774694/0.849171`, loss3 `0.843830/0.875296`.
+- Inference: round03 gives the clearest targeted generated-generalization evidence for loss3 so far, while retaining caveats that loss3 is worse on original train/test RMSE and does not beat loss1 at the loss1-final wall-clock budget.
+
