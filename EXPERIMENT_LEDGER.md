@@ -1,3 +1,277 @@
+## 2026-06-06 - R2 copy completed and GitHub sync prepared
+
+Status: R2 upload completed; GitHub code/Markdown push completed in this sync turn.
+
+Observed R2 evidence:
+- Destination bucket/prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Successful `rclone copy` transferred `2.132 GiB / 2.132 GiB` after retrying with R2-compatible flags `--s3-no-check-bucket --s3-no-head --s3-disable-checksum`.
+- Post-upload `rclone size` on the prefix reported `128416` objects and `264.008 GiB`; this includes older pre-existing objects because the operation was copy-only and did not delete remote content.
+- Excluded local virtual environment, Git metadata, bytecode, and cache directories from the R2 upload.
+
+GitHub scope:
+- Stage/push only code/scripts/Markdown (`*.py`, `*.sh`, `*.md`) and `EXPERIMENT_LEDGER.md` to branch `vast-ai`.
+- Keep generated large artifacts, datasets, checkpoints, CSV/PNG/NPZ outputs, and visualization binaries out of GitHub; they were uploaded to R2.
+
+Dedicated result file:
+- `docs/r2_github_sync_20260606.md`
+
+Security note:
+- Credentials are not recorded in repository files. Rotate the pasted R2/GitHub tokens after sync confirmation.
+
+## 2026-06-06 - Burgers round03 visualization directory names updated to final epochs
+
+Status: corrected user-facing visualization directory names.
+
+Fix applied:
+- Renamed `visualizations/burgers_loss3_selective_round03_loss1_1000ep_long_20260605_plots` to `visualizations/burgers_loss3_selective_round03_loss1_3000ep_long_20260605_plots`.
+- Renamed `visualizations/burgers_loss3_selective_round03_loss2_500ep_long_20260605_plots` to `visualizations/burgers_loss3_selective_round03_loss2_1000ep_long_20260605_plots`.
+- Renamed `visualizations/burgers_loss3_selective_round03_loss3_500ep_long_20260605_plots` to `visualizations/burgers_loss3_selective_round03_loss3_1000ep_long_20260605_plots`.
+- Updated docs and per-directory manifests to point to the renamed visualization directories.
+
+Observed verification:
+- `visualizations/` no longer contains round03 single-run plot directories named with stale final epochs (`loss1_1000ep`, `loss2_500ep`, `loss3_500ep`).
+- `find visualizations -maxdepth 1 -type d | rg 'continue|continuation'` returns no entries, so the incorrect separate continuation visualization directories remain deleted.
+- Training source run directories under `adversarial_training_runs/` were not deleted because they contain the checkpoint/source data used to reproduce or audit the stitched plots.
+
+Inference:
+- The user-facing plot directory names now match the plotted final epochs: loss1 `3000ep`, loss2 `1000ep`, loss3 `1000ep`.
+
+## 2026-06-06 - Burgers round03 stitched plot correction, continue visual outputs removed
+
+Status: corrected the requested plot presentation.
+
+Observed issue:
+- The earlier plot refresh created separate user-facing visualization directories with `continue`/`continuation` in their names, which made the later epochs appear like separate runs.
+- The requested presentation is one stitched history per loss: loss1 epochs `0..3000`, loss2 epochs `0..1000`, loss3 epochs `0..1000`.
+
+Fix applied:
+- Added `tools/plot_burgers_round03_stitched_single_run_visualizations.py` to redraw each original single-run plot directory from its base run plus later run.
+- Updated `tools/plot_burgers_round03_loss123_continuation_dense_comparison.py` so plot titles say extended training and merged CSV segment labels use `original`/`extended`.
+- Overwrote original single-run plot directories: `visualizations/burgers_loss3_selective_round03_loss1_3000ep_long_20260605_plots`, `visualizations/burgers_loss3_selective_round03_loss2_1000ep_long_20260605_plots`, and `visualizations/burgers_loss3_selective_round03_loss3_1000ep_long_20260605_plots`.
+- Overwrote old comparison directories: `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605` and `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605`.
+- Deleted only the incorrect generated visualization directories under `visualizations/` whose names contained `continue`/`continuation`; training run/checkpoint directories were not deleted.
+
+Observed verification:
+- Single-run manifests now report max eval/attack epochs: loss1 `3000`, loss2 `1000`, loss3 `1000`.
+- Parsed `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_epoch_metrics_every1.csv`: max epoch by loss is loss1 `3000`, loss2 `1000`, loss3 `1000`; `run_role` values are `original` and `extended`.
+- PIL spot checks found nonblank old comparison PNGs and nonblank refreshed single-run RMSE heatmaps.
+- `find visualizations -maxdepth 1 -type d | rg 'continue|continuation'` returns no entries; a separate listing now shows only the old comparison directories and the three original base plot directories for this round03 visualization set.
+
+Dedicated result file:
+- `docs/burgers_loss3_selective_round03_continuation_extended_plots_20260606.md`
+
+Inference:
+- The current user-facing plot state now matches the requested view: no separate displayed continue plot; the original curves are extended forward.
+- Generated PNG/CSV artifacts remain large experiment outputs and should stay out of Git unless explicitly requested.
+
+## 2026-06-06 - Burgers round03 old plot directories overwritten with continuation curves
+
+Status: corrected output-location mismatch after the requested plot extension.
+
+Observed issue:
+- The first post-training plotting pass wrote continuation-aware figures to `visualizations/burgers_loss3_selective_round03_loss123_continuation_dense_20260605`, but the older user-facing directories `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605` and `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605` still contained the base-only plots.
+
+Fix applied:
+- Overwrote the old dense filenames `round03_dense_same_epoch_*`, `round03_dense_wall_clock_*`, and `round03_dense_epoch_metrics_every*.csv` with the continuation-extended outputs.
+- Overwrote the old compact filenames `round03_same_epoch_rmse.png`, `round03_same_epoch_relative_l2.png`, `round03_wall_clock_rmse.png`, `round03_wall_clock_relative_l2.png`, `round03_final_rmse_bars.png`, and `round03_final_relative_l2_bars.png` with continuation-aware outputs.
+- Rewrote old manifests to note the overwrite and source directory.
+
+Verification:
+- Parsed old dense CSV after overwrite: max epoch is loss1 `3000`, loss2 `1000`, loss3 `1000` for train/test/generalization/ALL.
+- PIL spot checks of overwritten old-name PNGs showed nonzero dimensions and nonblank grayscale extrema.
+
+Inference:
+- The old paths the user was opening now point to the extended continuation plots. Viewer/browser cache may require reload because filenames are unchanged.
+
+## 2026-06-06 - Burgers round03 continuation extended plots
+
+Status: completed requested plot refresh after continuation training.
+
+Source files and inputs:
+- Scripts: `tools/plot_burgers_round03_loss123_continuation_dense_comparison.py`, `tools/plot_burgers_training_run_visualizations_variable_epoch.py`
+- Source runs: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605`, `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_500ep_long_20260605`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue500to1000_20260605`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue500to1000_20260605`
+- Numeric source CSVs include `visualizations/burgers_loss3_selective_round03_loss123_continuation_dense_20260605/round03_loss123_continuation_dense_epoch_metrics_every1.csv` and each run's `burgers/eval_split_summary.csv`/`burgers/eval_metrics.csv`.
+
+Output files:
+- Plot report: `docs/burgers_loss3_selective_round03_loss123_continuation_plot_report_20260605.md`
+- Extended plot report: `docs/burgers_loss3_selective_round03_continuation_extended_plots_20260606.md`
+- Comparison output directory: `visualizations/burgers_loss3_selective_round03_loss123_continuation_dense_20260605`
+- Single-run output directories: `visualizations/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605_plots`, `visualizations/burgers_loss3_selective_round03_loss2_continue500to1000_20260605_plots`, `visualizations/burgers_loss3_selective_round03_loss3_continue500to1000_20260605_plots`
+
+Code change:
+- Updated `tools/plot_burgers_round03_loss123_continuation_dense_comparison.py` to emit continuation-final RMSE/relative-L2 bars and generated final-vs-best bars.
+
+Observed evidence:
+- `tools/plot_burgers_round03_loss123_continuation_dense_comparison.py --check-inputs` reported `all required inputs are present`.
+- Generated dense comparison curves for same-epoch and cumulative wall-clock RMSE/relative-L2 through loss1 epoch3000 and loss2/loss3 epoch1000.
+- Generated final RMSE/relative-L2 bars using continuation-final checkpoints.
+- Generated single-run extended plots for loss1 to epoch3000 and loss2/loss3 to epoch1000, including attack-loss, RMSE, relative-L2, high-transparency grouped trajectories, checkpoint-style heatmaps, FFT plots, and manifests.
+- Observed dense CSV line counts: every1 `20013`, every5 `4013`; generated PNG count across new visualization directories: `42`.
+- PIL spot checks showed nonzero dimensions and nonblank grayscale ranges for representative comparison and relative-L2 heatmap PNGs.
+
+Key metrics from plot report:
+- loss1 final generated RMSE `0.0343239`, relative L2 `0.0615363`; best generated RMSE `0.032945` at epoch2673.
+- loss2 final generated RMSE `0.0365082`, relative L2 `0.0654749`; best generated RMSE `0.0355695` at epoch948.
+- loss3 final generated RMSE `0.0220984`, relative L2 `0.0396222`; best generated RMSE `0.0193611` at epoch893.
+
+Inference:
+- The requested plot extension is complete. The new comparison figures are continuation-aware and the single-run plots now extend to the final continuation epochs.
+- The updated plots preserve the round03 conclusion: loss3 remains strongest on generated-OOD generalization; loss1/loss2 remain cleaner on train/test.
+- Generated PNG/CSV artifacts are large experiment outputs and should stay out of Git unless explicitly requested.
+
+## 2026-06-06 - Burgers round03 continuation training completion check
+
+Status: training complete. Plot stitching/final reporting remains to be done.
+
+Observed evidence:
+- At `2026-06-06T13:07:52Z`, `round03_loss123_continuation` was no longer in `tmux list-sessions`, `pgrep -af adv_robust` showed no training process, and `nvidia-smi` showed `0 MiB / 32768 MiB` used with `0%` GPU utilization.
+- `driver.log` showed loss1 done at `2026-06-05T23:13:01Z`, loss2 done at `2026-06-06T02:16:13Z`, loss3 done at `2026-06-06T08:39:01Z`, followed by `continuation all done`.
+- All three continuation runs had `summary.json` files.
+
+Final metrics from exact sources:
+- loss1 continuation source `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605/summary.json` and `burgers/eval_split_summary.csv`: wall seconds `10171.913992851973`; final epoch3000 train/test/generated RMSE `0.0010929236794394932` / `0.0012285454291087751` / `0.0343238570556901`; generated relative L2 `0.06153625953140944`; best generated RMSE `0.03294495584905165` at epoch2673.
+- loss2 continuation source `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue500to1000_20260605/summary.json` and `burgers/eval_split_summary.csv`: wall seconds `10989.178280254826`; final epoch1000 train/test/generated RMSE `0.00156830217012471` / `0.0016576365090477869` / `0.03650817803926622`; generated relative L2 `0.06547490209929319`; best generated RMSE `0.03556954401493024` at epoch948.
+- loss3 continuation source `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue500to1000_20260605/summary.json` and `burgers/eval_split_summary.csv`: wall seconds `22965.618723264895`; final epoch1000 train/test/generated RMSE `0.003190380039094097` / `0.0032434361898937398` / `0.02209842411568137`; generated relative L2 `0.03962216744527335`; best generated RMSE `0.019361087025757017` at epoch893.
+
+Inference:
+- The training phase completed successfully for loss1, loss2, and loss3.
+- On round03 generated-OOD generalization, loss3 remains clearly best by both final and best-checkpoint RMSE.
+- On clean train/test, loss1/loss2 remain lower-error than loss3.
+
+Remaining work:
+- Generate stitched train/test/generalization RMSE, relative L2, and wall-clock curves and update final docs. Same-wall/time-matched SVD remains cancelled.
+
+## 2026-06-06 - Burgers round03 continuation runtime health check
+
+Status: running normally. loss1 and loss2 continuation are complete; loss3 continuation is active.
+
+Observed evidence:
+- At `2026-06-06T05:11:47Z`, `round03_loss123_continuation` still existed in tmux.
+- `driver.log` showed loss2 completed at `2026-06-06T02:16:13Z` and loss3 started immediately afterward.
+- `pgrep -af adv_robust` showed PID `582426` running the expected loss3 continuation command with `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python`, `--device cuda`, and `--burgers-attack-loss-objective loss3`.
+- `nvidia-smi` showed Tesla V100-SXM2-32GB in P0, `30732 MiB / 32768 MiB` used, `19%` GPU utilization.
+- loss3 per-run log showed dataset preflight passed; loss3 `checkpoints.csv` showed checkpoints through epoch700; latest sampled `train_steps.csv` row was epoch728/global step2184/progress `0.728`.
+- latest sampled loss3 generated-generalization eval row at epoch728: RMSE mean `0.022943942603149046`, relative L2 mean `0.041151765127125026`, accuracy-score mean `96.06512771211996`.
+- loss3 `memory.csv` showed CUDA reserved `30328.0` MiB and peak allocated `28306.25341796875` MiB.
+
+Key observed metrics:
+- loss2 continuation completed with final epoch1000 generated RMSE `0.03650817803926622`, relative L2 `0.06547490209929319`; best generated RMSE `0.03556954401493024` at epoch948. `summary.json` wall seconds: `10989.178280254826`.
+- loss1 continuation final epoch3000 generated RMSE `0.0343238570556901`; best generated RMSE `0.03294495584905165` at epoch2673.
+- loss3 base epoch500 generated RMSE `0.023660631499673727`; base best generated RMSE `0.023076826214804887` at epoch492.
+- active loss3 continuation best generated RMSE so far `0.020467741032856916` at epoch727; relative L2 `0.03671246450588762`.
+
+Inference:
+- The run is healthy: process, GPU activity, checkpointing, train/eval CSV updates, and memory logging all indicate normal operation.
+- loss2 completed normally but remains behind loss1 continuation and far behind loss3 on generated generalization.
+- loss3 continuation is already improving over the loss3 epoch500 generated-generalization baseline, but final claims should wait for epoch1000 and `summary.json`.
+- Estimated training completion from epoch728 is roughly `2026-06-06T08:35Z` to `2026-06-06T08:50Z`, plus summary/plotting time.
+
+## 2026-06-06 - Burgers round03 continuation current result check
+
+Status: continuation still running. loss1 continuation is complete; loss2 continuation is active; loss3 continuation has not started.
+
+Observed evidence:
+- At `2026-06-06T00:41:44Z`, `round03_loss123_continuation` still existed in tmux and `pgrep -af adv_robust` showed PID `579129` running the loss2 continuation command with `--device cuda` and `--burgers-attack-loss-objective loss2`.
+- `driver.log` showed loss1 continuation done at `2026-06-05T23:13:01Z` and loss2 continuation started at the same time.
+- `nvidia-smi` at `2026-06-06 00:41:45 UTC` showed Tesla V100-SXM2-32GB in P0, `4896 MiB / 32768 MiB` used, `58%` GPU utilization.
+- Exact source CSVs inspected: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_500ep_long_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue500to1000_20260605/burgers/eval_split_summary.csv`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/burgers/eval_split_summary.csv`.
+
+Key observed metrics:
+- loss1 base epoch1000 generated RMSE `0.03655678255777361`, relative L2 `0.0655581618059065`; best generated RMSE `0.0351621095675644` at epoch965.
+- loss1 continuation final epoch3000 train/test/generated RMSE `0.0010929236794394932` / `0.0012285454291087751` / `0.0343238570556901`, generated relative L2 `0.06153625953140944`; best generated RMSE `0.03294495584905165` at epoch2673. `summary.json` reports `10171.913992851973` wall seconds.
+- loss2 base epoch500 generated RMSE `0.03966611168744192`, relative L2 `0.07114700937434287`; best generated RMSE `0.03830022787028556` at epoch486.
+- active loss2 continuation latest sampled epoch742 train/test/generated RMSE `0.0017918159641902769` / `0.0019882556388082337` / `0.03833159909118862`, generated relative L2 `0.06874984641837868`; best generated RMSE so far `0.03656475286341791` at epoch711.
+- loss3 base epoch500 generated RMSE `0.023660631499673727`, relative L2 `0.04244147745939993`; best generated RMSE `0.023076826214804887` at epoch492.
+- loss3 continuation directory was absent, so no loss3 continuation metrics are currently evidenced.
+
+Inference:
+- loss1 continuation helped: final generated RMSE improved about `6.11%` versus loss1 epoch1000 final, with best generated checkpoint at epoch2673.
+- loss2 continuation is currently better than loss2 epoch500 final but has not surpassed loss1 continuation, and it is still far behind the existing loss3 epoch500 generated-generalization result.
+- The round03 pattern still holds: loss3 is much better on generated-OOD generalization, while loss1/loss2 are cleaner on train/test.
+- The current state is intermediate; wait for loss2 completion and loss3 continuation before making the final continuation comparison.
+
+Remaining work:
+- Continue monitoring loss2 to epoch1000, then loss3 continuation to epoch1000.
+- After all summaries exist, generate stitched train/test/generalization RMSE, relative L2, and wall-clock curves.
+
+## 2026-06-05 - Burgers round03 continuation ETA correction
+
+Status: corrected ETA; previous estimate that used loss1 speed for loss2/loss3 is superseded.
+
+Observed evidence:
+- At `2026-06-05T23:08:16Z`, continuation was still in loss1. `pgrep -af adv_robust` showed `--run-name burgers_loss3_selective_round03_loss1_continue1000to3000_20260605` and `--burgers-attack-loss-objective loss1`.
+- Current loss1 continuation parsed from `train_steps.csv`: epoch `2950`, global step `8850`, progress fraction `0.9833333333333333`.
+- Current loss1 continuation `checkpoints.csv` showed epoch `2900` at wall elapsed `9668.578715356998` seconds and about `4.997` seconds/epoch from epoch2800 to epoch2900.
+- Base loss1 1000 epoch summary: `total_wall_seconds=5024.663676050492`, about `5.02` seconds/epoch.
+- Base loss2 500 epoch summary: `total_wall_seconds=10900.811602581292`, about `21.80` seconds/epoch; periodic checkpoint timing about `21.915` seconds/epoch from epoch100 to epoch400.
+- Base loss3 500 epoch summary: `total_wall_seconds=23889.608705461957`, about `47.78` seconds/epoch; periodic checkpoint timing about `47.505` seconds/epoch from epoch100 to epoch400.
+- loss2/loss3 continuation directories were absent, so those phases had not started.
+
+Inference:
+- The corrected remaining training ETA is roughly 9.7 to 10.2 hours from `2026-06-05T23:08:16Z`: about 4 to 5 minutes for the end of loss1, about 3.0 hours for loss2, and about 6.6 hours for loss3, plus handoff/final-summary overhead.
+- Expected training completion is roughly `2026-06-06T08:50Z` to `2026-06-06T09:20Z`, assuming throughput matches the existing long runs and no error/OOM occurs. Plot stitching/reporting comes afterward.
+
+## 2026-06-05 - Burgers round03 continuation ETA update
+
+Status: still running; active phase remains loss1 continuation.
+
+Observed evidence:
+- At `2026-06-05T21:48:52Z`, `round03_loss123_continuation` still existed in tmux and `pgrep -af adv_robust` showed PID `526950` running the expected CUDA loss1 continuation command.
+- `checkpoints.csv` showed loss1 checkpoints through epoch `2000` at wall elapsed `5056.680034907535` seconds.
+- Parsed `train_steps.csv` showed latest loss1 row epoch `2021`, global step `6062`, progress fraction `0.6735555555555556`.
+- Parsed `eval_split_summary.csv` showed latest generated-generalization row epoch `2020`, global step `6060`, RMSE mean `0.035468239067062715`, relative L2 mean `0.06359478850767653`, accuracy-score mean `94.05875141558727`.
+- loss1 had no `summary.json`; loss2 and loss3 continuation directories were not present yet.
+
+Inference:
+- Observed checkpoint timing is about `4.956` seconds/epoch from epoch1900 to epoch2000 and about `5.062` seconds/epoch from epoch1100 to epoch2000.
+- Remaining training ETA is about `2.75` to `3.1` hours: roughly `1.35` to `1.40` hours for loss1 to reach epoch3000, then about `0.70` hours each for loss2 and loss3 if runtime stays similar.
+- Expected completion is around `2026-06-06T00:35Z` to `2026-06-06T01:00Z`, plus any final-summary overhead. This is an ETA, not an observed final result.
+
+## 2026-06-05 - Burgers round03 loss1/loss2/loss3 continuation monitoring
+
+Status: continuation is running, not complete. The existing `round03_loss123_continuation` tmux session was found and no duplicate session was started.
+
+Source files and inputs:
+- Script: `tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh`
+- Dataset: `generalization_datasets_burgers_loss3_selective_search/round_03`
+- Required completed SVD gate: `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.csv`
+- Base checkpoints: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_1000ep_long_20260605/burgers/checkpoints/burgers_epoch1000_step003000.pt`, `adversarial_training_runs/burgers_loss3_selective_round03_loss2_500ep_long_20260605/burgers/checkpoints/burgers_epoch500_step001500.pt`, `adversarial_training_runs/burgers_loss3_selective_round03_loss3_500ep_long_20260605/burgers/checkpoints/burgers_epoch500_step001500.pt`
+
+Output files:
+- Status report: `docs/burgers_loss3_selective_round03_loss123_continuation_status_20260605.md`
+- Logs: `adversarial_training_runs/burgers_loss3_selective_round03_loss123_continuation_20260605_logs/`
+- GPU preflight: `forensics/burgers_loss3_selective_round03_loss123_continuation_gpu_preflight_20260605/`
+- Active run directory: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605/`
+
+Key settings:
+- Active phase is loss1 continuation from epoch1000 to epoch3000, using `--resume-epoch-offset 1000`, `--resume-global-step-offset 3000`, `--epochs 2000`, and `--burgers-initial-checkpoint` set to the epoch1000 loss1 checkpoint.
+- Command observed via `pgrep -af adv_robust` used `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python`, `--device cuda`, `fast_replace_l2`, 5 Burgers attack steps, epsilon fraction `0.06`, `--burgers-batch-size 480`, `--burgers-optimizer-batch-size 32`, and full round03 generated generalization eval with `--max-generalization-eval 50`.
+- The script is expected to run loss1, then loss2, then loss3; loss2/loss3 continuation directories were not present locally as of `2026-06-05T21:21:27Z`.
+
+GPU verification:
+- Observed from `forensics/burgers_loss3_selective_round03_loss123_continuation_gpu_preflight_20260605/gpu_preflight.json`: PyTorch `2.8.0+cu126`, Torch CUDA `12.6`, CUDA available, Tesla V100-SXM2-32GB, capability `[7, 0]`, arch list includes `sm_70`, JAX `0.10.0`, JAX backend `gpu`, JAX device `cuda:0`.
+- Observed from `nvidia-smi`: driver `580.76.05`, reported CUDA `13.0`, GPU in P0, about `4896 MiB / 32768 MiB` used, 48% to 63% util during monitoring. The NVIDIA process table did not list the PID, but `pgrep -af adv_robust` showed the expected CUDA training process PID `526950`.
+
+Observed evidence:
+- `driver.log` showed the loss1 continuation start at `2026-06-05T20:23:26Z`.
+- Per-run log showed dataset count preflight success with train `1`, test `1`, generalization `50`.
+- During the roughly 10 minute monitoring window, `train_steps.csv` advanced from about epoch `1550`/step `4650` to epoch `1671`/step `5012`.
+- Follow-up sample from `eval_split_summary.csv` before writing the record: epoch `1683`/step `5049`, generated generalization RMSE mean `0.035635485363701404`, relative L2 mean `0.06389568580656536`, accuracy-score mean `94.0312386197881`. These are interim during-training metrics.
+- `checkpoints.csv` showed checkpoints through epoch `1600`, including `burgers_epoch1600_step004800.pt`.
+- `memory.csv` final sampled row showed epoch `1671`/step `5012`, CUDA allocated `32.94091796875` MiB, reserved `4494.0` MiB, peak allocated `3894.95654296875` MiB.
+- No `summary.json` was present yet for loss1, loss2, or loss3 continuation.
+
+Inference:
+- The loss1 continuation is actively progressing on GPU and looked healthy during the requested monitoring window.
+- The full loss1/loss2/loss3 continuation is not finished; loss2 and loss3 have not started locally yet.
+- The interim metrics above are not final comparative continuation results.
+
+Remaining work:
+- Keep `round03_loss123_continuation` running in tmux.
+- Monitor until loss1 completes and the script proceeds through loss2 and loss3.
+- After all continuation summaries exist, generate stitched train/test/generalization RMSE, relative L2, and wall-clock curves from original long training into continuation.
+- Update the status report and ledger with final metrics and exact CSV/JSON sources. Do not rerun same-wall/time-matched SVD.
+
 ## 2026-06-05 - Burgers round03 consolidated Markdown report for GitHub
 
 Status: created a single consolidated Markdown report for the round03 loss3-selective Burgers generalization work and prepared it for GitHub push.

@@ -87,12 +87,16 @@ def write_summary_md(
     error_aggregate: list[dict[str, Any]],
     spectral_aggregate: list[dict[str, Any]],
     config: dict[str, Any],
+    *,
+    output_prefix: str,
+    report_title: str,
+    report_note: str,
 ) -> None:
     lines = [
-        "# Burgers Loss3-Aligned Round01 Final-Model Jacobian/SVD",
+        f"# {report_title}",
         "",
-        "This run recomputes all local Jacobians on the new round01 sample points.",
-        "No old solver or baseline SVD files are reused, because the generalization X changed.",
+        report_note,
+        "No old solver or baseline SVD files are reused, because local Jacobians depend on the input X.",
         "",
         "Definitions:",
         "",
@@ -149,12 +153,12 @@ def write_summary_md(
             "",
             "## Output Files",
             "",
-            "- `round01_sample_manifest.csv`: fixed train/test/generalization sample points.",
-            "- `round01_jacobian_svd_summary.csv`: per-sample spectral norms and top singular values.",
-            "- `round01_top_singular_values_long.csv`: long top-k singular values.",
-            "- `round01_solver_similarity_rankwise.csv`: rankwise singular-vector similarity to solver.",
-            "- `round01_solver_similarity_subspaces.csv`: top-k singular subspace similarity to solver.",
-            "- `round01_error_spectral_norm_aggregate.csv`: split-level model-minus-solver summary.",
+            f"- `{output_prefix}_sample_manifest.csv`: fixed train/test/generalization sample points.",
+            f"- `{output_prefix}_jacobian_svd_summary.csv`: per-sample spectral norms and top singular values.",
+            f"- `{output_prefix}_top_singular_values_long.csv`: long top-k singular values.",
+            f"- `{output_prefix}_solver_similarity_rankwise.csv`: rankwise singular-vector similarity to solver.",
+            f"- `{output_prefix}_solver_similarity_subspaces.csv`: top-k singular subspace similarity to solver.",
+            f"- `{output_prefix}_error_spectral_norm_aggregate.csv`: split-level model-minus-solver summary.",
             "- `sample_*/`: NPZ SVD files for solver, baseline, model, and model-minus-solver error.",
             "",
             "## Config",
@@ -164,7 +168,7 @@ def write_summary_md(
             "```",
         ]
     )
-    (out_root / "round01_jacobian_svd_summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (out_root / f"{output_prefix}_jacobian_svd_summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def aggregate_spectral(summary_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -239,10 +243,22 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-root", type=Path, default=DEFAULT_OUT_ROOT)
     parser.add_argument("--generalization-root", type=Path, default=DEFAULT_GEN_ROOT)
+    parser.add_argument("--output-prefix", default="round01")
+    parser.add_argument("--report-title", default="Burgers Loss3-Aligned Round01 Final-Model Jacobian/SVD")
+    parser.add_argument(
+        "--report-note",
+        default="This run recomputes all local Jacobians on the requested sample points.",
+    )
     parser.add_argument("--baseline-checkpoint", type=Path, default=DEFAULT_BASELINE)
     parser.add_argument("--loss1-checkpoint", type=Path, default=DEFAULT_LOSS1)
     parser.add_argument("--loss2-checkpoint", type=Path, default=DEFAULT_LOSS2)
     parser.add_argument("--loss3-checkpoint", type=Path, default=DEFAULT_LOSS3)
+    parser.add_argument("--loss1-label", default="loss1_epoch1000")
+    parser.add_argument("--loss2-label", default="loss2_epoch500")
+    parser.add_argument("--loss3-label", default="loss3_epoch500")
+    parser.add_argument("--loss1-epoch", type=int, default=1000)
+    parser.add_argument("--loss2-epoch", type=int, default=500)
+    parser.add_argument("--loss3-epoch", type=int, default=500)
     parser.add_argument("--sample-manifest", type=Path, default=None)
     parser.add_argument("--train-samples", type=int, default=5)
     parser.add_argument("--test-samples", type=int, default=5)
@@ -274,13 +290,14 @@ def main() -> None:
     out_root.mkdir(parents=True, exist_ok=True)
 
     samples = load_manifest(args.sample_manifest.resolve()) if args.sample_manifest else select_sample_manifest(args)
-    write_csv(out_root / "round01_sample_manifest.csv", samples)
+    prefix = args.output_prefix
+    write_csv(out_root / f"{prefix}_sample_manifest.csv", samples)
 
     model_specs = [
         {"label": "baseline", "epoch": 0, "path": args.baseline_checkpoint.resolve()},
-        {"label": "loss1_epoch1000", "epoch": 1000, "path": args.loss1_checkpoint.resolve()},
-        {"label": "loss2_epoch500", "epoch": 500, "path": args.loss2_checkpoint.resolve()},
-        {"label": "loss3_epoch500", "epoch": 500, "path": args.loss3_checkpoint.resolve()},
+        {"label": args.loss1_label, "epoch": args.loss1_epoch, "path": args.loss1_checkpoint.resolve()},
+        {"label": args.loss2_label, "epoch": args.loss2_epoch, "path": args.loss2_checkpoint.resolve()},
+        {"label": args.loss3_label, "epoch": args.loss3_epoch, "path": args.loss3_checkpoint.resolve()},
     ]
     config = {
         "generalization_root": args.generalization_root.resolve(),
@@ -290,6 +307,9 @@ def main() -> None:
         "train_samples": args.train_samples,
         "test_samples": args.test_samples,
         "generalization_samples": args.generalization_samples,
+        "output_prefix": prefix,
+        "report_title": args.report_title,
+        "report_note": args.report_note,
         "seed": args.seed,
         "top_k": args.top_k,
         "svd_method": args.svd_method,
@@ -357,7 +377,7 @@ def main() -> None:
                 solver_source = "reused"
             else:
                 start = time.perf_counter()
-                J_solver = compute_solver_jacobian(x, solver_args, device, progress_prefix=f"round01_solver_sample{sample_id}")
+                J_solver = compute_solver_jacobian(x, solver_args, device, progress_prefix=f"{prefix}_solver_sample{sample_id}")
                 solver_seconds = time.perf_counter() - start
                 solver_svd = save_configured_svd(solver_name, J_solver, sample_dir, sample_id, args)
                 solver_source = "computed"
@@ -461,11 +481,11 @@ def main() -> None:
                 append_solver_similarity(rank_similarity_rows, sample, label, "error", error_svd, solver_svd, int(args.top_k))
                 append_subspace_rows(subspace_similarity_rows, sample, label, "error", error_svd, solver_svd, [1, 5, 10, 20, 50, 100])
 
-            write_csv(out_root / "round01_jacobian_svd_summary.partial.csv", summary_rows)
-            write_csv(out_root / "round01_top_singular_values_long.partial.csv", top_rows)
-            write_csv(out_root / "round01_solver_similarity_rankwise.partial.csv", rank_similarity_rows)
-            write_csv(out_root / "round01_solver_similarity_subspaces.partial.csv", subspace_similarity_rows)
-            write_csv(out_root / "round01_runtime.partial.csv", runtime_rows)
+            write_csv(out_root / f"{prefix}_jacobian_svd_summary.partial.csv", summary_rows)
+            write_csv(out_root / f"{prefix}_top_singular_values_long.partial.csv", top_rows)
+            write_csv(out_root / f"{prefix}_solver_similarity_rankwise.partial.csv", rank_similarity_rows)
+            write_csv(out_root / f"{prefix}_solver_similarity_subspaces.partial.csv", subspace_similarity_rows)
+            write_csv(out_root / f"{prefix}_runtime.partial.csv", runtime_rows)
     finally:
         for model in models.values():
             del model
@@ -473,16 +493,25 @@ def main() -> None:
         if device.type == "cuda":
             torch.cuda.empty_cache()
 
-    write_csv(out_root / "round01_jacobian_svd_summary.csv", summary_rows)
-    write_csv(out_root / "round01_top_singular_values_long.csv", top_rows)
-    write_csv(out_root / "round01_solver_similarity_rankwise.csv", rank_similarity_rows)
-    write_csv(out_root / "round01_solver_similarity_subspaces.csv", subspace_similarity_rows)
-    write_csv(out_root / "round01_runtime.csv", runtime_rows)
+    write_csv(out_root / f"{prefix}_jacobian_svd_summary.csv", summary_rows)
+    write_csv(out_root / f"{prefix}_top_singular_values_long.csv", top_rows)
+    write_csv(out_root / f"{prefix}_solver_similarity_rankwise.csv", rank_similarity_rows)
+    write_csv(out_root / f"{prefix}_solver_similarity_subspaces.csv", subspace_similarity_rows)
+    write_csv(out_root / f"{prefix}_runtime.csv", runtime_rows)
     err_agg = aggregate_error(summary_rows)
     spec_agg = aggregate_spectral(summary_rows)
-    write_csv(out_root / "round01_error_spectral_norm_aggregate.csv", err_agg)
-    write_csv(out_root / "round01_jacobian_spectral_norm_aggregate.csv", spec_agg)
-    write_summary_md(out_root, model_specs, err_agg, spec_agg, config)
+    write_csv(out_root / f"{prefix}_error_spectral_norm_aggregate.csv", err_agg)
+    write_csv(out_root / f"{prefix}_jacobian_spectral_norm_aggregate.csv", spec_agg)
+    write_summary_md(
+        out_root,
+        model_specs,
+        err_agg,
+        spec_agg,
+        config,
+        output_prefix=prefix,
+        report_title=args.report_title,
+        report_note=args.report_note,
+    )
     print(
         json.dumps(
             {
