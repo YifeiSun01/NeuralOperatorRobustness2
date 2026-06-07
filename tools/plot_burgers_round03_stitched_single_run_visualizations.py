@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Plot one Burgers round03 run after stitching base and later training.
 
-This is for user-facing "single run" visualizations: loss1 should appear as a
-single 0..3000 training curve, and loss2/loss3 as single 0..1000 curves, even
-though the later epochs were produced by separate resume run directories.
+This is for user-facing single-run visualizations: each loss should appear as a
+single training curve even when later epochs were produced by one or more
+separate resume run directories.
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ def load_variable_module():
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-run-dir", required=True, type=Path)
-    parser.add_argument("--extension-run-dir", required=True, type=Path)
+    parser.add_argument("--extension-run-dir", required=True, type=Path, action="append", help="Resume run directory to append. Pass more than once for multi-stage continuation.")
     parser.add_argument("--out-dir", required=True, type=Path)
     parser.add_argument("--suffix", default="round03_long")
     parser.add_argument("--max-lines-per-panel", type=int, default=5)
@@ -53,12 +53,18 @@ def read_csv(run_dir: Path, name: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def stitched_eval(base_run: Path, extension_run: Path) -> pd.DataFrame:
-    base = read_csv(base_run, "eval_metrics.csv")
-    ext = read_csv(extension_run, "eval_metrics.csv")
-    if "phase" in ext.columns:
-        ext = ext[ext["phase"] != "resume_checkpoint_before_adversarial_training"].copy()
-    df = pd.concat([base, ext], ignore_index=True)
+def stitched_frames(base_run: Path, extension_runs: list[Path], name: str, *, drop_resume_phase: bool) -> pd.DataFrame:
+    frames = [read_csv(base_run, name)]
+    for extension_run in extension_runs:
+        ext = read_csv(extension_run, name)
+        if drop_resume_phase and "phase" in ext.columns:
+            ext = ext[ext["phase"] != "resume_checkpoint_before_adversarial_training"].copy()
+        frames.append(ext)
+    return pd.concat(frames, ignore_index=True)
+
+
+def stitched_eval(base_run: Path, extension_runs: list[Path]) -> pd.DataFrame:
+    df = stitched_frames(base_run, extension_runs, "eval_metrics.csv", drop_resume_phase=True)
     return (
         df.sort_values(["epoch", "dataset_id", "phase"])
         .drop_duplicates(["epoch", "dataset_id"], keep="first")
@@ -67,25 +73,19 @@ def stitched_eval(base_run: Path, extension_run: Path) -> pd.DataFrame:
     )
 
 
-def stitched_epoch_summary(base_run: Path, extension_run: Path) -> pd.DataFrame:
-    base = read_csv(base_run, "attack_epoch_summary.csv")
-    ext = read_csv(extension_run, "attack_epoch_summary.csv")
-    df = pd.concat([base, ext], ignore_index=True)
+def stitched_epoch_summary(base_run: Path, extension_runs: list[Path]) -> pd.DataFrame:
+    df = stitched_frames(base_run, extension_runs, "attack_epoch_summary.csv", drop_resume_phase=False)
     return df.sort_values(["epoch"]).drop_duplicates(["epoch"], keep="first").reset_index(drop=True)
 
 
-def stitched_bucket_summary(base_run: Path, extension_run: Path) -> pd.DataFrame:
-    base = read_csv(base_run, "attack_epsilon_bucket_summary.csv")
-    ext = read_csv(extension_run, "attack_epsilon_bucket_summary.csv")
-    df = pd.concat([base, ext], ignore_index=True)
+def stitched_bucket_summary(base_run: Path, extension_runs: list[Path]) -> pd.DataFrame:
+    df = stitched_frames(base_run, extension_runs, "attack_epsilon_bucket_summary.csv", drop_resume_phase=False)
     keys = ["epoch", "bucket_index"]
     return df.sort_values(keys).drop_duplicates(keys, keep="first").reset_index(drop=True)
 
 
-def stitched_probe_summary(base_run: Path, extension_run: Path) -> pd.DataFrame:
-    base = read_csv(base_run, "attack_probe_samples.csv")
-    ext = read_csv(extension_run, "attack_probe_samples.csv")
-    df = pd.concat([base, ext], ignore_index=True)
+def stitched_probe_summary(base_run: Path, extension_runs: list[Path]) -> pd.DataFrame:
+    df = stitched_frames(base_run, extension_runs, "attack_probe_samples.csv", drop_resume_phase=False)
     keys = ["epoch", "probe_rank"]
     return df.sort_values(keys).drop_duplicates(keys, keep="first").reset_index(drop=True)
 
@@ -119,8 +119,14 @@ def compute_delta_fft_matrix_from_probe(plotmod, probe_df: pd.DataFrame, epochs:
 
 
 def selected_fft_epochs(max_epoch: int, available_epochs: np.ndarray) -> list[int]:
-    if max_epoch >= 3000:
+    if max_epoch >= 5000:
+        requested = [50, 200, 400, 800, 1200, 2000, 3000, 4000, 5000]
+    elif max_epoch >= 3000:
         requested = [50, 200, 400, 800, 1200, 1800, 2400, 3000]
+    elif max_epoch >= 2000:
+        requested = [50, 100, 200, 400, 800, 1200, 1600, 2000]
+    elif max_epoch >= 1500:
+        requested = [50, 100, 200, 400, 700, 1000, 1250, 1500]
     elif max_epoch >= 1000:
         requested = [50, 100, 200, 400, 600, 800, 1000]
     else:
@@ -195,10 +201,11 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     polished_dir.mkdir(parents=True, exist_ok=True)
 
-    eval_df = stitched_eval(args.base_run_dir, args.extension_run_dir)
-    attack_df = stitched_epoch_summary(args.base_run_dir, args.extension_run_dir)
-    bucket_df = stitched_bucket_summary(args.base_run_dir, args.extension_run_dir)
-    probe_df = stitched_probe_summary(args.base_run_dir, args.extension_run_dir)
+    extension_runs = list(args.extension_run_dir)
+    eval_df = stitched_eval(args.base_run_dir, extension_runs)
+    attack_df = stitched_epoch_summary(args.base_run_dir, extension_runs)
+    bucket_df = stitched_bucket_summary(args.base_run_dir, extension_runs)
+    probe_df = stitched_probe_summary(args.base_run_dir, extension_runs)
 
     outputs: list[str] = []
     outputs.append(str(plotmod.plot_attack_loss(attack_df, bucket_df, polished_dir, args.suffix)))
@@ -220,7 +227,7 @@ def main() -> None:
 
     manifest = {
         "base_run_dir": str(args.base_run_dir),
-        "extension_run_dir": str(args.extension_run_dir),
+        "extension_run_dirs": [str(path) for path in extension_runs],
         "out_dir": str(out_dir),
         "max_eval_epoch": int(eval_df["epoch"].max()),
         "max_attack_epoch": int(attack_df["epoch"].max()),

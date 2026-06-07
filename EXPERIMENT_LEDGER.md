@@ -1,3 +1,355 @@
+## 2026-06-07 - Burgers round03 final extension R2/GitHub sync
+
+Status: R2 upload completed for selected final-extension artifacts. GitHub commit/push is being performed after this record is written.
+
+Observed R2 evidence:
+- Destination bucket/prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Upload mode was `rclone copy`, not destructive sync.
+- Uploaded selected paths include round03 dataset `generalization_datasets_burgers_loss3_selective_search/round_03`, final-extension training run directories for loss1 epoch5000/loss2 epoch2000/loss3 epoch1500, final-extension logs, GPU preflight, final SVD/Jacobian forensics, refreshed visualizations, final-extension docs, and final-extension helper scripts.
+- Remote size check for `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue3000to5000_20260606`: `2046` objects, `308.409 MiB`.
+- Remote size check for `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`: `395` objects, `809.670 MiB`.
+- Remote existence checks passed for final loss1/loss2/loss3 checkpoints, final-extension SVD Markdown summary, final loss3-advantage comparison PNG, and the completion Markdown report.
+
+GitHub scope:
+- Include code/scripts/Markdown: `*.py`, `*.sh`, selected `*.md`, and `EXPERIMENT_LEDGER.md`.
+- Exclude generated large artifacts such as checkpoints, `.pt`, `.npz`, `.npy`, generated `.csv`, `.png`, datasets, and visualization binaries from GitHub; those were uploaded to R2.
+
+Dedicated sync report:
+- `docs/r2_github_sync_20260607.md`
+
+Security note:
+- R2 credentials were only used via temporary `/tmp` rclone config files and were deleted after upload/verification.
+- Credentials pasted into chat should be rotated after sync confirmation.
+
+## 2026-06-07 - Burgers round03 final extension completed with SVD and plots
+
+Status: completed end-to-end. Training, final-checkpoint Jacobian/SVD, and final plot refresh are all done.
+
+Observed evidence:
+- `adversarial_training_runs/burgers_loss3_selective_round03_loss123_final_extension_20260606_logs/driver.log` records: loss1 done at `2026-06-06T17:36:15Z`, loss2 done at `2026-06-06T23:56:56Z`, loss3 done at `2026-06-07T06:16:09Z`, SVD done at `2026-06-07T09:27:18Z`, plots done at `2026-06-07T09:29:28Z`, and `final-extension workflow done` at `2026-06-07T09:29:28Z`.
+- `tmux list-sessions` no longer shows `round03_loss123_final_extension`; only `ssh_tmux` remains.
+- `pgrep` found no active training, SVD, or plotting process matching the final-extension workflow.
+- Training summaries exist for all three final-extension runs.
+- Final checkpoints exist by summary path: loss1 epoch5000 `burgers_epoch5000_step015000.pt`, loss2 epoch2000 `burgers_epoch2000_step006000.pt`, and loss3 epoch1500 `burgers_epoch1500_step004500.pt`.
+- Final SVD output directory exists: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`.
+- Primary final SVD result files include `round03_loss123_final_extension_jacobian_svd_summary.md`, `round03_loss123_final_extension_jacobian_svd_summary.csv`, `round03_loss123_final_extension_error_spectral_norm_aggregate.csv`, `round03_loss123_final_extension_jacobian_spectral_norm_aggregate.csv`, `round03_loss123_final_extension_solver_similarity_rankwise.csv`, `round03_loss123_final_extension_solver_similarity_subspaces.csv`, and `round03_loss123_final_extension_runtime.csv`.
+- Refreshed single-run plot directories exist for loss1 epoch5000, loss2 epoch2000, and loss3 epoch1500.
+- Refreshed comparison directories exist at `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605` and `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605`; key PNGs were updated around `2026-06-07T09:29Z`.
+- Dedicated completion report written to `docs/burgers_loss3_selective_round03_final_extension_completion_20260607.md`.
+
+Final generated/generalization metrics from each run's `burgers/eval_split_summary.csv`:
+- loss1 epoch5000: RMSE `0.03245434070606764`, relative L2 `0.058182682528028995`.
+- loss2 epoch2000: RMSE `0.03573958119889953`, relative L2 `0.06408098797752262`.
+- loss3 epoch1500: RMSE `0.021637501109214533`, relative L2 `0.03877425041082085`.
+
+Final SVD generalization error spectral norm from `round03_loss123_final_extension_error_spectral_norm_aggregate.csv`:
+- loss1_epoch5000: error mean `2.753176126511624`, ratio mean `0.49444841170651543`, `9/10` smaller than baseline.
+- loss2_epoch2000: error mean `3.3222567331169137`, ratio mean `0.5785477467427029`, `9/10` smaller than baseline.
+- loss3_epoch1500: error mean `2.4995994501058596`, ratio mean `0.41154677198027967`, `9/10` smaller than baseline.
+
+Inference from observed evidence:
+- The requested final-extension continuation and automated follow-on analyses completed successfully.
+- On final generated/generalization RMSE and relative L2, loss3 epoch1500 remains best among the three final-extension models.
+- On final SVD generalization model-minus-solver error spectral norm, loss3 epoch1500 has the lowest mean among loss1/loss2/loss3.
+
+Remaining work:
+- Upload large generated artifacts to R2 if requested.
+- Commit/push Markdown and source changes if requested.
+- Keep CSV/NPZ/model/PNG artifacts out of Git unless explicitly requested.
+
+## 2026-06-07 - Burgers round03 final extension loss3 mid-late health check
+
+Status: inspected the active final-extension workflow. Loss1 and loss2 remain complete; loss3 epoch1000 to epoch1500 is actively running on GPU and is in the late stage.
+
+Observed evidence:
+- tmux session `round03_loss123_final_extension` is present.
+- Active process is `burgers_loss3_selective_round03_loss3_continue1000to1500_20260606`, with `--device cuda`, `--epochs 500`, `--resume-epoch-offset 1000`, `--resume-global-step-offset 3000`, and loss objective `loss3`.
+- Driver log still records loss1 completion at `2026-06-06T17:36:15Z`, loss2 completion at `2026-06-06T23:56:56Z`, and loss3 start at `2026-06-06T23:56:56Z`; no final SVD start line has appeared yet.
+- `nvidia-smi` at `2026-06-07T04:18:11Z` showed Tesla V100-SXM2-32GB at `30732 MiB / 32768 MiB` and `30%` GPU utilization; no CPU fallback evidence was observed.
+- Loss3 `train_steps.csv` advanced through epoch `1345`, global step `4035`, progress `0.8966666666666666` in total-epoch coordinates.
+- Loss3 `eval_split_summary.csv` advanced through epoch `1345`, global step `4035`; generated/generalization RMSE was `0.021111329793382722` and relative L2 was `0.037838767998016394`.
+- Loss3 `checkpoints.csv` shows successful wall-clock checkpoints through epoch `1317`, elapsed seconds `14430.37260515429`, plus periodic checkpoints at epochs `1100`, `1200`, and `1300`.
+- Loss3 `memory.csv` shows CUDA reserved memory around `30328 MiB` and peak allocated around `28306.765 MiB`, consistent with heavy GPU execution.
+- No files were present yet in `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`; final SVD has not started.
+
+Inference from current evidence:
+- The workflow is running normally and is still in loss3 training.
+- Based on epoch `1317` at `14430.37260515429` seconds, observed loss3 speed is about `45.52` seconds per epoch. From epoch `1345`, about `155` epochs remain, so loss3 training ETA is about `1.96` hours.
+- After loss3 finishes, the driver should automatically start final-checkpoint SVD and then plot refresh. Prior comparable final SVD runtime was about `8403.65` seconds, so complete end-to-end finish is likely several hours after loss3 training completes.
+
+Remaining work:
+- Verify loss3 reaches epoch1500 and writes `summary.json` plus `burgers_epoch1500_step004500.pt`.
+- Verify final SVD starts and completes, then verify plot refresh outputs.
+- Record final metrics and output paths when complete.
+
+## 2026-06-07 - Burgers round03 final extension loss3 active health check
+
+Status: inspected the active final-extension workflow. Loss1 and loss2 are complete; loss3 epoch1000 to epoch1500 is actively running on GPU.
+
+Observed evidence:
+- tmux session `round03_loss123_final_extension` is present.
+- Driver log `adversarial_training_runs/burgers_loss3_selective_round03_loss123_final_extension_20260606_logs/driver.log` records loss1 completion at `2026-06-06T17:36:15Z`, loss2 completion at `2026-06-06T23:56:56Z`, and loss3 start at `2026-06-06T23:56:56Z`.
+- Active process is `burgers_loss3_selective_round03_loss3_continue1000to1500_20260606`, with `--device cuda`, `--epochs 500`, `--resume-epoch-offset 1000`, `--resume-global-step-offset 3000`, and loss objective `loss3`.
+- `nvidia-smi` at `2026-06-07T01:06:52Z` showed Tesla V100-SXM2-32GB at `30732 MiB / 32768 MiB` and `44%` GPU utilization; no CPU fallback evidence was observed.
+- Loss2 final summary exists at `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue1000to2000_20260606/summary.json`; it reports final checkpoint `burgers_epoch2000_step006000.pt` and total wall seconds `22837.659613220952`.
+- Loss2 final generated/generalization metrics from `eval_split_summary.csv` at epoch `2000`, global step `6000`: RMSE `0.03573958119889953`, relative L2 `0.06408098797752262`.
+- Loss3 `train_steps.csv` advanced to epoch `1095`, global step `3284`, progress `0.7297777777777777` in total-epoch coordinates.
+- Loss3 `eval_split_summary.csv` advanced to epoch `1093`, global step `3279`; generated/generalization RMSE was `0.019878102911421624` and relative L2 was `0.03562912872951677`.
+- Loss3 `checkpoints.csv` shows wall-clock checkpoints at epoch `1040` and epoch `1080`, with epoch `1080` elapsed seconds `3614.595871511847`.
+- Loss3 `memory.csv` shows CUDA reserved memory around `30328 MiB` and peak allocated around `28306 MiB`, consistent with heavy GPU use.
+- No files were present yet in `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`; final SVD has not started.
+- New final-epoch visualization directories such as `loss1_5000ep`, `loss2_2000ep`, and `loss3_1500ep` are not present yet; plot refresh has not started.
+
+Inference from current evidence:
+- The workflow is running normally and is currently in the loss3 training stage.
+- Based on the latest loss3 checkpoint rate of about `45.18` seconds per epoch and the latest training row at epoch `1095`, loss3 training has about `405` epochs remaining, or about `5.08` hours.
+- After training, final-checkpoint SVD and plot refresh should start automatically. Prior comparable final SVD runtime was about `8403.65` seconds, so full completion is likely several hours after loss3 finishes.
+
+Remaining work:
+- Verify loss3 reaches epoch1500 and writes `summary.json` plus the final checkpoint.
+- Verify final SVD starts and completes, then verify plot refresh outputs.
+- Record final loss3/SVD/plot metrics and paths when complete.
+
+## 2026-06-06 - Burgers round03 final extension loss2 late-stage health check
+
+Status: inspected the active final-extension workflow during loss2. The run is normal, on GPU, and loss2 is in the late stage.
+
+Observed evidence:
+- tmux session `round03_loss123_final_extension` is present.
+- Active process is `burgers_loss3_selective_round03_loss2_continue1000to2000_20260606`, with `--device cuda`, `--epochs 1000`, `--resume-epoch-offset 1000`, `--resume-global-step-offset 3000`, and loss objective `loss2`.
+- `nvidia-smi` at `2026-06-06T22:28:29Z` showed Tesla V100-SXM2-32GB at `4896 MiB / 32768 MiB` and `27%` GPU utilization; an earlier sample at `2026-06-06T17:36:53Z` had shown `54%` during the start of loss2. No CPU fallback evidence was observed.
+- `eval_split_summary.csv` for loss2 advanced through epoch `1774`, global step `5322`, progress `0.887`; generated/generalization RMSE was `0.03540885411475918` and relative L2 was `0.06349008010938685`.
+- `train_steps.csv` for loss2 advanced through epoch `1776`, global step `5327`, progress `0.8878333333333334`.
+- `checkpoints.csv` for loss2 shows successful periodic checkpoints through epoch `1700` and wall-clock checkpoints through epoch `1717` at wall target `16200` seconds.
+- The loss2 run log tail contains only preflight/planned-estimate/run-start messages; no error line was observed in the inspected tail.
+- Historical loss3 continuation timing source `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue500to1000_20260605/burgers/checkpoints.csv` shows final checkpoint epoch1000 at wall elapsed `22963.64923242852` seconds for 500 epochs.
+- Historical final SVD timing source `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_runtime.csv` has 180 runtime rows summing to `8403.651342598721` seconds.
+
+Inference from current evidence:
+- Loss2 has about `224` epochs left from the latest training row, roughly `1.4` hours at the observed loss2 rate since `2026-06-06T17:36:15Z`.
+- After loss2, loss3 epoch1000 to epoch1500 is expected to take on the order of `6.4` hours based on the previous loss3 500-epoch continuation wall time.
+- Final SVD/plot refresh will follow automatically; prior comparable final SVD runtime was about `2.3` hours, so the full workflow likely has roughly `9.5` to `10.5` hours remaining from this check, depending on SVD/runtime variation.
+
+Remaining work:
+- Verify loss2 reaches epoch2000 and hands off to loss3.
+- Verify loss3 reaches epoch1500, then final SVD and plot refresh complete.
+- Record final metrics and output paths when the workflow finishes.
+
+## 2026-06-06 - Burgers round03 final extension loss1 completed and loss2 started
+
+Status: inspected the active final-extension workflow after the loss1 handoff. Loss1 epoch3000 to epoch5000 completed, and loss2 epoch1000 to epoch2000 started automatically.
+
+Observed evidence:
+- Driver log `adversarial_training_runs/burgers_loss3_selective_round03_loss123_final_extension_20260606_logs/driver.log` recorded `done burgers_loss3_selective_round03_loss1_continue3000to5000_20260606` at `2026-06-06T17:36:15Z`, then immediately recorded start of `burgers_loss3_selective_round03_loss2_continue1000to2000_20260606` from the loss2 epoch1000 checkpoint.
+- Active process is now the expected loss2 continuation command with `--device cuda`, `--epochs 1000`, `--resume-epoch-offset 1000`, `--resume-global-step-offset 3000`, and loss objective `loss2`.
+- Loss1 `eval_split_summary.csv` reached epoch `5000`, global step `15000`, progress `1.0`; generated/generalization RMSE was `0.03245434070606764` and relative L2 was `0.058182682528028995`.
+- Loss2 `train_steps.csv` has already written rows through epoch `1002`, global step `3004`, progress `0.5006666666666667`.
+- Loss2 `eval_split_summary.csv` has already written during-training evaluation at epoch `1001`, global step `3003`; generated/generalization RMSE was `0.03679804939712015` and relative L2 was `0.06599775206257438`.
+- `nvidia-smi` at `2026-06-06T17:36:53Z` showed Tesla V100-SXM2-32GB at `4896 MiB / 32768 MiB` and `54%` GPU utilization; no CPU fallback evidence was observed.
+
+Inference from current evidence:
+- The workflow is running normally. The training driver successfully completed the first requested extension segment and handed off to the second segment.
+
+Remaining work:
+- Continue monitoring loss2 completion, loss3 start/completion, final SVD, and plot refresh.
+- Record the final SVD and visualization outputs after the full workflow completes.
+
+## 2026-06-06 - Burgers round03 final extension health check near loss1 completion
+
+Status: inspected the active final-extension workflow; it is still running normally in tmux and remains on GPU.
+
+Observed evidence:
+- tmux session `round03_loss123_final_extension` is present.
+- Active process is the expected loss1 continuation command for `burgers_loss3_selective_round03_loss1_continue3000to5000_20260606` with `--device cuda`, `--epochs 2000`, `--resume-epoch-offset 3000`, `--resume-global-step-offset 9000`, and the loss1 epoch3000 checkpoint.
+- `nvidia-smi` at `2026-06-06T17:35:09Z` showed Tesla V100-SXM2-32GB at `4896 MiB / 32768 MiB`, nonzero GPU utilization, and no CPU fallback evidence.
+- `train_steps.csv` advanced to epoch `4987`, global step `14961`, progress `0.9974`.
+- `eval_split_summary.csv` advanced to epoch `4990`, global step `14970`, progress `0.998`; the generated/generalization row had RMSE `0.03246346465091287` and relative L2 `0.058198833879218884`.
+- `checkpoints.csv` shows periodic checkpoints through epoch `4900`.
+- Driver log still only records the expected loss1 start; no error line was observed in the inspected tail.
+
+Inference from current evidence:
+- The workflow is behaving normally and loss1 should soon reach epoch5000, after which the same driver should proceed to loss2 epoch1000 to epoch2000, then loss3 epoch1000 to epoch1500, then final-checkpoint SVD and plot refresh.
+
+Remaining work:
+- Continue monitoring after loss1 finishes to verify the loss2 handoff.
+- Record final training, SVD, and visualization outputs after the full workflow completes.
+
+## 2026-06-06 - Burgers round03 final extension ten-minute launch monitor
+
+Status: completed a short monitor of the newly launched final-extension workflow, then stopped tracking without interrupting training.
+
+Observed evidence:
+- tmux session `round03_loss123_final_extension` remained present throughout the monitor.
+- Active phase remained loss1 continuation `burgers_loss3_selective_round03_loss1_continue3000to5000_20260606`.
+- The active command used `--device cuda`, `--epochs 2000`, `--resume-epoch-offset 3000`, `--resume-global-step-offset 9000`, and the loss1 epoch3000 checkpoint as `--burgers-initial-checkpoint`.
+- GPU sampling showed about `4896 MiB / 32768 MiB` memory used with nonzero utilization; no CPU fallback was observed.
+- `train_steps.csv` advanced from about epoch `3052` to epoch `3160` during the monitor window.
+- The loss1 log remained past dataset preflight and no early crash was observed.
+
+Current state:
+- Monitoring/tracking has stopped.
+- Training was not stopped and continues in tmux.
+- Remaining automated workflow after loss1: loss2 epoch1000 to epoch2000, loss3 epoch1000 to epoch1500, final-checkpoint SVD, then stitched plot refresh.
+
+Dedicated report updated:
+- `docs/burgers_loss3_selective_round03_final_extension_automation_20260606.md`
+
+## 2026-06-06 - Burgers round03 final extension launched
+
+Status: launched the requested round03 final-extension workflow in tmux. Active phase is loss1 continuation from epoch3000 to epoch5000.
+
+Launch evidence:
+- tmux session: `round03_loss123_final_extension`.
+- Driver log: `adversarial_training_runs/burgers_loss3_selective_round03_loss123_final_extension_20260606_logs/driver.log`.
+- Launcher log: `adversarial_training_runs/burgers_loss3_selective_round03_loss123_final_extension_20260606_logs/launcher.log`.
+- Active loss1 log: `adversarial_training_runs/burgers_loss3_selective_round03_loss123_final_extension_20260606_logs/burgers_loss3_selective_round03_loss1_continue3000to5000_20260606.log`.
+- Observed process command used `/workspace/NeuralOperatorRobustness2/adv_robust/bin/python`, `--device cuda`, `--run-name burgers_loss3_selective_round03_loss1_continue3000to5000_20260606`, `--epochs 2000`, `--resume-epoch-offset 3000`, `--resume-global-step-offset 9000`, and initial checkpoint `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605/burgers/checkpoints/burgers_epoch3000_step009000.pt`.
+- GPU preflight source: `forensics/burgers_loss3_selective_round03_loss123_final_extension_gpu_preflight_20260606/gpu_preflight.json`.
+- GPU preflight observed PyTorch `2.8.0+cu126`, Torch CUDA `12.6`, Tesla V100-SXM2-32GB, capability `[7, 0]`, arch list including `sm_70`, JAX `0.10.0`, JAX backend `gpu`, and JAX device `cuda:0`.
+- `nvidia-smi` during launch showed GPU memory in use and nonzero utilization; no CPU fallback was used.
+- Loss1 run log passed dataset-count preflight and wrote `planned_workload_estimate.json`.
+
+Workflow order:
+- loss1 epoch3000 to epoch5000.
+- loss2 epoch1000 to epoch2000.
+- loss3 epoch1000 to epoch1500.
+- Automatic final-checkpoint Jacobian/SVD on loss1 epoch5000, loss2 epoch2000, and loss3 epoch1500.
+- Automatic plot refresh so single-run and comparison curves extend to the new final epochs.
+
+Remaining work:
+- Monitor tmux/logs until training, final SVD, and plots complete.
+- Record final train/test/generated RMSE and relative L2, SVD summaries, and plot output paths after completion.
+
+## 2026-06-06 - Burgers round03 final extension automation prepared
+
+Status: implemented the requested automatic final-extension workflow for loss1 epoch3000 to epoch5000, loss2 epoch1000 to epoch2000, and loss3 epoch1000 to epoch1500. Launch is handled in tmux after this preparation step.
+
+Code changed/created:
+- Added `tools/run_burgers_loss3_selective_round03_loss123_final_extension_20260606.sh`.
+- Updated `tools/plot_burgers_round03_stitched_single_run_visualizations.py` to accept multiple `--extension-run-dir` arguments and stitch base + multiple continuation segments.
+- Added `tools/plot_burgers_round03_loss123_final_extension_dense_comparison.py` to refresh dense and compact comparison plots through loss1 epoch5000, loss2 epoch2000, and loss3 epoch1500.
+
+Training targets:
+- New loss1 run: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue3000to5000_20260606`, starting from `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605/burgers/checkpoints/burgers_epoch3000_step009000.pt`, with `--epochs 2000`, `--resume-epoch-offset 3000`, and `--resume-global-step-offset 9000`.
+- New loss2 run: `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue1000to2000_20260606`, starting from `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue500to1000_20260605/burgers/checkpoints/burgers_epoch1000_step003000.pt`, with `--epochs 1000`, `--resume-epoch-offset 1000`, and `--resume-global-step-offset 3000`.
+- New loss3 run: `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue1000to1500_20260606`, starting from `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue500to1000_20260605/burgers/checkpoints/burgers_epoch1000_step003000.pt`, with `--epochs 500`, `--resume-epoch-offset 1000`, and `--resume-global-step-offset 3000`.
+
+Automatic post-training stages:
+- Final SVD/Jacobian output directory: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606` with prefix `round03_loss123_final_extension`.
+- SVD uses fixed sample manifest `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_sample_manifest.csv` and final checkpoints loss1 epoch5000, loss2 epoch2000, loss3 epoch1500.
+- Plot refresh writes single-run curves to final-epoch plot directories and refreshes dense/compact comparison directories in place.
+- Same-wall/time-matched SVD remains cancelled; this automation runs final-checkpoint SVD only.
+
+Observed pre-launch verification:
+- `bash -n tools/run_burgers_loss3_selective_round03_loss123_final_extension_20260606.sh` passed.
+- `python3 -m py_compile tools/plot_burgers_round03_loss123_final_extension_dense_comparison.py tools/plot_burgers_round03_stitched_single_run_visualizations.py` passed.
+- Starting checkpoints and the fixed SVD sample manifest exist locally.
+- Target final-extension run directories were not present before launch.
+
+Dedicated report:
+- `docs/burgers_loss3_selective_round03_final_extension_automation_20260606.md`
+
+## 2026-06-06 - Burgers round03 post-continuation SVD stopped and automation disabled by default
+
+Status: stopped the briefly launched post-continuation final SVD and changed the continuation script so post-continuation final SVD is opt-in, not automatic.
+
+Observed stop evidence:
+- The launched job was `tools/compare_burgers_round01_final_jacobian_svd.py` using existing continuation-final checkpoints; it was not retraining.
+- The continuation driver skipped all three completed continuation runs before starting the SVD-only job.
+- Sent Ctrl-C to tmux session `round03_post_continuation_final_svd`.
+- After stopping, `pgrep -af 'compare_burgers_round01_final_jacobian_svd|round03_loss123_continuation_final'` returned no process.
+- `tmux list-sessions` no longer showed `round03_post_continuation_final_svd`.
+- `nvidia-smi` showed `0MiB / 32768MiB` and no running processes.
+
+Code changed:
+- `tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh` now defaults to `RUN_POST_CONTINUATION_FINAL_SVD=0`, so it does not automatically start the SVD after continuation.
+- Verified by running the script without that variable: it skipped all completed continuation runs and printed `skip post-continuation final SVD because RUN_POST_CONTINUATION_FINAL_SVD=0`.
+- To run it manually later, explicitly set `RUN_POST_CONTINUATION_FINAL_SVD=1`.
+
+Partial output status:
+- Output directory exists: `forensics/burgers_loss3_selective_round03_loss123_continuation_final_jacobian_svd_rep20_top100_20260606`.
+- The final summary `round03_loss123_continuation_final_jacobian_svd_summary.csv` does not exist.
+- Partial files exist for `sample_000` solver and baseline only; they were not deleted.
+
+Current conclusion:
+- No training is running.
+- No SVD is running.
+- Post-continuation final SVD remains incomplete and should not be used for conclusions.
+
+## 2026-06-06 - Burgers round03 continuation final-SVD automation fixed and launched
+
+Status: updated the continuation driver so post-continuation final-checkpoint Jacobian/SVD runs automatically after continuation training; launched the missing SVD in tmux.
+
+Code changed:
+- `tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh`
+
+Observed code behavior:
+- Completed continuation runs are skipped instead of retrained.
+- After the three continuation runs are complete, `run_post_continuation_final_svd` runs by default.
+- `RUN_POST_CONTINUATION_FINAL_SVD=0` is available only as an explicit debug override.
+- The SVD stage skips if `forensics/burgers_loss3_selective_round03_loss123_continuation_final_jacobian_svd_rep20_top100_20260606/round03_loss123_continuation_final_jacobian_svd_summary.csv` already exists.
+- The SVD stage checks CUDA, V100 `sm_70`, and JAX GPU before launching and uses `--device cuda`.
+- The SVD stage uses the fixed pre-continuation sample manifest `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_sample_manifest.csv`.
+
+Post-continuation final checkpoints used:
+- loss1 epoch3000: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue1000to3000_20260605/burgers/checkpoints/burgers_epoch3000_step009000.pt`
+- loss2 epoch1000: `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue500to1000_20260605/burgers/checkpoints/burgers_epoch1000_step003000.pt`
+- loss3 epoch1000: `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue500to1000_20260605/burgers/checkpoints/burgers_epoch1000_step003000.pt`
+
+Observed launch evidence:
+- Test run with `RUN_POST_CONTINUATION_FINAL_SVD=0` skipped all three completed continuation runs and did not retrain.
+- Formal run launched in tmux session `round03_post_continuation_final_svd` at `2026-06-06T14:20:28Z`.
+- `driver.log` recorded `start post-continuation final Jacobian/SVD` at `2026-06-06T14:20:31Z`.
+- `svd_final_post_continuation_rep20_top100.log` recorded GPU preflight: PyTorch `2.8.0+cu126`, Torch CUDA `12.6`, Tesla V100-SXM2-32GB, capability `[7, 0]`, arch list including `sm_70`, JAX `0.10.0`, JAX backend `gpu`, JAX device `cuda:0`.
+- The SVD log entered `[device] cuda` and started `sample_000`.
+
+Output/log paths:
+- Output directory: `forensics/burgers_loss3_selective_round03_loss123_continuation_final_jacobian_svd_rep20_top100_20260606`
+- Log: `adversarial_training_runs/burgers_loss3_selective_round03_loss123_continuation_20260605_logs/svd_final_post_continuation_rep20_top100.log`
+- Dedicated report: `docs/burgers_loss3_selective_round03_post_continuation_final_svd_automation_20260606.md`
+
+Current conclusion:
+- The automation gap is fixed and the missing post-continuation final SVD is running.
+- Do not claim final post-continuation SVD results until `round03_loss123_continuation_final_jacobian_svd_summary.csv` and `.md` exist.
+- Same-wall/time-matched SVD remains cancelled; this is final-checkpoint SVD only.
+
+## 2026-06-06 - Burgers round03 automatic final-SVD instruction audit
+
+Status: inspected repository records and scripts to determine whether automatic post-training final Jacobian/SVD had been requested/implemented previously.
+
+Observed evidence:
+- `tools/run_burgers_loss3_selective_round03_full_pipeline_20260605.py` defines `svd-final` as a full-pipeline stage and includes it in `all`.
+- `tools/watch_burgers_round03_posthoc_after_loss3_20260605.sh` waits for loss3 completion and then runs posthoc stages through `svd-final`.
+- `docs/burgers_loss3_selective_round03_full_pipeline_code_plan_20260605.md` records that after training, Jacobian/SVD diagnostics should run and that the SVD computes `J_solver`, `J_model`, `J_error`, singular values, spectral/Frobenius/effective-rank summaries, rankwise singular-vector similarity, and top-k singular-subspace similarity.
+- `tools/run_burgers_loss3_selective_round03_loss123_continuation_20260605.sh` only gates continuation on the old final SVD summary and then runs continuation training; it does not launch a post-continuation final-SVD stage after `continuation all done`.
+
+Inference from evidence:
+- The automatic final-SVD requirement is evidenced for the original round03 full pipeline and was applied to pre-continuation final checkpoints.
+- The continuation workflow failed to carry that automatic final-SVD pattern forward, leaving loss1 epoch3000 and loss2/loss3 epoch1000 Jacobian/SVD not evidenced locally.
+- Same-wall/time-matched SVD remains cancelled; this audit is about final-checkpoint SVD only.
+
+Dedicated audit file:
+- `docs/burgers_loss3_selective_round03_auto_svd_instruction_audit_20260606.md`
+
+## 2026-06-06 - Burgers round03 post-continuation Jacobian/SVD coverage check
+
+Status: inspected existing round03 Jacobian/SVD artifacts and recorded that post-continuation final-checkpoint SVD has not yet been evidenced locally.
+
+Observed evidence:
+- Existing completed SVD directory: `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605`.
+- Existing SVD summary file: `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.md`.
+- That summary explicitly says it was computed on `loss1_epoch1000`, `loss2_epoch0500`, and `loss3_epoch0500`.
+- The existing output set includes model Jacobians, model-minus-solver error Jacobians, top singular values, rankwise solver singular-vector similarity, top-k solver subspace similarity, and error spectral norm aggregates.
+- Continuation-final checkpoints exist locally at loss1 epoch3000, loss2 epoch1000, and loss3 epoch1000.
+- A local `forensics/` search did not find a round03 continuation/post-continuation Jacobian/SVD result for `loss1_epoch3000`, `loss2_epoch1000`, or `loss3_epoch1000`.
+
+Inference from evidence:
+- The old final/basic Jacobian/SVD was completed before continuation and should not be presented as the continuation-final SVD.
+- To support continuation-final forensic claims, rerun the final-checkpoint Jacobian/SVD workflow against the three continuation-final checkpoints. Same-wall/time-matched SVD remains cancelled.
+
+Dedicated status file:
+- `docs/burgers_loss3_selective_round03_post_continuation_jacobian_svd_status_20260606.md`
+
 ## 2026-06-06 - R2 copy completed and GitHub sync prepared
 
 Status: R2 upload completed; GitHub code/Markdown push completed in this sync turn.

@@ -9,13 +9,18 @@ GEN_ROOT="$ROOT/generalization_datasets_burgers_loss3_selective_search/round_03"
 OUT_ROOT="$ROOT/adversarial_training_runs"
 LOG_ROOT="$OUT_ROOT/burgers_loss3_selective_round03_loss123_continuation_20260605_logs"
 PREFLIGHT_DIR="$ROOT/forensics/burgers_loss3_selective_round03_loss123_continuation_gpu_preflight_20260605"
-SVD_FINAL_DIR="$ROOT/forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605"
-SVD_FINAL_SUMMARY="$SVD_FINAL_DIR/round03_long_final_jacobian_svd_summary.csv"
+PRE_CONT_SVD_DIR="$ROOT/forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605"
+PRE_CONT_SVD_SUMMARY="$PRE_CONT_SVD_DIR/round03_long_final_jacobian_svd_summary.csv"
+PRE_CONT_SVD_SAMPLE_MANIFEST="$PRE_CONT_SVD_DIR/round03_long_final_sample_manifest.csv"
+POST_CONT_SVD_DIR="$ROOT/forensics/burgers_loss3_selective_round03_loss123_continuation_final_jacobian_svd_rep20_top100_20260606"
+POST_CONT_SVD_PREFIX="round03_loss123_continuation_final"
+POST_CONT_SVD_SUMMARY="$POST_CONT_SVD_DIR/${POST_CONT_SVD_PREFIX}_jacobian_svd_summary.csv"
+POST_CONT_SVD_LOG="$LOG_ROOT/svd_final_post_continuation_rep20_top100.log"
 mkdir -p "$LOG_ROOT" "$PREFLIGHT_DIR"
 
 if [[ "${ALLOW_BEFORE_SVD_COMPLETE:-0}" != "1" ]]; then
-  if [[ ! -f "$SVD_FINAL_SUMMARY" ]]; then
-    echo "[guard] final Jacobian/SVD summary is not complete yet: $SVD_FINAL_SUMMARY" >&2
+  if [[ ! -f "$PRE_CONT_SVD_SUMMARY" ]]; then
+    echo "[guard] final Jacobian/SVD summary is not complete yet: $PRE_CONT_SVD_SUMMARY" >&2
     echo "[guard] per user request, do not start continuation training before the active SVD job finishes." >&2
     echo "[guard] set ALLOW_BEFORE_SVD_COMPLETE=1 only if you intentionally want to override this guard." >&2
     exit 2
@@ -51,6 +56,10 @@ for run_name in "$LOSS1_CONT_RUN" "$LOSS2_CONT_RUN" "$LOSS3_CONT_RUN"; do
     exit 1
   fi
 done
+
+LOSS1_CONT_FINAL_CKPT="$OUT_ROOT/$LOSS1_CONT_RUN/burgers/checkpoints/burgers_epoch3000_step009000.pt"
+LOSS2_CONT_FINAL_CKPT="$OUT_ROOT/$LOSS2_CONT_RUN/burgers/checkpoints/burgers_epoch1000_step003000.pt"
+LOSS3_CONT_FINAL_CKPT="$OUT_ROOT/$LOSS3_CONT_RUN/burgers/checkpoints/burgers_epoch1000_step003000.pt"
 
 "$PY" - <<'PYGPU' > "$PREFLIGHT_DIR/gpu_preflight.json"
 import json
@@ -154,6 +163,116 @@ run_continue() {
   echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] done ${run_name}" | tee -a "$LOG_ROOT/driver.log"
 }
 
+run_post_continuation_final_svd() {
+  if [[ "${RUN_POST_CONTINUATION_FINAL_SVD:-0}" != "1" ]]; then
+    echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] skip post-continuation final SVD because RUN_POST_CONTINUATION_FINAL_SVD=${RUN_POST_CONTINUATION_FINAL_SVD:-0}" | tee -a "$LOG_ROOT/driver.log"
+    return 0
+  fi
+
+  if [[ -f "$POST_CONT_SVD_SUMMARY" ]]; then
+    echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] skip completed post-continuation final SVD: $POST_CONT_SVD_SUMMARY" | tee -a "$LOG_ROOT/driver.log"
+    return 0
+  fi
+
+  for required in "$LOSS1_CONT_FINAL_CKPT" "$LOSS2_CONT_FINAL_CKPT" "$LOSS3_CONT_FINAL_CKPT" "$PRE_CONT_SVD_SAMPLE_MANIFEST"; do
+    if [[ ! -f "$required" ]]; then
+      echo "[missing] post-continuation final SVD prerequisite missing: $required" >&2
+      exit 1
+    fi
+  done
+
+  mkdir -p "$POST_CONT_SVD_DIR"
+  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] start post-continuation final Jacobian/SVD -> $POST_CONT_SVD_DIR" | tee -a "$LOG_ROOT/driver.log"
+  {
+    echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] START post-continuation final Jacobian/SVD"
+    echo "out_root=$POST_CONT_SVD_DIR"
+    echo "sample_manifest=$PRE_CONT_SVD_SAMPLE_MANIFEST"
+    echo "loss1_checkpoint=$LOSS1_CONT_FINAL_CKPT"
+    echo "loss2_checkpoint=$LOSS2_CONT_FINAL_CKPT"
+    echo "loss3_checkpoint=$LOSS3_CONT_FINAL_CKPT"
+  } >> "$POST_CONT_SVD_LOG"
+
+  "$PY" - <<'PYGPU' >> "$POST_CONT_SVD_LOG" 2>&1
+import json
+import sys
+import time
+
+import torch
+
+payload = {
+    "time_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    "python": sys.executable,
+    "torch_version": torch.__version__,
+    "torch_cuda_version": torch.version.cuda,
+    "torch_cuda_available": torch.cuda.is_available(),
+}
+if not torch.cuda.is_available():
+    raise SystemExit("CUDA is unavailable; refusing post-continuation final SVD per GPU-only rule")
+payload.update(
+    {
+        "torch_device_name": torch.cuda.get_device_name(0),
+        "torch_device_capability": torch.cuda.get_device_capability(0),
+        "torch_arch_list": torch.cuda.get_arch_list(),
+    }
+)
+if "sm_70" not in torch.cuda.get_arch_list():
+    raise SystemExit(f"PyTorch arch list does not include sm_70: {torch.cuda.get_arch_list()}")
+try:
+    import jax
+
+    payload.update(
+        {
+            "jax_version": jax.__version__,
+            "jax_backend": jax.default_backend(),
+            "jax_devices": [str(d) for d in jax.devices()],
+        }
+    )
+    if jax.default_backend() != "gpu":
+        raise SystemExit(f"JAX backend is not gpu: {jax.default_backend()}")
+except Exception as exc:
+    payload["jax_error"] = repr(exc)
+    raise
+print(json.dumps(payload, indent=2))
+PYGPU
+
+  nvidia-smi >> "$POST_CONT_SVD_LOG" 2>&1
+
+  local -a svd_cmd=(
+    "$PY" "$ROOT/tools/compare_burgers_round01_final_jacobian_svd.py"
+    --out-root "$POST_CONT_SVD_DIR"
+    --generalization-root "$GEN_ROOT"
+    --sample-manifest "$PRE_CONT_SVD_SAMPLE_MANIFEST"
+    --output-prefix "$POST_CONT_SVD_PREFIX"
+    --report-title "Burgers Loss3-Selective Round03 Post-Continuation Final-Model Jacobian/SVD"
+    --report-note "Observed on round03 continuation-final checkpoints with the same fixed sample manifest used by the pre-continuation long final SVD: loss1 epoch3000, loss2 epoch1000, loss3 epoch1000."
+    --loss1-checkpoint "$LOSS1_CONT_FINAL_CKPT"
+    --loss2-checkpoint "$LOSS2_CONT_FINAL_CKPT"
+    --loss3-checkpoint "$LOSS3_CONT_FINAL_CKPT"
+    --loss1-label loss1_epoch3000
+    --loss2-label loss2_epoch1000
+    --loss3-label loss3_epoch1000
+    --loss1-epoch 3000
+    --loss2-epoch 1000
+    --loss3-epoch 1000
+    --train-samples "${FINAL_SVD_TRAIN_SAMPLES:-5}"
+    --test-samples "${FINAL_SVD_TEST_SAMPLES:-5}"
+    --generalization-samples "${FINAL_SVD_GENERALIZATION_SAMPLES:-10}"
+    --seed 20260606
+    --device cuda
+    --top-k "${FINAL_SVD_TOP_K:-100}"
+    --svd-method "${FINAL_SVD_METHOD:-topk}"
+    --svd-solver "${FINAL_SVD_SOLVER:-propack}"
+  )
+  {
+    printf '[cmd]'
+    printf ' %q' "${svd_cmd[@]}"
+    printf '%s\n' ''
+  } >> "$POST_CONT_SVD_LOG"
+  "${svd_cmd[@]}" >> "$POST_CONT_SVD_LOG" 2>&1
+
+  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] done post-continuation final Jacobian/SVD" | tee -a "$LOG_ROOT/driver.log"
+}
+
 # Continuation targets:
 # - loss1: epoch1000 -> epoch3000, so train 2000 more local epochs.
 # - loss2: epoch500 -> epoch1000, so train 500 more local epochs.
@@ -163,5 +282,6 @@ run_continue() {
 run_continue loss1 "$LOSS1_CONT_RUN" "$LOSS1_CKPT" 2000 1000 3000
 run_continue loss2 "$LOSS2_CONT_RUN" "$LOSS2_CKPT" 500 500 1500
 run_continue loss3 "$LOSS3_CONT_RUN" "$LOSS3_CKPT" 500 500 1500
+run_post_continuation_final_svd
 
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] continuation all done" | tee -a "$LOG_ROOT/driver.log"
+echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] continuation workflow done" | tee -a "$LOG_ROOT/driver.log"
