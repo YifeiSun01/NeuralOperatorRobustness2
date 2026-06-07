@@ -1,3 +1,17 @@
+## 2026-06-07 - Burgers round03 final extension GitHub push completed
+
+Status: GitHub push completed for the final-extension code, Shell scripts, Markdown reports, ledger, and selected SVD Markdown summary.
+
+Observed evidence:
+- Git commit created: `4102bfa` (`Record round03 final extension workflow`).
+- Push output reported `ea83ca5..4102bfa  HEAD -> vast-ai` to `https://github.com/YifeiSun01/NeuralOperatorRobustness2.git`.
+- GitHub scope included code/scripts/Markdown only; generated large artifacts remain excluded from Git and were uploaded to R2.
+- R2/GitHub sync report updated: `docs/r2_github_sync_20260607.md`.
+
+Remaining work:
+- Push this small sync-completion record as a follow-up Git commit.
+- Rotate pasted R2/GitHub credentials after confirming remote availability.
+
 ## 2026-06-07 - Burgers round03 final extension R2/GitHub sync
 
 Status: R2 upload completed for selected final-extension artifacts. GitHub commit/push is being performed after this record is written.
