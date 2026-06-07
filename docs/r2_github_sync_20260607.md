@@ -50,6 +50,21 @@ Observed remote existence checks passed for:
 - `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/round03_final_generated50_loss3_advantage_hist.png`
 - `docs/burgers_loss3_selective_round03_final_extension_completion_20260607.md`
 
+
+## GitHub Upload
+
+Destination:
+
+- Remote: `https://github.com/YifeiSun01/NeuralOperatorRobustness2.git`
+- Branch: `vast-ai`
+
+Observed push:
+
+- Main final-extension commit pushed: `4102bfa` (`Record round03 final extension workflow`).
+- Sync-completion commit pushed: `db19eb7` (`Record round03 sync completion`).
+- Push outputs reported `ea83ca5..4102bfa  HEAD -> vast-ai` and `4102bfa..db19eb7  HEAD -> vast-ai`.
+- `git ls-remote` verified `db19eb7eabb882ecc26649c4d45c9c3607b7e73c` at `refs/heads/vast-ai` after the second push.
+
 ## GitHub Upload Scope
 
 Planned GitHub commit scope:

@@ -1,3 +1,16 @@
+## 2026-06-07 - Burgers round03 final extension remote sync verification
+
+Status: verified the GitHub remote after pushing the final-extension workflow and sync records.
+
+Observed evidence:
+- Push output reported `4102bfa..db19eb7  HEAD -> vast-ai`.
+- `git ls-remote` verified `db19eb7eabb882ecc26649c4d45c9c3607b7e73c` at `refs/heads/vast-ai` after the sync-completion push.
+- R2 key-object checks had already passed for final loss1/loss2/loss3 checkpoints, final SVD Markdown summary, final comparison PNG, and completion Markdown.
+- `docs/r2_github_sync_20260607.md` records the R2 and GitHub destinations, uploaded paths, key remote existence checks, and GitHub pushed commits.
+
+Remaining work:
+- Rotate pasted R2/GitHub credentials after confirming remote availability.
+
 ## 2026-06-07 - Burgers round03 final extension GitHub push completed
 
 Status: GitHub push completed for the final-extension code, Shell scripts, Markdown reports, ledger, and selected SVD Markdown summary.
@@ -9,7 +22,6 @@ Observed evidence:
 - R2/GitHub sync report updated: `docs/r2_github_sync_20260607.md`.
 
 Remaining work:
-- Push this small sync-completion record as a follow-up Git commit.
 - Rotate pasted R2/GitHub credentials after confirming remote availability.
 
 ## 2026-06-07 - Burgers round03 final extension R2/GitHub sync
