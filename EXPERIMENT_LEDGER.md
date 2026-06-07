@@ -1,3 +1,17 @@
+## 2026-06-07 - Burgers round03 final extension split-specific SVD Markdown pushed
+
+Status: verified GitHub push of the corrected split-specific SVD Markdown and ledger records.
+
+Observed evidence:
+- Data/table commit created and pushed: `f9a8fa9` (`Record round03 final SVD split tables`).
+- Push output reported `5f400c8..f9a8fa9  HEAD -> vast-ai` to `https://github.com/YifeiSun01/NeuralOperatorRobustness2.git`.
+- Corrected Markdown record on that commit: `docs/burgers_loss3_selective_round03_final_extension_svd_compact_tables_20260607.md`.
+- The pushed Markdown records final generated/generalization RMSE and relative L2, train/test/generalization model-minus-solver error compression, rank1/rank5/rank20 model-vs-solver singular-value/vector similarity, and top5/top10/top20/top50/top100 model-vs-solver subspace similarity.
+- Generated CSV/NPZ/model/PNG/data artifacts were not staged for Git; only Markdown/ledger records were included in the pushed documentation update.
+
+Remaining work:
+- Rotate the GitHub/R2 credentials pasted into chat after confirming repository and R2 availability.
+
 ## 2026-06-07 - Burgers round03 final extension split-specific SVD tables recorded for GitHub
 
 Status: expanded the corrected compact SVD Markdown record with the full split-specific tables requested by the user and prepared it for GitHub push.
