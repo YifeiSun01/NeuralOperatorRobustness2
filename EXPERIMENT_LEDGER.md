@@ -1,3 +1,55 @@
+## 2026-06-07 - Burgers round03 final extension split-specific SVD tables recorded for GitHub
+
+Status: expanded the corrected compact SVD Markdown record with the full split-specific tables requested by the user and prepared it for GitHub push.
+
+Observed evidence:
+- Dedicated Markdown record updated: `docs/burgers_loss3_selective_round03_final_extension_svd_compact_tables_20260607.md`.
+- Source directory: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`.
+- Source CSVs: `round03_loss123_final_extension_error_spectral_norm_aggregate.csv`, `round03_loss123_final_extension_jacobian_spectral_norm_aggregate.csv`, `round03_loss123_final_extension_solver_similarity_rankwise.csv`, `round03_loss123_final_extension_solver_similarity_subspaces.csv`, `round03_loss123_final_extension_jacobian_svd_summary.csv`, and `round03_loss123_final_extension_runtime.csv`.
+- The Markdown now records final generated/generalization RMSE and relative L2, train/test/generalization model-minus-solver error compression, rank1/rank5/rank20 singular-value and singular-vector similarity, and top5/top10/top20/top50/top100 solver subspace similarity.
+- Rank-wise and top-k solver-similarity tables use `jacobian_kind=model`; `jacobian_kind=error` rows are not mixed into those model-vs-solver singular-vector/subspace summaries.
+- Baseline is recorded only as a denominator column for baseline-relative compression; no baseline-vs-baseline trained row is included.
+
+Key observed conclusions:
+- Generated/generalization error compression favors loss3 epoch1500: loss3 drop `58.85%`, loss1 drop `50.56%`, loss2 drop `42.15%`.
+- Train/test error compression does not favor loss3: train drop loss1/loss2/loss3 `71.56%` / `69.89%` / `-0.88%`; test drop loss1/loss2/loss3 `70.60%` / `68.22%` / `33.00%`.
+- Top-k solver subspace similarity favors loss3 most clearly at top20/top50, including generated/generalization top20 right/left mean cosines loss1 `0.770393/0.840468`, loss2 `0.776335/0.850286`, loss3 `0.909340/0.910852`.
+
+Inference:
+- The corrected record supports the split-specific interpretation requested by the user: loss3's final-extension advantage is clearest on generated/generalization; train/test error compression favors loss1/loss2, while broader top-k subspace alignment still favors loss3.
+
+Git/GitHub scope:
+- Commit and push only Markdown/ledger records for this update.
+- Leave generated CSV/NPZ/model/PNG/data artifacts out of Git; they remain R2-side artifacts per repository policy.
+
+## 2026-06-07 - Burgers round03 final extension corrected SVD compact tables
+
+Status: corrected the compact SVD table presentation after review.
+
+Observed evidence:
+- `baseline mean` in the compression table is the original baseline model-minus-solver error spectral norm mean used as the denominator, not a separate trained result.
+- The generalization split has `10` SVD samples because the manifest uses `5` train, `5` test, and `10` generated/generalization samples, totaling `20`.
+- Top-k subspace similarity values are available for `top_k = 1, 5, 10, 20, 50, 100` in `round03_loss123_final_extension_solver_similarity_subspaces.csv`.
+- Corrected compact table doc: `docs/burgers_loss3_selective_round03_final_extension_svd_compact_tables_20260607.md`.
+
+Inference:
+- Rank-1 singular vector similarity does not support a loss3 advantage; loss1 is strongest there.
+- Loss3's SVD-side advantage appears in generalization error spectral-norm shrinkage and top-k solver subspace similarity, especially top5/top10/top20.
+
+## 2026-06-07 - Burgers round03 final extension compact SVD table extraction
+
+Status: extracted compact baseline/loss1/loss2/loss3 SVD and model-minus-solver compression tables for the final-extension checkpoints.
+
+Observed evidence:
+- Source directory: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`.
+- Source files: `round03_loss123_final_extension_error_spectral_norm_aggregate.csv`, `round03_loss123_final_extension_jacobian_spectral_norm_aggregate.csv`, `round03_loss123_final_extension_solver_similarity_rankwise.csv`, and `round03_loss123_final_extension_solver_similarity_subspaces.csv`.
+- Dedicated compact table doc written: `docs/burgers_loss3_selective_round03_final_extension_svd_compact_tables_20260607.md`.
+
+Inference from observed generalization split:
+- loss3 epoch1500 has the lowest model-minus-solver error spectral norm mean (`2.4995994501058596`) and lowest ratio to baseline (`0.41154677198027967`) among loss1/loss2/loss3.
+- loss3 epoch1500 also has the highest top-10 right/left subspace mean cosines to solver (`0.9406077070863675` / `0.9187087747553171`).
+- Across all 20 samples, loss1 has the strongest aggregate error shrinkage ratio (`0.39183534625194366`), followed by loss2 (`0.4439982725594362`) and loss3 (`0.6254593401852017`).
+
 ## 2026-06-07 - Burgers round03 final extension remote sync verification
 
 Status: verified the GitHub remote after pushing the final-extension workflow and sync records.
