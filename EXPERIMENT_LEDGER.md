@@ -1,3 +1,43 @@
+## 2026-06-08 - Loss-objective direction experiments in error-operator framework
+
+Status: created a dedicated Markdown note connecting prior Burgers loss1/loss2/loss3 direction experiments to the current model-minus-solver error-operator robustness framework.
+
+Observed source/record files:
+
+- `docs/delta_loss_formula_taxonomy_20260515.md`
+- `docs/loss_gradient_direction_vs_svd_direction_20260515.md`
+- `docs/local_jacobian_svd_direction_taxonomy_20260515.md`
+- `docs/analytic_solution_hierarchy_for_delta_objectives_20260516.md`
+- `docs/fno_nu0p001_loss_gradient_path_result_20260515.md`
+- `docs/three_loss_pairwise_gradient_angles_result_20260516.md`
+- `docs/loss3_gradient_direction_optimization_fno_nu0p001_gpu_steps12_result_20260516.md`
+- `docs/loss3_p2_q2_method_equivalence_summary_20260518.md`
+- `docs/loss3_p_norm_method_equivalence_rules_20260518.md`
+- `docs/pq_equivalence_continuous_vs_binary_summary_20260529.md`
+- `docs/burgers_p2q2_loss123_solver_alignment_report_20260603.md`
+- `docs/burgers_p2q2_loss123_offmanifold_gradient_input_similarity_report_20260604.md`
+
+Dedicated note:
+
+- `docs/loss_objective_direction_experiments_error_operator_framework_20260608.md`
+
+Observed/included conclusions:
+
+- The local error-Jacobian spectral norm describes infinitesimal error-field movement, \(\|\mathcal E(a+h)-\mathcal E(a)\|\), not automatically endpoint error energy.
+- Practical loss3/physics PGD usually maximizes endpoint error energy, \(\|\mathcal E(a+h)\|^2\), whose local expansion includes the first-order term \(D\mathcal E(a)^*\mathcal E(a)\).
+- Earlier FNO/Burgers gradient-angle evidence found loss1/loss2 gradients almost aligned (`3.91 deg` mean angle for \(k\ge5\)) while loss3 was far away from both (`56.51 deg` and `57.23 deg` mean angles).
+- Earlier optimized-direction evidence found residual movement \(L_e\) aligns with the top singular direction of \(J_e\), while endpoint growth \(G_e\) aligns with \(J_e^T(e/\|e\|)\).
+- Burgers p2q2 self-training diagnostics showed raw loss3 produced peakier/off-range samples and poorly aligned parameter updates; clipping/lowpass+clip changed the alignment and removed the first-epoch jump.
+
+Inference:
+
+- The previous "some methods are equivalent" result mostly concerns optimizer-update labels under \(p=2\), not equality of loss1/loss2/loss3 objectives.
+- The previous "loss directions are not equal" result is naturally explained by the distinction between pure error-field movement, endpoint error growth, finite-radius PGD, and parameter-gradient alignment.
+
+Remaining work:
+
+- Use this note together with `docs/error_operator_robustness_local_lipschitz_pgd_equivalence_20260608.md` as the paper-facing reference for local Lipschitz robustness versus practical PGD robustness.
+
 ## 2026-06-08 - Error-operator robustness equivalence note
 
 Status: created a dedicated Markdown note formalizing the relationship between model-solver error-operator local Lipschitz/spectral norm robustness and PGD epsilon-ball loss-growth robustness.
