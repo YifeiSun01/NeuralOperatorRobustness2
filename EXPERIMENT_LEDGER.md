@@ -1,3 +1,28 @@
+## 2026-06-08 - Error-operator robustness equivalence note
+
+Status: created a dedicated Markdown note formalizing the relationship between model-solver error-operator local Lipschitz/spectral norm robustness and PGD epsilon-ball loss-growth robustness.
+
+Observed source/context:
+
+- User-provided pasted text attachments on scalar loss growth, \(p/q\) dual norms, local Jacobian/kernel robustness, and model-minus-solver error operator interpretation.
+- Prior discussion in this thread about Burgers/Darcy robustness definitions.
+
+Dedicated note:
+
+- `docs/error_operator_robustness_local_lipschitz_pgd_equivalence_20260608.md`
+
+Observed/included conclusions:
+
+- The relevant operator is \(\mathcal E=\mathcal M-\mathcal S\), not the model alone.
+- The Frechet derivative \(D\mathcal E(a)\) is the continuous analogue of the error Jacobian \(J_{model}-J_{solver}\).
+- \(\|D\mathcal E(a)\|_{L^2\to L^2}\) is the local Lipschitz constant and equals the infinitesimal epsilon-ball worst-case output error amplification.
+- The squared output-change energy has asymptotic coefficient \(\frac12\|D\mathcal E(a)\|^2\), matching the kernel \(D\mathcal E(a)^*D\mathcal E(a)\) in compact/discretized settings.
+- The practical PGD loss \(\frac12\|\mathcal E(a+h)\|^2\) has an extra first-order residual term \(D\mathcal E(a)^*\mathcal E(a)\), so it is equivalent to the kernel norm only when that term vanishes or is negligible.
+
+Remaining work:
+
+- Use this note as the reference wording when describing local robustness versus finite-radius PGD robustness in Burgers/Darcy reports.
+
 ## 2026-06-08 - Darcy Flow time-matched loss1/loss2/physics duration check
 
 Status: inspected current wall-clock schedule for Darcy Flow loss1, loss2, and physics self-training.
