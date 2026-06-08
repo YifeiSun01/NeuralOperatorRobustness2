@@ -1,0 +1,20 @@
+{
+  "source_files": {
+    "svd_csv": "forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_jacobian_svd_summary.csv",
+    "attack_csv": "forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary_by_model_dataset.csv"
+  },
+  "outputs": {
+    "model_split_join": "analysis_outputs/burgers_jacobian_pgd_correlation_20260608/model_split_join.csv",
+    "generalization_dataset_join": "analysis_outputs/burgers_jacobian_pgd_correlation_20260608/generalization_dataset_join.csv",
+    "correlations": "analysis_outputs/burgers_jacobian_pgd_correlation_20260608/correlations.csv"
+  },
+  "row_counts": {
+    "svd_error_rows": 80,
+    "attack_rows": 208,
+    "model_split_join": 12,
+    "model_split_exact": 9,
+    "generalization_dataset_join": 0,
+    "generalization_dataset_exact": 0
+  },
+  "checkpoint_note": "No local loss1 epoch8000 Jacobian/SVD artifact was found; loss1 rows use epoch5000 SVD as a proxy when included. Exact-checkpoint analyses exclude loss1."
+}

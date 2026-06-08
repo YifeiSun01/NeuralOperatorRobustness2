@@ -11835,3 +11835,29 @@ Inference:
 
 Remaining work:
 - Commit and push the staged `*.py`, `*.sh`, and `*.md` files to GitHub branch `vast-ai`.
+
+## 2026-06-08 - Burgers Jacobian norm versus PGD loss-growth correlation audit
+
+Status: computed a saved-data correlation audit between Burgers model-solver error Jacobian spectral norms and saved finite-radius p2q2 PGD attack loss.
+
+Observed evidence:
+- Jacobian/SVD source: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_jacobian_svd_summary.csv`.
+- PGD source: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary_by_model_dataset.csv`.
+- Analysis script: `tools/analyze_burgers_jacobian_pgd_correlation.py`.
+- Output directory: `analysis_outputs/burgers_jacobian_pgd_correlation_20260608/`.
+- Result doc: `docs/burgers_jacobian_pgd_loss_correlation_20260608.md`.
+- Main joined table: `analysis_outputs/burgers_jacobian_pgd_correlation_20260608/model_split_join.csv`.
+- Correlation table: `analysis_outputs/burgers_jacobian_pgd_correlation_20260608/correlations.csv`.
+- Plots: `analysis_outputs/burgers_jacobian_pgd_correlation_20260608/model_split_sigma_vs_attack_mse.svg` and `analysis_outputs/burgers_jacobian_pgd_correlation_20260608/model_split_sigma_ratio_vs_attack_mse_ratio.svg`.
+- With loss1 proxy included, mean error-Jacobian spectral norm versus final PGD MSE has Pearson `0.8113` and Spearman `0.7203` over `12` model-split rows.
+- Exact-checkpoint-only subset, excluding loss1 because no local `loss1_epoch8000` SVD is available, has Pearson `0.8392` and Spearman `0.7167` over `9` rows.
+- Baseline-normalized exact-checkpoint spectral-norm ratio versus final PGD MSE ratio has Pearson `0.6895` and Spearman `0.2543`.
+
+Inference:
+- Existing saved data support a clear positive aggregate relationship between local error-Jacobian norm and finite-radius PGD loss growth.
+- The relation is not a strict pointwise result in the currently visible files: the SVD generalization samples use `burgers_loss3_selective_r03_dXX`, while the 52-dataset PGD table uses a different generalization sweep, so a strict per-sample/per-dataset join is not available.
+- Rank correlations after baseline normalization are weak, consistent with finite-radius endpoint-loss effects, residual terms, path nonlinearity, and dataset difficulty.
+
+Remaining work:
+- For a clean pointwise test, either run p2q2 PGD on the exact 20-sample SVD manifest, compute `loss1_epoch8000` SVD on that same manifest, or compute SVD probes on the same 52 datasets used by the full p2q2 final-only PGD table.
+- No new GPU experiment was run for this audit.

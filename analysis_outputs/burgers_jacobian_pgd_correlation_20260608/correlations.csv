@@ -1,0 +1,11 @@
+analysis_set,x,y,n,pearson,spearman,partial_control,partial_pearson,note
+model_split_all_with_loss1_proxy,spectral_norm_mean,attack_final_loss_mean,12,0.8113107045500714,0.7202797202797203,attack_initial_loss_mean,0.5002702157166403,Raw aggregate MSE can be confounded by split/dataset difficulty.
+model_split_all_with_loss1_proxy,spectral_norm_mean,attack_final_rms_mean,12,0.8228610866433831,0.7202797202797203,attack_initial_loss_mean,0.5012928090341419,Raw aggregate RMS can be confounded by split/dataset difficulty.
+model_split_all_with_loss1_proxy,spectral_norm_mean,attack_loss_gain,12,0.8116876169299327,0.7202797202797203,attack_initial_loss_mean,0.5002702157166403,Attack MSE gain above clean error.
+model_split_all_with_loss1_proxy,spectral_norm_ratio_to_baseline_mean,attack_final_loss_ratio_to_baseline,12,0.7059335904690879,0.1690182756489597,,,Baseline-normalized within each split.
+model_split_all_with_loss1_proxy,spectral_norm_ratio_to_baseline_mean,attack_final_rms_ratio_to_baseline,12,0.6481774121509033,0.2183152727132396,,,Baseline-normalized within each split.
+model_split_exact_checkpoints,spectral_norm_mean,attack_final_loss_mean,9,0.8392154654206894,0.7166666666666667,attack_initial_loss_mean,0.43323312578525774,Raw aggregate MSE can be confounded by split/dataset difficulty.
+model_split_exact_checkpoints,spectral_norm_mean,attack_final_rms_mean,9,0.8316877570641847,0.7166666666666667,attack_initial_loss_mean,0.3600336073869417,Raw aggregate RMS can be confounded by split/dataset difficulty.
+model_split_exact_checkpoints,spectral_norm_mean,attack_loss_gain,9,0.8394193550168927,0.7166666666666667,attack_initial_loss_mean,0.43323312578525786,Attack MSE gain above clean error.
+model_split_exact_checkpoints,spectral_norm_ratio_to_baseline_mean,attack_final_loss_ratio_to_baseline,9,0.6895037247911294,0.2542738138578039,,,Baseline-normalized within each split.
+model_split_exact_checkpoints,spectral_norm_ratio_to_baseline_mean,attack_final_rms_ratio_to_baseline,9,0.6493191365894626,0.33903175181040524,,,Baseline-normalized within each split.
