@@ -1,3 +1,31 @@
+## 2026-06-08 - Darcy Flow time-matched loss1/loss2/physics duration check
+
+Status: inspected current wall-clock schedule for Darcy Flow loss1, loss2, and physics self-training.
+
+Observed source/log files:
+
+- `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608_logs/driver.log`
+- `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608_logs/driver.log`
+- `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608/darcy/eval_split_summary.csv`
+- `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608/darcy/eval_split_summary.csv`
+- `docs/darcy_time_matched_loss1_loss2_physics_pipeline_20260608.md`
+
+Observed timing:
+
+- Each objective is capped by `--max-wall-seconds 4966.925741452724`, matching the prior Darcy loss3 500-epoch elapsed time.
+- Loss1 driver start: `2026-06-08T02:06:58Z`.
+- Loss2 driver start: `2026-06-08T02:07:00Z`.
+- At `2026-06-08T02:27:42Z`, loss1/loss2 tmux sessions were still active and the physics waiter session was still queued behind them.
+- Latest inspected eval rows: loss1 reached epoch 92; loss2 reached epoch 62.
+- GPU status at inspection: `24684 MiB / 32768 MiB`, `98%` utilization, `62C`.
+- Log scan found no `Traceback`, `CUDA out of memory`, `RuntimeError`, or `Killed` lines in the active loss1/loss2 run/log directories.
+
+Inference:
+
+- Sequential loss1 + loss2 + physics would take about `14900.78s`, or `4h 08m 21s`, plus postprocessing/upload overhead.
+- Current schedule runs loss1 and loss2 concurrently, then starts physics afterward, so expected training wall-clock is about `9933.85s`, or `2h 45m 34s`, plus postprocessing/upload overhead.
+- From the `2026-06-08T02:27:42Z` check, expected remaining training time was roughly `2h 24m 45s`, with expected completion around `2026-06-08T04:52:30Z` if there is no failure or extra queuing delay.
+
 ## 2026-06-08 - Burgers self-training dataset-dependence conclusion note
 
 Status: created a dedicated Markdown note summarizing the qualitative conclusion from prior Burgers self-training comparisons of baseline, loss1, loss2, and loss3.
