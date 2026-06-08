@@ -1,3 +1,35 @@
+## 2026-06-08 - Burgers self-training dataset-dependence conclusion note
+
+Status: created a dedicated Markdown note summarizing the qualitative conclusion from prior Burgers self-training comparisons of baseline, loss1, loss2, and loss3.
+
+Observed source/record files referenced:
+
+- `docs/burgers_p2q2_loss1_loss2_loss3_training_pipeline_20260602.md`
+- `docs/burgers_round03_clean_loss_ratio_interpretation_20260608.md`
+- `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary_by_model_dataset.csv`
+- `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/clean_and_attack_loss_ratios_by_dataset.csv`
+- `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/sample_weighted_before_after_solver_gap_summary.csv`
+
+Dedicated note:
+
+- `docs/burgers_self_training_dataset_dependence_loss123_conclusions_20260608.md`
+
+Observed conclusion recorded:
+
+- Loss3's clean-generalization advantage is dataset-dependent and was not very obvious on early generalization datasets whose range/distribution was close to train/test.
+- Loss1/loss2 can reduce clean generalization quickly on mild generalization sets.
+- Loss3 can show a first-epoch clean-loss spike before decreasing.
+- With wider-range/stress-test generalization datasets, loss3's advantage becomes clearer, especially on generalization rather than train/test.
+- In the later round03 same-protocol p2q2 attack summary, loss3 gives the lowest attacked model-solver RMS gap, while loss1 gives the lowest clean/pre-attack RMS gap.
+
+Inference:
+
+- Burgers loss1/loss2/loss3 conclusions must state the generalization dataset distribution/range. Mild generalization datasets can understate the value of loss3.
+
+Remaining work:
+
+- Push this lightweight Markdown/ledger update to GitHub when credentials are available; generated large artifacts remain outside Git.
+
 
 ## 2026-06-08 - Darcy Flow loss1/loss2/physics time-matched self-training pipeline
 
