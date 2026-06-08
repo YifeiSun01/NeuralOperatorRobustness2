@@ -1,0 +1,162 @@
+[
+  {
+    "sample_id": 0,
+    "source_split": "train",
+    "dataset_id": "train_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+    "local_index": 210,
+    "manual_rank": 0.0
+  },
+  {
+    "sample_id": 1,
+    "source_split": "train",
+    "dataset_id": "train_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+    "local_index": 1247,
+    "manual_rank": 0.0
+  },
+  {
+    "sample_id": 2,
+    "source_split": "train",
+    "dataset_id": "train_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+    "local_index": 809,
+    "manual_rank": 0.0
+  },
+  {
+    "sample_id": 3,
+    "source_split": "train",
+    "dataset_id": "train_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+    "local_index": 503,
+    "manual_rank": 0.0
+  },
+  {
+    "sample_id": 4,
+    "source_split": "train",
+    "dataset_id": "train_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+    "local_index": 1186,
+    "manual_rank": 0.0
+  },
+  {
+    "sample_id": 5,
+    "source_split": "test",
+    "dataset_id": "test_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "local_index": 20,
+    "manual_rank": 0.1
+  },
+  {
+    "sample_id": 6,
+    "source_split": "test",
+    "dataset_id": "test_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "local_index": 146,
+    "manual_rank": 0.1
+  },
+  {
+    "sample_id": 7,
+    "source_split": "test",
+    "dataset_id": "test_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "local_index": 109,
+    "manual_rank": 0.1
+  },
+  {
+    "sample_id": 8,
+    "source_split": "test",
+    "dataset_id": "test_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "local_index": 50,
+    "manual_rank": 0.1
+  },
+  {
+    "sample_id": 9,
+    "source_split": "test",
+    "dataset_id": "test_original_gaussian_corr0p03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+    "local_index": 56,
+    "manual_rank": 0.1
+  },
+  {
+    "sample_id": 10,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d24",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d24.pt",
+    "local_index": 43,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 11,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d17",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d17.pt",
+    "local_index": 38,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 12,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d35",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d35.pt",
+    "local_index": 19,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 13,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d19",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d19.pt",
+    "local_index": 12,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 14,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d46",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d46.pt",
+    "local_index": 2,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 15,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d29",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d29.pt",
+    "local_index": 47,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 16,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d03",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d03.pt",
+    "local_index": 26,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 17,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d42",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d42.pt",
+    "local_index": 32,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 18,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d10",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d10.pt",
+    "local_index": 0,
+    "manual_rank": 3.0
+  },
+  {
+    "sample_id": 19,
+    "source_split": "generalization",
+    "dataset_id": "burgers_loss3_selective_r03_d14",
+    "dataset_path": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_loss3_selective_search/round_03/burgers/burgers_loss3_selective_r03_d14.pt",
+    "local_index": 26,
+    "manual_rank": 3.0
+  }
+]

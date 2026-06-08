@@ -1,0 +1,75 @@
+{
+  "config": {
+    "created_unix_time": 1780950736.6534607,
+    "svd_manifest": "/workspace/NeuralOperatorRobustness2/forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_sample_manifest.csv",
+    "svd_summary": "/workspace/NeuralOperatorRobustness2/forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_jacobian_svd_summary.csv",
+    "steps": 20,
+    "batch_size": 20,
+    "epsilon_rms": 0.12,
+    "alpha_rms": 0.012,
+    "models": {
+      "baseline": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+      "loss1_epoch5000": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue3000to5000_20260606/burgers/checkpoints/burgers_epoch5000_step015000.pt",
+      "loss2_epoch2000": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue1000to2000_20260606/burgers/checkpoints/burgers_epoch2000_step006000.pt",
+      "loss3_epoch1500": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue1000to1500_20260606/burgers/checkpoints/burgers_epoch1500_step004500.pt"
+    },
+    "model_order": [
+      "baseline",
+      "loss1_epoch5000",
+      "loss2_epoch2000",
+      "loss3_epoch1500"
+    ],
+    "sample_count": 20,
+    "gpu_preflight": {
+      "torch_version": "2.8.0+cu126",
+      "cuda_version": "12.6",
+      "cuda_available": true,
+      "device_name": "Tesla V100-SXM2-32GB",
+      "device_capability": [
+        7,
+        0
+      ],
+      "arch_list": [
+        "sm_50",
+        "sm_60",
+        "sm_70",
+        "sm_75",
+        "sm_80",
+        "sm_86",
+        "sm_90"
+      ],
+      "cuda_matmul_0_0": 128.0
+    }
+  },
+  "model_timing": {
+    "baseline": {
+      "seconds": 51.45316004753113,
+      "peak_allocated_gib": 1.1399693489074707,
+      "initial_loss_mean": 0.003500116989016533,
+      "final_loss_mean": 0.022570766508579254,
+      "attack_increase_mean": 0.01907064951956272
+    },
+    "loss1_epoch5000": {
+      "seconds": 54.31716728210449,
+      "peak_allocated_gib": 1.1399693489074707,
+      "initial_loss_mean": 0.00039256905438378453,
+      "final_loss_mean": 0.01006132923066616,
+      "attack_increase_mean": 0.009668759070336819
+    },
+    "loss2_epoch2000": {
+      "seconds": 53.50527310371399,
+      "peak_allocated_gib": 1.1399693489074707,
+      "initial_loss_mean": 0.0004995346534997225,
+      "final_loss_mean": 0.00971070397645235,
+      "attack_increase_mean": 0.009211169555783272
+    },
+    "loss3_epoch1500": {
+      "seconds": 55.42592692375183,
+      "peak_allocated_gib": 1.1399693489074707,
+      "initial_loss_mean": 0.00021387290325947106,
+      "final_loss_mean": 0.0071463873609900475,
+      "attack_increase_mean": 0.006932514254003763
+    }
+  },
+  "finished_unix_time": 1780950951.8010156
+}

@@ -1,3 +1,412 @@
+## 2026-06-08 - Burgers SVD20 P2Q2 attack/error-spectral correlation completed
+
+Status: completed a GPU P2Q2 attack run on all `20` existing Burgers SVD sample points and computed correlations between attack loss/growth and error-Jacobian spectral norm. No Jacobian/SVD recomputation was performed.
+
+Observed evidence:
+- Dedicated result doc: `docs/burgers_svd20_p2q2_attack_error_spectral_correlation_20260608.md`.
+- Runner: `tools/run_burgers_svd20_p2q2_attack_correlation_20260608.py`.
+- Attack output directory: `forensics/burgers_svd20_p2q2_attack_correlation_20260608/`.
+- GPU evidence: `forensics/burgers_svd20_p2q2_attack_correlation_20260608/nvidia_smi.txt` and `config.json`; observed PyTorch `2.8.0+cu126`, CUDA `12.6`, Tesla V100-SXM2-32GB, compute capability `[7, 0]`, arch list including `sm_70`, and CUDA matmul sanity value `128.0`.
+- SVD source: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_sample_manifest.csv` and `round03_loss123_final_extension_jacobian_svd_summary.csv`.
+- Attack setting: P2Q2 RMS-L2, `epsilon_rms=0.12`, `alpha_rms=0.012`, `20` steps, batch size `20`.
+- Models attacked to match SVD checkpoints: baseline, loss1 epoch5000, loss2 epoch2000, loss3 epoch1500.
+- Attack mean initial/final/increase from `attack_loss_by_model_sample.csv`: baseline `0.003500117/0.022570767/0.019070650`, loss1 `0.000392569/0.010061328/0.009668759`, loss2 `0.000499535/0.009710704/0.009211169`, loss3 `0.000213873/0.007146387/0.006932515`.
+- Main all-20/all-4-model correlation from `error_svd_attack_correlation_summary.csv`: error-Jacobian spectral norm vs attack increase Pearson `0.832552`, Spearman `0.807712`, `n=80`; vs final attack loss Pearson `0.848999`, Spearman `0.815331`.
+- Trained-only all-20 correlation: error-Jacobian spectral norm vs attack increase Pearson `0.832868`, Spearman `0.726702`, `n=60`.
+- Per-model error-Jacobian spectral norm vs attack increase correlations: baseline Pearson/Spearman `0.801739/0.793985`, loss1 `0.828419/0.890226`, loss2 `0.845560/0.921805`, loss3 `0.871745/0.771429`.
+
+Inference:
+- On the 20 existing SVD sample points, the error Jacobian norm `||J_model - J_solver||_2` is highly positively correlated with fixed-budget P2Q2 attack damage.
+- This corrects the earlier 5-overlap-only probe: the SVD artifact indeed has 20 samples, and once those exact 20 samples are attacked, the error-operator correlation is strong.
+- This conclusion is for the SVD20 sample set, whose generalization rows are round03 stress-root samples. A full second-root ns50 conclusion still requires running Jacobian/SVD on representative second-root samples and joining to the existing full attack artifact.
+
+## 2026-06-08 - Burgers SVD/attack correlation probe on currently matchable rows
+
+Status: computed a correlation probe by joining existing full P2Q2 attack/tag rows with existing Jacobian/SVD rows where sample keys overlap. No new training, attack run, or Jacobian/SVD computation was launched.
+
+Observed evidence:
+- Dedicated result doc: `docs/burgers_second_dataset_svd_attack_correlation_probe_20260608.md`.
+- Derived rows: `forensics/burgers_second_dataset_svd_attack_correlation_probe_20260608/matched_svd_attack_rows.csv`.
+- Derived correlations: `forensics/burgers_second_dataset_svd_attack_correlation_probe_20260608/correlation_summary.csv`.
+- Attack source artifact: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607`.
+- SVD source artifact: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_jacobian_svd_summary.csv`.
+- The SVD artifact's generalization rows are third-root stress-set samples, so only `5` shared test samples overlap with the full attack artifact. Strict checkpoint overlap is baseline, loss2 epoch2000, and loss3 epoch1500; loss1 is non-strict because SVD has epoch5000 while attack has epoch8000.
+- Rechecked overlap detail after user challenge: SVD has `20` total samples (`5` train, `5` test, `10` round03 stress-root generalization). The full attack artifact contains train source indices `0..49`, while SVD train indices are `210`, `1247`, `809`, `503`, and `1186`; therefore train overlap is zero. The `5` SVD test samples overlap because the attack artifact includes all 150 test samples. The `10` SVD generalization samples do not overlap because they use the third stress root, not the second ns50 root.
+- Strict checkpoint rows, model Jacobian spectral norm vs attack increase: Pearson `0.132891`, Spearman `0.089286`, `n=15`.
+- Strict checkpoint rows, error-Jacobian spectral norm `||J_model-J_solver||_2` vs attack increase: Pearson `0.533032`, Spearman `0.392857`, `n=15`.
+- Including non-strict loss1, model Jacobian spectral norm vs attack increase: Pearson `0.118394`, Spearman `0.102256`, `n=20`; error-Jacobian spectral norm vs attack increase: Pearson `0.543876`, Spearman `0.233083`, `n=20`.
+
+Inference:
+- On currently matchable rows, raw model Jacobian spectral norm is essentially not correlated with attack growth.
+- Error-Jacobian spectral norm has a moderate positive correlation with attack growth, but this is not enough to call a high-correlation result because the matched subset is tiny and mostly test-only.
+- A true second-root generalization answer requires a matched Jacobian/SVD run on representative samples from `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`, then joining those rows to the full attack/tag artifact.
+
+## 2026-06-08 - Burgers second-dataset attack/SVD correlation clarification
+
+Status: inspected local records and the R2 selected prefix for whether the second Burgers generalization dataset already has an observed high correlation between Jacobian/SVD spectral norm and attack-after loss growth. No new training or attack run was launched.
+
+Observed evidence:
+- Dedicated clarification doc: `docs/burgers_second_dataset_attack_svd_correlation_clarification_20260608.md`.
+- The second dataset full P2Q2 attack/tag artifact is `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607`, whose `10000` generalization samples use `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- Existing full-tag correlation file `forensics/burgers_round03_full52_clean_vs_attack_mismatch_20260608/clean_attack_correlation_summary.csv` measures clean loss versus final attack/growth, not Jacobian/SVD spectral norm versus attack growth. For trained generalization-50 dataset rows, Pearson clean-vs-final-attack is `-0.549044` and clean-vs-attack-increase is `-0.556730`.
+- Existing round03 Jacobian/SVD sample manifests in `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606` and `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605` point to `generalization_datasets_burgers_loss3_selective_search/round_03/burgers/...`, i.e. the third loss3-selective stress root, not the second ns50 root.
+- R2 selected-prefix filename search found correlation files for perturbation geometry versus generalization RMSE and SVD frequency/projection residual versus downsample sigma proxy error; it did not reveal a second-root Jacobian/SVD spectral-norm versus attack-growth correlation table.
+
+Inference:
+- It is not currently evidenced that, on the second dataset, larger Jacobian/SVD spectral norm correlates highly with larger attack-after loss growth.
+- What is evidenced is the second dataset's clean-vs-robustness mismatch: loss3 is usually worse clean but usually best after fixed-budget P2Q2 attack/tag.
+- A direct spectral-norm-vs-attack-growth claim needs a matched-sample joined analysis or a separately located artifact outside the inspected paths.
+
+## 2026-06-08 - Burgers three-dataset R2 conclusion audit correction
+
+Status: inspected the user-provided R2 bucket prefix and local records to answer the three Burgers generalization dataset conclusion question. No new training or attack run was launched.
+
+Observed evidence:
+- Dedicated result doc: `docs/r2_burgers_three_dataset_conclusion_audit_20260608.md`.
+- R2 prefix inspected: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Complete dataset roots observed on R2: first `generalization_datasets/burgers` with 50 objects, second `generalization_datasets_rmse_1p5_3x_all_ns50/burgers` with 50 objects, and third `generalization_datasets_burgers_loss3_selective_search/round_03/burgers` with 50 objects.
+- Partial/unofficial root observed on R2: `generalization_datasets_burgers_loss3_aligned_search/round_02/burgers` with 10 objects.
+- Full fixed-budget attack/tag artifact observed on R2/local records: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607`; its `10000` generalization samples use the second root, not the third root.
+- First root clean evidence from `docs/burgers_run1_run2_generalization_roots_audit_20260608.md`: aggregate generalization RMSE/relative-L2/MAE baseline `0.091671/0.248715/0.060993`, loss1 `0.085163/0.212877/0.059952`, loss2 `0.073342/0.188096/0.050274`, loss3 `0.074097/0.176689/0.051457`.
+- Second root clean evidence from `docs/burgers_neutral_generalization_final_models_20260608.md`: loss1 wins all 50 neutral target-band datasets by RMSE, relative-L2, and MAE; aggregate generalization RMSE/relative-L2/MAE loss1 `0.001770/0.003065/0.000909`, loss2 `0.002916/0.005033/0.001184`, loss3 `0.006730/0.011615/0.001877`.
+- Second root robustness evidence from `docs/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608.md`: on `10000` generalization samples, clean winners loss1/loss2/loss3 are `9195/770/35`, final-attack winners are `729/355/8916`, and attack-increase winners are `683/325/8992`.
+- Third root clean/stress evidence from round03 docs: generated50 stress-set RMSE at epoch50 loss1/loss2/loss3 = `0.055974/0.056011/0.045295`, with loss3 winning `50/50` selected generated datasets.
+
+Inference:
+- The user-facing three-line summary needs correction. The first root is not a simple "loss1/loss2 both beat loss3" result: loss2 beats loss3 on aggregate RMSE/MAE, loss3 beats loss2 on aggregate relative-L2, and loss1 wins the most per-dataset counts; no direct first-root full attack/tag robustness table was found in the inspected R2/local records.
+- The second root strongly supports the mismatch claim: clean/generalization favors loss1/loss2, while fixed-budget P2Q2 attack/tag robustness strongly favors loss3.
+- The third root supports loss3 on the selected generated/stress clean loss and is consistent with the loss3 robustness direction, but it remains attack-generated/loss3-selective and should not be reported as broad neutral generalization evidence.
+
+Remaining work:
+- If a direct first-root full fixed-budget P2Q2 attack/tag table exists outside the inspected R2 prefix, locate it and append the exact source path and winner counts.
+- If a separate full third-root attack/tag table is required, run or locate it; do not substitute the second-root full-tag artifact for that claim.
+
+## 2026-06-08 - Burgers P2Q2 six-sample selection provenance clarification
+
+Status: inspected the plotting code to clarify how the six P2Q2 overlay rows were selected.
+
+Observed evidence:
+- Updated doc: `docs/burgers_overlay_six_vs_full50_generalization_20260608.md`.
+- `tools/plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif.py` defines the six rows in a hard-coded `SAMPLES` list. S1 is one original test sample; S2-S6 come from `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- `tools/plot_burgers_round03_baseline_vs_final_attack_panels.py` imports/reuses the earlier sample loader when generating the round03 baseline/loss1/loss2/loss3 before/after overlay.
+
+Inference:
+- The six overlay rows were not freshly selected by an automatic round03 rule such as maximizing loss3 advantage over the full 50 datasets. They are selected visualization samples reused from an earlier P2Q2 baseline-vs-epoch1000 figure.
+- The full clean-inference result over the same 50-dataset root still favors loss1, while the six-row overlay shows loss3 attacked-output stability under P2Q2.
+
+Remaining work:
+- To test whether the loss3 P2Q2 robustness advantage generalizes over all 50 datasets, run a full 50-dataset attack evaluation rather than inferring from the six visualization rows.
+
+## 2026-06-08 - Burgers overlay six samples vs full 50 generalization clarification
+
+Status: clarified the difference between the six selected P2Q2 overlay samples and the full 50-dataset clean generalization suite.
+
+Observed evidence:
+- Dedicated doc: `docs/burgers_overlay_six_vs_full50_generalization_20260608.md`.
+- Overlay sample manifest: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/sample_manifest.json`.
+- Overlay rows: S1 is one test sample; S2-S6 are five selected samples from `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- Full root count checked with `find generalization_datasets_rmse_1p5_3x_all_ns50/burgers -maxdepth 1 -type f -name '*.pt' | wc -l`: observed `50`.
+- Full clean-inference metrics source: `forensics/burgers_neutral_generalization_final_models_20260608/per_dataset_metrics.csv`, `split_summary.csv`, and `relative_to_baseline_split_summary.csv`.
+- Full 50 generalization mean RMSE/relative-L2/MAE: baseline `0.017932/0.031019/0.006034`, loss1 `0.001770/0.003065/0.000909`, loss2 `0.002916/0.005033/0.001184`, loss3 `0.006730/0.011615/0.001877`.
+- Full 50 percent change vs baseline: loss1 `-90.130%/-90.121%/-84.932%`, loss2 `-83.741%/-83.774%/-80.376%`, loss3 `-62.472%/-62.554%/-68.897%` for RMSE/relative-L2/MAE.
+- Full 50 winner counts: loss1 is lowest on all 50 datasets for RMSE, relative-L2, and MAE.
+
+Inference:
+- The overlay's visible loss3 advantage is a P2Q2 attacked-output stability result on six selected samples, not a clean-inference generalization result over the full 50 datasets.
+- The full clean-inference result for the same root favors loss1, not loss3.
+
+Remaining work:
+- If the desired claim is about P2Q2 robustness over all 50 datasets, run a full 50-dataset attack evaluation rather than using clean inference or the six-row visualization.
+
+## 2026-06-08 - Burgers run1/run2 neutral generalization root correction
+
+Status: corrected the previous incomplete neutral-generalization evaluation by regenerating/evaluating the documented master semantic Burgers root and comparing it with the previously evaluated target-band/ns50 root.
+
+Observed evidence:
+- Dedicated audit/result doc: `docs/burgers_run1_run2_generalization_roots_audit_20260608.md`.
+- Previously evaluated root: `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`; outputs in `forensics/burgers_neutral_generalization_final_models_20260608/` and report `docs/burgers_neutral_generalization_final_models_20260608.md`.
+- Master semantic root `generalization_datasets/burgers` was absent locally but documented in `GENERALIZATION_DATASETS.md` and `GENERALIZATION_MASTER_RECORD.md` as a 50-dataset curated semantic suite. It was regenerated for Burgers only using `tools/generate_generalization_datasets.py --tasks burgers --output-root generalization_datasets --burgers-batch-size 200`.
+- GPU preflight before master regeneration: `forensics/burgers_master_generalization_regen_20260608/gpu_preflight.json`; observed Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, capability `(7, 0)`, PyTorch arch list including `sm_70`, and JAX backend `gpu` with device `cuda:0`.
+- Regenerated master root summary: `generalization_datasets/summary.json`; observed `burgers=50`, tier split `near_param_shift=17`, `mid_kernel_spectrum=13`, `far_range_pattern=20`.
+- Master/run1 evaluation script: `tools/evaluate_burgers_final_models_generalization_root_20260608.py`.
+- Master/run1 output files: `forensics/burgers_master_semantic_final_models_20260608/per_dataset_metrics.csv`, `split_summary.csv`, `relative_to_baseline_by_dataset.csv`, `relative_to_baseline_split_summary.csv`, `neutral_dataset_provenance.csv`, `gpu_preflight.json`, and `manifest.json`; report `docs/burgers_master_semantic_final_models_20260608.md`.
+- R2 access check failed locally because current `rclone` has no configured `R2` remote; observed missing `/root/.config/rclone/rclone.conf` and `didn't find section in config file`. This means missing remote-only roots cannot currently be listed or downloaded from this shell.
+- R2 sync record `docs/r2_and_github_sync_20260608.md` says `generalization_datasets_*` and `generalization_eval*` were included in the 2026-06-08 R2 snapshot, but this is not the same as current local accessibility.
+
+Key metrics:
+- Master semantic run1 generalization mean RMSE/relative-L2/MAE: baseline `0.091671/0.248715/0.060993`, loss1 `0.085163/0.212877/0.059952`, loss2 `0.073342/0.188096/0.050274`, loss3 `0.074097/0.176689/0.051457`.
+- Master semantic run1 percent change vs baseline: loss1 `-7.099%/-14.409%/-1.706%`, loss2 `-19.994%/-24.373%/-17.574%`, loss3 `-19.170%/-28.959%/-15.634%` for RMSE/relative-L2/MAE.
+- Master semantic run1 per-generalization winner counts: RMSE and relative-L2 `baseline=3`, `loss1=26`, `loss2=2`, `loss3=19`; MAE `baseline=3`, `loss1=26`, `loss2=3`, `loss3=18`.
+- Target-band/ns50 current root generalization mean RMSE/relative-L2/MAE: baseline `0.017932/0.031019/0.006034`, loss1 `0.001770/0.003065/0.000909`, loss2 `0.002916/0.005033/0.001184`, loss3 `0.006730/0.011615/0.001877`.
+- Target-band/ns50 current root percent change vs baseline: loss1 `-90.130%/-90.121%/-84.932%`, loss2 `-83.741%/-83.774%/-80.376%`, loss3 `-62.472%/-62.554%/-68.897%` for RMSE/relative-L2/MAE.
+
+Inference:
+- The previous answer was incomplete: it covered only the locally present target-band/ns50 root, not the documented master semantic root.
+- On master semantic run1, loss3 has the best aggregate relative-L2, loss2 has the best aggregate RMSE/MAE, and loss1 wins the most individual generalization datasets.
+- On target-band/ns50 current root, loss1 is best by all aggregate metrics and wins all 50 individual generalization datasets.
+- Neither evaluated root is the round03 loss3-selective attack-generated stress root.
+- A possible additional uploaded root, likely `generalization_datasets_rmse_1p5_3x_all`, is not present locally and cannot be evaluated until R2 access is restored or the root is provided locally.
+
+Remaining work:
+- Restore R2/rclone access or provide the missing third root if the exact third uploaded suite should be evaluated.
+- Run `tools/evaluate_burgers_final_models_generalization_root_20260608.py` on any restored root and append it to the audit table.
+
+## 2026-06-08 - Burgers neutral semantic generalization final-model evaluation
+
+Status: completed GPU inference evaluation of Burgers baseline, loss1, loss2, and loss3 final checkpoints on train/test plus a non-attack neutral semantic 50-dataset generalization root.
+
+Observed evidence:
+- Result doc: `docs/burgers_neutral_generalization_final_models_20260608.md`.
+- Evaluation script: `tools/evaluate_burgers_neutral_generalization_final_models_20260608.py`.
+- GPU preflight record: `forensics/burgers_neutral_generalization_final_models_20260608/gpu_preflight.json`; observed Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, capability `(7, 0)`, PyTorch arch list including `sm_70`, and JAX backend `gpu`.
+- Neutral generalization root: `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`; observed exactly 50 Burgers `.pt` files with semantic IDs such as `burgers_far_sawtooth_add_scale0p3_shift0` and `burgers_mid_matern_corr0p75_nu2p5`.
+- Provenance CSV: `forensics/burgers_neutral_generalization_final_models_20260608/neutral_dataset_provenance.csv`; observed no `attack_objective`, `attack_steps`, or `epsilon_fraction` fields in dataset metadata. Tier counts are `far_range_pattern=2`, `mid_kernel_spectrum=2`, `near_param_shift=8`, `target_loss_kernel_shift=15`, and `target_loss_param_shift=23`.
+- Evaluated checkpoints: baseline `1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt`; loss1 `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/burgers/checkpoints/burgers_epoch8000_step024000.pt`; loss2 `adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue1000to2000_20260606/burgers/checkpoints/burgers_epoch2000_step006000.pt`; loss3 `adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue1000to1500_20260606/burgers/checkpoints/burgers_epoch1500_step004500.pt`.
+- Output metrics: `forensics/burgers_neutral_generalization_final_models_20260608/per_dataset_metrics.csv`, `forensics/burgers_neutral_generalization_final_models_20260608/split_summary.csv`, `forensics/burgers_neutral_generalization_final_models_20260608/relative_to_baseline_by_dataset.csv`, and `forensics/burgers_neutral_generalization_final_models_20260608/relative_to_baseline_split_summary.csv`.
+- Split mean raw metrics from `split_summary.csv`: generalization RMSE/relative-L2/MAE are baseline `0.0179323/0.0310194/0.00603362`, loss1 `0.00176997/0.00306454/0.000909169`, loss2 `0.00291557/0.00503321/0.00118401`, loss3 `0.00672954/0.0116154/0.00187665`.
+- Percent change vs baseline from `relative_to_baseline_split_summary.csv`: generalization RMSE/relative-L2/MAE are loss1 `-90.1297%/-90.1206%/-84.9316%`, loss2 `-83.7412%/-83.7740%/-80.3765%`, loss3 `-62.4725%/-62.5542%/-68.8968%`.
+- Per-generalization best-model count from `per_dataset_metrics.csv`: across the 50 neutral generalization datasets, the lowest RMSE, relative-L2, and MAE are all `loss1_epoch8000` on `50/50` datasets.
+
+Inference:
+- This evaluation does not use the round03 loss3-selective attack-generated stress root. It is the appropriate local neutral semantic train/test/generalization check.
+- On this neutral semantic root, all three trained checkpoints improve over baseline, but loss1 is best, loss2 is second, and loss3 is third. This does not support a broad claim that loss3 is best for neutral semantic generalization.
+- The root is non-attack semantic data, but some `target_*` datasets are target-band semantic candidates; therefore it should not be described as a uniformly random sample from all possible distributions.
+
+Remaining work:
+- If "run1/run2" specifically refers to a separate remote/R2 dataset root, recover and audit that root separately. The completed evaluation here uses the only local neutral semantic 50-dataset Burgers root found.
+- Optional next step: generate per-dataset bar/heatmap plots from `relative_to_baseline_by_dataset.csv`.
+
+## 2026-06-08 - Burgers round03 attack-generated generalization validity caveat
+
+Status: recorded a credibility caveat after auditing the provenance of the round03 selected datasets.
+
+Observed evidence:
+- `tools/generate_burgers_loss3_selective_generalization.py` generates round03 candidates by sampling original Burgers train/test examples and running a raw `loss3` adversarial attack on them, then selecting top-scoring candidates.
+- `generalization_datasets_burgers_loss3_selective_search/round_03/selected_candidate_scores.csv` shows the 50 selected datasets collapse to six source/epsilon/step configurations, not 50 distinct semantic `kernel/transform/scale/shift` distributions.
+- Neutral semantic Burgers names such as `burgers_far_sawtooth_add_scale0p3_shift0` belong to `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`, not to the plotted round03 root.
+- Dedicated caveat doc: `docs/burgers_round03_attack_generated_generalization_validity_caveat_20260608.md`.
+
+Inference:
+- The round03 panels/results should be interpreted as targeted performance on a loss3-selective attack-generated stress set, not as strong broad OOD generalization evidence.
+- This creates selection bias in favor of loss3; future reporting must separate train/test, neutral semantic generalization, and attack-generated stress evaluation.
+- Plain conclusion: the round03 set is not really "50 kinds" of semantic generalization datasets; it is attack-generated and therefore has very low persuasive power for neutral generalization-loss claims.
+
+Remaining work:
+- Evaluate or plot the trained models on the neutral semantic Burgers root before making any broad generalization claim.
+
+## 2026-06-08 - Burgers Round03 per-generalization 5x5 wall-clock panels
+
+Status: generated the requested per-generalization dense comparison panels for Burgers round03.
+
+Observed evidence:
+- Source metrics are per-dataset `eval_metrics.csv` files from loss1/loss2/loss3 long-training and continuation runs; no training or attack was rerun.
+- Output directory: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense`.
+- Wall-clock x-axis clipped to `0..12.5` hours; plotted every `1` epoch.
+- Corrected subplot labels after tracing `selected_candidate_scores.csv` and `tools/generate_burgers_loss3_selective_generalization.py`: labels now avoid both saved selected IDs (`dXX`) and candidate-pool IDs (`cXXX`) and use semantic generation settings such as `loss3_adversarial_far_range_pattern`, `base=test_original_gaussian_corr0p03`, and `transform=loss3_raw_attack_epsfrac0p12_steps10`.
+- Observed evidence: round03 is an adversarial candidate-pool search and its metadata does not contain neutral master `kernel/transform/scale/shift` labels such as `burgers_far_sawtooth_add_scale...`; those names belong to `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`, which is a different evaluation root from the plotted round03 runs.
+- Clarification from `selected_candidate_scores.csv`: the 50 selected round03 datasets collapse to six semantic source/epsilon/step configurations; many semantic-only labels are identical because the unique differences are sampled base examples, attack/jitter realization, and selection score rather than distinct named kernel/transform distributions.
+- Generated PNG files:
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_relative_l2_generalization_5x5_part1_xmax12p5h.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_relative_l2_generalization_5x5_part2_xmax12p5h.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_rmse_generalization_5x5_part1_xmax12p5h.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_rmse_generalization_5x5_part2_xmax12p5h.png`
+- Dedicated doc: `docs/burgers_round03_generalization_5x5_wallclock_panels_20260608.md`.
+
+- Final-vs-baseline check from the same raw metrics: relative-L2 and RMSE final values are below baseline for loss1/loss2/loss3 on `50/50` generalization datasets.
+
+Inference:
+- These panels fix the previous visualization issue where all 50 generalization datasets were averaged into one curve; each generalization dataset is now visible in its own subplot.
+
+Remaining work:
+- Inspect the panels visually and, if needed, generate an accompanying per-dataset winner/count table for monotonic loss decrease checks.
+
+## 2026-06-08 - Darcy/C-flow loss3 per-dataset dominance check
+
+Status: inspected the corrected 52x5 raw table to answer whether loss3 is lower on every dataset.
+
+Observed evidence:
+- Source table: `adversarial_training_runs/darcy_cflow_wallclock_raw52x5_20260608/darcy_cflow_raw52x5_wallclock_wide.csv`.
+- Dedicated result file: `docs/darcy_cflow_loss3_per_dataset_dominance_20260608.md`.
+- For all 50 generalization datasets, loss3 is best against baseline/loss1/loss2/physics for relative-L2, RMSE, and MAE.
+- For the train and test datasets, loss3 is worst among the five models for relative-L2, RMSE, and MAE.
+
+Inference:
+- Loss3 is uniformly best on the 50 generalization datasets, but not across all 52 datasets. The fair wording is: loss3 dominates the separated generalization set while sacrificing train/test performance.
+
+Remaining work:
+- If needed, generate a per-dataset bar/heatmap visualization showing the 50/52 dominance pattern.
+
+## 2026-06-08 - Darcy/C-flow visualization artifact location inspection
+
+Status: inspected local Darcy/C-flow visualization artifacts and recorded where they are saved.
+
+Observed evidence:
+- Dedicated location record: `docs/darcy_cflow_visualization_artifact_locations_20260608.md`.
+- Existing PNGs for clean single-GPU wall-clock runs are under each run's `darcy_time_matched_summary/` directory.
+- Existing raw attack probe data are under each run's `darcy/attack_probe_samples.csv` and `darcy/attack_probe_samples/*.npz`.
+- No standalone Darcy/C-flow perturbation-frequency/spectral PNG files were found locally; only raw `delta_fft_*` metrics and `.npz` probe data are present.
+
+Inference:
+- The Darcy/C-flow figure set is not yet as complete as the Burgers perturbation visualization set. Downstream plots for perturbation frequency/spectrum need to be generated from the saved attack probe raw data if required.
+
+Remaining work:
+- Generate Darcy/C-flow perturbation/frequency visualizations from the saved probe CSV/NPZ files if the Burgers-style figure family is required.
+
+## 2026-06-08 - Darcy/C-flow corrected raw 52x5 wall-clock table
+
+Status: generated the corrected raw Darcy/C-flow table requested by the user. The table separates all 50 generalization datasets and includes train/test, giving 52 datasets times 5 models = 260 raw rows.
+
+Observed evidence:
+- Long raw CSV: `adversarial_training_runs/darcy_cflow_wallclock_raw52x5_20260608/darcy_cflow_raw52x5_wallclock_long.csv` with `260` rows.
+- Wide raw CSV: `adversarial_training_runs/darcy_cflow_wallclock_raw52x5_20260608/darcy_cflow_raw52x5_wallclock_wide.csv` with 52 dataset rows.
+- Split summary CSV: `adversarial_training_runs/darcy_cflow_wallclock_raw52x5_20260608/darcy_cflow_raw52x5_wallclock_split_summary.csv`.
+- Dedicated doc: `docs/darcy_cflow_wallclock_raw52x5_20260608.md`.
+- Four self-training models use same-wall-clock final checkpoints, not same epoch: loss1 epoch `683`, loss2 epoch `733`, loss3 epoch `500`, physics epoch `778`.
+
+Inference:
+- The raw data product fixes the previous aggregation problem: the 50 generalization datasets are no longer collapsed before inspection. Epoch count is explicitly treated as an output of fixed wall-clock budget, not the matching variable.
+
+Remaining work:
+- Regenerate downstream plots directly from `darcy_cflow_raw52x5_wallclock_long.csv` or `darcy_cflow_raw52x5_wallclock_wide.csv` if per-dataset visualization is needed.
+
+## 2026-06-08 - Darcy/C-flow wall-clock matched comparison clarification
+
+Status: corrected the Darcy/C-flow comparison axis to wall-clock time rather than epoch count. The fair comparison uses each time-matched run's final checkpoint, because all visible runs finished around the same `82.8-82.9 min` wall-clock budget.
+
+Observed evidence:
+- Exact metrics came from the local `summary.json` and `darcy/eval_split_summary.csv` files for loss1, loss2, loss3, and physics.
+- Dedicated result file: `docs/darcy_cflow_wallclock_matched_comparison_20260608.md`.
+- Same-wall-clock final rows: loss1 epoch `683` at `82.93 min`, loss2 epoch `733` at `82.90 min`, loss3 epoch `500` at `82.78 min`, physics epoch `778` at `82.91 min`.
+- Generalization relative-L2 drops vs baseline at the same wall-clock budget: loss1 `2.03%`, loss2 `17.68%`, loss3 `46.21%`, physics `31.80%`.
+
+Inference:
+- The fair wall-clock matched ranking on the 50-dataset generalization split is loss3 strongest, physics second, loss2 third, loss1 weakest. Epoch 650 should only be treated as a diagnostic point, not as the comparison axis, because physics/loss3 have different epoch speeds.
+
+Remaining work:
+- Regenerate any combined plots/tables whose labels imply an epoch-matched comparison; they should be labeled as wall-clock matched final-checkpoint comparisons.
+
+## 2026-06-08 - Darcy/C-flow loss1/loss2 single-GPU to-650 status inspection
+
+Status: inspected local Darcy/C-flow artifacts for the user's to-650 question. The dedicated `continue_to650` pipeline has a plan document and runner, but no local run logs, stitched output, or R2 upload evidence. The clean single-GPU sequential time-matched loss1/loss2 rerun did complete and exceeded epoch 650.
+
+Observed evidence:
+- Source driver log: `adversarial_training_runs/darcy_loss12_single_gpu_time_matched_20260608_logs/driver.log` shows loss1 ran from `2026-06-08T05:49:24Z` to `2026-06-08T07:12:29Z`, then loss2 from `2026-06-08T07:12:33Z` to `2026-06-08T08:35:37Z`.
+- loss1 summary: `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608/darcy/summary.json` reports epoch `683`, `82.93` minutes, final checkpoint `darcy_epoch683_step002732.pt`.
+- loss2 summary: `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608/darcy/summary.json` reports epoch `733`, `82.90` minutes, final checkpoint `darcy_epoch733_step002932.pt`.
+- Exact split metrics came from each run's `darcy/eval_split_summary.csv`; dedicated result file: `docs/darcy_cflow_loss12_single_gpu_to650_status_20260608.md`.
+- At epoch 650, generalization relative-L2 drops vs baseline were: loss1 `5.59%`, loss2 `-6.33%`, physics `24.34%`; loss3 has no epoch 650 row because the visible run completed at epoch 500.
+- Final generalization relative-L2 drops vs baseline were: loss1 `2.03%` at epoch 683, loss2 `17.68%` at epoch 733, loss3 `46.21%` at epoch 500, physics `31.80%` at epoch 778.
+
+Inference:
+- The earlier under-650 concern is resolved for the clean sequential time-matched rerun because loss1 and loss2 exceeded 650 epochs on one GPU. However, the separately requested stitched `continue_to650` workflow itself is not evidenced as completed locally.
+- For the visible local 50-dataset generalization split, loss3 remains strongest; physics is second; loss2 is acceptable by final epoch but bad exactly at 650; loss1 is train/test-improving but weak on final generalization.
+
+Remaining work:
+- If a strict stitched-to-650 artifact and R2 upload are still required, run `tools/run_darcy_loss12_continue_to650_20260608.sh` or regenerate a corrected combined summary from the single-GPU loss1/loss2 plus loss3/physics artifacts.
+
+## 2026-06-08 - Darcy other30 stockgeneralization stockloss3other20 launch
+
+Status: prepared, launched in tmux, and monitored for more than ten minutes. The tmux session waits for the active Darcy single-GPU job to release the V100 before starting; no new metrics are complete yet because the older Darcy loss1 run still owns the GPU.
+
+Observed evidence:
+- Current active GPU job at launch time was `tools/adversarial_training.py` for Darcy loss1 single-GPU time-matched training, using about 12838 MiB on Tesla V100-SXM2-32GB.
+- Created launcher: `tools/run_darcy_other30_stockgeneralization_loss3other20_20260608.sh`.
+- Created launch record: `docs/darcy_other30_stockgeneralization_loss3other20_pipeline_20260608.md`.
+- Started tmux session `darcy_other30_stock_loss3_20260608` at `2026-06-08T06:46:44Z`.
+- Ten-minute monitor check at `2026-06-08T06:57:14Z`: the new driver process `1081796 bash tools/run_darcy_other30_stockgeneralization_loss3other20_20260608.sh` was still alive, `driver.log` contained only the pipeline request line, and `wait_for_idle.log` showed repeated clean waits behind Darcy loss1 through `2026-06-08T06:56:46Z`.
+- GPU snapshot at `2026-06-08 06:57:14 UTC`: Tesla V100-SXM2-32GB, `12838 MiB / 32768 MiB` used, `92%` utilization, temperature `62 C`; observed active training process remained Darcy loss1 PID `1035150`.
+- The launcher records GPU preflight under `forensics/darcy_other30_stockgeneralization_loss3other20_20260608_gpu_preflight/` after the GPU is idle.
+- The launcher defines `other30training` as 30-epoch Darcy FNO training on the local screen train/test tensors, `stockgeneralization` as a newly generated and screened 50-dataset Darcy generalization root, and `stockloss3other20training` as 20 epochs of Darcy loss3 adversarial self-training initialized from the other30 checkpoint.
+
+Key paths:
+- Other30 model directory: `2D_Darcy_FNO2d/saved_models/2D/darcy_flow_other30training_20260608/`.
+- Stock generalization pool: `generalization_datasets_darcy_stockgeneralization_pool_20260608/`.
+- Stock selected generalization root: `generalization_datasets_darcy_stockgeneralization_20260608/`.
+- Loss3 other20 run: `adversarial_training_runs/darcy_stockloss3other20training_20260608/`.
+- Driver logs: `adversarial_training_runs/darcy_other30_stockgeneralization_loss3other20_20260608_logs/`.
+
+Inference:
+- Because the single V100 is occupied, queuing behind the existing Darcy process is the safe way to satisfy the launch request without causing an avoidable OOM.
+
+Remaining work:
+- Continue to let tmux session `darcy_other30_stock_loss3_20260608` wait; when the current Darcy loss1 run exits and free GPU memory reaches the threshold, it should start `other30training`.
+- Once complete, summarize the generated manifests, training summaries, and plots, and update this ledger with observed results.
+
+## 2026-06-08 - NS2D loss3 self-training one-epoch timing preparation and queue
+
+Status: prepared and queued a Navier-Stokes 2D `loss3` self-training one-epoch timing run. It is waiting for exclusive GPU access behind the active Darcy single-GPU run; no new 2026-06-08 measured epoch timing has completed yet.
+
+Observed evidence:
+- User requested an experimental timing for one epoch of NS2D loss3 self-training.
+- Existing source path inspected: `tools/adversarial_training.py` NS2D solver-label branch perturbs initial vorticity, backpropagates `MSE(model(x_seq_adv), y_seq_adv)` through the differentiable NS solver, regenerates attacked solver labels, and applies optimizer updates on attacked solver pairs.
+- Prior timing estimate inspected: `adversarial_training_runs/RUNTIME_BLOWUP_DIAGNOSIS_20260530.md` reports NS2D corrected setting with `50` train samples, batch `6`, `9` batches/epoch, measured step time `434.494 s/batch`, giving `3910.445 s/epoch` or about `65.17 min/epoch`.
+- Original data-size evidence inspected in ledger/docs: the real NS2D train tensor was `N1150`, shape `x=(1150,256,256)`, `y=(1150,256,256,21)`.
+- Added timing harness: `tools/time_ns2d_loss3_self_training_epoch_20260608.py`.
+- Added one-epoch timing launcher: `tools/run_ns2d_loss3_self_training_epoch_timing_20260608.sh`.
+- Added chain launcher that runs epoch timing first, then the earlier batch probe: `tools/run_ns2d_loss3_epoch_then_batch_probe_20260608.sh`.
+- Added dedicated timing note: `docs/ns2d_loss3_self_training_epoch_timing_20260608.md`.
+- Static checks passed: `adv_robust/bin/python -m py_compile tools/time_ns2d_loss3_self_training_epoch_20260608.py tools/probe_ns2d_loss3_adversarial_training_batch_20260608.py tools/adversarial_training.py`; `bash -n tools/run_ns2d_loss3_self_training_epoch_timing_20260608.sh tools/run_ns2d_loss3_epoch_then_batch_probe_20260608.sh tools/run_ns2d_loss3_batch_probe_20260608.sh`; timing script `--help` imports successfully.
+- Replaced the earlier waiting-only batch probe session with tmux session `ns2d_loss3_epoch_then_batch_20260608`, created at about `2026-06-08T06:28:01Z`.
+- GPU preflight for this queued timing was recorded at `forensics/ns2d_loss3_self_training_epoch_timing_20260608/gpu_preflight.log`: Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, compute capability `sm_70`, arch list includes `sm_70`, JAX `0.10.0` backend `gpu`.
+- Current wait log: `forensics/ns2d_loss3_self_training_epoch_timing_20260608/logs/wait_for_idle.log`, showing active Darcy driver PID `1034945`, active Darcy training PID `1035150`, and free GPU memory below the `30000 MiB` threshold.
+
+Key settings for queued measurement:
+- `num_samples=50`, `batch_size=6`, `optimizer_batch_size=1`.
+- `attack_steps=10`, `attack_method=fast_add_linf`, `epsilon_fraction=0.035`, `alpha_ratio=0.2`.
+- `ns2d_solver_remat=chunk`, `chunk_steps=20`.
+- Output directory: `forensics/ns2d_loss3_self_training_epoch_timing_20260608/`.
+
+Current local constraints:
+- The retained NS2D baseline checkpoint and real NS2D train/test/generalization `.pt` files are not visible in the current working tree.
+- If still missing when the queued job starts, the timing harness will use synthetic `256x256` initial vorticity and a random same-architecture model, clearly marked as runtime/memory evidence only, not scientific metric evidence.
+
+Inference:
+- Prior evidence suggests the 50-sample NS2D loss3 epoch should be roughly `65 min` on the V100 at batch `6`.
+- If the same per-batch time is extrapolated to all `1150` real train samples, one full-data epoch would be about `192 * 434.494 s = 23.17 h`. The queued run will directly measure the current code path for the explicit `50`-sample epoch and write an `1150` extrapolation.
+
+Remaining work:
+- Let tmux session `ns2d_loss3_epoch_then_batch_20260608` run after the Darcy job releases the GPU.
+- Summarize `forensics/ns2d_loss3_self_training_epoch_timing_20260608/epoch_summary.json` and `epoch_train_batches.csv` once complete, then continue/inspect the batch-size probe outputs.
+
+
+## 2026-06-08 - NS2D loss3 adversarial-training batch probe preparation and queue
+
+Status: prepared and queued a Navier-Stokes 2D solver-gradient loss3 adversarial-training batch-size probe. The probe is waiting for exclusive GPU access; no new 2026-06-08 NS2D batch result has completed yet.
+
+Observed evidence:
+- Source code inspected: `tools/adversarial_training.py`, especially `ns2d_solver_pair_from_initial`, `ns2d_solver_consistent_attack`, `attack_batch`, and `clean_solver_training_pair`.
+- Existing NS2D loss3 path perturbs only the initial vorticity frame `x0`, rolls out the differentiable NS solver from `x0_adv`, computes `MSE(model(x_seq_adv), y_seq_adv)`, and backpropagates through the solver to `x0_adv`.
+- Prior batch evidence inspected: `adversarial_training_runs/CORRECTED_10STEP_REMAT_CHECKPOINT_RECORD_20260530.md` and `NS2D_GENERALIZATION_AND_REMAT_RECORD_20260530.md`. These records are V100/32GB records for the relevant path: batch `6` passed for chunk-remat NS2D loss3 adversarial training, while batch `8/10` OOMed; direct full-gradient attack batch `7` also OOMed.
+- Corrected interpretation after rechecking older notes: A100/B200-era larger-batch records must not be mixed into the current V100 recommendation. For this machine, the production launcher should remain at explicit batch `6` until a fresh current-code V100 probe says otherwise.
+- Updated source comment in `tools/adversarial_training.py` to replace the stale NS2D batch-2 OOM note with the prior batch-6 / batch-8/10 evidence, while keeping the generic default conservative.
+- Added probe script: `tools/probe_ns2d_loss3_adversarial_training_batch_20260608.py`.
+- Added queued launcher: `tools/run_ns2d_loss3_batch_probe_20260608.sh`.
+- Added production training launcher: `tools/run_ns2d_loss3_adversarial_training_20260608.sh`.
+- Added dedicated result/plan document: `docs/ns2d_loss3_adversarial_training_batch_probe_20260608.md`.
+- Static checks passed: `adv_robust/bin/python -m py_compile tools/adversarial_training.py tools/probe_ns2d_loss3_adversarial_training_batch_20260608.py`; `bash -n tools/run_ns2d_loss3_batch_probe_20260608.sh tools/run_ns2d_loss3_adversarial_training_20260608.sh`; probe `--help` imports successfully.
+- GPU preflight for the queued probe was recorded at `forensics/ns2d_loss3_adversarial_training_batch_probe_20260608/gpu_preflight.log`: Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, compute capability `sm_70`, arch list includes `sm_70`, JAX `0.10.0` backend `gpu`.
+- tmux session `ns2d_loss3_batch_probe_20260608` was launched/restarted at about `2026-06-08T06:21:11Z`; it is waiting because the Darcy driver PID `1034945` and active Darcy training PID `1035150` are present and free GPU memory is below the 30000 MiB threshold.
+- Current wait log: `forensics/ns2d_loss3_adversarial_training_batch_probe_20260608/logs/wait_for_idle.log`.
+
+Current local constraints:
+- The retained NS2D baseline checkpoint path referenced by `load_ns2d_model` is not present locally: `2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/best.pt`.
+- The default NS2D train/test `.pt` files and the 50 NS2D generalization `.pt` files are also not visible in the current working tree. They may need to be restored from git, R2, or another machine before an official full NS2D adversarial-training run.
+- Because of the missing checkpoint, the batch probe supports a clearly marked random same-architecture model for memory-capacity testing only. It must not be interpreted as a scientific metric run.
+
+Key settings:
+- Probe candidates: `4 5 6 7 8`, stopping at first OOM.
+- Probe loss3 policy: `fast_add_linf`, `attack_steps=10`, `epsilon_fraction=0.035`, `alpha_ratio=0.2`, `ns2d_solver_remat=chunk`, `chunk_steps=20`, optimizer microbatch `1`.
+- Production launcher defaults: NS2D only, solver labels, adv-only training, batch `6`, optimizer batch `1`, 500 epochs, every-epoch eval/checkpointing controls inherited from `tools/adversarial_training.py`.
+
+Inference:
+- Based on prior records, the best evidenced production batch is `6`; batch `7` is the next confirmation point, and batch `8+` is expected to OOM on this V100 path.
+- The queued probe will provide current-code evidence once the existing Darcy job releases the GPU.
+
+Remaining work:
+- Let `ns2d_loss3_batch_probe_20260608` proceed after the Darcy GPU job is done, then summarize `forensics/ns2d_loss3_adversarial_training_batch_probe_20260608/batch_probe_results.csv`.
+- Restore the missing NS2D checkpoint and real NS2D datasets before running `tools/run_ns2d_loss3_adversarial_training_20260608.sh` as an official training run.
+
+
 ## 2026-06-08 - Loss-objective direction experiments in error-operator framework
 
 Status: created a dedicated Markdown note connecting prior Burgers loss1/loss2/loss3 direction experiments to the current model-minus-solver error-operator robustness framework.
@@ -11861,3 +12270,400 @@ Inference:
 Remaining work:
 - For a clean pointwise test, either run p2q2 PGD on the exact 20-sample SVD manifest, compute `loss1_epoch8000` SVD on that same manifest, or compute SVD probes on the same 52 datasets used by the full p2q2 final-only PGD table.
 - No new GPU experiment was run for this audit.
+
+
+## 2026-06-08 - Darcy lossdrop50 time-matched loss1/loss2/loss3/physics completion check and plot bundle
+
+Status: completed status audit and posthoc plotting from existing run artifacts. No new GPU training experiment was launched in this audit.
+
+Observed evidence:
+- Current GPU/process check at `2026-06-08T05:21Z`: `nvidia-smi` showed Tesla V100-SXM2-32GB with `0 MiB / 32768 MiB`, `0%` utilization, and no running GPU processes; process table showed no Darcy training or plotting process.
+- Loss1 driver log: `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608_logs/driver.log` recorded start `2026-06-08T02:06:58Z`, done `2026-06-08T03:30:08Z`, workflow complete `2026-06-08T03:30:11Z`.
+- Loss2 driver log: `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608_logs/driver.log` recorded start `2026-06-08T02:07:00Z`, done `2026-06-08T03:30:12Z`, workflow complete `2026-06-08T03:30:15Z`.
+- Physics driver log: `adversarial_training_runs/darcy_lossdrop50_physics_time_matched_loss3wall_20260608_logs/driver.log` recorded start `2026-06-08T03:31:04Z`, done `2026-06-08T04:54:09Z`, workflow complete `2026-06-08T04:54:12Z`.
+- Loss3 source summary: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` reports finished UTC `20260607_200325_UTC`, `500` epochs, `2000` global steps, and final checkpoint `darcy/checkpoints/darcy_epoch500_step002000.pt`.
+- Generated/confirmed result doc: `docs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608.md`.
+- Generated loss3 posthoc doc: `docs/darcy_lossdrop50_loss3_500ep_time_matched_summary_20260608.md`.
+- Generated combined CSV: `adversarial_training_runs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608/darcy_time_matched_summary.csv`.
+- Generated/confirmed per-run plots under `adversarial_training_runs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608/*/{rmse_split_curves.png,relative_l2_split_curves.png,attack_objective_and_solver_mse_curves.png}`.
+- Loss3 standalone posthoc plots also exist under `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy_time_matched_summary/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/`.
+
+Key settings:
+- Same target wall time as the completed loss3 run: approximately `4966.93` seconds, about `82.8-83.0` minutes.
+- All runs used Darcy lossdrop50 selected generalization data with `batch_size=96`, `attack_batch_size=96`, `optimizer_batch_size=24`, adv-only training, solver labels, and every-epoch evaluation.
+- Loss1/loss2/physics stopped by `max_wall_seconds_reached`; loss3 was the prior `500` epoch baseline whose observed wall time was used for matching.
+
+Key metrics observed from `darcy_time_matched_summary.csv`:
+- Loss1: `352` epochs, `1408` steps, `82.97` minutes, generalization RMSE `0.000571722 -> 0.000552445` (`3.37%` lower), relative L2 `0.09338 -> 0.0902246` (`3.38%` lower), peak CUDA `10131.2 MB`.
+- Loss2: `240` epochs, `960` steps, `83.01` minutes, generalization RMSE `0.000571722 -> 0.000665826` (`16.46%` higher), relative L2 `0.09338 -> 0.108746` (`16.46%` higher), peak CUDA `9328.7 MB`.
+- Loss3: `500` epochs, `2000` steps, `82.78` minutes, generalization RMSE `0.000571722 -> 0.000307584` (`46.20%` lower), relative L2 `0.09338 -> 0.0502322` (`46.21%` lower), peak CUDA `9335.8 MB`.
+- Physics: `778` epochs, `3112` steps, `82.91` minutes, generalization RMSE `0.000571722 -> 0.000389987` (`31.79%` lower), relative L2 `0.09338 -> 0.0636878` (`31.80%` lower), peak CUDA `9331.4 MB`.
+
+Inference:
+- The four Darcy lossdrop50 time-matched runs are complete locally, and the requested plots now exist for loss1, loss2, loss3, and physics/loss4 style objectives.
+- On final generalization metrics at the matched wall time, loss3 is best, physics is second, loss1 is a small improvement, and loss2 regresses relative to baseline.
+- Loss3 and physics had better intermediate best epochs than their final checkpoints for generalization; final-checkpoint ranking should not be interpreted as a monotonic training trend.
+
+Remaining work:
+- Inspect the generated PNGs visually if presentation quality matters.
+- If official reporting needs exact best-checkpoint comparison, select/checkpoint the best observed epoch per objective rather than using only final wall-stop checkpoints.
+- Large checkpoints/images remain local/R2-style artifacts unless explicitly staged; lightweight scripts/docs should be staged explicitly when saving to Git.
+
+
+
+## 2026-06-08 - Darcy lossdrop50 loss1/loss2 concurrency caveat
+
+Status: inspected launch logs and attack summaries after noticing loss1/loss2 completed fewer epochs than loss3 despite using cheaper objectives.
+
+Observed evidence:
+- Loss1 driver log: `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608_logs/driver.log` shows start `2026-06-08T02:06:58Z` and done `2026-06-08T03:30:08Z`.
+- Loss2 driver log: `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608_logs/driver.log` shows start `2026-06-08T02:07:00Z` and done `2026-06-08T03:30:12Z`.
+- Physics driver log: `adversarial_training_runs/darcy_lossdrop50_physics_time_matched_loss3wall_20260608_logs/driver.log` shows start `2026-06-08T03:31:04Z`, after loss1/loss2 completed.
+- Per-run elapsed speed from `darcy/summary.json`: loss1 `352` epochs in `4978.108s` (`14.142s/epoch`), loss2 `240` epochs in `4980.536s` (`20.752s/epoch`), loss3 `500` epochs in `4966.926s` (`9.934s/epoch`), physics `778` epochs in `4974.570s` (`6.394s/epoch`).
+- Attack objective metadata in `darcy/attack_epoch_summary.csv`: loss1 `attack_uses_solver_forward=0`, `attack_uses_solver_backward=0`; loss2 `1/0`; physics `0/0`. The Darcy loss3 code path in `tools/adversarial_training.py` uses `MSE(model(a_adv), solver(a_adv))` and records solver backward when solver target gradients are enabled.
+- Result doc updated with this caveat: `docs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608.md`.
+
+Inference:
+- The low completed epoch counts for loss1/loss2 are very likely a concurrency artifact from running both jobs on the same GPU at the same time.
+- The current final-checkpoint rows for loss1/loss2 should not be treated as an official fair single-GPU time-matched comparison against standalone loss3 or physics.
+- A fair comparison should rerun loss1 and loss2 sequentially on an otherwise idle GPU using the same target wall time and settings.
+
+Remaining work:
+- Rerun Darcy loss1 and loss2 sequentially if official wall-clock conclusions are needed.
+- Keep the current artifacts as concurrency-contaminated diagnostic runs unless explicitly superseded.
+
+
+
+## 2026-06-08 - Darcy loss1/loss2 single-GPU 5-epoch timing probe
+
+Status: ran fresh sequential 5-epoch timing probes for Darcy loss1 and loss2 on an idle V100. Loss1 finished before loss2 was started; no concurrent training process was present.
+
+Observed evidence:
+- GPU before launch: `nvidia-smi` showed Tesla V100-SXM2-32GB, `0 MiB / 32768 MiB`, no running GPU processes.
+- PyTorch/JAX GPU path verified with `adv_robust/bin/python`: PyTorch `2.8.0+cu126`, CUDA `12.6`, device `Tesla V100-SXM2-32GB`, capability `(7, 0)`, arch list includes `sm_70`, JAX backend `gpu`, JAX device `cuda:0`.
+- GPU/preflight records: `forensics/darcy_lossdrop50_single_gpu_timing5ep_20260608_gpu_preflight/`.
+- Loss1 source run: `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_timing5ep_20260608/darcy/summary.json`.
+- Loss2 source run: `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_timing5ep_20260608/darcy/summary.json`.
+- Timing estimate CSV: `forensics/darcy_lossdrop50_single_gpu_timing5ep_20260608_gpu_preflight/single_gpu_timing_estimates.csv`.
+- Result doc: `docs/darcy_lossdrop50_loss12_single_gpu_timing5ep_20260608.md`.
+- Loss1 observed `5` epochs in `39.3177948417142s`, or `7.863559s/epoch`.
+- Loss2 observed `5` epochs in `39.61514286324382s`, or `7.923029s/epoch`.
+- Loss3 reference wall time is `4966.925741452724s` from `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/summary.json`.
+
+Inference:
+- Direct 5-epoch total-time estimate: loss1 would run about `631.64` epochs and loss2 about `626.90` epochs in the same wall time as loss3.
+- Warmed/amortized smoke estimates are higher: roughly `655` loss1 epochs and `651` loss2 epochs at the same loss3 wall time.
+- This confirms the previous loss1/loss2 low epoch counts were a concurrency artifact, not objective-intrinsic slowness.
+
+Remaining work:
+- Launch official sequential single-GPU time-matched loss1 and loss2 full runs to replace the concurrency-contaminated rows.
+
+
+
+## 2026-06-08 - Darcy loss1/loss2 official sequential single-GPU time-matched rerun launch
+
+Status: launched official sequential single-GPU time-matched reruns to supersede the concurrency-contaminated loss1/loss2 runs. The workflow runs loss1 first and starts loss2 only after loss1 finishes.
+
+Observed evidence:
+- Runner script: `tools/run_darcy_loss12_single_gpu_time_matched_20260608.sh`.
+- tmux session: `darcy_loss12_single_gpu_20260608`.
+- Driver log: `adversarial_training_runs/darcy_loss12_single_gpu_time_matched_20260608_logs/driver.log`.
+- GPU preflight/output records: `forensics/darcy_loss12_single_gpu_time_matched_20260608_gpu_preflight/`.
+- Driver log records loss1 start at `2026-06-08T05:49:24Z`: `darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608`, target wall seconds `4966.925741452724`.
+- Process check at about `2026-06-08T05:49:41Z` showed one active `adversarial_training.py` process for the loss1 single-GPU time-matched run. No loss2 training process was active.
+- `nvidia-smi` at about `2026-06-08T05:49:41Z` showed Tesla V100-SXM2-32GB at about `12838 MiB / 32768 MiB` and `96%` GPU utilization.
+
+Key settings:
+- Target wall time: loss3 elapsed seconds `4966.925741452724`.
+- Run names: `darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608` then `darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608`.
+- Same selected Darcy lossdrop50 generalization suite, `batch_size=96`, `attack_batch_size=96`, `optimizer_batch_size=24`, adv-only training, solver labels, every-epoch evaluation, and `max_generalization_eval=50`.
+
+Inference:
+- This launch should produce the fair single-GPU wall-clock comparison for loss1/loss2 against the standalone loss3 and physics rows.
+- Based on the 5-epoch timing probe, expected completed epochs are roughly `630-655` for loss1 and `627-651` for loss2, depending on fixed-overhead amortization.
+
+Remaining work:
+- Monitor the tmux session until loss1 completes and loss2 starts.
+- After both runs finish, generate the combined loss1/loss2/loss3/physics summary and update docs/ledger with final metrics.
+
+
+
+## 2026-06-08 - Darcy loss1/loss2 continue-to-650 pipeline code preparation
+
+Status: prepared code to continue Darcy loss1/loss2 self-training from existing checkpoints to explicit epoch 650. This entry records code preparation, not completion of the continuation runs.
+
+Observed evidence:
+- Added Darcy resume CLI support in `tools/adversarial_training.py`: `--darcy-initial-checkpoint` now uses the existing generic initial-checkpoint/resume-offset path for Darcy.
+- Added stitching helper: `tools/stitch_darcy_continuation_run_20260608.py`.
+- Added continuation runner: `tools/run_darcy_loss12_continue_to650_20260608.sh`.
+- Added pipeline note: `docs/darcy_loss12_continue_to650_pipeline_20260608.md`.
+- Static checks passed: `bash -n tools/run_darcy_loss12_continue_to650_20260608.sh`; `adv_robust/bin/python -m py_compile tools/adversarial_training.py tools/stitch_darcy_continuation_run_20260608.py`; CLI help shows `--darcy-initial-checkpoint`.
+
+Key behavior:
+- Defaults to source runs `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608` and `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608`.
+- Waits for source `darcy/summary.json` files by default, computes `local_epochs = 650 - source_epoch`, and runs sequential loss1 then loss2 continuations.
+- Uses `--darcy-initial-checkpoint`, `--resume-epoch-offset`, and `--resume-global-step-offset` so final checkpoint numbering reaches epoch 650.
+- Creates stitched full-history CSV/JSON records for plotting baseline-to-650 curves.
+- Runs summary/plot postprocessing and uploads source, continuation, stitched, combined summary, docs, logs, and preflight artifacts to R2 by default.
+
+Inference:
+- This code is ready to launch once the current single-GPU time-matched loss1/loss2 source runs have completed, or it can be launched with `WAIT_FOR_SOURCE=1` to wait for them.
+
+Remaining work:
+- Launch `tools/run_darcy_loss12_continue_to650_20260608.sh` in tmux after confirming the desired source runs.
+- After completion, inspect final epoch-650 metrics and upload logs.
+
+
+## 2026-06-08 - Burgers P2Q2 six-sample prediction loss versus attack growth
+
+Status: completed a post-processing audit of the six samples used in the Burgers round03 baseline/loss1/loss2/loss3 before-after P2Q2 attack overlay. This was analysis of existing CSV attack curves, not a new model or solver run.
+
+Observed evidence:
+- Source sample manifest: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/sample_manifest.json`.
+- Source attack curves: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss1/attack_loss_curves.csv`, `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss2/attack_loss_curves.csv`, and `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss3/attack_loss_curves.csv`.
+- Derived output directory: `forensics/burgers_p2q2_six_sample_prediction_vs_attack_growth_20260608/`.
+- Derived numeric tables: `six_sample_clean_attack_growth.csv`, `model_mean_clean_attack_growth.csv`, `clean_vs_attack_correlations.csv`, and `metadata.json`.
+- Result doc: `docs/burgers_p2q2_six_sample_prediction_loss_vs_attack_growth_20260608.md`.
+- Six-sample mean clean MSE: baseline `0.0002251479018`, loss1 `0.000007584736987`, loss2 `0.000008816111498`, loss3 `0.00003560450356`.
+- Six-sample mean step-100 attacked MSE: baseline `0.02650749679`, loss1 `0.006293901601`, loss2 `0.009268279517`, loss3 `0.002929622463`.
+- Six-sample mean attack increase MSE: baseline `0.02628234889`, loss1 `0.006286316864`, loss2 `0.009259463406`, loss3 `0.002894017959`.
+
+Inference:
+- On these six display samples, clean prediction ranking is `loss1 < loss2 < loss3 < baseline`, but fixed-budget attacked-loss ranking is `loss3 < loss1 < loss2 < baseline`.
+- Clean prediction/generalization loss and zero-start fixed-budget attack growth are related but not equivalent. The robustness ranking can differ because attack loss also depends on local input sensitivity, gradient geometry, and curvature.
+
+Remaining work:
+- Do not use the six display samples as a substitute for full-50 clean generalization or full-52-dataset attack evaluation.
+
+
+## 2026-06-08 - Burgers round03 full-52 clean generalization versus attack robustness mismatch audit
+
+Status: completed a full-52 post-processing audit to test whether clean prediction/generalization loss and fixed-budget P2Q2 attack robustness have the same ranking. This was analysis of existing CSV/JSON artifacts, not a new model or solver run.
+
+Observed evidence:
+- Source full attack run: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary.json` and `summary_by_model_dataset.csv`.
+- Source clean/attack ratio table: `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/clean_and_attack_loss_ratios_by_dataset.csv`.
+- Derived output directory: `forensics/burgers_round03_full52_clean_vs_attack_mismatch_20260608/`.
+- Derived numeric tables: `model_sample_weighted_means.csv`, `winner_by_dataset.csv`, `winner_and_sample_weighted_summary.csv`, `clean_attack_correlation_summary.csv`, `loss3_pairwise_ratios_vs_loss12.csv`, `trained_models_clean_attack_long_by_dataset.csv`, and `metadata.json`.
+- Result doc: `docs/burgers_round03_full52_clean_generalization_vs_attack_robustness_mismatch_20260608.md`.
+- Full-52 setting from source summary: Burgers P2Q2 RMS-L2 attack, epsilon RMS `0.12`, alpha RMS `0.012`, `20` steps, `52` datasets, `10200` samples, V100 GPU path recorded in source config.
+- Full-52 sample-weighted clean MSE: baseline `0.0003210206038`, loss1 `0.00000337123809`, loss2 `0.000008680059203`, loss3 `0.00004514041727`.
+- Full-52 sample-weighted final attack MSE: baseline `0.02971614201`, loss1 `0.003606513503`, loss2 `0.004632377368`, loss3 `0.001694242130`.
+- Full-52 trained-model winner counts: clean MSE winner loss1 `52/52`; final attack MSE winner loss3 `52/52`; attack increase winner loss3 `52/52`.
+- Generalization-50 trained-model winner counts: clean MSE winner loss1 `50/50`; final attack MSE winner loss3 `50/50`; attack increase winner loss3 `50/50`.
+- Generalization-50 ratios: loss3 clean MSE is `13.33002285x` loss1 but loss3 final attack MSE is `0.4685758949x` loss1 and loss3 attack increase is `0.4565002791x` loss1.
+
+Inference:
+- On this existing Burgers round03 full-P2Q2 suite, clean prediction/generalization loss and fixed-budget attack robustness do not match as model-selection criteria.
+- This is direct evidence for this suite, budget, model set, and attack implementation; it does not remove the separate benchmark-validity concern about whether the current generalization suite is the ideal external generalization benchmark.
+
+Remaining work:
+- Repeat the same clean-vs-attack mismatch audit on any replacement externally valid generalization suite once that suite is finalized.
+
+
+## 2026-06-08 - Darcy Flow generalization dataset provenance attack audit
+
+Status: completed a provenance audit of the Darcy Flow lossdrop50 and stockgeneralization dataset roots to answer whether they were created by attacking train/test samples. This was file/code/metadata inspection, not a new training or solver run.
+
+Observed evidence:
+- Source generator inspected: `tools/generate_darcy_lossdrop50_pool_20260607.py`.
+- Shared candidate generator inspected: `tools/generate_darcy_generalization_candidates.py`.
+- Selector inspected: `tools/select_darcy_lossdrop50_20260607.py`.
+- Stock pipeline launcher inspected: `tools/run_darcy_other30_stockgeneralization_loss3other20_20260608.sh`.
+- Existing dataset doc inspected: `docs/darcy_lossdrop50_selected_generalization_suite_20260607.md`.
+- Lossdrop pool manifest: `generalization_datasets_darcy_lossdrop50_pool_20260607/candidate_manifest.csv` has 72 generated pool datasets.
+- Lossdrop selected manifest: `generalization_datasets_darcy_lossdrop50_selected_20260607/candidate_manifest.csv` has 50 selected datasets.
+- Stock pool manifest: `generalization_datasets_darcy_stockgeneralization_pool_20260608/candidate_manifest.csv` has 72 generated pool datasets.
+- Stock selected manifest: `generalization_datasets_darcy_stockgeneralization_20260608/candidate_manifest.csv` has 50 selected datasets.
+- Selected manifests record `source_pool_path` back to the generated pool roots and parameters such as `alpha`, `tau`, `low`, `high`, `soft_coefficients`, `soft_beta`, `samples`, `resolution`, and `solve_resolution`.
+- Spot-checked selected `.pt` payloads contain `x`, `y`, `latent`, and `metadata`; metadata reports `split=generalization`, `similarity_tier=lossdrop_pool_soft`, coefficient/sampling parameters, and solver `jax_matrix_free_cg_second_order_fd`.
+- Result doc: `docs/darcy_generalization_dataset_provenance_attack_audit_20260608.md`.
+
+Inference:
+- The Darcy Flow generalization datasets were not generated by adversarially attacking existing train/test tensors. They were independently generated from GRF/coefficient-family samplers and solved with the Darcy solver, then selected from the pool using a short adversarial-training gradient/loss screen.
+- The important caveat is that these selected roots are screening-biased loss-drop suites, not unbiased random external generalization benchmarks.
+
+Remaining work:
+- If an unbiased external Darcy generalization benchmark is needed, generate a separate unfiltered suite and record its provenance separately.
+
+
+## 2026-06-08 - Burgers round03 full-52 per-sample clean versus adversarial-tag mismatch audit
+
+Status: completed a per-sample audit of the existing full-52 Burgers round03 P2Q2 tagged/attacked artifact. This used existing per-model NPZ arrays with `10200` samples and did not run new attacks or model evaluation.
+
+Observed evidence:
+- Source attack/tag run: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/`.
+- Source manifest: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/manifest.json`, with `10200` rows across `52` datasets.
+- Source per-model arrays: `baseline/losses_and_delta_rms_by_sample.npz`, `loss1_epoch8000/losses_and_delta_rms_by_sample.npz`, `loss2_epoch2000/losses_and_delta_rms_by_sample.npz`, and `loss3_epoch1500/losses_and_delta_rms_by_sample.npz`, each containing `initial_loss`, `initial_diff_rms`, `final_loss`, `final_diff_rms`, and `final_delta_rms` with shape `(10200,)`.
+- Attack setting from source run: Burgers P2Q2 RMS-L2, epsilon RMS `0.12`, alpha RMS `0.012`, `20` steps, zero-start.
+- Derived output directory: `forensics/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608/`.
+- Derived tables: `per_sample_clean_attack_wide.csv`, `per_sample_mismatch_summary_by_split.csv`, `direct_loss3_mismatch_cross_counts.csv`, `per_sample_clean_attack_correlations.csv`, `per_dataset_sample_level_mismatch_summary.csv`, and `metadata.json`.
+- Result doc: `docs/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608.md`.
+- On all `10200` samples, clean winner counts among loss1/loss2/loss3 are `9392/773/35`; final attack winner counts are `753/357/9090`; attack-increase winner counts are `707/327/9166`.
+- On the `10000` generalization samples, clean winner counts among loss1/loss2/loss3 are `9195/770/35`; final attack winner counts are `729/355/8916`; attack-increase winner counts are `683/325/8992`.
+- On the `10000` generalization samples, `8889` samples (`88.89%`) have loss3 not being the clean winner while being the final-attack winner; `8965` samples (`89.65%`) have loss3 not being the clean winner while being the attack-increase winner.
+- On the `10000` generalization samples, `8817` samples (`88.17%`) have loss3 clean MSE worse than both loss1 and loss2 while final attack MSE is better than both; `8893` samples (`88.93%`) have loss3 clean MSE worse than both while attack increase is better than both.
+
+Inference:
+- The user's suspected phenomenon is present in the existing full per-sample artifact: loss3 often has worse clean/generalization prediction loss but smaller fixed-budget adversarial-tag loss and smaller attack growth.
+- This is not just a six-sample visualization artifact. The local full artifact supporting this is the 20-step full-52 P2Q2 run; a separate full 100-step all-sample run, if stored only remotely, should be audited separately.
+
+Remaining work:
+- If the intended reference is a different all-sample tag run, especially a full 100-step version, locate it in R2 or the older machine and repeat this same per-sample mismatch audit.
+
+
+## 2026-06-08 - Burgers full-tag sample count clarification
+
+Status: clarified the sample accounting for the Burgers round03 full-52 per-sample clean-vs-attack mismatch audit.
+
+Observed evidence:
+- Source manifest: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/manifest.json`.
+- Manifest total samples: `10200`, not `12000`.
+- Split counts: train `50`, test `150`, generalization `10000`.
+- Dataset count: `52`; the generalization split has `50` datasets with `200` samples each.
+- The train split in this full-tag artifact is `train_original_gaussian_corr0p03_first50`, so it contributes only `50` samples.
+- Winner-count sums checked from `forensics/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608/per_sample_mismatch_summary_by_split.csv`: the `generalization` clean/final/increase winner rows each sum to `10000`; the `all_10200` rows each sum to `10200`.
+- Result doc updated: `docs/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608.md`.
+
+Inference:
+- The earlier reported `9195/770/35`, `729/355/8916`, and `683/325/8992` rows are counts over the `10000` generalization samples only. They are not counts over `12000` samples.
+
+Remaining work:
+- If a different all-sample tag artifact with a larger train split exists, locate it separately and audit its manifest counts before comparing.
+
+
+## 2026-06-08 - Burgers full-tag generalization source provenance audit
+
+Status: completed a provenance audit for the full-tag/per-sample clean-vs-attack mismatch result to confirm whether its 50 generalization datasets were semantic/non-attack or train/test attack-generated.
+
+Observed evidence:
+- Full-tag manifest inspected: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/manifest.json`.
+- Manifest generalization sample count: `10000`; unique generalization dataset count: `50`.
+- Every generalization `source_path` in the full-tag manifest points under `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- Derived provenance directory: `forensics/burgers_fulltag_generalization_source_provenance_20260608/`.
+- Derived files: `summary.json` and `target_band_ns50_metadata_audit.csv`.
+- Metadata audit observed `root_file_count=50`, `all_generalization_paths_under_target_band_ns50=true`, and `attack_like_metadata_key_hits=[]`.
+- Tier counts in the audited root: `near_param_shift=8`, `mid_kernel_spectrum=2`, `far_range_pattern=2`, `target_loss_param_shift=23`, and `target_loss_kernel_shift=15`.
+- Spot-checked semantic root payloads contain `x`, `y`, and `metadata`, with shapes `(200, 1024)` and metadata keys such as `family`, `params`, `seed`, `similarity_tier`, `solver`, and `training_reference`.
+- Spot-checked problematic round03 root payload contains attack-generated metadata keys such as `attack_geometry`, `selection`, and `record`, which are absent from the target-band/ns50 root.
+- Result doc: `docs/burgers_fulltag_generalization_source_provenance_20260608.md`.
+- Updated per-sample mismatch doc: `docs/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608.md`.
+
+Inference:
+- The local full-tag mismatch result uses `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`, locally recorded as `target_band_ns50_current`, not the round03 loss3-selective attack-generated stress root.
+- If the user means this root by "Run2", then the answer is yes: this is a real non-attack semantic/target-band generalization root. If "Run2" refers to a different R2-only root, that root still needs separate recovery and audit.
+- Caveat: `target_band_ns50_current` is curated target-band semantic data, not an unbiased random external generalization benchmark.
+
+Remaining work:
+- Restore R2 access or provide the exact Run2 root if the user intends a different remote root, then repeat this provenance check.
+
+
+## 2026-06-08 - Darcy selected-50 generalization parameter distribution audit
+
+Status: summarized how the Darcy Flow selected-50 generalization roots were generated and what parameter/distribution differences exist across the selected datasets. This was manifest/code inspection and CSV summarization, not a new generation/training run.
+
+Observed evidence:
+- Source generator inspected: `tools/generate_darcy_generalization_candidates.py`.
+- Darcy sampler/solver inspected: `2D_Darcy_FNO2d/solvers/darcy_jax_solver.py`.
+- Pool generator inspected: `tools/generate_darcy_lossdrop50_pool_20260607.py`.
+- Lossdrop selected manifest: `generalization_datasets_darcy_lossdrop50_selected_20260607/candidate_manifest.csv`.
+- Lossdrop selected screen summary: `generalization_datasets_darcy_lossdrop50_selected_20260607/selection_summary.csv`.
+- Stock selected manifest: `generalization_datasets_darcy_stockgeneralization_20260608/candidate_manifest.csv`.
+- Stock selected screen summary: `generalization_datasets_darcy_stockgeneralization_20260608/selection_summary.csv`.
+- Derived tables: `forensics/darcy_generalization_50_parameter_distribution_20260608/`.
+- Result doc: `docs/darcy_generalization_50_parameter_distribution_20260608.md`.
+
+Key settings:
+- Generation samples latent GRF fields with `alpha=2.0`, `tau=3.0`, converts them with `a = low + (high-low) * sigmoid(beta * latent)`, solves Darcy with JAX CG at `solve_resolution=421`, and saves/downsamples to `resolution=85`.
+- Each selected dataset has `48` samples and includes `x`, `y`, `latent`, and `metadata`.
+
+Observed parameter distribution:
+- `lossdrop50_selected_20260607`: selected families are `low4_high10_beta8` count `18`, `low4_high10_beta10` count `16`, `low4_high10_beta12` count `9`, `low4_high10_beta14` count `4`, and `low4_high10p5_beta12` count `3`.
+- `stockgeneralization_20260608`: selected families are `low3_high12_beta6` count `2`, `low4_high10_beta8` count `18`, `low4_high10_beta10` count `15`, `low4_high10_beta12` count `6`, `low4_high10_beta14` count `3`, and `low4_high10p5_beta12` count `6`.
+
+Inference:
+- The selected 50 roots are mostly independent draws from a few soft-coefficient Darcy families, not 50 unrelated broad OOD distributions.
+- The main distribution differences are coefficient range (`low/high`) and soft-threshold sharpness (`soft_beta`); `alpha/tau` are fixed across selected datasets.
+- These roots are suitable for the intended loss-drop/self-training screen but should be described as narrow, screening-biased soft-coefficient suites rather than unbiased random external generalization benchmarks.
+
+Remaining work:
+- If a broad external Darcy benchmark is required, generate an unfiltered suite with wider variation in `alpha`, `tau`, binary/soft mode, coefficient range, and latent transforms.
+
+
+## 2026-06-08 - Burgers full-tag round-02 dataset clarification
+
+Status: clarified whether the reported `10200`-sample Burgers full-tag/per-sample clean-vs-attack mismatch audit used the user's intended `round_02` dataset root.
+
+Observed evidence:
+- Full-tag script inspected: `tools/run_burgers_round03_full_p2q2_finalonly_attack.py`; it sets `GEN_ROOT = generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- Full-tag manifest inspected: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/manifest.json`; all `10000` generalization samples point under `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- Local Burgers search roots inspected: `generalization_datasets_burgers_loss3_aligned_search/round_02/burgers` exists locally, but it was not used by this full-tag audit.
+- Local `generalization_datasets_burgers_loss3_selective_search` contains `round_03` and `round_03_candidate_pool`, not a local `round_02` subdirectory.
+- Result doc updated: `docs/burgers_fulltag_generalization_source_provenance_20260608.md`.
+
+Inference:
+- If the user means `generalization_datasets_burgers_loss3_aligned_search/round_02/burgers` by "round 2", then the reported `9195/770/35`, `729/355/8916`, and `683/325/8992` full-tag generalization winner counts did not use that round_02 root.
+- Those counts used the neutral/semantic target-band root `generalization_datasets_rmse_1p5_3x_all_ns50/burgers` with the round03-trained checkpoints.
+
+Remaining work:
+- If the user wants the same per-sample clean-vs-attack mismatch audit on `generalization_datasets_burgers_loss3_aligned_search/round_02/burgers`, run a separate full-tag evaluation or locate any existing round_02-specific tagged artifact.
+
+## 2026-06-08 - Burgers three generalization/self-training conclusion audit
+
+Status: completed a conclusion-alignment audit from existing local records. No new training, attack, or GPU run was launched.
+
+Observed evidence:
+- Result doc: `docs/burgers_three_generalization_rounds_conclusion_audit_20260608.md`.
+- Early round evidence read from `docs/burgers_generalization_round00_round01_direction_analysis_20260605.md` and `forensics/burgers_loss3_aligned_round01_report_20260604.md`.
+- Round03 selective stress evidence read from `docs/burgers_loss3_selective_round03_complete_report_20260605.md` and `docs/burgers_round03_attack_generated_generalization_validity_caveat_20260608.md`.
+- Neutral semantic clean/generalization evidence read from `docs/burgers_neutral_generalization_final_models_20260608.md`.
+- Neutral semantic fixed-budget robustness/tag evidence read from `docs/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608.md`.
+- Round02 status read from `docs/burgers_round03_characteristics_vs_round01_round02_train_test_20260605.md`: local round02 is partial/unofficial with only `10` `.pt` files and no formal evaluation record in that note.
+
+Key observed metrics:
+- Round00 gradient-cosine means to generated generalization were loss1/loss2/loss3 = `-0.0155 / 0.0374 / 0.0342`, so round00 was hard but not loss3-selective.
+- Round01 50-step generated-generalization gradient-cosine means were loss1/loss2/loss3 = `0.235689 / 0.166701 / 0.735448`, but final generated RMSE was loss1/loss2/loss3 = `0.009127 / 0.012053 / 0.009939`; loss3 had the best observed epoch (`0.007302` at epoch `463`) but not the best final checkpoint.
+- Round03 attack-generated stress-set epoch50 generated RMSE was loss1/loss2/loss3 = `0.055974 / 0.056011 / 0.045295`, and loss3 won all `50/50` generated datasets in the round03 per-dataset audit.
+- Neutral semantic target-band final-model generated RMSE was baseline/loss1/loss2/loss3 = `0.0179323 / 0.00176997 / 0.00291557 / 0.00672954`; loss1 won `50/50` clean neutral generalization datasets.
+- Neutral semantic full52 per-sample P2Q2 tag counts on `10000` generalization samples were clean winners loss1/loss2/loss3 = `9195 / 770 / 35`, final-attack winners = `729 / 355 / 8916`, and attack-increase winners = `683 / 325 / 8992`.
+
+Inference:
+- The user’s broad memory is directionally right that the conclusion changes by dataset, but it should be split by evaluation axis.
+- Neutral clean/generalization currently favors loss1, not loss3.
+- Neutral fixed-budget attacked robustness/tag currently favors loss3 strongly, despite worse clean loss.
+- Round03 supports a loss3-selective stress-set/generated-loss win, but because it is attack-generated and selection-biased it should not be reported as broad neutral OOD generalization.
+- Local round02 should not be treated as a completed formal second-round conclusion unless another full artifact is found.
+
+Remaining work:
+- If the user wants a strict three-round table for `round00`, official `round01`, and a rebuilt official `round02`, locate or rerun matching clean/generalization plus fixed-budget attack/tag evaluations for each root using the same checkpoints and wall-clock policy.
+- User-facing three-run mapping clarified on 2026-06-08: if first/second/third means broad semantic master `generalization_datasets/burgers`, target-band/ns50 semantic `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`, and problematic attack-generated `generalization_datasets_burgers_loss3_selective_search/round_03/burgers`, then the `10200`-sample full-tag result belongs to the **second** dataset.
+
+## 2026-06-08 - R2 Burgers generalization data lookup
+
+Status: completed a read-only lookup of the user-provided Cloudflare R2 selected-machine-sync prefix. Credentials were used only as temporary command environment variables and were not written to repository files.
+
+Observed evidence:
+- Result doc: docs/r2_burgers_generalization_data_lookup_20260608.md.
+- Remote prefix inspected: neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected.
+- R2 first semantic/generalization root generalization_datasets/burgers: 50 objects, 82205042 bytes.
+- R2 second semantic/target-band ns50 root generalization_datasets_rmse_1p5_3x_all_ns50/burgers: 50 objects, 82206074 bytes.
+- R2 third loss3-selective stress root generalization_datasets_burgers_loss3_selective_search/round_03/burgers: 50 objects, 20744250 bytes.
+- R2 partial round_02 root generalization_datasets_burgers_loss3_aligned_search/round_02/burgers: 10 objects, 4139730 bytes.
+- R2 full-tag source artifact forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607: 21 objects, 160859222 bytes, with manifest.json, summary.json, summary_by_model_dataset.csv, and per-model NPZ outputs.
+- R2 round03 per-dataset advantage artifact forensics/burgers_loss3_selective_round03_per_dataset_loss3_advantage_20260605: 4 objects, 57673 bytes.
+- R2 second-root full generalization eval generalization_eval_rmse_1p5_3x_all_ns50_full contains GENERALIZATION_EVALUATION.md, metrics JSON/CSV files, similarity JSON/CSV files, and plot PNGs.
+
+Observed missing/not uploaded under this selected prefix at lookup time:
+- forensics/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608: 0 objects.
+- forensics/burgers_neutral_generalization_final_models_20260608: 0 objects.
+- Newly written local docs such as docs/burgers_three_generalization_rounds_conclusion_audit_20260608.md were not observed in the remote docs listing during this lookup.
+
+Inference:
+- Under the user's first/second/third dataset naming, the 10200-sample full-tag source artifact on R2 belongs to the second semantic/target-band ns50 generalization root, not the third attack-generated root.
+- The third root is present on R2 as the loss3-selective attack-generated/stress dataset with 50 objects.
+- Remote round_02 is only partial in the inspected selected prefix and should not be treated as a complete 50-dataset run.
+
+Remaining work:
+- If the local 2026-06-08 derived mismatch/provenance docs and CSVs should be available remotely, sync them to R2 explicitly.
+- If the user intends a different R2 prefix containing another completed round_02 or full 100-step tag artifact, inspect that prefix separately.
+
