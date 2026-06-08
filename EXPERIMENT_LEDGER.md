@@ -1,3 +1,44 @@
+
+## 2026-06-08 - Darcy Flow loss1/loss2/physics time-matched self-training pipeline
+
+Status: code implemented; timing probes completed; official loss1/loss2 runs launched and monitored for about ten minutes; physics is queued behind loss1/loss2.
+
+Observed source files:
+
+- `tools/adversarial_training.py`
+- `tools/run_darcy_lossdrop50_time_matched_objective_20260608.sh`
+- `tools/summarize_darcy_time_matched_runs_20260608.py`
+
+Observed timing runs:
+
+- `adversarial_training_runs/darcy_lossdrop50_loss1_timing5ep_20260608`: 5 epochs, 39.21667575277388 seconds, peak allocated 10131.2085 MB.
+- `adversarial_training_runs/darcy_lossdrop50_loss2_timing5ep_20260608`: 5 epochs, 39.598233016207814 seconds, peak allocated 9328.6514 MB.
+- `adversarial_training_runs/darcy_lossdrop50_physics_timing5ep_20260608`: 5 epochs, 34.802722845226526 seconds, peak allocated 9331.3574 MB.
+
+Inference from timing:
+
+- Matching the existing Darcy loss3 elapsed time `4966.925741452724` seconds implies roughly loss1 633 epochs, loss2 627 epochs, and physics 714 epochs, but the official jobs are controlled by `--max-wall-seconds` rather than a fixed epoch count.
+- Three concurrent jobs are likely unsafe on V100 32GB; loss1+loss2 concurrency stabilized at about 24684 MiB used, so physics was queued behind them.
+
+Observed official run state after about ten minutes:
+
+- tmux sessions: `darcy_loss1_timematch_20260608`, `darcy_loss2_timematch_20260608`, and queued `darcy_physics_timematch_waiter_20260608`.
+- loss1 run dir: `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608`; at 2026-06-08T02:16:49Z last eval epoch 41, step 164.
+- loss2 run dir: `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608`; at 2026-06-08T02:16:49Z last eval epoch 27, step 108, last train step 111.
+- GPU status at 2026-06-08T02:16:49Z: 24684 MiB / 32768 MiB, 100% utilization, 61C.
+- No OOM, no session exit, and no traceback observed during the monitoring window.
+
+Dedicated note:
+
+- `docs/darcy_time_matched_loss1_loss2_physics_pipeline_20260608.md`
+
+Remaining work:
+
+- Let loss1/loss2 finish; the physics waiter should then start the physics run.
+- After completion, run combined postprocess and upload generated artifacts to R2. The current environment had no `/tmp/neural_operator_r2_auto_rclone.conf` and no `R2_*` env variables, so R2 upload was not armed for the running jobs in this turn.
+- Keep generated CSV/NPZ/checkpoint/PNG artifacts out of Git; commit/push lightweight source and Markdown records to GitHub.
+- Local Git commit `a8ed7db` was created for the lightweight source/Markdown records. `git push origin vast-ai` failed in this shell because no GitHub credential helper/token is available.
+
 ## 2026-06-07 - Burgers Loss1 8000 plot curve verification
 
 Status: explicitly verified that regenerated Burgers Loss1 plots include the 5000-to-8000 continuation segment rather than stopping at epoch5000.

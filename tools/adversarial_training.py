@@ -1072,6 +1072,187 @@ def burgers_attack_loss_metadata(objective: str) -> dict[str, Any]:
     }
 
 
+def darcy_attack_loss_objective(cfg: dict[str, Any]) -> str:
+    objective = str(cfg.get("attack_loss_objective", "loss3")).lower().strip()
+    aliases = {
+        "1": "loss1",
+        "l1": "loss1",
+        "loss_1": "loss1",
+        "2": "loss2",
+        "l2": "loss2",
+        "loss_2": "loss2",
+        "3": "loss3",
+        "l3": "loss3",
+        "loss_3": "loss3",
+        "4": "physics",
+        "l4": "physics",
+        "loss4": "physics",
+        "loss_4": "physics",
+        "loss4_physics": "physics",
+        "physics_loss": "physics",
+        "pde": "physics",
+    }
+    objective = aliases.get(objective, objective)
+    if objective not in {"loss1", "loss2", "loss3", "physics"}:
+        raise ValueError(
+            f"unknown Darcy attack_loss_objective={objective!r}; expected loss1/loss2/loss3/physics"
+        )
+    return objective
+
+
+def darcy_attack_loss_metadata(objective: str, cfg: dict[str, Any]) -> dict[str, Any]:
+    if objective == "loss1":
+        return {
+            "attack_loss_objective": "loss1",
+            "attack_objective_definition": "MSE(model(a_adv), model(a_clean).detach())",
+            "attack_uses_solver_forward": 0,
+            "attack_uses_solver_backward": 0,
+            "full_solver_gradient": False,
+            "attack_target_source": "fixed clean model output; no solver in attack",
+        }
+    if objective == "loss2":
+        return {
+            "attack_loss_objective": "loss2",
+            "attack_objective_definition": "MSE(model(a_adv), solver(a_clean).detach())",
+            "attack_uses_solver_forward": 1,
+            "attack_uses_solver_backward": 0,
+            "full_solver_gradient": False,
+            "attack_target_source": "fixed clean solver output; solver forward only in attack",
+        }
+    if objective == "physics":
+        metric = str(cfg.get("darcy_physics_metric", "rel_l2"))
+        bc_weight = float(cfg.get("darcy_physics_bc_weight", 1.0))
+        return {
+            "attack_loss_objective": "physics",
+            "attack_objective_definition": (
+                f"Darcy physics residual + {bc_weight:g} * boundary penalty, metric={metric}"
+            ),
+            "attack_uses_solver_forward": 0,
+            "attack_uses_solver_backward": 0,
+            "full_solver_gradient": False,
+            "attack_target_source": "PDE residual of model(a_adv); no numerical solver in attack",
+            "darcy_physics_metric": metric,
+            "darcy_physics_bc_weight": bc_weight,
+        }
+    return {
+        "attack_loss_objective": "loss3",
+        "attack_objective_definition": "MSE(model(a_adv), solver(a_adv))",
+        "attack_uses_solver_forward": 1,
+        "attack_uses_solver_backward": int(bool(solver_target_grad_enabled(cfg))),
+        "full_solver_gradient": bool(solver_target_grad_enabled(cfg)),
+        "attack_target_source": "attacked solver output; solver forward/backward in attack",
+    }
+
+
+def darcy_spatial_field(x: torch.Tensor) -> torch.Tensor:
+    if x.ndim == 4 and x.shape[-1] == 1:
+        return x[..., 0]
+    if x.ndim == 3:
+        return x
+    raise ValueError(f"Darcy field expects shape (B,H,W) or (B,H,W,1), got {tuple(x.shape)}")
+
+
+def darcy_matvec_torch(a: torch.Tensor, u_full: torch.Tensor) -> torch.Tensor:
+    """Apply the finite-difference Darcy operator used by the JAX solver."""
+    a = darcy_spatial_field(a)
+    u_full = darcy_spatial_field(u_full)
+    n = int(a.shape[-1])
+    h = 1.0 / float(n - 1)
+    center = u_full[:, 1:-1, 1:-1]
+    a_center = a[:, 1:-1, 1:-1]
+    a_e = 0.5 * (a_center + a[:, 2:, 1:-1])
+    a_w = 0.5 * (a_center + a[:, :-2, 1:-1])
+    a_n = 0.5 * (a_center + a[:, 1:-1, 2:])
+    a_s = 0.5 * (a_center + a[:, 1:-1, :-2])
+    out = (
+        (a_e + a_w + a_n + a_s) * center
+        - a_e * u_full[:, 2:, 1:-1]
+        - a_w * u_full[:, :-2, 1:-1]
+        - a_n * u_full[:, 1:-1, 2:]
+        - a_s * u_full[:, 1:-1, :-2]
+    )
+    return out / (h * h)
+
+
+def darcy_boundary_values(u: torch.Tensor) -> torch.Tensor:
+    u = darcy_spatial_field(u)
+    return torch.cat([u[:, 0, :], u[:, -1, :], u[:, 1:-1, 0], u[:, 1:-1, -1]], dim=1)
+
+
+def darcy_per_sample_physics_components(
+    a: torch.Tensor,
+    pred_u: torch.Tensor,
+    *,
+    forcing_value: float = 1.0,
+    physics_metric: str = "rel_l2",
+) -> tuple[torch.Tensor, torch.Tensor]:
+    op_u = darcy_matvec_torch(a, pred_u)
+    rhs = torch.ones_like(op_u) * float(forcing_value)
+    residual = op_u - rhs
+    residual_flat = residual.reshape(residual.shape[0], -1)
+    if physics_metric == "rel_l2":
+        rhs_flat = rhs.reshape(rhs.shape[0], -1)
+        pde_loss = torch.linalg.vector_norm(residual_flat, ord=2, dim=1) / torch.linalg.vector_norm(
+            rhs_flat, ord=2, dim=1
+        ).clamp_min(1e-12)
+    elif physics_metric == "mse":
+        pde_loss = torch.mean(residual_flat.square(), dim=1)
+    else:
+        raise ValueError(f"unknown Darcy physics metric {physics_metric!r}; expected rel_l2/mse")
+
+    boundary = darcy_boundary_values(pred_u)
+    if physics_metric == "rel_l2":
+        bc_loss = torch.linalg.vector_norm(boundary, ord=2, dim=1) / math.sqrt(max(1, boundary.shape[1]))
+    else:
+        bc_loss = torch.mean(boundary.square(), dim=1)
+    return pde_loss, bc_loss
+
+
+def darcy_per_sample_physics_loss(a: torch.Tensor, pred_u: torch.Tensor, cfg: dict[str, Any]) -> torch.Tensor:
+    pde_loss, bc_loss = darcy_per_sample_physics_components(
+        a,
+        pred_u,
+        forcing_value=float(cfg.get("darcy_physics_forcing_value", 1.0)),
+        physics_metric=str(cfg.get("darcy_physics_metric", "rel_l2")),
+    )
+    return pde_loss + float(cfg.get("darcy_physics_bc_weight", 1.0)) * bc_loss
+
+
+def darcy_attack_objective_loss(
+    model,
+    x_clean: torch.Tensor,
+    x_adv: torch.Tensor,
+    y_clean: torch.Tensor,
+    cfg: dict[str, Any],
+    *,
+    allow_solver_backward: bool,
+) -> tuple[torch.Tensor, torch.Tensor, str, dict[str, Any]]:
+    objective = darcy_attack_loss_objective(cfg)
+    pred_adv = model(x_adv)
+    if objective == "loss1":
+        with torch.no_grad():
+            target = model(x_clean).detach()
+        losses = per_sample_finite_mse(pred_adv, target)
+        return losses.mean(), losses, objective, darcy_attack_loss_metadata(objective, cfg)
+    if objective == "loss2":
+        target = solver_target_for_model_input("darcy", x_clean, y_clean, cfg, allow_target_grad=False).detach()
+        losses = per_sample_finite_mse(pred_adv, target)
+        return losses.mean(), losses, objective, darcy_attack_loss_metadata(objective, cfg)
+    if objective == "physics":
+        losses = darcy_per_sample_physics_loss(x_adv, pred_adv, cfg)
+        return losses.mean(), losses, objective, darcy_attack_loss_metadata(objective, cfg)
+
+    target = solver_target_for_model_input(
+        "darcy",
+        x_adv,
+        y_clean,
+        cfg,
+        allow_target_grad=allow_solver_backward and solver_target_grad_enabled(cfg),
+    )
+    losses = per_sample_finite_mse(pred_adv, target)
+    return losses.mean(), losses, objective, darcy_attack_loss_metadata(objective, cfg)
+
+
 def attack_objective_target(
     model,
     task: str,
@@ -1093,6 +1274,18 @@ def attack_objective_target(
     solver_target_for_model_input(..., x_adv, allow_target_grad=False), because
     these objectives are attack-generation choices.
     """
+    if task == "darcy":
+        objective = darcy_attack_loss_objective(cfg)
+        if objective == "loss1":
+            with torch.no_grad():
+                target = model(xb).detach()
+            return target, objective, darcy_attack_loss_metadata(objective, cfg)
+        if objective == "loss2":
+            target = solver_target_for_model_input(task, xb, yb, cfg, allow_target_grad=False).detach()
+            return target, objective, darcy_attack_loss_metadata(objective, cfg)
+        if objective == "physics":
+            raise ValueError("Darcy physics attack objective is not target-MSE based")
+
     if task != "burgers":
         target = solver_target_for_model_input(
             task,
@@ -1139,6 +1332,25 @@ def attack_objective_losses_for_probe(
     cfg: dict[str, Any],
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Per-sample clean/attacked losses using the configured attack objective."""
+    if task == "darcy":
+        _, clean_losses, _, _ = darcy_attack_objective_loss(
+            model,
+            xb_selected,
+            xb_selected,
+            yb_selected,
+            cfg,
+            allow_solver_backward=False,
+        )
+        _, adv_losses, _, _ = darcy_attack_objective_loss(
+            model,
+            xb_selected,
+            x_adv_selected,
+            yb_selected,
+            cfg,
+            allow_solver_backward=False,
+        )
+        return clean_losses, adv_losses
+
     if task == "burgers":
         objective = burgers_attack_loss_objective(cfg)
         if objective == "loss1":
@@ -1361,6 +1573,32 @@ def binary_darcy_replace_attack(
         jitter = torch.empty((b,), device=x0.device, dtype=x0.dtype).uniform_(jitter_low_f, jitter_high_f)
     budgets = torch.clamp((float(epsilon_fraction) * jitter * n_pix).round().long(), min=1, max=n_pix)
     used_steps = max(1, int(steps))
+    objective = darcy_attack_loss_objective(cfg)
+    attack_objective_info = darcy_attack_loss_metadata(objective, cfg)
+
+    loss1_random_start_enabled = bool(cfg.get("darcy_loss1_random_start", True)) and objective == "loss1"
+    loss1_random_start_fraction = float(cfg.get("darcy_loss1_random_start_fraction", 1.0))
+    loss1_random_start_flips_total = 0
+    if loss1_random_start_enabled and loss1_random_start_fraction > 0:
+        random_budgets = torch.clamp(
+            (budgets.float() * loss1_random_start_fraction).round().long(),
+            min=1,
+            max=n_pix,
+        )
+        flat_x0 = x0.reshape(b, -1)
+        lo0 = flat_x0.min(dim=1).values.reshape(b, 1)
+        hi0 = flat_x0.max(dim=1).values.reshape(b, 1)
+        midpoint0 = (lo0 + hi0) * 0.5
+        other0 = torch.where(flat_x0 > midpoint0, lo0.expand_as(flat_x0), hi0.expand_as(flat_x0))
+        flat_adv0 = flat_x0.clone()
+        for i in range(b):
+            k0 = int(random_budgets[i].item())
+            if k0 <= 0:
+                continue
+            chosen0 = torch.randperm(n_pix, device=x0.device)[:k0]
+            flat_adv0[i, chosen0] = other0[i, chosen0]
+            loss1_random_start_flips_total += k0
+        x_adv = flat_adv0.reshape_as(x0).detach()
 
     first_loss = float("nan")
     positive_score_frac = float("nan")
@@ -1370,22 +1608,29 @@ def binary_darcy_replace_attack(
 
     try:
         with torch.no_grad():
-            clean_target = solver_target_for_model_input("darcy", x0, yb, cfg, allow_target_grad=False)
+            clean_loss, clean_loss_samples, _, attack_objective_info = darcy_attack_objective_loss(
+                model,
+                x0,
+                x0,
+                yb,
+                cfg,
+                allow_solver_backward=False,
+            )
+            clean_solver_target = solver_target_for_model_input("darcy", x0, yb, cfg, allow_target_grad=False).detach()
             clean_pred = model(x0)
-            clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
-            clean_loss = finite_mse(clean_pred, clean_target)
+            clean_solver_loss_samples = per_sample_finite_mse(clean_pred, clean_solver_target)
+            clean_solver_loss = finite_mse(clean_pred, clean_solver_target)
 
         for step in range(used_steps):
             x_score = x_adv.detach().clone().requires_grad_(True)
-            pred = model(x_score)
-            score_target = solver_target_for_model_input(
-                "darcy",
+            loss, _, attack_objective, attack_objective_info = darcy_attack_objective_loss(
+                model,
+                x0,
                 x_score,
                 yb,
                 cfg,
-                allow_target_grad=solver_target_grad_enabled(cfg),
+                allow_solver_backward=True,
             )
-            loss = finite_mse(pred, score_target)
             if step == 0:
                 first_loss = float(loss.detach().cpu())
             grad = torch.autograd.grad(loss, x_score, only_inputs=True)[0].detach()
@@ -1419,9 +1664,17 @@ def binary_darcy_replace_attack(
 
         with torch.no_grad():
             y_train = solver_target_for_model_input("darcy", x_adv, yb, cfg, allow_target_grad=False).detach()
+            adv_loss, adv_loss_samples, attack_objective, attack_objective_info = darcy_attack_objective_loss(
+                model,
+                x0,
+                x_adv,
+                yb,
+                cfg,
+                allow_solver_backward=False,
+            )
             adv_pred = model(x_adv)
-            adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
-            adv_loss = finite_mse(adv_pred, y_train)
+            adv_solver_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+            adv_solver_loss = finite_mse(adv_pred, y_train)
             delta = x_adv - x0
             changed = delta.reshape(b, -1).abs() > 1e-12
             flip_fraction = float(changed.float().mean().detach().cpu())
@@ -1435,8 +1688,9 @@ def binary_darcy_replace_attack(
 
     info = {
         "label_mode": str(cfg.get("label_mode", "solver")),
-        "target_source": str(cfg.get("label_mode", "solver")),
-        "full_solver_gradient": True,
+        "target_source": "solver_x_adv_training_target" if str(cfg.get("label_mode", "solver")) == "solver" else str(cfg.get("label_mode", "solver")),
+        "training_target_source": "solver(a_adv).detach() for optimizer update" if str(cfg.get("label_mode", "solver")) == "solver" else str(cfg.get("label_mode", "solver")),
+        **attack_objective_info,
         "attack_type": "binary_replace",
         "attack_method": "binary_steepest_replace",
         "attack_steps": used_steps,
@@ -1448,6 +1702,9 @@ def binary_darcy_replace_attack(
         "adv_loss_after_random_start": first_loss,
         "adv_loss_after_attack": float(adv_loss.detach().cpu()),
         "attack_loss_gain": float((adv_loss - clean_loss).detach().cpu()),
+        "clean_solver_mse_before_attack": float(clean_solver_loss.detach().cpu()),
+        "adv_solver_mse_after_attack": float(adv_solver_loss.detach().cpu()),
+        "solver_mse_attack_gain": float((adv_solver_loss - clean_solver_loss).detach().cpu()),
         "grad_abs_mean_last": float(grad.abs().mean().detach().cpu()),
         "boundary_ratio_mean": flip_fraction / max(float(epsilon_fraction), 1e-12),
         "delta_linf_mean": float(delta.abs().reshape(b, -1).max(dim=1).values.mean().detach().cpu()),
@@ -1456,6 +1713,10 @@ def binary_darcy_replace_attack(
         "darcy_flip_fraction": flip_fraction,
         "darcy_positive_score_fraction": positive_score_frac,
         "darcy_last_step_flips_total": flips_total,
+        "darcy_loss1_random_start_enabled": int(loss1_random_start_enabled),
+        "darcy_loss1_random_start_fraction": loss1_random_start_fraction,
+        "darcy_loss1_random_start_flips_total": loss1_random_start_flips_total,
+        "darcy_loss1_random_start_flips_mean": loss1_random_start_flips_total / max(1, b),
     }
     info.update(tensor_stats("target", y_train))
     epsilon_fraction_per_sample = budgets.float() / float(n_pix)
@@ -1790,6 +2051,13 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
         cfg["attack_method"] = str(override_attack_method)
     if task == "burgers":
         cfg["attack_loss_objective"] = str(getattr(args, "burgers_attack_loss_objective", "loss3"))
+    if task == "darcy":
+        cfg["attack_loss_objective"] = str(getattr(args, "darcy_attack_loss_objective", "loss3"))
+        cfg["darcy_physics_metric"] = str(getattr(args, "darcy_physics_metric", "rel_l2"))
+        cfg["darcy_physics_bc_weight"] = float(getattr(args, "darcy_physics_bc_weight", 1.0))
+        cfg["darcy_physics_forcing_value"] = float(getattr(args, "darcy_physics_forcing_value", 1.0))
+        cfg["darcy_loss1_random_start"] = bool(getattr(args, "darcy_loss1_random_start", True))
+        cfg["darcy_loss1_random_start_fraction"] = float(getattr(args, "darcy_loss1_random_start_fraction", 1.0))
     override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
     if override_random_start_fraction is not None:
         cfg["random_start_fraction"] = float(override_random_start_fraction)
@@ -1958,6 +2226,9 @@ def write_attack_epoch_summary(path: Path, task: str, epoch: int, global_step: i
     clean_mean = _weighted_mean(rows, "clean_loss_before_attack")
     adv_mean = _weighted_mean(rows, "adv_loss_after_attack")
     gain_mean = adv_mean - clean_mean if math.isfinite(clean_mean) and math.isfinite(adv_mean) else float("nan")
+    clean_solver_mse_mean = _weighted_mean(rows, "clean_solver_mse_before_attack")
+    adv_solver_mse_mean = _weighted_mean(rows, "adv_solver_mse_after_attack")
+    solver_mse_gain_mean = adv_solver_mse_mean - clean_solver_mse_mean if math.isfinite(clean_solver_mse_mean) and math.isfinite(adv_solver_mse_mean) else float("nan")
     attack_wall_sec_total = sum(_finite_float(row.get("attack_wall_sec")) for row in rows if math.isfinite(_finite_float(row.get("attack_wall_sec"))))
     row = {
         "task": task,
@@ -1973,6 +2244,9 @@ def write_attack_epoch_summary(path: Path, task: str, epoch: int, global_step: i
         "adv_loss_after_attack_mean": adv_mean,
         "attack_loss_gain_mean": gain_mean,
         "attack_loss_gain_relative_mean": (gain_mean / abs(clean_mean)) if math.isfinite(gain_mean) and math.isfinite(clean_mean) and abs(clean_mean) > 1e-20 else float("nan"),
+        "clean_solver_mse_before_attack_mean": clean_solver_mse_mean,
+        "adv_solver_mse_after_attack_mean": adv_solver_mse_mean,
+        "solver_mse_attack_gain_mean": solver_mse_gain_mean,
         "train_loss_used_for_optimizer_updates_mean": _weighted_mean(rows, "train_loss_on_adv_mean"),
         "epsilon_mean": _weighted_mean(rows, "epsilon_mean"),
         "epsilon_min_observed": min((_finite_float(row.get("epsilon_min")) for row in rows), default=float("nan")),
@@ -1984,6 +2258,7 @@ def write_attack_epoch_summary(path: Path, task: str, epoch: int, global_step: i
         "delta_l2_rms_mean": _weighted_mean(rows, "delta_l2_rms_mean"),
         "boundary_ratio_mean": _weighted_mean(rows, "boundary_ratio_mean"),
         "grad_abs_mean_last_mean": _weighted_mean(rows, "grad_abs_mean_last"),
+        "darcy_loss1_random_start_flips_mean": _weighted_mean(rows, "darcy_loss1_random_start_flips_mean"),
         "attack_wall_sec_total": attack_wall_sec_total,
     }
     row["attack_samples_per_sec"] = row["attack_samples"] / max(row["attack_wall_sec_total"], 1e-12)
@@ -2350,6 +2625,7 @@ def train_one_task(
             "burgers_solver_remat_chunk_steps": args.burgers_solver_remat_chunk_steps,
             "ns2d_solver_remat": args.ns2d_solver_remat,
             "ns2d_solver_remat_chunk_steps": args.ns2d_solver_remat_chunk_steps,
+            "max_wall_seconds": args.max_wall_seconds,
             "full_solver_gradient": True,
         }
     )
@@ -2386,6 +2662,13 @@ def train_one_task(
         task_cfg["attack_method"] = str(override_attack_method)
     if task == "burgers":
         task_cfg["attack_loss_objective"] = str(getattr(args, "burgers_attack_loss_objective", "loss3"))
+    if task == "darcy":
+        task_cfg["attack_loss_objective"] = str(getattr(args, "darcy_attack_loss_objective", "loss3"))
+        task_cfg["darcy_physics_metric"] = str(getattr(args, "darcy_physics_metric", "rel_l2"))
+        task_cfg["darcy_physics_bc_weight"] = float(getattr(args, "darcy_physics_bc_weight", 1.0))
+        task_cfg["darcy_physics_forcing_value"] = float(getattr(args, "darcy_physics_forcing_value", 1.0))
+        task_cfg["darcy_loss1_random_start"] = bool(getattr(args, "darcy_loss1_random_start", True))
+        task_cfg["darcy_loss1_random_start_fraction"] = float(getattr(args, "darcy_loss1_random_start_fraction", 1.0))
     override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
     if override_random_start_fraction is not None:
         task_cfg["random_start_fraction"] = float(override_random_start_fraction)
@@ -2468,6 +2751,8 @@ def train_one_task(
     else:
         batches_per_epoch = batches_per_epoch_nominal
     local_epochs = int(task_cfg["epochs"])
+    max_wall_seconds = task_cfg.get("max_wall_seconds")
+    max_wall_seconds = None if max_wall_seconds is None else float(max_wall_seconds)
     total_epochs_for_progress = resume_epoch_offset + local_epochs
     total_steps = total_epochs_for_progress * max(1, batches_per_epoch)
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
@@ -2573,6 +2858,9 @@ def train_one_task(
     last_checkpoint_epoch = -1
     pending_wall_checkpoints = list(checkpoint_wall_seconds)
     saved_wall_checkpoints: list[dict[str, Any]] = []
+    completed_local_epochs = 0
+    stop_reason = "completed_configured_epochs"
+    wall_stop_seconds = float("nan")
 
     for local_epoch in range(1, local_epochs + 1):
         epoch = resume_epoch_offset + local_epoch
@@ -2697,7 +2985,7 @@ def train_one_task(
             }
             row.update(attack_info)
             write_csv_row(train_csv, row)
-            write_csv_row(attack_csv, {k: row[k] for k in row if k.startswith("attack") or k.startswith("epsilon") or k.startswith("alpha") or k.startswith("delta") or k.startswith("darcy") or k.startswith("target") or k.startswith("solver") or k.startswith("x_train") or k in {"task", "epoch", "global_step", "label_mode", "boundary_ratio_mean", "clean_loss_before_attack", "adv_loss_after_attack"}})
+            write_csv_row(attack_csv, {k: row[k] for k in row if k.startswith("attack") or k.startswith("epsilon") or k.startswith("alpha") or k.startswith("delta") or k.startswith("darcy") or k.startswith("target") or k.startswith("solver") or k.startswith("x_train") or k in {"task", "epoch", "global_step", "label_mode", "boundary_ratio_mean", "clean_loss_before_attack", "adv_loss_after_attack", "clean_solver_mse_before_attack", "adv_solver_mse_after_attack"}})
             write_csv_row(memory_csv, {"task": task, "epoch": epoch, "global_step": global_step, **memory_stats(device)})
             train_rows.append(row)
             epoch_attack_rows.append(row)
@@ -2813,8 +3101,26 @@ def train_one_task(
             }
             write_csv_row(out_dir / "checkpoints.csv", wall_row)
             saved_wall_checkpoints.append(wall_row)
+        completed_local_epochs = local_epoch
+        if max_wall_seconds is not None and wall_elapsed_after_eval >= max_wall_seconds:
+            stop_reason = "max_wall_seconds_reached"
+            wall_stop_seconds = wall_elapsed_after_eval
+            write_csv_row(
+                out_dir / "wall_stop.csv",
+                {
+                    "task": task,
+                    "epoch": epoch,
+                    "global_step": global_step,
+                    "progress_fraction": epoch_progress,
+                    "max_wall_seconds": max_wall_seconds,
+                    "wall_elapsed_seconds": wall_elapsed_after_eval,
+                    "eval_wall_sec": seconds,
+                    "stop_reason": stop_reason,
+                },
+            )
+            break
 
-    final_epoch = resume_epoch_offset + local_epochs
+    final_epoch = resume_epoch_offset + completed_local_epochs
     if last_checkpoint_path is not None and last_checkpoint_epoch == final_epoch:
         final_ckpt = last_checkpoint_path
     else:
@@ -2824,7 +3130,7 @@ def train_one_task(
         task,
         train_rows,
         eval_seconds,
-        full_epochs=DEFAULTS[task].epochs if args.epochs is None else int(args.epochs),
+        full_epochs=completed_local_epochs if completed_local_epochs > 0 else (DEFAULTS[task].epochs if args.epochs is None else int(args.epochs)),
         full_train_samples=n_train,
         batch_size=batch_size,
         optimizer_batch_size=optimizer_batch_size,
@@ -2841,8 +3147,13 @@ def train_one_task(
         "effective_train_samples_per_full_attack_batch": (2 * batch_size if str(task_cfg.get("training_data_mode", "adv-only")) == "clean-plus-adv" else batch_size),
         "optimizer_batch_size": optimizer_batch_size,
         "optimizer_steps_per_epoch": optimizer_steps_per_epoch,
-        "total_optimizer_steps": total_optimizer_steps,
-        "epochs": local_epochs,
+        "total_optimizer_steps": optimizer_global_step,
+        "total_optimizer_steps_planned": total_optimizer_steps,
+        "epochs": completed_local_epochs,
+        "epochs_configured": local_epochs,
+        "stop_reason": stop_reason,
+        "max_wall_seconds": max_wall_seconds,
+        "wall_stop_seconds": wall_stop_seconds,
         "resume_epoch_offset": resume_epoch_offset,
         "resume_global_step_offset": resume_global_step_offset,
         "total_epochs_for_progress": total_epochs_for_progress,
@@ -2896,6 +3207,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Legacy fallback: save checkpoints every this fraction of total training progress. Used only when --checkpoint-every-epochs <= 0.")
     parser.add_argument("--checkpoint-wall-seconds", default=None, help="Comma-separated elapsed wall-clock seconds. After an epoch/eval crosses each target, save an extra checkpoint with checkpoint_reason=wall_clock.")
     parser.add_argument("--checkpoint-wall-hours", default=None, help="Comma-separated elapsed wall-clock hours; converted to --checkpoint-wall-seconds targets.")
+    parser.add_argument("--max-wall-seconds", type=float, default=None, help="Stop gracefully after the completed epoch/evaluation that first reaches this training wall-clock budget.")
     parser.add_argument("--resume-epoch-offset", type=int, default=0, help="Epoch number represented by the loaded initial checkpoint; resumed epochs are logged after this offset.")
     parser.add_argument("--resume-global-step-offset", type=int, default=0, help="Global train-step number represented by the loaded initial checkpoint.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
@@ -2938,6 +3250,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--burgers-random-start-fraction", type=float, default=None, help="Optional Burgers attack random-start radius as a fraction of epsilon. Default keeps the task default; loss1 has zero gradient at exactly delta=0, so a tiny value is useful for a dedicated loss1 run.")
     parser.add_argument("--burgers-require-p2q2", action="store_true", help="Require Burgers continuous attack geometry to be p=2,q=2; rejects *_linf methods before training starts.")
     parser.add_argument("--darcy-attack-method", choices=["binary_steepest_replace"], default=None)
+    parser.add_argument("--darcy-attack-loss-objective", choices=["loss1", "loss2", "loss3", "physics", "loss4", "loss4_physics"], default="loss3", help="Darcy binary attack objective. Training target remains solver(a_adv) for solver-label self-training.")
+    parser.add_argument("--darcy-physics-metric", choices=["rel_l2", "mse"], default="rel_l2", help="Physics residual metric for --darcy-attack-loss-objective physics/loss4.")
+    parser.add_argument("--darcy-physics-bc-weight", type=float, default=1.0, help="Boundary-condition penalty weight for Darcy physics loss.")
+    parser.add_argument("--darcy-physics-forcing-value", type=float, default=1.0, help="Right-hand-side forcing value for Darcy physics residual.")
+    parser.add_argument("--darcy-loss1-random-start", action=argparse.BooleanOptionalAction, default=True, help="For Darcy loss1, start from a random binary flip mask so the zero-distance loss1 gradient does not stall.")
+    parser.add_argument("--darcy-loss1-random-start-fraction", type=float, default=1.0, help="Fraction of the per-sample flip budget used for the Darcy loss1 random initial mask.")
     parser.add_argument("--ns2d-attack-method", choices=["fast_replace_linf", "fast_add_linf"], default=None)
     parser.add_argument("--burgers-epsilon-fraction", type=float, default=None)
     parser.add_argument("--darcy-epsilon-fraction", type=float, default=None)
@@ -3018,6 +3336,17 @@ def main() -> None:
         "checkpoint_every_epochs": int(args.checkpoint_every_epochs),
         "checkpoint_every_fraction": args.checkpoint_every_fraction,
         "checkpoint_wall_seconds": wall_clock_checkpoint_targets(args.checkpoint_wall_seconds, args.checkpoint_wall_hours),
+        "max_wall_seconds": args.max_wall_seconds,
+        "darcy_attack_loss_objective": args.darcy_attack_loss_objective,
+        "darcy_physics_loss": {
+            "metric": args.darcy_physics_metric,
+            "bc_weight": args.darcy_physics_bc_weight,
+            "forcing_value": args.darcy_physics_forcing_value,
+        },
+        "darcy_loss1_random_start": {
+            "enabled": args.darcy_loss1_random_start,
+            "fraction": args.darcy_loss1_random_start_fraction,
+        },
         "attack_probe": {
             "samples": int(args.attack_probe_samples),
             "indices": args.attack_probe_indices,
@@ -3072,6 +3401,8 @@ def main() -> None:
         f"- Label mode: `{args.label_mode}`",
         f"- Training data mode: `{args.training_data_mode}`",
         f"- Burgers attack loss objective: `{args.burgers_attack_loss_objective}`",
+        f"- Darcy attack loss objective: `{args.darcy_attack_loss_objective}`",
+        f"- Max wall seconds: `{args.max_wall_seconds}`",
         "",
         "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
         "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
@@ -3079,7 +3410,7 @@ def main() -> None:
         "",
         "Default attack policy:",
         "- Burgers: p=2/q=2 RMS-L2 fast-replace attack in the corrected pipeline. The attack objective can be loss1, loss2, or loss3: loss1 uses no solver; loss2 uses fixed clean solver output without solver backward; loss3 uses attacked solver output with solver backward. Optimizer training remains on attacked solver pairs unless training-data-mode is changed.",
-        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default.",
+        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default. The attack objective can be loss1, loss2, loss3, or physics/loss4; optimizer training still uses attacked solver pairs unless training-data-mode is changed.",
         "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default, epsilon/alpha are fixed, and random start is off for comparable same-index probes.",
         "",
         "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch, giving 52 dataset-level curves per task when all 50 generated sets are present; checkpoints default to every 200 epochs plus final.",
