@@ -119,7 +119,9 @@ def compute_delta_fft_matrix_from_probe(plotmod, probe_df: pd.DataFrame, epochs:
 
 
 def selected_fft_epochs(max_epoch: int, available_epochs: np.ndarray) -> list[int]:
-    if max_epoch >= 5000:
+    if max_epoch >= 8000:
+        requested = [50, 200, 400, 800, 1200, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
+    elif max_epoch >= 5000:
         requested = [50, 200, 400, 800, 1200, 2000, 3000, 4000, 5000]
     elif max_epoch >= 3000:
         requested = [50, 200, 400, 800, 1200, 1800, 2400, 3000]

@@ -35,6 +35,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from tools.evaluate_generalization_models import (  # noqa: E402
     DatasetSpec,
     build_specs,
+    checkpoint_state,
     evaluate_dataset,
     load_module,
     load_burgers_model,
@@ -229,14 +230,56 @@ def safe_grad_norm(model) -> float:
     return math.sqrt(total) if math.isfinite(total) else float("inf")
 
 
-def load_model(task: str, device: torch.device):
+def load_model(task: str, device: torch.device, model_checkpoint_override: Path | None = None):
     if task == "burgers":
         return load_burgers_model(device)
     if task == "darcy":
+        if model_checkpoint_override is not None:
+            mod = load_module("darcy_fno2d_advtrain_override", PROJECT_ROOT / "2D_Darcy_FNO2d" / "models" / "FNO2d.py")
+            model = mod.FNO2d(modes1=64, modes2=64, width=60, num_layers=4, in_channels=1, out_channels=1, padding=0).to(device)
+            model.load_state_dict(checkpoint_state(model_checkpoint_override.resolve()), strict=True)
+            model.eval()
+            return model
         return load_darcy_model(device)
     if task == "ns2d":
         return load_ns2d_model(device)
     raise ValueError(task)
+
+
+def apply_dataset_path_overrides(specs: list[DatasetSpec], args: argparse.Namespace) -> list[DatasetSpec]:
+    darcy_train_path = getattr(args, "darcy_train_path", None)
+    darcy_test_path = getattr(args, "darcy_test_path", None)
+    if darcy_train_path is None and darcy_test_path is None:
+        return specs
+    out: list[DatasetSpec] = []
+    for spec in specs:
+        if spec.task == "darcy" and spec.split == "train" and darcy_train_path is not None:
+            out.append(
+                DatasetSpec(
+                    spec.task,
+                    "train_screen_binary_grf_alpha2_tau3_n384",
+                    spec.split,
+                    darcy_train_path.resolve(),
+                    "override_screening",
+                    spec.manual_tier,
+                    spec.manual_rank,
+                )
+            )
+        elif spec.task == "darcy" and spec.split == "test" and darcy_test_path is not None:
+            out.append(
+                DatasetSpec(
+                    spec.task,
+                    "test_screen_binary_grf_alpha2_tau3_n96",
+                    spec.split,
+                    darcy_test_path.resolve(),
+                    "override_screening",
+                    spec.manual_tier,
+                    spec.manual_rank,
+                )
+            )
+        else:
+            out.append(spec)
+    return out
 
 
 def baseline_checkpoint_manifest() -> dict[str, dict[str, str]]:
@@ -2390,7 +2433,11 @@ def train_one_task(
     out_dir = out_root / task
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    model = load_model(task, device)
+    model_checkpoint_override = getattr(args, f"{task}_model_checkpoint", None)
+    if model_checkpoint_override is not None:
+        model_checkpoint_override = Path(model_checkpoint_override)
+    task_cfg["model_checkpoint_override"] = None if model_checkpoint_override is None else str(model_checkpoint_override.resolve())
+    model = load_model(task, device, model_checkpoint_override)
     initial_checkpoint_info: dict[str, Any] | None = None
     if initial_checkpoint is not None:
         initial_checkpoint_info = load_model_checkpoint_state(model, Path(initial_checkpoint), device)
@@ -2871,6 +2918,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--binary-pool-multiplier", type=float, default=1.0, help="Darcy binary attack candidate pool multiplier. Default 1.0 is deterministic top-k for comparable same-index probes.")
     parser.add_argument("--binary-score-noise", type=float, default=0.0, help="Darcy binary attack score noise. Default 0.0 keeps same epsilon/model changes as the main source of probe variation.")
     parser.add_argument("--burgers-initial-checkpoint", type=Path, default=None, help="Optional Burgers checkpoint to load before adversarial training; used for resume/continuation runs.")
+    parser.add_argument("--darcy-model-checkpoint", type=Path, default=None, help="Optional Darcy checkpoint to load as the starting model when the official default checkpoint is unavailable or a screening baseline is intended.")
+    parser.add_argument("--darcy-train-path", type=Path, default=None, help="Optional Darcy train dataset override path.")
+    parser.add_argument("--darcy-test-path", type=Path, default=None, help="Optional Darcy test dataset override path.")
     parser.add_argument("--burgers-train-max", type=int, default=None)
     parser.add_argument("--darcy-train-max", type=int, default=None)
     parser.add_argument("--ns2d-train-max", type=int, default=None)
@@ -2930,7 +2980,7 @@ def main() -> None:
     out_root = (args.output_root / run_name).resolve()
     out_root.mkdir(parents=True, exist_ok=True)
 
-    all_specs = build_specs(args.generalization_root.resolve())
+    all_specs = apply_dataset_path_overrides(build_specs(args.generalization_root.resolve()), args)
     missing = [str(s.path) for s in all_specs if s.task in tasks and not s.path.exists()]
     if missing:
         raise FileNotFoundError("missing dataset files:\n" + "\n".join(missing[:20]))
@@ -2955,6 +3005,11 @@ def main() -> None:
         "started_utc": now_stamp(),
         "defaults": {task: asdict(DEFAULTS[task]) for task in tasks},
         "baseline_checkpoints": baseline_checkpoint_manifest(),
+        "model_checkpoint_overrides": {"darcy": None if args.darcy_model_checkpoint is None else str(args.darcy_model_checkpoint.resolve())},
+        "dataset_path_overrides": {
+            "darcy_train_path": None if args.darcy_train_path is None else str(args.darcy_train_path.resolve()),
+            "darcy_test_path": None if args.darcy_test_path is None else str(args.darcy_test_path.resolve()),
+        },
         "preflight_dataset_counts": dataset_count_rows,
         "planned_workload_estimate": planned_estimate,
         "training_data_mode": args.training_data_mode,
@@ -2975,7 +3030,7 @@ def main() -> None:
             "burgers_solver_remat_chunk_steps": args.burgers_solver_remat_chunk_steps,
             "ns2d_solver_remat": args.ns2d_solver_remat,
             "ns2d_solver_remat_chunk_steps": args.ns2d_solver_remat_chunk_steps,
-            "darcy_note": "Darcy/C-flow uses a JAX CG solver with implicit differentiation; this path is tuned by batch and optimizer microbatch rather than a time-rollout remat mode.",
+            "darcy_note": "Darcy Flow uses a JAX CG solver with implicit differentiation; this path is tuned by batch and optimizer microbatch rather than a time-rollout remat mode.",
         },
         "note": (
             "Online adversarial training. The default label mode is solver-label: "

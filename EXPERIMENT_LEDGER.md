@@ -1,3 +1,241 @@
+## 2026-06-07 - Burgers Loss1 8000 plot curve verification
+
+Status: explicitly verified that regenerated Burgers Loss1 plots include the 5000-to-8000 continuation segment rather than stopping at epoch5000.
+
+Observed evidence:
+- Single-run visualization manifest: `visualizations/burgers_loss3_selective_round03_loss1_8000ep_long_20260605_plots/polished_report/variable_epoch_visualization_manifest_round03_long.json`.
+- The manifest includes extension run `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607`.
+- The manifest records `max_eval_epoch=8000` and `max_attack_epoch=8000`.
+- Dense comparison CSVs `round03_dense_epoch_metrics_every1.csv` and `round03_dense_epoch_metrics_every5.csv` both have epoch range `0..8000` and include `loss1`, `loss2`, and `loss3`.
+- Checkpoint-style RMSE and relative-L2 heatmap CSVs include epoch columns through `8000`, specifically `0, 800, 1600, 2400, 3200, 4000, 4800, 5600, 6400, 7200, 8000`.
+- Dedicated plot report updated: `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`.
+
+Inference:
+- The regenerated Loss1 curves and polished RMSE/relative-L2/FFT/attack-loss outputs are not old 5000-epoch-only figures; they include the 5000-to-8000 continuation segment.
+
+Remaining work:
+- None for this verification; future analysis can now use the epoch8000 plot/data outputs.
+
+## 2026-06-07 - Plot and Jacobian/SVD analysis status clarification
+
+Status: inspected whether the requested plots and Jacobian/SVD-style analyses are completed for the current Burgers and Darcy Flow tasks.
+
+Observed evidence:
+- Check time: `2026-06-07T19:42:33Z`.
+- Burgers Loss1 epoch8000 plot artifacts now live in the existing folders: `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_plot_manifest.txt`, `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/round03_long_training_comparison_plot_manifest.txt`, and `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`.
+- Darcy Flow Loss3 500ep final artifacts do not yet exist: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` and `darcy/checkpoints/darcy_epoch500_step002000.pt` are not present.
+- Darcy latest observed progress from `eval_split_summary.csv`: epoch `302/500`, step `1208`, progress fraction `0.604`.
+- Searches under `visualizations`, `docs`, and `forensics` found no completed Darcy Loss3 plot/Jacobian/SVD outputs for this 500ep run yet.
+- Existing local Jacobian/SVD tools include `tools/analyze_fno_solver_jacobian_similarity.py`, `tools/compare_burgers_adversarial_jacobian_svd.py`, `tools/compare_burgers_checkpoint_series_jacobian_svd.py`, and related Burgers/FNO SVD plotting utilities, but no completed Darcy Loss3 500ep post-analysis artifact is evidenced yet.
+
+Inference:
+- Burgers epoch8000 plots are done.
+- Darcy Flow final plots and Jacobian/SVD analyses are not done yet because the 500ep training run is still in progress.
+- Based on launch at `2026-06-07T18:40:28Z` and latest epoch `302` at `2026-06-07T19:42:33Z`, estimated Darcy completion is about `2026-06-07T20:23Z`, roughly `41` minutes after the check.
+
+Remaining work:
+- Let Darcy Flow Loss3 reach epoch500.
+- After completion, generate the requested plots and then run/implement the Jacobian curve/coefficient and Jacobian matrix singular-value decomposition analysis against the completed checkpoints and selected 50 generalization datasets.
+
+## 2026-06-07 - Concurrent Burgers/Darcy status check
+
+Status: inspected the two active/recent tasks after the user asked whether either run had stopped or OOMed and how long remains.
+
+Observed evidence:
+- Check time: `2026-06-07T19:39:02Z`.
+- Burgers Loss1 session is no longer active because the training completed; final checkpoint exists at `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/burgers/checkpoints/burgers_epoch8000_step024000.pt` and summary exists at `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/summary.json`.
+- Burgers driver log recorded training completion at `2026-06-07T19:35:51Z` and then plot refresh. The automatic dense-comparison plot wrapper initially failed with a Python dataclass import-wrapper error, not an OOM. `tools/plot_burgers_round03_loss1_8000_dense_comparison.py` was fixed and rerun successfully.
+- Burgers plot outputs now live in the existing folders: `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_plot_manifest.txt`, `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/round03_long_training_comparison_plot_manifest.txt`, and `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`.
+- Darcy Flow Loss3 tmux session `darcy_lossdrop50_loss3_500ep_20260607` is still running.
+- Latest Darcy progress from `eval_split_summary.csv`: epoch `265/500`, step `1060`, progress fraction `0.53`.
+- Latest Darcy regular checkpoint observed: `darcy_epoch250_step001000.pt`.
+- `nvidia-smi` at check time showed Tesla V100-SXM2-32GB, `11834 MiB / 32768 MiB`, and about `95%` utilization.
+- Searching Darcy logs for `Traceback`, `CUDA out of memory`, `out of memory`, `Killed`, `ERROR`, and `RuntimeError` returned no matches.
+- Dedicated notes updated: `docs/burgers_loss1_5000to8000_launch_20260607.md` and `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+
+Inference:
+- Burgers Loss1 5000-to-8000 is complete; the only issue was a post-training plot wrapper bug, now fixed and rerun.
+- Darcy Flow Loss3 500-epoch run is healthy and has not OOMed or stopped.
+- Darcy observed speed is about `13.26` seconds per epoch; remaining `235` epochs imply completion around `2026-06-07T20:31Z`, about `52` minutes after the check.
+
+Remaining work:
+- Let Darcy continue to epoch500.
+- After Darcy completion, verify final `summary.json`, epoch500 checkpoint, all CSVs, and attack probe outputs.
+
+## 2026-06-07 - Darcy Flow Loss3 500-epoch training launched on selected lossdrop50 suite
+
+Status: launched the requested Darcy Flow Loss3 adversarial training run for 500 epochs using the selected 50 loss-drop generalization datasets, plus screening train/test data.
+
+Observed evidence:
+- tmux session: `darcy_lossdrop50_loss3_500ep_20260607`.
+- Run directory: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607`.
+- Logs: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607_logs`.
+- Runner: `tools/run_darcy_lossdrop50_loss3_500ep_20260607.sh`.
+- Patched source: `tools/adversarial_training.py` now supports explicit Darcy model/train/test overrides.
+- Selected 50 generalization root: `generalization_datasets_darcy_lossdrop50_selected_20260607`.
+- Train override: `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/train/dim2d_darcy_nx85_N384_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt`.
+- Test override: `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/test/dim2d_darcy_nx85_N96_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_test.pt`.
+- Starting model checkpoint override: `2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607/best.pt`.
+- Dataset preflight passed with train=1, test=1, generalization=50.
+- At `2026-06-07T18:44:10Z`, the run had reached epoch `14/500`, step `56`, progress fraction `0.028`.
+- Output files observed: `darcy/train_steps.csv`, `darcy/attack_batches.csv`, `darcy/eval_split_summary.csv`, `darcy/attack_epoch_summary.csv`, `darcy/attack_epsilon_bucket_summary.csv`, `darcy/attack_probe_epochs.csv`, `darcy/attack_probe_samples.csv`, and `darcy/attack_probe_samples/*.npz`.
+- GPU monitoring showed Tesla V100-SXM2-32GB execution, `16726 MiB / 32768 MiB`, and `100%` utilization while Burgers and Darcy were active.
+- Dedicated launch note: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+
+Inference:
+- The run is active and producing Burgers-style adversarial-training analysis artifacts.
+- This is a screening-baseline Darcy Flow Loss3 run, not an official full Darcy benchmark, because official Darcy artifacts were missing locally and explicit screening overrides were used.
+- Early speed is roughly `15-16` seconds per epoch; epoch500 ETA is around two hours after launch, possibly faster after the concurrent Burgers run finishes.
+
+Remaining work:
+- Let tmux session continue to epoch500.
+- After completion, verify final `summary.json`, epoch500 checkpoint, all CSV row counts, attack probe NPZ outputs, and then prepare visualization/analysis scripts as needed.
+
+## 2026-06-07 - Burgers Loss1 5000-to-8000 status and ETA check
+
+Status: inspected the still-running Burgers Loss1 continuation after the user asked where the epoch8000 run currently is and how long remains.
+
+Observed evidence:
+- tmux session `burgers_loss1_8000_20260607` is still running.
+- Check time: `2026-06-07T18:15:12Z`.
+- Latest observed eval row: epoch `7320`, step `21960`, progress fraction `0.915` on the total epoch0-to-8000/global-step scale.
+- Continuation segment progress: `2320 / 3000` epochs completed from epoch5000 to epoch8000; `680` epochs remaining.
+- Latest regular checkpoint observed: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/burgers/checkpoints/burgers_epoch7300_step021900.pt`.
+- Latest wall-time checkpoint observed: `burgers_epoch7230_step021690_wall_0012600s.pt`.
+- Dedicated note updated: `docs/burgers_loss1_5000to8000_launch_20260607.md`.
+
+Inference:
+- Observed average continuation speed is about `5.63` seconds per epoch.
+- Estimated epoch8000 training completion is about `2026-06-07T19:19Z`.
+- Because the launcher refreshes stitched and comparison plots after training, full workflow completion is expected a few minutes later, approximately `2026-06-07T19:25Z` if current speed holds.
+- Final epoch8000 checkpoint and refreshed plots are not yet evidenced locally.
+
+Remaining work:
+- Let the tmux run continue.
+- After completion, verify `burgers_epoch8000_step024000.pt`, `summary.json`, and plot output directories before claiming completion.
+
+## 2026-06-07 - Darcy Flow selected 50 loss-drop generalization datasets
+
+Status: generated and screened an oversized Darcy Flow loss-drop candidate pool, then selected 50 generalization datasets whose individual eval losses decreased after the 50-step adversarial-training probe.
+
+Observed evidence:
+- Dedicated result note: `docs/darcy_lossdrop50_selected_generalization_suite_20260607.md`.
+- Runner: `tools/run_darcy_lossdrop50_pool_screen_20260607.sh`.
+- Pool generator: `tools/generate_darcy_lossdrop50_pool_20260607.py`.
+- Selector: `tools/select_darcy_lossdrop50_20260607.py`.
+- Pool root: `generalization_datasets_darcy_lossdrop50_pool_20260607`.
+- Pool screen summary: `forensics/darcy_lossdrop50_pool_gradient_screen_20260607/candidate_screen_summary.csv`.
+- Selected 50 root: `generalization_datasets_darcy_lossdrop50_selected_20260607`.
+- Selected manifest: `generalization_datasets_darcy_lossdrop50_selected_20260607/candidate_manifest.csv`.
+- Selected evidence table: `generalization_datasets_darcy_lossdrop50_selected_20260607/selection_summary.csv`.
+- Selected `.pt` files: `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/*.pt` has 50 files.
+- Driver log: pool generation started `2026-06-07T17:36:55Z`, screen started `2026-06-07T17:46:15Z`, selection started `2026-06-07T18:05:18Z`, and selection completed `2026-06-07T18:05:19Z`.
+- Probe reached `[darcy-screen] step 50/50` and wrote `forensics/darcy_lossdrop50_pool_gradient_screen_20260607`.
+- Pool candidates screened: 72; candidates with `first50 eval_loss_delta < 0`: 72; non-decreasing candidates: 0.
+- Selected count: 50; all selected `eval_loss_delta` values are negative.
+- Selected loss delta range: most negative `-2.3176673143628549e-07`, least negative `-1.8023750669726724e-07`, mean `-2.0133049086249833e-07`.
+
+Inference:
+- The user's corrected 50-dataset requirement is satisfied in this screening setup: every selected dataset has observed generalization loss decrease after the short adversarial-training probe.
+- The selected suite prioritizes loss decrease over high cosine. Selected cosine means are moderate, roughly `0.7595` to `0.7723`, with `6/50` negative-cosine steps.
+- The current result remains a screening-baseline result because official Darcy artifacts were missing locally.
+
+Remaining work:
+- Use `generalization_datasets_darcy_lossdrop50_selected_20260607` for follow-up Darcy Flow screening/training.
+- Restore or regenerate official Darcy train/test/checkpoint artifacts before official benchmark claims.
+- If the next target is stronger gradient-direction agreement, run a local sweep around the selected soft low-contrast family using cosine as a secondary objective.
+
+## 2026-06-07 - Darcy Flow loss-direction clarification
+
+Status: clarified the completed Darcy Flow candidate-screen interpretation after the user asked whether every tested dataset had rising loss.
+
+Observed evidence:
+- Dedicated note updated: `docs/darcy_candidate_generalization_gradient_screen_20260607.md`.
+- Loss-decreasing candidates exist in the first50 summary rows, including `darcy_r02_soft_low4_high10_beta10` eval loss delta `-2.029294e-07`, `darcy_r02_soft_low4_high10_beta8` eval loss delta `-2.011733e-07`, `darcy_screen_soft_beta6` eval loss delta `-1.665820e-07`, `darcy_screen_soft_beta12` eval loss delta `-2.356520e-08`, and `darcy_r03_contrast_low4_high11p25` eval loss delta `-4.724270e-08`.
+
+Inference:
+- The problem is not that all candidate losses rose. The problem is that no screened candidate simultaneously achieved loss decrease and cosine above `0.9`; the high-cosine binary parameter shifts were the loss-increasing cases.
+
+Remaining work:
+- If a stronger accepted dataset is required, continue sweeping around the loss-decreasing families and optimize for both loss decrease and cosine.
+
+## 2026-06-07 - Burgers Loss1 5000-to-8000 progress check after Darcy screens
+
+Status: inspected the still-running Burgers Loss1 continuation after completing Darcy Flow candidate screens.
+
+Observed evidence:
+- tmux session `burgers_loss1_8000_20260607` is still running.
+- Run directory: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607`.
+- Progress CSVs: `burgers/train_steps.csv` and `burgers/eval_split_summary.csv`.
+- Latest observed epoch/step from CSV tail: epoch `5730`, step `17190`, progress fraction `0.71625`.
+- Checkpoints observed through `burgers_epoch5700_step017100.pt`; wall-time checkpoints observed through `burgers_epoch5625_step016875_wall_0003600s.pt`.
+- Dedicated note updated: `docs/burgers_loss1_5000to8000_launch_20260607.md`.
+
+Inference:
+- The run is still making progress and has not yet reached the requested epoch8000 completion point.
+- Final epoch8000 checkpoint, summary, and refreshed plots are not yet evidenced locally.
+
+Remaining work:
+- Let the tmux run continue.
+- After completion, verify `burgers_epoch8000_step024000.pt`, generated summary files, and refreshed comparison plots.
+
+## 2026-06-07 - Darcy Flow candidate screens round01-round03 completed
+
+Status: completed three GPU Darcy Flow candidate-generalization screens and evaluated the user's two acceptance metrics: candidate loss trajectory and parameter-gradient cosine with adversarial training gradients.
+
+Observed evidence:
+- Dedicated result note updated: `docs/darcy_candidate_generalization_gradient_screen_20260607.md`.
+- Round01 output: `forensics/darcy_candidate_gradient_alignment_screen_20260607/candidate_screen_summary.csv`.
+- Round02 output: `forensics/darcy_candidate_gradient_alignment_screen_round02_20260607/candidate_screen_summary.csv`.
+- Round03 output: `forensics/darcy_candidate_gradient_alignment_screen_round03_20260607/candidate_screen_summary.csv`.
+- Candidate roots: `generalization_datasets_darcy_candidate_screen_20260607`, `generalization_datasets_darcy_candidate_screen_round02_20260607`, and `generalization_datasets_darcy_candidate_screen_round03_20260607`.
+- Round02 source/launcher: `tools/generate_darcy_generalization_candidates_round02.py`, `tools/run_darcy_candidate_screen_round02_20260607.sh`.
+- Round03 source/launcher: `tools/generate_darcy_generalization_candidates_round03.py`, `tools/run_darcy_candidate_screen_round03_20260607.sh`.
+- Driver logs show round01 completed at `2026-06-07T14:48:27Z`, round02 at `2026-06-07T15:33:12Z`, and round03 at `2026-06-07T15:43:37Z`.
+- Best loss-decreasing candidates observed: `darcy_screen_soft_beta12` cosine `0.879517`, eval loss delta `-2.356520e-08`; `darcy_r03_contrast_low4_high11p25` cosine `0.874474`, eval loss delta `-4.724270e-08`; `darcy_r02_contrast_low4_high11` cosine `0.873782`, eval loss delta `-3.474140e-08`.
+- High-cosine but loss-increasing candidates included `darcy_screen_mid_tau5` cosine `0.999412`, eval loss delta `+1.875534e-07`, and `darcy_screen_mid_alpha2p5_tau3` cosine `0.988405`, eval loss delta `+1.742665e-07`.
+- Poor candidate evidence: `darcy_screen_contrast_low2_high14` cosine `-0.102057`, `28/50` negative-cosine steps, eval loss delta `+8.911378e-07`.
+
+Inference:
+- The generated candidate `.pt` datasets are valid screening artifacts, but no screened candidate simultaneously achieved loss decrease and cosine above `0.9`.
+- Darcy Flow adversarial-training degradation remains consistent with generalization/adversarial distribution mismatch: the candidates that decrease eval loss are soft or lower-contrast and only moderately aligned, while the most cosine-aligned binary parameter shifts increase eval loss over the short adversarial-training trajectory.
+- Best compromise families for a larger sweep are soft beta around `10-12` and binary/mild contrast around `low=4`, `high=10.75-11.25`.
+
+Remaining work:
+- Do not promote a full official 50-dataset Darcy Flow generalization suite from round01 alone.
+- Run a broader automated sweep around the best compromise families if the user wants a stronger candidate with both loss decrease and higher cosine.
+- Restore or regenerate official Darcy train/test/checkpoint artifacts before official Darcy Flow adversarial training; current results use a local screening baseline because official artifacts were missing locally.
+
+## 2026-06-07 - Burgers Loss1 5000-to-8000 and Darcy Flow candidate screen launched
+
+Status: launched the requested Burgers round03 Loss1 continuation from epoch5000 to epoch8000 and started a Darcy Flow candidate-generalization gradient-alignment screen. Completed the requested 10-minute monitor without interrupting the background jobs.
+
+Observed evidence:
+- Burgers tmux session: `burgers_loss1_8000_20260607`.
+- Darcy Flow tmux session: `darcy_candidate_screen_20260607`.
+- Burgers launcher: `tools/run_burgers_loss1_continue5000to8000_20260607.sh`.
+- Burgers start checkpoint: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue3000to5000_20260606/burgers/checkpoints/burgers_epoch5000_step015000.pt`.
+- Burgers active run: `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607`.
+- Darcy candidate launcher: `tools/run_darcy_candidate_screen_20260607.sh`.
+- Darcy candidate generator: `tools/generate_darcy_generalization_candidates.py`.
+- Darcy gradient screen: `tools/probe_darcy_gradient_alignment_screen.py`.
+- Dedicated records: `docs/burgers_loss1_5000to8000_launch_20260607.md` and `docs/darcy_candidate_generalization_gradient_screen_20260607.md`.
+- GPU preflights: `forensics/burgers_loss1_5000to8000_gpu_preflight_20260607/gpu_preflight.json` and `forensics/darcy_candidate_screen_gpu_preflight_20260607/gpu_preflight.json`.
+- `nvidia-smi` at `2026-06-07T14:47:41Z` showed Tesla V100-SXM2-32GB, `16190 MiB / 32768 MiB`, and `100%` GPU utilization while both jobs were active.
+- Burgers output growth at monitor end: `train_steps.csv` had `209` total lines and `eval_split_summary.csv` had `281` total lines.
+- Darcy Flow driver phases observed: generated screening train/test data, trained screening baseline, generated 10 candidate generalization datasets, and started gradient-alignment screen.
+- Darcy Flow gradient screen reached `[darcy-screen] step 40/50` by the monitor end; `gradient_alignment_by_step.csv` had `497` total lines and `optimizer_microsteps.csv` had `165` total lines.
+
+Inference:
+- Burgers Loss1 continuation survived the first 10 minutes and is producing expected training/evaluation/probe files. The epoch8000 checkpoint and refreshed plots are not yet evidenced.
+- Darcy Flow screening implements the user's requested method: rank candidate generalization datasets by parameter-gradient cosine against adversarial training updates before promoting a 50-dataset generalization suite. Final candidate ranking is not yet evidenced because the 50-step screen was still running at monitor end.
+
+Remaining work:
+- Let both tmux sessions continue.
+- After Burgers completion, verify `burgers_epoch8000_step024000.pt`, `summary.json`, and refreshed plot directories.
+- After Darcy screen completion, inspect `forensics/darcy_candidate_gradient_alignment_screen_20260607/candidate_screen_summary.csv` and promote high-cosine candidate families into a full Darcy Flow generated generalization suite.
+- For official Darcy Flow adversarial training, restore or regenerate the official Darcy train/test/checkpoint artifacts; the current baseline is explicitly a screening baseline created because local official Darcy `.pt` files/checkpoint were missing.
+
 ## 2026-06-07 - Burgers round03 final extension split-specific SVD Markdown pushed
 
 Status: verified GitHub push of the corrected split-specific SVD Markdown and ledger records.
@@ -10862,4 +11100,408 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Observed round03 SVD evidence recorded in the summary: generalization `J_model - J_solver` mean spectral norm is baseline `5.77462`, loss1 `3.39560`, loss2 `3.93652`, loss3 `2.65625`; loss3 has the largest baseline-relative generalization drop, `54.00%`.
 - Observed round03 subspace evidence recorded in the summary: generalization top20 right/left mean principal cosines are baseline `0.732393/0.767185`, loss1 `0.777392/0.850798`, loss2 `0.774694/0.849171`, loss3 `0.843830/0.875296`.
 - Inference: round03 gives the clearest targeted generated-generalization evidence for loss3 so far, while retaining caveats that loss3 is worse on original train/test RMSE and does not beat loss1 at the loss1-final wall-clock budget.
+
+## Burgers Round03 Loss1 8000 Plot Scope Check - 2026-06-07T19:56:26Z
+
+- Status: inspected plot scope only; no new training or plotting job was started.
+- Dedicated plot report updated: `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`.
+- Observed from user screenshots: the same-epoch Relative L2 screenshot has epoch axis `0..5000`, so the shown image is not a `0..8000` same-epoch image. The FFT screenshot also shows heatmap epoch axis `0..5000` and selected spectra ending at `epoch 5000`.
+- Observed from `visualizations/burgers_loss3_selective_round03_loss1_8000_dense_comparison_20260607/round03_dense_epoch_metrics_every1.csv`: `loss1` has epochs `0..8000` for train/test/generalization; the corresponding old dense CSV in `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/` has `loss1` only through epoch `5000`.
+- Observed from `visualizations/burgers_loss3_selective_round03_loss1_8000ep_long_20260605_plots/polished_report/variable_epoch_visualization_manifest_round03_long.json`: `max_eval_epoch` and `max_attack_epoch` are both `8000`, with extension run `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607`.
+- Observed from `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/burgers/attack_probe_samples.csv`: probe epochs cover `5001..8000`.
+- Observed code issue: `tools/plot_burgers_round03_stitched_single_run_visualizations.py::selected_fft_epochs` still selects only `[50, 200, 400, 800, 1200, 2000, 3000, 4000, 5000]` for `max_epoch=8000`, so the FFT selected-spectra line panel is capped at `epoch 5000` even with 8000-epoch source data.
+- Inference: the screenshot same-epoch and FFT images shown in chat are 5000-epoch/stale views for those panels; the 8000 dense CSV exists for Relative L2/RMSE, while the FFT selected-spectra logic needs correction to show 6000/7000/8000 lines.
+
+## Burgers Round03 Loss1 8000 Folder Consolidation - 2026-06-07T20:05:14Z
+
+- Status: consolidated generated plot outputs into the existing Burgers round03 visualization folders as requested; no new training was started.
+- Deleted standalone comparison folders: `visualizations/burgers_loss3_selective_round03_loss1_8000_dense_comparison_20260607` and `visualizations/burgers_loss3_selective_round03_loss1_8000_comparison_20260607`.
+- Deleted the earlier standalone single-run folder `visualizations/burgers_loss3_selective_round03_loss1_8000ep_long_20260605_plots`, renamed the existing `visualizations/burgers_loss3_selective_round03_loss1_5000ep_long_20260605_plots` folder to `visualizations/burgers_loss3_selective_round03_loss1_8000ep_long_20260605_plots`, and regenerated the single-run plots there.
+- Overwrote existing comparison outputs in `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605` and `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605` with the loss1 8000-epoch data.
+- Observed from `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_epoch_metrics_every1.csv`: loss1 covers epochs `0..8000`, with `8001` epoch points for each of train/test/generalization; loss2 covers `0..2000` and loss3 covers `0..1500`.
+- Observed from `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_epoch_metrics_every5.csv`: the optional every5 companion CSV also covers loss1 `0..8000`.
+- Observed from `visualizations/burgers_loss3_selective_round03_loss1_8000ep_long_20260605_plots/polished_report/variable_epoch_visualization_manifest_round03_long.json`: `max_eval_epoch=8000`, `max_attack_epoch=8000`, and `out_dir` is the renamed `loss1_8000ep` folder.
+- Source fix: `tools/plot_burgers_round03_loss1_8000_dense_comparison.py` now writes to the existing comparison folders, and `tools/plot_burgers_round03_stitched_single_run_visualizations.py::selected_fft_epochs` now includes `6000`, `7000`, and `8000` when `max_epoch >= 8000`.
+- Inference: the official current plot locations are the existing comparison folders plus the renamed `loss1_8000ep` single-run folder; the previously separate `loss1_8000_*_20260607` folders should no longer be used.
+
+## Burgers Round03 Image-Only Bundle - 2026-06-07T20:13:50Z
+
+- Status: created a standalone image-only bundle; no training was started.
+- Dedicated report: `docs/burgers_loss3_selective_round03_image_only_bundle_20260607.md`.
+- Output folder: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607`.
+- Observed bundle structure: top-level folders `loss1`, `loss2`, `loss3`, and `comparison_dense`; loss folders preserve `polished_report` subfolders for polished PNGs.
+- Observed file hygiene after cleanup and per-loss p2q2 image generation: `53` PNG files and `0` non-PNG files inside the bundle.
+- Observed copied sources: loss1 images from `visualizations/burgers_loss3_selective_round03_loss1_8000ep_long_20260605_plots`, loss2 images from `visualizations/burgers_loss3_selective_round03_loss2_2000ep_long_20260605_plots`, loss3 images from `visualizations/burgers_loss3_selective_round03_loss3_1500ep_long_20260605_plots`, and comparison images from `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605` plus compact comparison PNGs.
+- Observed added round03 per-loss p2q2 attack verification PNGs: two before/after PNGs in each of `loss1/polished_report`, `loss2/polished_report`, and `loss3/polished_report`, generated from the corresponding final self-training checkpoint.
+- Observed added clipped wall-clock every1 comparison PNGs in `comparison_dense`: `round03_dense_wall_clock_rmse_every1_train_test_generalization_xmax12p5h.png` and `round03_dense_wall_clock_relative_l2_every1_train_test_generalization_xmax12p5h.png`; both use wall-clock x-axis `0..12.5` hours.
+- Inference: this bundle is the requested separate picture-only version for inspection/sharing, while the official working plot directories remain unchanged.
+
+## Burgers Round03 Image-Only Bundle Sparse Plot Cleanup - 2026-06-07T20:17:58Z
+
+- Status: removed unwanted sparse checkpoint-style heatmap+line plots from the image-only bundle; no training or new plotting was started.
+- Bundle: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607`.
+- Removed 6 PNGs matching `*checkpoint_style*heatmap_line_below*.png`: RMSE and Relative L2 checkpoint-style heatmap+line plots for `loss1`, `loss2`, and `loss3`.
+- Observed after cleanup: `49` PNG files and `0` non-PNG files remain in the bundle.
+- Inference: the bundle now excludes the sparse checkpoint-column heatmap+line images and keeps the every-epoch dense comparison images plus the requested clipped wall-clock every1 images.
+
+## Burgers Round03 Per-Loss P2Q2 Attack Verification Images - 2026-06-07T20:44:37Z
+
+- Status: generated the requested per-model p=2,q=2 RMS-L2 attack before/after PNGs for `loss1`, `loss2`, and `loss3`; no training was started.
+- GPU evidence: run used CUDA on `Tesla V100-SXM2-32GB` with PyTorch `2.8.0+cu126` and CUDA `12.6`; earlier preflight confirmed `sm_70` support.
+- Source script: `tools/plot_burgers_round03_baseline_vs_final_attack_panels.py`.
+- Numeric source: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/summary.json`; per-loss CSV/NPZ outputs are under `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss*/`.
+- Removed stale copied reference PNGs matching `p2q2_reference_*.png` from the image-only bundle.
+- Added two fresh PNGs to each loss polished report in `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607`: before perturbation at step000 and after perturbation at step100 for the corresponding round03 final model.
+- Observed final attack MSE means: baseline `0.026507497`; loss1 final model `0.0062939017`; loss2 final model `0.0092682792`; loss3 final model `0.0029296223`.
+- Observed bundle hygiene after correction: `53` PNG files, `0` non-PNG files, and `0` stale `p2q2_reference_*.png` files.
+- Dedicated report: `docs/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607.md`.
+- Inference: on this six-sample p2q2 visualization set, all three final self-training models are harder to drive away from the solver than the baseline under the same attack budget; `loss3` has the lowest final attack MSE among the three.
+
+## Burgers Round03 P2Q2 Initial-Condition Source Check - 2026-06-07T20:48:36Z
+
+- Status: inspected the sample source for the round03 baseline-vs-final p2q2 attack before/after images; no new plotting or training was started.
+- Dedicated report updated: `docs/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607.md`.
+- Observed from `tools/plot_burgers_round03_baseline_vs_final_attack_panels.py`: the script calls `base_mod.load_samples()` from `tools/plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif.py`.
+- Observed from `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/sample_manifest.json`: the six initial conditions comprise one `test` sample and five `generalization` samples; no `train` samples are used.
+- Observed source paths: the test sample comes from `1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/...seed45_test.pt`; the five generalization samples come from `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- Inference: the before/after p2q2 attack figure is a mixed test/generalization probe, not a train-set probe.
+
+## Darcy Flow Naming Audit - 2026-06-07T20:55:27Z
+
+- Status: audited and corrected current Darcy naming in records/scripts; no training or plotting was started.
+- Dedicated report: `docs/darcy_flow_naming_audit_20260607.md`.
+- Observed pre-correction issue: current records included stale misspelled or ambiguous Darcy naming in `EXPERIMENT_LEDGER.md` and related docs; current scripts/docs also used an older alternate-flow label.
+- Correction: replaced those current user-facing labels with `Darcy Flow` in current docs, ledger entries, Darcy helper scripts, candidate-screen READMEs, `tools/analyze_generalization_loss_patterns.py`, and `tools/adversarial_training.py`.
+- Observed verification after correction: searches for the known wrong-spelling patterns and stale alternate-flow patterns across current `EXPERIMENT_LEDGER.md`, `docs`, `tools`, `visualizations`, `forensics`, and `generalization_datasets_darcy_lossdrop50_selected_20260607` returned no matches, excluding binary/image files and this audit wording before it was sanitized.
+- Observed PNG check: no current Darcy PNG files were found under `visualizations`, `forensics`, or `docs`; no PNG filenames contain the known wrong or stale Darcy labels.
+- Inference: current user-facing text and future current-script generated labels now use `Darcy Flow`; there were no existing Darcy bitmap figures requiring redraw for embedded text.
+
+
+
+## Burgers Round03 Image-Only Bundle Duplicate Comparison Directory Check - 2026-06-07T21:03:12Z
+
+- Status: inspected duplicate comparison folders inside the image-only bundle; no training or plotting was started.
+- Dedicated report updated: `docs/burgers_loss3_selective_round03_image_only_bundle_20260607.md`.
+- Bundle inspected: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607`.
+- Observed from `diff -qr`: the bundle currently contains both `comparison_dense` and `burgers_loss3_selective_round03_long_training_comparison_dense_20260605`.
+- Observed content comparison: `comparison_dense` has 23 files, all PNG; the long-name directory has 16 files, including 12 PNGs byte-identical to same-named files in `comparison_dense`, plus 4 non-PNG CSV/TXT files.
+- Inference: `comparison_dense` is the intended image-only comparison folder; the long-name directory is an accidental original dense-output copy and should not remain in the requested four-folder bundle.
+
+
+## Burgers Round03 Image-Only Bundle Duplicate Directory Cleanup - 2026-06-07T21:04:48Z
+
+- Status: removed the accidental duplicate long-name comparison directory from the image-only bundle; no training or plotting was started.
+- Dedicated report updated: `docs/burgers_loss3_selective_round03_image_only_bundle_20260607.md`.
+- Removed directory: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/burgers_loss3_selective_round03_long_training_comparison_dense_20260605`.
+- Observed post-cleanup top-level folders: `loss1`, `loss2`, `loss3`, and `comparison_dense`.
+- Observed post-cleanup file hygiene: `53` PNG files and `0` non-PNG files remain in the bundle.
+- Inference: the bundle now matches the requested four-folder image-only structure, with `comparison_dense` as the sole comparison folder.
+
+
+## Burgers Round03 Loss3 P2Q2 After-Attack Visual Interpretation - 2026-06-07T21:13:26Z
+
+- Status: inspected the loss3 p2q2 after-attack image and numeric traces; no training or plotting was started.
+- Dedicated report updated: `docs/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607.md`.
+- Source image: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/loss3/polished_report/round03_loss3_baseline_vs_epoch1500_p2q2_attack_step100_after_perturbation.png`.
+- Numeric sources: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss3/summary.json`, `attack_loss_curves.csv`, and `attack_traces.npz`.
+- Observed from plotting code: baseline and loss3 target panels share per-row y-limits for delta/input/output/diff, so left-right visual magnitude is comparable.
+- Observed at step100: final perturbation RMS is approximately `0.12` for both baseline and loss3; mean final MSE is baseline `0.0265074968` versus loss3 `0.0029296223`; mean final model-solver diff RMS is baseline `0.1535285` versus loss3 `0.0525339`.
+- Observed per-sample final MSE target/baseline ratios: S1 `0.8445`, S2 `0.1003`, S3 `0.0805`, S4 `0.0622`, S5 `0.0920`, S6 `0.1905`.
+- Inference: the figure supports the interpretation that loss3 self-training made the model harder to move away from the solver under the same p2q2 input perturbation, especially on the five generalization samples; the input perturbation amplitude itself is not smaller.
+
+
+## Burgers Round03 Combined P2Q2 Comparison-Dense Panels - 2026-06-07T21:21:56Z
+
+- Status: generated combined p=2,q=2 attack visualization PNGs from existing saved traces; no training and no new attack optimization was started.
+- Source script: `tools/plot_burgers_round03_p2q2_combined_attack_panels.py`.
+- Dedicated reports updated: `docs/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607.md` and `docs/burgers_loss3_selective_round03_image_only_bundle_20260607.md`.
+- Numeric sources: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss1/attack_traces.npz`, `loss2/attack_traces.npz`, `loss3/attack_traces.npz`, and `sample_manifest.json`.
+- Output directory: `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense`.
+- Output files:
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_loss1_loss2_loss3_step000_before_perturbation_four_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_loss1_loss2_loss3_step100_after_perturbation_four_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_loss1_loss2_loss3_before_after_overlay_four_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_vs_loss1_before_after_overlay_two_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_vs_loss2_before_after_overlay_two_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_vs_loss3_before_after_overlay_two_column.png`
+- Observed verification: four-column images are `7200x2528`; two-column overlay images are `3600x2528`; all six PNGs had nonzero RGB pixel standard deviation.
+- Observed bundle hygiene after generation: `59` PNG files and `0` non-PNG files inside the image-only bundle.
+- Inference: the new four-column views remove the repeated baseline panel and compare `baseline`, `loss1`, `loss2`, and `loss3` under shared row-wise y-limits; overlay views render before perturbation as faint dashed curves and after-step100 as darker solid curves.
+
+
+## Burgers Round03 All-Model P2Q2 Comparison Correction - 2026-06-07T21:24:43Z
+
+- Status: corrected the p2q2 interpretation to compare `loss3` against `baseline`, `loss1`, and `loss2`; no training, plotting, or attack optimization was started.
+- Dedicated report updated: `docs/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607.md`.
+- Numeric sources: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/loss1/attack_traces.npz`, `loss2/attack_traces.npz`, `loss3/attack_traces.npz`, and `summary.json`.
+- Observed step0 mean MSE: baseline `0.0002251479`, loss1 `0.0000075847`, loss2 `0.0000088161`, loss3 `0.0000356045`.
+- Observed step100 mean MSE at matching `delta_rms≈0.12`: baseline `0.0265074968`, loss1 `0.0062939017`, loss2 `0.0092682792`, loss3 `0.0029296223`.
+- Observed step100 mean model-solver diff RMS: baseline `0.1535285`, loss1 `0.0706373`, loss2 `0.0884283`, loss3 `0.0525339`.
+- Observed step100 ratios: loss3/baseline `0.1105`, loss3/loss1 `0.4655`, loss3/loss2 `0.3161`.
+- Observed per-sample final MSE ranking: loss3 wins S3-S6; loss1 wins S1-S2; baseline is worst on all six samples.
+- Inference: loss3 is not best by clean step0 MSE, but has the best overall attacked-output stability after 100 p2q2 attack steps on this six-sample set.
+
+
+## Burgers Round03 P2Q2 Overlay Before-Curve Alpha Correction - 2026-06-07T21:30:51Z
+
+- Status: updated and regenerated p2q2 overlay comparison PNGs; no training and no new attack optimization was started.
+- Source script updated: `tools/plot_burgers_round03_p2q2_combined_attack_panels.py`.
+- Dedicated reports updated: `docs/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607.md` and `docs/burgers_loss3_selective_round03_image_only_bundle_20260607.md`.
+- Observed pre-correction issue: before-perturbation overlay main curves used alpha `0.26`, `0.28`, and `0.30`, while after curves used approximately `0.92..0.94`.
+- Correction: before-perturbation dashed main curves now use `alpha=0.80` for delta, attacked input, solver before, model before, and diff before; low-alpha fill bands remain light.
+- Regenerated overlay outputs:
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_loss1_loss2_loss3_before_after_overlay_four_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_vs_loss1_before_after_overlay_two_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_vs_loss2_before_after_overlay_two_column.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_p2q2_baseline_vs_loss3_before_after_overlay_two_column.png`
+- Observed verification: overlay image dimensions remain `7200x2528` for the four-column overlay and `3600x2528` for two-column overlays; bundle hygiene remains `59` PNG files and `0` non-PNG files.
+- Inference: before curves should now be visible while dashed line style still separates before from after.
+
+
+## Burgers Round03 P2Q2 Metrics Markdown Record - 2026-06-07T21:35:55Z
+
+- Status: created a dedicated Markdown record consolidating the p2q2 MSE/RMS/ratio/image-alpha data discussed in chat; no training and no new attack optimization was started.
+- Dedicated record: `docs/burgers_round03_p2q2_metrics_record_20260607.md`.
+- Numeric sources: `forensics/burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607/summary.json`, `sample_manifest.json`, and `loss1/loss2/loss3/attack_traces.npz` plus their `attack_loss_curves.csv` files.
+- Plot/source paths recorded: `tools/plot_burgers_round03_p2q2_combined_attack_panels.py` and `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense`.
+- Observed contents recorded in the Markdown: attack/environment settings, checkpoint sources, six sample sources, MSE/RMS definitions, step0 summary table, step100 summary table, per-sample step100 MSE ratios, per-sample step100 rankings, loss3-vs-baseline amplitude details, step0 rankings, six plot output dimensions/byte sizes/RGB stddevs, bundle PNG/non-PNG counts, and overlay alpha settings before/after correction.
+- Observed key values carried into the record: step100 mean MSE baseline `0.0265074968`, loss1 `0.0062939017`, loss2 `0.0092682792`, loss3 `0.0029296223`; step100 mean model-solver RMS baseline `0.1535285264`, loss1 `0.0706373230`, loss2 `0.0884283185`, loss3 `0.0525338911`; bundle hygiene `59` PNG and `0` non-PNG files.
+- Inference recorded: loss3 is not best by clean step0 MSE, but has the best overall attacked-output stability after 100 p2q2 attack steps on the six-sample set; loss3 wins S3-S6, loss1 wins S1-S2, and baseline is worst on all six final attacked samples.
+
+
+## Burgers Round03 Full P2Q2 Attack Runtime Estimate - 2026-06-07T21:49:41Z
+
+- Status: estimated runtime and output schema for the requested 52-dataset x 4-model p=2,q=2 attack sweep; no full sweep was started.
+- Dedicated estimate report: `docs/burgers_round03_full_p2q2_attack_runtime_estimate_20260607.md`.
+- GPU evidence: `nvidia-smi` observed Tesla V100-SXM2-32GB idle with 0 MiB used; PyTorch `2.8.0+cu126`, CUDA runtime `12.6`, CUDA available, device capability `(7,0)`, arch list includes `sm_70`, CUDA matmul sanity returned `256.0`.
+- Model set: baseline plus round03 loss1 epoch8000, loss2 epoch2000, and loss3 epoch1500 checkpoints.
+- Dataset scope observed: train file has 1350 samples but only 50 are planned; test has 150 samples; 50 generalization files each have 200 samples; total per model is 10200 samples and total across four models is 40800 model-sample attacks.
+- Existing p2q2 logic inspected from `tools/plot_burgers_p2q2_baseline_vs_epoch1000_attack_gif.py`: `EPSILON_RMS=0.12`, `ALPHA_RMS=0.012`, differentiable solver target, normalized RMS-L2 gradient update, RMS-L2 projection.
+- Benchmark observed on representative generalization data with final-only recording plus FFT: batch50 mean step `3.2156s`, peak `2.8239 GiB`; batch100 `3.2876s`, peak `5.6343 GiB`; batch200 `3.6761s`, peak `11.2144 GiB`; batch400 `2.6039s`, peak `22.4426 GiB`; batch500 `2.5830s`, peak `28.5935 GiB`.
+- Runtime estimate recorded: batch500 grouped estimates are 10 steps `0.61h`, 20 steps `1.14h`, 50 steps `2.76h`, 100 steps `5.46h` ideal; practical 100-step expectation is `6-7h`. Batch400 100-step ideal is `7.16h`; strict per-dataset batch200 100-step ideal is `17.74h`.
+- Proposed output schema recorded: sample manifest, config, summary CSV, per-model initial/final losses, per-model final delta arrays, and per-model/dataset FFT power mean arrays of shape `[52,513]` plus low/mid/high frequency band summaries and spectral centroid.
+- Inference: full 100-step sweep is feasible but not quick; recommended next step is a 20-step all-dataset pilot with batch500, expected around `1.3-1.6h` practical wall-clock, to check whether the final-delta FFT already shows the suspected high-frequency shift.
+
+
+## Burgers Round03 Full P2Q2 20-Step Pilot Launch - 2026-06-07T21:57:55Z
+
+- Status: launched the all-dataset final-only p=2,q=2 attack pilot in tmux; the run is active and has not completed yet.
+- Dedicated launch report: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md`.
+- Tmux session: `burgers_p2q2_20step_20260607`.
+- Source runner: `tools/run_burgers_round03_full_p2q2_finalonly_attack.py`.
+- Launcher: `tools/run_burgers_round03_full_p2q2_20step_pilot_20260607.sh`.
+- Result root: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607`.
+- Log: `adversarial_training_runs/burgers_round03_full_p2q2_20step_pilot_20260607_logs/run_20260607_215538_UTC.log`.
+- Scope: baseline plus round03 loss1 epoch8000, loss2 epoch2000, loss3 epoch1500; train first 50, full test 150, and all 50 generalization datasets of 200 samples each; `10200` samples per model and `40800` model-sample attacks total.
+- Attack settings: `steps=20`, `batch_size=500`, `epsilon_rms=0.12`, `alpha_rms=0.012`; final-only recording of initial loss, final loss, final delta, delta RMS, per-dataset FFT power means, FFT band fractions, and spectral centroid.
+- Debug validation before launch: `forensics/burgers_round03_full_p2q2_debug_10samples_1step_20260607` completed baseline-only 10-sample 1-step run and wrote manifest/config/summary/loss/delta/FFT outputs; final delta RMS mean was `0.012000000104308128`.
+- GPU evidence: launch `nvidia-smi` showed Tesla V100-SXM2-32GB idle with 0 MiB used; during monitoring GPU memory was about `30084 MiB / 32768 MiB`.
+- First progress observed from `progress.jsonl`: two baseline batches completed, 0:500 in `51.4147s` and 500:1000 in `49.4566s`, both with final delta RMS mean `0.1199999973` and peak allocated `28.5961 GiB`.
+- Inference: the task is running normally and matches the batch-500 runtime/memory estimate. It was launched to replace six-sample visual impressions with all-dataset final-delta FFT evidence for the suspected high-frequency shift.
+
+
+## Burgers/Darcy Flow GPU Status Check - 2026-06-07T22:19:52Z
+
+- Status: inspected current GPU memory, Burgers p2q2 pilot progress, and Darcy Flow 500-epoch run completion; no new training/attack was started by this status check.
+- Dedicated reports updated: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md` and `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Observed GPU state: `nvidia-smi` at `2026-06-07T22:18:44Z` showed Tesla V100-SXM2-32GB using `30084 MiB / 32768 MiB`, utilization about `43%`, temperature `51C`, with no OOM/ECC error shown.
+- Observed process state: `pgrep` showed active Burgers runner PID `865719`; `tmux list-sessions` showed `burgers_p2q2_20step_20260607`; no Darcy Flow training tmux session was active.
+- Observed Burgers progress: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/progress.jsonl` had `27` completed batches out of expected `84`; baseline completed all samples and loss1 epoch8000 had completed through sample range `2500:3000`; `summary.json` was not yet written.
+- Observed latest Burgers batch: loss1 epoch8000 `2500:3000`, `54.2218s`, final loss mean `0.0028975329`, final delta RMS mean `0.1199999973`, peak allocated `28.5961 GiB`.
+- Inference: Burgers p2q2 pilot has not blown GPU memory and is running normally; ETA from this check is roughly `55-65` minutes plus final FFT/write overhead.
+- Observed Darcy Flow completion: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` reports finished UTC `20260607_200325_UTC`, `epochs=500`, final checkpoint `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/checkpoints/darcy_epoch500_step002000.pt`, total wall `4975.1246s` (`82.9187 min`), and CUDA peak allocated `9335.814 MB`.
+- Inference: Darcy Flow completed normally and is no longer running, so the current ~30 GiB GPU use is from the Burgers p2q2 pilot, not from simultaneous Darcy Flow plus Burgers.
+
+## Burgers Round03 Full P2Q2 20-Step Pilot Resume Preparation - 2026-06-07T22:28:42Z
+
+- Status: inspected the active 20-step all-dataset p=2,q=2 attack pilot and prepared resume support for continuing saved 20-step deltas to 40 or 60 total attack steps; no additional attack run was launched by this update.
+- Dedicated reports updated: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md` and `docs/burgers_round03_full_p2q2_attack_runtime_estimate_20260607.md`.
+- Source runner updated: `tools/run_burgers_round03_full_p2q2_finalonly_attack.py`.
+- New resume launchers: `tools/run_burgers_round03_full_p2q2_resume_20to40_20260607.sh` and `tools/run_burgers_round03_full_p2q2_resume_20to60_20260607.sh`.
+- Observed validation: `adv_robust/bin/python -m py_compile tools/run_burgers_round03_full_p2q2_finalonly_attack.py` passed. `bash -n` had passed for both resume launchers before this ledger update.
+- Observed current 20-step progress: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/progress.jsonl` had `38` completed batch rows out of expected `84`; baseline completed all `10200` samples and loss1 epoch8000 had completed through sample range `8000:8500`.
+- Observed current saved 20-step outputs: baseline wrote `baseline/losses_and_delta_rms_by_sample.npz` and `baseline/final_delta_by_sample.npz`; loss1/loss2/loss3 final delta files were not yet expected because those model sweeps had not completed.
+- Observed GPU/process state: `nvidia-smi` reported `30084 MiB / 32768 MiB`, about `34%` utilization, and no OOM/ECC error. `ps` showed active runner PID `865719`; tmux session `burgers_p2q2_20step_20260607` was still active.
+- Resume behavior recorded: after the 20-step source root has `summary.json` and all four per-model loss/delta files, the 20-to-40 or 20-to-60 launcher will load saved 20-step `final_delta_by_sample.npz` as the initial perturbation, preserve the original step0 loss, record the 20-step resume-start loss/delta RMS, and recompute final loss, final delta, and FFT summaries at the target total step count.
+- Inference: 20 steps may be insufficient for the frequency-shift question, but the saved deltas will make 40/60-step follow-up runs incremental rather than restarting from zero. The resume runs should not be launched until the current 20-step job finishes, because the active job is already using roughly 30 GiB of GPU memory.
+
+## Burgers Round03 Full P2Q2 20-Step Pilot Delta Save Check - 2026-06-07T22:33:53Z
+
+- Status: inspected the active 20-step pilot after loss1 reached its model boundary; no new attack run was launched.
+- Dedicated report updated: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md`.
+- Observed progress: `progress.jsonl` had `43` completed batch rows; loss1 epoch8000 completed `10000:10200`, and loss2 epoch2000 had started with batch `0:500` complete.
+- Observed saved outputs: both baseline and loss1 now have `losses_and_delta_rms_by_sample.npz` and `final_delta_by_sample.npz` under `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/`.
+- Observed GPU state: `nvidia-smi` reported `30084 MiB / 32768 MiB`, about `42%` utilization, temperature `50C`, and no OOM/ECC error.
+- Inference: the 20-step run writes final deltas at each model boundary as expected; the prepared 20-to-40/60 resume path should have usable per-model starting deltas after loss2/loss3 complete and the global summary is written.
+
+## Darcy Flow Loss3 Self-Training Generalization Result - 2026-06-07T22:41Z
+
+- Status: inspected completed Darcy Flow loss3 self-training evaluation CSVs to answer whether generalization loss decreased; no new training or attack was started.
+- Dedicated report updated: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Source files inspected: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/eval_split_summary.csv`, `eval_metrics.csv`, and `summary.json`.
+- Observed scope: clean evaluation during Darcy Flow loss3 self-training on train/test plus `50` selected generalization datasets; this is not an adversarial attack evaluation.
+- Observed generalization epoch0 to epoch500: RMSE dataset mean `0.0005717215820` to `0.0003075836784` (`46.20%` lower), MAE dataset mean `0.0004752948281` to `0.0002511947812` (`47.15%` lower), relative L2 dataset mean `0.09337999846` to `0.05023221956` (`46.21%` lower), and accuracy score mean `91.46002810` to `95.21719090` (`+3.7572` points).
+- Observed per-dataset result: all `50/50` generalization datasets improved at epoch500 for RMSE, MAE, relative L2, and accuracy score versus baseline.
+- Observed best clean generalization checkpoint: epoch `479`, global step `1916`, with RMSE dataset mean `0.0001979864422`, relative L2 dataset mean `0.03234040494`, and MAE dataset mean `0.0001593592566`; epoch500 remains improved versus baseline but is worse than epoch479.
+- Observed train/test epoch0 to epoch500: train RMSE worsened from `0.0002389861588` to `0.0004251050391` (`77.88%` higher); test RMSE worsened from `0.0003051046005` to `0.0004394615336` (`44.04%` higher); train MAE worsened from `0.0001717641692` to `0.0003802275410` (`121.37%` higher); test MAE worsened from `0.0002191964648` to `0.0003843123580` (`75.33%` higher); train relative L2 worsened from `0.03555337338` to `0.06324181391` (`77.88%` higher); test relative L2 worsened from `0.04471923445` to `0.06441195355` (`44.04%` higher); train accuracy score dropped from `96.56672710` to `94.05198205` (`-2.5147` points); test accuracy score dropped from `95.71949736` to `93.94858792` (`-1.7709` points).
+- Inference: Darcy Flow loss3 self-training did lower clean generalization loss on the selected 50 generalization datasets, but the improvement is not monotonic and comes with clean train/test degradation, suggesting specialization to the selected generalization distribution.
+
+## Darcy Flow Loss1/Loss2 Comparison And Jacobian-SVD Feasibility Inspection - 2026-06-07T22:50Z
+
+- Status: inspected local Darcy Flow training artifacts, adversarial-training code paths, and dataset shape to answer whether loss3 was compared with loss1/loss2 self-training and whether full Jacobian/SVD is feasible; no new training, attack, or Jacobian computation was started.
+- Dedicated report updated: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Source files inspected: `tools/run_darcy_lossdrop50_loss3_500ep_20260607.sh`, `tools/adversarial_training.py`, `tools/analyze_local_jacobian_fno_deeponet.py`, `tools/compare_burgers_adversarial_jacobian_svd.py`, and the Darcy train dataset `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/train/dim2d_darcy_nx85_N384_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt`.
+- Observed comparison status: the current Darcy Flow lossdrop50 selected-dataset self-training has a completed loss3-style run but no matching local loss1/loss2 500-epoch self-training runs on the same 50 selected generalization datasets.
+- Observed code behavior: `--burgers-attack-loss-objective loss1/loss2/loss3` is Burgers-only; non-Burgers attack targets use attacked solver output and are labeled loss3-style. The current Darcy launcher has no Darcy-specific loss1/loss2 switch.
+- Observed Darcy data shape: train `x` and `y` are `(384, 85, 85)`, so one single-sample dense local Jacobian is `7225 x 7225` with `52,200,625` entries.
+- Observed Burgers Jacobian code path: the existing explicit Jacobian helper computes dense rows by one autograd backward pass per output coordinate; existing top-k SVD code uses sparse `svds` after the dense matrix is available.
+- Inference: there is currently no valid loss3-vs-loss1/loss2 Darcy self-training comparison. A direct dense Jacobian/SVD diagnostic for Darcy is much more expensive than Burgers and should not be the default. For current `85x85`, one or a few dense probes might be possible but expensive; for `400x400`, dense Jacobian storage alone would be about `102 GB` per float32 matrix and is not practical. Matrix-free top-k JVP/VJP or finite-difference directional probes are the better path.
+
+
+## Darcy Flow Loss1/Loss2 Concurrent Memory Feasibility With Active Burgers Attack - 2026-06-07T22:53Z
+
+Observed evidence:
+- Observed from `nvidia-smi` at `2026-06-07T22:52:47Z`: Tesla V100-SXM2-32GB used `30084 MiB / 32768 MiB`, about `42%` GPU utilization, and no OOM/ECC error was shown. The NVIDIA process table did not list the Python process, but `pgrep` showed active Burgers runner PID `865719` in tmux session `burgers_p2q2_20step_20260607`.
+- Observed from `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/progress.jsonl`: the Burgers p2q2 20-step final-only attack had `64/84` completed batch rows; latest batch `loss3_epoch1500 0:500` reported `peak_allocated_gib=28.59606409072876` and recent batch times around `54-59s`.
+- Observed from `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json`: the completed Darcy Flow loss3 self-training with `batch_size=96`, `attack_batch_size=96`, `optimizer_batch_size=24` reported `cuda_peak_allocated_mb=9335.81396484375`, `cuda_reserved_mb=11288.0`, and final `cuda_allocated_mb=3626.45068359375`.
+
+Inference:
+- A same-settings Darcy Flow self-training run should not be launched concurrently with the currently active Burgers attack on this 32GB V100: only about `2684 MiB` is free, while Darcy loss3 alone previously needed about `9.1 GiB` peak allocated and reserved about `11.0 GiB`.
+- After the Burgers attack finishes and releases memory, one Darcy Flow self-training run at the previous loss3 settings should fit. Running Darcy loss1 and loss2 simultaneously without Burgers may fit in raw memory if their footprints match loss3, but is risky due to transient attack/evaluation overhead and allocator fragmentation; sequential loss1 then loss2 is the safer default.
+- The current Darcy Flow run is loss3-style; true Darcy loss1/loss2 needs a Darcy-specific objective or launcher adjustment because the existing `--burgers-attack-loss-objective` switch is Burgers-only.
+
+
+## Darcy Flow Accuracy Score Definition Audit - 2026-06-07T22:58Z
+
+Observed evidence:
+- Observed from `tools/adversarial_training.py:35-40`: the adversarial-training evaluator imports `evaluate_dataset` from `tools.evaluate_generalization_models`.
+- Observed from `tools/evaluate_generalization_models.py:152-155`: per dataset, `relative_l2 = sqrt(sse / max(target_sse, 1e-20))` and `accuracy_score = 100.0 / (1.0 + relative_l2)`.
+- Observed from `tools/evaluate_generalization_models.py:407`: the code explicitly describes this as an accuracy-like score for regression PDE tasks; raw `relative_l2`, `RMSE`, and `MAE` are the underlying regression metrics.
+- Observed from `tools/adversarial_training.py:2133-2156`: `eval_split_summary.csv` averages per-dataset `accuracy_score`, so split means over multiple datasets equal `mean(100/(1+relative_l2_dataset))`, not necessarily `100/(1+mean(relative_l2_dataset))`.
+
+Inference:
+- Darcy Flow `accuracy_score` is not classification accuracy. It is a monotone rescaling of relative L2 used for plotting/table readability, and it should not be treated as an independent metric from relative L2.
+
+
+## Burgers Jacobian Downsample SVD Probe - 2026-06-07T23:35Z
+
+Status: completed a small GPU SVD probe comparing saved full `1024 x 1024` Burgers Jacobians to `512 x 512` and `256 x 256` coarse proxies.
+
+Observed evidence:
+- Current GPU availability before the run: `nvidia-smi` reported Tesla V100-SXM2-32GB idle at `0 MiB / 32768 MiB`; no active experiment Python process was found.
+- GPU path recorded for the probe: PyTorch `2.8.0+cu126`, Torch CUDA `12.6`, CUDA available on Tesla V100-SXM2-32GB, capability `[7, 0]`, PyTorch arch list includes `sm_70`; JAX `0.10.0`, backend `gpu`, device `cuda:0`.
+- Added tool: `tools/compare_burgers_jacobian_downsample_svd.py`.
+- Output directory: `forensics/burgers_jacobian_downsample_svd_probe_20260607`.
+- Dedicated report: `docs/burgers_jacobian_downsample_svd_probe_20260607.md`.
+- Source matrices: nine saved full-Jacobian SVD NPZ files from `forensics/burgers_p2q2_checkpoint_series_jacobian_svd_20260601`, covering samples `000`, `004`, and `006`, and matrix kinds `solver`, `baseline`, and `baseline_error`.
+- Observed checked NPZ fields include `jacobian`, `singular_values`, `left_singular_vectors`, and `right_singular_vectors`; checked full Jacobians have shape `(1024, 1024)`.
+- The probe generated `36` result rows in `forensics/burgers_jacobian_downsample_svd_probe_20260607/downsample_jacobian_svd_comparison.csv`; max CUDA allocated was `19.04 MB`, max reserved `26.0 MB`.
+- Observed overall block-projection results across all nine matrices: `512` proxy sigma1 ratio mean `0.9872`, min-max `[0.9496, 0.9982]`, minimum rank-1 right/left cosine `0.9971/0.9979`, minimum top10 right/left subspace mean principal cosine `0.9999/0.9999`; `256` proxy sigma1 ratio mean `0.9426`, min-max `[0.7758, 0.9912]`, minimum rank-1 right/left cosine `0.9533/0.9661`, minimum top10 right/left subspace mean principal cosine `0.9971/0.9976`.
+- Observed overall stride-submatrix results: `512` stride sigma1 ratio mean `0.5005`; `256` stride sigma1 ratio mean `0.2563`. Stride directions can still align well, but stride singular values are not quantitatively comparable to the full spectral norm.
+
+Inference:
+- For these saved Burgers matrices, `512` block-projected Jacobians are excellent proxies for the leading `1024` singular directions and top singular value.
+- `256` block-projected Jacobians remain useful as quick singular-vector/subspace screens, but can understate the error-Jacobian spectral norm by roughly `10%` to `22%` in this probe.
+- Plain `J[::d, ::d]` stride submatrices should not be used to estimate the full `1024` spectral norm; use block projection or another L2-consistent projection.
+- Raw per-row key metrics table was added to `docs/burgers_jacobian_downsample_svd_probe_20260607.md` under `Raw Per-Row Key Metrics`, sourced from `forensics/burgers_jacobian_downsample_svd_probe_20260607/downsample_jacobian_svd_comparison.csv`.
+
+- Metric definitions and a scaled-stride check were added to `docs/burgers_jacobian_downsample_svd_probe_20260607.md`. Observed after multiplying stride sigma ratios by the downsample factor: `512` stride scaled sigma mean `1.0009`, `256` stride scaled sigma mean `1.0253`; for `baseline_error` at `256`, scaled stride ranged `[0.9207, 1.2617]` with weaker minimum rank-1 right/left cosines `0.8285/0.8757` and top10 right/left subspace cosines `0.8767/0.9010`, while 256 block projection had sigma range `[0.7758,0.9597]` but stronger minimum rank-1 cosines `0.9533/0.9661` and top10 subspace cosines `0.9971/0.9976`.
+
+
+## Burgers Round03 Loss1/Loss2/Loss3 Downsample Jacobian SVD Probe - 2026-06-07T23:59Z
+
+Status: completed a GPU probe extending the earlier Burgers downsample-Jacobian SVD comparison from baseline-only evidence to the saved round03 self-trained loss1/loss2/loss3 model and error Jacobians.
+
+Observed evidence:
+- GPU before the run: `nvidia-smi` reported Tesla V100-SXM2-32GB at `0 MiB / 32768 MiB`; the run recorded PyTorch `2.8.0+cu126`, Torch CUDA `12.6`, device `Tesla V100-SXM2-32GB`, capability `[7, 0]`, and PyTorch arch list including `sm_70`.
+- Source directory: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`.
+- Source scope: 20 samples x 9 matrix labels = 180 saved full `1024 x 1024` Jacobian NPZ files: `solver`, `baseline_model`, `baseline_error`, `loss1_epoch5000_model`, `loss1_epoch5000_error`, `loss2_epoch2000_model`, `loss2_epoch2000_error`, `loss3_epoch1500_model`, and `loss3_epoch1500_error`.
+- Observed limitation: no local `*8000*jacobian_svd*.npz` under `forensics/` was found, so this probe uses the saved round03 `loss1_epoch5000` full Jacobians rather than epoch8000 Jacobians.
+- Output directory: `forensics/burgers_round03_loss123_downsample_svd_probe_20260607`.
+- Primary CSV: `forensics/burgers_round03_loss123_downsample_svd_probe_20260607/downsample_jacobian_svd_comparison.csv`.
+- Dedicated report: `docs/burgers_round03_loss123_downsample_svd_probe_20260607.md`.
+- Result size: `720` rows; max CUDA allocated/reserved `19.04 MB / 26.00 MB`.
+- Observed 512 block-projection error-Jacobian sigma means: baseline `0.9852`, loss1 `0.9848`, loss2 `0.9844`, loss3 `0.9777`; weakest 512 block top10 right/left subspace cosines were baseline `0.9987/0.9989`, loss1 `0.9867/0.9878`, loss2 `0.9653/0.9669`, loss3 `0.9999/0.9999`.
+- Observed 256 block-projection error-Jacobian sigma means/ranges: baseline `0.9361 [0.8342,0.9881]`, loss1 `0.9493 [0.8548,0.9799]`, loss2 `0.9366 [0.7601,0.9792]`, loss3 `0.8959 [0.7225,0.9691]`.
+- Observed 256 scaled-stride error-Jacobian sigma ranges: baseline `[0.8915,1.0684]`, loss1 `[0.8024,1.2052]`, loss2 `[0.6282,1.1963]`, loss3 `[0.8318,1.1695]`. Minimum top10 right/left subspace cosines were baseline `0.7724/0.8168`, loss1 `0.7091/0.7297`, loss2 `0.6796/0.6943`, loss3 `0.9648/0.9671`.
+
+Inference:
+- The self-trained model Jacobians themselves are not harder to compress than baseline in this probe; the fragile object is the model-minus-solver error Jacobian.
+- The user suspicion is partly supported: loss1/loss2 error Jacobians are clearly worse for 256 stride directions, and loss3 error shows stronger 256 block-projection spectral-norm underestimation. The effect is not uniform across all loss1/loss2/loss3 models.
+- For future cheap SVD screening, `512 block_projection` is the safest proxy. `256 block_projection` is useful for top-10 subspace screening but can understate error spectral norm. `256 stride`, even scaled by the downsample factor, should not be trusted for error-Jacobian conclusions.
+
+## Burgers Downsample Jacobian SVD Interpretation Correction - 2026-06-08T00:00Z
+
+Status: corrected the interpretation of stride versus block-projection proxy reliability after checking the reported 256 error-Jacobian sigma values.
+
+Observed evidence:
+- In `docs/burgers_jacobian_downsample_svd_probe_20260607.md`, the original 3-sample `baseline_error` 256 block-projection sigma mean was `0.8908`, while 256 stride after multiplying by the downsample factor had scaled sigma mean `1.0640`; for sigma1 magnitude alone, scaled stride was closer in mean.
+- In the expanded 20-sample round03 data, `baseline_error` 256 block projection had sigma mean/range `0.9361 [0.8342, 0.9881]`, while 256 scaled stride had `1.0040 [0.8915, 1.0684]`; again, scaled stride was closer for baseline-error sigma1 magnitude.
+- Direction/subspace metrics still favored block projection for error Jacobians: in the 3-sample probe, baseline-error 256 block top10 right/left subspace minima were `0.9971/0.9976`, versus scaled stride `0.8767/0.9010`; in the expanded round03 data, self-trained 256 stride top10 minima dropped to loss1 `0.7091/0.7297` and loss2 `0.6796/0.6943`, while block projection stayed above roughly `0.9186/0.9194` for those rows.
+
+Corrected inference:
+- The correct statement is not “block projection is always more reliable.”
+- If only estimating sigma1 magnitude, scaled stride can be competitive or closer after calibration.
+- If comparing singular vectors/top-k subspaces, or if requiring an `L2`-consistent coarse operator, block projection remains the more reliable diagnostic.
+
+## Burgers Round03 SVD Vector Frequency Proxy Interpretation - 2026-06-08T00:20Z
+
+Status: completed a saved-SVD analysis to explain why 256/512 downsample proxies are accurate for solver/model Jacobians but much less accurate for model-minus-solver error Jacobians.
+
+Observed evidence:
+- Source full-SVD directory: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606`.
+- Joined proxy CSV: `forensics/burgers_round03_loss123_downsample_svd_probe_20260607/downsample_jacobian_svd_comparison.csv`.
+- New output directory: `forensics/burgers_round03_loss123_svd_vector_frequency_probe_20260608`.
+- Dedicated report: `docs/burgers_round03_svd_vector_frequency_proxy_interpretation_20260608.md`.
+- GPU path: `nvidia-smi` before the run showed Tesla V100-SXM2-32GB at `0 MiB / 32768 MiB`; analysis recorded PyTorch `2.8.0+cu126`, Torch CUDA `12.6`, device `Tesla V100-SXM2-32GB`, capability `[7, 0]`, arch list including `sm_70`; max CUDA allocated/reserved `0.12 MB / 2.00 MB`.
+- Observed 256 model top1 block residual means: baseline `0.0217`, loss1 `0.0274`, loss2 `0.0296`, loss3 `0.0259`; corresponding 256 block sigma absolute error means are about `0.0219`, `0.0278`, `0.0301`, `0.0262`.
+- Observed 256 error top1 block residual means: baseline `0.0620`, loss1 `0.0496`, loss2 `0.0622`, loss3 `0.0968`; corresponding 256 block sigma absolute error means are `0.0639`, `0.0507`, `0.0634`, `0.1041`.
+- Observed 256 error worst-case sigma absolute errors: block projection reaches `0.2775` for loss3 error and `0.2399` for loss2 error; scaled stride reaches `0.3718` for loss2 error.
+- Observed correlations over 256 error rows: top1 block residual vs block-projection sigma absolute error `0.9976`; top10 block residual vs block-projection sigma absolute error `0.9724`; FFT high-power metrics correlate more weakly with block sigma error around `0.45`, and with stride sigma error around `0.59`.
+
+Inference:
+- The main cause of proxy inaccuracy is that error-Jacobian leading singular vectors are less well represented in the 256 block-constant coarse subspace. This is better described as projection residual/cancellation than simply generic high frequency, though high-frequency content is part of the physical picture.
+- `J_model - J_solver` cancels shared smooth low-frequency components and leaves relatively more mid/high-frequency or localized structure, so 256 projections and point-sampling proxies become less reliable.
+- Adversarial/self-training does not uniformly make the model Jacobian harder to compress. The model Jacobian remains easy; the error Jacobian is fragile. In the saved round03 data, loss3 error is worst for 256 block projection magnitude, while loss1/loss2 error are worst for 256 stride direction/subspace and outlier sigma errors.
+
+## Burgers Round03 FFT High Frequency Versus Block Residual Check - 2026-06-08T00:30Z
+
+Status: computed correlations between saved full-SVD singular-vector FFT high-frequency fractions and block-projection residuals to answer whether “more high frequency” is associated with larger block residual.
+
+Observed evidence:
+- Source CSV: `forensics/burgers_round03_loss123_svd_vector_frequency_probe_20260608/singular_vector_frequency_metrics.csv`.
+- Dedicated report updated: `docs/burgers_round03_svd_vector_frequency_proxy_interpretation_20260608.md`.
+- At coarse size 256 across all 180 matrices, FFT high versus block residual correlation was Pearson `0.5553`, Spearman `0.8753` for top1 vectors, and Pearson `0.6012`, Spearman `0.8998` for top10 weighted vectors.
+- At coarse size 256 for error matrices only, correlation was Pearson `0.4617`, Spearman `0.7936` for top1 vectors, and Pearson `0.4997`, Spearman `0.7102` for top10 weighted vectors.
+- 256 mean FFT high / block residual for model-only top1 vectors was `0.00089 / 0.02616`; for error-only top1 vectors it was `0.01618 / 0.06764`.
+- Within 256 error families, top1 Spearman correlations were baseline_error `0.5805`, loss1_error `0.8707`, loss2_error `0.8421`, and loss3_error `0.6526`.
+
+Inference:
+- Higher FFT high-frequency content is positively associated with larger block residual, especially in rank order.
+- FFT high-frequency and block residual are related but not equivalent: FFT high measures power above a Fourier cutoff, while block residual directly measures energy outside the piecewise-constant coarse subspace.
+- The sharper explanation for block-projection error is projection residual; higher frequency is an important physical reason this residual grows.
+
+## 2026-06-08 Cross-Topic Summary Markdown Bundle
+
+Status: created a multi-file Markdown summary bundle covering the key theoretical references, Burgers 1024/512/256 Jacobian downsample experiments, frequency/projection-residual analysis, Burgers p2q2 attack and training plots, and Darcy Flow loss3 self-training results discussed in the recent analysis thread.
+
+Observed output files:
+- `docs/20260608_experiment_summary_index.md`
+- `docs/20260608_jacobian_projection_theory_and_references.md`
+- `docs/20260608_burgers_downsample_svd_1024_512_256_summary.md`
+- `docs/20260608_burgers_frequency_projection_residual_summary.md`
+- `docs/20260608_burgers_training_attack_visual_summary.md`
+- `docs/20260608_darcy_flow_self_training_summary.md`
+
+Observed sources summarized:
+- Burgers downsample SVD reports: `docs/burgers_jacobian_downsample_svd_probe_20260607.md`, `docs/burgers_round03_loss123_downsample_svd_probe_20260607.md`, and their CSVs under `forensics/`.
+- Burgers frequency/projection residual report: `docs/burgers_round03_svd_vector_frequency_proxy_interpretation_20260608.md` and source CSVs under `forensics/burgers_round03_loss123_svd_vector_frequency_probe_20260608`.
+- Burgers p2q2 attack metrics: `docs/burgers_round03_p2q2_metrics_record_20260607.md`.
+- Burgers all-dataset p2q2 pilot: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md`.
+- Darcy Flow loss3 self-training: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Literature/reference notes: Rayleigh-Ritz/Galerkin, Davis-Kahan, Wedin, and StablePDENet arXiv `2601.06472`.
+
+Inference:
+- The bundle is an index-and-topic summary layer over existing detailed reports and numeric artifacts. It does not replace the source CSV/JSON/NPZ files.
+- The summary explicitly separates observed evidence from inference and records limitations such as missing local `loss1_epoch8000` full-Jacobian SVD NPZs.
 

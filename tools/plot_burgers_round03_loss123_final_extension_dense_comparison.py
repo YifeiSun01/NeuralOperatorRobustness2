@@ -399,10 +399,16 @@ def write_report(report_path: Path, dense_dir: Path, compact_dir: Path, merged: 
         final = g.iloc[-1]
         best = g.loc[g["rmse"].idxmin()]
         rows.append((loss, int(final["epoch"]), float(final["wall_hours"]), float(final["rmse"]), float(final["relative_l2"]), int(best["epoch"]), float(best["rmse"])))
+    final_epoch_by_loss = {}
+    for loss in ["loss1", "loss2", "loss3"]:
+        g = merged[merged["loss"] == loss]
+        if not g.empty:
+            final_epoch_by_loss[loss] = int(g["epoch"].max())
+    extent_text = ", ".join(f"{loss} epoch{final_epoch_by_loss[loss]}" for loss in ["loss1", "loss2", "loss3"] if loss in final_epoch_by_loss)
     lines = [
         "# Burgers Round03 Final Extension Plot Report - 2026-06-06",
         "",
-        "This report joins original, first-continuation, and final-extension run directories so curves extend through loss1 epoch5000, loss2 epoch2000, and loss3 epoch1500.",
+        f"This report joins original and continuation run directories so curves extend through {extent_text}.",
         "",
         "## Final And Best Generated Generalization",
         "",

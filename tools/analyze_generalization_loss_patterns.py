@@ -58,7 +58,7 @@ def jsonable(v: Any) -> Any:
 
 
 def task_label(task: str) -> str:
-    return {"burgers": "Burgers", "darcy": "Darcy/C-flow", "ns2d": "NS2D"}.get(task, task)
+    return {"burgers": "Burgers", "darcy": "Darcy Flow", "ns2d": "NS2D"}.get(task, task)
 
 
 def is_hard_binary_focus_excluded(task: str, dataset_id: str) -> bool:
@@ -144,22 +144,22 @@ def readable_case_label(task: str, dataset_id: str, split: str = "", manual_tier
     if task == "darcy":
         m = re.match(r"darcy_near_alpha(.+)_tau(.+)$", did)
         if m:
-            return f"Darcy/C-flow: binary coefficient 3/12, GRF alpha={unslug_number(m.group(1))}, tau={unslug_number(m.group(2))}"
+            return f"Darcy Flow: binary coefficient 3/12, GRF alpha={unslug_number(m.group(1))}, tau={unslug_number(m.group(2))}"
         m = re.match(r"darcy_far_alpha(.+)_tau(.+)_bin(.+)_(.+)$", did)
         if m:
-            return f"Darcy/C-flow: binary coefficient {unslug_number(m.group(3))}/{unslug_number(m.group(4))}, GRF alpha={unslug_number(m.group(1))}, tau={unslug_number(m.group(2))}"
+            return f"Darcy Flow: binary coefficient {unslug_number(m.group(3))}/{unslug_number(m.group(4))}, GRF alpha={unslug_number(m.group(1))}, tau={unslug_number(m.group(2))}"
         m = re.match(r"darcy_mid_identity_bias(.+)$", did)
         if m:
-            return f"Darcy/C-flow: threshold bias {unslug_number(m.group(1))}"
+            return f"Darcy Flow: threshold bias {unslug_number(m.group(1))}"
         m = re.match(r"darcy_mid_negative_bias(.+)$", did)
         if m:
-            return f"Darcy/C-flow: negated latent field, threshold bias {unslug_number(m.group(1))}"
+            return f"Darcy Flow: negated latent field, threshold bias {unslug_number(m.group(1))}"
         m = re.match(r"darcy_mid_square_centered_bias(.+)$", did)
         if m:
-            return f"Darcy/C-flow: squared-centered latent field, threshold bias {unslug_number(m.group(1))}"
+            return f"Darcy Flow: squared-centered latent field, threshold bias {unslug_number(m.group(1))}"
         m = re.match(r"darcy_mid_log_abs_centered_bias(.+)$", did)
         if m:
-            return f"Darcy/C-flow: log-absolute centered latent field, threshold bias {unslug_number(m.group(1))}"
+            return f"Darcy Flow: log-absolute centered latent field, threshold bias {unslug_number(m.group(1))}"
 
     return did
 
@@ -998,7 +998,7 @@ def write_readme(outdir: Path, tasks: list[str], ds: pd.DataFrame, sample_df: pd
     lines = [
         "# Generalization loss pattern diagnostics",
         "",
-        "This report compares low-loss and high-loss generated datasets for Burgers, Darcy/C-flow, and NS2D using the same retained FNO checkpoints.",
+        "This report compares low-loss and high-loss generated datasets for Burgers, Darcy Flow, and NS2D using the same retained FNO checkpoints.",
         "",
         "Terminology: `ground truth final` means the solver/PDE target at the final predicted time or the Darcy solution target. The previous `soft output target last` wording was incorrect and is not used here.",
         "",
