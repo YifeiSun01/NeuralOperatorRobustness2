@@ -45,3 +45,8 @@ Observed from Burgers p2q2 six-sample attack metrics: under the same `delta_rmsâ
 Observed from Darcy Flow loss3 self-training: selected 50 generalization datasets improved clean generalization RMSE/relative-L2 by about `46%`, but train/test clean metrics worsened, indicating specialization to the selected generalization distribution.
 
 Observed limitation: local full-Jacobian SVD artifacts exist for round03 `loss1_epoch5000`, `loss2_epoch2000`, and `loss3_epoch1500`. A local `loss1_epoch8000` full-Jacobian NPZ was not found, so the downsample-Jacobian comparison uses `loss1_epoch5000` for loss1.
+
+## Additional Definition Note
+
+- `docs/20260608_generalization_and_robustness_definitions.md`  
+  Working definitions separating clean generalization, finite-budget adversarial robustness, and infinitesimal Jacobian/spectral-norm robustness.

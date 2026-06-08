@@ -11505,3 +11505,167 @@ Inference:
 - The bundle is an index-and-topic summary layer over existing detailed reports and numeric artifacts. It does not replace the source CSV/JSON/NPZ files.
 - The summary explicitly separates observed evidence from inference and records limitations such as missing local `loss1_epoch8000` full-Jacobian SVD NPZs.
 
+
+## 2026-06-08 - Burgers Round03 full P2Q2 20-step attack data integrity check
+
+Status: inspected the previously launched four-model by 52-dataset Burgers p2q2 final-only attack output after the user asked whether the loss-before/loss-after, final delta, and delta FFT data now exist.
+
+Observed evidence:
+- Result root: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607`.
+- Completion/config evidence: `summary.json` exists and records `steps=20`, `batch_size=500`, `dataset_count=52`, `sample_count=10200`, and model order `baseline`, `loss1_epoch8000`, `loss2_epoch2000`, `loss3_epoch1500`.
+- `summary_by_model_dataset.csv` has `208` data rows, exactly `4 models x 52 datasets`.
+- Each model directory contains `losses_and_delta_rms_by_sample.npz`, `final_delta_by_sample.npz`, `fft_power_mean_by_dataset.npz`, and `fft_summary_by_dataset.csv`.
+- Per-model `fft_summary_by_dataset.csv` files each have `52` data rows.
+- For all four models, `losses_and_delta_rms_by_sample.npz` contains `initial_loss`, `initial_diff_rms`, `final_loss`, `final_diff_rms`, and `final_delta_rms`, each shape `(10200,)`.
+- For all four models, `final_delta_by_sample.npz` contains `final_delta` shape `(10200, 1024)`.
+- For all four models, `fft_power_mean_by_dataset.npz` contains `fft_power_mean` shape `(52, 513)`.
+- Mean dataset-level spectral centroids from `summary_by_model_dataset.csv`: baseline `4.030162`, loss1 epoch8000 `17.468758`, loss2 epoch2000 `13.889011`, loss3 epoch1500 `31.202970`.
+- Mean dataset-level high-frequency fractions `fft_high_129_512_frac`: baseline `0.000010`, loss1 epoch8000 `0.002113`, loss2 epoch2000 `0.000260`, loss3 epoch1500 `0.034111`.
+
+Inference:
+- The 20-step attack data requested for the initial all-dataset screen exists and is structurally complete.
+- It is not a 40-step, 60-step, or 100-step attack result. Only the `20step` root currently exists locally for this exact run-name family.
+- The saved 20-step final deltas are suitable as resume inputs for the prepared 20-to-40 or 20-to-60 launchers if longer attacks are needed.
+
+Remaining work:
+- If the scientific question requires saturation beyond the 20-step pilot, run `tools/run_burgers_round03_full_p2q2_resume_20to40_20260607.sh` or `tools/run_burgers_round03_full_p2q2_resume_20to60_20260607.sh` and compare the FFT/high-frequency metrics again.
+
+## 2026-06-08 - Burgers Round03 full P2Q2 frequency interpretation check
+
+Status: interpreted the completed 20-step four-model by 52-dataset attack FFT summary after the user asked whether the six-sample overlay made loss1/loss2 look falsely high-frequency.
+
+Observed evidence from `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary_by_model_dataset.csv`:
+- Mean low-band fractions `fft_low_1_32_frac`: baseline `0.9950449`, loss1 epoch8000 `0.9118145`, loss2 epoch2000 `0.9294445`, loss3 epoch1500 `0.7578354`.
+- Mean mid-band fractions `fft_mid_33_128_frac`: baseline `0.0049450`, loss1 epoch8000 `0.0860724`, loss2 epoch2000 `0.0702958`, loss3 epoch1500 `0.2080541`.
+- Mean high-band fractions `fft_high_129_512_frac`: baseline `0.0000101`, loss1 epoch8000 `0.0021130`, loss2 epoch2000 `0.0002598`, loss3 epoch1500 `0.0341106`.
+- Mean spectral centroids: baseline `4.0301616`, loss1 epoch8000 `17.468758`, loss2 epoch2000 `13.889011`, loss3 epoch1500 `31.202970`.
+- Paired by dataset, all three trained models have higher spectral centroid than baseline on `52/52` datasets.
+
+Inference:
+- Loss3 is the only model with a strong high-band `129-512` delta FFT shift.
+- Loss1 and loss2 are not identical to baseline, but their frequency shift is mostly mid-band rather than strongly high-band. Loss2 is especially close to baseline in absolute high-band energy.
+- The six-sample overlay visual impression that all three trained models become very high-frequency is not supported as a global high-band claim by the all-dataset 20-step statistics.
+- The earlier checkpoint-style delta FFT heatmap impression that loss3 changes most strongly is consistent with the all-dataset summary.
+
+Remaining work:
+- If the final attack is extended from 20 to 40 or 60 steps, rerun this same frequency summary and check whether loss1/loss2 high-band fractions remain small or grow with additional attack optimization.
+
+## 2026-06-08 - Burgers Round03 full P2Q2 robust loss reduction check
+
+Status: compared baseline against loss1 epoch8000, loss2 epoch2000, and loss3 epoch1500 on the completed 20-step p2q2 attack summary to answer whether self-training lowered the same-attack loss across the 52 datasets.
+
+Observed evidence from `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary_by_model_dataset.csv`:
+- Clean/pre-attack initial loss mean: baseline `0.0003164451`, loss1 epoch8000 `0.0000033187`, loss2 epoch2000 `0.0000085542`, loss3 epoch1500 `0.0000446399`.
+- Paired clean loss ratios vs baseline: loss1 `0.0101095`, loss2 `0.0265781`, loss3 `0.1465824`.
+- Clean loss is lower than baseline on `52/52` datasets for loss1, loss2, and loss3.
+- Final 20-step attacked loss mean: baseline `0.0292785310`, loss1 epoch8000 `0.0035624034`, loss2 epoch2000 `0.0045731862`, loss3 epoch1500 `0.0016781858`.
+- Paired final attacked loss ratios vs baseline: loss1 `0.1208829`, loss2 `0.1555019`, loss3 `0.0609096`.
+- Final attacked loss is lower than baseline on `52/52` datasets for loss1, loss2, and loss3.
+- Final model-solver RMS ratios vs baseline: loss1 `0.3396248`, loss2 `0.3828037`, loss3 `0.2447011`.
+- On the 50 generalization datasets only, final attacked loss ratios vs baseline are loss1 `0.1181292`, loss2 `0.1528716`, and loss3 `0.0584845`, with `50/50` lower final attacked loss for all three models.
+
+Inference:
+- Same-protocol 20-step attack loss is strongly reduced after self-training for all three models. Loss3 gives the lowest attacked final loss; loss1 gives the lowest clean initial loss.
+- Frequency and robustness are not the same metric: loss1/loss2 become much more robust than baseline even though their final deltas are not strongly high-frequency in the same way loss3 deltas are.
+- The current evidence is a 20-step attack result, not a saturated 100-step result. If attack saturation is required, extend from saved 20-step deltas and rerun the same summary.
+
+Remaining work:
+- Decide whether to extend to 40 or 60 steps to check whether the final-loss ordering and FFT-band ordering stay stable under longer attack optimization.
+
+## 2026-06-08 - Generalization versus robustness definition note
+
+Status: recorded the working definitions separating clean generalization, finite-budget adversarial robustness, and infinitesimal Jacobian robustness.
+
+Observed evidence:
+- Definition note created: `docs/20260608_generalization_and_robustness_definitions.md`.
+- Summary index updated: `docs/20260608_experiment_summary_index.md`.
+
+Inference:
+- Future Burgers/Darcy reports should explicitly state whether an improvement refers to clean absolute error, finite-budget attacked loss, or Jacobian spectral sensitivity.
+- The p2q2 attack is a finite-radius local robustness diagnostic; the Jacobian spectral norm is an infinitesimal first-order diagnostic. They are related but not equivalent.
+
+Remaining work:
+- When extending the 20-step Burgers attack to 40/60 steps or adding more Jacobian/SVD runs, report clean loss, final attacked loss, and Jacobian spectral quantities as separate metrics.
+
+## 2026-06-08 - Burgers clean-loss ratio interpretation and per-dataset table
+
+Status: clarified that the surprisingly small clean-loss ratios are MSE-style squared-loss ratios, not output-amplitude ratios, and generated a 52-dataset per-dataset table.
+
+Observed evidence:
+- Source summary: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/summary_by_model_dataset.csv`.
+- Runner definition: `tools/run_burgers_round03_full_p2q2_finalonly_attack.py` computes loss as `(pred - solver).pow(2).mean(dim=(1, 2))` and separately records RMS with `rms_l2_norm(pred - solver)`.
+- Generated CSV: `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/clean_and_attack_loss_ratios_by_dataset.csv`.
+- Generated Markdown: `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/clean_and_attack_loss_ratios_by_dataset.md`.
+- Dedicated docs copy: `docs/burgers_round03_clean_loss_ratio_interpretation_20260608.md`.
+- Mean clean MSE ratios vs baseline: loss1 epoch8000 `0.0101095`, loss2 epoch2000 `0.0265781`, loss3 epoch1500 `0.146582`.
+- Mean clean RMS ratios vs baseline: loss1 epoch8000 `0.100027`, loss2 epoch2000 `0.162403`, loss3 epoch1500 `0.395195`.
+
+Inference:
+- The `0.0101` clean ratio should not be interpreted as “output deviation amplitude is 1% of baseline”; it means squared clean MSE is about 1% of baseline. The corresponding RMS amplitude ratio is about 10%.
+- Future summaries should present both MSE ratio and RMS ratio when explaining clean accuracy or attack robustness.
+
+Remaining work:
+- If needed, use the per-dataset CSV to make a compact visualization of clean MSE/RMS ratios across the 52 datasets.
+
+## 2026-06-08 - Burgers sample-weighted solver gap before and after attack
+
+Status: computed the direct sample-weighted model-solver gap before and after the 20-step p2q2 attack for baseline, loss1 epoch8000, loss2 epoch2000, and loss3 epoch1500.
+
+Observed evidence:
+- Source arrays: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/*/losses_and_delta_rms_by_sample.npz`.
+- Output CSV: `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/sample_weighted_before_after_solver_gap_summary.csv`.
+- Dedicated doc updated: `docs/burgers_round03_clean_loss_ratio_interpretation_20260608.md`.
+- Across all `10200` samples, before-attack RMS gaps are baseline `0.016761`, loss1 epoch8000 `0.001683`, loss2 epoch2000 `0.002731`, loss3 epoch1500 `0.006546`.
+- Across all `10200` samples, after-attack RMS gaps are baseline `0.169412`, loss1 epoch8000 `0.057174`, loss2 epoch2000 `0.064495`, loss3 epoch1500 `0.040445`.
+- Before-attack RMS ratios vs baseline are loss1 `0.100384`, loss2 `0.162950`, loss3 `0.390539`.
+- After-attack RMS ratios vs baseline are loss1 `0.337486`, loss2 `0.380699`, loss3 `0.238735`.
+
+Inference:
+- Loss1 has the smallest clean model-solver output-amplitude gap.
+- Loss3 has the smallest attacked model-solver output-amplitude gap under the same 20-step p2q2 attack.
+- These RMS ratios are the visually intuitive amplitude ratios; MSE ratios are squared-loss ratios and appear much smaller.
+
+Remaining work:
+- If the attack is extended to 40/60 steps, recompute this same sample-weighted solver-gap table.
+
+## 2026-06-08 - Burgers per-dataset solver-gap variability check
+
+Status: inspected whether the 52 datasets have different before/after solver-gap behavior or whether the loss1/loss2/loss3 ranking is stable.
+
+Observed evidence:
+- Source table: `forensics/burgers_round03_full_p2q2_clean_loss_per_dataset_20260608/clean_and_attack_loss_ratios_by_dataset.csv`.
+- Dedicated doc updated: `docs/burgers_round03_clean_loss_ratio_interpretation_20260608.md`.
+- Before attack, loss1 epoch8000 has the smallest model-solver RMS gap on `52/52` datasets.
+- After attack, loss3 epoch1500 has the smallest model-solver RMS gap on `52/52` datasets.
+- Before-clean RMS ratio ranges vs baseline: loss1 `0.069630-0.267142`, loss2 `0.112260-0.271106`, loss3 `0.269603-0.478129`.
+- After-attack RMS ratio ranges vs baseline: loss1 `0.286972-0.524818`, loss2 `0.326930-0.526781`, loss3 `0.223921-0.417498`.
+- After attack, loss1 is smaller than loss2 on `51/52` datasets; loss3 is smaller than both loss1 and loss2 on `52/52` datasets.
+
+Inference:
+- Dataset-to-dataset magnitudes vary noticeably, but the qualitative ranking is stable: loss1 is best before attack, and loss3 is best after attack.
+- The generated generalization datasets and original train/test rows have different ratio magnitudes; train/test after-attack ratios are somewhat higher, but ranking remains the same.
+
+Remaining work:
+- A compact per-dataset bar/line visualization would make the variability easier to inspect visually if needed.
+
+## 2026-06-08 - R2 raw artifact sync and GitHub source-record sync
+
+Status: synchronized generated raw data/results/visualizations to Cloudflare R2 and prepared Python/shell/Markdown files for GitHub.
+
+Observed evidence:
+- R2 target bucket/prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Local snapshot estimate before upload from `rclone size . --exclude-from .r2exclude`: `26,755` objects, `24.240 GiB`.
+- R2 upload used `rclone copy` with `.r2exclude`, excluding `.git`, `adv_robust`, virtual environments, and caches.
+- Initial R2 attempt with S3 ACL returned Cloudflare R2 `501 NotImplemented`; it was stopped and rerun without ACL settings.
+- Final no-ACL clean pass completed successfully and reported `There was nothing to transfer`.
+- Final R2 remote size check for the target prefix reported `136,532` objects and `280.973 GiB`; this is the full remote prefix total and includes prior remote content.
+- Sync record created: `docs/r2_and_github_sync_20260608.md`.
+- Final R2 log saved locally: `forensics/r2_upload_20260608/rclone_copy_noacl_final_20260608.log`.
+
+Inference:
+- The local model/data/result/visualization snapshot covered by `.r2exclude` has been copied to the requested R2 prefix.
+- The remote prefix is larger than the local snapshot because previous uploads already existed under the same prefix.
+- GitHub should receive only lightweight `*.py`, `*.sh`, and `*.md` files; large arrays, checkpoints, images, and datasets should stay on R2.
+
+Remaining work:
+- Commit and push the staged `*.py`, `*.sh`, and `*.md` files to GitHub branch `vast-ai`.
