@@ -1,3 +1,16 @@
+## 2026-06-08 - Burgers cross-term plain-language clarification
+
+Status: clarified the endpoint-growth decomposition and cross-term correlation from existing residual-change outputs. No new computation was launched beyond reading the existing key summary CSV.
+
+Observed evidence:
+- Dedicated clarification doc: `docs/burgers_cross_term_plain_explanation_20260608.md`.
+- Source CSV: `forensics/burgers_existing_svd_residual_change_correlation_key_summary_20260608.csv`.
+- The x-variable in the cross-term correlations is `error_spectral_norm = ||J_model-J_solver||_2`; the y-variable is `cross_term_mse = 2<E(x), E(x+delta)-E(x)>`.
+- Observed all-sample/all-model Pearson/Spearman correlations between `error_spectral_norm` and `cross_term_mse`: second ns50 loss3 checkpoint series `-0.808/-0.571`, second ns50 loss1 epoch2000 `-0.681/-0.274`, second ns50 loss2 epoch0900 `-0.701/-0.489`, round01 aligned `-0.785/-0.488`, round03 long-final `-0.513/-0.425`, and round03 final-extension `-0.447/-0.320`.
+
+Inference:
+- The negative cross-term correlations mean that larger error-Jacobian spectral norm is often accompanied by a more negative endpoint correction term, partially canceling residual-change energy in endpoint growth.
+
 ## 2026-06-08 - Burgers error-operator SVD/attack paper record consolidated
 
 Status: created a paper-oriented Markdown record consolidating the theory, prior direction experiment, endpoint attack-damage correlations, residual-change correlations, caveats, and suggested paper claims. No new computation was launched for this consolidation step.
@@ -12776,3 +12789,93 @@ Inference:
 Remaining work:
 - If the local 2026-06-08 derived mismatch/provenance docs and CSVs should be available remotely, sync them to R2 explicitly.
 - If the user intends a different R2 prefix containing another completed round_02 or full 100-step tag artifact, inspect that prefix separately.
+
+## 2026-06-08 - Burgers attack delta vs error-SVD direction alignment
+
+Status: completed a GPU-verified post-processing audit of saved PGD final perturbations against saved error-Jacobian right singular vectors. No new SVD, attack, training, model prediction, or solver prediction was recomputed.
+
+Observed evidence:
+- Script: `tools/compute_burgers_attack_delta_svd_direction_alignment_20260608.py`.
+- Result doc: `docs/burgers_attack_delta_svd_direction_alignment_20260608.md`.
+- Output manifest: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/manifest.json`.
+- Per-row CSV: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_rows.csv`.
+- Summary CSV: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_summary.csv`.
+- Direction-metric correlation CSV: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_metric_correlations.csv`.
+- GPU records: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/gpu_preflight.json` and `forensics/burgers_attack_delta_svd_direction_alignment_20260608/nvidia_smi.txt`.
+- GPU preflight observed PyTorch `2.8.0+cu126`, CUDA `12.6`, Tesla V100-SXM2-32GB, compute capability `(7, 0)`, and `sm_70` in the supported architecture list.
+- All saved delta/SVD rows matched: `n_rows = 440`, `n_missing = 0`.
+
+Key observed metrics:
+- Across all `440` rows, `abs_cos_top1` mean/median = `0.321671 / 0.227038`, and top-1 angle mean/median = `69.907779 / 76.877230` degrees.
+- Across all rows, top-k input perturbation energy explained by saved right singular subspaces was top5/top20/top100 = `0.562995 / 0.776901 / 0.886816`.
+- Across `220` generalization rows, `abs_cos_top1` mean/median = `0.350457 / 0.294917`, top-1 angle mean/median = `68.095717 / 72.847274` degrees, and top5/top20/top100 energy = `0.644626 / 0.841631 / 0.931321`.
+- All-row correlations: `top20_energy` vs endpoint/residual/cross = Pearson `0.591 / 0.579 / -0.204`, Spearman `0.745 / 0.736 / -0.263`; `error_spectral_norm` vs endpoint/residual/cross = Pearson `0.758 / 0.792 / -0.500`, Spearman `0.719 / 0.723 / -0.450`.
+- Generalization-row correlations: `top20_energy` vs endpoint/residual/cross = Pearson `0.588 / 0.575 / -0.190`, Spearman `0.787 / 0.771 / -0.319`; `error_spectral_norm` vs endpoint/residual/cross = Pearson `0.700 / 0.749 / -0.502`, Spearman `0.666 / 0.688 / -0.592`.
+
+Inference:
+- The realized final PGD perturbation is generally not the single top right singular vector of `J_model - J_solver`; the top-1 angle is typically large.
+- The perturbation is nevertheless concentrated in high-singular-value subspaces: top-20/top-100 explain most final-delta energy, especially on generalization rows.
+- This supports describing the attack direction as a high-singular-subspace mixture rather than a pure top-1 singular vector direction.
+- The negative cross term remains an endpoint orientation effect relative to the clean residual `E(x)`, not proof that the attack delta exactly followed the top singular vector.
+
+Remaining work:
+- For a stricter theorem-facing audit, save or recompute output-space `DeltaE = E(x+delta)-E(x)` vectors and compare them with left singular vectors; this entry only audits input-space `delta` vs right singular vectors.
+
+## 2026-06-08 - Burgers actual PGD cross term vs top-singular counterfactual
+
+Status: completed a GPU-verified comparison between actual saved PGD endpoint cross terms and clean-point top-singular-direction linearized cross terms. No SVD or attack was recomputed; clean residual vectors `E(x)` were recomputed by GPU model/solver forward pass.
+
+Observed evidence:
+- Script: `tools/compute_burgers_actual_vs_top_singular_cross_term_20260608.py`.
+- Result doc: `docs/burgers_actual_vs_top_singular_cross_term_20260608.md`.
+- Output manifest: `forensics/burgers_actual_vs_top_singular_cross_term_20260608/manifest.json`.
+- Per-row CSV: `forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_rows.csv`.
+- Summary CSV: `forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_summary.csv`.
+- Correlation CSV: `forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_correlations.csv`.
+- GPU records: `forensics/burgers_actual_vs_top_singular_cross_term_20260608/gpu_preflight.json` and `forensics/burgers_actual_vs_top_singular_cross_term_20260608/nvidia_smi.txt`.
+- Source direction rows: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_rows.csv`.
+- All saved rows matched: `n_rows = 440`, `n_missing = 0`.
+- Consistency check: `||A v1|| - sigma1` had mean absolute error `8.26e-10` and max absolute error `2.43e-08`.
+
+Key observed metrics:
+- All rows: actual PGD cross term mean/median = `-5.045636e-04 / 7.221332e-06`; negative fraction = `0.479545`; actual residual-clean cosine mean/median = `0.072723 / 0.018151`.
+- Generalization rows: actual PGD cross term mean/median = `-1.000210e-03 / -6.494438e-05`; negative fraction = `0.627273`; actual residual-clean cosine mean/median = `-0.011381 / -0.067133`.
+- All rows: top-1 raw cross negative fraction = `0.502273`, confirming raw SVD sign is not meaningful for endpoint interpretation.
+- Generalization rows: top-1 raw cross negative fraction = `0.522727`; top-1 outward-sign cross mean/median = `2.215496e-03 / 2.951988e-04`; top-1 output abs cosine with `E(x)` mean/median = `0.077477 / 0.051896`.
+- Generalization rows: top-1 linear residual-change mean/median = `1.866151e-01 / 8.740677e-02`; actual residual-change mean/median = `1.517049e-02 / 6.293141e-03`.
+- Mean-level cancellation: actual cross mean divided by actual residual-change mean was `-5.46%` all rows and `-6.59%` on generalization rows.
+
+Inference:
+- The realized PGD endpoint perturbation is not the same as the clean-point top singular vector and does not necessarily make the residual movement strongly outward relative to `E(x)`.
+- On generalization rows, actual PGD residual movement has a mildly negative orientation term on average, but the residual movement energy remains much larger than the cancellation term.
+- If the top singular vector is used as a counterfactual and its sign is chosen to maximize endpoint growth, its cross term is positive by definition, not more negative; raw-sign negativity is an arbitrary SVD sign artifact.
+- The top-1 output direction is mostly close to orthogonal to `E(x)`; its main linearized effect is large `||A delta||^2`, not a large outward cross term.
+
+Remaining work:
+- If needed, run a direct nonlinear top-1 attack/probe by evaluating `E(x +/- ||delta|| v1)` through the model and solver; the current result is a clean-point linearized counterfactual.
+
+## 2026-06-08 - Burgers error-Jacobian endpoint-growth final conclusion record
+
+Status: recorded the final cleaned-up conclusion about Rayleigh/SVD directions, endpoint-good sign choice, actual PGD direction, and the cross-term role in endpoint growth. This is a documentation-only synthesis of existing saved analyses; no new training, attack, SVD, model forward, or solver forward was run for this entry.
+
+Observed evidence:
+- Final conclusion doc: `docs/burgers_error_jacobian_endpoint_growth_final_conclusion_20260608.md`.
+- Source direction audit: `docs/burgers_attack_delta_svd_direction_alignment_20260608.md`.
+- Source actual-vs-top-singular audit: `docs/burgers_actual_vs_top_singular_cross_term_20260608.md`.
+- Source rows: `forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_rows.csv` and `forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_rows.csv`.
+- Both audits matched `440` rows with `0` missing rows.
+
+Key conclusion:
+- The Rayleigh/SVD objective `max ||A delta||^2` gives the top singular axis, not an endpoint-good sign; for endpoint comparison the sign must be chosen by `sign(<E0, A v1>)`.
+- Actual PGD optimizes nonlinear endpoint growth and is not close to the top-1 singular vector; observed mean `|cos(delta_PGD, v1)|` was `0.322` overall and `0.350` on generalization rows.
+- Endpoint growth decomposes into residual movement plus cross term: `Delta L_end = ||Delta E||^2/N + 2<E0, Delta E>/N`.
+- On generalization rows, actual PGD cross term was negative on `62.7%` of rows with mean `-0.0010`, while actual residual movement mean was `0.01517`; the mean cancellation fraction was about `6.6%`.
+- The endpoint-good top-singular cross term is nonnegative by construction, but small relative to top-singular residual movement; observed mean `|cos(E0, A v1)|` was `0.0775` on generalization rows.
+
+Inference:
+- The cross term explains why endpoint growth and residual movement are not identical, but in the observed Burgers artifacts it is a correction term rather than the dominant attack-damage mechanism.
+- The error-Jacobian spectral norm remains strongly predictive of adversarial damage because it controls the dominant residual-movement amplification.
+
+Remaining work:
+- If the paper needs this statement for every broad generalization root, run or locate matching SVD/attack-direction audits for roots not covered by the existing representative artifacts.
+

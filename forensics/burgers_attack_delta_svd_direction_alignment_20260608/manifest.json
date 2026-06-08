@@ -1,0 +1,18 @@
+{
+  "output_dir": "forensics/burgers_attack_delta_svd_direction_alignment_20260608",
+  "rows_csv": "forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_rows.csv",
+  "summary_csv": "forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_summary.csv",
+  "metric_correlations_csv": "forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_metric_correlations.csv",
+  "missing_csv": "forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_missing.csv",
+  "n_rows": 440,
+  "n_missing": 0,
+  "attack_roots": [
+    "forensics/burgers_run2_ns50_p2q2_loss3_checkpoint_series_svd20_attack_correlation_20260608",
+    "forensics/burgers_run2_ns50_p2q2_loss1_epoch2000_svd20_attack_correlation_20260608",
+    "forensics/burgers_run2_ns50_p2q2_loss2_epoch900_svd20_attack_correlation_20260608",
+    "forensics/burgers_round01_aligned_final_loss123_svd20_p2q2_attack_correlation_20260608",
+    "forensics/burgers_round03_long_final_loss123_svd20_p2q2_attack_correlation_20260608",
+    "forensics/burgers_svd20_p2q2_attack_correlation_20260608"
+  ],
+  "metric_note": "abs_cos_top1 uses absolute value because SVD vector sign is arbitrary; top-k energy is squared projection of unit attack delta onto the saved top-k right-singular subspace."
+}

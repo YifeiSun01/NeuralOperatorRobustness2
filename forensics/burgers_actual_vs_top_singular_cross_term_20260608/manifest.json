@@ -1,0 +1,11 @@
+{
+  "output_dir": "forensics/burgers_actual_vs_top_singular_cross_term_20260608",
+  "rows_csv": "forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_rows.csv",
+  "summary_csv": "forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_summary.csv",
+  "correlations_csv": "forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_correlations.csv",
+  "missing_csv": "forensics/burgers_actual_vs_top_singular_cross_term_20260608/actual_vs_top1_cross_term_missing.csv",
+  "n_rows": 440,
+  "n_missing": 0,
+  "direction_rows_source": "forensics/burgers_attack_delta_svd_direction_alignment_20260608/attack_delta_vs_error_svd_direction_rows.csv",
+  "metric_note": "top1 uses delta_l2-matched linearized A v1. top1_cross_outward_mse chooses the sign of v1 that maximizes the endpoint cross term; raw sign is arbitrary in SVD files."
+}

@@ -1,0 +1,20 @@
+{
+  "torch_version": "2.8.0+cu126",
+  "torch_cuda_version": "12.6",
+  "cuda_available": true,
+  "device_name": "Tesla V100-SXM2-32GB",
+  "device_capability": [
+    7,
+    0
+  ],
+  "torch_cuda_arch_list": [
+    "sm_50",
+    "sm_60",
+    "sm_70",
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90"
+  ],
+  "cuda_matmul_0_0": 128.0
+}
