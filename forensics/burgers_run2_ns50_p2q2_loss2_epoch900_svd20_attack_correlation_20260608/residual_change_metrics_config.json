@@ -1,0 +1,48 @@
+{
+  "created_unix_time": 1780955943.4551697,
+  "attack_root": "/workspace/NeuralOperatorRobustness2/forensics/burgers_run2_ns50_p2q2_loss2_epoch900_svd20_attack_correlation_20260608",
+  "svd_manifest": "forensics/burgers_p2q2_loss2_epoch900_jacobian_svd_rep20_top100_20260603/representative20_sample_manifest.csv",
+  "svd_summary": "forensics/burgers_p2q2_loss2_epoch900_jacobian_svd_rep20_top100_20260603/checkpoint_series_jacobian_svd_summary.csv",
+  "batch_size": 20,
+  "model_order": [
+    "baseline",
+    "epoch0900"
+  ],
+  "gpu_preflight": {
+    "torch_version": "2.8.0+cu126",
+    "cuda_version": "12.6",
+    "cuda_available": true,
+    "device_name": "Tesla V100-SXM2-32GB",
+    "device_capability": [
+      7,
+      0
+    ],
+    "arch_list": [
+      "sm_50",
+      "sm_60",
+      "sm_70",
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90"
+    ],
+    "cuda_matmul_0_0": 128.0
+  },
+  "timing": {
+    "baseline": {
+      "seconds": 1.5079283714294434,
+      "endpoint_growth_mse_mean": 0.018834348820382728,
+      "residual_change_mse_mean": 0.0192776991520077,
+      "cross_term_mse_mean": -0.0004433502210304141,
+      "max_abs_decomp_error": 3.725290298461914e-09
+    },
+    "epoch0900": {
+      "seconds": 1.5349600315093994,
+      "endpoint_growth_mse_mean": 0.003994587104534731,
+      "residual_change_mse_mean": 0.003909699461655691,
+      "cross_term_mse_mean": 8.488778430546518e-05,
+      "max_abs_decomp_error": 9.313225746154785e-10
+    }
+  },
+  "peak_allocated_gib": 0.049925804138183594
+}

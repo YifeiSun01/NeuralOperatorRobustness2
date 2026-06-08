@@ -23,13 +23,13 @@ DEFAULT_SVD_ROOT = REPO / "forensics" / "burgers_loss3_selective_round03_loss123
 DEFAULT_SVD_MANIFEST = DEFAULT_SVD_ROOT / "round03_loss123_final_extension_sample_manifest.csv"
 DEFAULT_SVD_SUMMARY = DEFAULT_SVD_ROOT / "round03_loss123_final_extension_jacobian_svd_summary.csv"
 
-MODELS = {
+DEFAULT_MODELS = {
     "baseline": REPO / "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
     "loss1_epoch5000": REPO / "adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue3000to5000_20260606/burgers/checkpoints/burgers_epoch5000_step015000.pt",
     "loss2_epoch2000": REPO / "adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue1000to2000_20260606/burgers/checkpoints/burgers_epoch2000_step006000.pt",
     "loss3_epoch1500": REPO / "adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue1000to1500_20260606/burgers/checkpoints/burgers_epoch1500_step004500.pt",
 }
-MODEL_ORDER = ["baseline", "loss1_epoch5000", "loss2_epoch2000", "loss3_epoch1500"]
+DEFAULT_MODEL_ORDER = ["baseline", "loss1_epoch5000", "loss2_epoch2000", "loss3_epoch1500"]
 
 
 def load_full_attack_module():
@@ -155,13 +155,47 @@ def spearman(x: list[float], y: list[float]) -> float:
     return pearson(rankdata(xx.tolist()).tolist(), rankdata(yy.tolist()).tolist())
 
 
-def load_error_svd_rows(svd_summary: Path) -> dict[tuple[int, str], dict[str, object]]:
+def resolve_model_specs(selected_models: list[str] | None, model_specs: list[str]) -> tuple[dict[str, Path], list[str]]:
+    if model_specs:
+        out: dict[str, Path] = {}
+        order: list[str] = []
+        for item in model_specs:
+            if "=" not in item:
+                raise ValueError(f"expected --model-spec label=checkpoint, got {item!r}")
+            label, path_text = item.split("=", 1)
+            label = label.strip()
+            if not label:
+                raise ValueError(f"empty model label in --model-spec {item!r}")
+            if label in out:
+                raise ValueError(f"duplicate model label in --model-spec: {label}")
+            out[label] = Path(path_text).expanduser()
+            order.append(label)
+        if selected_models:
+            missing = [label for label in selected_models if label not in out]
+            if missing:
+                raise ValueError(f"--models labels missing from --model-spec: {missing}")
+            order = selected_models
+        return out, order
+
+    order = selected_models or list(DEFAULT_MODEL_ORDER)
+    unknown = [label for label in order if label not in DEFAULT_MODELS]
+    if unknown:
+        raise ValueError(f"unknown default model label(s): {unknown}")
+    return {label: DEFAULT_MODELS[label] for label in order}, order
+
+
+def load_error_svd_rows(svd_summary: Path, model_paths: dict[str, Path]) -> dict[tuple[int, str], dict[str, object]]:
     out: dict[tuple[int, str], dict[str, object]] = {}
     for row in read_csv(svd_summary):
         if row.get("jacobian_kind") != "error":
             continue
-        label = row["checkpoint_label"]
-        if label not in MODELS:
+        raw_label = row["checkpoint_label"]
+        label = raw_label
+        if label not in model_paths and label.endswith("_error"):
+            candidate = label[: -len("_error")]
+            if candidate in model_paths:
+                label = candidate
+        if label not in model_paths:
             continue
         sample_id = int(row["sample_id"])
         out[(sample_id, label)] = {
@@ -170,6 +204,7 @@ def load_error_svd_rows(svd_summary: Path) -> dict[tuple[int, str], dict[str, ob
             "dataset_id": row["dataset_id"],
             "local_index": int(float(row["local_index"])),
             "model": label,
+            "svd_checkpoint_label": raw_label,
             "error_spectral_norm": float(row["error_spectral_norm"] or row["spectral_norm"]),
             "fro_norm": float(row["fro_norm"]),
             "effective_rank": float(row["effective_rank"]),
@@ -199,11 +234,17 @@ def add_corr(rows: list[dict[str, object]], scope: str, summary: list[dict[str, 
             )
 
 
-def compute_joined_correlations(out_dir: Path, manifest: list[dict[str, object]], svd_summary: Path) -> None:
-    svd_by_key = load_error_svd_rows(svd_summary)
+def compute_joined_correlations(
+    out_dir: Path,
+    manifest: list[dict[str, object]],
+    svd_summary: Path,
+    model_order: list[str],
+    model_paths: dict[str, Path],
+) -> None:
+    svd_by_key = load_error_svd_rows(svd_summary, model_paths)
     joined: list[dict[str, object]] = []
     manifest_by_id = {int(row["sample_id"]): row for row in manifest}
-    for model_name in MODEL_ORDER:
+    for model_name in model_order:
         loss_npz = np.load(out_dir / model_name / "losses_and_delta_rms_by_sample.npz")
         for i in range(len(manifest)):
             key = (int(manifest[i]["sample_id"]), model_name)
@@ -235,6 +276,7 @@ def compute_joined_correlations(out_dir: Path, manifest: list[dict[str, object]]
         "dataset_id",
         "local_index",
         "model",
+        "svd_checkpoint_label",
         "error_spectral_norm",
         "fro_norm",
         "effective_rank",
@@ -260,7 +302,7 @@ def compute_joined_correlations(out_dir: Path, manifest: list[dict[str, object]]
     for split in ["train", "test", "generalization"]:
         add_corr([r for r in joined if r["source_split"] == split], f"{split}_all4_models", summary)
         add_corr([r for r in joined if r["source_split"] == split and r["model"] != "baseline"], f"{split}_trained3", summary)
-    for model_name in MODEL_ORDER:
+    for model_name in model_order:
         add_corr([r for r in joined if r["model"] == model_name], f"model_{model_name}", summary)
     write_csv(out_dir / "error_svd_attack_correlation_summary.csv", summary, ["scope", "n", "x", "y", "pearson", "spearman"])
 
@@ -272,7 +314,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-dir", type=Path, default=REPO / "forensics" / "burgers_svd20_p2q2_attack_correlation_20260608")
     parser.add_argument("--steps", type=int, default=20)
     parser.add_argument("--batch-size", type=int, default=20)
-    parser.add_argument("--models", nargs="*", default=MODEL_ORDER, choices=MODEL_ORDER)
+    parser.add_argument("--models", nargs="*", default=None)
+    parser.add_argument(
+        "--model-spec",
+        action="append",
+        default=[],
+        help="Model mapping as label=checkpoint. May be passed multiple times; labels must match SVD summary checkpoint_label values.",
+    )
+    parser.add_argument("--correlate-only", action="store_true", help="Reuse existing per-model NPZ attack outputs and only rewrite joined/correlation CSVs.")
     return parser.parse_args()
 
 
@@ -283,6 +332,25 @@ def main() -> None:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     run_nvidia_smi(args.out_dir)
     gpu = gpu_preflight()
+    model_paths, model_order = resolve_model_specs(args.models, args.model_spec)
+    if args.correlate_only:
+        rows = read_csv(args.svd_manifest)
+        manifest = []
+        for row in rows:
+            manifest.append(
+                {
+                    "sample_id": int(row["sample_id"]),
+                    "source_split": row["source_split"],
+                    "dataset_id": row["dataset_id"],
+                    "dataset_path": row["dataset_path"],
+                    "local_index": int(float(row["local_index"])),
+                    "manual_rank": float(row["manual_rank"]) if row.get("manual_rank", "") != "" else math.nan,
+                }
+            )
+        compute_joined_correlations(args.out_dir, manifest, args.svd_summary, model_order, model_paths)
+        print(json.dumps({"event": "correlate_only_done", "out_dir": str(args.out_dir), "samples": len(manifest), "models": model_order}, indent=2), flush=True)
+        return
+
     full_attack = load_full_attack_module()
     base_mod = full_attack.load_base_module()
     x_all, manifest = load_svd_manifest_samples(args.svd_manifest)
@@ -297,22 +365,22 @@ def main() -> None:
         "batch_size": args.batch_size,
         "epsilon_rms": float(base_mod.EPSILON_RMS),
         "alpha_rms": float(base_mod.ALPHA_RMS),
-        "models": {name: str(MODELS[name]) for name in args.models},
-        "model_order": args.models,
+        "models": {name: str(model_paths[name]) for name in model_order},
+        "model_order": model_order,
         "sample_count": n,
         "gpu_preflight": gpu,
     }
     (args.out_dir / "config.json").write_text(json.dumps(config, indent=2) + "\n")
     (args.out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(json.dumps({"event": "start", "out_dir": str(args.out_dir), "samples": n, "models": args.models}, indent=2), flush=True)
+    print(json.dumps({"event": "start", "out_dir": str(args.out_dir), "samples": n, "models": model_order}, indent=2), flush=True)
 
     device = torch.device("cuda")
     x_all = x_all.contiguous()
     progress_path = args.out_dir / "progress.jsonl"
     summary_rows: list[dict[str, object]] = []
     timing: dict[str, object] = {}
-    for model_name in args.models:
-        ckpt = MODELS[model_name]
+    for model_name in model_order:
+        ckpt = model_paths[model_name]
         if not ckpt.exists():
             raise FileNotFoundError(ckpt)
         t0 = time.time()
@@ -417,7 +485,7 @@ def main() -> None:
             "final_delta_rms",
         ],
     )
-    compute_joined_correlations(args.out_dir, manifest, args.svd_summary)
+    compute_joined_correlations(args.out_dir, manifest, args.svd_summary, model_order, model_paths)
     summary = {"config": config, "model_timing": timing, "finished_unix_time": time.time()}
     (args.out_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps({"event": "done", "out_dir": str(args.out_dir), "model_timing": timing}, indent=2), flush=True)

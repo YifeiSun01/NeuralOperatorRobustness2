@@ -1,0 +1,64 @@
+{
+  "created_unix_time": 1780955956.1068287,
+  "attack_root": "/workspace/NeuralOperatorRobustness2/forensics/burgers_round03_long_final_loss123_svd20_p2q2_attack_correlation_20260608",
+  "svd_manifest": "forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_sample_manifest.csv",
+  "svd_summary": "forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.csv",
+  "batch_size": 20,
+  "model_order": [
+    "baseline",
+    "loss1_epoch1000",
+    "loss2_epoch0500",
+    "loss3_epoch0500"
+  ],
+  "gpu_preflight": {
+    "torch_version": "2.8.0+cu126",
+    "cuda_version": "12.6",
+    "cuda_available": true,
+    "device_name": "Tesla V100-SXM2-32GB",
+    "device_capability": [
+      7,
+      0
+    ],
+    "arch_list": [
+      "sm_50",
+      "sm_60",
+      "sm_70",
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90"
+    ],
+    "cuda_matmul_0_0": 128.0
+  },
+  "timing": {
+    "baseline": {
+      "seconds": 1.5468103885650635,
+      "endpoint_growth_mse_mean": 0.019070649630157276,
+      "residual_change_mse_mean": 0.02151785951573402,
+      "cross_term_mse_mean": -0.0024472095440160047,
+      "max_abs_decomp_error": 7.450580596923828e-09
+    },
+    "loss1_epoch1000": {
+      "seconds": 1.456676721572876,
+      "endpoint_growth_mse_mean": 0.009293073072331026,
+      "residual_change_mse_mean": 0.00964753414154984,
+      "cross_term_mse_mean": -0.00035446147435322926,
+      "max_abs_decomp_error": 3.725290298461914e-09
+    },
+    "loss2_epoch0500": {
+      "seconds": 1.4780104160308838,
+      "endpoint_growth_mse_mean": 0.009346993023063988,
+      "residual_change_mse_mean": 0.009976930019911378,
+      "cross_term_mse_mean": -0.0006299368296708962,
+      "max_abs_decomp_error": 3.725290298461914e-09
+    },
+    "loss3_epoch0500": {
+      "seconds": 1.5691447257995605,
+      "endpoint_growth_mse_mean": 0.0069278301321901384,
+      "residual_change_mse_mean": 0.007586774922674522,
+      "cross_term_mse_mean": -0.0006589447952137561,
+      "max_abs_decomp_error": 3.725290298461914e-09
+    }
+  },
+  "peak_allocated_gib": 0.0499577522277832
+}

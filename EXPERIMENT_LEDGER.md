@@ -1,3 +1,57 @@
+## 2026-06-08 - Burgers error-operator SVD/attack paper record consolidated
+
+Status: created a paper-oriented Markdown record consolidating the theory, prior direction experiment, endpoint attack-damage correlations, residual-change correlations, caveats, and suggested paper claims. No new computation was launched for this consolidation step.
+
+Observed evidence:
+- Dedicated paper record: `docs/burgers_error_operator_svd_attack_paper_record_20260608.md`.
+- Source records summarized: `docs/outward_growth_direction_result_20260515.md`, `docs/angle_experiment_inventory_20260516.md`, `docs/delta_loss_formula_taxonomy_20260515.md`, `docs/error_operator_robustness_local_lipschitz_pgd_equivalence_20260608.md`, `docs/burgers_existing_svd_attack_correlation_sweep_20260608.md`, and `docs/burgers_svd_residual_change_correlation_20260608.md`.
+- Key observation preserved for paper writing: `||J_model-J_solver||_2` is strongly positively correlated with endpoint attack damage, and residual-change MSE `||e(x+delta)-e(x)||^2` gives higher Pearson correlation in all six tested SVD/attack groups.
+- Key caveat preserved: the theorem-side spectral-norm quantity is residual-field movement, while endpoint attack damage additionally contains the cross/outward term `2<e(x), e(x+delta)-e(x)>`.
+
+Inference:
+- The paper should phrase the result as an error-operator local Lipschitz/SVD robustness connection to residual-field movement, with endpoint attack damage treated as a related finite-radius stress metric rather than an identical theorem quantity.
+
+## 2026-06-08 - Burgers SVD residual-change correlation on existing attack deltas
+
+Status: completed GPU residual-change metric computation on six existing Burgers SVD20 P2Q2 attack roots. No PGD rerun and no Jacobian/SVD recomputation was performed.
+
+Observed evidence:
+- Script: `tools/compute_burgers_svd20_residual_change_correlation_20260608.py`.
+- Dedicated result doc: `docs/burgers_svd_residual_change_correlation_20260608.md`.
+- Aggregate key summary: `forensics/burgers_existing_svd_residual_change_correlation_key_summary_20260608.csv`.
+- Aggregate all-summary: `forensics/burgers_existing_svd_residual_change_correlation_key_summary_20260608_all_summary.csv`.
+- GPU record: `forensics/burgers_existing_svd_residual_change_nvidia_smi_20260608.txt`; observed PyTorch `2.8.0+cu126`, CUDA `12.6`, Tesla V100-SXM2-32GB, compute capability `7.0`, arch list including `sm_70`, and CUDA matmul sanity `128.0`.
+- Per-root joined/correlation outputs were written as `error_svd_residual_change_joined_rows.csv`, `error_svd_residual_change_correlation_summary.csv`, and `residual_change_metrics_config.json` inside each existing attack root.
+
+Key observed all-sample/all-model Pearson/Spearman correlations for `||J_model-J_solver||_2`:
+- second ns50 loss3 checkpoint series: endpoint growth `0.516/0.655`, residual-change MSE `0.555/0.677`, residual-change RMS `0.610/0.677`.
+- second ns50 loss1 epoch2000: endpoint growth `0.843/0.835`, residual-change MSE `0.850/0.820`, residual-change RMS `0.826/0.820`.
+- second ns50 loss2 epoch0900: endpoint growth `0.834/0.775`, residual-change MSE `0.841/0.769`, residual-change RMS `0.805/0.769`.
+- round01 aligned final loss123: endpoint growth `0.821/0.764`, residual-change MSE `0.854/0.749`, residual-change RMS `0.833/0.749`.
+- round03 long-final loss123: endpoint growth `0.850/0.824`, residual-change MSE `0.875/0.826`, residual-change RMS `0.883/0.826`.
+- round03 final-extension loss123: endpoint growth `0.833/0.808`, residual-change MSE `0.867/0.802`, residual-change RMS `0.862/0.802`.
+
+Inference:
+- Using residual-change MSE `||e(x+delta)-e(x)||^2` increases Pearson correlation with error-Jacobian spectral norm in every tested group. Spearman rank correlation is similar but not uniformly higher.
+- The endpoint-growth decomposition was numerically exact up to at most `7.45e-09`; cross terms were often negative on average, confirming that residual movement and outward endpoint growth are distinct.
+- This supports the careful theorem wording: the direct spectral-norm metric is residual-field movement, while endpoint attack damage additionally contains the clean-residual cross/outward term.
+
+## 2026-06-08 - Burgers error-movement versus endpoint-growth prior evidence rechecked
+
+Status: completed a read-only audit of prior Markdown experiment records and recorded the conclusion. No new attack, training, or Jacobian/SVD computation was launched.
+
+Observed evidence:
+- Dedicated result doc: `docs/burgers_error_movement_vs_endpoint_growth_prior_evidence_20260608.md`.
+- Rechecked source docs: `docs/outward_growth_direction_result_20260515.md`, `docs/angle_experiment_inventory_20260516.md`, `docs/delta_loss_formula_taxonomy_20260515.md`, `docs/loss_objective_direction_experiments_error_operator_framework_20260608.md`, and `docs/error_operator_robustness_local_lipschitz_pgd_equivalence_20260608.md`.
+- Existing SVD/attack correlation records show positive correlations between `||J_model-J_solver||_2` and endpoint `attack_increase = final_loss - initial_loss`, including Pearson/Spearman `0.843/0.835` for the second ns50 loss1 epoch2000 slice, `0.834/0.775` for second ns50 loss2 epoch0900, `0.821/0.764` for round01 aligned final loss123, `0.850/0.824` for round03 long-final loss123, and `0.833/0.808` for round03 final-extension loss123.
+- Prior outward-growth evidence shows the distinction between residual movement and endpoint growth: `error_top` top-8 directions have mismatch gain mean `0.412169` but outward component mean only `0.0140571`; the `error` rank-1 singular direction has mismatch gain `0.868217` but outward component `-0.00677836`; `outward_growth` has mismatch gain `0.368053` but outward component `0.166514`.
+- Prior finite-difference evidence shows `negative_outward_growth` has residual movement around `0.367704` while endpoint growth is negative (`-0.165528` at `rho=1e-4`), demonstrating that large `||e(x+delta)-e(x)||` need not imply endpoint error growth.
+- Prior true nonlinear endpoint-vs-movement gradient angles on the `loss3` path were `45.06 deg` at `k=5`, `36.36 deg` at `k=10`, `22.33 deg` at `k=25`, and `8.15 deg` at `k=50`.
+
+Inference:
+- The current multi-sweep correlation results should be worded as `error-Jacobian spectral norm versus endpoint attack damage`, not as direct validation of the residual-change theorem metric.
+- Strict theorem validation should reuse the same saved attack deltas and compute `||e(x+delta)-e(x)||`, `0.5||e(x+delta)-e(x)||^2`, and the cross/outward term `2<e(x), e(x+delta)-e(x)>`; no SVD recomputation is needed for that next step.
+
 ## 2026-06-08 - Burgers SVD20 P2Q2 attack/error-spectral correlation completed
 
 Status: completed a GPU P2Q2 attack run on all `20` existing Burgers SVD sample points and computed correlations between attack loss/growth and error-Jacobian spectral norm. No Jacobian/SVD recomputation was performed.
@@ -19,6 +73,62 @@ Inference:
 - On the 20 existing SVD sample points, the error Jacobian norm `||J_model - J_solver||_2` is highly positively correlated with fixed-budget P2Q2 attack damage.
 - This corrects the earlier 5-overlap-only probe: the SVD artifact indeed has 20 samples, and once those exact 20 samples are attacked, the error-operator correlation is strong.
 - This conclusion is for the SVD20 sample set, whose generalization rows are round03 stress-root samples. A full second-root ns50 conclusion still requires running Jacobian/SVD on representative second-root samples and joining to the existing full attack artifact.
+
+## 2026-06-08 - Burgers SVD/Attack Correlation Metric Choice Clarification
+
+Status: corrected.
+
+Observed from source documents `docs/error_operator_robustness_local_lipschitz_pgd_equivalence_20260608.md`, `docs/loss_objective_direction_experiments_error_operator_framework_20260608.md`, and `docs/delta_loss_formula_taxonomy_20260515.md`: the clean theorem linked directly to `||J_model - J_solver||_2` uses error-field movement, i.e. `||E(a+h)-E(a)||` or squared `1/2||E(a+h)-E(a)||^2`. This is distinct from endpoint error growth `1/2||E(a+h)||^2 - 1/2||E(a)||^2`, which includes an additional first-order residual term.
+
+Corrected conclusion: percentage growth is not the right primary theorem metric. However, `attack_increase = final_loss - initial_loss` is also not the direct spectral-norm theorem quantity; it is an endpoint attack-damage metric. The direct metric for the local Lipschitz/spectral-norm theorem is residual-change norm/energy. Recent SVD20 correlations using `attack_increase` should therefore be described as correlations with endpoint attack damage, not as direct measurements of `||E(a+h)-E(a)||`.
+
+Result note updated: `docs/burgers_svd_attack_correlation_metric_choice_20260608.md`.
+
+## 2026-06-08 - Burgers Existing-SVD Attack Correlation Sweep
+
+Status: completed.
+
+Observed from local `forensics/` and selected R2 directory listing: existing Burgers SVD/Jacobian summaries are available for the second ns50 root (`generalization_datasets_rmse_1p5_3x_all_ns50/burgers`), round01 aligned generated root, and third round03 stress root. A completed first master root SVD summary for `generalization_datasets/burgers` was not found locally or in the selected R2 prefix. The local `forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608` directory contains only diagnostic manifest/preflight artifacts from an interrupted dry-run and is not a completed SVD result.
+
+Action taken: no SVD/Jacobian computation was run. Existing SVD sample manifests and `*_jacobian_svd_summary.csv` files were reused, and P2Q2 20-step attack/tag was run on the same SVD sample points. The attack/join script was updated to support explicit `--model-spec label=checkpoint`, `--correlate-only`, and old-summary `baseline_error -> baseline` label mapping.
+
+Source files:
+
+- `tools/run_burgers_svd20_p2q2_attack_correlation_20260608.py`
+- `tools/run_burgers_existing_svd_attack_correlations_20260608.sh`
+- `tools/refresh_burgers_existing_svd_attack_correlation_joins_20260608.sh`
+
+SVD sources reused:
+
+- `forensics/burgers_p2q2_checkpoint_series_jacobian_svd_20260601/checkpoint_series_jacobian_svd_summary.csv`
+- `forensics/burgers_p2q2_loss1_epoch2000_jacobian_svd_rep20_top100_20260603/checkpoint_series_jacobian_svd_summary.csv`
+- `forensics/burgers_p2q2_loss2_epoch900_jacobian_svd_rep20_top100_20260603/checkpoint_series_jacobian_svd_summary.csv`
+- `forensics/burgers_loss3_aligned_round01_final_jacobian_svd_rep20_top100_20260604/round01_jacobian_svd_summary.csv`
+- `forensics/burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/round03_long_final_jacobian_svd_summary.csv`
+- Previously completed comparison source: `forensics/burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/round03_loss123_final_extension_jacobian_svd_summary.csv`
+
+Outputs:
+
+- `forensics/burgers_run2_ns50_p2q2_loss3_checkpoint_series_svd20_attack_correlation_20260608/`
+- `forensics/burgers_run2_ns50_p2q2_loss1_epoch2000_svd20_attack_correlation_20260608/`
+- `forensics/burgers_run2_ns50_p2q2_loss2_epoch900_svd20_attack_correlation_20260608/`
+- `forensics/burgers_round01_aligned_final_loss123_svd20_p2q2_attack_correlation_20260608/`
+- `forensics/burgers_round03_long_final_loss123_svd20_p2q2_attack_correlation_20260608/`
+- Key summary CSV: `forensics/burgers_existing_svd_attack_correlation_key_summary_20260608.csv`
+- Result document: `docs/burgers_existing_svd_attack_correlation_sweep_20260608.md`
+
+Key observed correlations for `error_spectral_norm = ||J_model - J_solver||_2` versus `attack_increase = final_loss - initial_loss`:
+
+- second ns50 loss3 checkpoint series, all rows: Pearson `0.515865`, Spearman `0.654920`; generalization rows: Pearson `0.405998`, Spearman `0.479911`.
+- second ns50 loss1 epoch2000, all rows: Pearson `0.843321`, Spearman `0.834522`; generalization rows: Pearson `0.827078`, Spearman `0.783459`.
+- second ns50 loss2 epoch0900, all rows: Pearson `0.833547`, Spearman `0.774859`; generalization rows: Pearson `0.816659`, Spearman `0.780451`.
+- round01 aligned final loss123, all rows: Pearson `0.821269`, Spearman `0.764088`; generalization rows: Pearson `0.805611`, Spearman `0.737148`.
+- round03 long-final loss123, all rows: Pearson `0.850377`, Spearman `0.824473`; generalization rows: Pearson `0.806629`, Spearman `0.802627`.
+- round03 final-extension loss123, already completed earlier, all rows: Pearson `0.832552`, Spearman `0.807712`; generalization rows: Pearson `0.768775`, Spearman `0.781051`.
+
+Inference from observed evidence: across existing SVD sample audits, model-minus-solver Jacobian spectral norm is positively associated with finite-budget P2Q2 attack damage. The relationship is strong for loss1/loss2 ns50 slices and round01/round03 final-model SVDs; it is still positive but weaker when pooling the second-root loss3 checkpoint series across many epochs.
+
+Remaining work: if a completed first master root SVD exists outside the selected R2 prefix, locate that artifact before any first-root correlation claim. Do not recompute SVD unless explicitly requested.
 
 ## 2026-06-08 - Burgers SVD/attack correlation probe on currently matchable rows
 
@@ -12666,4 +12776,3 @@ Inference:
 Remaining work:
 - If the local 2026-06-08 derived mismatch/provenance docs and CSVs should be available remotely, sync them to R2 explicitly.
 - If the user intends a different R2 prefix containing another completed round_02 or full 100-step tag artifact, inspect that prefix separately.
-
