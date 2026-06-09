@@ -13514,9 +13514,10 @@ Observed evidence:
 - The delta/error-only versions use row-shared absolute-error color ranges.
 - The four-panel versions now use the actual row-shared model/solver output range instead of a fixed `0` to `1` display range.
 - The one-sample split version places `baseline`, `loss1`, and `loss2` on the first row, and `loss3` plus `physical_source` on the second row.
+- Direct R2 upload completed for the eight large PNG figures and three small forensics record files under `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
 
 Inference:
 - The new large variants make the selected weak-tag regime visually clearer: `loss3` has the smallest loss gain and the darkest shared-scale error panels in the selected samples.
 
 Remaining work:
-- Upload these new visualizations and record files to R2 if the direct upload has not completed yet.
+- None for this visualization refresh.
