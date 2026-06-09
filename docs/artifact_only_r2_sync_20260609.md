@@ -104,3 +104,21 @@ Correction:
   at `2026-06-09T06:41:23+00:00`.
 - Observed active retry processes after launch: launcher PID `1367058` and
   rclone PID `1367074`.
+
+## Completion Record
+
+Observed completion:
+
+- The corrected retry completed at `2026-06-09T06:43:04+00:00`.
+- The completion evidence is the line
+  `Completed: 2026-06-09T06:43:04+00:00` in
+  `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`.
+- After completion, no `artifact_r2_sync_20260609` tmux session and no active
+  `rclone copy` process were observed.
+
+Interpretation:
+
+- The artifact-only incremental R2 copy finished successfully after excluding
+  the runtime log directory.
+- Earlier `NotImplemented` errors in the same log belong to the failed
+  pre-correction attempt and should not be read as the final retry status.

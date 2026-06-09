@@ -13729,3 +13729,30 @@ Inference:
 Remaining work:
 - Check `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log` later
   for `Completed:` or `Failed:`.
+
+## 2026-06-09 - Artifact-only R2 upload completed
+
+Status: inspected the artifact-only R2 retry after the user asked whether the
+R2 upload had completed. The corrected retry completed successfully.
+
+Source / record files:
+- Upload doc: `docs/artifact_only_r2_sync_20260609.md`
+- Upload launcher: `tools/start_artifact_r2_sync_20260609.sh`
+- Completion log: `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`
+
+Observed evidence:
+- No `artifact_r2_sync_20260609` tmux session remained active.
+- No active `rclone copy` or `start_artifact_r2_sync` upload process remained
+  active.
+- The retry log contains `Completed: 2026-06-09T06:43:04+00:00`.
+- The previous `Failed: 2026-06-09T06:25:41+00:00 exit_status=1` line belongs
+  to the pre-correction attempt that tried to copy the live runtime log.
+
+Inference:
+- The artifact-only incremental R2 upload completed after excluding
+  `forensics/artifact_r2_sync_20260609/`.
+- Earlier R2 `NotImplemented` errors in the same log should not be interpreted
+  as the final retry status; the final observed retry status is `Completed`.
+
+Remaining work:
+- None for the artifact-only R2 upload completion status.
