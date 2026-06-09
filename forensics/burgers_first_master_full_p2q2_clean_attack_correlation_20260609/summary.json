@@ -1,0 +1,122 @@
+{
+  "attack_root": "forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608",
+  "source_summary_csv": "forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608/summary_by_model_dataset.csv",
+  "out_dir": "forensics/burgers_first_master_full_p2q2_clean_attack_correlation_20260609",
+  "generalization_dataset_count": 50,
+  "model_order": [
+    "baseline",
+    "loss1_epoch8000",
+    "loss2_epoch2000",
+    "loss3_epoch1500"
+  ],
+  "key_correlations": [
+    {
+      "scope": "all_rows_all_models",
+      "n": 208,
+      "x": "clean_initial_loss",
+      "y": "attack_final_loss",
+      "pearson": 0.982369034580274,
+      "spearman": 0.8200540877886415
+    },
+    {
+      "scope": "all_rows_all_models",
+      "n": 208,
+      "x": "clean_initial_loss",
+      "y": "attack_increase",
+      "pearson": 0.924343421823687,
+      "spearman": 0.813025075610888
+    },
+    {
+      "scope": "generalization_all_models",
+      "n": 200,
+      "x": "clean_initial_loss",
+      "y": "attack_final_loss",
+      "pearson": 0.9824090765122256,
+      "spearman": 0.8209315232880822
+    },
+    {
+      "scope": "generalization_all_models",
+      "n": 200,
+      "x": "clean_initial_loss",
+      "y": "attack_increase",
+      "pearson": 0.9242924818131438,
+      "spearman": 0.8142728568214206
+    }
+  ],
+  "winner_counts": [
+    {
+      "metric": "clean_initial_loss_winner",
+      "model": "baseline",
+      "winner_count_50": 3
+    },
+    {
+      "metric": "clean_initial_loss_winner",
+      "model": "loss1_epoch8000",
+      "winner_count_50": 26
+    },
+    {
+      "metric": "clean_initial_loss_winner",
+      "model": "loss2_epoch2000",
+      "winner_count_50": 2
+    },
+    {
+      "metric": "clean_initial_loss_winner",
+      "model": "loss3_epoch1500",
+      "winner_count_50": 19
+    },
+    {
+      "metric": "attack_final_loss_winner",
+      "model": "baseline",
+      "winner_count_50": 5
+    },
+    {
+      "metric": "attack_final_loss_winner",
+      "model": "loss1_epoch8000",
+      "winner_count_50": 0
+    },
+    {
+      "metric": "attack_final_loss_winner",
+      "model": "loss2_epoch2000",
+      "winner_count_50": 7
+    },
+    {
+      "metric": "attack_final_loss_winner",
+      "model": "loss3_epoch1500",
+      "winner_count_50": 38
+    },
+    {
+      "metric": "attack_increase_winner",
+      "model": "baseline",
+      "winner_count_50": 8
+    },
+    {
+      "metric": "attack_increase_winner",
+      "model": "loss1_epoch8000",
+      "winner_count_50": 0
+    },
+    {
+      "metric": "attack_increase_winner",
+      "model": "loss2_epoch2000",
+      "winner_count_50": 5
+    },
+    {
+      "metric": "attack_increase_winner",
+      "model": "loss3_epoch1500",
+      "winner_count_50": 37
+    }
+  ],
+  "svd_status": {
+    "svd_dir": "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608",
+    "has_completed_jacobian_svd_summary_csv": false,
+    "has_error_spectral_norm_table": false,
+    "visible_files": [
+      "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/config.json",
+      "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/first_master_finalmodels_sample_manifest.csv",
+      "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/gpu_preflight.json",
+      "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/nvidia_smi_manual_preflight.txt",
+      "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/nvidia_smi_preflight.txt",
+      "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/sample_000/sample.json"
+    ],
+    "conclusion": "No completed first-master SVD spectral-norm summary is visible, so first-master attack-vs-SVD correlation is not currently computable from local evidence."
+  }
+}

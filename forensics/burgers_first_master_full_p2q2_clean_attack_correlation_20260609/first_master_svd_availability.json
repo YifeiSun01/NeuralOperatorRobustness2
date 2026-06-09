@@ -1,0 +1,14 @@
+{
+  "svd_dir": "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608",
+  "has_completed_jacobian_svd_summary_csv": false,
+  "has_error_spectral_norm_table": false,
+  "visible_files": [
+    "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/config.json",
+    "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/first_master_finalmodels_sample_manifest.csv",
+    "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/gpu_preflight.json",
+    "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/nvidia_smi_manual_preflight.txt",
+    "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/nvidia_smi_preflight.txt",
+    "forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/sample_000/sample.json"
+  ],
+  "conclusion": "No completed first-master SVD spectral-norm summary is visible, so first-master attack-vs-SVD correlation is not currently computable from local evidence."
+}

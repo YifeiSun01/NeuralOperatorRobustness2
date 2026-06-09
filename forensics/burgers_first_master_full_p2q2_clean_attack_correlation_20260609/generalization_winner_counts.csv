@@ -1,0 +1,13 @@
+metric,model,winner_count_50
+clean_initial_loss_winner,baseline,3
+clean_initial_loss_winner,loss1_epoch8000,26
+clean_initial_loss_winner,loss2_epoch2000,2
+clean_initial_loss_winner,loss3_epoch1500,19
+attack_final_loss_winner,baseline,5
+attack_final_loss_winner,loss1_epoch8000,0
+attack_final_loss_winner,loss2_epoch2000,7
+attack_final_loss_winner,loss3_epoch1500,38
+attack_increase_winner,baseline,8
+attack_increase_winner,loss1_epoch8000,0
+attack_increase_winner,loss2_epoch2000,5
+attack_increase_winner,loss3_epoch1500,37
