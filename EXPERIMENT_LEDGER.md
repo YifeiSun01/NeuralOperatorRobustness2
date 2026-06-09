@@ -13487,3 +13487,36 @@ Inference:
 
 Remaining work:
 - Confirm the ongoing R2 upload reaches the `visualizations/` and `forensics/` stages so the new PNG and selected-sample CSV are uploaded.
+
+## 2026-06-09 - Darcy/C-flow loss3-advantage large visualization variants
+
+Status: generated larger Darcy/C-flow weak-tag visualization variants from the same six selected `loss3`-advantage samples.
+
+Source / record files:
+- Plot script: `tools/plot_darcy_loss3_advantage_large_variants_20260609.py`
+- Source sample list: `forensics/darcy_loss3_advantage_six_sample_plate_20260609/selected_samples.csv`
+- Rerun metrics: `forensics/darcy_loss3_advantage_six_sample_plate_20260609/large_variant_metrics.csv`
+- GPU preflight: `forensics/darcy_loss3_advantage_six_sample_plate_20260609/large_variants_gpu_preflight.json`
+- Result doc updated: `docs/darcy_cflow_tag_robustness_sweep_consolidated_20260609.md`
+
+Generated figures:
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_six_sample_delta_error_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_three_sample_delta_error_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_two_sample_delta_error_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_delta_error_huge.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_three_sample_four_panel_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_two_sample_four_panel_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_four_panel_huge.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_four_panel_split_rows_huge.png`
+
+Observed evidence:
+- The rerun used CUDA on `Tesla V100-SXM2-32GB`; PyTorch `2.8.0+cu126` includes `sm_70`, and JAX backend is `gpu`.
+- The delta/error-only versions use row-shared absolute-error color ranges.
+- The four-panel versions now use the actual row-shared model/solver output range instead of a fixed `0` to `1` display range.
+- The one-sample split version places `baseline`, `loss1`, and `loss2` on the first row, and `loss3` plus `physical_source` on the second row.
+
+Inference:
+- The new large variants make the selected weak-tag regime visually clearer: `loss3` has the smallest loss gain and the darkest shared-scale error panels in the selected samples.
+
+Remaining work:
+- Upload these new visualizations and record files to R2 if the direct upload has not completed yet.

@@ -254,3 +254,27 @@ Figure layout:
 - Per-cell annotations show final MSE, loss gain, and gain ratio relative to the best model in that row.
 
 Inference from these selected examples: under the `eps=0.00625`, `10-step` weak-attack protocol, the chosen examples make the `loss3` advantage visually and numerically explicit. These are intentionally selected examples, not a replacement for the full-50 aggregate statistics above.
+
+## Large Loss3-Advantage Visualization Variants
+
+Additional large-format variants were generated to make the selected examples easier to inspect visually.
+
+Observed from `tools/plot_darcy_loss3_advantage_large_variants_20260609.py` and `forensics/darcy_loss3_advantage_six_sample_plate_20260609/large_variant_metrics.csv`:
+
+- The same six selected samples from `forensics/darcy_loss3_advantage_six_sample_plate_20260609/selected_samples.csv` were reused.
+- The same weak-tag protocol was rerun: `epsilon_fraction=0.00625`, `steps=10`, shared `loss3` attack objective.
+- GPU verification for this plotting rerun is stored at `forensics/darcy_loss3_advantage_six_sample_plate_20260609/large_variants_gpu_preflight.json`.
+- The delta/error-only figures remove model and solver heatmaps so the perturbation and absolute model-solver error are larger.
+- The four-panel figures use the actual row-shared model/solver output range. This corrects the earlier display issue where model and solver panels were visually flattened by an overly wide fixed color range.
+- Each row's absolute-error panels use one shared color range across all five models so the `loss3` error reduction is visually comparable within the row.
+
+Generated large-format figures:
+
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_six_sample_delta_error_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_three_sample_delta_error_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_two_sample_delta_error_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_delta_error_huge.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_three_sample_four_panel_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_two_sample_four_panel_large.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_four_panel_huge.png`
+- `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_four_panel_split_rows_huge.png`
