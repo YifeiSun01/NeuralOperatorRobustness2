@@ -22,9 +22,9 @@ Runtime records:
 - Manifest: `forensics/artifact_r2_sync_20260609/artifact_sync_manifest.txt`
 - Log: `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`
 
-The launcher uses `rclone copy` with `--size-only` so existing same-size remote
-objects are skipped and missing local artifacts are uploaded incrementally. It
-does not delete any remote R2 object.
+The launcher uses `rclone copy` with `--size-only` and ordered `--filter` rules
+so existing same-size remote objects are skipped and missing local artifacts are
+uploaded incrementally. It does not delete any remote R2 object.
 
 ## Included Artifacts
 
@@ -54,6 +54,7 @@ Excluded from R2 artifact upload:
 - `adv_robust/`
 - `__pycache__/`
 - Python bytecode
+- Source and record files intended for GitHub: `*.py`, `*.sh`, `*.md`
 - Files not matching artifact directories or artifact file extensions
 
 Credentials are intentionally not written to this file or to the launcher.

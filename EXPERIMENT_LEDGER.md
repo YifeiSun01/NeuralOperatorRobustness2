@@ -13636,8 +13636,10 @@ Key settings:
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`
 - Transfer command: `rclone copy`
 - Incremental comparison: `--size-only`
+- Filter mode: ordered `--filter` rules.
 - Excluded from R2 artifact upload: `.git/`, `adv_robust/`, Python bytecode,
-  and files not matching artifact directories or artifact file extensions.
+  Python source, shell scripts, Markdown records, and files not matching
+  artifact directories or artifact file extensions.
 
 Observed evidence:
 - The launcher was created locally and intentionally keeps credentials out of

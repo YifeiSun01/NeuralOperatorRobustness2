@@ -38,65 +38,73 @@ rclone copy "." "$DEST" \
   --size-only \
   --stats 60s \
   --stats-one-line \
-  --exclude '.git/**' \
-  --exclude 'adv_robust/**' \
-  --exclude '__pycache__/**' \
-  --exclude '*.pyc' \
-  --exclude '.DS_Store' \
-  --include 'adversarial_training_runs/**' \
-  --include 'forensics/**' \
-  --include 'visualizations/**' \
-  --include 'visualization_outputs/**' \
-  --include 'analysis_outputs/**' \
-  --include 'figures/**' \
-  --include 'results/**' \
-  --include 'run_logs/**' \
-  --include 'data/**' \
-  --include 'Model/**' \
-  --include 'generalization_datasets*/**' \
-  --include 'generalization_eval*/**' \
-  --include '**/saved_models/**' \
-  --include '**/saved_models_expanded/**' \
-  --include '**/saved_models_kernel_abstracts/**' \
-  --include '**/trained_models/**' \
-  --include '**/datasets/**' \
-  --include '**/test_train_datasets/**' \
-  --include '**/GRFs/**' \
-  --include '**/perturbation_results/**' \
-  --include '**/perturbed_results_as_inputs/**' \
-  --include '**/attack_result_viz/**' \
-  --include '**/viz_results/**' \
-  --include '**/visualizations/**' \
-  --include '**/*.pt' \
-  --include '**/*.pth' \
-  --include '**/*.ckpt' \
-  --include '**/*.safetensors' \
-  --include '**/*.npz' \
-  --include '**/*.npy' \
-  --include '**/*.mat' \
-  --include '**/*.h5' \
-  --include '**/*.hdf5' \
-  --include '**/*.nc' \
-  --include '**/*.csv' \
-  --include '**/*.json' \
-  --include '**/*.jsonl' \
-  --include '**/*.yaml' \
-  --include '**/*.yml' \
-  --include '**/*.txt' \
-  --include '**/*.log' \
-  --include '**/*.png' \
-  --include '**/*.jpg' \
-  --include '**/*.jpeg' \
-  --include '**/*.pdf' \
-  --include '**/*.svg' \
-  --include '**/*.gif' \
-  --include '**/*.mp4' \
-  --include '**/*.webm' \
-  --include '**/*.zip' \
-  --include '**/*.tar' \
-  --include '**/*.tar.gz' \
-  --include '**/*.tgz' \
-  --exclude '*' \
+  --filter '- .git/' \
+  --filter '- .git/**' \
+  --filter '- adv_robust/' \
+  --filter '- adv_robust/**' \
+  --filter '- __pycache__/' \
+  --filter '- __pycache__/**' \
+  --filter '- **/__pycache__/**' \
+  --filter '- **/*.pyc' \
+  --filter '- **/.DS_Store' \
+  --filter '- **/*.py' \
+  --filter '- **/*.sh' \
+  --filter '- **/*.md' \
+  --filter '+ */' \
+  --filter '+ adversarial_training_runs/**' \
+  --filter '+ forensics/**' \
+  --filter '+ visualizations/**' \
+  --filter '+ visualization_outputs/**' \
+  --filter '+ analysis_outputs/**' \
+  --filter '+ figures/**' \
+  --filter '+ results/**' \
+  --filter '+ run_logs/**' \
+  --filter '+ data/**' \
+  --filter '+ Model/**' \
+  --filter '+ generalization_datasets*/**' \
+  --filter '+ generalization_eval*/**' \
+  --filter '+ **/saved_models/**' \
+  --filter '+ **/saved_models_expanded/**' \
+  --filter '+ **/saved_models_kernel_abstracts/**' \
+  --filter '+ **/trained_models/**' \
+  --filter '+ **/datasets/**' \
+  --filter '+ **/test_train_datasets/**' \
+  --filter '+ **/GRFs/**' \
+  --filter '+ **/perturbation_results/**' \
+  --filter '+ **/perturbed_results_as_inputs/**' \
+  --filter '+ **/attack_result_viz/**' \
+  --filter '+ **/viz_results/**' \
+  --filter '+ **/visualizations/**' \
+  --filter '+ **/*.pt' \
+  --filter '+ **/*.pth' \
+  --filter '+ **/*.ckpt' \
+  --filter '+ **/*.safetensors' \
+  --filter '+ **/*.npz' \
+  --filter '+ **/*.npy' \
+  --filter '+ **/*.mat' \
+  --filter '+ **/*.h5' \
+  --filter '+ **/*.hdf5' \
+  --filter '+ **/*.nc' \
+  --filter '+ **/*.csv' \
+  --filter '+ **/*.json' \
+  --filter '+ **/*.jsonl' \
+  --filter '+ **/*.yaml' \
+  --filter '+ **/*.yml' \
+  --filter '+ **/*.txt' \
+  --filter '+ **/*.log' \
+  --filter '+ **/*.png' \
+  --filter '+ **/*.jpg' \
+  --filter '+ **/*.jpeg' \
+  --filter '+ **/*.pdf' \
+  --filter '+ **/*.svg' \
+  --filter '+ **/*.gif' \
+  --filter '+ **/*.mp4' \
+  --filter '+ **/*.webm' \
+  --filter '+ **/*.zip' \
+  --filter '+ **/*.tar' \
+  --filter '+ **/*.tar.gz' \
+  --filter '+ **/*.tgz' \
+  --filter '- *' \
   2>&1 | tee -a "$LOG"
 
 printf '\nCompleted: %s\n' "$(date -Iseconds)" | tee -a "$LOG"
