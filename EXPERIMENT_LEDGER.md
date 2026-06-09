@@ -13454,3 +13454,15 @@ Inference:
 Remaining work:
 - Upload selected forensics and visualizations to R2 from an environment where external data transfer is allowed.
 - Push the local Git commit to GitHub from an environment where GitHub push is allowed, if this session cannot perform the push.
+
+## 2026-06-09 - External GitHub push blocked by environment policy
+
+Status: local Git commit `7264e6c` was created with the Darcy/C-flow Markdown and code records, but `git push origin vast-ai` was blocked by the execution environment's external data-transfer policy. No GitHub push was completed in this session.
+
+Observed evidence:
+- Local commit: `7264e6c Record Darcy tag robustness sweep results`.
+- Attempted remote branch: `origin vast-ai`.
+- Push was rejected before execution by the environment's approval reviewer because it would export workspace code and experiment records to an external GitHub repository.
+
+Remaining work:
+- Push commit `7264e6c` and this ledger update from an environment where external GitHub push is allowed.
