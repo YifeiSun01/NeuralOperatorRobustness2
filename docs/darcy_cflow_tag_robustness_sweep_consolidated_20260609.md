@@ -267,6 +267,9 @@ Observed from `tools/plot_darcy_loss3_advantage_large_variants_20260609.py` and 
 - The delta/error-only figures remove model and solver heatmaps so the perturbation and absolute model-solver error are larger.
 - The four-panel figures use the actual row-shared model/solver output range. This corrects the earlier display issue where model and solver panels were visually flattened by an overly wide fixed color range.
 - Each row's absolute-error panels use one shared color range across all five models so the `loss3` error reduction is visually comparable within the row.
+- `large_variant_metrics.csv` now records final changed-pixel counts and nonzero delta magnitudes for each displayed sample/model.
+- The displayed `delta` is not a fixed-amplitude additive perturbation. In this binary-replace Darcy attack, selected pixels are replaced by the sample's low or high coefficient value, so `delta = replaced_value - original_value` can have many magnitudes even though each selected pixel is discretely replaced.
+- For these `85 x 85` samples, `epsilon_fraction=0.00625` gives about `45` pixel replacements per step. Over `10` steps the maximum no-repeat final count is `450`, but pixels can be revisited or toggled back, so the final nonzero count can be much smaller.
 
 Generated large-format figures:
 
@@ -278,3 +281,16 @@ Generated large-format figures:
 - `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_two_sample_four_panel_large.png`
 - `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_four_panel_huge.png`
 - `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_one_sample_four_panel_split_rows_huge.png`
+
+Observed final changed-pixel counts for the selected six rows:
+
+| row | baseline | loss1 | loss2 | loss3 | physical_source |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 450 | 418 | 423 | 186 | 446 |
+| 2 | 450 | 426 | 449 | 125 | 431 |
+| 3 | 450 | 416 | 443 | 163 | 435 |
+| 4 | 429 | 412 | 439 | 188 | 435 |
+| 5 | 450 | 395 | 384 | 136 | 439 |
+| 6 | 450 | 393 | 440 | 62 | 423 |
+
+Inference from these selected examples: `loss3` visually shows fewer nonzero perturbation pixels because the final attack state actually contains fewer changed pixels for these selected weak-tag samples, not because of an image scaling artifact.

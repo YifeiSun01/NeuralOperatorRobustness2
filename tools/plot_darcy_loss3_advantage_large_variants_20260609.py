@@ -242,6 +242,9 @@ def write_variant_metrics(data: dict[str, Any]) -> Path:
         row_id = int(row["row_id"])
         for model_name in MODEL_ORDER:
             entry = images[(row_id, model_name)]
+            delta = squeeze_field(entry["delta"])
+            changed = np.abs(delta) > 1e-12
+            changed_values = delta[changed]
             records.append(
                 {
                     "row_id": row_id,
@@ -251,6 +254,12 @@ def write_variant_metrics(data: dict[str, Any]) -> Path:
                     "clean_loss": entry["clean_loss"],
                     "adv_loss": entry["adv_loss"],
                     "gain": entry["gain"],
+                    "final_changed_pixel_count": int(np.count_nonzero(changed)),
+                    "final_changed_pixel_fraction": float(np.count_nonzero(changed) / delta.size),
+                    "nonzero_delta_abs_min": float(np.min(np.abs(changed_values))) if changed_values.size else 0.0,
+                    "nonzero_delta_abs_mean": float(np.mean(np.abs(changed_values))) if changed_values.size else 0.0,
+                    "nonzero_delta_abs_max": float(np.max(np.abs(changed_values))) if changed_values.size else 0.0,
+                    "rounded_nonzero_delta_value_count": int(np.unique(np.round(changed_values, 8)).size) if changed_values.size else 0,
                     "selection_margin_from_original_csv": row["selection_margin"],
                     "checkpoint": entry["checkpoint"],
                 }
@@ -348,8 +357,9 @@ def add_heatmap(
     norm: TwoSlopeNorm | None = None,
     vmin: float | None = None,
     vmax: float | None = None,
+    aspect: str = "equal",
 ) -> None:
-    ax.imshow(squeeze_field(image), cmap=cmap, norm=norm, vmin=vmin, vmax=vmax, interpolation="nearest")
+    ax.imshow(squeeze_field(image), cmap=cmap, norm=norm, vmin=vmin, vmax=vmax, interpolation="nearest", aspect=aspect)
     ax.set_xticks([])
     ax.set_yticks([])
     for spine in ax.spines.values():
@@ -451,14 +461,14 @@ def draw_four_panel_cell(
     fmax = scales["field_vmax"]
 
     panels = [
-        ([0.04, 0.50, 0.43, 0.34], "delta", entry["delta"], "coolwarm", TwoSlopeNorm(vcenter=0.0, vmin=-dmax, vmax=dmax), None, None),
-        ([0.53, 0.50, 0.43, 0.34], "model", entry["pred"], "viridis", None, fmin, fmax),
-        ([0.04, 0.11, 0.43, 0.34], "solver", entry["solver"], "viridis", None, fmin, fmax),
-        ([0.53, 0.11, 0.43, 0.34], "|error|", entry["err"], "magma", None, 0.0, evmax),
+        ([0.025, 0.510, 0.465, 0.405], "delta", entry["delta"], "coolwarm", TwoSlopeNorm(vcenter=0.0, vmin=-dmax, vmax=dmax), None, None),
+        ([0.510, 0.510, 0.465, 0.405], "model", entry["pred"], "viridis", None, fmin, fmax),
+        ([0.025, 0.060, 0.465, 0.405], "solver", entry["solver"], "viridis", None, fmin, fmax),
+        ([0.510, 0.060, 0.465, 0.405], "|error|", entry["err"], "magma", None, 0.0, evmax),
     ]
     for bounds, label, image, cmap, norm, vmin, vmax in panels:
         ax = outer.inset_axes(bounds)
-        add_heatmap(ax, image, cmap=cmap, label=label, fontsize=label_fontsize, norm=norm, vmin=vmin, vmax=vmax)
+        add_heatmap(ax, image, cmap=cmap, label=label, fontsize=label_fontsize, norm=norm, vmin=vmin, vmax=vmax, aspect="auto")
     outer.text(
         0.5,
         0.965,
