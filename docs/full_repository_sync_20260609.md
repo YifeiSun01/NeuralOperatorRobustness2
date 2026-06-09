@@ -65,6 +65,11 @@ Observed local broad-copy log:
   `1D_Burgers_FNO_generalization`, `1D_Burgers_deeponet`,
   `2D_Darcy_FNO2d`, `2D_NS_FNO2d_recurrent`,
   `adversarial_training_runs`, and then `forensics`.
+- The `2D_Darcy_FNO2d` phase showed several R2 `NotImplemented` copy errors
+  on the first attempt, then `Attempt 2/3 succeeded`.
+- The `forensics` phase showed another set of R2 `NotImplemented` copy errors
+  before the broad job was stopped. No full-job completion statistic was
+  recorded.
 - No broad R2 upload session remains active after stopping
   `full_r2_sync_20260609`.
 

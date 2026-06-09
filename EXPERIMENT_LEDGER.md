@@ -13601,6 +13601,11 @@ Observed evidence:
   `1D_Burgers_FNO_generalization`, `1D_Burgers_deeponet`,
   `2D_Darcy_FNO2d`, `2D_NS_FNO2d_recurrent`,
   `adversarial_training_runs`, and then `forensics`.
+- The `2D_Darcy_FNO2d` phase logged R2 `NotImplemented` copy errors on the
+  first attempt and then `Attempt 2/3 succeeded`.
+- The `forensics` phase logged another set of R2 `NotImplemented` copy errors
+  before the broad job was stopped; no full-job completion statistic was
+  recorded.
 - The `full_r2_sync_20260609` tmux session was stopped, and no broad R2 upload
   session remains active.
 
