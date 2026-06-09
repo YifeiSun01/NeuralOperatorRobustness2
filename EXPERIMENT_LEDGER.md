@@ -13621,7 +13621,7 @@ Remaining work:
 
 ## 2026-06-09 - Artifact-only R2 upload prepared
 
-Status: prepared an artifact-only R2 upload for model checkpoints, datasets,
+Status: launched an artifact-only R2 upload for model checkpoints, datasets,
 generated numeric results, logs, images, visualizations, and archives. This is a
 data-transfer task, not a GPU experiment run.
 
@@ -13650,6 +13650,16 @@ Observed evidence:
 - The launcher also includes nested model/data/result directories and common
   artifact extensions such as checkpoints, NumPy arrays, tables/configs/logs,
   figures, videos, and archives.
+- A first launch at `2026-06-09T06:12:06+00:00` was stopped after rclone warned
+  about mixed `--include` and `--exclude` parsing order.
+- The launcher was revised to ordered `--filter` rules.
+- A short `nohup` restart at `2026-06-09T06:14:06+00:00` did not remain active
+  long enough to be used as the official background run.
+- The artifact-only upload was launched in tmux session
+  `artifact_r2_sync_20260609` at `2026-06-09T06:15:59+00:00`.
+- Observed active processes after launch: launcher PID `1365324` and rclone PID
+  `1365340`.
+- The tmux-launched log begins without the mixed include/exclude warning.
 
 Inference:
 - This scope matches the corrected policy: R2 receives generated artifacts, and
@@ -13657,5 +13667,5 @@ Inference:
   files.
 
 Remaining work:
-- Launch the artifact-only copy and monitor its log later for completion or
-  R2-side retry errors.
+- Monitor `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log` later
+  for completion or R2-side retry errors.

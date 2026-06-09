@@ -58,3 +58,24 @@ Excluded from R2 artifact upload:
 - Files not matching artifact directories or artifact file extensions
 
 Credentials are intentionally not written to this file or to the launcher.
+
+## Launch Record
+
+Observed launch status:
+
+- A first attempt started at `2026-06-09T06:12:06+00:00` was stopped after
+  rclone warned that mixed `--include` and `--exclude` rules have indeterminate
+  parsing order.
+- The launcher was revised to ordered `--filter` rules.
+- A short `nohup` restart at `2026-06-09T06:14:06+00:00` did not remain active
+  long enough to be used as the official background run.
+- The artifact-only upload was then launched in tmux at
+  `2026-06-09T06:15:59+00:00`.
+- Tmux session: `artifact_r2_sync_20260609`
+- Observed launcher process: `bash tools/start_artifact_r2_sync_20260609.sh`
+- Observed rclone process: `rclone copy . R2:neural-operator-robustness/...`
+- Local PID file: `forensics/artifact_r2_sync_20260609/artifact_sync.pid`
+- Current log: `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`
+
+The restarted job is intended to keep running in the background. Completion
+should be checked from the log rather than from chat history.

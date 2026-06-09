@@ -27,6 +27,7 @@ cd "$PROJECT_ROOT"
 
 printf '[%s] Artifact copy -> %s\n' "$(date -Iseconds)" "$DEST" | tee -a "$LOG"
 
+set +e
 rclone copy "." "$DEST" \
   --s3-no-check-bucket \
   --s3-disable-checksum \
@@ -106,5 +107,13 @@ rclone copy "." "$DEST" \
   --filter '+ **/*.tgz' \
   --filter '- *' \
   2>&1 | tee -a "$LOG"
+copy_status=${PIPESTATUS[0]}
+set -e
 
-printf '\nCompleted: %s\n' "$(date -Iseconds)" | tee -a "$LOG"
+if [[ "$copy_status" -eq 0 ]]; then
+  printf '\nCompleted: %s\n' "$(date -Iseconds)" | tee -a "$LOG"
+else
+  printf '\nFailed: %s exit_status=%s\n' "$(date -Iseconds)" "$copy_status" | tee -a "$LOG"
+fi
+
+exit "$copy_status"
