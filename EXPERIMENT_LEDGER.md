@@ -13550,3 +13550,22 @@ Inference:
 
 Remaining work:
 - Locate or generate true binary Darcy generalization datasets and rerun the five-model TAG comparison/visualization under the same attack protocol.
+
+## 2026-06-09 - Full GitHub/R2 repository sync requested
+
+Status: preparing a full sync where code/Markdown are pushed to GitHub and large model/data/result/visualization roots are synced to R2.
+
+Source / record files:
+- Sync doc: `docs/full_repository_sync_20260609.md`
+- R2 sync script: `tools/start_full_r2_sync_20260609.sh`
+- R2 manifest path: `forensics/full_r2_sync_20260609/full_sync_manifest.txt`
+- R2 log path: `forensics/full_r2_sync_20260609/rclone_full_sync.log`
+
+Observed evidence:
+- GitHub target branch is `vast-ai`.
+- R2 target prefix is `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- The R2 sync roots include model code/checkpoint directories, generated data, adversarial training runs, forensics, visualizations, run logs, and generalization datasets/evaluations.
+- Credentials are not recorded in the repository files.
+
+Remaining work:
+- Launch the R2 sync in a background tmux session and monitor completion from the log.
