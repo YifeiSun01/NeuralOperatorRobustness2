@@ -13553,7 +13553,7 @@ Remaining work:
 
 ## 2026-06-09 - Full GitHub/R2 repository sync requested
 
-Status: preparing a full sync where code/Markdown are pushed to GitHub and large model/data/result/visualization roots are synced to R2.
+Status: launched a full sync where code/Markdown are pushed to GitHub and large model/data/result/visualization roots are synced to R2.
 
 Source / record files:
 - Sync doc: `docs/full_repository_sync_20260609.md`
@@ -13566,6 +13566,9 @@ Observed evidence:
 - R2 target prefix is `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
 - The R2 sync roots include model code/checkpoint directories, generated data, adversarial training runs, forensics, visualizations, run logs, and generalization datasets/evaluations.
 - Credentials are not recorded in the repository files.
+- GitHub commit `e9325bf` was pushed to `vast-ai` with the code/Markdown sync records and newly staged Markdown reports.
+- R2 background sync started in tmux session `full_r2_sync_20260609` at `2026-06-09T05:46:24+00:00`.
+- R2 manifest was created at `forensics/full_r2_sync_20260609/full_sync_manifest.txt`; live rclone log is `forensics/full_r2_sync_20260609/rclone_full_sync.log`.
 
 Remaining work:
-- Launch the R2 sync in a background tmux session and monitor completion from the log.
+- Monitor the tmux session and rclone log until the R2 sync completes.
