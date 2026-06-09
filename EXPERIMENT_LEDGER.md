@@ -13466,3 +13466,24 @@ Observed evidence:
 
 Remaining work:
 - Push commit `7264e6c` and this ledger update from an environment where external GitHub push is allowed.
+
+## 2026-06-09 - Darcy/C-flow loss3-advantage six-sample visualization
+
+Status: generated a dense six-sample visualization for Darcy/C-flow examples where `loss3` has a clear weak-attack advantage under `eps=0.00625`, `10` attack steps.
+
+Source / record files:
+- Plot script: `tools/plot_darcy_loss3_advantage_six_sample_plate_20260609.py`
+- Figure: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_six_sample_tag_plate.png`
+- Selected sample table: `forensics/darcy_loss3_advantage_six_sample_plate_20260609/selected_samples.csv`
+- Consolidated doc updated: `docs/darcy_cflow_tag_robustness_sweep_consolidated_20260609.md`
+
+Observed evidence:
+- The figure size is `3368 x 3285` pixels.
+- Six selected samples came from the `eps0p00625_steps010` protocol where `loss3` won most datasets.
+- The largest selected loss3-vs-next-best gain margins ranged from `1.4224680455754424e-07` to `1.8035103721558698e-07`.
+
+Inference:
+- The selected figure is designed to visually demonstrate the weak-attack regime where `loss3` is robust; it should not be interpreted as a random or full-dataset summary.
+
+Remaining work:
+- Confirm the ongoing R2 upload reaches the `visualizations/` and `forensics/` stages so the new PNG and selected-sample CSV are uploaded.

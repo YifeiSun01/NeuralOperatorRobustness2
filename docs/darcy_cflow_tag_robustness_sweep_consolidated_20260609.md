@@ -214,3 +214,43 @@ Selected data and visualization artifacts:
 - `forensics/darcy_five_model_tag_protocol_sweep_20260609/`
 - `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`
 - `visualizations/darcy_five_model_tag_protocol_sweep_20260609/`
+
+## Loss3-Advantage Six-Sample Visualization
+
+A dense six-sample visualization was generated after the protocol sweep to make the weak-attack `loss3` advantage visually inspectable.
+
+Protocol used for sample selection and plotting:
+
+- Epsilon fraction: `0.00625`
+- Attack steps: `10`
+- Shared objective: `loss3`
+- Selection source: `forensics/darcy_five_model_tag_protocol_sweep_20260609/eps0p00625_steps010/summary_by_dataset.csv`
+- Selection rule: choose datasets where `loss3` won, then choose the sample with the largest per-sample margin between `loss3` gain and the next-best non-loss3 gain.
+
+Generated files:
+
+- Figure: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_loss3_advantage_six_sample_tag_plate.png`
+- Selected sample table: `forensics/darcy_loss3_advantage_six_sample_plate_20260609/selected_samples.csv`
+- Plot script: `tools/plot_darcy_loss3_advantage_six_sample_plate_20260609.py`
+
+Observed selected samples and margins:
+
+| rank | dataset | sample | loss3 gain | next best non-loss3 gain | margin |
+|---:|---|---:|---:|---:|---:|
+| 1 | `darcy_lossdrop_pool_soft_l4_h10_b12_10.pt` | 25 | 3.120010205748258e-08 | 2.1155113927306957e-07 | 1.8035103721558698e-07 |
+| 2 | `darcy_lossdrop_pool_soft_l4_h10_b14_07.pt` | 30 | 1.1386561027393327e-08 | 1.6295378202357824e-07 | 1.5156722099618491e-07 |
+| 3 | `darcy_lossdrop_pool_soft_l4_h10_b10_03.pt` | 25 | 8.325713451995398e-09 | 1.5869332514739654e-07 | 1.5036761169540114e-07 |
+| 4 | `darcy_lossdrop_pool_soft_l4_h10_b8_14.pt` | 45 | 1.33276500946522e-09 | 1.4893954869421577e-07 | 1.4760678368475055e-07 |
+| 5 | `darcy_lossdrop_pool_soft_l4_h10_b12_11.pt` | 20 | 1.182712594527402e-08 | 1.5562221733489423e-07 | 1.437950913896202e-07 |
+| 6 | `darcy_lossdrop_pool_soft_l4_h10_b12_07.pt` | 40 | 1.1290808288322296e-09 | 1.4337588538637647e-07 | 1.4224680455754424e-07 |
+
+Figure layout:
+
+- Six rows correspond to six selected generalization samples.
+- The left column shows the clean Darcy input field.
+- The five model columns show `baseline`, `loss1`, `loss2`, `loss3`, and `physical_source`.
+- Each model cell contains perturbation, model output, solver output, and absolute model-solver error.
+- Green borders mark the `loss3` column.
+- Per-cell annotations show final MSE, loss gain, and gain ratio relative to the best model in that row.
+
+Inference from these selected examples: under the `eps=0.00625`, `10-step` weak-attack protocol, the chosen examples make the `loss3` advantage visually and numerically explicit. These are intentionally selected examples, not a replacement for the full-50 aggregate statistics above.
