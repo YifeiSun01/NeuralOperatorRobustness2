@@ -13527,3 +13527,26 @@ Inference:
 
 Remaining work:
 - None for this visualization refresh.
+
+## 2026-06-09 - Darcy/C-flow soft-vs-binary TAG audit
+
+Status: audited the selected Darcy/C-flow TAG visualization inputs after a concern that the intended Darcy coefficient fields should be binary.
+
+Source / record files:
+- Audit doc: `docs/darcy_cflow_soft_vs_binary_tag_audit_20260609.md`
+- Current selected TAG data directory: `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/`
+- Attack implementation: `tools/adversarial_training.py`, function `binary_darcy_replace_attack`
+- Binary benchmark config example: `2D_Darcy_FNO2d/saved_models/2D/darcy_flow_other30training_20260608/config.json`
+
+Observed evidence:
+- The current selected TAG files are named `darcy_lossdrop_pool_soft_*`.
+- Direct tensor inspection found selected samples with thousands of rounded unique coefficient values, not two values: `7197` unique rounded values for `darcy_lossdrop_pool_soft_l4_h10_b12_10.pt` sample `25`, and `7196` for `darcy_lossdrop_pool_soft_l4_h10_b14_07.pt` sample `30`.
+- The binary benchmark config paths include `binary3-12`, with metadata describing GRF thresholding and `soft_coefficients: false`.
+- The current attack code performs binary replacement to each sample's min/max, but on soft input fields that produces many possible delta magnitudes because `delta = replaced_value - original_value`.
+
+Inference:
+- The recent large `loss3`-advantage TAG visualizations and weak-TAG metrics are evidence for a soft-coefficient Darcy generalization setting, not for the original binary Darcy coefficient setting.
+- A corrected binary-coefficient TAG run should be performed before interpreting these results as binary Darcy TAG robustness.
+
+Remaining work:
+- Locate or generate true binary Darcy generalization datasets and rerun the five-model TAG comparison/visualization under the same attack protocol.
