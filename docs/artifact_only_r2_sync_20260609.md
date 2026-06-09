@@ -79,3 +79,24 @@ Observed launch status:
 
 The restarted job is intended to keep running in the background. Completion
 should be checked from the log rather than from chat history.
+
+## Failure And Retry
+
+Observed after launch:
+
+- The tmux-launched job exited at `2026-06-09T06:25:41+00:00` with
+  `exit_status=1`.
+- The log recorded `Attempt 1/5 failed with 163 errors` on Darcy selected and
+  stockgeneralization `.pt` files with R2 `NotImplemented` responses.
+- Later retries reduced the repeated failure to the live upload log itself:
+  `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`.
+- Because the upload job was writing that log while rclone was also trying to
+  copy it, the live log remained a repeated failing object and caused the
+  artifact copy to exit nonzero.
+
+Correction:
+
+- `tools/start_artifact_r2_sync_20260609.sh` now excludes
+  `forensics/artifact_r2_sync_20260609/` from the artifact copy.
+- The retry should continue as an incremental `rclone copy --size-only`, so
+  files already present on R2 with the same size are skipped.

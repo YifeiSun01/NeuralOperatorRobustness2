@@ -48,6 +48,8 @@ rclone copy "." "$DEST" \
   --filter '- **/__pycache__/**' \
   --filter '- **/*.pyc' \
   --filter '- **/.DS_Store' \
+  --filter '- forensics/artifact_r2_sync_20260609/' \
+  --filter '- forensics/artifact_r2_sync_20260609/**' \
   --filter '- **/*.py' \
   --filter '- **/*.sh' \
   --filter '- **/*.md' \

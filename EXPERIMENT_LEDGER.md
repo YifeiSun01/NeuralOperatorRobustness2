@@ -13669,3 +13669,36 @@ Inference:
 Remaining work:
 - Monitor `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log` later
   for completion or R2-side retry errors.
+
+## 2026-06-09 - Artifact-only R2 upload failed and retry prepared
+
+Status: inspected the artifact-only R2 upload after the user asked whether it
+had completed. The first tmux-launched artifact copy did not complete; the
+launcher was corrected to avoid copying its own live runtime log.
+
+Source / record files:
+- Upload doc: `docs/artifact_only_r2_sync_20260609.md`
+- Upload launcher: `tools/start_artifact_r2_sync_20260609.sh`
+- Failed log path: `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`
+
+Observed evidence:
+- No `artifact_r2_sync_20260609` tmux session or rclone process remained active
+  when checked.
+- The log ended with `Failed: 2026-06-09T06:25:41+00:00 exit_status=1`.
+- Attempt `1/5` reported `163` R2 `NotImplemented` copy errors on Darcy
+  selected and stockgeneralization `.pt` files.
+- Attempts `2/5` through `5/5` were reduced to one repeated failure:
+  `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`.
+- The repeated final failure was the upload job trying to copy the live log it
+  was writing.
+
+Inference:
+- The artifact upload was not complete as of `2026-06-09T06:25:41+00:00`.
+- The retry should be incremental because the launcher uses `rclone copy
+  --size-only`; any same-size files that already made it to R2 should be
+  skipped.
+
+Remaining work:
+- Restart artifact-only upload after excluding
+  `forensics/artifact_r2_sync_20260609/` from the copy set.
+- Check the retry log for `Completed:` or `Failed:` after the retry finishes.
