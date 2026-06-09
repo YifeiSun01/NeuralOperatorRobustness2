@@ -89,7 +89,15 @@ def summarize_run(run_dir: Path) -> dict[str, Any]:
     attack_df = pd.read_csv(attack_csv) if attack_csv.exists() else pd.DataFrame()
     objective = str(config.get("attack_loss_objective") or task_summary.get("attack_loss_objective") or "unknown")
     if objective == "unknown" and not attack_df.empty and "attack_loss_objective" in attack_df:
-        objective = str(attack_df["attack_loss_objective"].dropna().iloc[-1])
+        observed_objectives = attack_df["attack_loss_objective"].dropna()
+        observed_objectives = observed_objectives[observed_objectives.astype(str).str.len() > 0]
+        if not observed_objectives.empty:
+            objective = str(observed_objectives.iloc[-1])
+    if objective == "unknown":
+        for candidate in ("physics", "loss4", "loss3", "loss2", "loss1"):
+            if candidate in run_dir.name:
+                objective = "physics" if candidate == "loss4" else candidate
+                break
 
     row: dict[str, Any] = {
         "run_name": run_dir.name,

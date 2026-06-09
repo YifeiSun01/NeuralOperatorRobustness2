@@ -71,7 +71,7 @@ def load_x(path: Path) -> torch.Tensor:
     return x
 
 
-def build_samples(train_count: int) -> tuple[torch.Tensor, list[SampleRecord], list[str]]:
+def build_samples(train_count: int, gen_root: Path) -> tuple[torch.Tensor, list[SampleRecord], list[str]]:
     xs: list[torch.Tensor] = []
     manifest: list[SampleRecord] = []
     dataset_ids: list[str] = []
@@ -98,7 +98,7 @@ def build_samples(train_count: int) -> tuple[torch.Tensor, list[SampleRecord], l
     test_x = load_x(TEST_PATH)
     add_dataset("test", "test_original_gaussian_corr0p03", TEST_PATH, test_x, range(test_x.shape[0]))
 
-    for path in sorted(GEN_ROOT.glob("*.pt")):
+    for path in sorted(gen_root.glob("*.pt")):
         x = load_x(path)
         add_dataset("generalization", path.stem, path, x, range(x.shape[0]))
 
@@ -251,6 +251,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--steps", type=int, default=20)
     parser.add_argument("--batch-size", type=int, default=500)
     parser.add_argument("--train-count", type=int, default=50)
+    parser.add_argument("--gen-root", type=Path, default=GEN_ROOT)
     parser.add_argument("--run-name", default="burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607")
     parser.add_argument("--out-root", type=Path, default=REPO / "forensics")
     parser.add_argument("--models", nargs="*", default=MODEL_ORDER, choices=MODEL_ORDER)
@@ -272,7 +273,14 @@ def main() -> None:
     base_mod = load_base_module()
     gpu = gpu_preflight()
     device = torch.device("cuda")
-    x_all, manifest, dataset_ids = build_samples(args.train_count)
+    gen_root = args.gen_root
+    if not gen_root.is_absolute():
+        gen_root = (REPO / gen_root).resolve()
+    if not gen_root.exists():
+        raise FileNotFoundError(f"generalization root does not exist: {gen_root}")
+    if not any(gen_root.glob("*.pt")):
+        raise FileNotFoundError(f"generalization root has no .pt files: {gen_root}")
+    x_all, manifest, dataset_ids = build_samples(args.train_count, gen_root)
     if args.max_samples is not None:
         x_all = x_all[: args.max_samples].contiguous()
         manifest = manifest[: args.max_samples]
@@ -311,6 +319,7 @@ def main() -> None:
         "epsilon_rms": float(base_mod.EPSILON_RMS),
         "alpha_rms": float(base_mod.ALPHA_RMS),
         "train_count": args.train_count,
+        "gen_root": str(gen_root),
         "model_order": args.models,
         "models": {name: str(MODELS[name]) for name in args.models},
         "sample_count": n,

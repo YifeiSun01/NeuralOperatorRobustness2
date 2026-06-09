@@ -113,7 +113,11 @@ DEFAULTS: dict[str, TaskDefaults] = {
         eps_jitter_high=1.0,
     ),
     "ns2d": TaskDefaults(
-        # Exact NS2D solver-gradient rollout is very memory heavy; batch 2 OOMed on the 31.7GB GPU.
+        # Exact NS2D solver-gradient rollout is very memory heavy. Keep the
+        # generic default conservative; production launchers should pass an
+        # explicit tuned batch. On the 32GB V100 path, 2026-05-30
+        # chunk-remat adversarial-training records found batch 6 passed and
+        # batch 8/10 OOMed. Larger A100/B200 batch records are not comparable.
         batch_size=1,
         optimizer_batch_size=1,
         eval_batch_size=5,
@@ -3230,6 +3234,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--binary-pool-multiplier", type=float, default=1.0, help="Darcy binary attack candidate pool multiplier. Default 1.0 is deterministic top-k for comparable same-index probes.")
     parser.add_argument("--binary-score-noise", type=float, default=0.0, help="Darcy binary attack score noise. Default 0.0 keeps same epsilon/model changes as the main source of probe variation.")
     parser.add_argument("--burgers-initial-checkpoint", type=Path, default=None, help="Optional Burgers checkpoint to load before adversarial training; used for resume/continuation runs.")
+    parser.add_argument("--darcy-initial-checkpoint", type=Path, default=None, help="Optional Darcy checkpoint to load before adversarial training; used for resume/continuation runs with epoch/global-step offsets.")
     parser.add_argument("--darcy-model-checkpoint", type=Path, default=None, help="Optional Darcy checkpoint to load as the starting model when the official default checkpoint is unavailable or a screening baseline is intended.")
     parser.add_argument("--darcy-train-path", type=Path, default=None, help="Optional Darcy train dataset override path.")
     parser.add_argument("--darcy-test-path", type=Path, default=None, help="Optional Darcy test dataset override path.")

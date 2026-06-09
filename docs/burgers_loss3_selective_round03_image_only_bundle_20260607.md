@@ -100,3 +100,23 @@ Regenerated overlay outputs:
 Observed verification: overlay PNG dimensions remain `7200x2528` for the four-column overlay and `3600x2528` for the two-column overlays. The image-only bundle still contains `59` PNG files and `0` non-PNG files.
 
 Inference: the overlay figures now keep the before/after distinction via dashed vs solid line style while making the before curves visible enough for direct comparison.
+
+## Per-Generalization 5x5 Wall-Clock Panels - 2026-06-08
+
+Observed action: added four per-generalization wall-clock panels to `comparison_dense`, generated from existing per-dataset `eval_metrics.csv` files without rerunning training or attacks. The plots separate all 50 generalization datasets into two 5x5 panels for each metric, with loss1/loss2/loss3 curves and a baseline horizontal reference line in every subplot.
+
+Generated output files:
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_relative_l2_generalization_5x5_part1_xmax12p5h.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_relative_l2_generalization_5x5_part2_xmax12p5h.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_rmse_generalization_5x5_part1_xmax12p5h.png`
+  - `visualizations/burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607/comparison_dense/round03_dense_wall_clock_rmse_generalization_5x5_part2_xmax12p5h.png`
+
+Observed verification: each new PNG is `4625x3443`; file sizes are about `1.7..1.9 MB`. Bundle count is now `63` PNG files and `0` non-PNG files. The final-vs-baseline check on the 50 generalization datasets shows relative-L2 and RMSE final values below baseline for loss1/loss2/loss3 on `50/50` datasets.
+
+Label correction: regenerated these four PNGs again after tracing `selected_candidate_scores.csv` and the round03 generator. Subplot titles now avoid both saved selected IDs (`dXX`) and candidate-pool IDs (`cXXX`); they use semantic generation labels such as `loss3_adversarial_far_range_pattern`, `base=test_original_gaussian_corr0p03`, and `transform=loss3_raw_attack_epsfrac0p12_steps10`. Observed evidence shows this round03 root does not contain neutral master `kernel/transform/scale/shift` names such as `burgers_far_sawtooth_add_scale...`; those belong to `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`, not the round03 evaluation data plotted here. Because round03 has only six source/epsilon/step semantic configurations, many semantic-only subplot titles are identical; the individual datasets differ by sampled base examples, random attack/jitter realization, and selection score.
+
+Dedicated record: `docs/burgers_round03_generalization_5x5_wallclock_panels_20260608.md`.
+
+## Validity Caveat - 2026-06-08
+
+Observed evidence: the added round03 per-generalization panels visualize attack-generated, loss3-selected stress datasets, not 50 neutral semantic distribution shifts. The correct interpretation is targeted robustness on a constructed loss3-selective stress set. Broad generalization claims require separate evaluation on the neutral semantic root `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`. Dedicated caveat: `docs/burgers_round03_attack_generated_generalization_validity_caveat_20260608.md`.

@@ -330,9 +330,12 @@ def main() -> None:
     if missing:
         raise FileNotFoundError("missing checkpoint(s): " + ", ".join(missing))
 
-    device = torch.device(args.device if args.device and torch.cuda.is_available() else "cpu")
+    requested_device = str(args.device or "cuda")
+    if requested_device.startswith("cuda") and not torch.cuda.is_available():
+        raise RuntimeError("CUDA is required for this official Jacobian/SVD run; refusing CPU fallback")
+    device = torch.device(requested_device)
     if device.type != "cuda":
-        print("[warn] CUDA is unavailable; explicit Jacobian/SVD will be slow.", flush=True)
+        raise RuntimeError("CUDA is required for this official Jacobian/SVD run; refusing CPU execution")
     print(f"[device] {device}", flush=True)
 
     solver_args = SimpleNamespace(
