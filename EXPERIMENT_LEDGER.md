@@ -13572,3 +13572,44 @@ Observed evidence:
 
 Remaining work:
 - Monitor the tmux session and rclone log until the R2 sync completes.
+
+## 2026-06-09 - R2 inventory checked and broad copy stopped
+
+Status: inspected the existing R2 target contents, stopped the broad R2 copy job,
+and recorded that future uploads should use narrow `rclone copy` commands for
+new or recently modified artifacts only.
+
+Source / record files:
+- Sync doc: `docs/full_repository_sync_20260609.md`
+- R2 manifest path: `forensics/full_r2_sync_20260609/full_sync_manifest.txt`
+- R2 log path: `forensics/full_r2_sync_20260609/rclone_full_sync.log`
+
+Observed evidence:
+- Existing R2 target
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`
+  contains `143764` objects and `389357585709` bytes, about `389.4 GB`
+  decimal or `362.6 GiB`.
+- Largest top-level R2 roots observed were `adversarial_training_runs`
+  (`129.739 GiB`), `2D_NS_FNO2d_recurrent` (`96.840 GiB`),
+  `2D_Darcy_FNO2d` (`35.827 GiB`), and `forensics` (`23.550 GiB`).
+- Old 1D roots were already present and small on R2:
+  `1D_Burgers` (`0.179 GiB`), `1D_Burgers_deeponet` (`0.028 GiB`), and
+  `1D_Burgers_FNO_generalization` (`0.028 GiB`).
+- The stopped job used `rclone copy`, not `rclone sync`; therefore it would not
+  delete remote files, but it was scanning too many historical roots.
+- The stopped broad-copy log shows it scanned or started `1D_Burgers`,
+  `1D_Burgers_FNO_generalization`, `1D_Burgers_deeponet`,
+  `2D_Darcy_FNO2d`, `2D_NS_FNO2d_recurrent`,
+  `adversarial_training_runs`, and then `forensics`.
+- The `full_r2_sync_20260609` tmux session was stopped, and no broad R2 upload
+  session remains active.
+
+Inference:
+- The command type was correct for incremental upload, but the manifest scope
+  was too broad. Future R2 transfers should use narrow `rclone copy` calls for
+  the current Darcy/C-flow, Burgers, Navier-Stokes, visualization, dataset, and
+  forensics artifacts that are actually new or changed.
+
+Remaining work:
+- Start a corrected narrow R2 copy only after confirming the exact recent
+  artifact directories to upload.
