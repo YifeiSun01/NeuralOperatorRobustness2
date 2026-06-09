@@ -13618,3 +13618,42 @@ Inference:
 Remaining work:
 - Start a corrected narrow R2 copy only after confirming the exact recent
   artifact directories to upload.
+
+## 2026-06-09 - Artifact-only R2 upload prepared
+
+Status: prepared an artifact-only R2 upload for model checkpoints, datasets,
+generated numeric results, logs, images, visualizations, and archives. This is a
+data-transfer task, not a GPU experiment run.
+
+Source / record files:
+- Upload doc: `docs/artifact_only_r2_sync_20260609.md`
+- Upload launcher: `tools/start_artifact_r2_sync_20260609.sh`
+- Manifest path: `forensics/artifact_r2_sync_20260609/artifact_sync_manifest.txt`
+- Log path: `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`
+
+Key settings:
+- Destination prefix:
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`
+- Transfer command: `rclone copy`
+- Incremental comparison: `--size-only`
+- Excluded from R2 artifact upload: `.git/`, `adv_robust/`, Python bytecode,
+  and files not matching artifact directories or artifact file extensions.
+
+Observed evidence:
+- The launcher was created locally and intentionally keeps credentials out of
+  repository files.
+- The launcher uploads artifact roots such as `adversarial_training_runs/`,
+  `forensics/`, `visualizations/`, `results/`, `data/`, `Model/`,
+  `generalization_datasets*/`, and `generalization_eval*/`.
+- The launcher also includes nested model/data/result directories and common
+  artifact extensions such as checkpoints, NumPy arrays, tables/configs/logs,
+  figures, videos, and archives.
+
+Inference:
+- This scope matches the corrected policy: R2 receives generated artifacts, and
+  GitHub remains the system of record for Python, shell, and Markdown source
+  files.
+
+Remaining work:
+- Launch the artifact-only copy and monitor its log later for completion or
+  R2-side retry errors.
