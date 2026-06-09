@@ -12879,3 +12879,311 @@ Inference:
 Remaining work:
 - If the paper needs this statement for every broad generalization root, run or locate matching SVD/attack-direction audits for roots not covered by the existing representative artifacts.
 
+## 2026-06-08 - Burgers three-root generalization/robustness unified status
+
+Status: completed a documentation audit of the current evidence status for the user's three Burgers generalization roots. No new training, attack, SVD, model forward, or solver forward was run for this entry.
+
+Observed evidence:
+- Result doc: `docs/burgers_three_dataset_generalization_robustness_unified_status_20260608.md`.
+- First/root clean-generalization source: `docs/burgers_master_semantic_final_models_20260608.md`.
+- Second/root clean-generalization source: `docs/burgers_neutral_generalization_final_models_20260608.md`.
+- Second/root full robustness/tag sources: `docs/burgers_round03_full52_per_sample_clean_vs_attack_mismatch_20260608.md` and `docs/burgers_round03_full52_clean_generalization_vs_attack_robustness_mismatch_20260608.md`.
+- Three-root prior audit source: `docs/r2_burgers_three_dataset_conclusion_audit_20260608.md`.
+- Third/root provenance caveat source: `docs/burgers_round03_attack_generated_generalization_validity_caveat_20260608.md`.
+
+Key observed status:
+- First root `generalization_datasets/burgers`: clean/generalization evaluation exists, but the result is mixed and no direct full first-root fixed-budget P2Q2 attack/tag table was found in inspected local/R2 records.
+- Second root `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`: clean/generalization and full `10200`-sample robustness/tag evidence both exist; clean/generalization favors loss1/loss2, especially loss1, while robustness strongly favors loss3.
+- Third root `generalization_datasets_burgers_loss3_selective_search/round_03/burgers`: clean/generated-stress evidence favors loss3 and robustness evidence is consistent with loss3, but the root is attack-generated/loss3-selective and should be reported as stress-set evidence.
+
+Inference:
+- It is not currently correct to say all three roots have the same complete clean-plus-robustness conclusion.
+- The strongest unified clean-vs-robustness mismatch is on the second root.
+
+Remaining work:
+- Run or locate a direct full fixed-budget P2Q2 attack/tag table for the first root if a first-root robustness conclusion is required.
+- Run or locate a separate full third-root attack/tag table if the third-root robustness claim needs the same sample-scale strength as the second-root artifact.
+
+## 2026-06-08 - Darcy/C-flow visualization location recheck
+
+Status: rechecked local Darcy/C-flow visualization locations in response to a user request. No new plotting, model evaluation, solver evaluation, training, or attack run was launched.
+
+Observed evidence:
+- Existing location record: `docs/darcy_cflow_visualization_artifact_locations_20260608.md`.
+- Main combined copied PNG directory: `adversarial_training_runs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608/`.
+- Corrected single-GPU loss1/loss2 PNGs are under each run's `darcy_time_matched_summary/` directory.
+- Current stockloss3other20 PNGs are under `adversarial_training_runs/darcy_stockloss3other20training_20260608/darcy_time_matched_summary/`.
+- Raw attack-probe metrics/data are present under each run's `darcy/attack_probe_samples.csv` and `darcy/attack_probe_samples/`.
+
+Inference:
+- The existing Darcy/C-flow PNGs cover RMSE split curves, relative-L2 split curves, attack objective/solver-MSE curves, and eval/train progress where available.
+- Standalone Darcy/C-flow perturbation-frequency/spectrum PNGs were not found locally; only raw FFT/TV/sign-change metrics and NPZ probe data are present.
+
+
+
+## 2026-06-08 - Burgers Missing First/Third Root Full Robustness Run
+
+Status: running in tmux session `burgers_missing_roots_fulltag_20260608`.
+
+Source files:
+- `tools/run_burgers_round03_full_p2q2_finalonly_attack.py`
+- `tools/run_burgers_missing_roots_full_p2q2_attack_20260608.sh`
+
+Output files / logs:
+- `run_logs/burgers_missing_roots_full_p2q2_20260608/gpu_preflight.txt`
+- `run_logs/burgers_missing_roots_full_p2q2_20260608/first_master_full_p2q2_20step.log`
+- `run_logs/burgers_missing_roots_full_p2q2_20260608/round03_selective_full_p2q2_20step.log`
+- `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608`
+- `forensics/burgers_round03_selective_full_p2q2_52datasets_4models_finalonly_20step_20260608`
+- `docs/burgers_missing_roots_full_robustness_run_20260608.md`
+
+Key settings:
+- First root: `generalization_datasets/burgers`.
+- Third root: `generalization_datasets_burgers_loss3_selective_search/round_03/burgers`.
+- Models: baseline, `loss1_epoch8000`, `loss2_epoch2000`, `loss3_epoch1500`.
+- Attack protocol: final-only P2Q2, `steps=20`, `epsilon_rms=0.12`, `alpha_rms=0.012`, `batch_size=500`, `train_count=50`.
+- GPU preflight recorded Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, compute capability `[7, 0]`, arch list including `sm_70`.
+
+Observed evidence:
+- Second-root full-tag evidence already exists at `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607`.
+- A direct first-root full-tag table was not found locally before this run.
+- A direct third-root full `10200`-sample final-only full-tag table was not found locally before this run, although representative SVD20/attack-correlation evidence exists.
+- Current machine has no configured `rclone` remote, so R2 was not independently enumerated in this turn.
+
+Inference:
+- The missing same-strength robustness/tag evidence for the first and third roots should be generated by this run, making the three roots comparable under the same full-tag protocol.
+
+Remaining work:
+- Monitor first-root completion, then third-root completion.
+- After both runs finish, generate winner/count summaries and update the three-root conclusion doc with observed first/third robustness rankings.
+
+## 2026-06-08 - Darcy/C-flow image-only loss-method comparison bundle
+
+Status: built the requested image-only Darcy/C-flow figure bundle. No new training, attack, model-forward evaluation, or solver-forward evaluation was launched. Existing PNGs were copied, and additional comparison PNGs were generated from existing local CSV/NPZ artifacts.
+
+Observed evidence:
+- Result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+- Image-only output directory: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`.
+- Output verification: `27` PNG files, and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
+- Build tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+- Source runs: `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608/`, `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608/`, `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/`, `adversarial_training_runs/darcy_lossdrop50_physics_time_matched_loss3wall_20260608/`, and `adversarial_training_runs/darcy_stockloss3other20training_20260608/`.
+- Numeric source files used per run: `darcy/eval_split_summary.csv`, `darcy/attack_epoch_summary.csv`, `darcy/attack_probe_samples.csv`, `darcy/attack_probe_samples/*.npz`, `darcy/train_steps.csv`, and available summary JSON files. Exact per-run source paths are enumerated in `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+
+Key settings:
+- Formal methods compared: loss1, loss2, loss3, physics/loss4.
+- Reference run included: stockloss3other20.
+- Baseline in RMSE/relative-L2/final-best figures: lossdrop50 epoch-0 clean-evaluation baseline from the formal-method set.
+- X-axis for generated comparison curves: wall minutes reconstructed from cumulative `train_steps.csv:step_wall_sec`, scaled to recorded elapsed seconds when available.
+
+Key generated figures:
+- `comparison_rmse_all_methods_vs_baseline.png`.
+- `comparison_relative_l2_all_methods_vs_baseline.png`.
+- `comparison_generalization_final_best_bars_vs_baseline.png`.
+- `comparison_attack_solver_mse_all_methods.png`.
+- `comparison_attack_objective_normalized_all_methods.png`.
+- `comparison_attack_probe_frequency_metrics_all_methods.png`.
+- `comparison_final_delta_radial_spectrum_all_methods.png`.
+- `comparison_final_delta_maps_all_methods.png`.
+
+Inference:
+- The bundle now satisfies the requested single-folder image-only organization and adds same-figure comparisons for the four formal Darcy/C-flow loss methods plus the stockloss3other20 reference.
+- Because evaluation CSVs do not contain exact cumulative evaluation timestamps, the wall-minute x-axis is reconstructed/scaled from train-step timing and should be treated as a visualization aid rather than exact timestamp evidence.
+
+Remaining work:
+- Log exact cumulative evaluation timestamps in future runs if exact wall-time curve alignment is required.
+- Extend perturbation-map plotting beyond the first stored final probe if full probe-rank grids are needed.
+
+## 2026-06-08 - Darcy/C-flow polished loss-only bundle correction
+
+Status: replaced the earlier broad Darcy/C-flow image bundle with a polished loss-method-only bundle in response to user feedback. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was launched.
+
+Observed evidence:
+- Current result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+- Current image-only output directory: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`.
+- Current output verification: `4` PNG files, and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
+- Build tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+- Syntax check passed: `adv_robust/bin/python -m py_compile tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+
+Key correction:
+- Removed `stockloss3other20` from the plotted curves. It is a separate 20-epoch stock/generalization reference run, not one of the four formal loss-objective methods in this Darcy/C-flow comparison.
+- Removed copied old per-run PNGs with raw run-directory titles.
+- Removed delta, spectrum, perturbation-frequency, and robustness-style PNGs from the current bundle.
+- Regenerated only polished loss-focused figures using the Burgers-style visual template.
+
+Current generated figures:
+- `comparison_attack_objective_normalized_all_methods.png`.
+- `darcy_cflow_clean_rmse_loss_methods.png`.
+- `darcy_cflow_clean_relative_l2_loss_methods.png`.
+- `darcy_cflow_generalization_final_best_loss_methods.png`.
+
+Key settings:
+- Formal methods plotted: loss1, loss2, loss3, physics/loss4.
+- Baseline handling: epoch-0 clean-evaluation baseline is printed as a panel note, not drawn as an extra curve, so the line plots contain only four method curves.
+- Attack objective normalization: each objective is normalized to its own first finite nonzero value because absolute objective scales differ by definition.
+
+Observed source files:
+- Exact per-run source paths are enumerated in `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+- Core numeric sources are each formal run's `darcy/eval_split_summary.csv`, `darcy/attack_epoch_summary.csv`, `darcy/train_steps.csv`, and summary JSON files.
+
+Inference:
+- The current bundle supersedes the earlier 27-PNG version for the user's requested polished four-loss-method comparison.
+- The previous broad bundle included useful exploratory plots, but it did not match the requested clean loss-comparison deliverable.
+
+Remaining work:
+- If exact wall-clock x-axis values at evaluation time are required, future runs should log cumulative wall timestamps directly into evaluation outputs.
+- Keep perturbation/spectrum/robustness figures separate from this loss-method figure bundle unless explicitly requested.
+
+## 2026-06-08 - Darcy stockloss3other20 naming clarification
+
+Status: clarified the meaning of the `darcy_stockloss3other20training_20260608` label. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was run.
+
+Observed evidence:
+- Clarification doc: `docs/darcy_stockloss3other20_naming_clarification_20260608.md`.
+- Pipeline source: `docs/darcy_other30_stockgeneralization_loss3other20_pipeline_20260608.md`.
+- Run summary source: `docs/darcy_stockloss3other20training_20260608.md`.
+- Run config source: `adversarial_training_runs/darcy_stockloss3other20training_20260608/run_config.json`.
+
+Conclusion:
+- `stockloss3other20training` is a run label, not a loss method.
+- It means loss3 adversarial self-training for 20 epochs in the stock/generalization pipeline, initialized from the other30 Darcy checkpoint.
+- It should not be included as a fifth curve in the four-method Darcy/C-flow loss comparison.
+
+
+
+## 2026-06-08 - R2 Burgers Missing-Roots Artifact Inventory
+
+Status: completed R2 inventory pass for selected prefix; no credentials recorded in repo files.
+
+Source / evidence files:
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_forensics_topdirs.txt`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_adversarial_training_runs_topdirs.txt`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_docs_lsf_pst.tsv`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_generalization_datasets_lsf_pst.tsv`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_generalization_datasets_rmse_1p5_3x_all_ns50_lsf_pst.tsv`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_generalization_datasets_burgers_loss3_selective_search_lsf_pst.tsv`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_burgers_relevant_all_matches.txt`
+- `docs/r2_burgers_missing_roots_inventory_20260608.md`
+
+Observed evidence:
+- R2 has 50 Burgers `.pt` datasets for first root `generalization_datasets/burgers`.
+- R2 has 50 Burgers `.pt` datasets for second root `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
+- R2 has 50 selected Burgers `.pt` datasets for third root `generalization_datasets_burgers_loss3_selective_search/round_03/burgers`, plus 60 candidate-pool `.pt` files.
+- R2 has `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/`, the already-known second-root full-tag artifact.
+- R2 has third-root SVD/representative artifacts including `burgers_loss3_selective_round03_long_final_jacobian_svd_rep20_top100_20260605/` and `burgers_loss3_selective_round03_loss123_final_extension_jacobian_svd_rep20_top100_20260606/`.
+- No first-root-specific full P2Q2 final-only top-level artifact was found in R2 topdir listings.
+- No third-root-specific full P2Q2 final-only top-level artifact was found in R2 topdir listings.
+
+Inference:
+- R2 does not currently remove the need for the local first-root/third-root full-tag補跑. The local tmux run should continue.
+
+Remaining work:
+- When the local first-root and third-root full-tag runs complete, generate summary tables and optionally upload the new artifacts back to R2.
+
+
+## 2026-06-08 - Burgers Missing-Roots Background Job Status Check
+
+Status: running; user asked whether the background job is SVD or attack.
+
+Observed evidence:
+- Active tmux session: `burgers_missing_roots_fulltag_20260608`.
+- Active command: `tools/run_burgers_round03_full_p2q2_finalonly_attack.py --gen-root generalization_datasets/burgers --run-name burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608 --steps 20 --batch-size 500 --train-count 50`.
+- No active `jacobian_svd`/SVD process was observed in the process list.
+- Latest observed log entry: `loss1_epoch8000` batch `6000:6500` completed.
+- GPU use observed around `30084 MiB / 32768 MiB` on Tesla V100-SXM2-32GB.
+
+Conclusion:
+- The background job is full P2Q2 attack/tag, not SVD. It should not have dense SVD runtime characteristics, although it remains a long GPU run because it attacks 10200 samples for 4 models per root.
+
+
+## 2026-06-08 - R2 Burgers SVD Metadata Provenance Correction
+
+Status: completed metadata-only R2 SVD provenance audit; no SVD recomputation.
+
+Source / evidence files:
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_forensics_svd_topdirs.txt`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_svd_top_metadata/`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_svd_metadata_source_hits.txt`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_svd_manifest_provenance_summary.csv`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_svd_manifest_provenance_summary.md`
+- `docs/r2_burgers_missing_roots_inventory_20260608.md`
+
+Observed evidence:
+- R2 selected prefix has 27 SVD/Jacobian top-level artifact directories under `forensics/`.
+- Second-root ns50 SVD metadata is present, including representative20 manifests with about 10 generalization and 10 train/test samples.
+- Round01/aligned SVD metadata is present.
+- Third-root/round03 selective SVD metadata is present, including representative round03 manifests and final-extension SVD summaries.
+- Exact root string `generalization_datasets/burgers` was not found inside the downloaded SVD metadata, so first/master semantic SVD remains unevidenced in this selected-prefix audit.
+
+Inference:
+- The corrected statement is that SVD was done for several Burgers generalization roots/families, especially second ns50 and third round03; the missing/unclear SVD evidence is specifically first/master semantic root, not all roots.
+- The currently running background job is attack/tag only, not SVD.
+
+## 2026-06-08 - Darcy/C-flow baseline-plus-perturbation bundle correction
+
+Status: regenerated the Darcy/C-flow visualization bundle after user feedback. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was launched.
+
+Observed evidence:
+- Current result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+- Current image-only output directory: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`.
+- Current output verification: `7` PNG files, and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
+- Build tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+- Syntax check passed: `adv_robust/bin/python -m py_compile tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+- PIL nonblank checks recorded nonzero RGB standard deviations for all seven generated PNGs.
+
+Key correction:
+- Added `baseline model` back into clean-evaluation figures and the generalization summary bar chart.
+- Clarified attack-objective panel labels: perturbed-input objective value and attack-induced objective increase.
+- Restored perturbation example and perturbation-frequency analysis figures from existing probe CSV/NPZ artifacts.
+- Kept `stockloss3other20` excluded from method curves because it is a separate 20-epoch stock/generalization pipeline run using loss3, not a fifth formal objective.
+
+Current generated figures:
+- `comparison_attack_objective_normalized_all_methods.png`.
+- `darcy_cflow_clean_rmse_loss_methods.png`.
+- `darcy_cflow_clean_relative_l2_loss_methods.png`.
+- `darcy_cflow_generalization_final_best_loss_methods.png`.
+- `darcy_cflow_final_perturbation_examples.png`.
+- `darcy_cflow_final_delta_radial_spectrum_loss_methods.png`.
+- `darcy_cflow_perturbation_frequency_metrics_loss_methods.png`.
+
+Observed source files:
+- Exact per-run source paths are enumerated in `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+- Core clean-eval sources: each formal run's `darcy/eval_split_summary.csv`.
+- Core attack-objective sources: each formal run's `darcy/attack_epoch_summary.csv`.
+- Core perturbation sources: each formal run's `darcy/attack_probe_samples.csv` and `darcy/attack_probe_samples/*.npz`.
+- Timing sources: each formal run's `darcy/train_steps.csv` and summary JSON files.
+
+Inference:
+- The bundle now separates three concepts explicitly: clean prediction error, attack-generation objective diagnostics, and perturbation/frequency diagnostics.
+- RMSE and Relative L2 clean plots have similar structure because both come from the same clean evaluation passes; RMSE is absolute error, while Relative L2 is scale-normalized error.
+- Attack objective curves should be read within each method only because objective definitions differ across loss1/loss2/loss3/physics.
+
+Remaining work:
+- If exact wall-clock x-axis values at evaluation time are required, future runs should log cumulative wall timestamps directly into evaluation outputs.
+- Generate a separate paper-ready final robustness metric figure if needed; do not conflate it with attack-generation objective curves.
+
+
+
+## 2026-06-09 - Burgers Three-Root Data/SVD/Attack Status Markdown For GitHub
+
+Status: documentation prepared for GitHub push.
+
+Source / record files:
+- `docs/burgers_three_roots_data_svd_attack_status_20260609.md`
+- `docs/r2_burgers_missing_roots_inventory_20260608.md`
+- `docs/burgers_missing_roots_full_robustness_run_20260608.md`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_svd_manifest_provenance_summary.md`
+- `forensics/r2_burgers_missing_roots_inventory_20260608/r2_svd_manifest_provenance_summary.csv`
+
+Observed evidence:
+- R2 has 50 Burgers `.pt` datasets for each of the three roots.
+- R2 has completed SVD metadata for second/ns50, round01/aligned, and third/round03 selective roots.
+- Exact first/master semantic SVD evidence remains unevidenced in selected R2 metadata.
+- R2 has completed second/ns50 full P2Q2 final-only attack/tag.
+- First/master and third/round03 full P2Q2 final-only attack/tag were not found on R2 and are being generated locally in tmux session `burgers_missing_roots_fulltag_20260608`.
+
+Inference:
+- The corrected status is not that SVD was missing broadly. The missing/unclear SVD evidence is specifically the first/master semantic root; the currently running job is attack/tag, not SVD.
+
+Remaining work:
+- Push the Markdown records to GitHub.
+- After local attack/tag finishes, summarize first/third full-tag results and optionally upload artifacts to R2.
