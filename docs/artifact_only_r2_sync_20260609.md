@@ -100,3 +100,7 @@ Correction:
   `forensics/artifact_r2_sync_20260609/` from the artifact copy.
 - The retry should continue as an incremental `rclone copy --size-only`, so
   files already present on R2 with the same size are skipped.
+- The corrected retry was launched in tmux session `artifact_r2_sync_20260609`
+  at `2026-06-09T06:41:23+00:00`.
+- Observed active retry processes after launch: launcher PID `1367058` and
+  rclone PID `1367074`.

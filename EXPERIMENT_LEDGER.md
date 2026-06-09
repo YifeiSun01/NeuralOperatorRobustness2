@@ -13702,3 +13702,30 @@ Remaining work:
 - Restart artifact-only upload after excluding
   `forensics/artifact_r2_sync_20260609/` from the copy set.
 - Check the retry log for `Completed:` or `Failed:` after the retry finishes.
+
+## 2026-06-09 - Artifact-only R2 upload retry launched
+
+Status: restarted the artifact-only R2 upload after excluding the upload
+runtime directory from the copy set.
+
+Source / record files:
+- Upload doc: `docs/artifact_only_r2_sync_20260609.md`
+- Upload launcher: `tools/start_artifact_r2_sync_20260609.sh`
+- Retry log path: `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log`
+
+Observed evidence:
+- The corrected retry started at `2026-06-09T06:41:23+00:00`.
+- Tmux session `artifact_r2_sync_20260609` was active after launch.
+- Observed active processes after launch: launcher PID `1367058` and rclone PID
+  `1367074`.
+- The active rclone command includes filters excluding
+  `forensics/artifact_r2_sync_20260609/` and
+  `forensics/artifact_r2_sync_20260609/**`.
+
+Inference:
+- The previous live-log self-copy failure should not recur in this retry.
+- Completion is still not evidenced until the retry log contains `Completed:`.
+
+Remaining work:
+- Check `forensics/artifact_r2_sync_20260609/rclone_artifact_sync.log` later
+  for `Completed:` or `Failed:`.
