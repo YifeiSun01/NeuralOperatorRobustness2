@@ -266,6 +266,7 @@ Observed from `tools/plot_darcy_loss3_advantage_large_variants_20260609.py` and 
 - GPU verification for this plotting rerun is stored at `forensics/darcy_loss3_advantage_six_sample_plate_20260609/large_variants_gpu_preflight.json`.
 - The delta/error-only figures remove model and solver heatmaps so the perturbation and absolute model-solver error are larger.
 - The four-panel figures use the actual row-shared model/solver output range. This corrects the earlier display issue where model and solver panels were visually flattened by an overly wide fixed color range.
+- The four-panel heatmaps are forced to square aspect. No `delta`, `model`, `solver`, or `error` panel is stretched into a rectangle.
 - Each row's absolute-error panels use one shared color range across all five models so the `loss3` error reduction is visually comparable within the row.
 - `large_variant_metrics.csv` now records final changed-pixel counts and nonzero delta magnitudes for each displayed sample/model.
 - The displayed `delta` is not a fixed-amplitude additive perturbation. In this binary-replace Darcy attack, selected pixels are replaced by the sample's low or high coefficient value, so `delta = replaced_value - original_value` can have many magnitudes even though each selected pixel is discretely replaced.

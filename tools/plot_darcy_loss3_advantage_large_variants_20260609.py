@@ -357,9 +357,9 @@ def add_heatmap(
     norm: TwoSlopeNorm | None = None,
     vmin: float | None = None,
     vmax: float | None = None,
-    aspect: str = "equal",
 ) -> None:
-    ax.imshow(squeeze_field(image), cmap=cmap, norm=norm, vmin=vmin, vmax=vmax, interpolation="nearest", aspect=aspect)
+    ax.imshow(squeeze_field(image), cmap=cmap, norm=norm, vmin=vmin, vmax=vmax, interpolation="nearest", aspect="equal")
+    ax.set_box_aspect(1)
     ax.set_xticks([])
     ax.set_yticks([])
     for spine in ax.spines.values():
@@ -370,6 +370,7 @@ def add_heatmap(
 
 def draw_clean(ax: plt.Axes, row: dict[str, Any], *, label_fontsize: float) -> None:
     ax.imshow(squeeze_field(row["x_clean"]), cmap="viridis", interpolation="nearest")
+    ax.set_box_aspect(1)
     ax.set_xticks([])
     ax.set_yticks([])
     ax.set_facecolor("#ffffff")
@@ -461,14 +462,14 @@ def draw_four_panel_cell(
     fmax = scales["field_vmax"]
 
     panels = [
-        ([0.025, 0.510, 0.465, 0.405], "delta", entry["delta"], "coolwarm", TwoSlopeNorm(vcenter=0.0, vmin=-dmax, vmax=dmax), None, None),
-        ([0.510, 0.510, 0.465, 0.405], "model", entry["pred"], "viridis", None, fmin, fmax),
-        ([0.025, 0.060, 0.465, 0.405], "solver", entry["solver"], "viridis", None, fmin, fmax),
-        ([0.510, 0.060, 0.465, 0.405], "|error|", entry["err"], "magma", None, 0.0, evmax),
+        ([0.035, 0.505, 0.445, 0.410], "delta", entry["delta"], "coolwarm", TwoSlopeNorm(vcenter=0.0, vmin=-dmax, vmax=dmax), None, None),
+        ([0.520, 0.505, 0.445, 0.410], "model", entry["pred"], "viridis", None, fmin, fmax),
+        ([0.035, 0.055, 0.445, 0.410], "solver", entry["solver"], "viridis", None, fmin, fmax),
+        ([0.520, 0.055, 0.445, 0.410], "|error|", entry["err"], "magma", None, 0.0, evmax),
     ]
     for bounds, label, image, cmap, norm, vmin, vmax in panels:
         ax = outer.inset_axes(bounds)
-        add_heatmap(ax, image, cmap=cmap, label=label, fontsize=label_fontsize, norm=norm, vmin=vmin, vmax=vmax, aspect="auto")
+        add_heatmap(ax, image, cmap=cmap, label=label, fontsize=label_fontsize, norm=norm, vmin=vmin, vmax=vmax)
     outer.text(
         0.5,
         0.965,

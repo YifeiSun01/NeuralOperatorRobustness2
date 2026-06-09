@@ -13516,6 +13516,7 @@ Observed evidence:
 - The one-sample split version places `baseline`, `loss1`, and `loss2` on the first row, and `loss3` plus `physical_source` on the second row.
 - Direct R2 upload completed for the eight large PNG figures and three small forensics record files under `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
 - The four-panel mini heatmaps were enlarged inside each model cell and regenerated.
+- The four-panel mini heatmaps were regenerated again with forced square aspect; the temporary rectangular `aspect="auto"` rendering was removed.
 - `large_variant_metrics.csv` now records final changed-pixel counts and nonzero delta magnitude summaries.
 - For the selected six rows, final changed-pixel counts for `loss3` were `186`, `125`, `163`, `188`, `136`, and `62`, while baseline was `450`, `450`, `450`, `429`, `450`, and `450`.
 
