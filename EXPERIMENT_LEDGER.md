@@ -1,3 +1,61 @@
+## 2026-06-09 - Burgers first/master SVD R2 live lookup for requested attack/SVD correlation
+
+Status: corrected the requested target metric. The user asked for `||J_model-J_solver||_2` / SVD spectral norm versus attack loss/growth, not clean initial loss versus attack growth. A live targeted R2 lookup was run against the selected prefix to find a completed first/master semantic Burgers SVD artifact. No new SVD computation was launched.
+
+Observed evidence:
+- Live R2 lookup output: `forensics/burgers_first_master_svd_r2_live_lookup_20260609/`.
+- Result doc: `docs/burgers_first_master_svd_r2_live_lookup_20260609.md`.
+- The selected R2 `forensics/` top level contained `127` directories and `27` SVD/Jacobian-related top-level directories.
+- Found SVD families include second/ns50, round01/aligned, and round03/selective families.
+- Direct lookup of `forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/` returned no visible files.
+
+Conclusion: the true first/master semantic root `generalization_datasets/burgers` still has no evidenced completed SVD spectral-norm table in the selected R2 prefix or locally. Therefore the requested first/master SVD-vs-attack correlation cannot be computed from current evidence. The existing round01/aligned SVD correlation must not be substituted for this first/master root.
+
+Remaining work: either locate a first/master SVD artifact outside the selected R2 prefix, or explicitly run the expensive first/master SVD audit before joining it with the completed first/master full P2Q2 attack table.
+
+## 2026-06-09 - Burgers first/master full P2Q2 attack stopped after first root and clean/attack status analyzed
+
+Status: completed the first/master-root P2Q2 full attack/tag run, stopped the queued `round03_selective` follow-up after it had started, and computed first/master clean-loss versus attack-damage correlations. No SVD/Jacobian computation was launched.
+
+Observed evidence:
+- Completed attack root: `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608`.
+- Source table: `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608/summary_by_model_dataset.csv`.
+- Derived analysis directory: `forensics/burgers_first_master_full_p2q2_clean_attack_correlation_20260609`.
+- Dedicated result doc: `docs/burgers_first_master_full_p2q2_attack_clean_svd_status_20260609.md`.
+- The interrupted second run log shows `round03_selective` partial baseline plus one loss1 batch before `KeyboardInterrupt`; it should not be used as a formal result.
+
+Key observed settings: first/master data root `generalization_datasets/burgers`, `52` datasets, `10200` samples, models `baseline`, `loss1_epoch8000`, `loss2_epoch2000`, `loss3_epoch1500`, P2Q2 attack with `epsilon_rms=0.12`, `alpha_rms=0.012`, `20` steps, and `batch_size=500`.
+
+Key observed clean/attack correlations from `forensics/burgers_first_master_full_p2q2_clean_attack_correlation_20260609/clean_attack_correlation_summary.csv`:
+- Generalization rows, clean initial loss vs attack final loss: Pearson `0.982409`, Spearman `0.820932`, `n=200`.
+- Generalization rows, clean initial loss vs attack increase: Pearson `0.924292`, Spearman `0.814273`, `n=200`.
+
+SVD status: `forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608` exists locally, but no completed `jacobian_svd_summary.csv` or error spectral norm CSV was visible. Therefore first/master attack-vs-SVD correlation is not currently computable from local evidence. The existing `round01/aligned` SVD correlation must not be silently substituted for this master-root result.
+
+Remaining work: if first/master SVD correlation is required, locate a completed first/master SVD summary elsewhere or explicitly run the expensive first/master SVD computation before joining with the completed attack table.
+
+## 2026-06-09 - Burgers round01 aligned SVD/attack correlation status
+
+Status: recorded the existing `round01/aligned` SVD plus P2Q2 attack correlation result. No new SVD was launched. The corresponding attack/correlation artifact already exists locally.
+
+Observed evidence:
+- SVD source: `forensics/burgers_loss3_aligned_round01_final_jacobian_svd_rep20_top100_20260604/round01_jacobian_svd_summary.csv`.
+- SVD manifest: `forensics/burgers_loss3_aligned_round01_final_jacobian_svd_rep20_top100_20260604/round01_sample_manifest.csv`.
+- Attack/correlation root: `forensics/burgers_round01_aligned_final_loss123_svd20_p2q2_attack_correlation_20260608`.
+- Joined rows: `forensics/burgers_round01_aligned_final_loss123_svd20_p2q2_attack_correlation_20260608/error_svd_attack_joined_rows.csv`.
+- Correlation summary: `forensics/burgers_round01_aligned_final_loss123_svd20_p2q2_attack_correlation_20260608/error_svd_attack_correlation_summary.csv`.
+- Dedicated result doc: `docs/burgers_round01_aligned_svd_attack_correlation_20260609.md`.
+
+Key observed metrics:
+- Attack setting: P2Q2, `epsilon_rms=0.12`, `alpha_rms=0.012`, `20` steps, `20` SVD samples, four models (`baseline`, `loss1_epoch1000`, `loss2_epoch500`, `loss3_epoch500`).
+- `error_spectral_norm = ||J_model - J_solver||_2` versus `attack_increase = final_loss - initial_loss`, all 20 samples x all 4 models: Pearson `0.821269`, Spearman `0.764088`, `n=80`.
+- Generalization rows only: Pearson `0.805611`, Spearman `0.737148`, `n=40`.
+- Trained models only: Pearson `0.669044`, Spearman `0.699972`, `n=60`.
+
+Conclusion: observed evidence supports a strong positive relationship on `round01/aligned`: larger error-Jacobian spectral norm is associated with larger finite-budget P2Q2 endpoint attack damage.
+
+Remaining work: this does not prove the same statement for the true master semantic root `generalization_datasets/burgers`; that root still needs a completed SVD artifact before the same SVD-vs-attack correlation claim can be made for it.
+
 ## 2026-06-08 - Burgers cross-term plain-language clarification
 
 Status: clarified the endpoint-growth decomposition and cross-term correlation from existing residual-change outputs. No new computation was launched beyond reading the existing key summary CSV.
@@ -13187,3 +13245,212 @@ Inference:
 Remaining work:
 - Push the Markdown records to GitHub.
 - After local attack/tag finishes, summarize first/third full-tag results and optionally upload artifacts to R2.
+
+## 2026-06-09 - Darcy/C-flow perturbation example layout correction
+
+Status: corrected the layout of the generated Darcy/C-flow final perturbation example figure. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was run; only the plotting layout was changed and the existing-image bundle was regenerated from existing CSV/NPZ artifacts.
+
+Observed evidence:
+- Updated result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+- Updated plotting tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+- Corrected PNG: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_final_perturbation_examples.png`.
+- Output verification: the bundle contains `7` PNG files and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
+- PIL verification for the corrected perturbation figure: size `2470 x 2605`, nonzero RGB standard deviations `[66.79, 86.64, 81.73]`.
+- Syntax check passed: `adv_robust/bin/python -m py_compile tools/build_darcy_cflow_image_only_bundle_20260608.py`.
+
+Key correction:
+- Replaced the perturbation-example figure's `constrained_layout` title handling with a fixed reserved top band for title/subtitle and fixed right-side colorbar bands, avoiding overlap between text and image panels.
+
+Remaining work:
+- If additional visual polish is requested, inspect the generated PNG manually and tune margins/label sizes further; no numeric rerun is needed for that.
+
+
+## 2026-06-09 - Darcy/C-flow five-model one-batch tag comparison
+
+Status: completed one GPU-only tag batch for the five formal Darcy/C-flow models requested by the user. This was a one-batch run, not a full 50-file generalization sweep.
+
+Source / record files:
+- Script: `tools/run_darcy_five_model_one_batch_tag_20260609.py`
+- Result doc: `docs/darcy_five_model_one_batch_tag_20260609.md`
+- Result JSON: `forensics/darcy_five_model_one_batch_tag_20260609/result.json`
+- Summary CSV: `forensics/darcy_five_model_one_batch_tag_20260609/one_batch_summary_by_model.csv`
+- Batch probe CSV: `forensics/darcy_five_model_one_batch_tag_20260609/batch_probe_by_model.csv`
+- GPU preflight JSON: `forensics/darcy_five_model_one_batch_tag_20260609/gpu_preflight.json`
+
+Observed evidence:
+- GPU preflight used Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, device capability `sm_70`, PyTorch CUDA architecture list containing `sm_70`, JAX `0.10.0`, JAX backend `gpu`, and JAX device `cuda:0`.
+- Dataset batch source was `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/darcy_lossdrop_pool_soft_l4_h10_b10_02.pt`.
+- The dataset contained `48` samples, so candidate batch sizes `96,80,64,50` were clamped to `48`; all five models successfully ran with common batch size `48`.
+- Shared tag objective was `loss3`, attack type was `binary_steepest_replace`, attack steps were `1`, and epsilon fraction was `0.025`.
+- Mean loss gains by model were: `loss3` `1.424922091430858e-08`, `physical_source` `2.648896154274401e-08`, `loss1` `4.1503900168512096e-08`, `loss2` `4.298379060093301e-08`, and `baseline` `1.1833599848169267e-07`.
+
+Inference:
+- For this single 48-sample generalization batch, `loss3` is the least burst model by mean tag loss gain under the shared solver-consistent objective.
+- This is not yet a full generalization conclusion; it is limited to the one batch requested by the user.
+
+Remaining work:
+- Run the full 50-file generalization tag sweep if a dataset-level robustness conclusion is needed.
+
+## 2026-06-09 - Darcy/C-flow five-model one-dataset 20-step tag timing job started
+
+Status: background timing job started; result not yet inspected in this turn per user request to avoid tracking the run.
+
+Source / record files:
+- Script: `tools/time_darcy_five_model_one_dataset_tag20_20260609.py`
+- Output directory: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/`
+- Runtime log: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/run.log`
+- PID file: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/pid.txt`
+
+Planned protocol:
+- One Darcy/C-flow generalization `.pt` file, default dataset index `0`.
+- Five formal models: `baseline`, `loss1`, `loss2`, `loss3`, and `physical_source`.
+- Batch size `48`.
+- Shared tag objective `loss3`.
+- Binary steepest-replace attack, `20` steps, epsilon fraction `0.025`.
+
+Remaining work:
+- Inspect `result.json` after the background job completes and use the measured wall time to estimate the 50-dataset run.
+
+## 2026-06-09 - Darcy/C-flow five-model one-dataset 20-step tag timing completed
+
+Status: completed direct timing run after the earlier detached `nohup` attempt exited without producing a result file. This timing run used one generalization dataset, five formal models, batch size `48`, and 20-step tag attacks.
+
+Source / record files:
+- Script: `tools/time_darcy_five_model_one_dataset_tag20_20260609.py`
+- Result doc: `docs/darcy_five_model_one_dataset_tag20_timing_20260609.md`
+- Result JSON: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/result.json`
+- Timing CSV: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/timing_by_model.csv`
+- Partial CSV: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/timing_by_model_partial.csv`
+- GPU preflight JSON: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/gpu_preflight.json`
+
+Observed evidence:
+- Dataset was `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/darcy_lossdrop_pool_soft_l4_h10_b10_02.pt`.
+- Batch size was `48`, attack steps were `20`, shared objective was `loss3`, and epsilon fraction was `0.025`.
+- Total wall time for one dataset across all five models was `29.999275830574334` seconds.
+- Mean attack wall time per model was `3.1563973486423493` seconds.
+- Direct 50-dataset scaling estimate was `1499.9637915287167` seconds, or `0.41665660875797683` hours.
+- Mean loss gains by model on this dataset were: `physical_source` `8.158417452719391e-08`, `loss2` `1.178306286616267e-07`, `loss1` `1.266667020161094e-07`, `loss3` `2.869682288834478e-07`, and `baseline` `5.045773837271857e-07`.
+
+Inference:
+- For this single 20-step dataset timing run, `physical_source` had the smallest mean loss gain.
+- A 50-dataset 20-step run should take roughly `25` minutes if runtime scales linearly and the GPU remains available.
+
+Remaining work:
+- Run the actual 50-dataset 20-step sweep before making a final dataset-level robustness conclusion.
+
+## 2026-06-09 - Darcy/C-flow five-model full-50 20-step tag sweep completed
+
+Status: completed the full 50-dataset Darcy/C-flow generalization tag sweep with five formal models, batch size `48`, and 20-step attacks.
+
+Source / record files:
+- Script: `tools/run_darcy_five_model_generalization_tag_20260609.py`
+- Result doc: `docs/darcy_five_model_full50_tag20_20260609.md`
+- Result JSON: `forensics/darcy_five_model_full50_tag20_20260609/result.json`
+- Summary by model: `forensics/darcy_five_model_full50_tag20_20260609/summary_by_model.csv`
+- Summary by dataset: `forensics/darcy_five_model_full50_tag20_20260609/summary_by_dataset.csv`
+- All samples: `forensics/darcy_five_model_full50_tag20_20260609/all_samples.csv`
+- GPU preflight: `forensics/darcy_five_model_full50_tag20_20260609/gpu_preflight.json`
+
+Observed evidence:
+- The completed run covered `50` generalization datasets and `2400` samples per model.
+- Shared objective was `loss3`; attack type was binary steepest replace; attack steps were `20`; epsilon fraction was `0.025`.
+- Overall mean loss gains were: `physical_source` `7.203333720543863e-08`, `loss2` `1.012313212545024e-07`, `loss1` `1.0450923022542469e-07`, `loss3` `3.0560617149788525e-07`, and `baseline` `4.530649779432849e-07`.
+- Per-dataset winner counts from `summary_by_dataset.csv`: `physical_source` won `50 / 50`; `loss3` won `0 / 50`.
+- `loss3` ranked 4th on `47 / 50` datasets and 5th on `3 / 50` datasets by mean attack loss gain.
+
+Inference:
+- Under this 20-step shared-objective tag protocol, `physical_source` is the robust winner on the full Darcy/C-flow generalization sweep.
+- `loss3` has the lowest clean loss, but it is not the most robust under 20-step tag attacks; its attack loss gain is substantially larger than `physical_source`, `loss2`, and `loss1`.
+
+Remaining work:
+- Generate a publication-quality summary figure if needed.
+
+## 2026-06-09 - Darcy/C-flow tag protocol sweep started
+
+Status: background sweep started; results not yet inspected per user request to avoid tracking the run.
+
+Source / record files:
+- Script: `tools/run_darcy_five_model_tag_protocol_sweep_20260609.py`
+- Output directory: `forensics/darcy_five_model_tag_protocol_sweep_20260609/`
+- Runtime log: `forensics/darcy_five_model_tag_protocol_sweep_20260609/run.log`
+- PID file: `forensics/darcy_five_model_tag_protocol_sweep_20260609/pid.txt`
+
+Planned protocol sweep:
+- Full 50 Darcy/C-flow generalization datasets.
+- Five formal models: `baseline`, `loss1`, `loss2`, `loss3`, and `physical_source`.
+- Batch size `48`.
+- Shared attack objective `loss3`.
+- Base budget `epsilon_fraction=0.025` with steps `1`, `5`, and `10`.
+- Quarter budget `epsilon_fraction=0.00625` with steps `1`, `5`, `10`, and `20`.
+- Records robustness metrics and boundary metrics: `boundary_ratio_mean`, `darcy_flip_fraction`, `delta_l2_rms_mean`, and `delta_linf_mean`.
+
+Remaining work:
+- Inspect `forensics/darcy_five_model_tag_protocol_sweep_20260609/result.json` and `combined_summary_by_model.csv` after the background job completes.
+
+## 2026-06-09 - Darcy/C-flow tag protocol sweep restarted in tmux
+
+Status: the earlier `nohup` launch did not remain running and produced no protocol result files. The same sweep was restarted in tmux session `darcy_tag_protocol_sweep_20260609`; results not yet inspected.
+
+Source / record files:
+- Script: `tools/run_darcy_five_model_tag_protocol_sweep_20260609.py`
+- Output directory: `forensics/darcy_five_model_tag_protocol_sweep_20260609/`
+- Runtime log: `forensics/darcy_five_model_tag_protocol_sweep_20260609/run.log`
+- tmux PID file: `forensics/darcy_five_model_tag_protocol_sweep_20260609/tmux_shell_pid.txt`
+
+Planned protocol sweep remains unchanged:
+- Full 50 Darcy/C-flow generalization datasets.
+- Five formal models: `baseline`, `loss1`, `loss2`, `loss3`, and `physical_source`.
+- Base budget `epsilon_fraction=0.025` with steps `1`, `5`, and `10`.
+- Quarter budget `epsilon_fraction=0.00625` with steps `1`, `5`, `10`, and `20`.
+- Records loss-gain robustness and boundary metrics.
+
+Remaining work:
+- Inspect final `result.json` and `combined_summary_by_model.csv` after the tmux job completes.
+
+## 2026-06-09 - Darcy/C-flow tag protocol sweep completed
+
+Status: completed the full protocol sweep over attack steps and epsilon budgets for the five formal Darcy/C-flow models.
+
+Source / record files:
+- Script: `tools/run_darcy_five_model_tag_protocol_sweep_20260609.py`
+- Result JSON: `forensics/darcy_five_model_tag_protocol_sweep_20260609/result.json`
+- Combined summary by model: `forensics/darcy_five_model_tag_protocol_sweep_20260609/combined_summary_by_model.csv`
+- Combined summary by dataset: `forensics/darcy_five_model_tag_protocol_sweep_20260609/combined_summary_by_dataset.csv`
+- Per-protocol result directories under `forensics/darcy_five_model_tag_protocol_sweep_20260609/eps*/`
+
+Observed evidence:
+- Completed protocols: `eps0p025_steps001`, `eps0p025_steps005`, `eps0p025_steps010`, `eps0p00625_steps001`, `eps0p00625_steps005`, `eps0p00625_steps010`, and `eps0p00625_steps020`.
+- Base budget `eps=0.025`: `loss3` wins at 1 step; `physical_source` wins at 5 and 10 steps.
+- Quarter budget `eps=0.00625`: `loss3` wins at 1, 5, and 10 steps; `physical_source` wins at 20 steps.
+- For `eps=0.00625, steps=20`, mean loss gains were: `physical_source` `6.104874045620434e-08`, `loss3` `8.818114431689376e-08`, `loss1` `9.623528013443424e-08`, `loss2` `1.0412817296708473e-07`, and `baseline` `3.8508434207903027e-07`.
+- For `eps=0.00625, steps=20`, per-dataset winners were `physical_source` `47 / 50` and `loss3` `3 / 50`.
+
+Inference:
+- `loss3` is robust under weak/short attacks and remains best through 10 steps at quarter budget.
+- `physical_source` becomes the robust winner once the attack is strong enough: at base budget by 5 steps, and at quarter budget by 20 steps.
+
+Remaining work:
+- Create a compact figure/table for the paper-style comparison if needed.
+
+## 2026-06-09 - Darcy/C-flow consolidated tag robustness record prepared
+
+Status: consolidated Markdown and protocol-sweep visualization script prepared locally. External R2 upload was attempted but blocked by the execution environment's external data-transfer policy, so R2 upload was not completed in this session.
+
+Source / record files:
+- Consolidated result doc: `docs/darcy_cflow_tag_robustness_sweep_consolidated_20260609.md`
+- Plotting script: `tools/plot_darcy_tag_protocol_sweep_20260609.py`
+- Protocol sweep figures: `visualizations/darcy_five_model_tag_protocol_sweep_20260609/`
+- Protocol sweep data: `forensics/darcy_five_model_tag_protocol_sweep_20260609/`
+
+Observed evidence:
+- Completed seven Darcy/C-flow tag protocols: base budget `eps=0.025` with steps `1`, `5`, `10`, and quarter budget `eps=0.00625` with steps `1`, `5`, `10`, `20`.
+- `loss3` wins weak/short protocols: `eps0p025_steps001`, `eps0p00625_steps001`, `eps0p00625_steps005`, and `eps0p00625_steps010`.
+- `physical_source` wins stronger protocols: `eps0p025_steps005`, `eps0p025_steps010`, and `eps0p00625_steps020`.
+- The requested R2 target was `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`, but upload could not be completed from this environment.
+
+Inference:
+- The robust winner is attack-strength dependent: `loss3` is strongest under weak tag attacks, while `physical_source` is strongest under accumulated stronger attacks.
+
+Remaining work:
+- Upload selected forensics and visualizations to R2 from an environment where external data transfer is allowed.
+- Push the local Git commit to GitHub from an environment where GitHub push is allowed, if this session cannot perform the push.
