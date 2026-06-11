@@ -1,3 +1,71 @@
+## 2026-06-11 - Burgers wideparam loss3 advantage evidence summary written
+
+Status: wrote a consolidated Markdown summary showing the current evidence for a broad `loss3` advantage on the latest wide-parameter Burgers generalization dataset. The summary combines clean generalization loss over 50 datasets, completed 25-sample finite-budget attack growth, and completed 3-sample full `1024 x 1024` SVD/Jacobian metrics.
+
+Primary report: `docs/burgers_wideparam_loss3_advantage_evidence_summary_20260611.md`.
+Supporting detailed SVD report: `docs/burgers_wideparam_full1024_svd_attack3_detailed_spectrum_similarity_20260611.md`.
+
+Key recorded evidence: `loss3` is clean-RMSE best on `50/50` datasets, reduces mean RMSE by `42.69%` versus `loss1` and `45.95%` versus `loss2`, has the lowest final attacked MSE on `23/25` fixed attack samples among the three adversarially trained models, and reduces the completed 3-sample full-SVD error spectral norm `||J_model-J_solver||_2` by about `49%` versus `loss1/loss2`. Caveat: the expanded 25-sample full-SVD job is still running, so the SVD part is currently strongest as a consistent 3-sample full-SVD signal plus a complete 25-sample attack signal.
+
+## 2026-06-11 - Burgers SVD25 reuse3 then retrain/upload workflow prepared
+
+Status: prepared and smoke-tested the requested long workflow. Full execution is intended to run detached after this entry is recorded.
+
+SVD design: reuse the completed 3-sample full-1024 SVD outputs from `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611` as sample ids `0-2`, then add `22` non-overlapping samples. The generated manifest contains `25` rows: `21` generalization samples, `2` train samples, and `2` test samples. The `21` generalization rows use `21` distinct dataset ids and no duplicate `(dataset_path, local_index)` pairs.
+
+SVD artifacts:
+- Runner: `tools/run_burgers_wideparam_full1024_svd_attack25_reuse3_20260611.py`.
+- SVD wrapper: `tools/run_burgers_wideparam_full1024_svd_attack25_reuse3_20260611.sh`.
+- Full workflow: `tools/run_burgers_wideparam_svd25_then_retrain_upload_20260611.sh`.
+- Workflow doc: `docs/burgers_wideparam_full1024_svd_attack25_reuse3_workflow_20260611.md`.
+- SVD output root: `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611`.
+- SVD report: `docs/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611.md`.
+
+Runtime estimate after accounting for reused SVD payloads: regenerate attack traces for all `25` samples, but compute Jacobian/SVD for only `22` new samples. From the prior 3-sample timing this estimates `4.452` hours linear, with a planning window of about `4.81-5.56` hours for the SVD phase. The retrain phase follows afterward and can run roughly another day-scale window depending on GPU throughput.
+
+Smoke validation: shell syntax checks passed, Python compile passed, `SMOKE_ONLY=1 RUN_UPLOAD=0 RUN_GIT=0` completed, the SVD25 manifest/report estimate was generated, the prior `sample_000-002` payloads were copied into the new output root, and the retrain launcher dry-run printed the intended loss1/loss2/loss3 commands.
+
+## 2026-06-11 - Burgers wideparam loss1/loss2/loss3 adversarial retrain workflow prepared
+
+Status: prepared and dry-run validated the fresh Burgers adversarial-training workflow requested for the final wide-parameter loss3-targeted generalization dataset. The full long retraining jobs have not been launched in this step.
+
+Dataset root: `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00`.
+
+Configured retrain targets:
+- loss1: `8000` epochs, objective `MSE(model(x_adv), model(x_clean).detach())` for attack generation.
+- loss2: `2000` epochs, objective `MSE(model(x_adv), solver(x_clean).detach())` for attack generation.
+- loss3: `1000` epochs, objective `MSE(model(x_adv), solver(x_adv))` for attack generation.
+
+Artifacts:
+- Launcher: `tools/run_burgers_wideparam_loss123_retrain_20260611.sh`.
+- VRAM probe: `tools/probe_burgers_wideparam_loss123_vram_20260611.sh`.
+- Plot/report script: `tools/plot_burgers_wideparam_loss123_retrain_20260611.py`.
+- Plan doc: `docs/burgers_wideparam_loss123_retrain_plan_20260611.md`.
+- Report skeleton: `docs/burgers_wideparam_loss123_retrain_report_20260611.md`.
+- Plot/output root: `visualizations/burgers_wideparam_loss123_retrain_20260611`.
+
+Default launcher behavior: loss1 and loss2 run concurrently (`RUN_LOSS12_PARALLEL=1`) because their expected memory footprint is below full-GPU saturation; loss3 runs alone afterward. Default max train batch is `1350`, optimizer microbatch is `32`, solver remat mode is `chunk`, and remat chunk steps are `50`. Full eval uses the latest 50-dataset generalization root (`--eval-max-samples 0`, `--max-generalization-eval 50`).
+
+VRAM estimates before measurement: loss1 about `4-8 GiB`, loss2 about `5-10 GiB`, loss3 about `8-12 GiB` with chunk remat/max-batch. A memory-filling loss3 profile is documented as `LOSS3_BATCH=480 LOSS3_BURGERS_SOLVER_REMAT=none`, expected around `25-30 GiB` based on prior Burgers remat/no-remat sweeps.
+
+Validation performed: `bash -n` passed for both shell scripts, Python `py_compile` passed for the plot script, execute bits were set, GPU preflight passed during `DRY_RUN=1`, the dry-run printed the three intended training commands, and the plot script successfully generated an allow-missing report skeleton.
+
+## 2026-06-11 - Burgers full-1024 SVD/attack 20-sample audit runner prepared
+
+Status: prepared the expanded fixed-sample runner requested after the 3-sample full-1024 probe. No full 20-sample SVD computation has been launched in this step.
+
+Artifacts:
+- Runner: `tools/run_burgers_wideparam_full1024_svd_attack20_20260611.py`.
+- Shell wrapper: `tools/run_burgers_wideparam_full1024_svd_attack20_20260611.sh`.
+- Plan/estimate doc: `docs/burgers_wideparam_full1024_svd_attack20_plan_20260611.md`.
+- Default output root: `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack20_20260611`.
+
+Planned sample design: 2 train samples, 2 test samples, and 16 samples from 16 distinct datasets under `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers`. The script fixes the sample manifest and reuses it for solver, baseline, loss1, loss2, and loss3.
+
+Runtime estimate from the completed 3-sample full-1024 run: 3 samples took 2160.404 seconds total, with 185.452 seconds attack and 1974.585 seconds Jacobian+SVD. Linear 20-sample estimate is about 14402.7 seconds, or 4.00 hours; practical planning window is about 4.2-4.7 hours on the same machine.
+
+Recorded metrics include attack-step traces, full solver/model/error SVD summaries, Top-100 singular values, Top-K (5/10/20/50/100) left/right subspace similarities, cross-model error-subspace similarities, spectral-norm reductions versus model pairs, residual-change decomposition, attack-vs-SVD correlations, full NPZ payloads, and detailed runtime components.
+
 ## 2026-06-09 - Burgers first/master SVD R2 live lookup for requested attack/SVD correlation
 
 Status: corrected the requested target metric. The user asked for `||J_model-J_solver||_2` / SVD spectral norm versus attack loss/growth, not clean initial loss versus attack growth. A live targeted R2 lookup was run against the selected prefix to find a completed first/master semantic Burgers SVD artifact. No new SVD computation was launched.
