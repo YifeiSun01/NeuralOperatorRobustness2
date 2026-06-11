@@ -14160,3 +14160,9 @@ Note:
 - Ran it on `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611` using CPU model/solver residual recomputation.
 - Output: `forensics/burgers_wideparam_loss3targeted_biased_local_direction_20260611/` and report `docs/burgers_wideparam_loss3targeted_biased_local_direction_20260611.md`.
 - Main result: top SVD vs `A^T b` mean angle is about 80.8 degrees across 12 model-sample pairs; final nonlinear attack delta aligns far better with `A^T b` than with top SVD on this small probe.
+
+## 2026-06-11 - Burgers SVD25/retrain automation update
+
+- Updated `tools/run_burgers_wideparam_svd25_then_retrain_upload_20260611.sh` so completed SVD25 runs automatically launch biased local direction/correlation analysis before upload/Git bookkeeping.
+- Updated `tools/run_burgers_wideparam_loss123_retrain_20260611.sh` so the default retrain order is `loss3_then_loss12`: run loss3 first, then loss1/loss2, with loss1/loss2 still parallelizable.
+- Added automation contract note `docs/burgers_wideparam_svd25_retrain_full_automation_20260611.md`.

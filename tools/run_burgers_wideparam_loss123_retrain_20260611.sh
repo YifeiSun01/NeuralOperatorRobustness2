@@ -28,6 +28,7 @@ LOSS3_BURGERS_SOLVER_REMAT="${LOSS3_BURGERS_SOLVER_REMAT:-chunk}"
 BURGERS_SOLVER_REMAT_CHUNK_STEPS="${BURGERS_SOLVER_REMAT_CHUNK_STEPS:-50}"
 
 RUN_LOSS12_PARALLEL="${RUN_LOSS12_PARALLEL:-1}"
+RETRAIN_ORDER="${RETRAIN_ORDER:-loss3_then_loss12}"
 RUN_LOSS1="${RUN_LOSS1:-1}"
 RUN_LOSS2="${RUN_LOSS2:-1}"
 RUN_LOSS3="${RUN_LOSS3:-1}"
@@ -153,25 +154,40 @@ run_one() {
   echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] done $run_name" | tee -a "$LOG_ROOT/driver.log"
 }
 
-if [[ "$RUN_LOSS12_PARALLEL" == "1" ]]; then
-  pids=()
-  if [[ "$RUN_LOSS1" == "1" ]]; then
-    run_one loss1 "$LOSS1_RUN" "$LOSS1_EPOCHS" "$LOSS1_BATCH" "$LOSS1_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT" &
-    pids+=("$!")
+run_loss12_group() {
+  if [[ "$RUN_LOSS12_PARALLEL" == "1" ]]; then
+    pids=()
+    if [[ "$RUN_LOSS1" == "1" ]]; then
+      run_one loss1 "$LOSS1_RUN" "$LOSS1_EPOCHS" "$LOSS1_BATCH" "$LOSS1_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT" &
+      pids+=("$!")
+    fi
+    if [[ "$RUN_LOSS2" == "1" ]]; then
+      run_one loss2 "$LOSS2_RUN" "$LOSS2_EPOCHS" "$LOSS2_BATCH" "$LOSS2_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT" &
+      pids+=("$!")
+    fi
+    for pid in "${pids[@]}"; do
+      wait "$pid"
+    done
+  else
+    [[ "$RUN_LOSS1" == "1" ]] && run_one loss1 "$LOSS1_RUN" "$LOSS1_EPOCHS" "$LOSS1_BATCH" "$LOSS1_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT"
+    [[ "$RUN_LOSS2" == "1" ]] && run_one loss2 "$LOSS2_RUN" "$LOSS2_EPOCHS" "$LOSS2_BATCH" "$LOSS2_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT"
   fi
-  if [[ "$RUN_LOSS2" == "1" ]]; then
-    run_one loss2 "$LOSS2_RUN" "$LOSS2_EPOCHS" "$LOSS2_BATCH" "$LOSS2_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT" &
-    pids+=("$!")
-  fi
-  for pid in "${pids[@]}"; do
-    wait "$pid"
-  done
-else
-  [[ "$RUN_LOSS1" == "1" ]] && run_one loss1 "$LOSS1_RUN" "$LOSS1_EPOCHS" "$LOSS1_BATCH" "$LOSS1_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT"
-  [[ "$RUN_LOSS2" == "1" ]] && run_one loss2 "$LOSS2_RUN" "$LOSS2_EPOCHS" "$LOSS2_BATCH" "$LOSS2_OPT_BATCH" "$LOSS12_BURGERS_SOLVER_REMAT"
-fi
+}
 
-[[ "$RUN_LOSS3" == "1" ]] && run_one loss3 "$LOSS3_RUN" "$LOSS3_EPOCHS" "$LOSS3_BATCH" "$LOSS3_OPT_BATCH" "$LOSS3_BURGERS_SOLVER_REMAT"
+case "$RETRAIN_ORDER" in
+  loss3_then_loss12)
+    [[ "$RUN_LOSS3" == "1" ]] && run_one loss3 "$LOSS3_RUN" "$LOSS3_EPOCHS" "$LOSS3_BATCH" "$LOSS3_OPT_BATCH" "$LOSS3_BURGERS_SOLVER_REMAT"
+    run_loss12_group
+    ;;
+  loss12_then_loss3)
+    run_loss12_group
+    [[ "$RUN_LOSS3" == "1" ]] && run_one loss3 "$LOSS3_RUN" "$LOSS3_EPOCHS" "$LOSS3_BATCH" "$LOSS3_OPT_BATCH" "$LOSS3_BURGERS_SOLVER_REMAT"
+    ;;
+  *)
+    echo "[refuse] unknown RETRAIN_ORDER=$RETRAIN_ORDER; use loss3_then_loss12 or loss12_then_loss3" >&2
+    exit 1
+    ;;
+esac
 
 nvidia-smi > "$PREFLIGHT_DIR/nvidia_smi_after.txt" || true
 
