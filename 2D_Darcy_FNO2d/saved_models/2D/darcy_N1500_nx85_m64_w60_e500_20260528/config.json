@@ -1,0 +1,95 @@
+{
+  "project_root": "/workspace/NeuralOperatorRobustness2",
+  "darcy_root": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d",
+  "train_path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/datasets/grf_darcy_20260528_N1500/train/dim2d_darcy_nx85_N1200_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt",
+  "test_path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/datasets/grf_darcy_20260528_N1500/test/dim2d_darcy_nx85_N300_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_test.pt",
+  "resolution": 85,
+  "epochs": 500,
+  "batch_size": 300,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "modes": 64,
+  "width": 60,
+  "num_layers": 4,
+  "padding": 0,
+  "model_parameters": 235988641,
+  "train_metadata": {
+    "split": "train",
+    "nsamples": 1200,
+    "resolution": 85,
+    "solve_resolution": 421,
+    "source": "FNO Darcy GRF threshold benchmark",
+    "pde": "-div(A grad U)=1, U|boundary=0",
+    "coefficient": {
+      "latent": "GRF(alpha,tau) with Neumann-Laplacian cosine modes",
+      "threshold": "A=high if latent>=0 else low",
+      "low": 3.0,
+      "high": 12.0,
+      "soft_coefficients": false,
+      "soft_beta": 8.0
+    },
+    "alpha": 2.0,
+    "tau": 3.0,
+    "seed": 45,
+    "solver": {
+      "name": "jax_matrix_free_cg_second_order_fd",
+      "tol": 1e-05,
+      "atol": 0.0,
+      "maxiter": null
+    },
+    "timing_records": [
+      {
+        "start_index": 0,
+        "end_index": 1200,
+        "batch_n": 1200,
+        "sample_seconds": 1.9649823922663927,
+        "solve_seconds": 15.368958842009306,
+        "solve_seconds_per_sample": 0.012807465701674422,
+        "residual_rel_mean": 0.035746555775403976,
+        "residual_rel_max": 0.0532471165060997,
+        "split": "train"
+      }
+    ]
+  },
+  "test_metadata": {
+    "split": "test",
+    "nsamples": 300,
+    "resolution": 85,
+    "solve_resolution": 421,
+    "source": "FNO Darcy GRF threshold benchmark",
+    "pde": "-div(A grad U)=1, U|boundary=0",
+    "coefficient": {
+      "latent": "GRF(alpha,tau) with Neumann-Laplacian cosine modes",
+      "threshold": "A=high if latent>=0 else low",
+      "low": 3.0,
+      "high": 12.0,
+      "soft_coefficients": false,
+      "soft_beta": 8.0
+    },
+    "alpha": 2.0,
+    "tau": 3.0,
+    "seed": 45,
+    "solver": {
+      "name": "jax_matrix_free_cg_second_order_fd",
+      "tol": 1e-05,
+      "atol": 0.0,
+      "maxiter": null
+    },
+    "timing_records": [
+      {
+        "start_index": 1200,
+        "end_index": 1500,
+        "batch_n": 300,
+        "sample_seconds": 1.2489475570619106,
+        "solve_seconds": 4.756525065749884,
+        "solve_seconds_per_sample": 0.01585508355249961,
+        "residual_rel_mean": 0.03558967262506485,
+        "residual_rel_max": 0.05007896572351456,
+        "split": "test"
+      }
+    ]
+  },
+  "torch_version": "2.8.0+cu126",
+  "torch_cuda_available": true,
+  "torch_device": "NVIDIA A100-SXM4-80GB"
+}

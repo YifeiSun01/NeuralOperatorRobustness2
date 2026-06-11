@@ -1,0 +1,383 @@
+{
+  "loss1": {
+    "generated_count": 50,
+    "improved_count": 0,
+    "worse_count": 50,
+    "mean_relative_l2": 0.09934883933142391,
+    "mean_baseline_relative_l2": 0.09148346584318592,
+    "mean_delta_relative_l2_vs_baseline": 0.007865373488237985,
+    "median_delta_relative_l2_vs_baseline": 0.007988860770532513,
+    "min_delta_relative_l2_vs_baseline": 0.006515914910953831,
+    "max_delta_relative_l2_vs_baseline": 0.009520407834538336,
+    "best_5": [
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_01_matern_fine_frac0p24_a1p77634_t11p8641",
+        "family": "matern_fine",
+        "high_fraction": 0.24127888679504395,
+        "edge_density": 0.07746638357639313,
+        "baseline_relative_l2": 0.049660084449455834,
+        "relative_l2": 0.056175999360409665,
+        "delta": 0.006515914910953831
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_42_highpass_grf_frac0p24_a1p18205_t11p6872",
+        "family": "highpass_grf",
+        "high_fraction": 0.24002490937709808,
+        "edge_density": 0.3407633304595947,
+        "baseline_relative_l2": 0.03996431047482641,
+        "relative_l2": 0.04658714150956629,
+        "delta": 0.00662283103473988
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_19_bandpass_grf_frac0p24_a2p18225_t4p94437",
+        "family": "bandpass_grf",
+        "high_fraction": 0.24129272997379303,
+        "edge_density": 0.0636078417301178,
+        "baseline_relative_l2": 0.059698628676317124,
+        "relative_l2": 0.06632364598149627,
+        "delta": 0.00662501730517915
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_46_rectangles_frac0p24_a1p57209_t7p6296",
+        "family": "rectangles",
+        "high_fraction": 0.24005259573459625,
+        "edge_density": 0.16681233048439026,
+        "baseline_relative_l2": 0.08023757660805904,
+        "relative_l2": 0.08697626599092399,
+        "delta": 0.006738689382864954
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_10_highpass_grf_frac0p24_a1p11037_t11p7271",
+        "family": "highpass_grf",
+        "high_fraction": 0.23976193368434906,
+        "edge_density": 0.3489019572734833,
+        "baseline_relative_l2": 0.03666068628045102,
+        "relative_l2": 0.04355568567418058,
+        "delta": 0.006894999393729562
+      }
+    ],
+    "worst_5": [
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_00_matern_smooth_frac0p12_a3p65909_t2p05625",
+        "family": "matern_smooth",
+        "high_fraction": 0.1219792366027832,
+        "edge_density": 0.006194678135216236,
+        "baseline_relative_l2": 0.10781611977293697,
+        "relative_l2": 0.1173365276074753,
+        "delta": 0.009520407834538336
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_48_matern_smooth_frac0p2_a3p3086_t2p22775",
+        "family": "matern_smooth",
+        "high_fraction": 0.20178823173046112,
+        "edge_density": 0.008689075708389282,
+        "baseline_relative_l2": 0.06907692044984375,
+        "relative_l2": 0.07785413490971803,
+        "delta": 0.008777214459874283
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029",
+        "family": "matern_smooth",
+        "high_fraction": 0.121785469353199,
+        "edge_density": 0.007168067619204521,
+        "baseline_relative_l2": 0.10922734964678557,
+        "relative_l2": 0.11795750381844886,
+        "delta": 0.008730154171663285
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_43_bandpass_grf_frac0p2_a1p22554_t2p62907",
+        "family": "bandpass_grf",
+        "high_fraction": 0.2010602056980133,
+        "edge_density": 0.10867367684841156,
+        "baseline_relative_l2": 0.075095679935295,
+        "relative_l2": 0.08366649381260344,
+        "delta": 0.00857081387730843
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_33_matern_fine_frac0p24_a1p77702_t7p67384",
+        "family": "matern_fine",
+        "high_fraction": 0.24116262793540955,
+        "edge_density": 0.05756162479519844,
+        "baseline_relative_l2": 0.05903743318786698,
+        "relative_l2": 0.06755556620647657,
+        "delta": 0.00851813301860959
+      }
+    ]
+  },
+  "loss2": {
+    "generated_count": 50,
+    "improved_count": 0,
+    "worse_count": 50,
+    "mean_relative_l2": 0.09817911906531217,
+    "mean_baseline_relative_l2": 0.09148346584318592,
+    "mean_delta_relative_l2_vs_baseline": 0.006695653222126249,
+    "median_delta_relative_l2_vs_baseline": 0.006865693826431318,
+    "min_delta_relative_l2_vs_baseline": 0.0042479324822830705,
+    "max_delta_relative_l2_vs_baseline": 0.010529984913943177,
+    "best_5": [
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_42_highpass_grf_frac0p24_a1p18205_t11p6872",
+        "family": "highpass_grf",
+        "high_fraction": 0.24002490937709808,
+        "edge_density": 0.3407633304595947,
+        "baseline_relative_l2": 0.03996431047482641,
+        "relative_l2": 0.04421224295710948,
+        "delta": 0.0042479324822830705
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_10_highpass_grf_frac0p24_a1p11037_t11p7271",
+        "family": "highpass_grf",
+        "high_fraction": 0.23976193368434906,
+        "edge_density": 0.3489019572734833,
+        "baseline_relative_l2": 0.03666068628045102,
+        "relative_l2": 0.04095338962076425,
+        "delta": 0.004292703340313231
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_46_rectangles_frac0p24_a1p57209_t7p6296",
+        "family": "rectangles",
+        "high_fraction": 0.24005259573459625,
+        "edge_density": 0.16681233048439026,
+        "baseline_relative_l2": 0.08023757660805904,
+        "relative_l2": 0.08463138951922686,
+        "delta": 0.004393812911167819
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_01_matern_fine_frac0p24_a1p77634_t11p8641",
+        "family": "matern_fine",
+        "high_fraction": 0.24127888679504395,
+        "edge_density": 0.07746638357639313,
+        "baseline_relative_l2": 0.049660084449455834,
+        "relative_l2": 0.05428773240493558,
+        "delta": 0.0046276479554797495
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_14_rectangles_frac0p24_a1p67693_t9p58326",
+        "family": "rectangles",
+        "high_fraction": 0.23790450394153595,
+        "edge_density": 0.10761764645576477,
+        "baseline_relative_l2": 0.09938613206925491,
+        "relative_l2": 0.10432282209120289,
+        "delta": 0.004936690021947979
+      }
+    ],
+    "worst_5": [
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_00_matern_smooth_frac0p12_a3p65909_t2p05625",
+        "family": "matern_smooth",
+        "high_fraction": 0.1219792366027832,
+        "edge_density": 0.006194678135216236,
+        "baseline_relative_l2": 0.10781611977293697,
+        "relative_l2": 0.11834610468688014,
+        "delta": 0.010529984913943177
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_08_matern_smooth_frac0p16_a3p55666_t2p38988",
+        "family": "matern_smooth",
+        "high_fraction": 0.16178546845912933,
+        "edge_density": 0.007915966212749481,
+        "baseline_relative_l2": 0.08796359829129732,
+        "relative_l2": 0.09834872567461844,
+        "delta": 0.010385127383321119
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_24_matern_smooth_frac0p24_a4p16883_t1p66293",
+        "family": "matern_smooth",
+        "high_fraction": 0.24172179400920868,
+        "edge_density": 0.007421568501740694,
+        "baseline_relative_l2": 0.05579780220456149,
+        "relative_l2": 0.06485472366645674,
+        "delta": 0.009056921461895247
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029",
+        "family": "matern_smooth",
+        "high_fraction": 0.121785469353199,
+        "edge_density": 0.007168067619204521,
+        "baseline_relative_l2": 0.10922734964678557,
+        "relative_l2": 0.11791310399047303,
+        "delta": 0.008685754343687457
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_40_matern_smooth_frac0p16_a4p67408_t1p27431",
+        "family": "matern_smooth",
+        "high_fraction": 0.1630200743675232,
+        "edge_density": 0.007043417543172836,
+        "baseline_relative_l2": 0.0885875929176791,
+        "relative_l2": 0.09711394266733138,
+        "delta": 0.008526349749652273
+      }
+    ]
+  },
+  "loss3": {
+    "generated_count": 50,
+    "improved_count": 50,
+    "worse_count": 0,
+    "mean_relative_l2": 0.06696199444274743,
+    "mean_baseline_relative_l2": 0.09148346584318592,
+    "mean_delta_relative_l2_vs_baseline": -0.024521471400438494,
+    "median_delta_relative_l2_vs_baseline": -0.025688566098979057,
+    "min_delta_relative_l2_vs_baseline": -0.033142546573824774,
+    "max_delta_relative_l2_vs_baseline": -0.007300173114178649,
+    "best_5": [
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_22_rectangles_frac0p12_a1p43234_t10p2242",
+        "family": "rectangles",
+        "high_fraction": 0.11800415068864822,
+        "edge_density": 0.05404061824083328,
+        "baseline_relative_l2": 0.1393444470935276,
+        "relative_l2": 0.10620190051970284,
+        "delta": -0.033142546573824774
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_30_rectangles_frac0p16_a1p24225_t5p53206",
+        "family": "rectangles",
+        "high_fraction": 0.15862976014614105,
+        "edge_density": 0.08245377987623215,
+        "baseline_relative_l2": 0.12209712232859803,
+        "relative_l2": 0.09010491705705531,
+        "delta": -0.031992205271542715
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_38_rectangles_frac0p2_a1p49751_t8p36934",
+        "family": "rectangles",
+        "high_fraction": 0.19784913957118988,
+        "edge_density": 0.0796162486076355,
+        "baseline_relative_l2": 0.11508241630029747,
+        "relative_l2": 0.08328304260300629,
+        "delta": -0.03179937369729119
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_14_rectangles_frac0p24_a1p67693_t9p58326",
+        "family": "rectangles",
+        "high_fraction": 0.23790450394153595,
+        "edge_density": 0.10761764645576477,
+        "baseline_relative_l2": 0.09938613206925491,
+        "relative_l2": 0.06958709721233414,
+        "delta": -0.029799034856920772
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_04_wave_mix_frac0p12_a2p34332_t2p21748",
+        "family": "wave_mix",
+        "high_fraction": 0.12011626362800598,
+        "edge_density": 0.03675910457968712,
+        "baseline_relative_l2": 0.13111339898241367,
+        "relative_l2": 0.10178421525238059,
+        "delta": -0.029329183730033084
+      }
+    ],
+    "worst_5": [
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_10_highpass_grf_frac0p24_a1p11037_t11p7271",
+        "family": "highpass_grf",
+        "high_fraction": 0.23976193368434906,
+        "edge_density": 0.3489019572734833,
+        "baseline_relative_l2": 0.03666068628045102,
+        "relative_l2": 0.029360513166272372,
+        "delta": -0.007300173114178649
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_42_highpass_grf_frac0p24_a1p18205_t11p6872",
+        "family": "highpass_grf",
+        "high_fraction": 0.24002490937709808,
+        "edge_density": 0.3407633304595947,
+        "baseline_relative_l2": 0.03996431047482641,
+        "relative_l2": 0.030437727049152846,
+        "delta": -0.009526583425673564
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_01_matern_fine_frac0p24_a1p77634_t11p8641",
+        "family": "matern_fine",
+        "high_fraction": 0.24127888679504395,
+        "edge_density": 0.07746638357639313,
+        "baseline_relative_l2": 0.049660084449455834,
+        "relative_l2": 0.03999489135556404,
+        "delta": -0.009665193093891793
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_05_blocky_tiles_frac0p24_a3p85379_t3p60021",
+        "family": "blocky_tiles",
+        "high_fraction": 0.24154740571975708,
+        "edge_density": 0.03509523719549179,
+        "baseline_relative_l2": 0.07046933359254759,
+        "relative_l2": 0.05466484523117528,
+        "delta": -0.015804488361372312
+      },
+      {
+        "dataset_id": "darcy_binary_loss3targeted_20260611_33_matern_fine_frac0p24_a1p77702_t7p67384",
+        "family": "matern_fine",
+        "high_fraction": 0.24116262793540955,
+        "edge_density": 0.05756162479519844,
+        "baseline_relative_l2": 0.05903743318786698,
+        "relative_l2": 0.04194255146428508,
+        "delta": -0.017094881723581902
+      }
+    ]
+  },
+  "train_test": {
+    "baseline": [
+      {
+        "split": "train",
+        "dataset_id": "train_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.019839320554306327,
+        "delta": 0.0
+      },
+      {
+        "split": "test",
+        "dataset_id": "test_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.022788286310304467,
+        "delta": 0.0
+      }
+    ],
+    "loss1": [
+      {
+        "split": "train",
+        "dataset_id": "train_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.023267632248739994,
+        "delta": 0.0034283116944336667
+      },
+      {
+        "split": "test",
+        "dataset_id": "test_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.02659195778983131,
+        "delta": 0.0038036714795268434
+      }
+    ],
+    "loss2": [
+      {
+        "split": "train",
+        "dataset_id": "train_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.02097034580726102,
+        "delta": 0.0011310252529546927
+      },
+      {
+        "split": "test",
+        "dataset_id": "test_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.024378894308540486,
+        "delta": 0.001590607998236019
+      }
+    ],
+    "loss3": [
+      {
+        "split": "train",
+        "dataset_id": "train_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.031050367990334907,
+        "delta": 0.01121104743602858
+      },
+      {
+        "split": "test",
+        "dataset_id": "test_original_binary_grf_alpha2_tau3",
+        "relative_l2": 0.031291680600346,
+        "delta": 0.00850339429004153
+      }
+    ]
+  },
+  "artifacts": {
+    "csv": "analysis_outputs/darcy_binary_loss3targeted_loss123_50ep_probe_full50_eval_20260611.csv",
+    "summary_json": "analysis_outputs/darcy_binary_loss3targeted_loss123_50ep_probe_full50_eval_20260611_summary.json"
+  },
+  "dataset": {
+    "root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+    "generated_count": 50
+  }
+}

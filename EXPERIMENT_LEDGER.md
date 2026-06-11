@@ -1,3 +1,15 @@
+## 2026-06-11 - Darcy vs Burgers solver forward/backward benchmark
+
+Status: completed a solver-only GPU timing benchmark to answer whether the current Darcy solver is much faster than the current Burgers solver in both forward and backward passes. No model forward, optimizer, evaluation, or checkpoint I/O is included.
+
+Artifacts:
+- Benchmark script: `tools/benchmark_darcy_vs_burgers_solver_runtime_20260611.py`.
+- Main output: `analysis_outputs/darcy_vs_burgers_solver_forward_backward_benchmark_20260611/solver_runtime_summary.json`.
+- Larger Burgers batch output: `analysis_outputs/darcy_vs_burgers_solver_forward_backward_benchmark_20260611_large_burgers_batches/solver_runtime_summary.json`.
+- Report: `docs/darcy_vs_burgers_solver_forward_backward_benchmark_20260611.md`.
+
+Key result: using warmed-up means, same-batch comparison shows Burgers is about `64x-90x` slower than Darcy for forward-with-grad and about `53x-70x` slower for backward-only. Darcy backward-only is about `1.84x-2.09x` of its forward-with-grad, consistent with the user's memory that Darcy solver backward is roughly twice forward. Burgers backward-only is about `1.56x-1.61x` of graph-building forward, or about `1.9x` of no-grad forward.
+
 ## 2026-06-11 - Burgers wideparam loss3 advantage evidence summary written
 
 Status: wrote a consolidated Markdown summary showing the current evidence for a broad `loss3` advantage on the latest wide-parameter Burgers generalization dataset. The summary combines clean generalization loss over 50 datasets, completed 25-sample finite-budget attack growth, and completed 3-sample full `1024 x 1024` SVD/Jacobian metrics.
@@ -14166,3 +14178,110 @@ Note:
 - Updated `tools/run_burgers_wideparam_svd25_then_retrain_upload_20260611.sh` so completed SVD25 runs automatically launch biased local direction/correlation analysis before upload/Git bookkeeping.
 - Updated `tools/run_burgers_wideparam_loss123_retrain_20260611.sh` so the default retrain order is `loss3_then_loss12`: run loss3 first, then loss1/loss2, with loss1/loss2 still parallelizable.
 - Added automation contract note `docs/burgers_wideparam_svd25_retrain_full_automation_20260611.md`.
+
+## 2026-06-11 - Vast.ai setup and Darcy m64/w60 checkpoint load
+
+Status: complete.
+
+Observed from local setup:
+- Cloned `YifeiSun01/NeuralOperatorRobustness2` branch `vast-ai` into `/workspace/NeuralOperatorRobustness2`.
+- Created `adv_robust` with `tools/setup_adv_robust_gpu_env.py --python python3`.
+- GPU verification passed: PyTorch `2.8.0+cu126`, CUDA `12.6`, V100 `sm_70`, JAX backend `gpu`, and `pip check` clean.
+
+Observed from R2 and local files:
+- R2 source prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Selected Darcy checkpoint: `2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt`.
+- Downloaded `best.pt`, `config.json`, and `train_log.csv` for that run.
+- Config records resolution `85`, modes `64`, width `60`, `4` layers, padding `0`, and `235988641` model parameters.
+
+Observed from GPU load smoke test:
+- Strict `load_state_dict` succeeded with `0` missing keys and `0` unexpected keys.
+- Random GPU input `(1, 85, 85, 1)` produced finite output `(1, 85, 85, 1)`.
+- Smoke test result: `darcy_checkpoint_load_smoke PASS`.
+
+Artifact:
+- `docs/vast_ai_darcy_m64_w60_checkpoint_load_20260611.md`
+
+Remaining work:
+- No training was run in this setup step.
+- Download or verify matching Darcy datasets before attack/evaluation runs.
+- `/workspace` is not a persistent Vast volume on this instance, so any new outputs should be synced to R2 or Git before recycle/destroy.
+
+
+## 2026-06-11 - Darcy binary generalization datasets and loss3-targeted probe
+
+Status: complete.
+
+Code/data updates:
+- Added `tools/generate_darcy_binary_diverse_generalization_20260611.py` for hard-binary Darcy generalization data; generated coefficients contain only `3.0` and `12.0`.
+- Added a Darcy binary coefficient guard in `tools/evaluate_generalization_models.py`, which is also active for adversarial training via `tensor_xy`.
+- Generated broad 50-set binary Darcy data in `generalization_datasets_darcy_binary_diverse_20260611/darcy` and loss3-targeted 50-set data in `generalization_datasets_darcy_binary_loss3targeted_20260611/darcy`.
+
+Observed results:
+- Broad 50-set probe: loss3 was best on average but only modestly ahead of loss2 (`mean_delta=-0.001536` vs `-0.001114`), so the dataset was changed per the experiment rule.
+- Loss3-targeted 50-set probe: loss3 improved 50/50 generated datasets with mean relative-L2 delta `-0.024521`; loss1 and loss2 improved 0/50 and worsened mean relative L2 by `+0.007865` and `+0.006696`.
+- Targeted loss3 training loss on adversarial batches decreased from `1.11358e-06` at epoch 1 to `4.57787e-08` at epoch 50.
+- Original train/test relative L2 worsened for the targeted loss3 checkpoint, so this is a targeted diagnostic result rather than a final production replacement.
+
+Artifacts:
+- Report: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+- Full-50 targeted eval CSV: `analysis_outputs/darcy_binary_loss3targeted_loss123_50ep_probe_full50_eval_20260611.csv`
+- Full-50 targeted eval summary: `analysis_outputs/darcy_binary_loss3targeted_loss123_50ep_probe_full50_eval_20260611_summary.json`
+- Targeted run roots: `adversarial_training_runs/darcy_binary_loss3targeted_loss1_50ep_probe_20260611`, `adversarial_training_runs/darcy_binary_loss3targeted_loss2_50ep_probe_20260611`, `adversarial_training_runs/darcy_binary_loss3targeted_loss3_50ep_probe_20260611`
+
+## 2026-06-11 - Darcy binary loss3 attack heatmap visualizations
+
+Status: complete.
+
+- Added `tools/visualize_darcy_binary_attack_heatmaps_20260611.py` to plot attack sample heat maps for clean binary coefficient, delta, attacked coefficient, model output, solver output, and model-minus-solver output.
+- Generated baseline retained-checkpoint and loss3-targeted epoch-50 checkpoint visualizations for targeted dataset indices `22,30,38,10`, sample index `0`, using loss3 binary steepest-replace attack with 181 flips per sample.
+- Heat maps:
+  - `visualizations/darcy_binary_attack_heatmaps_20260611/baseline_m64w60/darcy_baseline_m64w60_loss3_indices_22-30-38-10_samples_0-0-0-0_heatmaps.png`
+  - `visualizations/darcy_binary_attack_heatmaps_20260611/loss3targeted_epoch50/darcy_loss3targeted_epoch50_loss3_indices_22-30-38-10_samples_0-0-0-0_heatmaps.png`
+- Report updated: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+
+## 2026-06-11 - Darcy binary loss3-targeted 100-epoch follow-up
+
+Status: complete.
+
+- Ran matched 100-epoch Darcy adversarial-training probes on the loss3-targeted binary 50-set generalization dataset for loss1, loss2, and loss3.
+- Full-50 generated evaluation results: loss1 improved 0/50 with mean delta `+0.003420`, loss2 improved 8/50 with mean delta `+0.001340`, and loss3 improved 50/50 with mean delta `-0.009675`.
+- Compared with the 50-epoch probe, loss3 remained clearly better than loss1/loss2 but was weaker than the 50-epoch loss3 checkpoint (`-0.024521` mean delta at 50 epochs versus `-0.009675` at 100 epochs).
+- Artifacts:
+  - `analysis_outputs/darcy_binary_loss3targeted_loss123_100ep_probe_full50_eval_20260611.csv`
+  - `analysis_outputs/darcy_binary_loss3targeted_loss123_100ep_probe_full50_eval_20260611_summary.json`
+  - `adversarial_training_runs/darcy_binary_loss3targeted_loss1_100ep_probe_20260611`
+  - `adversarial_training_runs/darcy_binary_loss3targeted_loss2_100ep_probe_20260611`
+  - `adversarial_training_runs/darcy_binary_loss3targeted_loss3_100ep_probe_20260611`
+- Report updated: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+
+## 2026-06-11 - Darcy binary generated-vs-training contact sheets
+
+Status: complete.
+
+- Added `tools/visualize_darcy_binary_dataset_contact_sheets_20260611.py` to plot 25-sample coefficient heat-map sheets.
+- Generated two 5x5 sheets for all 50 loss3-targeted generated Darcy datasets, using sample index `0` from each dataset.
+- Generated two matching 5x5 sheets from 50 evenly spaced original training samples.
+- Generated a feature comparison plot for high-phase fraction and edge density.
+- Main contrast: generated selected 50 have high-fraction mean `0.180529` and edge-density mean `0.099057`; original training full 1200 has high-fraction mean `0.501751` and edge-density mean `0.025060`.
+- Output root: `visualizations/darcy_binary_dataset_contact_sheets_20260611/loss3targeted_vs_train_even50/`
+- Report updated: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+
+## 2026-06-11 - Darcy binary 500-epoch runtime estimate
+
+Status: complete.
+
+- Estimated 500-epoch runtime from measured targeted Darcy 100-epoch loss1/loss2/loss3 probes and a 50-epoch standard-clean timing benchmark.
+- Estimates with the same per-epoch eval load: loss1 `15.04 min`, loss2 `14.74 min`, loss3 `15.12 min`, standard clean `10.05 min` for 500 epochs.
+- Same wall time as loss3-500 allows about `503` loss1 epochs or `513` loss2 epochs.
+- Artifacts: `analysis_outputs/darcy_binary_loss3targeted_runtime_estimate_500ep_20260611.csv` and `.json`.
+
+## 2026-06-11 - Darcy binary physics/loss4 100-epoch follow-up
+
+Status: complete.
+
+- Ran the missing Darcy physics/loss4 adversarial-training probe for 100 epochs on the loss3-targeted binary 50-set generated dataset.
+- Full-50 generated evaluation with four objectives: loss1 improved 0/50 (`+0.003420` mean delta), loss2 improved 8/50 (`+0.001340`), loss3 improved 50/50 (`-0.009675`), physics/loss4 improved 9/50 (`+0.001044`).
+- Physics/loss4 attack training loss decreased (`1.15183e-06` to `1.41416e-08`), but its final checkpoint did not produce mean generated-set improvement over baseline.
+- Artifacts: `adversarial_training_runs/darcy_binary_loss3targeted_physics_100ep_probe_20260611/`, `analysis_outputs/darcy_binary_loss3targeted_loss123physics_100ep_probe_full50_eval_20260611.csv`, and matching summary JSON.
+- Conclusion: adding physics/loss4 does not change the main result; loss3 remains clearly strongest on this targeted binary Darcy generalization set.

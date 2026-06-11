@@ -1,0 +1,23 @@
+{
+  "loss1": {
+    "datasets": 50,
+    "improved_count": 6,
+    "mean_delta_rel_l2": 0.0035566333838275128,
+    "min_delta_rel_l2": -0.003623299245764832,
+    "max_delta_rel_l2": 0.0092176811308807
+  },
+  "loss2": {
+    "datasets": 50,
+    "improved_count": 20,
+    "mean_delta_rel_l2": -0.0011142649973831665,
+    "min_delta_rel_l2": -0.019176702119583833,
+    "max_delta_rel_l2": 0.010335049476961164
+  },
+  "loss3": {
+    "datasets": 50,
+    "improved_count": 21,
+    "mean_delta_rel_l2": -0.0015360938286271652,
+    "min_delta_rel_l2": -0.027651017688024054,
+    "max_delta_rel_l2": 0.0199217778016081
+  }
+}

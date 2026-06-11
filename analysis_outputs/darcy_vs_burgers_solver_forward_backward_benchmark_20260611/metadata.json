@@ -1,0 +1,17 @@
+{
+  "torch": "2.8.0+cu126",
+  "torch_cuda": "12.6",
+  "torch_device": "Tesla V100-SXM2-32GB",
+  "jax": "0.10.0",
+  "jax_backend": "gpu",
+  "darcy_dataset": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/datasets/grf_darcy_20260528_N1500/train/dim2d_darcy_nx85_N1200_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt",
+  "darcy_coeff_unique": [
+    3.0,
+    12.0
+  ],
+  "burgers_n": 1024,
+  "burgers_steps": 1000,
+  "burgers_remat_mode": "none",
+  "warmups": 1,
+  "repeats": 5
+}
