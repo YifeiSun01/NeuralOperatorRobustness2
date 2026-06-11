@@ -1,3 +1,17 @@
+## 2026-06-11 - Darcy Burgers-style plotting and full-logging pipeline
+
+Status: added a Darcy-specific Burgers-style plotting pipeline and generated plots from the existing loss1/loss2/loss3/physics 100-epoch Darcy runs. The plots are Darcy Flow plots that reuse the Burgers report vocabulary: epoch and wall-clock train/test/generalization curves, attack-gain curves, attacked-train loss curves, runtime/memory diagnostics, final full-50 generated-dataset reduction heatmaps, and generated-set feature scatter plots.
+
+Artifacts:
+- Plotter: `tools/plot_darcy_loss123physics_adv_training_20260611.py`.
+- Full logging launcher: `tools/run_darcy_loss123physics_full_logging_20260611.sh`.
+- Report: `docs/darcy_loss123physics_burgers_style_report_20260611.md`.
+- Visualization root: `visualizations/darcy_loss123physics_burgers_style_20260611/`.
+
+Observed limitation of the existing 100-epoch runs: their saved config used `eval_max_samples=10`, `max_generalization_eval=8`, and `attack_probe_samples=0`, so the existing logs can produce polished aggregate curves and final full-50 posthoc comparisons, but cannot reconstruct every-epoch full-50 dataset curves or fixed-probe delta FFT histories. The new full-logging launcher fixes this for future runs by using `--eval-max-samples 0`, `--max-generalization-eval 50`, `--attack-probe-samples 5`, and `--attack-probe-every-n-epochs 1` for all four Darcy objectives, then calling the new plotter with `--derive-full50-from-run-eval`.
+
+Validation: Python compile passed, shell syntax check passed, dry-run printed the four full-logging training commands plus the final plotting command, and all generated PNGs opened as nonblank images.
+
 ## 2026-06-11 - Darcy vs Burgers solver forward/backward benchmark
 
 Status: completed a solver-only GPU timing benchmark to answer whether the current Darcy solver is much faster than the current Burgers solver in both forward and backward passes. No model forward, optimizer, evaluation, or checkpoint I/O is included.
