@@ -14059,3 +14059,29 @@ Artifacts for GitHub:
 The sync script intentionally records no credentials. It uploads selected
 2026-06-11 generated datasets, forensics outputs, full-SVD artifacts, and
 visualizations to the configured R2 prefix using `rclone copy --size-only`.
+
+## 2026-06-11 - Completed GitHub and selected R2 sync for Burgers archive
+
+Status: complete.
+
+GitHub:
+- Pushed commit `c584771` to branch `vast-ai` with the 2026-06-11 Burgers
+  archive Markdown, generated Python/Shell tools, reports, plotter update, and
+  ledger updates.
+
+R2:
+- Uploaded selected generated datasets, forensics outputs, full `1024 x 1024`
+  SVD artifacts, P2Q2 traces, and comparison-dense visualizations to:
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`
+- Upload completed at `2026-06-11T06:29:43+00:00` according to
+  `forensics/burgers_20260611_selected_r2_sync/rclone_selected_sync.log`.
+- Uploaded the sync manifest, rclone log, and remote size verification to:
+  `forensics/burgers_20260611_selected_r2_sync`.
+- Remote verification highlights: final loss3-targeted dataset root has 421
+  objects / 644.948 MiB; full-1024 SVD root has 73 objects / 304.597 MiB; final
+  wrapped-label visualization root has 30 objects / 46.071 MiB.
+
+Note:
+- The old local rclone reports intermediate Cloudflare R2 `501 NotImplemented`
+  messages, but retries succeeded and the final upload process exited 0. The
+  post-upload `rclone size` checks verified remote object counts/sizes.

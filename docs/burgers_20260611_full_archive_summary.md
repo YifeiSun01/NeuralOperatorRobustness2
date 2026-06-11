@@ -702,3 +702,61 @@ tools/start_burgers_20260611_selected_r2_sync.sh
 ```
 
 This archive document should be updated after GitHub push and R2 copy are verified.
+
+## 19. Completed GitHub And R2 Sync Status
+
+GitHub sync:
+
+- Branch: `vast-ai`
+- Commit pushed first: `c584771` (`Add Burgers 20260611 archive and sync scripts`)
+- Scope pushed to GitHub: Markdown records, Python tools, shell scripts, plotter update, and `EXPERIMENT_LEDGER.md`.
+- Large generated data, figures, full SVD NPZ files, attack traces, and datasets were not committed to GitHub; they were uploaded to R2.
+
+R2 sync:
+
+- Status: completed.
+- Completion line in local log: `Completed: 2026-06-11T06:29:43+00:00`.
+- R2 prefix:
+
+```text
+neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected
+```
+
+- Upload log and verification root:
+
+```text
+forensics/burgers_20260611_selected_r2_sync
+```
+
+- This sync-log root was also uploaded to R2 and contains:
+
+```text
+selected_sync_manifest.txt
+rclone_selected_sync.log
+remote_size_verification.txt
+```
+
+R2 compatibility note:
+
+- The old `rclone v1.60.1-DEV` on this instance reports many intermediate Cloudflare R2 `501 NotImplemented` lines during the first upload attempt for objects.
+- In this run, rclone retries then reports `Attempt 2/5 succeeded`; the final process exit code was 0.
+- Remote object counts/sizes were verified after upload with `rclone size`.
+
+Selected remote verification highlights:
+
+| remote root | objects | size |
+| --- | ---: | ---: |
+| `generalization_datasets_burgers_semantic_loss3fav_search_20260611` | 978 | 1.470 GiB |
+| `generalization_datasets_burgers_semantic_smooth_loss3_screen_20260611` | 782 | 1.182 GiB |
+| `generalization_datasets_burgers_semantic_wideparam_visible_20260611` | 54 | 78.546 MiB |
+| `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611` | 421 | 644.948 MiB |
+| `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_diverse_multi_sample_attack_visuals_batched_20260611` | 48 | 162.255 MiB |
+| `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611` | 73 | 304.597 MiB |
+| `visualizations/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_comparison_dense_diverse_multi_sample_batched_wrapped_labels_20260611` | 30 | 46.071 MiB |
+| `forensics/burgers_20260611_selected_r2_sync` | 3 | 335.715 KiB |
+
+Full verification table is in:
+
+```text
+forensics/burgers_20260611_selected_r2_sync/remote_size_verification.txt
+```
