@@ -1,0 +1,15 @@
+{
+  "svd_root": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611",
+  "out_dir": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_biased_local_direction_20260611",
+  "report_md": "/workspace/NeuralOperatorRobustness2/docs/burgers_wideparam_loss3targeted_full1024_svd_attack25_biased_local_direction_20260611.md",
+  "device": "cpu",
+  "attack_epsilon_rms": 0.12,
+  "eps_rms_values": [
+    1e-06,
+    0.0001,
+    0.001,
+    0.01,
+    0.12
+  ],
+  "max_rows": 0
+}

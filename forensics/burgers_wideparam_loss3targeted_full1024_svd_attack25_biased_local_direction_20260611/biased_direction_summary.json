@@ -1,0 +1,234 @@
+{
+  "n_pairs": 100,
+  "mean_svd_outward_abs_cos": 0.24000861205173532,
+  "mean_svd_outward_abs_angle_deg": 75.20017415206428,
+  "mean_svd_affine_eps_abs_cos": 0.9924639592633936,
+  "mean_attack_delta_svd_abs_cos": 0.20047615232124857,
+  "mean_attack_delta_outward_abs_cos": 0.7804195801901287,
+  "mean_attack_delta_affine_eps_abs_cos": 0.21889083699735548,
+  "by_model_svd_outward_abs_angle_deg": {
+    "baseline": 71.35021753748563,
+    "loss1": 76.64676567300928,
+    "loss2": 73.68838189784303,
+    "loss3": 79.11533149991918
+  },
+  "by_model_attack_delta_svd_abs_cos": {
+    "baseline": 0.3048802294200048,
+    "loss1": 0.20905778571158906,
+    "loss2": 0.1965145068196833,
+    "loss3": 0.09145208733371707
+  },
+  "by_model_attack_delta_outward_abs_cos": {
+    "baseline": 0.7934502819074498,
+    "loss1": 0.8030559261195782,
+    "loss2": 0.7987143033470298,
+    "loss3": 0.7264578093864565
+  },
+  "by_model_attack_delta_affine_eps_abs_cos": {
+    "baseline": 0.34048974584227765,
+    "loss1": 0.22657706350032478,
+    "loss2": 0.20831415398962272,
+    "loss3": 0.10018238465719687
+  },
+  "correlation_all_pairs": {
+    "error_spectral_norm__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "error_spectral_norm",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.6371899321401348,
+      "spearman": 0.7778097809780976
+    },
+    "error_spectral_norm__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "error_spectral_norm",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.7239573499961025,
+      "spearman": 0.8158175817581756
+    },
+    "error_spectral_norm__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "error_spectral_norm",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": -0.6956790456240607,
+      "spearman": -0.8275187518751874
+    },
+    "bias_gradient_norm__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "bias_gradient_norm",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.7453075693594505,
+      "spearman": 0.8507050705070505
+    },
+    "bias_gradient_norm__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "bias_gradient_norm",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.8279142505972403,
+      "spearman": 0.8868886888688868
+    },
+    "bias_gradient_norm__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "bias_gradient_norm",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": -0.5664561503866061,
+      "spearman": -0.8148094809480947
+    },
+    "svd_local_gain_eps_mse__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "svd_local_gain_eps_mse",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.5767437586112651,
+      "spearman": 0.7801980198019801
+    },
+    "svd_local_gain_eps_mse__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "svd_local_gain_eps_mse",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.6806012269525468,
+      "spearman": 0.8179057905790578
+    },
+    "svd_local_gain_eps_mse__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "svd_local_gain_eps_mse",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": -0.5609001842639383,
+      "spearman": -0.8259105910591058
+    },
+    "outward_local_gain_eps_mse__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "outward_local_gain_eps_mse",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.6261912334299662,
+      "spearman": 0.8715151515151514
+    },
+    "outward_local_gain_eps_mse__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "outward_local_gain_eps_mse",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.6617214458029768,
+      "spearman": 0.8946534653465347
+    },
+    "outward_local_gain_eps_mse__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "outward_local_gain_eps_mse",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": -0.2853681030430893,
+      "spearman": -0.6968616861686167
+    },
+    "affine_local_gain_eps_mse__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "affine_local_gain_eps_mse",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.5776155478914866,
+      "spearman": 0.7806660666066605
+    },
+    "affine_local_gain_eps_mse__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "affine_local_gain_eps_mse",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.6813881340215068,
+      "spearman": 0.8183498349834982
+    },
+    "affine_local_gain_eps_mse__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "affine_local_gain_eps_mse",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": -0.5605254164842672,
+      "spearman": -0.8253945394539454
+    },
+    "attack_delta_svd_oriented_cos__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_svd_oriented_cos",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.15382015581440103,
+      "spearman": 0.12472847284728472
+    },
+    "attack_delta_svd_oriented_cos__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_svd_oriented_cos",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.12517987041658538,
+      "spearman": 0.10178217821782176
+    },
+    "attack_delta_svd_oriented_cos__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_svd_oriented_cos",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": 0.4419226449332653,
+      "spearman": 0.22749474947494747
+    },
+    "attack_delta_outward_cos__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_outward_cos",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.29954448282003326,
+      "spearman": 0.333045304530453
+    },
+    "attack_delta_outward_cos__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_outward_cos",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.3541140773301296,
+      "spearman": 0.3678967896789679
+    },
+    "attack_delta_outward_cos__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_outward_cos",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": -0.29918163079322724,
+      "spearman": -0.462022202220222
+    },
+    "attack_delta_affine_eps_cos__attack_loss_growth_abs": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_affine_eps_cos",
+      "y": "attack_loss_growth_abs",
+      "n": 100,
+      "pearson": 0.21508558473754585,
+      "spearman": 0.1436063606360636
+    },
+    "attack_delta_affine_eps_cos__attack_final_mse": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_affine_eps_cos",
+      "y": "attack_final_mse",
+      "n": 100,
+      "pearson": 0.18892831796200082,
+      "spearman": 0.11896789678967895
+    },
+    "attack_delta_affine_eps_cos__attack_log_growth": {
+      "analysis_set": "all_model_sample_pairs",
+      "x": "attack_delta_affine_eps_cos",
+      "y": "attack_log_growth",
+      "n": 100,
+      "pearson": 0.41695633800772314,
+      "spearman": 0.23335133513351333
+    }
+  },
+  "eps_rms_values": [
+    1e-06,
+    0.0001,
+    0.001,
+    0.01,
+    0.12
+  ]
+}
