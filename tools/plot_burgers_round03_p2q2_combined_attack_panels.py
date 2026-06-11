@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import matplotlib
@@ -16,6 +17,10 @@ REPO = Path(__file__).resolve().parents[1]
 TRACE_ROOT = REPO / "forensics" / "burgers_round03_baseline_vs_final_p2q2_attack_verification_20260607"
 BUNDLE_ROOT = REPO / "visualizations" / "burgers_loss3_selective_round03_longtraining_comparison_dense_image_only_bundle_20260607"
 OUT_DIR = BUNDLE_ROOT / "comparison_dense"
+OUTPUT_PREFIX = "round03_p2q2"
+TITLE_PREFIX = "Burgers round03"
+FRAME_SUBTITLE = "Baseline is shown once; loss1/loss2/loss3 panels use their corresponding final self-training models."
+OVERLAY_SUBTITLE = "Dashed curves are before perturbation; solid/darker curves are after 100 attack steps."
 
 LOSS_ORDER = ["loss1", "loss2", "loss3"]
 MODEL_ORDER = ["baseline", "loss1", "loss2", "loss3"]
@@ -79,6 +84,116 @@ def short_dataset_label(dataset_id: str) -> str:
     for old, new in replacements:
         out = out.replace(old, new)
     return out.replace("_", " ")
+
+
+def _finite_float(value: object) -> float | None:
+    try:
+        out = float(value)
+    except (TypeError, ValueError):
+        return None
+    return out if np.isfinite(out) else None
+
+
+def _regex_value(text: str, pattern: str) -> str | None:
+    match = re.search(pattern, text, flags=re.IGNORECASE)
+    if not match:
+        return None
+    return match.group(1).strip()
+
+
+def _fmt_num(value: object, digits: int = 3) -> str | None:
+    val = _finite_float(value)
+    if val is None:
+        return None
+    return f"{val:.{digits}g}"
+
+
+def _fmt_range(lo: object, hi: object) -> str | None:
+    lo_s = _fmt_num(lo, 3)
+    hi_s = _fmt_num(hi, 3)
+    if lo_s is None or hi_s is None:
+        return None
+    return f"[{lo_s},{hi_s}]"
+
+
+def sample_label_lines(row: int, item: dict[str, object]) -> list[str]:
+    dataset_id = str(item.get("dataset_id", ""))
+    source_id = str(item.get("source_dataset_id", ""))
+    family = str(item.get("family", "")).strip().lower()
+    split = str(item.get("split", ""))
+    lines = [f"S{row + 1} {split}".strip()]
+
+    if split == "test":
+        lines.append("Gaussian test")
+        lines.append("C=0.03")
+        lines.append("Range=[0,1]")
+        lines.append("Centroid=3.43")
+        lines.append("TV=0.00487")
+    else:
+        if not family:
+            family = _regex_value(dataset_id, r"^(Gaussian|Matern|Powerlaw|Sine mix|Sawtooth|Square wave)") or source_id
+            family = family.lower().replace(" ", "_")
+        family_title = {
+            "gaussian": "Gaussian",
+            "matern": "Matern",
+            "powerlaw_fourier": "Powerlaw",
+            "sine_mixture": "Sine mix",
+            "sawtooth": "Sawtooth",
+            "square_wave": "Square wave",
+            "piecewise_linear": "Piecewise",
+        }.get(family, short_dataset_label(source_id or dataset_id))
+        lines.append(family_title)
+
+        corr = _fmt_num(item.get("correlation_length")) or _regex_value(dataset_id, r"(?:corr|c)\s*=\s*([0-9.]+)")
+        matern_nu = _fmt_num(item.get("matern_nu")) or _regex_value(dataset_id, r"nu\s*=\s*([0-9.]+)")
+        alpha = _fmt_num(item.get("spectral_alpha")) or _regex_value(dataset_id, r"alpha\s*=\s*([0-9.]+)")
+        k0 = _fmt_num(item.get("k0")) or _regex_value(dataset_id, r"k0\s*=\s*([0-9.]+)")
+        freqs = str(item.get("frequencies", "")).strip()
+        if freqs.lower() in {"", "nan", "none"}:
+            freqs = _regex_value(dataset_id, r"f=\[([^\]]+)\]") or ""
+        decay = _fmt_num(item.get("decay")) or _regex_value(dataset_id, r"decay\s*=\s*([0-9.]+)")
+        freq = _fmt_num(item.get("frequency")) or _regex_value(dataset_id, r"freq\s*=\s*([0-9.]+)")
+        duty = _fmt_num(item.get("duty")) or _regex_value(dataset_id, r"duty\s*=\s*([0-9.]+)")
+
+        if corr is not None:
+            lines.append(f"C={corr}")
+        if matern_nu is not None:
+            lines.append(f"Nu={matern_nu}")
+        if alpha is not None:
+            lines.append(f"Alpha={alpha}")
+        if k0 is not None:
+            lines.append(f"k0={k0}")
+        if freqs:
+            compact_freqs = freqs.replace(" ", "")
+            lines.append(f"Freqs={compact_freqs}")
+        if decay is not None:
+            lines.append(f"Decay={decay}")
+        if freq is not None and family in {"sawtooth", "square_wave"}:
+            lines.append(f"Freq={freq}")
+        if duty is not None:
+            lines.append(f"Duty={duty}")
+
+        range_text = _fmt_range(item.get("target_min"), item.get("target_max"))
+        if range_text is None:
+            lo = _regex_value(dataset_id, r"range\s*\[\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\]")
+            if lo is not None:
+                match = re.search(r"range\s*\[\s*([-0-9.]+)\s*,\s*([-0-9.]+)\s*\]", dataset_id, flags=re.IGNORECASE)
+                range_text = f"[{match.group(1)},{match.group(2)}]" if match else None
+        if range_text is not None:
+            lines.append(f"Range={range_text}")
+
+    centroid = _fmt_num(item.get("spectral_centroid_mean"), 3) or _regex_value(dataset_id, r"centroid\s*=\s*([0-9.]+)")
+    tv = _fmt_num(item.get("total_variation_mean"), 3) or _regex_value(dataset_id, r"TV\s*=\s*([0-9.]+)")
+    if centroid is not None:
+        lines.append(f"Centroid={centroid}")
+    if tv is not None:
+        lines.append(f"TV={tv}")
+    lines.append(f"idx={item.get('index', '')}")
+    return lines
+
+
+def sample_label(row: int, item: dict[str, object]) -> str:
+    return "\n".join(sample_label_lines(row, item))
 
 
 def load_trace(loss_name: str) -> dict[str, np.ndarray]:
@@ -161,9 +276,9 @@ def add_row_labels(fig: plt.Figure, positions: list[tuple[float, str]]) -> None:
             label,
             ha="left",
             va="center",
-            fontsize=6.8,
+            fontsize=6.2,
             color=TEXT,
-            linespacing=1.15,
+            linespacing=1.05,
             bbox={"facecolor": BG, "edgecolor": "none", "alpha": 0.95, "pad": 0.2},
         )
 
@@ -207,7 +322,7 @@ def render_frame(
 
     for row in range(clean.shape[0]):
         item = manifest[row]
-        sample_label = "\n".join([f"S{row + 1}  {item['split']}", short_dataset_label(str(item["dataset_id"])), f"index {item['index']}"])
+        sample_label_text = sample_label(row, item)
         first_ax_for_row = None
         for group_idx, model_key in enumerate(model_keys):
             base_col = group_idx * 4
@@ -276,7 +391,7 @@ def render_frame(
 
         if first_ax_for_row is not None:
             bbox = first_ax_for_row.get_position()
-            row_label_positions.append(((bbox.y0 + bbox.y1) / 2.0, sample_label))
+            row_label_positions.append(((bbox.y0 + bbox.y1) / 2.0, sample_label_text))
 
     add_row_labels(fig, row_label_positions)
 
@@ -310,8 +425,8 @@ def render_frame(
             bbox={"boxstyle": "round,pad=0.30", "facecolor": "#ffffff", "edgecolor": color, "alpha": 0.94},
         )
     phase = "before perturbation" if frame_idx == 0 else "after perturbation"
-    fig.suptitle(f"Burgers round03 p=2, q=2 RMS-L2 attack, step {step:03d}: {phase}", fontsize=15.0, fontweight="bold", y=0.985)
-    fig.text(0.5, 0.956, "Baseline is shown once; loss1/loss2/loss3 panels use their corresponding final self-training models.", ha="center", va="center", fontsize=9.0, color=MUTED)
+    fig.suptitle(f"{TITLE_PREFIX} p=2, q=2 RMS-L2 attack, step {step:03d}: {phase}", fontsize=15.0, fontweight="bold", y=0.985)
+    fig.text(0.5, 0.956, FRAME_SUBTITLE, ha="center", va="center", fontsize=9.0, color=MUTED)
     fig.savefig(out_path, dpi=dpi)
     plt.close(fig)
 
@@ -338,7 +453,7 @@ def render_overlay(
 
     for row in range(clean.shape[0]):
         item = manifest[row]
-        sample_label = "\n".join([f"S{row + 1}  {item['split']}", short_dataset_label(str(item["dataset_id"])), f"index {item['index']}"])
+        sample_label_text = sample_label(row, item)
         first_ax_for_row = None
         for group_idx, model_key in enumerate(model_keys):
             base_col = group_idx * 4
@@ -423,7 +538,7 @@ def render_overlay(
 
         if first_ax_for_row is not None:
             bbox = first_ax_for_row.get_position()
-            row_label_positions.append(((bbox.y0 + bbox.y1) / 2.0, sample_label))
+            row_label_positions.append(((bbox.y0 + bbox.y1) / 2.0, sample_label_text))
 
     add_row_labels(fig, row_label_positions)
 
@@ -457,8 +572,8 @@ def render_overlay(
             color=color,
             bbox={"boxstyle": "round,pad=0.30", "facecolor": "#ffffff", "edgecolor": color, "alpha": 0.94},
         )
-    fig.suptitle("Burgers round03 p=2, q=2 RMS-L2 attack: before/after perturbation overlay", fontsize=15.0, fontweight="bold", y=0.985)
-    fig.text(0.5, 0.956, "Dashed curves are before perturbation; solid/darker curves are after 100 attack steps.", ha="center", va="center", fontsize=9.0, color=MUTED)
+    fig.suptitle(f"{TITLE_PREFIX} p=2, q=2 RMS-L2 attack: before/after perturbation overlay", fontsize=15.0, fontweight="bold", y=0.985)
+    fig.text(0.5, 0.956, OVERLAY_SUBTITLE, ha="center", va="center", fontsize=9.0, color=MUTED)
     fig.savefig(out_path, dpi=dpi)
     plt.close(fig)
 
@@ -467,7 +582,7 @@ def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     clean, manifest, models, limits, loss_ylim, final_idx = build_data()
     render_frame(
-        OUT_DIR / "round03_p2q2_baseline_loss1_loss2_loss3_step000_before_perturbation_four_column.png",
+        OUT_DIR / f"{OUTPUT_PREFIX}_baseline_loss1_loss2_loss3_step000_before_perturbation_four_column.png",
         MODEL_ORDER,
         0,
         clean,
@@ -477,7 +592,7 @@ def main() -> None:
         loss_ylim,
     )
     render_frame(
-        OUT_DIR / "round03_p2q2_baseline_loss1_loss2_loss3_step100_after_perturbation_four_column.png",
+        OUT_DIR / f"{OUTPUT_PREFIX}_baseline_loss1_loss2_loss3_step100_after_perturbation_four_column.png",
         MODEL_ORDER,
         final_idx,
         clean,
@@ -487,7 +602,7 @@ def main() -> None:
         loss_ylim,
     )
     render_overlay(
-        OUT_DIR / "round03_p2q2_baseline_loss1_loss2_loss3_before_after_overlay_four_column.png",
+        OUT_DIR / f"{OUTPUT_PREFIX}_baseline_loss1_loss2_loss3_before_after_overlay_four_column.png",
         MODEL_ORDER,
         clean,
         manifest,
@@ -497,7 +612,7 @@ def main() -> None:
     )
     for loss in LOSS_ORDER:
         render_overlay(
-            OUT_DIR / f"round03_p2q2_baseline_vs_{loss}_before_after_overlay_two_column.png",
+            OUT_DIR / f"{OUTPUT_PREFIX}_baseline_vs_{loss}_before_after_overlay_two_column.png",
             ["baseline", loss],
             clean,
             manifest,
@@ -505,7 +620,13 @@ def main() -> None:
             limits,
             loss_ylim,
         )
-    outputs = sorted(str(p.relative_to(REPO)) for p in OUT_DIR.glob("round03_p2q2_*.png"))
+    def _display_path(path: Path) -> str:
+        try:
+            return str(path.relative_to(REPO))
+        except ValueError:
+            return str(path)
+
+    outputs = sorted(_display_path(p) for p in OUT_DIR.glob(f"{OUTPUT_PREFIX}_*.png"))
     print(json.dumps({"output_dir": str(OUT_DIR), "generated_outputs": outputs}, indent=2))
 
 

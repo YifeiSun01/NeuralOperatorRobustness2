@@ -13756,3 +13756,306 @@ Inference:
 
 Remaining work:
 - None for the artifact-only R2 upload completion status.
+
+
+## 2026-06-11 - Burgers wide-parameter loss3-targeted replacement dataset
+
+Status: generated and evaluated a new non-attack Burgers wide-parameter visible
+generalization dataset targeted to stronger loss3 clean-generalization advantage.
+The previous wide-parameter visible dataset and plots were left intact.
+
+Source / record files:
+- Generator and selector:
+  `tools/generate_burgers_wideparam_loss3_targeted_replacement_20260611.py`
+- Result report:
+  `docs/burgers_wideparam_loss3_targeted_replacement_20260611.md`
+- New selected dataset:
+  `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00`
+- Candidate pool:
+  `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00_candidate_pool`
+- Final clean metrics:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_clean_loss_final_models_20260611/summary.json`
+  and
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_clean_loss_final_models_20260611/per_dataset_clean_metrics.csv`
+- Dataset audit:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_20260611/wide_parameter_dataset_audit_summary.json`
+
+Observed evidence:
+- GPU path was verified before the run: Tesla V100-SXM2-32GB, PyTorch
+  `2.8.0+cu126` with CUDA available and `sm_70`, and JAX backend `gpu`.
+- Old non-winners were concentrated in `matern` and `sine_mixture` families,
+  with higher spectral centroid/high-frequency fraction and more fragile
+  piecewise/sawtooth cases.
+- The replacement search generated 360 semantic candidates, all non-attack.
+- The selected dataset has 50 unique parameter sets with family counts:
+  `gaussian` 12, `matern` 10, `powerlaw_fourier` 14, `sine_mixture` 12,
+  `sawtooth` 1, `square_wave` 1.
+- Selection-screen evidence: 50/50 selected datasets were strict loss3 winners
+  against loss1/loss2 on RMSE and relative L2.
+- Full four-model clean inference confirmed loss3 clean RMSE winner counts:
+  50/50 against all four models, including baseline.
+- Dataset-mean clean RMSE: baseline 0.0299017, loss1 0.0210265,
+  loss2 0.0222924, loss3 0.0120496.
+- Loss3 dataset-mean RMSE reduction: 59.70% vs baseline, 42.69% vs loss1,
+  45.95% vs loss2. Paired p-values for loss3 vs loss1/loss2 were
+  4.92e-22 and 5.73e-24.
+- Audit confirms 50 unique parameter keys, actual global `x` range
+  [-0.65, 1.50], and no spike-train datasets.
+
+Inference:
+- This version satisfies the user's requested stronger loss3 advantage target:
+  it exceeds 45/50 and reaches 50/50 clean RMSE wins while keeping broad,
+  visibly varied semantic parameter families and only one sawtooth plus one
+  square-wave dataset.
+
+Remaining work:
+- Run the Burgers comparison-dense multi-sample adversarial attack/plot pipeline
+  on this new dataset root.
+- Sync the new dataset, script, docs, and forensics outputs off the instance
+  before any Vast recycle/destroy because `/workspace` is not persistent.
+
+
+## 2026-06-11 - Burgers wide-parameter loss3-targeted P2Q2 diverse visuals
+
+Status: verified the new loss3-targeted wide-parameter Burgers dataset for
+visible parameter/shape diversity, then ran a batched P2Q2 attack and rendered
+five comparison-dense multi-sample groups. The previous smooth-screen and older
+wide-parameter plots were not deleted or overwritten.
+
+Source / record files:
+- Runner:
+  `tools/run_burgers_wideparam_loss3targeted_round00_p2q2_diverse_multi_visuals_batched_20260611.py`
+- Result report:
+  `docs/burgers_wideparam_loss3targeted_p2q2_diverse_visuals_20260611.md`
+- Dataset root:
+  `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers`
+- Trace root:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_diverse_multi_sample_attack_visuals_batched_20260611`
+- Visualization root:
+  `visualizations/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_comparison_dense_diverse_multi_sample_batched_bundle_20260611/comparison_dense`
+
+Observed evidence:
+- Dataset audit confirmed 50 unique parameter sets with family counts:
+  `gaussian` 12, `matern` 10, `powerlaw_fourier` 14, `sine_mixture` 12,
+  `sawtooth` 1, `square_wave` 1, and no spike-train datasets.
+- The selected P2Q2 groups used 25 distinct generalization datasets with no
+  reuse, mixing smooth Matern/Gaussian, power-law, sine-mixture, and sharp or
+  high-frequency cases.
+- Spectral centroids in the selected pool span low-to-high regimes, including
+  smooth Matern around 6, Gaussian around 8-10, power-law around 10-15, square
+  wave around 20, and high-frequency sine around 23-32.
+- A valid group-preview image was created at
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_diverse_multi_sample_attack_visuals_batched_20260611/diverse_group_initial_condition_preview.png`
+  with size 3780x2160.
+- GPU path was verified before attack generation: Tesla V100-SXM2-32GB,
+  PyTorch `2.8.0+cu126` with CUDA available and `sm_70`, and JAX backend `gpu`.
+- P2Q2 attack settings: 100 steps, record every 2 steps, RMS epsilon 0.12,
+  alpha RMS 0.012. Five groups were attacked in one combined batch of 30
+  samples for each model.
+- The run rendered 30 valid PNG files: 5 groups x 6 comparison-dense images.
+  Four-column PNGs are 7200x2528 and two-column PNGs are 3600x2528.
+- Final attacked MSE means by group:
+  group00 baseline 1.2439e-02, loss1 6.0062e-03, loss2 6.0574e-03,
+  loss3 3.2049e-03;
+  group01 baseline 1.6045e-02, loss1 6.9050e-03, loss2 7.7222e-03,
+  loss3 4.0798e-03;
+  group02 baseline 1.2800e-02, loss1 6.5433e-03, loss2 5.9747e-03,
+  loss3 3.9501e-03;
+  group03 baseline 1.9085e-02, loss1 7.8953e-03, loss2 6.4595e-03,
+  loss3 5.1924e-03;
+  group04 baseline 1.5852e-02, loss1 7.3700e-03, loss2 6.8700e-03,
+  loss3 4.1244e-03.
+
+Inference:
+- The visual subset now satisfies the requested diversity criterion better than
+  file-order selection: each group includes visibly different families and
+  spectral regimes. Loss3 also has the lowest final attacked MSE mean in all
+  five displayed groups.
+
+Remaining work:
+- Inspect the generated PNGs manually and decide whether to render additional
+  curated groups.
+- Sync the new traces, visualizations, runner, and records to durable storage
+  before any Vast recycle/destroy because `/workspace` is not persistent.
+
+
+## 2026-06-11 - Burgers loss3-targeted 52-dataset clean metrics report
+Status: recorded clean, non-adversarial inference metrics for the original
+Burgers train split, the original Burgers test split, and the 50
+loss3-targeted wide-parameter generalization datasets.
+
+Source / record files:
+- Reporter:
+  `tools/report_burgers_loss3targeted_52_clean_metrics_20260611.py`
+- Markdown report:
+  `docs/burgers_loss3targeted_52dataset_clean_metrics_20260611.md`
+- Per-dataset Markdown appendix:
+  `docs/burgers_loss3targeted_52dataset_clean_metrics_appendix_20260611.md`
+- Output root:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_52dataset_clean_metrics_20260611`
+- Full 52-row table:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_52dataset_clean_metrics_20260611/per_dataset_52_clean_metrics.csv`
+- Compact 52-row table:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_52dataset_clean_metrics_20260611/per_dataset_52_compact_rmse_relative_l2_reductions.csv`
+- Sample-level table:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_52dataset_clean_metrics_20260611/per_sample_52_clean_metrics.csv`
+- Summary JSON:
+  `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_52dataset_clean_metrics_20260611/summary_52_clean_metrics.json`
+
+Observed evidence:
+- The report covers 52 datasets and 11,500 total samples: train 1,350 samples,
+  test 150 samples, and 50 generalization datasets with 200 samples each.
+- The full dataset table has 266 columns, including dataset path, display
+  label, description, family, solver metadata, observed `x` statistics,
+  spectral centroid/low/mid/high fractions, total variation, flattened
+  parameter columns, full `params_json`, RMSE/MSE/relative-L2 summary
+  statistics, paired reductions, win counts, p-values, and effect sizes.
+- Train split RMSE means: baseline 0.00875634, loss1 0.000746925,
+  loss2 0.00140180, loss3 0.00425008. RMSE reductions vs baseline:
+  loss1 91.47%, loss2 83.99%, loss3 51.46%. Relative-L2 reductions:
+  loss1 91.40%, loss2 83.91%, loss3 51.73%.
+- Test split RMSE means: baseline 0.00923196, loss1 0.000836263,
+  loss2 0.00149737, loss3 0.00437389. RMSE reductions vs baseline:
+  loss1 90.94%, loss2 83.78%, loss3 52.62%. Relative-L2 reductions:
+  loss1 90.80%, loss2 83.56%, loss3 52.47%.
+- On the 50 generalization datasets, loss3 is clean-RMSE best among all four
+  models on 50/50 datasets. Generalization family counts are: `gaussian` 12,
+  `matern` 10, `powerlaw_fourier` 14, `sine_mixture` 12, `sawtooth` 1,
+  `square_wave` 1, and no spike-train datasets.
+
+Inference:
+- The user-facing detailed record now exists in both Markdown and CSV form.
+  The compact CSV is the easiest complete table for comparing RMSE,
+  relative-L2, and reductions; the full CSV preserves all detailed per-dataset
+  parameters and statistical columns.
+
+Remaining work:
+- Sync this report, the 52-dataset metrics tables, the dataset root, and
+  previous visual artifacts to R2/durable storage before any Vast
+  recycle/destroy because `/workspace` is not persistent.
+
+
+## 2026-06-11 - Burgers wide-parameter P2Q2 wrapped-label rerender
+
+Status: fixed the comparison-dense row-label layout after long semantic dataset
+names overlapped the delta / initial-condition / output panels. The old image
+folder was not deleted; a new wrapped-label visualization root was created.
+
+Source / record files:
+- Updated combined panel plotter:
+  `tools/plot_burgers_round03_p2q2_combined_attack_panels.py`
+- Updated wide-parameter runner / manifest writer:
+  `tools/run_burgers_wideparam_loss3targeted_round00_p2q2_diverse_multi_visuals_batched_20260611.py`
+- Updated report:
+  `docs/burgers_wideparam_loss3targeted_p2q2_diverse_visuals_20260611.md`
+- New visualization root:
+  `visualizations/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_comparison_dense_diverse_multi_sample_batched_wrapped_labels_20260611/comparison_dense`
+
+Observed evidence:
+- Rerendered 30 PNG files: 5 groups x 6 comparison-dense images.
+- Four-column images remain 7200x2528 and two-column images remain 3600x2528.
+- Row labels are now structured multi-line blocks, for example: sample/split,
+  family, `C`, `Nu` or `Alpha/k0/Freqs`, `Range`, `Centroid`, `TV`, and sample
+  index. Test rows show Gaussian test, `C=0.03`, `Range=[0,1]`, `Centroid=3.43`,
+  and `TV=0.00487`.
+- Text-bounding-box validation showed the longest label ends before the first
+  plotted panel in both layouts: four-column max label right edge 0.0306 vs
+  axes-left 0.045, and two-column max label right edge 0.0522 vs axes-left 0.082.
+
+Inference:
+- The new wrapped-label images should avoid the previous overlap where long
+  one-line Matern/Gaussian/spectrum labels covered later panel content.
+
+Remaining work:
+- Sync the rerendered visualization root and updated scripts/docs to durable
+  storage before any Vast recycle/destroy because `/workspace` is not persistent.
+
+
+## 2026-06-11 - Burgers full-1024 SVD vs 15-step attack correlation smoke test
+
+Status: ran the requested initial probe on 3 randomly selected generalization
+samples using full `1024 x 1024` dense Jacobians and full SVD. No block
+projection, no downsampling, and no top-k SVD were used.
+
+Source / record files:
+- Runner:
+  `tools/run_burgers_full1024_svd_attack_correlation_20260611.py`
+- Report:
+  `docs/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611.md`
+- Output root:
+  `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611`
+- Joined model-sample table:
+  `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/svd_attack_joined_metrics.csv`
+- Correlation table:
+  `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/svd_attack_correlations.csv`
+- Runtime summary:
+  `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/runtime_summary.json`
+- Full SVD NPZ files:
+  `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/sample_*/{solver,*_model,*_error}/*_jacobian_svd.npz`
+
+Observed evidence:
+- Sampled 3 generalization points from the wide-parameter loss3-targeted root:
+  `burgers_widevis_l3target_d31` index 10, `burgers_widevis_l3target_d17`
+  index 177, and `burgers_widevis_l3target_d05` index 45.
+- Ran 15-step P2Q2 RMS-L2 attacks for baseline, loss1 epoch8000, loss2
+  epoch2000, and loss3 epoch1500. All 12 model-sample attacks reached final
+  `delta_rms = 0.12`.
+- Saved 27 full SVD NPZ files: 3 samples x (`solver` + 4 model Jacobians + 4
+  model-minus-solver error Jacobians).
+- Total wall time was 2160.4 seconds. Attack time was 185.5 seconds;
+  Jacobian+SVD time was 1974.6 seconds. Solver Jacobians dominated runtime:
+  886.7 seconds total for 3 solver Jacobians.
+- Across the 12 aligned model-sample pairs, `error_spectral_norm` vs absolute
+  attack-loss growth had Pearson 0.4767 and Spearman 0.8462. `error_spectral_norm`
+  vs final attacked MSE had Pearson 0.5127 and Spearman 0.8811.
+- `error_spectral_norm` vs multiplicative growth ratio was negative in this tiny
+  probe because very low clean initial losses can produce large ratios while
+  final attacked MSE remains small.
+
+Inference:
+- In this 3-sample smoke test, the full error-Jacobian spectral norm tracks
+  absolute/final adversarial damage better than multiplicative growth ratio.
+  This supports the intended aligned-sample comparison workflow, but the sample
+  size is too small for a final statistical claim.
+
+Remaining work:
+- Scale to the larger representative sample set if this smoke-test output looks
+  right, and sync the full SVD artifacts to durable storage before any Vast
+  recycle/destroy because `/workspace` is not persistent.
+
+## 2026-06-11 - Future baseline note: label-preserving input-perturbation augmentation
+
+Created a future-experiment note for an additional robustness comparison baseline:
+expand the training set with small perturbations `x -> x + delta` while keeping
+the original `y` unchanged. This is intentionally recorded as a flawed but useful
+control baseline, distinct from true loss1/loss2/loss3 adversarial training.
+
+Artifact:
+- `docs/future_label_preserving_input_perturbation_augmentation_baseline_20260611.md`
+
+Planned comparison scope:
+- Burgers loss1/loss2/loss3 adversarial training.
+- Darcy flow loss1/loss2/loss3 adversarial training.
+- Physics / Physicx / Navier-Stokes-related loss4 adversarial training, with
+  exact task naming still TBD.
+
+Main hypothesis:
+- Label-preserving noisy-input augmentation may improve local train/test
+  robustness, but is physically inconsistent because changing `x` should usually
+  change the PDE output `y`. It is expected to be weaker than real adversarial
+  training on far generalization datasets and broader distribution shifts.
+
+## 2026-06-11 - Burgers full archive summary and selected R2 sync script
+
+Created a comprehensive archive Markdown summarizing the 2026-06-11 Burgers
+semantic generalization, clean inference, P2Q2 visualization, wrapped-label fix,
+full `1024 x 1024` SVD smoke test, 12.5-hour epoch estimate, and future
+label-preserving perturbation baseline note.
+
+Artifacts for GitHub:
+- `docs/burgers_20260611_full_archive_summary.md`
+- `tools/start_burgers_20260611_selected_r2_sync.sh`
+
+The sync script intentionally records no credentials. It uploads selected
+2026-06-11 generated datasets, forensics outputs, full-SVD artifacts, and
+visualizations to the configured R2 prefix using `rclone copy --size-only`.
