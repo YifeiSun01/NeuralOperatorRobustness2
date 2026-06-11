@@ -14153,3 +14153,10 @@ Note:
 - The old local rclone reports intermediate Cloudflare R2 `501 NotImplemented`
   messages, but retries succeeded and the final upload process exited 0. The
   post-upload `rclone size` checks verified remote object counts/sizes.
+
+## 2026-06-11 - Burgers biased local attack direction analysis
+
+- Added `tools/analyze_burgers_biased_local_attack_direction_20260611.py` to compare pure top-SVD direction, infinitesimal outward direction `A^T b`, and finite-radius affine trust-region direction for the local error model `b + A delta`.
+- Ran it on `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611` using CPU model/solver residual recomputation.
+- Output: `forensics/burgers_wideparam_loss3targeted_biased_local_direction_20260611/` and report `docs/burgers_wideparam_loss3targeted_biased_local_direction_20260611.md`.
+- Main result: top SVD vs `A^T b` mean angle is about 80.8 degrees across 12 model-sample pairs; final nonlinear attack delta aligns far better with `A^T b` than with top SVD on this small probe.
