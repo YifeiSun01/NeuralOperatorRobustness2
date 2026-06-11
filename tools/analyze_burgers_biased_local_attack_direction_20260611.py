@@ -215,6 +215,58 @@ def spearman(x: list[float], y: list[float]) -> float:
     return pearson(rank_values(xx).tolist(), rank_values(yy).tolist())
 
 
+
+def quantile_summary_table(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    metrics = [
+        "error_spectral_norm",
+        "attack_initial_mse",
+        "attack_final_mse",
+        "attack_loss_growth_abs",
+        "attack_loss_growth_ratio",
+        "bias_gradient_norm",
+        "svd_local_gain_eps_mse",
+        "outward_local_gain_eps_mse",
+        "affine_local_gain_eps_mse",
+        "attack_delta_svd_abs_cos",
+        "attack_delta_outward_abs_cos",
+        "attack_delta_affine_eps_abs_cos",
+    ]
+    qs = [0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0]
+    groups: list[tuple[str, str, list[dict[str, Any]]]] = [("all", "all_model_sample_pairs", rows)]
+    for split in sorted({str(r.get("source_split", "")) for r in rows}):
+        groups.append(("split", split, [r for r in rows if str(r.get("source_split", "")) == split]))
+    for model in sorted({str(r["model_key"]) for r in rows}):
+        groups.append(("model", model, [r for r in rows if str(r["model_key"]) == model]))
+    out: list[dict[str, Any]] = []
+    for group_type, group_name, group_rows in groups:
+        for metric in metrics:
+            vals = np.asarray([float(r.get(metric, math.nan)) for r in group_rows], dtype=float)
+            vals = vals[np.isfinite(vals)]
+            row: dict[str, Any] = {
+                "group_type": group_type,
+                "group_name": group_name,
+                "metric": metric,
+                "n": int(vals.size),
+            }
+            if vals.size:
+                row.update(
+                    {
+                        "mean": float(np.mean(vals)),
+                        "std": float(np.std(vals, ddof=1)) if vals.size > 1 else 0.0,
+                        "min": float(np.min(vals)),
+                        "max": float(np.max(vals)),
+                    }
+                )
+                for q, value in zip(qs, np.quantile(vals, qs)):
+                    row[f"q{int(round(q * 100)):03d}"] = float(value)
+            else:
+                row.update({"mean": math.nan, "std": math.nan, "min": math.nan, "max": math.nan})
+                for q in qs:
+                    row[f"q{int(round(q * 100)):03d}"] = math.nan
+            out.append(row)
+    return out
+
+
 def correlation_table(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     x_keys = [
         "error_spectral_norm",
@@ -271,7 +323,7 @@ def load_clean_residuals(rows: list[dict[str, str]], device: torch.device) -> di
     return residuals
 
 
-def analyze(args: argparse.Namespace) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+def analyze(args: argparse.Namespace) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     joined_path = args.svd_root / "svd_attack_joined_metrics.csv"
     rows_in = read_csv(joined_path)
     if args.max_rows > 0:
@@ -351,8 +403,9 @@ def analyze(args: argparse.Namespace) -> tuple[list[dict[str, Any]], list[dict[s
             out[f"{key}_affine_gain_mse"] = gain_i["total_gain_mse"]
         rows.append(out)
     corr = correlation_table(rows)
+    quantiles = quantile_summary_table(rows)
     summary = summarize(rows, corr, eps_rms_values)
-    return rows, corr, summary
+    return rows, corr, quantiles, summary
 
 
 def summarize(rows: list[dict[str, Any]], corr: list[dict[str, Any]], eps_values: list[float]) -> dict[str, Any]:
@@ -452,6 +505,7 @@ def write_report(path: Path, args: argparse.Namespace, rows: list[dict[str, Any]
         f"- output directory: `{relpath(args.out_dir)}`",
         f"- per-pair metrics: `{relpath(args.out_dir / 'biased_direction_metrics.csv')}`",
         f"- correlations: `{relpath(args.out_dir / 'biased_direction_correlations.csv')}`",
+        f"- quantile summary: `{relpath(args.out_dir / 'biased_direction_quantile_summary.csv')}`",
         f"- summary JSON: `{relpath(args.out_dir / 'biased_direction_summary.json')}`",
         "",
         "## Headline Numbers",
@@ -519,9 +573,10 @@ def main() -> int:
     args.svd_root = args.svd_root.resolve()
     args.out_dir = args.out_dir.resolve()
     args.report_md = args.report_md.resolve()
-    rows, corr, summary = analyze(args)
+    rows, corr, quantiles, summary = analyze(args)
     write_csv(args.out_dir / "biased_direction_metrics.csv", rows)
     write_csv(args.out_dir / "biased_direction_correlations.csv", corr)
+    write_csv(args.out_dir / "biased_direction_quantile_summary.csv", quantiles)
     save_json(args.out_dir / "biased_direction_summary.json", summary)
     save_json(args.out_dir / "config.json", vars(args))
     write_report(args.report_md, args, rows, corr, summary)
