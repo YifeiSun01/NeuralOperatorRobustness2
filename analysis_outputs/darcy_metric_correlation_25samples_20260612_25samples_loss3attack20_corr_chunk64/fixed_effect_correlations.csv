@@ -1,0 +1,29 @@
+scope,metric,label,n,pearson_r,spearman_rho
+raw overall,clean_loss_before_attack,clean loss,100,-0.17531083797311922,-0.2658505850585059
+within model residual,clean_loss_before_attack,clean loss,100,-0.564201513785867,-0.7217881788178819
+within sample residual,clean_loss_before_attack,clean loss,100,0.5192674889466405,0.6038403840384039
+model+sample residual,clean_loss_before_attack,clean loss,100,-0.43542692015486784,-0.5717371737173719
+raw overall,jt_error_l2_norm,||J^T e||,100,-0.12124413724223007,-0.2482688268826883
+within model residual,jt_error_l2_norm,||J^T e||,100,-0.4053967701477371,-0.6084848484848486
+within sample residual,jt_error_l2_norm,||J^T e||,100,0.6394286152277345,0.6378517851785179
+model+sample residual,jt_error_l2_norm,||J^T e||,100,-0.17214210724766554,-0.3502190219021903
+raw overall,jt_error_l2_norm_sq,||J^T e||^2,100,-0.18351028571999156,-0.2482688268826883
+within model residual,jt_error_l2_norm_sq,||J^T e||^2,100,-0.4955993452221912,-0.6339753975397541
+within sample residual,jt_error_l2_norm_sq,||J^T e||^2,100,0.5162315228025219,0.5524152415241526
+model+sample residual,jt_error_l2_norm_sq,||J^T e||^2,100,-0.38245603827838975,-0.4450765076507652
+raw overall,binary_first_order_mse_gain_positive_topk,binary first-order,100,-0.13079604947933568,-0.2561536153615362
+within model residual,binary_first_order_mse_gain_positive_topk,binary first-order,100,-0.396119012825964,-0.6122892289228924
+within sample residual,binary_first_order_mse_gain_positive_topk,binary first-order,100,0.5644938800682199,0.5215601560156017
+model+sample residual,binary_first_order_mse_gain_positive_topk,binary first-order,100,-0.1402613719685576,-0.2307590759075908
+raw overall,one_power_sigma,sigma_max,100,-0.5386043270623596,-0.6035643564356437
+within model residual,one_power_sigma,sigma_max,100,-0.2950185634817688,-0.4598019801980199
+within sample residual,one_power_sigma,sigma_max,100,-0.6889894659141158,-0.5987518751875188
+model+sample residual,one_power_sigma,sigma_max,100,0.030964311031406844,0.19462346234623465
+raw overall,sigma_power_times_error_l2,sigma*||e||,100,-0.20193864463047706,-0.3280408040804081
+within model residual,sigma_power_times_error_l2,sigma*||e||,100,-0.44519163450877686,-0.6460006000600061
+within sample residual,sigma_power_times_error_l2,sigma*||e||,100,0.5155694893058114,0.5438463846384639
+model+sample residual,sigma_power_times_error_l2,sigma*||e||,100,-0.2614594340421659,-0.4171257125712572
+raw overall,top_left_error_alignment_abs,"|<e,u1>|",100,0.43353962604814994,0.20496849684968502
+within model residual,top_left_error_alignment_abs,"|<e,u1>|",100,0.2526479116334314,-0.055397539753975406
+within sample residual,top_left_error_alignment_abs,"|<e,u1>|",100,0.7245016354761054,0.628910891089109
+model+sample residual,top_left_error_alignment_abs,"|<e,u1>|",100,0.4961781782208303,0.2923492349234924

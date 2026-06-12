@@ -1,0 +1,970 @@
+{
+  "dataset_count": 50,
+  "unique_hashes": 50,
+  "duplicate_hash_count": 0,
+  "all_values_binary_3_12": true,
+  "shape_set": [
+    "(50, 85, 85)"
+  ],
+  "high_fraction_range": [
+    0.11800415224913495,
+    0.24172179930795848
+  ],
+  "edge_density_range": [
+    0.00619467787114846,
+    0.34890196078431374
+  ],
+  "pairwise_hamming_min_median_max": [
+    0.207438062283737,
+    0.2991778546712803,
+    0.3797287197231834
+  ],
+  "pairwise_hamming_p05_p95": [
+    0.2144647750865052,
+    0.35888276816609
+  ],
+  "closest_10_pairs": [
+    {
+      "hamming": 0.207438062283737,
+      "i": 22,
+      "j": 36,
+      "family_i": "rectangles",
+      "family_j": "wave_mix",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_22_rectangles_frac0p12_a1p43234_t10p2242",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_36_wave_mix_frac0p12_a1p72323_t5p41614"
+    },
+    {
+      "hamming": 0.20767612456747406,
+      "i": 27,
+      "j": 32,
+      "family_i": "bandpass_grf",
+      "family_j": "matern_smooth",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_27_bandpass_grf_frac0p12_a1p8965_t7p66724",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029"
+    },
+    {
+      "hamming": 0.20833217993079584,
+      "i": 27,
+      "j": 45,
+      "family_i": "bandpass_grf",
+      "family_j": "blocky_tiles",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_27_bandpass_grf_frac0p12_a1p8965_t7p66724",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_45_blocky_tiles_frac0p12_a2p72728_t2p09368"
+    },
+    {
+      "hamming": 0.2084955017301038,
+      "i": 9,
+      "j": 32,
+      "family_i": "matern_fine",
+      "family_j": "matern_smooth",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_09_matern_fine_frac0p12_a1p37232_t13p3592",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029"
+    },
+    {
+      "hamming": 0.2087114186851211,
+      "i": 32,
+      "j": 36,
+      "family_i": "matern_smooth",
+      "family_j": "wave_mix",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_36_wave_mix_frac0p12_a1p72323_t5p41614"
+    },
+    {
+      "hamming": 0.20893287197231833,
+      "i": 13,
+      "j": 27,
+      "family_i": "blocky_tiles",
+      "family_j": "bandpass_grf",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_13_blocky_tiles_frac0p12_a2p00536_t4p79207",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_27_bandpass_grf_frac0p12_a1p8965_t7p66724"
+    },
+    {
+      "hamming": 0.20953079584775086,
+      "i": 4,
+      "j": 13,
+      "family_i": "wave_mix",
+      "family_j": "blocky_tiles",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_04_wave_mix_frac0p12_a2p34332_t2p21748",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_13_blocky_tiles_frac0p12_a2p00536_t4p79207"
+    },
+    {
+      "hamming": 0.20979653979238755,
+      "i": 0,
+      "j": 27,
+      "family_i": "matern_smooth",
+      "family_j": "bandpass_grf",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_00_matern_smooth_frac0p12_a3p65909_t2p05625",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_27_bandpass_grf_frac0p12_a1p8965_t7p66724"
+    },
+    {
+      "hamming": 0.20983529411764706,
+      "i": 0,
+      "j": 31,
+      "family_i": "matern_smooth",
+      "family_j": "cellular_blobs",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_00_matern_smooth_frac0p12_a3p65909_t2p05625",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_31_cellular_blobs_frac0p12_a2p19293_t5p77748"
+    },
+    {
+      "hamming": 0.2099128027681661,
+      "i": 32,
+      "j": 45,
+      "family_i": "matern_smooth",
+      "family_j": "blocky_tiles",
+      "dataset_i": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029",
+      "dataset_j": "darcy_binary_loss3targeted_20260611_45_blocky_tiles_frac0p12_a2p72728_t2p09368"
+    }
+  ],
+  "rows": [
+    {
+      "index": 0,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_00_matern_smooth_frac0p12_a3p65909_t2p05625",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "adda8b051ae9c6ddecbd835040be582654b364e1114255ee627d3d57c1131f10",
+      "high_fraction": 0.12197923875432526,
+      "edge_density": 0.00619467787114846
+    },
+    {
+      "index": 1,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_01_matern_fine_frac0p24_a1p77634_t11p8641",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "8067448af3a113744b6839f136c6010915bc703a7412f5bf2003bfcc6c5901ab",
+      "high_fraction": 0.241278892733564,
+      "edge_density": 0.07746638655462185
+    },
+    {
+      "index": 2,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_02_highpass_grf_frac0p2_a1p39914_t8p09047",
+      "family": "highpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "5b368ee1442ecaae0c0f1c73906096b6a8ae6876c522b2f8b4f4195e664686b9",
+      "high_fraction": 0.20168581314878892,
+      "edge_density": 0.29053361344537815
+    },
+    {
+      "index": 3,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_03_bandpass_grf_frac0p16_a2p16503_t3p04694",
+      "family": "bandpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "461dcdb1ddd5aa2a90ee5627884110cd664d7037759dbc7dc70918fe3df0dfb3",
+      "high_fraction": 0.160719723183391,
+      "edge_density": 0.04341036414565826
+    },
+    {
+      "index": 4,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_04_wave_mix_frac0p12_a2p34332_t2p21748",
+      "family": "wave_mix",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "dfd6cafab99423a1b44c9a81b471b3e3e0b67f206c501dd649d77915e5fd7baa",
+      "high_fraction": 0.12011626297577854,
+      "edge_density": 0.036759103641456584
+    },
+    {
+      "index": 5,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_05_blocky_tiles_frac0p24_a3p85379_t3p60021",
+      "family": "blocky_tiles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "e2cdd739e4dbc37dffce791be47a5d51c66e15a7461d50ab27d2748269244f2b",
+      "high_fraction": 0.24154740484429066,
+      "edge_density": 0.035095238095238096
+    },
+    {
+      "index": 6,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_06_rectangles_frac0p2_a1p44134_t6p32822",
+      "family": "rectangles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "b7e06408c5178972e81717a61d9bdfd2a6698c40a206ee7ccd26ce2fa17caae2",
+      "high_fraction": 0.2014145328719723,
+      "edge_density": 0.22438235294117648
+    },
+    {
+      "index": 7,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_07_cellular_blobs_frac0p16_a1p97385_t4p60937",
+      "family": "cellular_blobs",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "04828ac1a17fe6b6b7b8e76db4e586257ce9b35d58105e51ee79a0248b663ed7",
+      "high_fraction": 0.15881799307958477,
+      "edge_density": 0.03242857142857143
+    },
+    {
+      "index": 8,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_08_matern_smooth_frac0p16_a3p55666_t2p38988",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "dc041d3704e6e17954de45073401cc210387290eb4ab1c01ea4a9b790ece74ad",
+      "high_fraction": 0.1617854671280277,
+      "edge_density": 0.007915966386554622
+    },
+    {
+      "index": 9,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_09_matern_fine_frac0p12_a1p37232_t13p3592",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "438342f04c18eba2b8a26a56feeb69873bc601b69ca2401ac4f3f1e3304cff0b",
+      "high_fraction": 0.12182698961937716,
+      "edge_density": 0.09834033613445378
+    },
+    {
+      "index": 10,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_10_highpass_grf_frac0p24_a1p11037_t11p7271",
+      "family": "highpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "ce92e8b0d1a58bb5748b349736a5ce142406cf5ca5dadd2c95fd0e902f39d732",
+      "high_fraction": 0.23976193771626297,
+      "edge_density": 0.34890196078431374
+    },
+    {
+      "index": 11,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_11_bandpass_grf_frac0p2_a1p80507_t4p09153",
+      "family": "bandpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "f34b6690103667717a0c0ac34fee6a1bd8c38cdadd1df318016eac9f69e79ef7",
+      "high_fraction": 0.20315847750865051,
+      "edge_density": 0.2198389355742297
+    },
+    {
+      "index": 12,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_12_wave_mix_frac0p16_a2p26209_t4p32867",
+      "family": "wave_mix",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "8053c27f1e84226bdcf1f2de0331855a155d41618f0d7ccd8825efec8da85ed0",
+      "high_fraction": 0.1602325259515571,
+      "edge_density": 0.07588795518207284
+    },
+    {
+      "index": 13,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_13_blocky_tiles_frac0p12_a2p00536_t4p79207",
+      "family": "blocky_tiles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "ea079965ac5cb6090b11f6127360936ec5234f4c70c1eb763b7e6a9d0558d130",
+      "high_fraction": 0.12098823529411765,
+      "edge_density": 0.02718627450980392
+    },
+    {
+      "index": 14,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_14_rectangles_frac0p24_a1p67693_t9p58326",
+      "family": "rectangles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "339e04bb07c977c93f93c1bbcb4c89d6e0211b7685800979ed81e87ee4467bb9",
+      "high_fraction": 0.23790449826989618,
+      "edge_density": 0.10761764705882353
+    },
+    {
+      "index": 15,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_15_cellular_blobs_frac0p2_a3p27206_t2p59767",
+      "family": "cellular_blobs",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "bec63b5ea2d8f58b2fef25c69a58096f89efb3069dd2d8b0ff6c7c74a2a093f5",
+      "high_fraction": 0.1996318339100346,
+      "edge_density": 0.027014005602240897
+    },
+    {
+      "index": 16,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_16_matern_smooth_frac0p2_a3p63184_t2p95736",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "9cc4ddb70435e708112ea5be2c84eb6f00a958e8ca91526438ef5cf46cc62d31",
+      "high_fraction": 0.20135640138408303,
+      "edge_density": 0.009394957983193277
+    },
+    {
+      "index": 17,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_17_matern_fine_frac0p16_a1p05208_t9p11004",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "bc48c73bef78335fa82143d675f78cc5199704252097147652a6dd89298dac39",
+      "high_fraction": 0.1632470588235294,
+      "edge_density": 0.21226610644257704
+    },
+    {
+      "index": 18,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_18_highpass_grf_frac0p12_a1p26489_t6p96292",
+      "family": "highpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "c2c2de516e3d7429a37d616cb07e2e661ea0799e8931ade8866bdf452381a242",
+      "high_fraction": 0.12171072664359861,
+      "edge_density": 0.1923767507002801
+    },
+    {
+      "index": 19,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_19_bandpass_grf_frac0p24_a2p18225_t4p94437",
+      "family": "bandpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "0efb0a7f5791d1f405b5ea6a5ab2f59d3bd1234b9bd1d38ab1a0a7e6879b1b17",
+      "high_fraction": 0.24129273356401384,
+      "edge_density": 0.0636078431372549
+    },
+    {
+      "index": 20,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_20_wave_mix_frac0p2_a2p69422_t4p60678",
+      "family": "wave_mix",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "79376c7bccfc152b82f80639bb0d9d2db3971e853764ee2873d920b6778bc9f9",
+      "high_fraction": 0.2004622837370242,
+      "edge_density": 0.10140056022408964
+    },
+    {
+      "index": 21,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_21_blocky_tiles_frac0p16_a3p29541_t4p96638",
+      "family": "blocky_tiles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "8ca8ce96e38992b8c52d3de33e18a425eb29bced3371f54c1ea79cb27c89666d",
+      "high_fraction": 0.16063667820069205,
+      "edge_density": 0.05109943977591036
+    },
+    {
+      "index": 22,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_22_rectangles_frac0p12_a1p43234_t10p2242",
+      "family": "rectangles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "8b501025cdfb1b6a96add490de527c642975bf3286bbb9650ddc734a30f56404",
+      "high_fraction": 0.11800415224913495,
+      "edge_density": 0.0540406162464986
+    },
+    {
+      "index": 23,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_23_cellular_blobs_frac0p24_a2p77492_t4p18018",
+      "family": "cellular_blobs",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "d2b3ae1b1b0ef1b8ed7714d489f0ad2dd174d7daf48c4bde4fc42712474a231c",
+      "high_fraction": 0.23920276816608996,
+      "edge_density": 0.04335714285714286
+    },
+    {
+      "index": 24,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_24_matern_smooth_frac0p24_a4p16883_t1p66293",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "a6052f93facafb9090a7fcefc0b7b872c16004b34688ce78f9074abd3ca2f545",
+      "high_fraction": 0.24172179930795848,
+      "edge_density": 0.00742156862745098
+    },
+    {
+      "index": 25,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_25_matern_fine_frac0p2_a1p32486_t12p8246",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "f0ba5017323065f24b5039e92854eba1f7496fae608cb1cddab4beceea8c1d57",
+      "high_fraction": 0.2007916955017301,
+      "edge_density": 0.15088935574229692
+    },
+    {
+      "index": 26,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_26_highpass_grf_frac0p16_a1p59204_t12p8363",
+      "family": "highpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "b6d9e1e4929a830e2b580e897db3e64403e8923211810bfe9d687d8b22d01258",
+      "high_fraction": 0.16238339100346022,
+      "edge_density": 0.2321890756302521
+    },
+    {
+      "index": 27,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_27_bandpass_grf_frac0p12_a1p8965_t7p66724",
+      "family": "bandpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "cc89f3c2465d64ec01f12d0bccbf465c2013d63ceb951190abe6c024e6100afd",
+      "high_fraction": 0.12169411764705883,
+      "edge_density": 0.13404481792717088
+    },
+    {
+      "index": 28,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_28_wave_mix_frac0p24_a1p71757_t2p96649",
+      "family": "wave_mix",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "59ed63eeb397c22f999e7d35cd4acc4d1346b71f3239f2abf465469ae4d599b3",
+      "high_fraction": 0.24013010380622837,
+      "edge_density": 0.11612464985994397
+    },
+    {
+      "index": 29,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_29_blocky_tiles_frac0p2_a2p06162_t2p29776",
+      "family": "blocky_tiles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "383735a653cc4f42316a62a5576f0fac32a8863d1a57716fb63fce9f09888301",
+      "high_fraction": 0.2018795847750865,
+      "edge_density": 0.06596358543417366
+    },
+    {
+      "index": 30,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_30_rectangles_frac0p16_a1p24225_t5p53206",
+      "family": "rectangles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "d182088bf29235179c46a05468729f02a3642ef13af8864aaaf373541de4de4b",
+      "high_fraction": 0.15862975778546712,
+      "edge_density": 0.08245378151260505
+    },
+    {
+      "index": 31,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_31_cellular_blobs_frac0p12_a2p19293_t5p77748",
+      "family": "cellular_blobs",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "bda3162edee8c0de0b5808c5d3c2f32c8d4b243c794d19d55d1f7d5ff14df858",
+      "high_fraction": 0.11982283737024221,
+      "edge_density": 0.02592016806722689
+    },
+    {
+      "index": 32,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_32_matern_smooth_frac0p12_a4p06817_t2p8029",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "73751395478062782738a71441c2f84e34a146a163c8a6b98cd3e01b0f838794",
+      "high_fraction": 0.12178546712802768,
+      "edge_density": 0.007168067226890756
+    },
+    {
+      "index": 33,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_33_matern_fine_frac0p24_a1p77702_t7p67384",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "e8baff26d25c3c81918a3f4065920c7f67e183daf6ae05b34243377f7e7d4b4f",
+      "high_fraction": 0.24116262975778546,
+      "edge_density": 0.05756162464985994
+    },
+    {
+      "index": 34,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_34_highpass_grf_frac0p2_a1p38501_t10p2829",
+      "family": "highpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "ce6d7f2e26a0d8c363be5c285f5c29b9df498e30207b2f7f25739d2bfcf725db",
+      "high_fraction": 0.2018878892733564,
+      "edge_density": 0.26108263305322127
+    },
+    {
+      "index": 35,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_35_bandpass_grf_frac0p16_a1p27246_t5p44182",
+      "family": "bandpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "fdeb8ee0faa8927549a4196554e997fd47d7f9abf27c12d726434422fa82ffad",
+      "high_fraction": 0.1632941176470588,
+      "edge_density": 0.16080812324929972
+    },
+    {
+      "index": 36,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_36_wave_mix_frac0p12_a1p72323_t5p41614",
+      "family": "wave_mix",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "04e3af8945a7f9492e3cc9146e432c9fc5e817ae28e001ee1b67d3cfa46b4a39",
+      "high_fraction": 0.12032664359861592,
+      "edge_density": 0.026953781512605045
+    },
+    {
+      "index": 37,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_37_blocky_tiles_frac0p24_a2p23756_t3p79868",
+      "family": "blocky_tiles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "655d8c93a693a7222463d2c09d1d2d82b0210c5b231274e2bd413ae062b75d62",
+      "high_fraction": 0.240559169550173,
+      "edge_density": 0.06951820728291316
+    },
+    {
+      "index": 38,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_38_rectangles_frac0p2_a1p49751_t8p36934",
+      "family": "rectangles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "807418aa40225f95f6fbceaf9f47daa168241f45bf21e92190cc74520efe2870",
+      "high_fraction": 0.1978491349480969,
+      "edge_density": 0.07961624649859944
+    },
+    {
+      "index": 39,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_39_cellular_blobs_frac0p16_a3p47176_t5p78996",
+      "family": "cellular_blobs",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "e05446d53eea92f370af127f6a8bd2fc60b6e9545856755e1d7395ad0b210dd2",
+      "high_fraction": 0.15913079584775086,
+      "edge_density": 0.026644257703081233
+    },
+    {
+      "index": 40,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_40_matern_smooth_frac0p16_a4p67408_t1p27431",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "5b3249445dc935151eca0dedfe161e188f6e99e91031c02672750f1fa7102b03",
+      "high_fraction": 0.16302006920415224,
+      "edge_density": 0.007043417366946778
+    },
+    {
+      "index": 41,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_41_matern_fine_frac0p12_a1p13343_t8p3613",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "c967410280505a161b99fc0f798e2ccb143cf085723559c1e6dcfaf263f9f882",
+      "high_fraction": 0.12252456747404844,
+      "edge_density": 0.15051680672268908
+    },
+    {
+      "index": 42,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_42_highpass_grf_frac0p24_a1p18205_t11p6872",
+      "family": "highpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "c5197fa649695823a1e7ce3acc401c6efc7e9c95175f0f26eb98e4a813f3f9ac",
+      "high_fraction": 0.2400249134948097,
+      "edge_density": 0.34076330532212884
+    },
+    {
+      "index": 43,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_43_bandpass_grf_frac0p2_a1p22554_t2p62907",
+      "family": "bandpass_grf",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "5fc71225adf263cd6f4719b714bac2ce6b816b5b5182d51e4940fa62e8101613",
+      "high_fraction": 0.20106020761245674,
+      "edge_density": 0.10867366946778712
+    },
+    {
+      "index": 44,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_44_wave_mix_frac0p16_a1p82574_t5p31661",
+      "family": "wave_mix",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "45d119a67146810305d97a374ec65a6e82e6a61a766c0ac2b4dfb4f53e55a6c5",
+      "high_fraction": 0.1599280276816609,
+      "edge_density": 0.047756302521008404
+    },
+    {
+      "index": 45,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_45_blocky_tiles_frac0p12_a2p72728_t2p09368",
+      "family": "blocky_tiles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "c3b57f8fbaece94ebf5cc68aa9dde2884929e855773bad3c43d8d58ac2061737",
+      "high_fraction": 0.1208968858131488,
+      "edge_density": 0.023107843137254905
+    },
+    {
+      "index": 46,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_46_rectangles_frac0p24_a1p57209_t7p6296",
+      "family": "rectangles",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "3458c858ba0c48bae9ea73c59f6f03f55b7a71840eded1b904b359145f551161",
+      "high_fraction": 0.24005259515570934,
+      "edge_density": 0.166812324929972
+    },
+    {
+      "index": 47,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_47_cellular_blobs_frac0p2_a3p35513_t6p18204",
+      "family": "cellular_blobs",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "efa5dc01c4be43764a599b56d45c86f7b162faf4c6ae4e40ac26d04241274881",
+      "high_fraction": 0.19835570934256055,
+      "edge_density": 0.03983473389355742
+    },
+    {
+      "index": 48,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_48_matern_smooth_frac0p2_a3p3086_t2p22775",
+      "family": "matern_smooth",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "bb94170664456aa0b6282b41742dc3b4a38070fc4d7a929e1273e56b8344e84f",
+      "high_fraction": 0.20178823529411766,
+      "edge_density": 0.008689075630252101
+    },
+    {
+      "index": 49,
+      "dataset_id": "darcy_binary_loss3targeted_20260611_49_matern_fine_frac0p16_a1p39654_t9p9182",
+      "family": "matern_fine",
+      "shape": [
+        50,
+        85,
+        85
+      ],
+      "values": [
+        3.0,
+        12.0
+      ],
+      "hash": "7de34b7c65a5f777c76d312d7e10409d331a679560a989726f285ad0b1c19761",
+      "high_fraction": 0.1622006920415225,
+      "edge_density": 0.10438655462184873
+    }
+  ]
+}

@@ -51,6 +51,18 @@ class SampleSpec:
     sample_index: int
 
 
+@dataclass(frozen=True)
+class AttackTrace:
+    x_train: torch.Tensor
+    y_train: torch.Tensor
+    clean_loss: float
+    adv_loss: float
+    attack_gain: float
+    attack_gain_relative: float
+    loss_history: np.ndarray
+    gain_history: np.ndarray
+
+
 MODELS = [
     ModelSpec(
         "baseline",
@@ -73,11 +85,19 @@ MODELS = [
         "loss3_adversarial_training_1000c",
     ),
     ModelSpec(
-        "fixed",
+        "physics loss",
         PROJECT_ROOT / "adversarial_training_runs" / f"darcy_binary_loss3targeted_physics_1040ep_full50_timematched_{RUN_TAG}" / "darcy" / "checkpoints" / "darcy_epoch1040_step001040.pt",
-        "physics_fixed_loss_adversarial_training_1000c",
+        "physics_loss_adversarial_training_1000c",
     ),
 ]
+
+MODEL_COLORS = {
+    "baseline": "#4b5563",
+    "loss1": "#d97706",
+    "loss2": "#2563eb",
+    "loss3": "#059669",
+    "physics loss": "#7c3aed",
+}
 
 SAMPLES = [
     SampleSpec("test_original_idx0", "test", "test_original_binary_grf_alpha2_tau3", 0),
@@ -119,6 +139,34 @@ def rel(path: Path) -> str:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
         return str(path)
+
+
+def slug(value: str) -> str:
+    safe = "".join(ch.lower() if ch.isalnum() else "_" for ch in str(value))
+    while "__" in safe:
+        safe = safe.replace("__", "_")
+    return safe.strip("_") or "item"
+
+
+def load_sample_specs(path: Path | None) -> list[SampleSpec]:
+    if path is None:
+        return list(SAMPLES)
+    rows: list[SampleSpec] = []
+    with path.open("r", newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for idx, row in enumerate(reader):
+            dataset_id = row.get("dataset_id", "").strip()
+            if not dataset_id:
+                raise ValueError(f"sample manifest row {idx} has empty dataset_id")
+            sample_index_raw = row.get("sample_index", row.get("source_sample_index", ""))
+            if sample_index_raw == "":
+                raise ValueError(f"sample manifest row {idx} has no sample_index/source_sample_index")
+            sample_id = row.get("sample_id", "").strip() or f"sample_{idx:02d}_idx{int(sample_index_raw)}"
+            split = row.get("split", "generalization").strip() or "generalization"
+            rows.append(SampleSpec(sample_id, split, dataset_id, int(float(sample_index_raw))))
+    if not rows:
+        raise ValueError(f"sample manifest is empty: {path}")
+    return rows
 
 
 def as2d(t: torch.Tensor) -> np.ndarray:
@@ -174,18 +222,102 @@ def load_model(spec: ModelSpec, device: torch.device):
     return model
 
 
-def run_attack(model, xb: torch.Tensor, yb: torch.Tensor, steps: int, epsilon_fraction: float):
-    return adv.binary_darcy_replace_attack(
-        model,
-        xb,
-        yb,
-        steps=steps,
-        epsilon_fraction=epsilon_fraction,
-        jitter_low=1.0,
-        jitter_high=1.0,
-        random_pool_multiplier=1.0,
-        random_score_noise=0.0,
-        cfg=attack_cfg(),
+def run_attack(model, xb: torch.Tensor, yb: torch.Tensor, steps: int, epsilon_fraction: float) -> AttackTrace:
+    cfg = attack_cfg()
+    was_training = model.training
+    model.eval()
+    original_requires_grad = [param.requires_grad for param in model.parameters()]
+    for param in model.parameters():
+        param.requires_grad_(False)
+
+    x0 = xb.detach()
+    x_adv = x0.detach()
+    b = int(x0.shape[0])
+    if b != 1:
+        raise ValueError("five-model heatmap trace expects one sample at a time")
+    spatial_shape = x0.shape[1:-1] if x0.ndim == 4 else x0.shape[1:]
+    n_pix = int(np.prod(spatial_shape))
+    budget = max(1, min(n_pix, int(round(float(epsilon_fraction) * n_pix))))
+
+    loss_history: list[float] = []
+    try:
+        with torch.no_grad():
+            clean_loss, clean_loss_samples, _, _ = adv.darcy_attack_objective_loss(
+                model,
+                x0,
+                x0,
+                yb,
+                cfg,
+                allow_solver_backward=False,
+            )
+            clean_loss_value = float(clean_loss.detach().cpu())
+            loss_history.append(clean_loss_value)
+
+        for _step in range(max(1, int(steps))):
+            x_score = x_adv.detach().clone().requires_grad_(True)
+            loss, _, _, _ = adv.darcy_attack_objective_loss(
+                model,
+                x0,
+                x_score,
+                yb,
+                cfg,
+                allow_solver_backward=True,
+            )
+            grad = torch.autograd.grad(loss, x_score, only_inputs=True)[0].detach()
+            grad = torch.nan_to_num(grad)
+
+            flat_x = x_score.detach().reshape(b, -1)
+            flat_grad = grad.reshape(b, -1)
+            lo = x0.reshape(b, -1).min(dim=1).values.reshape(b, 1)
+            hi = x0.reshape(b, -1).max(dim=1).values.reshape(b, 1)
+            midpoint = (lo + hi) * 0.5
+            other = torch.where(flat_x > midpoint, lo.expand_as(flat_x), hi.expand_as(flat_x))
+            score = flat_grad * (other - flat_x)
+            chosen = torch.topk(score[0], k=budget, largest=True).indices
+            flat_adv = flat_x.clone()
+            flat_adv[0, chosen] = other[0, chosen]
+            x_adv = flat_adv.reshape_as(x0).detach()
+
+            with torch.no_grad():
+                step_loss, _, _, _ = adv.darcy_attack_objective_loss(
+                    model,
+                    x0,
+                    x_adv,
+                    yb,
+                    cfg,
+                    allow_solver_backward=False,
+                )
+                loss_history.append(float(step_loss.detach().cpu()))
+
+        with torch.no_grad():
+            y_train = adv.solver_target_for_model_input("darcy", x_adv, yb, cfg, allow_target_grad=False).detach()
+            adv_loss, adv_loss_samples, _, _ = adv.darcy_attack_objective_loss(
+                model,
+                x0,
+                x_adv,
+                yb,
+                cfg,
+                allow_solver_backward=False,
+            )
+            adv_loss_value = float(adv_loss.detach().cpu())
+            attack_gain = adv_loss_value - clean_loss_value
+            rel_gain = attack_gain / abs(clean_loss_value) if abs(clean_loss_value) > 1e-20 else float("nan")
+    finally:
+        for param, flag in zip(model.parameters(), original_requires_grad):
+            param.requires_grad_(flag)
+        if was_training:
+            model.train()
+
+    hist = np.asarray(loss_history, dtype=np.float64)
+    return AttackTrace(
+        x_train=x_adv.detach(),
+        y_train=y_train.detach(),
+        clean_loss=clean_loss_value,
+        adv_loss=adv_loss_value,
+        attack_gain=attack_gain,
+        attack_gain_relative=rel_gain,
+        loss_history=hist,
+        gain_history=hist - hist[0],
     )
 
 
@@ -210,49 +342,125 @@ def shared_ranges(records: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _short_dataset_label(dataset_id: str) -> str:
+    label = dataset_id.replace("darcy_binary_loss3targeted_20260611_", "")
+    label = label.replace("test_original_binary_grf_", "test_")
+    return label[:86] + ("..." if len(label) > 86 else "")
+
+
 def plot_sample(sample: SampleSpec, records: list[dict[str, Any]], ranges: dict[str, Any], out_dir: Path) -> Path:
     rows = [r for r in records if r["sample_id"] == sample.sample_id]
     by_model = {r["model"]: r for r in rows}
     model_order = [m.name for m in MODELS]
     cols = [
-        ("x0", "initial condition", "coefficient"),
+        ("x0", "initial", "coefficient"),
         ("delta", "delta", "delta"),
-        ("x_adv", "initial + delta", "coefficient"),
-        ("model_output", "model output", "output_solver_shared"),
-        ("solver_output", "solver output", "output_solver_shared"),
+        ("x_adv", "attacked", "coefficient"),
+        ("model_output", "model", "output_solver_shared"),
+        ("solver_output", "solver", "output_solver_shared"),
         ("model_minus_solver", "model - solver", "model_minus_solver"),
     ]
-    fig, axes = plt.subplots(len(model_order), len(cols), figsize=(18.6, 14.2), constrained_layout=False)
-    images_by_col = []
+
+    plt.rcParams.update(
+        {
+            "font.family": "DejaVu Sans",
+            "axes.titlesize": 10,
+            "axes.labelsize": 9,
+            "xtick.labelsize": 8,
+            "ytick.labelsize": 8,
+            "figure.dpi": 150,
+        }
+    )
+    fig = plt.figure(figsize=(20.0, 18.2), constrained_layout=False, facecolor="white")
+    gs = fig.add_gridspec(
+        len(model_order) + 3,
+        len(cols),
+        height_ratios=[1.0] * len(model_order) + [0.085, 0.18, 0.92],
+        hspace=0.115,
+        wspace=0.045,
+    )
+    heat_axes = np.asarray([[fig.add_subplot(gs[i, j]) for j in range(len(cols))] for i in range(len(model_order))])
+    cbar_axes = [fig.add_subplot(gs[len(model_order), j]) for j in range(len(cols))]
+    legend_ax = fig.add_subplot(gs[len(model_order) + 1, :])
+    curve_ax = fig.add_subplot(gs[len(model_order) + 2, :])
+    legend_ax.axis("off")
+
+    images_by_col: dict[int, Any] = {}
     for i, model_name in enumerate(model_order):
         rec = by_model[model_name]
         for j, (key, title, range_key) in enumerate(cols):
-            ax = axes[i, j]
+            ax = heat_axes[i, j]
             rr = ranges[range_key]
             im = ax.imshow(rec[key], vmin=rr["vmin"], vmax=rr["vmax"], cmap=rr["cmap"], interpolation="nearest")
+            images_by_col[j] = im
             if i == 0:
-                ax.set_title(title, fontsize=10)
+                ax.set_title(title, fontsize=10, fontweight="semibold", pad=7)
             if j == 0:
                 gain = rec["attack_loss_gain"]
                 rel_l2 = rec["adv_relative_l2_model_vs_solver"]
-                ax.set_ylabel(f"{model_name}\ngain={gain:.2e}\nrelL2={rel_l2:.3g}", fontsize=9)
+                ax.set_ylabel(f"{model_name}\nΔL {gain:.2e}\nrel {rel_l2:.3f}", fontsize=8.6, rotation=0, labelpad=42, va="center")
             ax.set_xticks([])
             ax.set_yticks([])
-            if i == len(model_order) - 1:
-                images_by_col.append((j, im, range_key))
-    # One colorbar per semantic column using the shared scale.
-    for j, im, range_key in images_by_col:
-        cax = fig.add_axes([0.125 + j * 0.129, 0.055, 0.092, 0.012])
-        cb = fig.colorbar(im, cax=cax, orientation="horizontal")
-        cb.ax.tick_params(labelsize=7, length=2)
-    fig.suptitle(
-        f"Darcy shared-range 20-step loss3 attack heatmaps | {sample.sample_id} | {sample.split} | {sample.dataset_id}",
-        fontsize=13,
-        y=0.988,
+            for spine in ax.spines.values():
+                spine.set_linewidth(0.45)
+                spine.set_color("#d1d5db")
+
+    for j, (_key, _title, range_key) in enumerate(cols):
+        rr = ranges[range_key]
+        cb = fig.colorbar(images_by_col[j], cax=cbar_axes[j], orientation="horizontal")
+        cb.ax.tick_params(labelsize=7, length=2, pad=1)
+        cb.outline.set_linewidth(0.45)
+        cbar_axes[j].set_xlabel(f"{rr['vmin']:.2g} to {rr['vmax']:.2g}", fontsize=7, labelpad=1, color="#4b5563")
+
+    line_handles = []
+    for model_name in model_order:
+        rec = by_model[model_name]
+        y = np.asarray(rec["attack_loss_gain_history"], dtype=np.float64)
+        x = np.arange(y.shape[0], dtype=np.int64)
+        (line,) = curve_ax.plot(
+            x,
+            y,
+            marker="o",
+            markersize=3.1,
+            linewidth=2.0 if model_name == "loss3" else 1.55,
+            color=MODEL_COLORS.get(model_name),
+            alpha=0.98 if model_name == "loss3" else 0.88,
+            label=f"{model_name}  final ΔL={y[-1]:.2e}",
+        )
+        line_handles.append(line)
+    legend_ax.legend(
+        handles=line_handles,
+        loc="center",
+        ncol=len(model_order),
+        fontsize=8.8,
+        frameon=True,
+        fancybox=False,
+        framealpha=1.0,
+        edgecolor="#e5e7eb",
+        facecolor="#ffffff",
+        handlelength=2.2,
+        columnspacing=1.5,
+        borderpad=0.55,
     )
-    fig.subplots_adjust(left=0.075, right=0.985, top=0.94, bottom=0.09, wspace=0.04, hspace=0.08)
-    out_path = out_dir / f"{sample.sample_id}_five_model_attack_heatmap.png"
-    fig.savefig(out_path, dpi=220, facecolor="white")
+
+    curve_ax.axhline(0.0, color="#6b7280", linewidth=0.8, alpha=0.65)
+    curve_ax.set_xlim(0, max(1, int(max(len(by_model[m]["attack_loss_gain_history"]) for m in model_order)) - 1))
+    curve_ax.set_xlabel("binary attack step")
+    curve_ax.set_ylabel("attack loss gain ΔL")
+    curve_ax.set_title("Loss growth during the same 20-step binary attack", fontsize=10.5, fontweight="semibold", pad=7)
+    curve_ax.grid(True, color="#e5e7eb", linewidth=0.7, alpha=0.95)
+    curve_ax.spines["top"].set_visible(False)
+    curve_ax.spines["right"].set_visible(False)
+    curve_ax.spines["left"].set_color("#9ca3af")
+    curve_ax.spines["bottom"].set_color("#9ca3af")
+    curve_ax.ticklabel_format(axis="y", style="sci", scilimits=(-2, 2))
+
+    fig.text(0.075, 0.982, f"Darcy binary loss3 attack | {sample.sample_id}", fontsize=15, fontweight="bold", ha="left", va="top")
+    fig.text(0.075, 0.958, f"{sample.split} · {_short_dataset_label(sample.dataset_id)} · sample index {sample.sample_index}", fontsize=9.5, color="#4b5563", ha="left", va="top")
+    fig.text(0.985, 0.982, "shared color scales by column", fontsize=8.8, color="#4b5563", ha="right", va="top")
+    fig.subplots_adjust(left=0.078, right=0.988, top=0.925, bottom=0.058)
+    out_path = out_dir / f"{sample.sample_id}_five_model_attack_heatmap_with_loss_curve.png"
+    fig.savefig(out_path, dpi=230, facecolor="white")
     plt.close(fig)
     return out_path
 
@@ -264,15 +472,16 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def write_report(out_dir: Path, viz_dir: Path, summary_rows: list[dict[str, Any]], fig_paths: list[Path], args: argparse.Namespace) -> None:
+def write_report(out_dir: Path, viz_dir: Path, summary_rows: list[dict[str, Any]], fig_paths: list[Path], samples: list[SampleSpec], args: argparse.Namespace) -> None:
     lines = [
         f"# Darcy Five-Model Shared-Range Attack Heatmaps ({args.tag})",
         "",
         f"- Created: {now_iso()}",
-        f"- Models: baseline, loss1, loss2, loss3, fixed (physics).",
+        f"- Models: {', '.join(m.name for m in MODELS)}.",
         f"- Attack: binary Darcy loss3 solver-consistent attack, steps={args.attack_steps}, epsilon_fraction={args.epsilon_fraction}.",
-        f"- Samples: 1 test sample plus 4 generalization samples.",
-        f"- Color ranges are shared globally across all samples/models for each semantic panel type; see `shared_color_ranges.json`.",
+        f"- Samples: {len(samples)} selected samples ({sum(1 for s in samples if s.split == 'generalization')} generalization, {sum(1 for s in samples if s.split != 'generalization')} non-generalization).",
+        f"- Color ranges are shared globally across all samples/models for each semantic panel type; see `shared_color_ranges.json` and `column_color_ranges_applied.json`.",
+        f"- Each figure includes a bottom panel with attack loss gain versus binary attack step for the five models.",
         "",
         "## Figures",
         "",
@@ -285,6 +494,7 @@ def write_report(out_dir: Path, viz_dir: Path, summary_rows: list[dict[str, Any]
         f"- `{rel(out_dir / 'summary.csv')}`",
         f"- `{rel(out_dir / 'selected_samples.csv')}`",
         f"- `{rel(out_dir / 'shared_color_ranges.json')}`",
+        f"- `{rel(out_dir / 'column_color_ranges_applied.json')}`",
         f"- vectors: `{rel(out_dir / 'arrays')}`",
         "",
         "## Mean Attack Gain By Model",
@@ -310,10 +520,11 @@ def run(args: argparse.Namespace) -> None:
     array_dir.mkdir(parents=True, exist_ok=True)
 
     dataset_paths = load_dataset_map(args.generalization_root.resolve())
-    for s in SAMPLES:
+    samples = load_sample_specs(args.sample_manifest)
+    for s in samples:
         if s.dataset_id not in dataset_paths:
             raise KeyError(f"missing dataset {s.dataset_id}")
-    selected_rows = [s.__dict__ for s in SAMPLES]
+    selected_rows = [s.__dict__ for s in samples]
     with (out_dir / "selected_samples.csv").open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=list(selected_rows[0].keys()))
         writer.writeheader()
@@ -324,7 +535,7 @@ def run(args: argparse.Namespace) -> None:
     for model_spec in MODELS:
         print(f"[model] {model_spec.name} checkpoint={rel(model_spec.checkpoint)}", flush=True)
         model = load_model(model_spec, device)
-        for sample in SAMPLES:
+        for sample in samples:
             xb, yb = load_sample(dataset_paths, sample, device)
             t0 = time.perf_counter()
             result = run_attack(model, xb, yb, args.attack_steps, args.epsilon_fraction)
@@ -341,12 +552,11 @@ def run(args: argparse.Namespace) -> None:
             rel_l2 = float(torch.linalg.vector_norm(diff_flat).detach().cpu()) / max(float(torch.linalg.vector_norm(solver_flat).detach().cpu()), 1e-20)
             changed = float((delta.reshape(-1).abs() > 1e-12).float().mean().detach().cpu())
             delta_l2_rms = float(torch.sqrt(torch.mean(delta.reshape(-1) ** 2)).detach().cpu())
-            si = result.sample_info
-            clean = float(si["clean_loss_before_attack"][0])
-            adv_after = float(si["adv_loss_after_attack"][0])
-            gain = float(si["attack_loss_gain"][0])
-            rel_gain = float(si["attack_loss_gain_relative"][0])
-            npz_path = array_dir / f"{sample.sample_id}_{model_spec.name}_attack_fields.npz"
+            clean = float(result.clean_loss)
+            adv_after = float(result.adv_loss)
+            gain = float(result.attack_gain)
+            rel_gain = float(result.attack_gain_relative)
+            npz_path = array_dir / f"{sample.sample_id}_{slug(model_spec.name)}_attack_fields.npz"
             arrays = {
                 "x0": as2d(xb),
                 "delta": as2d(delta),
@@ -354,6 +564,8 @@ def run(args: argparse.Namespace) -> None:
                 "model_output": as2d(model_output),
                 "solver_output": as2d(solver_output),
                 "model_minus_solver": as2d(diff),
+                "attack_loss_history": result.loss_history.astype(np.float64),
+                "attack_loss_gain_history": result.gain_history.astype(np.float64),
             }
             np.savez_compressed(npz_path, **arrays)
             rec = {
@@ -400,9 +612,19 @@ def run(args: argparse.Namespace) -> None:
 
     ranges = shared_ranges(records)
     (out_dir / "shared_color_ranges.json").write_text(json.dumps(ranges, indent=2, sort_keys=True), encoding="utf-8")
+    column_ranges = {
+        "initial condition": ranges["coefficient"],
+        "delta": ranges["delta"],
+        "initial + delta": ranges["coefficient"],
+        "model output": ranges["output_solver_shared"],
+        "solver output": ranges["output_solver_shared"],
+        "model - solver": ranges["model_minus_solver"],
+        "note": "These vmin/vmax values are applied to every row/model in the corresponding column. Model output and solver output intentionally share the exact same range.",
+    }
+    (out_dir / "column_color_ranges_applied.json").write_text(json.dumps(column_ranges, indent=2, sort_keys=True), encoding="utf-8")
     write_csv(out_dir / "summary.csv", summary_rows)
-    fig_paths = [plot_sample(sample, records, ranges, viz_dir) for sample in SAMPLES]
-    write_report(out_dir, viz_dir, summary_rows, fig_paths, args)
+    fig_paths = [plot_sample(sample, records, ranges, viz_dir) for sample in samples]
+    write_report(out_dir, viz_dir, summary_rows, fig_paths, samples, args)
     print(json.dumps({"out_dir": rel(out_dir), "viz_dir": rel(viz_dir), "figures": [rel(p) for p in fig_paths]}, indent=2), flush=True)
 
 
@@ -410,6 +632,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tag", default=DEFAULT_TAG)
     parser.add_argument("--generalization-root", type=Path, default=PROJECT_ROOT / "generalization_datasets_darcy_binary_loss3targeted_20260611")
+    parser.add_argument("--sample-manifest", type=Path, default=None, help="Optional CSV with sample_id, split, dataset_id, sample_index columns. Defaults to the built-in five sample panel.")
     parser.add_argument("--out-dir", type=Path, default=None)
     parser.add_argument("--viz-dir", type=Path, default=None)
     parser.add_argument("--attack-steps", type=int, default=20)

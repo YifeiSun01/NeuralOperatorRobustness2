@@ -1,0 +1,22 @@
+{
+  "coefficient": {
+    "cmap": "viridis",
+    "vmax": 12.0,
+    "vmin": 3.0
+  },
+  "delta": {
+    "cmap": "coolwarm",
+    "vmax": 9.0,
+    "vmin": -9.0
+  },
+  "model_minus_solver": {
+    "cmap": "coolwarm",
+    "vmax": 0.005266321823000908,
+    "vmin": -0.005266321823000908
+  },
+  "output_solver_shared": {
+    "cmap": "viridis",
+    "vmax": 0.02382863499224186,
+    "vmin": -0.0006225183606147766
+  }
+}

@@ -921,6 +921,26 @@ def tensor_stats(prefix: str, x: torch.Tensor) -> dict[str, float]:
     }
 
 
+def parse_csv_floats(value: Any, default: list[float]) -> list[float]:
+    if value is None:
+        return list(default)
+    if isinstance(value, (list, tuple)):
+        out = [float(x) for x in value]
+    else:
+        out = [float(x.strip()) for x in str(value).split(",") if x.strip()]
+    return out or list(default)
+
+
+def parse_csv_strings(value: Any, default: list[str]) -> list[str]:
+    if value is None:
+        return list(default)
+    if isinstance(value, (list, tuple)):
+        out = [str(x).strip().lower() for x in value if str(x).strip()]
+    else:
+        out = [x.strip().lower() for x in str(value).split(",") if x.strip()]
+    return out or list(default)
+
+
 def burgers_solver_target(x_model: torch.Tensor, cfg: dict[str, Any], allow_target_grad: bool) -> torch.Tensor:
     if x_model.ndim != 3 or x_model.shape[-1] != 1:
         raise ValueError(f"Burgers model input must be (B,N,1), got {tuple(x_model.shape)}")
@@ -1337,6 +1357,13 @@ def attack_objective_losses_for_probe(
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Per-sample clean/attacked losses using the configured attack objective."""
     if task == "darcy":
+        if is_darcy_random_source_mode(cfg):
+            clean_pred = model(xb_selected)
+            adv_pred = model(x_adv_selected)
+            clean_losses = per_sample_finite_mse(clean_pred, yb_selected)
+            adv_target = yb_selected if str(cfg.get("training_data_mode")) == "random-binary-fixed-y" else y_adv_training
+            adv_losses = per_sample_finite_mse(adv_pred, adv_target)
+            return clean_losses, adv_losses
         _, clean_losses, _, _ = darcy_attack_objective_loss(
             model,
             xb_selected,
@@ -1541,6 +1568,273 @@ def continuous_attack(
         adv_loss=adv_loss_samples,
     )
     return AttackBatchResult(x_adv.detach(), y_train.detach(), info, sample_info=sample_info)
+
+
+DARCY_RANDOM_SOURCE_TRAINING_MODES = {"random-binary-fixed-y", "random-binary-solver-y"}
+
+
+def is_darcy_random_source_mode(cfg: dict[str, Any]) -> bool:
+    return str(cfg.get("training_data_mode", "adv-only")) in DARCY_RANDOM_SOURCE_TRAINING_MODES
+
+
+def _darcy_random_source_filter(
+    freq: torch.Tensor,
+    *,
+    kernel: str,
+    alpha: float,
+    lengthscale: float,
+) -> torch.Tensor:
+    cutoff = 1.0 / max(float(lengthscale), 1e-6)
+    scaled = freq / max(cutoff, 1e-6)
+    kernel = str(kernel).lower().strip()
+    if kernel in {"gaussian", "rbf", "sqexp", "squared_exponential"}:
+        filt = torch.exp(-0.5 * scaled.pow(2))
+    elif kernel in {"matern", "matérn"}:
+        filt = torch.pow(1.0 + scaled.pow(2), -0.5 * (float(alpha) + 1.0))
+    elif kernel in {"highpass", "high_pass"}:
+        low = torch.exp(-0.5 * scaled.pow(2))
+        filt = torch.pow((1.0 - low).clamp_min(0.0), max(float(alpha) / 2.0, 0.25))
+    elif kernel in {"bandpass", "band_pass"}:
+        width = max(cutoff * 0.55, 1e-6)
+        filt = torch.exp(-0.5 * ((freq - cutoff).abs() / width).pow(2))
+    elif kernel in {"mixed", "hybrid"}:
+        low = torch.exp(-0.5 * scaled.pow(2))
+        high = torch.pow((1.0 - low).clamp_min(0.0), max(float(alpha) / 2.0, 0.25))
+        filt = 0.5 * low + 0.5 * high
+    else:
+        raise ValueError(
+            f"unknown Darcy random source kernel={kernel!r}; "
+            "expected gaussian,matern,highpass,bandpass,or mixed"
+        )
+    return torch.nan_to_num(filt, nan=0.0, posinf=0.0, neginf=0.0)
+
+
+def _darcy_random_source_field(
+    h: int,
+    w: int,
+    *,
+    device: torch.device,
+    dtype: torch.dtype,
+    kernel: str,
+    alpha: float,
+    lengthscale: float,
+) -> torch.Tensor:
+    white = torch.randn((h, w), device=device, dtype=dtype)
+    fy = torch.fft.fftfreq(h, d=1.0 / max(1, h), device=device).to(dtype=dtype)
+    fx = torch.fft.rfftfreq(w, d=1.0 / max(1, w), device=device).to(dtype=dtype)
+    freq = torch.sqrt(fy[:, None].pow(2) + fx[None, :].pow(2))
+    filt = _darcy_random_source_filter(freq, kernel=kernel, alpha=alpha, lengthscale=lengthscale)
+    field = torch.fft.irfft2(torch.fft.rfft2(white) * filt, s=(h, w))
+    field = field - field.mean()
+    std = field.std(unbiased=False)
+    if not torch.isfinite(std) or float(std.detach().cpu()) <= 1e-12:
+        field = torch.randn((h, w), device=device, dtype=dtype)
+        field = field - field.mean()
+        std = field.std(unbiased=False).clamp_min(1e-12)
+    return field / std.clamp_min(1e-12)
+
+
+def darcy_random_binary_source_batch(
+    model,
+    xb: torch.Tensor,
+    yb: torch.Tensor,
+    cfg: dict[str, Any],
+) -> AttackBatchResult:
+    mode = str(cfg.get("training_data_mode", "adv-only"))
+    if mode not in DARCY_RANDOM_SOURCE_TRAINING_MODES:
+        raise ValueError(f"Darcy random source batch got unsupported mode={mode!r}")
+    if xb.ndim != 4 or xb.shape[-1] != 1:
+        raise ValueError(f"Darcy random binary source expects input (B,H,W,1), got {tuple(xb.shape)}")
+
+    was_training = model.training
+    model.eval()
+    x0 = xb.detach()
+    b, h, w, _ = x0.shape
+    n_pix = int(h * w)
+    max_fraction = float(cfg.get("darcy_random_source_max_flip_fraction", 0.05))
+    min_fraction = float(cfg.get("darcy_random_source_min_flip_fraction", 0.005))
+    if max_fraction < 0:
+        raise ValueError(f"darcy_random_source_max_flip_fraction must be non-negative, got {max_fraction}")
+    if min_fraction < 0:
+        raise ValueError(f"darcy_random_source_min_flip_fraction must be non-negative, got {min_fraction}")
+    if max_fraction < min_fraction:
+        raise ValueError(
+            "darcy_random_source_max_flip_fraction must be >= "
+            f"min, got min={min_fraction} max={max_fraction}"
+        )
+    max_fraction = min(max_fraction, 1.0)
+    min_fraction = min(min_fraction, max_fraction)
+    alpha_values_cfg = parse_csv_floats(cfg.get("darcy_random_source_alpha_values"), [1.2, 2.2, 3.2, 4.2, 5.2])
+    kernels = parse_csv_strings(
+        cfg.get("darcy_random_source_kernels"),
+        ["gaussian", "matern", "highpass", "bandpass", "mixed"],
+    )
+    lengthscale_min = float(cfg.get("darcy_random_source_lengthscale_min", 0.035))
+    lengthscale_max = float(cfg.get("darcy_random_source_lengthscale_max", 0.30))
+    if lengthscale_max < lengthscale_min:
+        raise ValueError(
+            "darcy_random_source_lengthscale_max must be >= min, "
+            f"got min={lengthscale_min} max={lengthscale_max}"
+        )
+
+    flat_x0 = x0.reshape(b, -1)
+    lo = flat_x0.min(dim=1).values.reshape(b, 1)
+    hi = flat_x0.max(dim=1).values.reshape(b, 1)
+    midpoint = 0.5 * (lo + hi)
+    flat_binary = torch.where(flat_x0 > midpoint, hi.expand_as(flat_x0), lo.expand_as(flat_x0))
+    other = torch.where(flat_binary > midpoint, lo.expand_as(flat_binary), hi.expand_as(flat_binary))
+    flat_rand = flat_binary.clone()
+
+    flip_fractions: list[float] = []
+    alpha_draws: list[float] = []
+    lengthscale_draws: list[float] = []
+    kernel_draws: list[str] = []
+    budgets: list[int] = []
+    field_abs_means: list[float] = []
+    field_stds: list[float] = []
+
+    with torch.no_grad():
+        for i in range(b):
+            kernel = random.choice(kernels)
+            alpha = float(random.choice(alpha_values_cfg))
+            if lengthscale_max == lengthscale_min:
+                lengthscale = lengthscale_min
+            else:
+                lengthscale = random.uniform(lengthscale_min, lengthscale_max)
+            if max_fraction == min_fraction:
+                fraction = max_fraction
+            else:
+                fraction = random.uniform(min_fraction, max_fraction)
+            k = int(round(fraction * n_pix))
+            k = max(0, min(k, n_pix))
+            if max_fraction > 0.0 and k == 0:
+                k = 1
+            field = _darcy_random_source_field(
+                h,
+                w,
+                device=x0.device,
+                dtype=x0.dtype,
+                kernel=kernel,
+                alpha=alpha,
+                lengthscale=lengthscale,
+            )
+            score = field.abs().reshape(-1)
+            if k > 0:
+                chosen = torch.topk(score, k=k, largest=True).indices
+                flat_rand[i, chosen] = other[i, chosen]
+            flip_fractions.append(k / max(1, n_pix))
+            alpha_draws.append(alpha)
+            lengthscale_draws.append(lengthscale)
+            kernel_draws.append(kernel)
+            budgets.append(k)
+            field_abs_means.append(float(field.abs().mean().detach().cpu()))
+            field_stds.append(float(field.std(unbiased=False).detach().cpu()))
+
+        x_rand = flat_rand.reshape_as(x0).detach()
+        if mode == "random-binary-fixed-y":
+            y_train = yb.detach()
+            target_source = "clean_dataset_y_unchanged"
+            training_target_source = "clean dataset y; solver is not rerun after random binary flips"
+            attack_uses_solver_forward = 0
+        else:
+            y_train = darcy_solver_target(x_rand, allow_target_grad=False).detach()
+            target_source = "solver(a_random).detach()"
+            training_target_source = "solver(a_random).detach() after random binary flips"
+            attack_uses_solver_forward = 1
+
+        clean_target = yb.detach()
+        clean_pred = model(x0)
+        adv_pred = model(x_rand)
+        clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
+        adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+        clean_loss = finite_mse(clean_pred, clean_target)
+        adv_loss = finite_mse(adv_pred, y_train)
+        clean_solver_loss_samples = clean_loss_samples
+        adv_solver_loss_samples = adv_loss_samples
+        clean_solver_loss = clean_loss
+        adv_solver_loss = adv_loss
+        delta = x_rand - x0
+        changed = delta.reshape(b, -1).abs() > 1e-12
+        observed_flip_fraction = float(changed.float().mean().detach().cpu())
+        delta_l2 = float(torch.sqrt(delta.pow(2).reshape(b, -1).mean(dim=1)).mean().detach().cpu())
+        delta_linf = float(delta.abs().reshape(b, -1).max(dim=1).values.mean().detach().cpu())
+        binary_error = torch.minimum((x_rand.reshape(b, -1) - lo).abs(), (x_rand.reshape(b, -1) - hi).abs())
+        binary_error_max = float(binary_error.max().detach().cpu())
+
+    if was_training:
+        model.train()
+
+    flip_tensor = torch.as_tensor(flip_fractions, device=x0.device, dtype=x0.dtype)
+    alpha_tensor = torch.as_tensor(alpha_draws, device=x0.device, dtype=x0.dtype)
+    lengthscale_tensor = torch.as_tensor(lengthscale_draws, device=x0.device, dtype=x0.dtype)
+    budget_tensor = torch.as_tensor(budgets, device=x0.device, dtype=x0.dtype)
+    kernel_counts = {name: kernel_draws.count(name) for name in sorted(set(kernel_draws))}
+    info = {
+        "label_mode": str(cfg.get("label_mode", "solver")),
+        "target_source": target_source,
+        "training_target_source": training_target_source,
+        "attack_loss_objective": mode,
+        "attack_objective_definition": "random binary source perturbation; no adversarial gradient is used",
+        "attack_uses_solver_forward": attack_uses_solver_forward,
+        "attack_uses_solver_backward": 0,
+        "full_solver_gradient": False,
+        "attack_target_source": target_source,
+        "attack_type": "random_binary_source",
+        "attack_method": mode,
+        "attack_steps": 0,
+        "epsilon_mean": float(flip_tensor.mean().detach().cpu()),
+        "epsilon_min": float(flip_tensor.min().detach().cpu()),
+        "epsilon_max": float(flip_tensor.max().detach().cpu()),
+        "alpha_mean": float(alpha_tensor.mean().detach().cpu()),
+        "alpha_min": float(alpha_tensor.min().detach().cpu()),
+        "alpha_max": float(alpha_tensor.max().detach().cpu()),
+        "alpha_ratio_nominal": float("nan"),
+        "clean_loss_before_attack": float(clean_loss.detach().cpu()),
+        "adv_loss_after_random_start": float(adv_loss.detach().cpu()),
+        "adv_loss_after_attack": float(adv_loss.detach().cpu()),
+        "attack_loss_gain": float((adv_loss - clean_loss).detach().cpu()),
+        "clean_solver_mse_before_attack": float(clean_solver_loss.detach().cpu()),
+        "adv_solver_mse_after_attack": float(adv_solver_loss.detach().cpu()),
+        "solver_mse_attack_gain": float((adv_solver_loss - clean_solver_loss).detach().cpu()),
+        "grad_abs_mean_last": float("nan"),
+        "boundary_ratio_mean": observed_flip_fraction / max(max_fraction, 1e-12),
+        "delta_linf_mean": delta_linf,
+        "delta_l2_rms_mean": delta_l2,
+        "darcy_budget_pixels_mean": float(budget_tensor.mean().detach().cpu()),
+        "darcy_flip_fraction": observed_flip_fraction,
+        "darcy_random_source_mode": mode,
+        "darcy_random_source_kernel_set": ",".join(kernels),
+        "darcy_random_source_alpha_values": ",".join(str(x) for x in alpha_values_cfg),
+        "darcy_random_source_alpha_draw_mean": float(alpha_tensor.mean().detach().cpu()),
+        "darcy_random_source_alpha_draw_min": float(alpha_tensor.min().detach().cpu()),
+        "darcy_random_source_alpha_draw_max": float(alpha_tensor.max().detach().cpu()),
+        "darcy_random_source_lengthscale_min_cfg": lengthscale_min,
+        "darcy_random_source_lengthscale_max_cfg": lengthscale_max,
+        "darcy_random_source_lengthscale_draw_mean": float(lengthscale_tensor.mean().detach().cpu()),
+        "darcy_random_source_lengthscale_draw_min": float(lengthscale_tensor.min().detach().cpu()),
+        "darcy_random_source_lengthscale_draw_max": float(lengthscale_tensor.max().detach().cpu()),
+        "darcy_random_source_min_flip_fraction_cfg": min_fraction,
+        "darcy_random_source_max_flip_fraction_cfg": max_fraction,
+        "darcy_random_source_observed_flip_fraction_mean": observed_flip_fraction,
+        "darcy_random_source_normalized_l1_energy_mean": observed_flip_fraction,
+        "darcy_random_source_normalized_squared_l2_energy_mean": observed_flip_fraction,
+        "darcy_random_source_field_abs_mean": float(np.mean(field_abs_means)) if field_abs_means else float("nan"),
+        "darcy_random_source_field_std_mean": float(np.mean(field_stds)) if field_stds else float("nan"),
+        "darcy_random_source_binary_error_max": binary_error_max,
+        "darcy_random_source_distinct_kernel_count": len(kernel_counts),
+    }
+    for kernel_name, count in kernel_counts.items():
+        safe_name = "".join(ch if ch.isalnum() else "_" for ch in kernel_name)
+        info[f"darcy_random_source_kernel_{safe_name}_count"] = int(count)
+    info.update(tensor_stats("target", y_train))
+    sample_info = make_attack_sample_info(
+        epsilon=flip_tensor,
+        epsilon_jitter_factor=flip_tensor / max(max_fraction, 1e-12),
+        alpha=alpha_tensor,
+        clean_loss=clean_loss_samples,
+        adv_loss=adv_loss_samples,
+    )
+    return AttackBatchResult(x_rand.detach(), y_train.detach(), info, sample_info=sample_info)
 
 
 def binary_darcy_replace_attack(
@@ -1869,6 +2163,8 @@ def ns2d_solver_consistent_attack(
 
 
 def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict[str, Any]) -> AttackBatchResult:
+    if task == "darcy" and is_darcy_random_source_mode(cfg):
+        return darcy_random_binary_source_batch(model, xb, yb, cfg)
     method = str(cfg["attack_method"])
     label_mode = str(cfg.get("label_mode", "solver"))
     if label_mode == "solver" and task == "ns2d":
@@ -1952,7 +2248,7 @@ def combine_training_pairs(
     mode = str(cfg.get("training_data_mode", "adv-only"))
     x_adv = attack_result.x_train.detach()
     y_adv = attack_result.y_train.detach()
-    if mode == "adv-only":
+    if mode == "adv-only" or mode in DARCY_RANDOM_SOURCE_TRAINING_MODES:
         info = {
             "training_data_mode": mode,
             "clean_train_samples": 0,
@@ -1973,7 +2269,10 @@ def combine_training_pairs(
             "clean_plus_adv_multiplier": float(x_train.shape[0]) / max(1, int(x_adv.shape[0])),
         }
         return x_train.detach(), y_train.detach(), info
-    raise ValueError(f"unknown training_data_mode={mode!r}; expected adv-only or clean-plus-adv")
+    raise ValueError(
+        f"unknown training_data_mode={mode!r}; expected adv-only, clean-plus-adv, "
+        "random-binary-fixed-y, or random-binary-solver-y"
+    )
 
 
 def task_train_spec(specs: list[DatasetSpec], task: str) -> DatasetSpec:
@@ -2062,6 +2361,12 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
         cfg["darcy_physics_forcing_value"] = float(getattr(args, "darcy_physics_forcing_value", 1.0))
         cfg["darcy_loss1_random_start"] = bool(getattr(args, "darcy_loss1_random_start", True))
         cfg["darcy_loss1_random_start_fraction"] = float(getattr(args, "darcy_loss1_random_start_fraction", 1.0))
+        cfg["darcy_random_source_kernels"] = str(getattr(args, "darcy_random_source_kernels", "gaussian,matern,highpass,bandpass,mixed"))
+        cfg["darcy_random_source_alpha_values"] = str(getattr(args, "darcy_random_source_alpha_values", "1.2,2.2,3.2,4.2,5.2"))
+        cfg["darcy_random_source_lengthscale_min"] = float(getattr(args, "darcy_random_source_lengthscale_min", 0.035))
+        cfg["darcy_random_source_lengthscale_max"] = float(getattr(args, "darcy_random_source_lengthscale_max", 0.30))
+        cfg["darcy_random_source_min_flip_fraction"] = float(getattr(args, "darcy_random_source_min_flip_fraction", 0.005))
+        cfg["darcy_random_source_max_flip_fraction"] = float(getattr(args, "darcy_random_source_max_flip_fraction", 0.05))
     override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
     if override_random_start_fraction is not None:
         cfg["random_start_fraction"] = float(override_random_start_fraction)
@@ -2673,6 +2978,12 @@ def train_one_task(
         task_cfg["darcy_physics_forcing_value"] = float(getattr(args, "darcy_physics_forcing_value", 1.0))
         task_cfg["darcy_loss1_random_start"] = bool(getattr(args, "darcy_loss1_random_start", True))
         task_cfg["darcy_loss1_random_start_fraction"] = float(getattr(args, "darcy_loss1_random_start_fraction", 1.0))
+        task_cfg["darcy_random_source_kernels"] = str(getattr(args, "darcy_random_source_kernels", "gaussian,matern,highpass,bandpass,mixed"))
+        task_cfg["darcy_random_source_alpha_values"] = str(getattr(args, "darcy_random_source_alpha_values", "1.2,2.2,3.2,4.2,5.2"))
+        task_cfg["darcy_random_source_lengthscale_min"] = float(getattr(args, "darcy_random_source_lengthscale_min", 0.035))
+        task_cfg["darcy_random_source_lengthscale_max"] = float(getattr(args, "darcy_random_source_lengthscale_max", 0.30))
+        task_cfg["darcy_random_source_min_flip_fraction"] = float(getattr(args, "darcy_random_source_min_flip_fraction", 0.005))
+        task_cfg["darcy_random_source_max_flip_fraction"] = float(getattr(args, "darcy_random_source_max_flip_fraction", 0.05))
     override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
     if override_random_start_fraction is not None:
         task_cfg["random_start_fraction"] = float(override_random_start_fraction)
@@ -3218,7 +3529,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
-    parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs.")
+    parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv", "random-binary-fixed-y", "random-binary-solver-y"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs; Darcy random-binary-fixed-y/random-binary-solver-y use random binary source flips instead of adversarial attacks.")
     parser.add_argument("--attack-probe-samples", type=int, default=5, help="Number of fixed train-set source indices whose attacked x_adv and delta are saved each probe epoch; set 0 to disable.")
     parser.add_argument("--attack-probe-indices", default=None, help="Optional comma-separated explicit train-set source indices for attack probe saving. Overrides --attack-probe-samples.")
     parser.add_argument("--attack-probe-every-n-epochs", type=int, default=1, help="Save attack probe arrays every N epochs; default 1 saves every epoch.")
@@ -3261,6 +3572,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--darcy-physics-forcing-value", type=float, default=1.0, help="Right-hand-side forcing value for Darcy physics residual.")
     parser.add_argument("--darcy-loss1-random-start", action=argparse.BooleanOptionalAction, default=True, help="For Darcy loss1, start from a random binary flip mask so the zero-distance loss1 gradient does not stall.")
     parser.add_argument("--darcy-loss1-random-start-fraction", type=float, default=1.0, help="Fraction of the per-sample flip budget used for the Darcy loss1 random initial mask.")
+    parser.add_argument("--darcy-random-source-kernels", default="gaussian,matern,highpass,bandpass,mixed", help="Comma-separated kernels for Darcy random binary source training. Used by random-binary-fixed-y and random-binary-solver-y.")
+    parser.add_argument("--darcy-random-source-alpha-values", default="1.2,2.2,3.2,4.2,5.2", help="Comma-separated alpha/smoothness values sampled per Darcy random-source sample.")
+    parser.add_argument("--darcy-random-source-lengthscale-min", type=float, default=0.035, help="Minimum spectral lengthscale sampled per Darcy random-source sample.")
+    parser.add_argument("--darcy-random-source-lengthscale-max", type=float, default=0.30, help="Maximum spectral lengthscale sampled per Darcy random-source sample.")
+    parser.add_argument("--darcy-random-source-min-flip-fraction", type=float, default=0.005, help="Minimum fraction of binary coefficient pixels flipped per random-source sample.")
+    parser.add_argument("--darcy-random-source-max-flip-fraction", type=float, default=0.05, help="Maximum fraction of binary coefficient pixels flipped per random-source sample; default enforces the requested 5 percent normalized energy budget.")
     parser.add_argument("--ns2d-attack-method", choices=["fast_replace_linf", "fast_add_linf"], default=None)
     parser.add_argument("--burgers-epsilon-fraction", type=float, default=None)
     parser.add_argument("--darcy-epsilon-fraction", type=float, default=None)
@@ -3298,6 +3615,8 @@ def main() -> None:
             raise ValueError("--burgers-require-p2q2 requires --burgers-attack-method fast_replace_l2 or fast_add_l2; got " + str(burgers_method))
     set_seed(int(args.seed))
     tasks = parse_tasks(args.tasks)
+    if args.training_data_mode in DARCY_RANDOM_SOURCE_TRAINING_MODES and tasks != ["darcy"]:
+        raise ValueError("Darcy random source training modes require --tasks darcy")
     device = torch.device(args.device)
     run_name = args.run_name or ("smoke_" if args.smoke else "full_") + now_stamp()
     out_root = (args.output_root / run_name).resolve()
@@ -3351,6 +3670,15 @@ def main() -> None:
         "darcy_loss1_random_start": {
             "enabled": args.darcy_loss1_random_start,
             "fraction": args.darcy_loss1_random_start_fraction,
+        },
+        "darcy_random_source": {
+            "kernels": args.darcy_random_source_kernels,
+            "alpha_values": args.darcy_random_source_alpha_values,
+            "lengthscale_min": args.darcy_random_source_lengthscale_min,
+            "lengthscale_max": args.darcy_random_source_lengthscale_max,
+            "min_flip_fraction": args.darcy_random_source_min_flip_fraction,
+            "max_flip_fraction": args.darcy_random_source_max_flip_fraction,
+            "binary_constraint": "inputs are projected back to the per-sample two Darcy coefficient values before training",
         },
         "attack_probe": {
             "samples": int(args.attack_probe_samples),
@@ -3410,12 +3738,12 @@ def main() -> None:
         f"- Max wall seconds: `{args.max_wall_seconds}`",
         "",
         "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
-        "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
+        "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch. Darcy-only `random-binary-fixed-y` and `random-binary-solver-y` replace adversarial attacks with random binary coefficient flips; fixed-y keeps the clean target, solver-y recomputes solver(a_random).",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
         "Default attack policy:",
         "- Burgers: p=2/q=2 RMS-L2 fast-replace attack in the corrected pipeline. The attack objective can be loss1, loss2, or loss3: loss1 uses no solver; loss2 uses fixed clean solver output without solver backward; loss3 uses attacked solver output with solver backward. Optimizer training remains on attacked solver pairs unless training-data-mode is changed.",
-        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default. The attack objective can be loss1, loss2, loss3, or physics/loss4; optimizer training still uses attacked solver pairs unless training-data-mode is changed.",
+        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default. The attack objective can be loss1, loss2, loss3, or physics/loss4; optimizer training still uses attacked solver pairs unless training-data-mode is changed. Random-source Darcy modes sample Gaussian/Matern/high-pass/band-pass/mixed fields, flip only between the two binary coefficient values, and cap the normalized mean flip energy at `--darcy-random-source-max-flip-fraction`.",
         "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default, epsilon/alpha are fixed, and random start is off for comparable same-index probes.",
         "",
         "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch, giving 52 dataset-level curves per task when all 50 generated sets are present; checkpoints default to every 200 epochs plus final.",
