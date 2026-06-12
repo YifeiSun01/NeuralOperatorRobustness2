@@ -14166,3 +14166,40 @@ Note:
 - Updated `tools/run_burgers_wideparam_svd25_then_retrain_upload_20260611.sh` so completed SVD25 runs automatically launch biased local direction/correlation analysis before upload/Git bookkeeping.
 - Updated `tools/run_burgers_wideparam_loss123_retrain_20260611.sh` so the default retrain order is `loss3_then_loss12`: run loss3 first, then loss1/loss2, with loss1/loss2 still parallelizable.
 - Added automation contract note `docs/burgers_wideparam_svd25_retrain_full_automation_20260611.md`.
+
+## 2026-06-12 - Burgers random-field noise training baseline code
+
+Added code for two non-adversarial Burgers random-delta training baselines on the
+latest wide-parameter loss3-targeted generalization dataset.
+
+Implementation:
+- `tools/adversarial_training.py` now supports `--training-perturbation-mode random-field` for Burgers.
+- Random deltas are sampled as Gaussian/Matern 1D random fields in Fourier space, with per-sample random kernel parameters and RMS-L2 epsilon normalization.
+- Default random-field epsilon is capped at `0.04 * range * jitter`, with jitter `0.75-1.25`, so per-sample RMS delta is `3%-5%` of the clean sample range and averages about `4%`.
+- `--random-field-target-mode clean-y` keeps the original target fixed after `x -> x + delta`.
+- `--random-field-target-mode solver-y` recomputes the target as `solver(x + delta)`.
+- The random-field path writes the same run structure as adversarial training: train/eval CSVs, attack-compatible summaries, epsilon buckets, probe NPZ/CSV files, checkpoints, memory logs, and summary JSON.
+
+Launch and plotting:
+- `tools/run_burgers_wideparam_random_field_training_20260612.sh` runs both 2000 epoch baselines.
+- `tools/plot_burgers_wideparam_loss123_retrain_20260611.py` was generalized with `--run label=path` while keeping old loss1/loss2/loss3 defaults unchanged.
+- Plan/details: `docs/burgers_random_field_noise_training_plan_20260612.md`.
+
+Status:
+- Code prepared only. The full 2000 epoch random-field runs were not started because the loss1/loss2 adversarial retrain is still occupying the GPU.
+
+## 2026-06-12 - Watcher to launch Burgers random-field training after current retrain
+
+Added and started `tools/watch_burgers_retrain_then_random_field_20260612.sh`.
+
+Behavior:
+- Waits for upstream workflow PID `142167` to exit.
+- Requires completed summaries for loss1/loss2/loss3 retrain before launching.
+- Waits for GPU utilization and memory to fall below configured thresholds.
+- Starts `tools/run_burgers_wideparam_random_field_training_20260612.sh`, which runs the two 2000 epoch random-field baselines.
+
+Validation:
+- `bash -n` passed.
+- Dry-run trigger chain passed with `WAIT_PID=0`, `REQUIRE_RETRAIN_SUMMARIES=0`, `WAIT_GPU_FREE=0`, `DRY_RUN=1`, `RUN_PLOTS=0`.
+- Live watcher started with PID recorded in `adversarial_training_runs/burgers_wideparam_random_field_training_20260612_logs/watch_retrain_then_random_field_20260612.pid`.
+

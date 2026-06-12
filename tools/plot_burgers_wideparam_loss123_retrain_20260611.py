@@ -27,11 +27,54 @@ DEFAULT_RUNS = {
 DEFAULT_OUT_DIR = PROJECT_ROOT / "visualizations/burgers_wideparam_loss123_retrain_20260611"
 DEFAULT_REPORT = PROJECT_ROOT / "docs/burgers_wideparam_loss123_retrain_report_20260611.md"
 
-COLORS = {"loss1": "#1b6ca8", "loss2": "#d95f02", "loss3": "#2ca25f"}
-MARKERS = {"loss1": "o", "loss2": "s", "loss3": "^"}
+COLORS = {
+    "loss1": "#1b6ca8",
+    "loss2": "#d95f02",
+    "loss3": "#2ca25f",
+    "random_clean_y": "#8e44ad",
+    "random_solver_y": "#c0392b",
+}
+MARKERS = {"loss1": "o", "loss2": "s", "loss3": "^", "random_clean_y": "D", "random_solver_y": "P"}
+DEFAULT_LABEL_ORDER = ["loss1", "loss2", "loss3", "random_clean_y", "random_solver_y"]
 BG = "#fbfaf7"
 GRID = "#d8d4c8"
 TEXT = "#202124"
+
+
+def label_order(df_or_labels: Any) -> list[str]:
+    if isinstance(df_or_labels, pd.DataFrame):
+        if df_or_labels.empty or "loss" not in df_or_labels.columns:
+            return []
+        labels = [str(x) for x in df_or_labels["loss"].dropna().unique().tolist()]
+    else:
+        labels = [str(x) for x in df_or_labels]
+    known = [label for label in DEFAULT_LABEL_ORDER if label in labels]
+    extra = sorted(label for label in labels if label not in known)
+    return known + extra
+
+
+def color_for(label: str) -> str:
+    if label in COLORS:
+        return COLORS[label]
+    palette = plt.get_cmap("tab10")
+    idx = abs(hash(label)) % 10
+    return palette(idx)
+
+
+def parse_run_mapping(values: list[str] | None) -> dict[str, Path] | None:
+    if not values:
+        return None
+    out: dict[str, Path] = {}
+    for item in values:
+        if "=" not in item:
+            raise ValueError(f"--run expects label=path, got {item!r}")
+        label, raw_path = item.split("=", 1)
+        label = label.strip()
+        raw_path = raw_path.strip()
+        if not label or not raw_path:
+            raise ValueError(f"--run expects non-empty label=path, got {item!r}")
+        out[label] = Path(raw_path).expanduser()
+    return out
 
 
 def relpath(path: Path) -> str:
@@ -170,11 +213,11 @@ def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str) -> st
     fig, axes = plt.subplots(1, 3, figsize=(21.6, 5.2), sharey=False)
     for ax, split in zip(axes, splits):
         s = df[df["split"] == split]
-        for loss in ["loss1", "loss2", "loss3"]:
+        for loss in label_order(df):
             g = s[s["loss"] == loss].sort_values(x)
             if g.empty:
                 continue
-            ax.plot(g[x], g[metric], color=COLORS[loss], lw=1.1, alpha=0.88, label=loss)
+            ax.plot(g[x], g[metric], color=color_for(loss), lw=1.1, alpha=0.88, label=loss)
         ax.set_title(split)
         ax.set_xlabel("epoch" if x == "epoch" else "wall-clock hours")
         ax.set_ylabel(metric_label(metric))
@@ -190,11 +233,11 @@ def plot_attack_summary(df: pd.DataFrame, out_dir: Path, y: str, ylabel: str) ->
     if df.empty or y not in df.columns:
         return None
     fig, ax = plt.subplots(figsize=(10.8, 5.4))
-    for loss in ["loss1", "loss2", "loss3"]:
+    for loss in label_order(df):
         g = df[df["loss"] == loss].sort_values("epoch")
         if g.empty:
             continue
-        ax.plot(g["epoch"], g[y], color=COLORS[loss], lw=1.15, label=loss)
+        ax.plot(g["epoch"], g[y], color=color_for(loss), lw=1.15, label=loss)
     ax.set_xlabel("epoch")
     ax.set_ylabel(ylabel)
     ax.set_title(f"Burgers wideparam retrain {ylabel}")
@@ -210,11 +253,11 @@ def plot_probe_metric(df: pd.DataFrame, out_dir: Path, y: str, ylabel: str) -> s
     if agg.empty:
         return None
     fig, ax = plt.subplots(figsize=(10.8, 5.4))
-    for loss in ["loss1", "loss2", "loss3"]:
+    for loss in label_order(df):
         g = agg[agg["loss"] == loss].sort_values("epoch")
         if g.empty:
             continue
-        ax.plot(g["epoch"], g[y], color=COLORS[loss], lw=1.15, label=loss)
+        ax.plot(g["epoch"], g[y], color=color_for(loss), lw=1.15, label=loss)
     ax.set_xlabel("epoch")
     ax.set_ylabel(ylabel)
     ax.set_title(f"Fixed attack-probe delta {ylabel}")
@@ -227,11 +270,11 @@ def plot_memory(df: pd.DataFrame, out_dir: Path) -> str | None:
     if df.empty or "cuda_peak_allocated_mb" not in df.columns:
         return None
     fig, ax = plt.subplots(figsize=(10.8, 5.4))
-    for loss in ["loss1", "loss2", "loss3"]:
+    for loss in label_order(df):
         g = df[df["loss"] == loss].sort_values("epoch")
         if g.empty:
             continue
-        ax.plot(g["epoch"], g["cuda_peak_allocated_mb"] / 1024.0, color=COLORS[loss], lw=1.15, label=loss)
+        ax.plot(g["epoch"], g["cuda_peak_allocated_mb"] / 1024.0, color=color_for(loss), lw=1.15, label=loss)
     ax.set_xlabel("epoch")
     ax.set_ylabel("peak allocated GiB")
     ax.set_title("CUDA peak allocation recorded during training")
@@ -365,13 +408,19 @@ def main() -> None:
     parser.add_argument("--loss1-run-dir", type=Path, default=DEFAULT_RUNS["loss1"])
     parser.add_argument("--loss2-run-dir", type=Path, default=DEFAULT_RUNS["loss2"])
     parser.add_argument("--loss3-run-dir", type=Path, default=DEFAULT_RUNS["loss3"])
+    parser.add_argument("--run", action="append", default=None, help="Optional generic run mapping, repeat as label=/path/to/run. Overrides --loss*-run-dir when provided.")
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--report-md", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument("--report-title", default="Burgers Wideparam Loss1/Loss2/Loss3 Retrain Report - 2026-06-11")
+    parser.add_argument("--report-description", default="This report summarizes the retraining runs against the final wide-parameter loss3-targeted Burgers generalization dataset.")
     parser.add_argument("--allow-missing", action="store_true")
     args = parser.parse_args()
 
     setup_plot_style()
-    run_dirs = {"loss1": args.loss1_run_dir.resolve(), "loss2": args.loss2_run_dir.resolve(), "loss3": args.loss3_run_dir.resolve()}
+    run_dirs_raw = parse_run_mapping(args.run)
+    if run_dirs_raw is None:
+        run_dirs_raw = {"loss1": args.loss1_run_dir, "loss2": args.loss2_run_dir, "loss3": args.loss3_run_dir}
+    run_dirs = {label: run_dir.resolve() for label, run_dir in run_dirs_raw.items()}
     missing = [loss for loss, run_dir in run_dirs.items() if not (task_dir(run_dir) / "summary.json").exists()]
     if missing and not args.allow_missing:
         raise FileNotFoundError("missing completed run summaries for: " + ", ".join(missing))
@@ -430,9 +479,9 @@ def main() -> None:
     rows = final_summary_rows(run_dirs, eval_df, memory_df)
     write_csv(out_dir / "wideparam_retrain_final_summary.csv", rows)
     lines = [
-        "# Burgers Wideparam Loss1/Loss2/Loss3 Retrain Report - 2026-06-11",
+        f"# {args.report_title}",
         "",
-        "This report summarizes the retraining runs against the final wide-parameter loss3-targeted Burgers generalization dataset.",
+        str(args.report_description),
         "",
         "## Run Status",
         "",
