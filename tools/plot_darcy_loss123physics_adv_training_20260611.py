@@ -183,7 +183,7 @@ def load_tagged_csv(run_dirs: dict[str, Path], filename: str) -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
 
-def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str) -> str | None:
+def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str, *, log_scale: bool = True) -> str | None:
     if df.empty or metric not in df.columns or x not in df.columns:
         return None
     splits = ["train", "test", "generalization"]
@@ -212,7 +212,7 @@ def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str) -> st
         ax.set_title(title)
         ax.set_xlabel("epoch" if x == "epoch" else "wall-clock minutes")
         ax.set_ylabel(metric_label(metric))
-        if metric in {"relative_l2", "rmse", "mae"}:
+        if log_scale and metric in {"relative_l2", "rmse", "mae"}:
             ax.set_yscale("log")
         ax.legend()
     x_name = "epoch" if x == "epoch" else "wall_clock"
@@ -221,7 +221,7 @@ def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str) -> st
     return savefig(fig, out_dir / f"darcy_adv_training_{x_name}_{metric}_train_test_generalization.png")
 
 
-def plot_attack_summary(df: pd.DataFrame, out_dir: Path, y: str, ylabel: str) -> str | None:
+def plot_attack_summary(df: pd.DataFrame, out_dir: Path, y: str, ylabel: str, *, log_scale: bool = True) -> str | None:
     if df.empty or y not in df.columns:
         return None
     fig, ax = plt.subplots(figsize=(11.2, 5.6))
@@ -233,14 +233,14 @@ def plot_attack_summary(df: pd.DataFrame, out_dir: Path, y: str, ylabel: str) ->
     ax.set_xlabel("epoch")
     ax.set_ylabel(ylabel)
     ax.set_title(f"Darcy Flow {ylabel}")
-    if y in {"train_loss_used_for_optimizer_updates_mean"}:
+    if log_scale and y in {"train_loss_used_for_optimizer_updates_mean"}:
         ax.set_yscale("log")
     ax.legend()
     fig.tight_layout()
     return savefig(fig, out_dir / f"darcy_adv_training_{y}.png")
 
 
-def plot_train_loss(df: pd.DataFrame, out_dir: Path) -> str | None:
+def plot_train_loss(df: pd.DataFrame, out_dir: Path, *, log_scale: bool = True) -> str | None:
     if df.empty or "train_loss_on_adv" not in df.columns:
         return None
     fig, ax = plt.subplots(figsize=(11.2, 5.6))
@@ -251,7 +251,8 @@ def plot_train_loss(df: pd.DataFrame, out_dir: Path) -> str | None:
         ax.plot(g["epoch"], g["train_loss_on_adv"], color=COLORS[method], lw=1.25, label=method)
     ax.set_xlabel("epoch")
     ax.set_ylabel("train loss on attacked solver pairs")
-    ax.set_yscale("log")
+    if log_scale:
+        ax.set_yscale("log")
     ax.set_title("Darcy Flow adversarial training loss on attacked data")
     ax.legend()
     fig.tight_layout()
@@ -377,7 +378,7 @@ def derive_full50_from_eval_metrics(run_dirs: dict[str, Path]) -> pd.DataFrame:
     return out
 
 
-def plot_full50_mean_bars(df: pd.DataFrame, out_dir: Path) -> str | None:
+def plot_full50_mean_bars(df: pd.DataFrame, out_dir: Path, *, log_scale: bool = True) -> str | None:
     if df.empty or not {"model", "split", "relative_l2"}.issubset(df.columns):
         return None
     rows = []
@@ -412,7 +413,8 @@ def plot_full50_mean_bars(df: pd.DataFrame, out_dir: Path) -> str | None:
         ax.set_xticks(np.arange(len(labels)), labels, rotation=25, ha="right")
         ax.set_ylabel("Relative L2")
         ax.set_title(title)
-        ax.set_yscale("log")
+        if log_scale:
+            ax.set_yscale("log")
     fig.suptitle("Darcy Flow final full-50 evaluation: generalization gain and train/test tradeoff")
     fig.tight_layout(rect=[0, 0, 1, 0.93])
     return savefig(fig, out_dir / "darcy_full50_mean_relative_l2_train_test_generalization.png")
@@ -442,7 +444,14 @@ def plot_full50_delta_heatmap(df: pd.DataFrame, out_dir: Path) -> str | None:
         meta = gen.groupby("dataset_id", as_index=False)[meta_cols].first().sort_values("manual_rank")
         order = meta["dataset_id"].tolist()
         pivot = pivot.reindex(order)
-        ylabels = [f"{int(r.manual_rank):02d} {str(r.family)[:12]}" for r in meta.itertuples(index=False)]
+        ylabels = []
+        for row in meta.itertuples(index=False):
+            rank = int(getattr(row, "manual_rank"))
+            if "family" in meta.columns:
+                label = str(getattr(row, "family"))[:12]
+            else:
+                label = str(getattr(row, "dataset_id"))[:18]
+            ylabels.append(f"{rank:02d} {label}")
     else:
         pivot = pivot.sort_index()
         ylabels = [str(x)[:18] for x in pivot.index]
@@ -684,6 +693,7 @@ def main() -> None:
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--report-md", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--allow-missing", action="store_true")
+    parser.add_argument("--linear-scale", action="store_true", help="Use linear y axes for loss/error plots instead of the default log y axes.")
     parser.add_argument("--write-full-logging-launcher", type=Path, default=PROJECT_ROOT / "tools/run_darcy_loss123physics_full_logging_20260611.sh")
     args = parser.parse_args()
 
@@ -714,7 +724,7 @@ def main() -> None:
         eval_df.to_csv(out_dir / "darcy_eval_split_summary_merged.csv", index=False)
         for metric in ["relative_l2", "rmse"]:
             for x in ["epoch", "wall_minutes"]:
-                path = plot_eval_metric(eval_df, out_dir, metric, x)
+                path = plot_eval_metric(eval_df, out_dir, metric, x, log_scale=not args.linear_scale)
                 if path:
                     outputs.append(path)
     if not attack_df.empty:
@@ -727,12 +737,12 @@ def main() -> None:
             ("darcy_flip_fraction", "binary flip fraction"),
             ("attack_samples_per_sec", "attack samples/sec"),
         ]:
-            path = plot_attack_summary(attack_df, out_dir, y, label)
+            path = plot_attack_summary(attack_df, out_dir, y, label, log_scale=not args.linear_scale)
             if path:
                 outputs.append(path)
     if not train_df.empty:
         train_df.to_csv(out_dir / "darcy_train_steps_merged.csv", index=False)
-        path = plot_train_loss(train_df, out_dir)
+        path = plot_train_loss(train_df, out_dir, log_scale=not args.linear_scale)
         if path:
             outputs.append(path)
         path = plot_runtime_components(train_df, eval_df, out_dir)
@@ -765,7 +775,10 @@ def main() -> None:
     if not full50_df.empty:
         full50_df.to_csv(out_dir / "darcy_full50_eval_merged.csv", index=False)
         for fn in [plot_full50_mean_bars, plot_full50_delta_heatmap, plot_full50_delta_scatter, plot_full50_improvement_bars]:
-            path = fn(full50_df, out_dir)
+            if fn is plot_full50_mean_bars:
+                path = fn(full50_df, out_dir, log_scale=not args.linear_scale)
+            else:
+                path = fn(full50_df, out_dir)
             if path:
                 outputs.append(path)
 
@@ -787,6 +800,10 @@ def main() -> None:
         "## Evaluation Coverage In Existing Runs",
         "",
         *coverage_lines(eval_df),
+        "",
+        "## Plot Scale",
+        "",
+        f"- Loss/error y-axis scale: {'linear' if args.linear_scale else 'log'}",
         "",
         "## Outputs",
         "",
