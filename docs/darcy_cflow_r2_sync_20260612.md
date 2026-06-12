@@ -93,6 +93,28 @@ Total objects: 202
 Total size: 655.146 MiB
 ```
 
+Top-percentile Darcy Loss3 visual heatmap upload, added after strict top5/top10 and visual-relaxed selection were generated:
+
+```text
+visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_top5pct_visual
+visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_top10pct_visual
+visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_top5pct_visual_relaxed
+visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_top10pct_visual_relaxed
+analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_top10pct_visualscreen_candidates
+analysis_outputs/darcy_five_model_batch_ranked_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished
+docs/darcy_loss3_top_percentile_visual_heatmaps_20260612.md
+tools/build_darcy_loss3_top_percentile_visual_heatmaps_20260612.py
+tools/build_darcy_loss3_visual_relaxed_heatmaps_20260612.py
+tools/plot_darcy_five_model_batch_ranked_heatmaps_20260612.py
+```
+
+Updated full3000 bundle Darcy attack heatmap subdirectory after adding top-percentile folders:
+
+```text
+Total objects: 50
+Total size: 32.239 MiB
+```
+
 Notes:
 
 ```text

@@ -456,10 +456,15 @@ def write_variant_outputs(
         for start in range(0, len(samples), int(args.plot_batch_size)):
             end = min(len(samples), start + int(args.plot_batch_size))
             t0 = time.perf_counter()
+            # Clone each slice before handing it to the JAX Darcy solver bridge.
+            # Plain tensor views can carry a storage offset whose device pointer
+            # alignment is rejected by XLA on some batches.
+            xb_batch = xb_all[start:end].clone().contiguous()
+            yb_batch = yb_all[start:end].clone().contiguous()
             batch_rows = batch_darcy_attack_trace(
                 model,
-                xb_all[start:end],
-                yb_all[start:end],
+                xb_batch,
+                yb_batch,
                 steps=int(args.attack_steps),
                 epsilon_fraction=float(args.epsilon_fraction),
                 keep_arrays=True,
