@@ -45,10 +45,33 @@ Total objects: 131
 Total size: 228.017 MiB
 ```
 
+
+Full training artifact upload, added after the explicit full checkpoint/archive request:
+
+```text
+adversarial_training_runs/darcy_binary_loss3targeted_loss1_1000ep_full50_timematched_20260612_full50_timematched_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_physics_1040ep_full50_timematched_20260612_full50_timematched_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_loss1_continue2000ep_from_1000ep_full50_timematched_20260612_stage2_2000_from_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_loss2_continue2053ep_from_1026ep_full50_timematched_20260612_stage2_2000_from_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_loss3_continue2022ep_from_1011ep_full50_timematched_20260612_stage2_2000_from_1000c
+adversarial_training_runs/darcy_binary_loss3targeted_physics_continue2081ep_from_1040ep_full50_timematched_20260612_stage2_2000_from_1000c
+```
+
+This full upload includes the large `.pt` checkpoints and `.npz` attack probe/sample files from the formal first-stage and stage2 Darcy Cflow runs.
+
+Full artifact verification after upload:
+
+```text
+Total objects: 12,467
+Total size: 61.318 GiB
+```
+
 Notes:
 
 ```text
 The temporary rclone config was removed after upload.
-Large adversarial_training_runs checkpoints were not included in this R2 bundle; the stage2 training directories alone are about 42 GiB and should be archived separately only if explicitly needed.
+Large adversarial_training_runs checkpoints are now included in the R2 bundle under the same Darcy Cflow prefix.
 GitHub commit intentionally keeps large binary scientific artifacts out of Git according to .gitignore.
 ```
