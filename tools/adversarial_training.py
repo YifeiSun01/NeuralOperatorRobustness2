@@ -1336,6 +1336,22 @@ def attack_objective_losses_for_probe(
     cfg: dict[str, Any],
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Per-sample clean/attacked losses using the configured attack objective."""
+    if str(cfg.get("training_perturbation_mode", "attack")) == "random-field":
+        target_mode = random_field_target_mode(cfg)
+        if task != "burgers":
+            raise ValueError("random-field probe losses are currently implemented for Burgers only")
+        if target_mode == "clean-y":
+            clean_target = yb_selected.detach()
+            adv_target = y_adv_training.detach()
+        elif target_mode == "solver-y":
+            clean_target = solver_target_for_model_input(task, xb_selected, yb_selected, cfg, allow_target_grad=False).detach()
+            adv_target = y_adv_training.detach()
+        else:
+            raise ValueError(f"unknown random_field_target_mode={target_mode!r}")
+        clean_losses = per_sample_finite_mse(model(xb_selected), clean_target)
+        adv_losses = per_sample_finite_mse(model(x_adv_selected), adv_target)
+        return clean_losses, adv_losses
+
     if task == "darcy":
         _, clean_losses, _, _ = darcy_attack_objective_loss(
             model,
@@ -1372,6 +1388,271 @@ def attack_objective_losses_for_probe(
     clean_losses = per_sample_finite_mse(model(x_clean_loss), y_clean_loss)
     adv_losses = per_sample_finite_mse(model(x_adv_selected), y_adv_training)
     return clean_losses, adv_losses
+
+
+def random_field_target_mode(cfg: dict[str, Any]) -> str:
+    mode = str(cfg.get("random_field_target_mode", "solver-y")).lower().strip().replace("_", "-")
+    aliases = {
+        "clean": "clean-y",
+        "clean-label": "clean-y",
+        "clean-y": "clean-y",
+        "fixed-y": "clean-y",
+        "unchanged-y": "clean-y",
+        "solver": "solver-y",
+        "solver-label": "solver-y",
+        "solver-y": "solver-y",
+        "recomputed-y": "solver-y",
+    }
+    mode = aliases.get(mode, mode)
+    if mode not in {"clean-y", "solver-y"}:
+        raise ValueError(f"unknown random_field_target_mode={mode!r}; expected clean-y or solver-y")
+    return mode
+
+
+def random_field_family_choices(cfg: dict[str, Any]) -> list[str]:
+    raw = str(cfg.get("random_field_families", "gaussian,matern"))
+    aliases = {
+        "gauss": "gaussian",
+        "rbf": "gaussian",
+        "squared-exponential": "gaussian",
+        "squared_exponential": "gaussian",
+        "mattern": "matern",
+        "martin": "matern",
+    }
+    families: list[str] = []
+    for part in raw.split(","):
+        family = aliases.get(part.strip().lower(), part.strip().lower())
+        if not family:
+            continue
+        if family not in {"gaussian", "matern"}:
+            raise ValueError(f"unknown random field family {family!r}; expected gaussian/matern")
+        families.append(family)
+    return families or ["gaussian", "matern"]
+
+
+def _positive_float_choices(value: Any, default: list[float], *, name: str) -> list[float]:
+    choices = parse_float_list(value)
+    if not choices:
+        choices = list(default)
+    out = [float(x) for x in choices if float(x) > 0]
+    if not out:
+        raise ValueError(f"{name} must contain at least one positive value")
+    return out
+
+
+def burgers_random_field_delta(
+    xb: torch.Tensor,
+    eps: torch.Tensor,
+    cfg: dict[str, Any],
+) -> tuple[torch.Tensor, dict[str, Any], dict[str, torch.Tensor]]:
+    if xb.ndim != 3 or xb.shape[-1] != 1:
+        raise ValueError(f"Burgers random-field mode expects x shape (B,N,1), got {tuple(xb.shape)}")
+
+    bsz = int(xb.shape[0])
+    n = int(xb.shape[1])
+    device = xb.device
+    dtype = xb.dtype
+    families = random_field_family_choices(cfg)
+    gaussian_lengths = _positive_float_choices(
+        cfg.get("random_field_gaussian_correlation_choices"),
+        [0.015, 0.03, 0.06, 0.12, 0.24],
+        name="random_field_gaussian_correlation_choices",
+    )
+    matern_lengths = _positive_float_choices(
+        cfg.get("random_field_matern_correlation_choices"),
+        [0.015, 0.03, 0.06, 0.12, 0.24],
+        name="random_field_matern_correlation_choices",
+    )
+    matern_nus = _positive_float_choices(
+        cfg.get("random_field_matern_nu_choices"),
+        [1.2, 2.2, 3.2, 4.2, 5.2],
+        name="random_field_matern_nu_choices",
+    )
+    domain_extent = float(cfg.get("random_field_domain_extent", 2.0))
+    if domain_extent <= 0:
+        raise ValueError("random_field_domain_extent must be positive")
+
+    family_idx = torch.randint(len(families), (bsz,), device=device)
+    family_names = [families[int(i)] for i in family_idx.detach().cpu().tolist()]
+    gaussian_length_tensor = torch.as_tensor(gaussian_lengths, device=device, dtype=dtype)
+    matern_length_tensor = torch.as_tensor(matern_lengths, device=device, dtype=dtype)
+    matern_nu_tensor = torch.as_tensor(matern_nus, device=device, dtype=dtype)
+    gaussian_length = gaussian_length_tensor[torch.randint(len(gaussian_lengths), (bsz,), device=device)]
+    matern_length = matern_length_tensor[torch.randint(len(matern_lengths), (bsz,), device=device)]
+    matern_nu = matern_nu_tensor[torch.randint(len(matern_nus), (bsz,), device=device)]
+
+    chosen_length = torch.empty((bsz,), device=device, dtype=dtype)
+    chosen_nu = torch.full((bsz,), float("nan"), device=device, dtype=dtype)
+    for i, family in enumerate(families):
+        mask = family_idx == i
+        if family == "gaussian":
+            chosen_length = torch.where(mask, gaussian_length, chosen_length)
+        elif family == "matern":
+            chosen_length = torch.where(mask, matern_length, chosen_length)
+            chosen_nu = torch.where(mask, matern_nu, chosen_nu)
+
+    white = torch.randn((bsz, n), device=device, dtype=dtype)
+    coeff = torch.fft.rfft(white, dim=1)
+    freq = torch.fft.rfftfreq(n, d=domain_extent / float(n)).to(device=device, dtype=dtype)
+    omega = (2.0 * math.pi * freq).reshape(1, -1)
+    length_view = chosen_length.reshape(-1, 1).clamp_min(1e-8)
+    nu_view = torch.nan_to_num(chosen_nu, nan=float(matern_nus[0])).reshape(-1, 1).clamp_min(1e-6)
+
+    gaussian_amp = torch.exp(-0.5 * (omega * length_view).pow(2))
+    matern_amp = (1.0 + (omega * length_view).pow(2) / (2.0 * nu_view)).pow(-(nu_view + 0.5) * 0.5)
+    amp = torch.empty_like(gaussian_amp)
+    for i, family in enumerate(families):
+        mask = (family_idx == i).reshape(-1, 1)
+        amp = torch.where(mask, matern_amp if family == "matern" else gaussian_amp, amp)
+    amp[:, 0] = 0.0
+    field = torch.fft.irfft(coeff * amp.to(dtype=coeff.dtype), n=n, dim=1)
+    field = field - field.mean(dim=1, keepdim=True)
+    field_rms = torch.sqrt(field.pow(2).mean(dim=1, keepdim=True).clamp_min(1e-24))
+    delta = field / field_rms * eps.reshape(-1, 1)
+    delta = delta.unsqueeze(-1).to(dtype=dtype)
+
+    clip_min = cfg.get("random_field_clip_x_min")
+    clip_max = cfg.get("random_field_clip_x_max")
+    if clip_min is not None or clip_max is not None:
+        lo = -float("inf") if clip_min is None else float(clip_min)
+        hi = float("inf") if clip_max is None else float(clip_max)
+        x_adv = torch.clamp(xb + delta, min=lo, max=hi)
+        delta = x_adv - xb
+
+    family_counts = {f"random_field_family_{family}_count": int(family_names.count(family)) for family in sorted(set(families))}
+    finite_nu = chosen_nu[torch.isfinite(chosen_nu)]
+    info = {
+        "random_field_families": ",".join(families),
+        "random_field_domain_extent": domain_extent,
+        "random_field_gaussian_correlation_choices": ",".join(f"{x:g}" for x in gaussian_lengths),
+        "random_field_matern_correlation_choices": ",".join(f"{x:g}" for x in matern_lengths),
+        "random_field_matern_nu_choices": ",".join(f"{x:g}" for x in matern_nus),
+        "random_field_length_mean": float(chosen_length.mean().detach().cpu()),
+        "random_field_length_min": float(chosen_length.min().detach().cpu()),
+        "random_field_length_max": float(chosen_length.max().detach().cpu()),
+        "random_field_matern_nu_mean": float(finite_nu.mean().detach().cpu()) if finite_nu.numel() else float("nan"),
+        "random_field_matern_nu_min": float(finite_nu.min().detach().cpu()) if finite_nu.numel() else float("nan"),
+        "random_field_matern_nu_max": float(finite_nu.max().detach().cpu()) if finite_nu.numel() else float("nan"),
+        **family_counts,
+    }
+    probe_tensors = {
+        "random_field_family_id": family_idx.detach().to(torch.float32),
+        "random_field_length": chosen_length.detach(),
+        "random_field_matern_nu": chosen_nu.detach(),
+        "random_field_epsilon": eps.detach(),
+    }
+    return delta.detach(), info, probe_tensors
+
+
+def burgers_random_field_training_batch(
+    model,
+    xb: torch.Tensor,
+    yb: torch.Tensor,
+    cfg: dict[str, Any],
+) -> AttackBatchResult:
+    was_training = model.training
+    model.eval()
+    eps = compute_batch_eps(
+        xb,
+        float(cfg["epsilon_fraction"]),
+        float(cfg["epsilon_abs"]),
+        float(cfg["eps_jitter_low"]),
+        float(cfg["eps_jitter_high"]),
+    )
+    if float(cfg.get("epsilon_abs", 0.0) or 0.0) > 0:
+        eps_nominal = torch.full_like(eps, float(cfg["epsilon_abs"]))
+    else:
+        eps_nominal = per_sample_range(xb).to(device=xb.device, dtype=xb.dtype) * float(cfg["epsilon_fraction"])
+    eps_jitter_factor = eps / eps_nominal.clamp_min(1e-12)
+    delta, field_info, probe_tensors = burgers_random_field_delta(xb, eps, cfg)
+    x_train = (xb + delta).detach()
+    target_mode = random_field_target_mode(cfg)
+
+    with torch.no_grad():
+        if target_mode == "clean-y":
+            y_train = yb.detach()
+            clean_target = yb.detach()
+            objective_definition = "Random field delta; optimizer trains MSE(model(x+delta), y_clean)"
+            target_source = "clean_y_unchanged_random_field"
+            solver_forward = 0
+        elif target_mode == "solver-y":
+            y_train = solver_target_for_model_input("burgers", x_train, yb, cfg, allow_target_grad=False).detach()
+            clean_target = solver_target_for_model_input("burgers", xb, yb, cfg, allow_target_grad=False).detach()
+            objective_definition = "Random field delta; optimizer trains MSE(model(x+delta), solver(x+delta))"
+            target_source = "solver_x_random_field_training_target"
+            solver_forward = 1
+        else:
+            raise ValueError(f"unknown random_field_target_mode={target_mode!r}")
+        clean_pred = model(xb)
+        adv_pred = model(x_train)
+        clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
+        adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+        clean_loss_value = float(finite_mse(clean_pred, clean_target).detach().cpu())
+        adv_loss_value = float(finite_mse(adv_pred, y_train).detach().cpu())
+        mask = torch.ones_like(xb)
+        linf = float(delta.abs().reshape(delta.shape[0], -1).max(dim=1).values.mean().cpu())
+        l2 = float(torch.sqrt(delta.pow(2).reshape(delta.shape[0], -1).mean(dim=1)).mean().cpu())
+        l2_total = float(per_sample_l2_total(delta, mask).mean().cpu())
+        eps_l2_total = float(rms_eps_to_l2_total(eps, mask).mean().cpu())
+        boundary_ratio = float((per_sample_l2_total(delta, mask) / rms_eps_to_l2_total(eps, mask).clamp_min(1e-12)).mean().cpu())
+
+    if was_training:
+        model.train()
+
+    info = {
+        "label_mode": str(cfg.get("label_mode", "solver")),
+        "target_source": target_source,
+        "training_target_source": target_source,
+        "attack_loss_objective": f"random_field_{target_mode}",
+        "attack_objective_definition": objective_definition,
+        "attack_uses_solver_forward": solver_forward,
+        "attack_uses_solver_backward": 0,
+        "full_solver_gradient": False,
+        "attack_target_source": target_source,
+        "attack_type": "random_field_l2_rms",
+        "attack_method": "random_field_gaussian_matern",
+        "attack_p_order": 2,
+        "attack_q_order": 2,
+        "epsilon_semantics": "per-sample RMS L2 radius for random field delta",
+        "attack_steps": 0,
+        "epsilon_mean": float(eps.mean().detach().cpu()),
+        "epsilon_min": float(eps.min().detach().cpu()),
+        "epsilon_max": float(eps.max().detach().cpu()),
+        "alpha_mean": float(eps.mean().detach().cpu()),
+        "alpha_min": float(eps.min().detach().cpu()),
+        "alpha_max": float(eps.max().detach().cpu()),
+        "alpha_ratio_nominal": 0.0,
+        "alpha_jitter_low": float("nan"),
+        "alpha_jitter_high": float("nan"),
+        "alpha_is_epsilon_times_ratio": 0.0,
+        "clean_loss_before_attack": clean_loss_value,
+        "adv_loss_after_random_start": adv_loss_value,
+        "adv_loss_after_attack": adv_loss_value,
+        "attack_loss_gain": adv_loss_value - clean_loss_value,
+        "grad_abs_mean_last": 0.0,
+        "boundary_ratio_mean": boundary_ratio,
+        "delta_linf_mean": linf,
+        "delta_l2_rms_mean": l2,
+        "delta_l2_total_mean": l2_total,
+        "epsilon_l2_total_mean": eps_l2_total,
+        **field_info,
+    }
+    info.update(tensor_stats("target", y_train))
+    sample_info = make_attack_sample_info(
+        epsilon=eps,
+        epsilon_jitter_factor=eps_jitter_factor,
+        alpha=eps,
+        clean_loss=clean_loss_samples,
+        adv_loss=adv_loss_samples,
+    )
+    sample_info.update({key: value.detach().float().cpu() for key, value in probe_tensors.items()})
+    return AttackBatchResult(
+        x_train.detach(),
+        y_train.detach(),
+        info,
+        sample_info=sample_info,
+        probe_tensors=probe_tensors,
+    )
 
 
 def continuous_attack(
@@ -1869,6 +2150,11 @@ def ns2d_solver_consistent_attack(
 
 
 def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict[str, Any]) -> AttackBatchResult:
+    if str(cfg.get("training_perturbation_mode", "attack")) == "random-field":
+        if task != "burgers":
+            raise ValueError("--training-perturbation-mode random-field is currently implemented for Burgers only")
+        return burgers_random_field_training_batch(model, xb, yb, cfg)
+
     method = str(cfg["attack_method"])
     label_mode = str(cfg.get("label_mode", "solver"))
     if label_mode == "solver" and task == "ns2d":
@@ -2625,6 +2911,15 @@ def train_one_task(
             "ns_attack_frames": args.ns_attack_frames,
             "label_mode": args.label_mode,
             "training_data_mode": args.training_data_mode,
+            "training_perturbation_mode": args.training_perturbation_mode,
+            "random_field_target_mode": args.random_field_target_mode,
+            "random_field_families": args.random_field_families,
+            "random_field_gaussian_correlation_choices": parse_float_list(args.random_field_gaussian_correlation_choices),
+            "random_field_matern_correlation_choices": parse_float_list(args.random_field_matern_correlation_choices),
+            "random_field_matern_nu_choices": parse_float_list(args.random_field_matern_nu_choices),
+            "random_field_domain_extent": args.random_field_domain_extent,
+            "random_field_clip_x_min": args.random_field_clip_x_min,
+            "random_field_clip_x_max": args.random_field_clip_x_max,
             "burgers_solver_remat": args.burgers_solver_remat,
             "burgers_solver_remat_chunk_steps": args.burgers_solver_remat_chunk_steps,
             "ns2d_solver_remat": args.ns2d_solver_remat,
@@ -3219,6 +3514,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
     parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs.")
+    parser.add_argument("--training-perturbation-mode", choices=["attack", "random-field"], default="attack", help="attack uses adversarially optimized delta; random-field samples a fresh Gaussian/Matern random-field delta without attack optimization.")
+    parser.add_argument("--random-field-target-mode", choices=["clean-y", "solver-y"], default="solver-y", help="For --training-perturbation-mode random-field: clean-y keeps the original clean target fixed; solver-y recomputes the solver target at x+delta.")
+    parser.add_argument("--random-field-families", default="gaussian,matern", help="Comma-separated random delta kernel families. Supported: gaussian,matern.")
+    parser.add_argument("--random-field-gaussian-correlation-choices", default="0.015,0.03,0.06,0.12,0.24", help="Comma-separated Gaussian kernel correlation lengths sampled per training sample.")
+    parser.add_argument("--random-field-matern-correlation-choices", default="0.015,0.03,0.06,0.12,0.24", help="Comma-separated Matern kernel correlation lengths sampled per training sample.")
+    parser.add_argument("--random-field-matern-nu-choices", default="1.2,2.2,3.2,4.2,5.2", help="Comma-separated Matern smoothness nu values sampled per training sample.")
+    parser.add_argument("--random-field-domain-extent", type=float, default=2.0, help="Physical domain extent used when converting FFT frequencies for random-field kernels.")
+    parser.add_argument("--random-field-clip-x-min", type=float, default=None, help="Optional lower clamp for x+delta in random-field mode; omitted preserves exact RMS delta budget.")
+    parser.add_argument("--random-field-clip-x-max", type=float, default=None, help="Optional upper clamp for x+delta in random-field mode; omitted preserves exact RMS delta budget.")
     parser.add_argument("--attack-probe-samples", type=int, default=5, help="Number of fixed train-set source indices whose attacked x_adv and delta are saved each probe epoch; set 0 to disable.")
     parser.add_argument("--attack-probe-indices", default=None, help="Optional comma-separated explicit train-set source indices for attack probe saving. Overrides --attack-probe-samples.")
     parser.add_argument("--attack-probe-every-n-epochs", type=int, default=1, help="Save attack probe arrays every N epochs; default 1 saves every epoch.")
@@ -3292,6 +3596,8 @@ def main() -> None:
         raise ValueError("--label-mode clean is the old non-physical x_adv -> y_clean objective. Pass --allow-clean-label only for an explicit ablation.")
     if args.training_data_mode == "clean-plus-adv" and args.label_mode != "solver":
         raise ValueError("--training-data-mode clean-plus-adv requires --label-mode solver so both clean and attacked pairs use solver-generated Y.")
+    if args.training_perturbation_mode == "random-field" and any(task.strip() != "burgers" for task in str(args.tasks).split(",") if task.strip()):
+        raise ValueError("--training-perturbation-mode random-field is currently implemented for --tasks burgers only")
     if args.burgers_require_p2q2:
         burgers_method = args.burgers_attack_method or DEFAULTS["burgers"].attack_method
         if not str(burgers_method).endswith("_l2"):
@@ -3336,6 +3642,17 @@ def main() -> None:
         "preflight_dataset_counts": dataset_count_rows,
         "planned_workload_estimate": planned_estimate,
         "training_data_mode": args.training_data_mode,
+        "training_perturbation_mode": args.training_perturbation_mode,
+        "random_field_training": {
+            "target_mode": args.random_field_target_mode,
+            "families": args.random_field_families,
+            "gaussian_correlation_choices": parse_float_list(args.random_field_gaussian_correlation_choices),
+            "matern_correlation_choices": parse_float_list(args.random_field_matern_correlation_choices),
+            "matern_nu_choices": parse_float_list(args.random_field_matern_nu_choices),
+            "domain_extent": args.random_field_domain_extent,
+            "clip_x_min": args.random_field_clip_x_min,
+            "clip_x_max": args.random_field_clip_x_max,
+        },
         "evaluation_schedule": "every_epoch",
         "eval_every_fraction_deprecated": args.eval_every_fraction,
         "checkpoint_every_epochs": int(args.checkpoint_every_epochs),
@@ -3377,7 +3694,10 @@ def main() -> None:
             "initial vorticity frame and both model input frames and target frames "
             "are regenerated by solver rollout from the attacked initial state. "
             "The old clean-label x_adv -> y_clean objective requires the explicit "
-            "--allow-clean-label ablation flag."
+            "--allow-clean-label ablation flag. The separate --training-perturbation-mode "
+            "random-field path is a deliberate non-adversarial delta ablation: it samples "
+            "Gaussian/Matern random-field perturbations and uses either clean-y or solver-y "
+            "targets according to --random-field-target-mode."
         ),
     }
     (out_root / "run_config.json").write_text(json.dumps(to_jsonable(run_cfg), indent=2), encoding="utf-8")
@@ -3410,7 +3730,8 @@ def main() -> None:
         f"- Max wall seconds: `{args.max_wall_seconds}`",
         "",
         "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
-        "Training data modes: `adv-only` uses only attacked solver pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly attacked solver pairs, doubling the training examples per attack batch.",
+        "Training data modes: `adv-only` uses only perturbed solver/target pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly perturbed pairs, doubling the training examples per perturbation batch.",
+        "Perturbation modes: `attack` optimizes delta adversarially; `random-field` samples fresh Gaussian/Matern random-field deltas without attack optimization and uses `--random-field-target-mode clean-y` or `solver-y` for the target.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
         "Default attack policy:",

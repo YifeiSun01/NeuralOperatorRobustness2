@@ -1,0 +1,49 @@
+target,metric,column,n,pearson,spearman
+attack loss increase abs,||A^T b||,bias_gradient_norm,100,0.7453075693594508,0.8507050705070505
+attack loss increase abs,||A^T b||^2,bias_gradient_norm_sq,100,0.6382414408316559,0.8507050705070505
+attack loss increase abs,sigma1(A)=||A||2,error_spectral_norm,100,0.6371899321401346,0.7778097809780976
+attack loss increase abs,sigma1(A)^2,error_spectral_norm_sq,100,0.5730657848381026,0.7778097809780976
+attack loss increase abs,||A||F,error_fro_norm,100,0.6663418957621838,0.8099609960996099
+attack loss increase abs,||A||F^2,error_fro_norm_sq,100,0.6349390094918731,0.8099609960996099
+attack loss increase abs,||b|| clean residual,clean_residual_norm_l2,100,0.6378227829568052,0.797023702370237
+attack loss increase abs,||b||^2 clean residual,clean_residual_norm_l2_sq,100,0.5426400198128501,0.797023702370237
+attack loss increase abs,SVD local gain at eps,svd_local_gain_eps_mse,100,0.5767437586112648,0.7801980198019801
+attack loss increase abs,SVD local gain at eps linear term,svd_local_gain_eps_linear_mse,100,0.5282562986915219,0.7819621962196219
+attack loss increase abs,SVD local gain at eps quadratic term,svd_local_gain_eps_quadratic_mse,100,0.5730657852610814,0.7778097809780976
+attack loss increase abs,ATB/outward local gain at eps,outward_local_gain_eps_mse,100,0.6261912334299677,0.8715151515151514
+attack loss increase abs,ATB/outward linear term,outward_local_gain_eps_linear_mse,100,0.7453075693594496,0.8507050705070505
+attack loss increase abs,ATB/outward quadratic term,outward_local_gain_eps_quadratic_mse,100,0.602485143517463,0.8587938793879387
+attack loss increase abs,affine local gain at eps,affine_local_gain_eps_mse,100,0.577615547891487,0.7806660666066605
+attack loss increase abs,attack initial MSE,attack_initial_mse,100,0.5425700285129837,0.797023702370237
+attack final MSE,||A^T b||,bias_gradient_norm,100,0.8279142505972402,0.8868886888688868
+attack final MSE,||A^T b||^2,bias_gradient_norm_sq,100,0.7235196465331234,0.8868886888688868
+attack final MSE,sigma1(A)=||A||2,error_spectral_norm,100,0.7239573499961031,0.8158175817581756
+attack final MSE,sigma1(A)^2,error_spectral_norm_sq,100,0.6772084927969739,0.8158175817581756
+attack final MSE,||A||F,error_fro_norm,100,0.7471692246926213,0.8505730573057305
+attack final MSE,||A||F^2,error_fro_norm_sq,100,0.729555151038398,0.8505730573057305
+attack final MSE,||b|| clean residual,clean_residual_norm_l2,100,0.7428976520698632,0.8404920492049204
+attack final MSE,||b||^2 clean residual,clean_residual_norm_l2_sq,100,0.6708054556548959,0.8404920492049204
+attack final MSE,SVD local gain at eps,svd_local_gain_eps_mse,100,0.6806012269525468,0.8179057905790578
+attack final MSE,SVD local gain at eps linear term,svd_local_gain_eps_linear_mse,100,0.5623410077733777,0.7926312631263125
+attack final MSE,SVD local gain at eps quadratic term,svd_local_gain_eps_quadratic_mse,100,0.6772084931445197,0.8158175817581756
+attack final MSE,ATB/outward local gain at eps,outward_local_gain_eps_mse,100,0.6617214458029771,0.8946534653465347
+attack final MSE,ATB/outward linear term,outward_local_gain_eps_linear_mse,100,0.8279142505972399,0.8868886888688868
+attack final MSE,ATB/outward quadratic term,outward_local_gain_eps_quadratic_mse,100,0.6331194756855977,0.8776477647764774
+attack final MSE,affine local gain at eps,affine_local_gain_eps_mse,100,0.6813881340215069,0.8183498349834982
+attack final MSE,attack initial MSE,attack_initial_mse,100,0.670743660897659,0.8404920492049204
+attack log growth,||A^T b||,bias_gradient_norm,100,-0.566456150386606,-0.8148094809480947
+attack log growth,||A^T b||^2,bias_gradient_norm_sq,100,-0.3774197182074583,-0.8148094809480947
+attack log growth,sigma1(A)=||A||2,error_spectral_norm,100,-0.6956790456240606,-0.8275187518751874
+attack log growth,sigma1(A)^2,error_spectral_norm_sq,100,-0.5611717969159746,-0.8275187518751874
+attack log growth,||A||F,error_fro_norm,100,-0.7305360803597737,-0.8509210921092109
+attack log growth,||A||F^2,error_fro_norm_sq,100,-0.6105835874963641,-0.8509210921092109
+attack log growth,||b|| clean residual,clean_residual_norm_l2,100,-0.7269414798888687,-0.8849564956495649
+attack log growth,||b||^2 clean residual,clean_residual_norm_l2_sq,100,-0.5484866560291308,-0.8849564956495649
+attack log growth,SVD local gain at eps,svd_local_gain_eps_mse,100,-0.5609001842639382,-0.8259105910591058
+attack log growth,SVD local gain at eps linear term,svd_local_gain_eps_linear_mse,100,-0.2658211517792892,-0.5557515751575157
+attack log growth,SVD local gain at eps quadratic term,svd_local_gain_eps_quadratic_mse,100,-0.5611717967610113,-0.8275187518751874
+attack log growth,ATB/outward local gain at eps,outward_local_gain_eps_mse,100,-0.2853681030430891,-0.6968616861686167
+attack log growth,ATB/outward linear term,outward_local_gain_eps_linear_mse,100,-0.5664561503866024,-0.8148094809480947
+attack log growth,ATB/outward quadratic term,outward_local_gain_eps_quadratic_mse,100,-0.2545900729418474,-0.6567536753675366
+attack log growth,affine local gain at eps,affine_local_gain_eps_mse,100,-0.5605254164842671,-0.8253945394539454
+attack log growth,attack initial MSE,attack_initial_mse,100,-0.5484777800901988,-0.8849564956495649
