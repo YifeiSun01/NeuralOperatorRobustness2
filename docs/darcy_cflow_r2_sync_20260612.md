@@ -68,6 +68,31 @@ Total objects: 12,467
 Total size: 61.318 GiB
 ```
 
+Full 0..3000 Burgers-style Darcy image-only bundle upload, added after the
+Darcy figures were regenerated as a single stitched 0..3000 trajectory:
+
+```text
+visualizations/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612
+analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work
+docs/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612.md
+tools/build_darcy_full3000_burgers_image_only_bundle_20260612.py
+```
+
+Image-only bundle verification after upload:
+
+```text
+Total objects: 116
+Total size: 105.931 MiB
+```
+
+Stitched work-directory verification after upload, excluding the already-uploaded
+per-epoch `.npz` attack-probe symlinks:
+
+```text
+Total objects: 202
+Total size: 655.146 MiB
+```
+
 Notes:
 
 ```text
