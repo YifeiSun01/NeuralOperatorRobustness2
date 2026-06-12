@@ -29,10 +29,26 @@ Total objects: 367
 Total size: 243.923 MiB
 ```
 
+Stage2 continuation upload, added after the 3000-ish epoch runs finished:
+
+```text
+visualizations/darcy_loss123physics_full50_timematched_stage2_20260612_stage2_2000_from_1000c
+docs/darcy_loss123physics_full50_timematched_stage2_20260612_stage2_2000_from_1000c*.md
+adversarial_training_runs/darcy_binary_loss3targeted_loss*_continue*stage2_2000_from_1000c metadata only
+adversarial_training_runs/darcy_binary_loss3targeted_physics_continue*stage2_2000_from_1000c metadata only
+```
+
+Stage2 visualization verification:
+
+```text
+Total objects: 131
+Total size: 228.017 MiB
+```
+
 Notes:
 
 ```text
 The temporary rclone config was removed after upload.
-Large adversarial_training_runs checkpoints were not included in this R2 bundle; that directory is about 58 GiB and should be archived separately only if explicitly needed.
+Large adversarial_training_runs checkpoints were not included in this R2 bundle; the stage2 training directories alone are about 42 GiB and should be archived separately only if explicitly needed.
 GitHub commit intentionally keeps large binary scientific artifacts out of Git according to .gitignore.
 ```
