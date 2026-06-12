@@ -74,6 +74,21 @@ def run_one(args: argparse.Namespace, method: str, run_dir: Path) -> dict[str, A
 
 def write_report(args: argparse.Namespace, manifests: list[dict[str, Any]]) -> None:
     args.report_md.parent.mkdir(parents=True, exist_ok=True)
+    full50 = all(
+        int(m.get("dataset_count_logged_per_epoch", 0)) >= 52
+        and int(m.get("generalization_dataset_count_logged_per_epoch", 0)) >= 50
+        for m in manifests
+    )
+    fft_generated = all(str(m.get("fft_status")) == "generated" for m in manifests)
+    status_note = (
+        "Corrected full-50 status: this report is built from new full-logging Darcy runs. "
+        "Each method logs 52 datasets per epoch: original train, original test, and all 50 generated binary generalization datasets. "
+        f"Delta FFT status across methods: {'generated' if fft_generated else 'see per-method status'}."
+        if full50
+        else "Important logging note: the older 100-epoch Darcy runs logged only the train set, test set, and 8 generated datasets per epoch. "
+        "Those runs can produce correct Burgers-style heatmaps for the data that was logged, but they cannot be expanded into 50 per-epoch generated datasets after the fact. "
+        "For 50 generated datasets per epoch and delta FFT, rerun `tools/run_darcy_loss123physics_full_logging_20260611.sh`; it sets `MAX_GENERALIZATION_EVAL=50` and `ATTACK_PROBE_SAMPLES=5` by default."
+    )
     lines = [
         "# Darcy Flow Burgers-Style Polished Adversarial-Training Figures",
         "",
@@ -85,9 +100,7 @@ def write_report(args: argparse.Namespace, manifests: list[dict[str, Any]]) -> N
         "- grouped high-transparency dataset trajectories, raw and 25-epoch moving average;",
         "- delta FFT heatmap plus selected spectra when fixed attack-probe NPZ files are present.",
         "",
-        "Important logging note: the older 100-epoch Darcy runs logged only the train set, test set, and 8 generated datasets per epoch. "
-        "Those runs can produce correct Burgers-style heatmaps for the data that was logged, but they cannot be expanded into 50 per-epoch generated datasets after the fact. "
-        "For 50 generated datasets per epoch and delta FFT, rerun `tools/run_darcy_loss123physics_full_logging_20260611.sh`; it sets `MAX_GENERALIZATION_EVAL=50` and `ATTACK_PROBE_SAMPLES=5` by default.",
+        status_note,
         "",
         "## Per-Method Outputs",
         "",
