@@ -363,6 +363,83 @@ input sensitivity and binary-feasible first-order gain than by Jacobian spectral
 norm. Loss3 reduces the former while not necessarily reducing the latter.
 ```
 
+
+## Ten-Sample Metric-Attack Correlation Run
+
+Correlation report:
+`analysis_outputs/darcy_metric_correlation_10samples_20260612_10samples_loss3attack20_corr_chunk64/README.md`.
+
+Fixed-effect supplement:
+`analysis_outputs/darcy_metric_correlation_10samples_20260612_10samples_loss3attack20_corr_chunk64/FIXED_EFFECT_INTERPRETATION.md`.
+
+Figures:
+`visualizations/darcy_metric_correlation_10samples_20260612_10samples_loss3attack20_corr_chunk64`.
+
+Script:
+`tools/run_darcy_metric_correlation_10samples_20260612.py`.
+
+Setup:
+
+- Samples: 10 diverse generated Darcy generalization samples.
+- Models: `loss1`, `loss2`, `loss3`, and `physics`.
+- Total model-sample rows: 40.
+- Attack: shared 20-step binary `loss3` attack, epsilon fraction `0.025`.
+- Sigma metric: block/2 top singular vector lifted to the full grid, followed by
+  one full-space singular-vector power-refinement step.
+- Additional metrics: clean loss, error norm, `||J^T e||`, `||J^T e||^2`,
+  binary-feasible first-order gain, `sigma_max * ||e||`, top-left singular-vector
+  error alignment, and top-1 weighted error energy.
+
+The first full attempt used `block-row-chunk=256` and hit CUDA OOM because it
+needed an extra 18.90 GiB while the stage2 training process was also resident on
+the GPU. The stable completed run used `block-row-chunk=64`.
+
+Output verification:
+
+| file | rows |
+|---|---:|
+| `metrics_by_model_sample.csv` | 40 data rows + header |
+| `correlations.csv` | 85 data rows + header |
+| `selected_samples.csv` | 10 data rows + header |
+
+Mean metrics by model in the 10-sample run:
+
+| model | mean attack gain | mean `||J^T e||` | mean `sigma_max` | mean binary first-order gain |
+|---|---:|---:|---:|---:|
+| loss1 | 4.87872e-06 | 1.25913e-04 | 0.00178995 | 1.56671e-06 |
+| loss2 | 3.84134e-06 | 1.02028e-04 | 0.00172110 | 1.25888e-06 |
+| loss3 | 2.64413e-06 | 9.28814e-05 | 0.00206670 | 1.20221e-06 |
+| physics | 4.20670e-06 | 1.17896e-04 | 0.00185268 | 1.51572e-06 |
+
+The raw overall correlation is not the right final evidence by itself, because it
+mixes model-level effects with sample-level effects. In raw overall correlation,
+`sigma_max` has a strong negative Spearman correlation with attack gain because
+`loss3` has lower attack gain while also having relatively high `sigma_max`.
+
+Key Spearman correlations under different fixed-effect views:
+
+| scope | clean loss | `||J^T e||` | `||J^T e||^2` | binary first-order | `sigma_max` | `sigma*||e||` | `|<e,u1>|` |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| raw overall | -0.323 | -0.221 | -0.221 | -0.267 | -0.592 | -0.304 | 0.258 |
+| within model | -0.716 | -0.545 | -0.582 | -0.599 | -0.377 | -0.556 | -0.006 |
+| within sample | 0.477 | 0.620 | 0.529 | 0.523 | -0.530 | 0.514 | 0.680 |
+| model+sample residual | -0.537 | -0.418 | -0.522 | -0.346 | 0.224 | -0.453 | 0.421 |
+
+Interpretation:
+
+- The model means strengthen the main observation: `loss3` has the smallest mean
+  attack gain, smallest mean `||J^T e||`, and smallest mean binary first-order
+  gain, while its mean `sigma_max` is the largest.
+- For comparing models on the same initial condition, the `within sample` view is
+  the most relevant. In that view, `||J^T e||`, `||J^T e||^2`, binary first-order
+  gain, and top-left error alignment are positively correlated with attack gain,
+  while `sigma_max` alone is negatively correlated.
+- The result supports the more careful claim that Darcy adversarial loss growth is
+  better explained by error-aligned sensitivity and feasible first-order attack
+  geometry than by worst-case Jacobian spectral norm alone.
+- The 10-sample result is a strong case study, not yet the final statistical proof;
+  the next scaling step should run the same fixed-effect analysis on more samples.
+
 ## Stage2 Continuation Status At Time Of This Record
 
 The stage2 continuation launcher was active when this record was written:
