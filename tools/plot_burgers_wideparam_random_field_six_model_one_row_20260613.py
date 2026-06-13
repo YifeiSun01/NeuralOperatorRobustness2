@@ -66,16 +66,16 @@ MODEL_SPECS = {
     },
     "random_clean_y": {
         "label": "random clean Y",
-        "epochs": 2000,
-        "sec_per_epoch": 2.0172,
-        "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_clean_y_2000ep_20260612/burgers/checkpoints/burgers_epoch2000_step002000.pt",
+        "epochs": 8000,
+        "sec_per_epoch": None,
+        "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_clean_y_8000ep_continue_20260613/burgers/checkpoints/burgers_epoch8000_step008000.pt",
         "color": "#7b5fb3",
     },
     "random_solver_y": {
         "label": "random solver Y",
-        "epochs": 2000,
-        "sec_per_epoch": 4.9562,
-        "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_2000ep_20260612/burgers/checkpoints/burgers_epoch2000_step002000.pt",
+        "epochs": 6000,
+        "sec_per_epoch": None,
+        "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_6000ep_continue_20260613/burgers/checkpoints/burgers_epoch6000_step006000.pt",
         "color": "#4f9a9a",
     },
 }

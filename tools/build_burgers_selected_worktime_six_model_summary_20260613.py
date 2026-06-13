@@ -19,6 +19,10 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 from scipy.stats import pearsonr, spearmanr
 
 REPO = Path(__file__).resolve().parents[1]
@@ -33,6 +37,22 @@ DEFAULT_OUT = REPO / "forensics/burgers_six_model_selected_worktime_summary_2026
 MODEL_ORDER = ["baseline", "loss1", "loss2", "loss3", "random_clean_y", "random_solver_y"]
 OLD4 = set(MODEL_ORDER[:4])
 RANDOM = set(MODEL_ORDER[4:])
+MODEL_LABELS = {
+    "baseline": "baseline",
+    "loss1": "loss1",
+    "loss2": "loss2",
+    "loss3": "loss3",
+    "random_clean_y": "random clean Y",
+    "random_solver_y": "random solver Y",
+}
+MODEL_COLORS = {
+    "baseline": "#2f6f9f",
+    "loss1": "#2f9b75",
+    "loss2": "#d98a2b",
+    "loss3": "#c35b5b",
+    "random_clean_y": "#7b5fb3",
+    "random_solver_y": "#4f9a9a",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -87,6 +107,219 @@ def stats(values: list[float]) -> dict[str, float]:
         "min": float(arr.min()),
         "max": float(arr.max()),
     }
+
+
+def model_bar(
+    ax: plt.Axes,
+    values: dict[str, float],
+    title: str,
+    ylabel: str,
+    *,
+    log_y: bool = False,
+    ylim: tuple[float, float] | None = None,
+) -> None:
+    xs = np.arange(len(MODEL_ORDER))
+    ys = [values.get(model, math.nan) for model in MODEL_ORDER]
+    colors = [MODEL_COLORS[model] for model in MODEL_ORDER]
+    ax.bar(xs, ys, color=colors, width=0.72)
+    ax.set_title(title, fontsize=10)
+    ax.set_ylabel(ylabel, fontsize=9)
+    ax.set_xticks(xs)
+    ax.set_xticklabels([MODEL_LABELS[m] for m in MODEL_ORDER], rotation=24, ha="right", fontsize=8)
+    ax.tick_params(axis="y", labelsize=8)
+    ax.grid(axis="y", alpha=0.25, lw=0.7)
+    if log_y:
+        positives = [v for v in ys if math.isfinite(v) and v > 0]
+        if positives:
+            ax.set_yscale("log")
+    if ylim is not None:
+        ax.set_ylim(*ylim)
+
+
+def long_model_means(rows: list[dict[str, Any]], metric: str, split: str | None = None) -> dict[str, float]:
+    out: dict[str, float] = {}
+    for model in MODEL_ORDER:
+        vals = []
+        for row in rows:
+            if row.get("model") != model:
+                continue
+            if split is not None and row.get("split") != split and row.get("source_split") != split:
+                continue
+            vals.append(finite(row.get(metric)))
+        out[model] = stats(vals)["mean"]
+    return out
+
+
+def write_clean_plots(clean_rows: list[dict[str, Any]], out_dir: Path) -> list[Path]:
+    plot_dir = out_dir / "plots"
+    plot_dir.mkdir(parents=True, exist_ok=True)
+    outputs: list[Path] = []
+    gen_rows = [row for row in clean_rows if row.get("split") == "generalization"]
+    for metric, title, ylabel in [
+        ("rmse", "Generalization clean RMSE", "RMSE"),
+        ("relative_l2", "Generalization clean relative L2", "Relative L2"),
+    ]:
+        means = {}
+        medians = {}
+        for model in MODEL_ORDER:
+            vals = [finite(row.get(f"{model}_{metric}_mean")) for row in gen_rows]
+            st = stats(vals)
+            means[model] = st["mean"]
+            medians[model] = st["median"]
+        fig, axes = plt.subplots(1, 2, figsize=(12.5, 4.2), constrained_layout=True)
+        model_bar(axes[0], means, f"{title} mean over generalization datasets", ylabel)
+        model_bar(axes[1], medians, f"{title} median over generalization datasets", ylabel)
+        fig.suptitle("Burgers selected-worktime six-model clean generalization", fontsize=12, weight="bold")
+        out = plot_dir / f"clean_generalization_{metric}_six_models.png"
+        fig.savefig(out, dpi=220)
+        plt.close(fig)
+        outputs.append(out)
+    return outputs
+
+
+def write_attack_plots(attack_rows: list[dict[str, Any]], out_dir: Path) -> list[Path]:
+    plot_dir = out_dir / "plots"
+    plot_dir.mkdir(parents=True, exist_ok=True)
+    outputs: list[Path] = []
+    for split in ("generalization", None):
+        suffix = "generalization" if split else "all52"
+        title_suffix = "generalization datasets" if split else "all 52 datasets"
+        fig, axes = plt.subplots(1, 2, figsize=(12.5, 4.2), constrained_layout=True)
+        model_bar(
+            axes[0],
+            long_model_means(attack_rows, "attack_loss_increase_mean", split),
+            f"P2Q2 attack loss increase, {title_suffix}",
+            "loss increase",
+            log_y=True,
+        )
+        model_bar(
+            axes[1],
+            long_model_means(attack_rows, "final_delta_rms_mean", split),
+            f"P2Q2 final delta RMS, {title_suffix}",
+            "delta RMS",
+            log_y=False,
+        )
+        fig.suptitle("Burgers selected-worktime six-model adversarial attack summary", fontsize=12, weight="bold")
+        out = plot_dir / f"attack_{suffix}_six_models.png"
+        fig.savefig(out, dpi=220)
+        plt.close(fig)
+        outputs.append(out)
+    return outputs
+
+
+def write_robustness_plots(robust_rows: list[dict[str, Any]], out_dir: Path) -> list[Path]:
+    plot_dir = out_dir / "plots"
+    plot_dir.mkdir(parents=True, exist_ok=True)
+    outputs: list[Path] = []
+
+    norm_metrics = [
+        ("attack_loss_increase", "attack loss increase", "loss increase"),
+        ("error_spectral_norm", "J_error spectral norm", "spectral norm"),
+        ("error_fro_norm_comparable", "J_error Frobenius norm", "Frobenius norm"),
+        ("bias_gradient_norm", "||J_error^T error||", "L2 norm"),
+        ("j_error_delta_l2", "||J_error delta||", "L2 norm"),
+        ("delta_l2", "||delta||", "L2 norm"),
+    ]
+    fig, axes = plt.subplots(2, 3, figsize=(15.0, 8.0), constrained_layout=True)
+    for ax, (metric, title, ylabel) in zip(axes.ravel(), norm_metrics, strict=False):
+        model_bar(ax, long_model_means(robust_rows, metric), title, ylabel, log_y=True)
+    fig.suptitle("Burgers selected-worktime 25-sample robustness norms", fontsize=13, weight="bold")
+    out = plot_dir / "robustness_norm_metrics_25sample_six_models.png"
+    fig.savefig(out, dpi=220)
+    plt.close(fig)
+    outputs.append(out)
+
+    direction_metrics = [
+        ("delta_top_error_sv_abs_cos", "cos(delta, top error right singular vector)"),
+        ("model_solver_top20_right_subspace_mean_cos", "top-20 right subspace mean cos"),
+        ("model_solver_top20_left_subspace_mean_cos", "top-20 left subspace mean cos"),
+        ("model_solver_top1_right_abs_cos", "top-1 right singular vector abs cos"),
+        ("model_solver_top1_left_abs_cos", "top-1 left singular vector abs cos"),
+    ]
+    fig, axes = plt.subplots(2, 3, figsize=(15.0, 8.0), constrained_layout=True)
+    for ax, (metric, title) in zip(axes.ravel(), direction_metrics, strict=False):
+        model_bar(ax, long_model_means(robust_rows, metric), title, "cosine", ylim=(0, 1.02))
+    for ax in axes.ravel()[len(direction_metrics) :]:
+        ax.axis("off")
+    fig.suptitle("Burgers selected-worktime 25-sample direction/subspace similarity", fontsize=13, weight="bold")
+    out = plot_dir / "robustness_direction_metrics_25sample_six_models.png"
+    fig.savefig(out, dpi=220)
+    plt.close(fig)
+    outputs.append(out)
+    return outputs
+
+
+def write_correlation_plots(out_dir: Path) -> list[Path]:
+    plot_dir = out_dir / "plots"
+    plot_dir.mkdir(parents=True, exist_ok=True)
+    corr_path = out_dir / "metric_correlations_with_attack_selected_worktime_25sample.csv"
+    rank_path = out_dir / "per_sample_model_rank_similarity_selected_worktime_25sample.csv"
+    outputs: list[Path] = []
+    if corr_path.exists():
+        rows = read_csv(corr_path)
+        metrics = [row["metric"] for row in rows]
+        y = np.arange(len(metrics))
+        pearson = [finite(row.get("pearson_with_attack_loss_increase")) for row in rows]
+        spearman = [finite(row.get("spearman_with_attack_loss_increase")) for row in rows]
+        fig, ax = plt.subplots(figsize=(10.5, max(5.0, 0.42 * len(metrics))), constrained_layout=True)
+        ax.barh(y - 0.18, pearson, height=0.34, label="Pearson", color="#4f7cac")
+        ax.barh(y + 0.18, spearman, height=0.34, label="Spearman", color="#c97944")
+        ax.set_yticks(y)
+        ax.set_yticklabels(metrics, fontsize=8)
+        ax.set_xlim(-1.0, 1.0)
+        ax.axvline(0, color="#222222", lw=0.8)
+        ax.grid(axis="x", alpha=0.25, lw=0.7)
+        ax.legend(fontsize=9)
+        ax.set_title("Correlation with attack loss increase across six models x 25 samples", fontsize=12, weight="bold")
+        out = plot_dir / "metric_correlations_with_attack_25sample_six_models.png"
+        fig.savefig(out, dpi=220)
+        plt.close(fig)
+        outputs.append(out)
+    if rank_path.exists():
+        rows = read_csv(rank_path)
+        metrics = sorted({row.get("metric", "") for row in rows if row.get("metric", "")})
+        means = {}
+        for metric in metrics:
+            vals = [finite(row.get("spearman_across_models_with_attack_loss_increase")) for row in rows if row.get("metric") == metric]
+            means[metric] = stats(vals)["mean"]
+        y = np.arange(len(metrics))
+        fig, ax = plt.subplots(figsize=(10.5, max(5.0, 0.42 * len(metrics))), constrained_layout=True)
+        ax.barh(y, [means[m] for m in metrics], color="#5c8d70")
+        ax.set_yticks(y)
+        ax.set_yticklabels(metrics, fontsize=8)
+        ax.set_xlim(-1.0, 1.0)
+        ax.axvline(0, color="#222222", lw=0.8)
+        ax.grid(axis="x", alpha=0.25, lw=0.7)
+        ax.set_title("Mean per-sample model-rank similarity with attack loss increase", fontsize=12, weight="bold")
+        out = plot_dir / "per_sample_model_rank_similarity_with_attack_25sample_six_models.png"
+        fig.savefig(out, dpi=220)
+        plt.close(fig)
+        outputs.append(out)
+    return outputs
+
+
+def write_summary_plots(
+    out_dir: Path,
+    clean_rows: list[dict[str, Any]],
+    attack_rows: list[dict[str, Any]],
+    robust_rows: list[dict[str, Any]],
+) -> list[Path]:
+    outputs: list[Path] = []
+    if clean_rows:
+        outputs.extend(write_clean_plots(clean_rows, out_dir))
+    if attack_rows:
+        outputs.extend(write_attack_plots(attack_rows, out_dir))
+    if robust_rows:
+        outputs.extend(write_robustness_plots(robust_rows, out_dir))
+        outputs.extend(write_correlation_plots(out_dir))
+    plot_dir = out_dir / "plots"
+    plot_dir.mkdir(parents=True, exist_ok=True)
+    manifest = {
+        "plot_count": len(outputs),
+        "plots": [str(path.relative_to(out_dir)) for path in outputs],
+    }
+    (plot_dir / "plot_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    return outputs
 
 
 def build_clean_table(random_root: Path, out_dir: Path) -> list[dict[str, Any]]:
@@ -282,7 +515,7 @@ def build_metric_summaries(rows: list[dict[str, Any]], out_dir: Path) -> None:
         corr_rows.append(
             {
                 "metric": metric,
-                "n": int(np.isfinite(np.asarray(x)) .sum()),
+                "n": int(np.isfinite(np.asarray(x)).sum()),
                 "pearson_with_attack_loss_increase": safe_corr(x, y, "pearson"),
                 "spearman_with_attack_loss_increase": safe_corr(x, y, "spearman"),
             }
@@ -306,7 +539,13 @@ def build_metric_summaries(rows: list[dict[str, Any]], out_dir: Path) -> None:
     write_csv(out_dir / "per_sample_model_rank_similarity_selected_worktime_25sample.csv", rank_rows)
 
 
-def write_readme(out_dir: Path, random_root: Path, clean_rows: list[dict[str, Any]], robust_rows: list[dict[str, Any]]) -> None:
+def write_readme(
+    out_dir: Path,
+    random_root: Path,
+    clean_rows: list[dict[str, Any]],
+    robust_rows: list[dict[str, Any]],
+    plot_paths: list[Path],
+) -> None:
     gen = [row for row in clean_rows if row.get("split") == "generalization"]
     lines = [
         "# Burgers Six-Model Selected-Worktime Summary",
@@ -332,7 +571,11 @@ def write_readme(out_dir: Path, random_root: Path, clean_rows: list[dict[str, An
         "- `model_level_metric_means_selected_worktime_25sample.csv`",
         "- `metric_correlations_with_attack_selected_worktime_25sample.csv`",
         "- `per_sample_model_rank_similarity_selected_worktime_25sample.csv`",
+        "",
+        "Summary plots:",
+        "",
     ]
+    lines.extend(f"- `{path.relative_to(out_dir)}`" for path in plot_paths)
     (out_dir / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -364,12 +607,24 @@ def main() -> int:
     }
     (out_dir / "selected_model_versions.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     clean_rows = build_clean_table(random_root, out_dir) if required[0].exists() else []
-    build_attack_table(random_root, out_dir)
+    attack_rows = build_attack_table(random_root, out_dir)
     robust_rows = build_robust_table(random_root, out_dir) if required[2].exists() else []
     if robust_rows:
         build_metric_summaries(robust_rows, out_dir)
-    write_readme(out_dir, random_root, clean_rows, robust_rows)
-    print(json.dumps({"out_dir": str(out_dir), "clean_rows": len(clean_rows), "robust_rows": len(robust_rows)}, indent=2))
+    plot_paths = write_summary_plots(out_dir, clean_rows, attack_rows, robust_rows)
+    write_readme(out_dir, random_root, clean_rows, robust_rows, plot_paths)
+    print(
+        json.dumps(
+            {
+                "out_dir": str(out_dir),
+                "clean_rows": len(clean_rows),
+                "attack_rows": len(attack_rows),
+                "robust_rows": len(robust_rows),
+                "plot_count": len(plot_paths),
+            },
+            indent=2,
+        )
+    )
     return 0
 
 
