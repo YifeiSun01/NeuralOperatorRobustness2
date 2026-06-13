@@ -1,0 +1,21 @@
+Darcy random-inclusive Burgers-style bundle R2 upload verification
+Date: 2026-06-13
+
+R2 prefix:
+neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected
+
+Verified remote paths:
+- visualizations/darcy_random_inclusive_burgers_style_bundle_20260613
+- analysis_outputs/darcy_random_inclusive_burgers_style_bundle_20260613
+
+Remote bundle size check:
+- Total objects: 78
+- Total size: 49.566 MiB
+
+Remote heatmap spot check:
+- visualizations/darcy_random_inclusive_burgers_style_bundle_20260613/comparison_dense/darcy_2d_attack_heatmaps/index0
+- PNG count: 5
+
+Notes:
+- The Git repository tracks the scripts, Markdown, CSV/JSON/README summaries, and this verification note.
+- The PNG images are ignored by repository policy and were uploaded to R2.
