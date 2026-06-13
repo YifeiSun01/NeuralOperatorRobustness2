@@ -1,0 +1,13 @@
+metric,n_models,pearson_model_means_vs_attack,spearman_model_rank_vs_attack
+clean_residual_mse_recomputed,6,0.9960298119968115,0.7714285714285715
+error_spectral_norm,6,0.9678883299828044,0.8285714285714287
+error_fro_norm_comparable,6,0.9847451314431909,0.7714285714285715
+bias_gradient_norm,6,0.9960836220663056,0.7714285714285715
+solver_subspace_mismatch_top20_right,6,0.792634953889293,0.7714285714285715
+solver_subspace_mismatch_top20_left,6,0.9266666911474819,0.8285714285714287
+model_solver_top20_right_subspace_mean_cos,6,-0.792634953889293,-0.7714285714285715
+model_solver_top20_left_subspace_mean_cos,6,-0.926666691147482,-0.8285714285714287
+delta_top_error_sv_abs_cos,6,0.8083604300429321,1.0
+attack_delta_outward_abs_cos,6,-0.5202531995144466,-0.3142857142857143
+svd_outward_abs_cos,6,0.9817777922860236,0.8285714285714287
+j_error_delta_l2,2,,

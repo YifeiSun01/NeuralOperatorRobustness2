@@ -1,0 +1,57 @@
+scope,metric,metric_label,meaning,target,n,pearson,spearman
+all_six_150,clean_residual_mse_recomputed,clean residual MSE,higher_bad,attack_loss_increase,150,0.8086606906400048,0.8298946619849772
+all_six_150,clean_residual_norm_l2,||clean error||,higher_bad,attack_loss_increase,150,0.8559368797244259,0.8298946619849772
+all_six_150,error_spectral_norm,J_error spectral norm,higher_bad,attack_loss_increase,150,0.6937648130226127,0.8312031645850927
+all_six_150,error_fro_norm_comparable,J_error Frobenius norm,higher_bad,attack_loss_increase,150,0.8039270852484587,0.8727125650028891
+all_six_150,bias_gradient_norm,||J_error^T error||,higher_bad,attack_loss_increase,150,0.899726037793489,0.8975563358371483
+all_six_150,bias_gradient_rms,RMS(J_error^T error),higher_bad,attack_loss_increase,150,0.8997260377934893,0.8975563358371483
+all_six_150,model_solver_top20_right_subspace_mean_cos,model-solver top20 right subspace similarity,higher_good,attack_loss_increase,150,-0.5916908458915114,-0.7374567758567048
+all_six_150,model_solver_top20_left_subspace_mean_cos,model-solver top20 left subspace similarity,higher_good,attack_loss_increase,150,-0.77880699583137,-0.8151668963065025
+all_six_150,solver_subspace_mismatch_top20_right,1 - top20 right subspace similarity,higher_bad,attack_loss_increase,150,0.5916908458915116,0.7374567758567048
+all_six_150,solver_subspace_mismatch_top20_left,1 - top20 left subspace similarity,higher_bad,attack_loss_increase,150,0.7788069958313701,0.8151668963065025
+all_six_150,delta_top_error_sv_abs_cos,"abs cos(delta, top error SV)",direction_alignment,attack_loss_increase,148,0.2670848052153106,0.19061809378204395
+all_six_150,attack_delta_outward_abs_cos,"abs cos(delta, J_error^T error)",direction_alignment,attack_loss_increase,148,-0.08152287888708183,0.09891277388880458
+all_six_150,svd_outward_abs_cos,"abs cos(top error SV, J_error^T error)",direction_alignment,attack_loss_increase,150,0.3721179770798563,0.2728779056846971
+all_six_150,j_error_delta_l2,||J_error delta|| separate diagnostic,higher_bad_random_only,attack_loss_increase,48,0.8825706643450799,0.9004559270516718
+old_four_100,clean_residual_mse_recomputed,clean residual MSE,higher_bad,attack_loss_increase,100,0.5426400198128467,0.797023702370237
+old_four_100,clean_residual_norm_l2,||clean error||,higher_bad,attack_loss_increase,100,0.6378227829568052,0.797023702370237
+old_four_100,error_spectral_norm,J_error spectral norm,higher_bad,attack_loss_increase,100,0.6371899321401345,0.7778097809780976
+old_four_100,error_fro_norm_comparable,J_error Frobenius norm,higher_bad,attack_loss_increase,100,0.6663418957621838,0.8099609960996099
+old_four_100,bias_gradient_norm,||J_error^T error||,higher_bad,attack_loss_increase,100,0.7453075693594508,0.8507050705070505
+old_four_100,bias_gradient_rms,RMS(J_error^T error),higher_bad,attack_loss_increase,100,0.7453075693594509,0.8507050705070505
+old_four_100,model_solver_top20_right_subspace_mean_cos,model-solver top20 right subspace similarity,higher_good,attack_loss_increase,100,-0.5199575919684004,-0.6974377437743774
+old_four_100,model_solver_top20_left_subspace_mean_cos,model-solver top20 left subspace similarity,higher_good,attack_loss_increase,100,-0.5626870554455612,-0.7272487248724873
+old_four_100,solver_subspace_mismatch_top20_right,1 - top20 right subspace similarity,higher_bad,attack_loss_increase,100,0.5199575919684004,0.6974377437743774
+old_four_100,solver_subspace_mismatch_top20_left,1 - top20 left subspace similarity,higher_bad,attack_loss_increase,100,0.5626870554455612,0.7272487248724873
+old_four_100,delta_top_error_sv_abs_cos,"abs cos(delta, top error SV)",direction_alignment,attack_loss_increase,100,0.15121688299147698,0.1481068106810681
+old_four_100,attack_delta_outward_abs_cos,"abs cos(delta, J_error^T error)",direction_alignment,attack_loss_increase,100,0.29954448282003265,0.333045304530453
+old_four_100,svd_outward_abs_cos,"abs cos(top error SV, J_error^T error)",direction_alignment,attack_loss_increase,100,0.16619855327793573,0.1547434743474347
+old_four_100,j_error_delta_l2,||J_error delta|| separate diagnostic,higher_bad_random_only,attack_loss_increase,0,,
+random_two_50,clean_residual_mse_recomputed,clean residual MSE,higher_bad,attack_loss_increase,50,0.7885982318249081,0.8655462184873949
+random_two_50,clean_residual_norm_l2,||clean error||,higher_bad,attack_loss_increase,50,0.858376968009478,0.8655462184873949
+random_two_50,error_spectral_norm,J_error spectral norm,higher_bad,attack_loss_increase,50,0.7697527671982782,0.8258823529411765
+random_two_50,error_fro_norm_comparable,J_error Frobenius norm,higher_bad,attack_loss_increase,50,0.8591557870795361,0.8962785114045618
+random_two_50,bias_gradient_norm,||J_error^T error||,higher_bad,attack_loss_increase,50,0.8843522651019442,0.9113565426170468
+random_two_50,bias_gradient_rms,RMS(J_error^T error),higher_bad,attack_loss_increase,50,0.8843522651019444,0.9113565426170468
+random_two_50,model_solver_top20_right_subspace_mean_cos,model-solver top20 right subspace similarity,higher_good,attack_loss_increase,50,-0.7797520040052289,-0.8260744297719088
+random_two_50,model_solver_top20_left_subspace_mean_cos,model-solver top20 left subspace similarity,higher_good,attack_loss_increase,50,-0.9049474820786846,-0.9146218487394957
+random_two_50,solver_subspace_mismatch_top20_right,1 - top20 right subspace similarity,higher_bad,attack_loss_increase,50,0.7797520040052286,0.8260744297719088
+random_two_50,solver_subspace_mismatch_top20_left,1 - top20 left subspace similarity,higher_bad,attack_loss_increase,50,0.9049474820786848,0.9146218487394957
+random_two_50,delta_top_error_sv_abs_cos,"abs cos(delta, top error SV)",direction_alignment,attack_loss_increase,48,0.1741255893599022,0.09476769431176725
+random_two_50,attack_delta_outward_abs_cos,"abs cos(delta, J_error^T error)",direction_alignment,attack_loss_increase,48,-0.02210494334281631,0.04190186712983066
+random_two_50,svd_outward_abs_cos,"abs cos(top error SV, J_error^T error)",direction_alignment,attack_loss_increase,50,0.3872743665851234,0.3397358943577431
+random_two_50,j_error_delta_l2,||J_error delta|| separate diagnostic,higher_bad_random_only,attack_loss_increase,48,0.8825706643450799,0.9004559270516718
+generalization_all_six_126,clean_residual_mse_recomputed,clean residual MSE,higher_bad,attack_loss_increase,126,0.8324303297252108,0.825811773528309
+generalization_all_six_126,clean_residual_norm_l2,||clean error||,higher_bad,attack_loss_increase,126,0.8884864594722474,0.825811773528309
+generalization_all_six_126,error_spectral_norm,J_error spectral norm,higher_bad,attack_loss_increase,126,0.6377148495523366,0.7862827146606675
+generalization_all_six_126,error_fro_norm_comparable,J_error Frobenius norm,higher_bad,attack_loss_increase,126,0.7803677610634574,0.830719160104987
+generalization_all_six_126,bias_gradient_norm,||J_error^T error||,higher_bad,attack_loss_increase,126,0.9253770587554908,0.875761529808774
+generalization_all_six_126,bias_gradient_rms,RMS(J_error^T error),higher_bad,attack_loss_increase,126,0.9253770587554909,0.875761529808774
+generalization_all_six_126,model_solver_top20_right_subspace_mean_cos,model-solver top20 right subspace similarity,higher_good,attack_loss_increase,126,-0.5583062965464649,-0.6707431571053618
+generalization_all_six_126,model_solver_top20_left_subspace_mean_cos,model-solver top20 left subspace similarity,higher_good,attack_loss_increase,126,-0.771086003983956,-0.7587821522309711
+generalization_all_six_126,solver_subspace_mismatch_top20_right,1 - top20 right subspace similarity,higher_bad,attack_loss_increase,126,0.5583062965464648,0.6707431571053618
+generalization_all_six_126,solver_subspace_mismatch_top20_left,1 - top20 left subspace similarity,higher_bad,attack_loss_increase,126,0.771086003983956,0.7587821522309711
+generalization_all_six_126,delta_top_error_sv_abs_cos,"abs cos(delta, top error SV)",direction_alignment,attack_loss_increase,126,0.390246991399176,0.2634660667416573
+generalization_all_six_126,attack_delta_outward_abs_cos,"abs cos(delta, J_error^T error)",direction_alignment,attack_loss_increase,126,-0.10286536387781144,0.05165054368203975
+generalization_all_six_126,svd_outward_abs_cos,"abs cos(top error SV, J_error^T error)",direction_alignment,attack_loss_increase,126,0.41293256097139225,0.3296677915260593
+generalization_all_six_126,j_error_delta_l2,||J_error delta|| separate diagnostic,higher_bad_random_only,attack_loss_increase,42,0.862165015744369,0.8795883639899521

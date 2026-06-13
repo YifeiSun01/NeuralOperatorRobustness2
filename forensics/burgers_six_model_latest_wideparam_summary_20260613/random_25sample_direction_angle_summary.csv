@@ -1,0 +1,3 @@
+model,relation,n,mean_abs_cos,median_abs_cos,mean_angle_deg,median_angle_deg
+random_clean_y,delta_vs_top_error_sv,24,0.39919706046207354,0.4567546918743812,65.66832462390668,62.819910547291414
+random_solver_y,delta_vs_top_error_sv,24,0.27710326811856434,0.24045420694458805,73.12248336193261,76.07971316884615
