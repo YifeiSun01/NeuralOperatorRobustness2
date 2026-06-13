@@ -145,18 +145,7 @@ def sample_loss_ylim_linear(traces: dict[str, dict[str, np.ndarray]], sample_idx
 
 
 def model_header_label(model_key: str) -> str:
-    spec = MODEL_SPECS[model_key]
-    epochs = spec.get("epochs")
-    sec_per_epoch = spec.get("sec_per_epoch")
-    if epochs is None:
-        epoch_part = "epoch n/a"
-    else:
-        epoch_part = f"{int(epochs)} ep"
-    if sec_per_epoch is None:
-        return f"{spec['label']}\n{epoch_part}, time n/a\ntotal n/a"
-    else:
-        total_hours = int(epochs) * float(sec_per_epoch) / 3600.0
-        return f"{spec['label']}\n{epoch_part} x {float(sec_per_epoch):.2f} s/ep\n= {total_hours:.2f} h total"
+    return str(MODEL_SPECS[model_key]["label"])
 
 
 def save_loss_curves_csv(path: Path, traces: dict[str, dict[str, np.ndarray]], manifest: list[dict[str, object]]) -> None:
@@ -452,8 +441,7 @@ def render_one_row(
             model_header_label(model_key),
             ha="center",
             va="center",
-            fontsize=7.4,
-            linespacing=1.08,
+            fontsize=10.2,
             fontweight="bold",
             color=MODEL_SPECS[model_key]["color"],
             bbox={"boxstyle": "round,pad=0.27", "facecolor": "#ffffff", "edgecolor": MODEL_SPECS[model_key]["color"], "alpha": 0.94},

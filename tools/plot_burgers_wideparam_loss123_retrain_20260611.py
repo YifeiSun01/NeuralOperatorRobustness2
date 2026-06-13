@@ -206,7 +206,15 @@ def metric_label(metric: str) -> str:
     return "Relative L2" if metric == "relative_l2" else "RMSE" if metric == "rmse" else metric
 
 
-def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str) -> str | None:
+def plot_eval_metric(
+    df: pd.DataFrame,
+    out_dir: Path,
+    metric: str,
+    x: str,
+    *,
+    x_max: float | None = None,
+    filename_suffix: str = "",
+) -> str | None:
     if df.empty or metric not in df.columns or x not in df.columns:
         return None
     splits = ["train", "test", "generalization"]
@@ -222,11 +230,14 @@ def plot_eval_metric(df: pd.DataFrame, out_dir: Path, metric: str, x: str) -> st
         ax.set_xlabel("epoch" if x == "epoch" else "wall-clock hours")
         ax.set_ylabel(metric_label(metric))
         ax.set_yscale("log")
+        if x_max is not None:
+            ax.set_xlim(0.0, x_max)
         ax.legend()
     x_name = "epoch" if x == "epoch" else "wall_clock"
-    fig.suptitle(f"Burgers wideparam retrain {metric_label(metric)} by {x_name.replace('_', ' ')}")
+    title_suffix = f" (0-{x_max:g} h)" if x_max is not None and x == "wall_hours" else ""
+    fig.suptitle(f"Burgers wideparam retrain {metric_label(metric)} by {x_name.replace('_', ' ')}{title_suffix}")
     fig.tight_layout(rect=[0, 0, 1, 0.95])
-    return savefig(fig, out_dir / f"wideparam_retrain_{x_name}_{metric}_train_test_generalization.png")
+    return savefig(fig, out_dir / f"wideparam_retrain_{x_name}_{metric}_train_test_generalization{filename_suffix}.png")
 
 
 def plot_attack_summary(df: pd.DataFrame, out_dir: Path, y: str, ylabel: str) -> str | None:
@@ -414,6 +425,8 @@ def main() -> None:
     parser.add_argument("--report-title", default="Burgers Wideparam Loss1/Loss2/Loss3 Retrain Report - 2026-06-11")
     parser.add_argument("--report-description", default="This report summarizes the retraining runs against the final wide-parameter loss3-targeted Burgers generalization dataset.")
     parser.add_argument("--allow-missing", action="store_true")
+    parser.add_argument("--wall-clock-xmax-hours", type=float, default=None, help="Also write wall-clock train/test/generalization plots truncated to this many hours.")
+    parser.add_argument("--skip-polished-plots", action="store_true", help="Do not regenerate the per-loss polished variable-epoch plot directories.")
     args = parser.parse_args()
 
     setup_plot_style()
@@ -442,6 +455,18 @@ def main() -> None:
                 path = plot_eval_metric(eval_df, out_dir, metric, x)
                 if path:
                     outputs.append(path)
+                if x == "wall_hours" and args.wall_clock_xmax_hours is not None:
+                    suffix_value = f"{args.wall_clock_xmax_hours:g}".replace(".", "p")
+                    path = plot_eval_metric(
+                        eval_df,
+                        out_dir,
+                        metric,
+                        x,
+                        x_max=float(args.wall_clock_xmax_hours),
+                        filename_suffix=f"_xmax{suffix_value}h",
+                    )
+                    if path:
+                        outputs.append(path)
     if not attack_df.empty:
         attack_df.to_csv(out_dir / "wideparam_retrain_attack_epoch_summary_merged.csv", index=False)
         for y, label in [
@@ -473,7 +498,7 @@ def main() -> None:
         train_df.to_csv(out_dir / "wideparam_retrain_train_steps_merged.csv", index=False)
     if not epsilon_df.empty:
         epsilon_df.to_csv(out_dir / "wideparam_retrain_attack_epsilon_bucket_summary_merged.csv", index=False)
-    polished_outputs = run_variable_epoch_polished_plots(run_dirs, out_dir, allow_missing=args.allow_missing)
+    polished_outputs = [] if args.skip_polished_plots else run_variable_epoch_polished_plots(run_dirs, out_dir, allow_missing=args.allow_missing)
     outputs.extend(polished_outputs)
 
     rows = final_summary_rows(run_dirs, eval_df, memory_df)
