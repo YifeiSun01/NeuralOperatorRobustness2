@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-06-13T12:30:00Z",
+  "purpose": "Record and back up the Darcy random_clean_y vs random_solver_y interpretation, metric rankings, and artifact paths.",
+  "primary_markdown": "docs/darcy_random_clean_vs_solver_y_interpretation_20260613.md",
+  "source_reports": [
+    "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/README.md",
+    "docs/darcy_six_model_random_source_report_20260613.md",
+    "analysis_outputs/darcy_six_model_random_source_report_20260613/README.md"
+  ],
+  "source_tables": [
+    "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_clean_by_split.csv",
+    "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_attack20_by_split.csv",
+    "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_model_means.csv",
+    "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_jacobian5_model_means.csv"
+  ],
+  "main_conclusion": {
+    "clean_generalization_best": "loss3",
+    "attack20_generalization_best": "loss3",
+    "jt_error_best_in_25sample_metrics": "random_clean_y",
+    "binary_first_order_best_in_25sample_metrics": "random_clean_y",
+    "random_clean_y_vs_random_solver_y": "random_clean_y is better on the reported clean generalization and robustness metrics; likely because it behaves as label-preserving consistency regularization while random_solver_y learns perturbed solver responses."
+  },
+  "r2_prefix": "neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected"
+}
