@@ -38,31 +38,43 @@ FOUR_MODEL_TRACE_ROOT = (
 MODEL_SPECS = {
     "baseline": {
         "label": "baseline",
+        "epochs": 500,
+        "sec_per_epoch": None,
         "checkpoint": REPO / "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
         "color": "#2f6f9f",
     },
     "loss1": {
         "label": "loss1",
+        "epochs": 8000,
+        "sec_per_epoch": 7.3405,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_loss1_8000ep_retrain_20260611/burgers/checkpoints/burgers_epoch8000_step008000.pt",
         "color": "#2f9b75",
     },
     "loss2": {
         "label": "loss2",
+        "epochs": 2000,
+        "sec_per_epoch": 19.7521,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_loss2_2000ep_retrain_20260611/burgers/checkpoints/burgers_epoch2000_step002000.pt",
         "color": "#d98a2b",
     },
     "loss3": {
         "label": "loss3",
+        "epochs": 1000,
+        "sec_per_epoch": 28.1990,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_loss3_1000ep_retrain_20260611/burgers/checkpoints/burgers_epoch1000_step001000.pt",
         "color": "#c35b5b",
     },
     "random_clean_y": {
         "label": "random clean Y",
+        "epochs": 2000,
+        "sec_per_epoch": 2.0172,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_clean_y_2000ep_20260612/burgers/checkpoints/burgers_epoch2000_step002000.pt",
         "color": "#7b5fb3",
     },
     "random_solver_y": {
         "label": "random solver Y",
+        "epochs": 2000,
+        "sec_per_epoch": 4.9562,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_2000ep_20260612/burgers/checkpoints/burgers_epoch2000_step002000.pt",
         "color": "#4f9a9a",
     },
@@ -119,6 +131,32 @@ def sample_loss_ylim(traces: dict[str, dict[str, np.ndarray]], sample_idx: int) 
     if vals.size == 0:
         return 1e-8, 1.0
     return max(float(vals.min()) / 1.35, 1e-10), float(vals.max()) * 1.35
+
+
+def sample_loss_ylim_linear(traces: dict[str, dict[str, np.ndarray]], sample_idx: int) -> tuple[float, float]:
+    vals = np.concatenate([traces[k]["loss"][:, sample_idx].reshape(-1) for k in MODEL_ORDER])
+    vals = vals[np.isfinite(vals)]
+    if vals.size == 0:
+        return 0.0, 1.0
+    lo = min(0.0, float(vals.min()))
+    hi = float(vals.max())
+    span = max(hi - lo, 1e-8)
+    return lo - 0.03 * span, hi + 0.10 * span
+
+
+def model_header_label(model_key: str) -> str:
+    spec = MODEL_SPECS[model_key]
+    epochs = spec.get("epochs")
+    sec_per_epoch = spec.get("sec_per_epoch")
+    if epochs is None:
+        epoch_part = "epoch n/a"
+    else:
+        epoch_part = f"{int(epochs)} ep"
+    if sec_per_epoch is None:
+        time_part = "time n/a"
+    else:
+        time_part = f"{float(sec_per_epoch):.2f} s/ep"
+    return f"{spec['label']}\n{epoch_part}, {time_part}"
 
 
 def save_loss_curves_csv(path: Path, traces: dict[str, dict[str, np.ndarray]], manifest: list[dict[str, object]]) -> None:
@@ -248,6 +286,7 @@ def render_one_row(
     manifest: list[dict[str, object]],
     traces: dict[str, dict[str, np.ndarray]],
     *,
+    loss_scale: str = "log",
     dpi: int = 145,
 ) -> None:
     label_mod.set_style()
@@ -378,14 +417,19 @@ def render_one_row(
                 alpha=0.94,
                 label=MODEL_SPECS[model_key]["label"],
             )
-        ax.set_yscale("log")
+        if loss_scale == "log":
+            ax.set_yscale("log")
+            ax.set_ylim(*sample_loss_ylim(traces, sample_idx))
+            scale_note = "log"
+        else:
+            ax.set_ylim(*sample_loss_ylim_linear(traces, sample_idx))
+            scale_note = "linear"
         ax.set_xlim(0, final_step)
-        ax.set_ylim(*sample_loss_ylim(traces, sample_idx))
         split = str(manifest[sample_idx].get("split", ""))
-        ax.set_title(f"S{sample_idx + 1} {split}: attack loss (log)", fontsize=7.0, loc="left", fontweight="bold", pad=4)
+        ax.set_title(f"S{sample_idx + 1} {split}: attack loss ({scale_note})", fontsize=7.0, loc="left", fontweight="bold", pad=4)
         ax.set_xlabel("attack step", fontsize=6.3)
         if sample_idx == 0:
-            ax.set_ylabel("MSE (log)", fontsize=6.3)
+            ax.set_ylabel(f"MSE ({scale_note})", fontsize=6.3)
         else:
             ax.set_yticklabels([])
         ax.legend(
@@ -405,10 +449,11 @@ def render_one_row(
         fig.text(
             x,
             0.921,
-            MODEL_SPECS[model_key]["label"],
+            model_header_label(model_key),
             ha="center",
             va="center",
-            fontsize=10.2,
+            fontsize=8.2,
+            linespacing=1.12,
             fontweight="bold",
             color=MODEL_SPECS[model_key]["color"],
             bbox={"boxstyle": "round,pad=0.27", "facecolor": "#ffffff", "edgecolor": MODEL_SPECS[model_key]["color"], "alpha": 0.94},
@@ -422,7 +467,7 @@ def render_one_row(
     fig.text(
         0.5,
         0.956,
-        f"Dashed = before perturbation, solid = after {final_step} attack steps; shaded regions show perturbation/error gaps. Bottom row shows sample-wise attack loss curves.",
+        f"Dashed = before perturbation, solid = after {final_step} attack steps; shaded regions show perturbation/error gaps. Bottom row shows sample-wise attack loss curves ({loss_scale} y-axis).",
         ha="center",
         va="center",
         fontsize=9.0,
@@ -446,6 +491,7 @@ def main() -> int:
     parser.add_argument("--four-model-trace-root", type=Path, default=FOUR_MODEL_TRACE_ROOT)
     parser.add_argument("--reuse-four-model-traces", action="store_true")
     parser.add_argument("--only-render", action="store_true")
+    parser.add_argument("--loss-scale", choices=["log", "linear", "both"], default="both")
     args = parser.parse_args()
 
     base = load_module("wideparam_base_for_randomfield_20260613", BASE_SCRIPT)
@@ -503,6 +549,7 @@ def main() -> int:
 
     outputs = []
     bundle_outputs = []
+    loss_scales = ["log", "linear"] if args.loss_scale == "both" else [args.loss_scale]
     for payload in group_payloads:
         group_id = int(payload["group_id"])
         group_trace_root = args.trace_root / f"group{group_id:02d}"
@@ -542,22 +589,33 @@ def main() -> int:
             save_loss_curves_csv(group_trace_root / "attack_loss_curves_all_six_models.csv", traces, manifest)
             save_group_npz(group_trace_root / "six_model_attack_traces.npz", clean_np, traces)
 
-        out_name = f"wideparam_loss3targeted_round00_group{group_id:02d}_p2q2_baseline_loss1_loss2_loss3_random_clean_y_random_solver_y_before_after_overlay_six_column_samplewise_loss_one_row.png"
-        out_path = group_vis_dir / out_name
-        render_one_row(labels, out_path, clean_np, manifest, traces)
-        outputs.append(out_path)
-        bundle_path = args.bundle_root / "comparison_dense" / f"group{group_id:02d}" / out_name
-        bundle_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(out_path, bundle_path)
-        bundle_outputs.append(bundle_path)
+        group_outputs: dict[str, str] = {}
+        group_bundle_outputs: dict[str, str] = {}
+        base_out_name = f"wideparam_loss3targeted_round00_group{group_id:02d}_p2q2_baseline_loss1_loss2_loss3_random_clean_y_random_solver_y_before_after_overlay_six_column_samplewise_loss_one_row.png"
+        for loss_scale in loss_scales:
+            if loss_scale == "log":
+                out_name = base_out_name
+            else:
+                out_name = base_out_name.replace("_samplewise_loss_one_row.png", "_samplewise_loss_linear_y_one_row.png")
+            out_path = group_vis_dir / out_name
+            render_one_row(labels, out_path, clean_np, manifest, traces, loss_scale=loss_scale)
+            outputs.append(out_path)
+            group_outputs[loss_scale] = str(out_path)
+            bundle_path = args.bundle_root / "comparison_dense" / f"group{group_id:02d}" / out_name
+            bundle_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(out_path, bundle_path)
+            bundle_outputs.append(bundle_path)
+            group_bundle_outputs[loss_scale] = str(bundle_path)
 
         summary = {
             "group_id": group_id,
             "trace_root": str(group_trace_root),
             "visualization_dir": str(group_vis_dir),
-            "image": str(out_path),
-            "bundle_image": str(bundle_path),
+            "images": group_outputs,
+            "bundle_images": group_bundle_outputs,
             "models": MODEL_ORDER,
+            "model_headers": {model_key: model_header_label(model_key) for model_key in MODEL_ORDER},
+            "loss_scales": loss_scales,
             "attack_steps": int(args.attack_steps),
             "epsilon_rms": float(args.epsilon_rms),
             "reuse_four_model_traces": bool(args.reuse_four_model_traces),
@@ -572,6 +630,8 @@ def main() -> int:
         "visualization_root": str(args.vis_root),
         "bundle_root": str(args.bundle_root),
         "models": MODEL_ORDER,
+        "model_headers": {model_key: model_header_label(model_key) for model_key in MODEL_ORDER},
+        "loss_scales": loss_scales,
         "reuse_four_model_traces": bool(args.reuse_four_model_traces),
         "four_model_trace_root": str(args.four_model_trace_root),
         "outputs": [str(p) for p in outputs],
