@@ -1,0 +1,8 @@
+model,clean_52_dataset_metrics,attack20_52_dataset_metrics,metric25_sample_rows,jacobian5_model_mean_available,clean_expected_rows,attack20_expected_rows,metric25_expected_rows
+baseline,52,0,0,False,52,52,25
+loss1,52,52,25,True,52,52,25
+loss2,52,52,25,True,52,52,25
+loss3,52,52,25,True,52,52,25
+physics_loss,52,52,25,True,52,52,25
+random_clean_y,52,52,25,True,52,52,25
+random_solver_y,52,52,25,True,52,52,25
