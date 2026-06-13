@@ -13,6 +13,7 @@
     "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_final_clean_and_attack_summary.png",
     "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_metric_jacobian_summary.png"
   ],
+  "wall_clock_components_csv": "analysis_outputs/darcy_random_inclusive_training_figures_20260613/six_method_wall_clock_components.csv",
   "runs": [
     {
       "name": "loss1",
@@ -45,5 +46,5 @@
       "path": "adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100"
     }
   ],
-  "note": "Random-inclusive training plots use each method's first-stage/random-source logs: old adversarial methods around 1000 epochs, random-source methods 1100 epochs."
+  "note": "Random-inclusive training plots use true cumulative wall-clock minutes from baseline eval + attack/random-source generation + optimizer + eval, calibrated to summary elapsed time. Old adversarial methods are first-stage 1000-ish runs; random-source methods are 1100 epoch runs."
 }

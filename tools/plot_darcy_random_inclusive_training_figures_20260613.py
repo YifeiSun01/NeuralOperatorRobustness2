@@ -82,20 +82,106 @@ def read_csv(path: Path) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
+def _epoch_seconds(path: Path, epoch_col: str, value_col: str) -> pd.Series:
+    if not path.exists():
+        return pd.Series(dtype=float)
+    d = read_csv(path)
+    if epoch_col not in d.columns or value_col not in d.columns:
+        return pd.Series(dtype=float)
+    epochs = pd.to_numeric(d[epoch_col], errors="coerce")
+    values = pd.to_numeric(d[value_col], errors="coerce").fillna(0.0)
+    return values.groupby(epochs.fillna(-1).astype(int)).sum()
+
+
 def wall_minutes(run: RunSpec) -> dict[int, float]:
-    p = run.path / "darcy/optimizer_steps.csv"
-    if not p.exists():
+    """Cumulative end-to-end wall-clock minutes by epoch.
+
+    This includes baseline evaluation, per-epoch random/adversarial generation,
+    optimizer updates, and per-epoch train/test/generalization evaluation.
+    Earlier versions used only optimizer_wall_sec, which is optimizer time rather
+    than true wall-clock time.
+    """
+    run_dir = run.path / "darcy"
+    opt = _epoch_seconds(run_dir / "optimizer_steps.csv", "epoch", "optimizer_wall_sec")
+    attack = _epoch_seconds(run_dir / "attack_epoch_summary.csv", "epoch", "attack_wall_sec_total")
+
+    eval_train = pd.Series(dtype=float)
+    baseline_eval_seconds = 0.0
+    eval_path = run_dir / "eval_split_summary.csv"
+    if eval_path.exists():
+        eval_df = read_csv(eval_path)
+        needed = {"phase", "epoch", "eval_wall_sec"}
+        if needed.issubset(eval_df.columns):
+            uniq = eval_df[["phase", "epoch", "eval_wall_sec"]].drop_duplicates().copy()
+            uniq["epoch"] = pd.to_numeric(uniq["epoch"], errors="coerce").fillna(-1).astype(int)
+            uniq["eval_wall_sec"] = pd.to_numeric(uniq["eval_wall_sec"], errors="coerce").fillna(0.0)
+            baseline_eval_seconds = float(
+                uniq[uniq["phase"] == "baseline_before_adversarial_training"]["eval_wall_sec"].sum()
+            )
+            eval_train = uniq[uniq["phase"] == "during_adversarial_training"].groupby("epoch")["eval_wall_sec"].sum()
+
+    epochs = sorted(set(opt.index.astype(int)) | set(attack.index.astype(int)) | set(eval_train.index.astype(int)))
+    epochs = [e for e in epochs if e > 0]
+    if not epochs:
         return {0: 0.0}
-    d = read_csv(p)
-    if "epoch" not in d.columns or "optimizer_wall_sec" not in d.columns:
-        return {0: 0.0}
-    g = pd.to_numeric(d["optimizer_wall_sec"], errors="coerce").fillna(0.0).groupby(pd.to_numeric(d["epoch"], errors="coerce").fillna(-1).astype(int)).sum()
-    c = g.sort_index().cumsum() / 60.0
-    out = {0: 0.0}
-    for epoch, minutes in c.items():
-        if epoch >= 0:
-            out[int(epoch)] = float(minutes)
-    return out
+
+    out_sec: dict[int, float] = {0: 0.0}
+    running = baseline_eval_seconds
+    for epoch in epochs:
+        running += float(opt.get(epoch, 0.0)) + float(attack.get(epoch, 0.0)) + float(eval_train.get(epoch, 0.0))
+        out_sec[int(epoch)] = running
+
+    summary_path = run.path / "summary.json"
+    if summary_path.exists():
+        try:
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            observed = float(summary.get("tasks", [{}])[0].get("elapsed_seconds", 0.0))
+        except Exception:
+            observed = 0.0
+        last_epoch = max(epochs)
+        raw_last = out_sec[last_epoch]
+        if observed > raw_last > 0.0:
+            missing = observed - raw_last
+            for epoch in epochs:
+                out_sec[epoch] += missing * (float(epoch) / float(last_epoch))
+
+    return {epoch: seconds / 60.0 for epoch, seconds in out_sec.items()}
+
+
+def wall_component_summary() -> pd.DataFrame:
+    rows = []
+    for run in RUNS:
+        run_dir = run.path / "darcy"
+        opt = _epoch_seconds(run_dir / "optimizer_steps.csv", "epoch", "optimizer_wall_sec").sum()
+        attack = _epoch_seconds(run_dir / "attack_epoch_summary.csv", "epoch", "attack_wall_sec_total").sum()
+        eval_seconds = 0.0
+        eval_path = run_dir / "eval_split_summary.csv"
+        if eval_path.exists():
+            eval_df = read_csv(eval_path)
+            if {"phase", "epoch", "eval_wall_sec"}.issubset(eval_df.columns):
+                uniq = eval_df[["phase", "epoch", "eval_wall_sec"]].drop_duplicates().copy()
+                eval_seconds = float(pd.to_numeric(uniq["eval_wall_sec"], errors="coerce").fillna(0.0).sum())
+        observed = np.nan
+        summary_path = run.path / "summary.json"
+        if summary_path.exists():
+            try:
+                observed = float(json.loads(summary_path.read_text(encoding="utf-8")).get("tasks", [{}])[0].get("elapsed_seconds", np.nan))
+            except Exception:
+                observed = np.nan
+        component = float(opt) + float(attack) + float(eval_seconds)
+        rows.append(
+            {
+                "method": run.name,
+                "label": run.label,
+                "optimizer_minutes": float(opt) / 60.0,
+                "attack_or_random_source_minutes": float(attack) / 60.0,
+                "evaluation_minutes": float(eval_seconds) / 60.0,
+                "component_sum_minutes": component / 60.0,
+                "observed_summary_minutes": observed / 60.0 if np.isfinite(observed) else np.nan,
+                "unattributed_overhead_minutes": (observed - component) / 60.0 if np.isfinite(observed) else np.nan,
+            }
+        )
+    return pd.DataFrame(rows)
 
 
 def map_wall(epochs: pd.Series, mapping: dict[int, float]) -> np.ndarray:
@@ -238,10 +324,12 @@ def main() -> None:
     setup_style()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     VIZ_DIR.mkdir(parents=True, exist_ok=True)
+    wall_components = wall_component_summary()
     eval_df = load_eval_split()
     attack_df = load_epoch_table("attack_epoch_summary.csv")
     opt_df = load_epoch_table("optimizer_steps.csv")
 
+    wall_components.to_csv(OUT_DIR / "six_method_wall_clock_components.csv", index=False)
     eval_df.to_csv(OUT_DIR / "six_method_eval_split_summary_merged.csv", index=False)
     attack_df.to_csv(OUT_DIR / "six_method_attack_epoch_summary_merged.csv", index=False)
     opt_df.to_csv(OUT_DIR / "six_method_optimizer_steps_merged.csv", index=False)
@@ -262,8 +350,9 @@ def main() -> None:
         "out_dir": rel(OUT_DIR),
         "viz_dir": rel(VIZ_DIR),
         "figures": [rel(p) for p in outputs],
+        "wall_clock_components_csv": rel(OUT_DIR / "six_method_wall_clock_components.csv"),
         "runs": [{"name": r.name, "label": r.label, "path": rel(r.path)} for r in RUNS],
-        "note": "Random-inclusive training plots use each method's first-stage/random-source logs: old adversarial methods around 1000 epochs, random-source methods 1100 epochs.",
+        "note": "Random-inclusive training plots use true cumulative wall-clock minutes from baseline eval + attack/random-source generation + optimizer + eval, calibrated to summary elapsed time. Old adversarial methods are first-stage 1000-ish runs; random-source methods are 1100 epoch runs.",
     }
     (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     lines = [
@@ -275,6 +364,8 @@ def main() -> None:
         f"- Figures: `{rel(VIZ_DIR)}`",
         "- Random methods: `random clean y`, `random solver y`.",
         "- Old adversarial methods are first-stage 1000-ish runs; random methods are 1100 epoch runs.",
+        "- Wall-clock plots use true cumulative time: baseline eval + attack/random-source generation + optimizer + eval, calibrated to each run summary elapsed time.",
+        f"- Wall-clock components CSV: `{rel(OUT_DIR / 'six_method_wall_clock_components.csv')}`",
         "",
         "## Figures",
         "",
