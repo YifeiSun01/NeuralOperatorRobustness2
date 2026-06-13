@@ -386,7 +386,7 @@ def write_reports(out_dir: Path, viz_dir: Path, rows: list[dict[str, Any]], jt_h
         "",
         f"- Created: {now_iso()}",
         f"- Samples: 5 generated Darcy generalization samples, sample_index={args.sample_index}.",
-        f"- Models: loss1, loss2, loss3, fixed (fixed = physics-loss model checkpoint).",
+        f"- Models: {', '.join(m.name for m in MODELS)}.",
         f"- `J^T error` is the gradient of `0.5 * ||model(x) - solver(x)||_2^2` with respect to the input coefficient field.",
         f"- Top singular value is estimated by `{args.power_iterations}` power iterations using JVP/VJP, not by materializing the full 7225 x 7225 Jacobian.",
         "",

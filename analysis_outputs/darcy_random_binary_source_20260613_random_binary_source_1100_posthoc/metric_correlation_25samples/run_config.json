@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-06-13T08:27:41+00:00",
+  "tag": "20260613_random_binary_source_1100_posthoc",
+  "attack_steps": 20,
+  "epsilon_fraction": 0.025,
+  "max_samples": 25,
+  "models": [
+    "random_fixed_y",
+    "random_solver_y"
+  ],
+  "block_row_chunk": 64,
+  "device": "cuda"
+}

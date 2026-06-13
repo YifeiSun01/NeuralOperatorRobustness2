@@ -490,19 +490,28 @@ def read_rows(path: Path) -> list[dict[str, str]]:
 
 
 def model_colors() -> dict[str, str]:
-    return {"loss1": "#4C78A8", "loss2": "#F58518", "loss3": "#54A24B", "physics": "#B279A2"}
+    return {
+        "loss1": "#4C78A8",
+        "loss2": "#F58518",
+        "loss3": "#54A24B",
+        "physics": "#B279A2",
+        "random_fixed_y": "#7F3C8D",
+        "random_solver_y": "#11A579",
+    }
 
 
 def plot_scatter(rows: list[dict[str, str]], metric: str, label: str, out: Path) -> None:
     colors = model_colors()
     fig, ax = plt.subplots(figsize=(6.4, 5.2))
-    for model in ["loss1", "loss2", "loss3", "physics"]:
+    dynamic_models = sorted({r["model"] for r in rows})
+    fallback_colors = plt.cm.tab10(np.linspace(0, 1, max(1, len(dynamic_models))))
+    for idx, model in enumerate(dynamic_models):
         sub = [r for r in rows if r["model"] == model]
         if not sub:
             continue
         x = np.array([float(r[metric]) for r in sub], dtype=np.float64)
         y = np.array([float(r["attack_loss_gain"]) for r in sub], dtype=np.float64)
-        ax.scatter(x, y, s=34, alpha=0.82, label=model, color=colors.get(model))
+        ax.scatter(x, y, s=34, alpha=0.82, label=model, color=colors.get(model, fallback_colors[idx]))
     x_all = np.array([float(r[metric]) for r in rows], dtype=np.float64)
     y_all = np.array([float(r["attack_loss_gain"]) for r in rows], dtype=np.float64)
     mask = np.isfinite(x_all) & np.isfinite(y_all)

@@ -1,0 +1,28 @@
+{
+  "attack_steps": 20,
+  "batch_size": 25,
+  "created_at": "2026-06-13T08:20:36+00:00",
+  "dataset_count": 52,
+  "epsilon_fraction": 0.025,
+  "generalization_root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+  "models": [
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100/darcy/checkpoints/darcy_epoch1100_step001100.pt",
+      "name": "random_fixed_y",
+      "trained_epochs": 1100,
+      "training_objective": "random-binary-fixed-y"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100/darcy/checkpoints/darcy_epoch1100_step001100.pt",
+      "name": "random_solver_y",
+      "trained_epochs": 1100,
+      "training_objective": "random-binary-solver-y"
+    }
+  ],
+  "notes": "All models are attacked with the same solver-consistent loss3 objective so loss growth is directly comparable.",
+  "sample_policy": "random",
+  "samples_per_dataset": 50,
+  "seed": 20260612,
+  "shared_attack_objective": "loss3",
+  "tag": "20260613_random_binary_source_1100_posthoc"
+}
