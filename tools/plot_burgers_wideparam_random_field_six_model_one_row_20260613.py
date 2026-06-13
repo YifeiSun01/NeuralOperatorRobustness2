@@ -153,10 +153,10 @@ def model_header_label(model_key: str) -> str:
     else:
         epoch_part = f"{int(epochs)} ep"
     if sec_per_epoch is None:
-        time_part = "time n/a"
+        return f"{spec['label']}\n{epoch_part}, time n/a\ntotal n/a"
     else:
-        time_part = f"{float(sec_per_epoch):.2f} s/ep"
-    return f"{spec['label']}\n{epoch_part}, {time_part}"
+        total_hours = int(epochs) * float(sec_per_epoch) / 3600.0
+        return f"{spec['label']}\n{epoch_part} x {float(sec_per_epoch):.2f} s/ep\n= {total_hours:.2f} h total"
 
 
 def save_loss_curves_csv(path: Path, traces: dict[str, dict[str, np.ndarray]], manifest: list[dict[str, object]]) -> None:
@@ -452,8 +452,8 @@ def render_one_row(
             model_header_label(model_key),
             ha="center",
             va="center",
-            fontsize=8.2,
-            linespacing=1.12,
+            fontsize=7.4,
+            linespacing=1.08,
             fontweight="bold",
             color=MODEL_SPECS[model_key]["color"],
             bbox={"boxstyle": "round,pad=0.27", "facecolor": "#ffffff", "edgecolor": MODEL_SPECS[model_key]["color"], "alpha": 0.94},
