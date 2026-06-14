@@ -14383,3 +14383,17 @@ Follow-up SVD/bias table placement:
 - Rebuilt the organized release with these tables. Observed from `MANIFEST.json`: 661 files, 1,469,211,584 bytes, 178 PNG, 94 CSV, 187 JSON, 137 NPZ, 37 log files, 8 Python scripts, and 0 missing expected inputs.
 - R2 verification for the final audit output returned 174 objects and 577,938,944 bytes; the nested historical SVD25 reuse3 folder returned 6 objects and 790,734 bytes; the nested biased-local-direction folder returned 7 objects and 313,956 bytes.
 - R2 verification for the organized release returned 661 objects and 1,469,211,584 bytes.
+
+Follow-up recovered prior metric placement:
+- Checked R2/local sources for missing Burgers metric families and recovered previously completed artifacts without rerunning attacks or SVD.
+- Recovered old4 52-dataset P2Q2 attack raw payloads from `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608/`; R2 source has 21 objects and 160,566,008 bytes.
+- Recovered full old4 SVD25 reuse3 raw payloads from `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611/`; R2 source has 501 objects and 2,670,190,545 bytes, including raw NPZ, top100 singular values, SVD summaries, top-k subspace similarities, attack joins, and correlations.
+- Copied six-model latest/corrected metric summaries from `forensics/burgers_six_model_latest_wideparam_summary_20260613/`; R2 source has 42 objects and 1,299,145 bytes.
+- Added `tools/recover_burgers_prior_metrics_into_solver7860_audit_20260614.py`.
+- Generated `attack_52dataset_six_models_recovered_full_long.csv` with 312 rows, covering 52 dataset indices x 6 models.
+- Generated `singular_values_top20_six_models_recovered_long.csv` with 6500 rows, covering solver plus six models at common top20 rank.
+- Generated `paired_tests_loss3_vs_other_models.csv` with 130 paired t-test/Wilcoxon rows.
+- Added `missing_metric_coverage_audit.csv/json`; the remaining known gap is random-clean/random-solver top50/top100 SVD, because the recovered random SVD source contains top20 only while old4 contains top100.
+- Final audit output R2 verification after recovery returned 1055 objects and 4,004,966,533 bytes.
+- Rebuilt organized release after recovery. `MANIFEST.json` reports 1230 files, 4,301,766,869 bytes, 178 PNG, 155 CSV, 446 JSON, 378 NPZ, 37 log files, 9 Python scripts, and 0 missing expected inputs.
+- Organized release R2 verification after recovery returned 1230 objects and 4,301,766,869 bytes.

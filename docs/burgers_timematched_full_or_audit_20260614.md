@@ -258,3 +258,40 @@ Organized release data completeness update:
   expected inputs.
 - R2 verification for the organized-release update returned 661 objects and
   1,469,211,584 bytes.
+
+Recovered prior metrics update:
+
+- Checked R2 and local sources for the missing metric families instead of
+  rerunning compute.
+- Recovered old4 52-dataset P2Q2 attack raw payloads from
+  `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608/`.
+- Recovered the full old4 SVD25 reuse3 payload from
+  `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611/`,
+  expanding `data/historical_svd_attack25_reuse3/` from compact CSV/JSON into
+  501 files including raw NPZ payloads, top100 singular values, SVD summaries,
+  top-k subspace similarities, attack joins, and correlations.
+- Copied the six-model latest/corrected metric summary bundle from
+  `forensics/burgers_six_model_latest_wideparam_summary_20260613/`.
+- Copied the random solver7860/clean8000 raw attack/SVD suite into
+  `data/recovered_prior/random_solver7860_clean8000_full_suite_20260614/`.
+- Added recovered six-model 52-dataset attack tables:
+  `data/attack_52dataset_six_models_recovered_full_long.csv` and
+  `data/attack_52dataset_six_models_recovered_full_wide.csv`.
+- Added recovered six-model common top20 singular-value table:
+  `data/singular_values_top20_six_models_recovered_long.csv`.
+- Added `data/paired_tests_loss3_vs_other_models.csv` with paired t-test,
+  one-sided p-values, Wilcoxon p-values, and BH-FDR q-values for clean
+  generalization and 25-sample robustness metrics.
+- Added explicit coverage/gap audit:
+  `data/missing_metric_coverage_audit.csv` and
+  `data/missing_metric_coverage_audit.json`.
+- Final audit R2 verification after this recovery returned 1055 objects and
+  4,004,966,533 bytes.
+- Rebuilt organized release after this recovery. `MANIFEST.json` now reports
+  1230 files, 4,301,766,869 bytes, 178 PNG, 155 CSV, 446 JSON, 378 NPZ, 37 log
+  files, 9 Python scripts, and 0 missing expected inputs.
+- Organized release R2 verification after this recovery returned 1230 objects
+  and 4,301,766,869 bytes.
+- Remaining known gap: old4 has top100 SVD values/subspaces, but recovered
+  random `random_clean_y`/`random_solver_y` SVD only has top20. The common
+  six-model singular-value table is therefore top20.

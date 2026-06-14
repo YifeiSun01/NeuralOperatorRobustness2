@@ -141,12 +141,12 @@ class Organizer:
             f"Generated: {datetime.now(timezone.utc).isoformat(timespec='seconds')}",
             "",
             "This folder is a non-destructive, layered copy of the final Burgers time-matched audit artifacts.",
-            "It groups the same local results by how you would inspect them: start-here reports, summary tables, figures, dense attack traces, random-model full-suite data, logs, and source-code references.",
+            "It groups the same local results by how you would inspect them: start-here reports, summary tables, recovered prior raw payloads, figures, dense attack traces, random-model full-suite data, logs, and source-code references.",
             "",
             "## Start Here",
             "",
             "- `00_start_here/`: final markdown reports, audit manifest, and top-level result notes.",
-            "- `01_summary_tables/`: clean 52-dataset metrics, attack metrics, robustness/SVD correlations, model versions.",
+            "- `01_summary_tables/`: clean 52-dataset metrics, recovered six-model attack metrics, robustness/SVD correlations, model versions, and prior raw payloads.",
             "- `02_figures/`: training curves, log-y variants, no-random-clean variants, polished reports, dense six-model attack panels, and summary plots.",
             "- `03_dense_six_model_attack_data/`: dense groups with manifests, six-model attack curves, summaries, and NPZ traces.",
             "- `04_random_model_full_suite/`: random clean/random solver clean loss, P2Q2 attacks, Jacobian/SVD, and postprocess tables.",
@@ -154,6 +154,8 @@ class Organizer:
             "- `06_logs/`: postprocess and R2 sync logs.",
             "- `07_source_code_and_references/`: scripts and docs that produced or describe the release.",
             "- `08_dense_image_only_bundle_full_copy/`: full copy of the dense image-only bundle as its own subfolder.",
+            "",
+            "Recovered prior artifacts are included without rerunning compute. The largest recovered items are old4 SVD25 raw payloads, old4 52-dataset P2Q2 attack raw payloads, six-model corrected metric/correlation summaries, and random solver7860/clean8000 raw attack/SVD outputs.",
             "",
             "## Counts",
             "",
@@ -285,6 +287,8 @@ def build_release(root: Path, out: Path) -> Organizer:
     logs = root / "run_logs" / "burgers_solver7860_postprocess_20260614"
     historical_svd25 = root / "forensics" / "burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611"
     biased_direction = root / "forensics" / "burgers_wideparam_loss3targeted_full1024_svd_attack25_biased_local_direction_20260611"
+    six_model_latest = root / "forensics" / "burgers_six_model_latest_wideparam_summary_20260613"
+    first_master_attack52 = root / "forensics" / "burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608"
 
     if out.exists():
         shutil.rmtree(out)
@@ -299,8 +303,10 @@ def build_release(root: Path, out: Path) -> Organizer:
         "dense_six_model_attack_figures": dense_figures,
         "polished_reports": polished,
         "postprocess_logs": logs,
-        "historical_svd25_reuse3_compact": historical_svd25,
+        "historical_svd25_reuse3_full": historical_svd25,
         "biased_local_direction_tables": biased_direction,
+        "six_model_latest_wideparam_summary": six_model_latest,
+        "first_master_old4_52dataset_attack": first_master_attack52,
     }.items():
         org.note_source(label, path)
 
@@ -309,6 +315,7 @@ def build_release(root: Path, out: Path) -> Organizer:
     for src in [
         audit / "reports" / "burgers_timematched_full_audit_report.md",
         audit / "manifests" / "audit_manifest.json",
+        audit / "manifests" / "recovered_prior_metrics_manifest.json",
         summary / "README.md",
         random_suite / "postprocess" / "summary.md",
         root / "docs" / "burgers_timematched_full_or_audit_20260614.md",
@@ -333,6 +340,8 @@ def build_release(root: Path, out: Path) -> Organizer:
         ],
         "02_attack_52dataset": [
             "attack_52dataset_six_models_selected_worktime_long.csv",
+            "attack_52dataset_six_models_recovered_full_long.csv",
+            "attack_52dataset_six_models_recovered_full_wide.csv",
             "p2q2_attack__manifest.json",
         ],
         "03_robustness_25sample": [
@@ -340,6 +349,8 @@ def build_release(root: Path, out: Path) -> Organizer:
             "jacobian_svd__sample_manifest.csv",
             "jacobian_svd__jacobian_svd_summary.csv",
             "jacobian_svd__top_singular_values_long.csv",
+            "singular_values_top20_six_models_recovered_long.csv",
+            "singular_values_top20_six_models_recovered_coverage.csv",
             "jacobian_svd__aggregate_jacobian_svd_summary.csv",
             "jacobian_svd__j_error_times_attack_delta.csv",
             "jacobian_svd__runtime.csv",
@@ -348,13 +359,18 @@ def build_release(root: Path, out: Path) -> Organizer:
             "model_level_metric_means_selected_worktime_25sample.csv",
             "metric_correlations_with_attack_selected_worktime_25sample.csv",
             "per_sample_model_rank_similarity_selected_worktime_25sample.csv",
+            "paired_tests_loss3_vs_other_models.csv",
+            "missing_metric_coverage_audit.csv",
+            "missing_metric_coverage_audit.json",
         ],
         "05_model_versions_and_runtime": [
             "selected_model_versions.json",
             "final_metric_summary.json",
             "gpu_preflight.json",
             "done.json",
+            "recovered_prior_metrics_done.json",
             "README.md",
+            "RECOVERED_PRIOR_METRICS_README.md",
         ],
     }
     for group, names in table_groups.items():
@@ -367,7 +383,7 @@ def build_release(root: Path, out: Path) -> Organizer:
     org.copy_tree(
         historical_svd25,
         table_root / "03_robustness_25sample" / "historical_svd_attack25_reuse3",
-        "historical_svd_attack25_compact",
+        "historical_svd_attack25_full",
     )
     org.copy_tree_filtered(
         biased_direction,
@@ -375,6 +391,15 @@ def build_release(root: Path, out: Path) -> Organizer:
         "biased_local_direction_tables",
         excluded_names={".biased_direction_hook_done"},
     )
+    for recovered_name in [
+        "six_model_latest_wideparam_summary_20260613",
+        "first_master_full_p2q2_52datasets_4models_finalonly_20step",
+    ]:
+        org.copy_tree(
+            audit / "data" / "recovered_prior" / recovered_name,
+            table_root / "08_recovered_prior_full_artifacts" / recovered_name,
+            "recovered_prior_full_artifacts",
+        )
 
     # 02: figures.
     fig_root = audit / "figures"
@@ -429,6 +454,7 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "tools" / "plot_burgers_wideparam_random_field_six_model_one_row_20260613.py",
         root / "tools" / "render_burgers_solver7860_loss123_only_dense_20260614.py",
         root / "tools" / "build_burgers_solver7860_loss3_best_group05_20260614.py",
+        root / "tools" / "recover_burgers_prior_metrics_into_solver7860_audit_20260614.py",
         root / "tools" / "run_burgers_random_field_final_models_full_suite_20260613.sh",
         root / "tools" / "run_burgers_timematched_strict_random_continuations_20260614.sh",
         root / "tools" / "watch_burgers_solver7860_then_postprocess_20260614.sh",
