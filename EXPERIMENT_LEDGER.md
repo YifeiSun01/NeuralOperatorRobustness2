@@ -14968,3 +14968,33 @@ Key results:
 Current interpretation:
 - For clean all-52 and clean generalization-50, `loss3` is significantly lower than the actual runner-up on MSE/RMSE/Relative L2 in paired dataset-row tests.
 - For attack all-52 and attack generalization-50, `loss3` is significantly lower than the actual runner-up on attack loss increase and final loss, and wins every dataset row for those attack metrics.
+
+## 2026-06-14 - Burgers metric coverage, correlation, and vector-similarity inventory
+
+Status: added a compact inventory for the user's question about whether the final Burgers bundle contains the requested clean metrics, strict attack metrics, 25-sample robustness/Jacobian/SVD scalar metrics, scalar significance tests, scalar correlations, vector cosine/angle summaries, and top-k subspace similarities. This step read existing tables only; no training, attack, Jacobian, SVD, or plotting job was rerun.
+
+New files:
+- Script: `tools/build_burgers_metric_coverage_inventory_20260614.py`.
+- Report: `docs/burgers_metric_coverage_inventory_20260614.md`.
+- Output report copy: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_metric_coverage_inventory_20260614.md`.
+- Output CSVs under `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/metric_coverage_inventory_20260614/`:
+  - `artifact_inventory.csv`
+  - `metric_coverage_summary.csv`
+  - `metric_coverage_counts.csv`
+  - `top_correlations_with_attack.csv`
+  - `top_scalar_pairwise_correlations.csv`
+  - `direction_angle_compact.csv`
+  - `subspace_similarity_compact.csv`
+
+Coverage results:
+- All 19 referenced artifacts exist locally; missing artifact count is 0.
+- Clean 52x6 RMSE/Relative L2/MSE are covered with best-model, runner-up, mean/std/median, and paired first-vs-runner-up significance for all-52 and gen-50.
+- Strict attack 52x6 final loss and attack loss increase are covered with best-model, runner-up, mean/std/median, and paired first-vs-runner-up significance for all-52 and gen-50.
+- 25-sample robustness/Jacobian/SVD scalar norms are covered in ranked metric tables with best-model, runner-up, and best-vs-other paired significance where paired coverage exists.
+- Top-k SVD/error singular spectrum, top-k model-solver subspace similarity, vector direction cosine/angle summaries, scalar-scalar correlations, and correlations with attack loss increase are covered.
+- Main table sizes recorded by the inventory: `metric_model_summary_ranked.csv` has 1522 rows; `metric_best_summary_ranked.csv` has 321 rows; `metric_best_vs_other_significance_tests.csv` has 1201 rows; `metric_pairwise_correlations_sorted.csv` has 220 rows; `correlations_with_attack_sorted.csv` has 56 rows.
+
+Interpretation notes:
+- Scalar quantities with a meaningful direction are the tables to use for "best model" and significance claims.
+- Vector direction cosine/angle, delta norms, and some subspace similarity rows are diagnostic quantities; they are summarized and correlated, but they should not all be converted into a blanket "model quality winner" claim.
+- The inventory keeps this boundary explicit so the final conclusion remains: `loss3` is strongly supported on clean accuracy, strict attack loss increase/final loss, and error-Jacobian/SVD spectrum, while not every diagnostic vector/subspace/process quantity is a direct quality metric.
