@@ -340,7 +340,13 @@ def summarize_final_metrics(clean: pd.DataFrame, attack: pd.DataFrame, robust: p
     }
 
 
-def write_markdown_report(dirs: OutputDirs, summary: dict[str, object], audit: dict[str, object], work: pd.DataFrame) -> None:
+def write_markdown_report(
+    dirs: OutputDirs,
+    summary: dict[str, object],
+    audit: dict[str, object],
+    work: pd.DataFrame,
+    workclock_plot_xmax: float | None,
+) -> None:
     clean_summary = summary["clean_summary"]
     attack_summary = summary["attack_summary"]
     attack_present = summary["attack_52dataset_models_present"]
@@ -351,6 +357,9 @@ def write_markdown_report(dirs: OutputDirs, summary: dict[str, object], audit: d
     for model in TRAINED_MODELS:
         m = work[work["model"] == model]
         work_rows.append((model, int(m["epoch"].max()), float(m["work_clock_hours"].max())))
+    common_hours = float(work.groupby("model")["work_clock_hours"].max().min())
+    plot_hours = float(workclock_plot_xmax) if workclock_plot_xmax is not None else common_hours
+    plot_hours_source = "explicit `--workclock-xmax`" if workclock_plot_xmax is not None else "minimum final logged work-clock across trained methods"
 
     best_clean = min(MODEL_ORDER, key=lambda m: clean_summary[m]["generalization_rmse_mean"])
     best_attack = min(attack_summary, key=lambda m: attack_summary.get(m, {}).get("generalization_attack_loss_increase_mean", math.inf))
@@ -384,7 +393,7 @@ def write_markdown_report(dirs: OutputDirs, summary: dict[str, object], audit: d
     lines.extend(
         [
             "",
-            "Work-clock is computed from `attack_wall_sec + train_wall_sec` in `train_steps.csv`, so it includes attack/delta generation or random/solver target generation plus forward/backward/optimizer-step work, and excludes evaluation/plot/upload. The common x-axis cap used for work-clock plots is the minimum final logged work-clock across the five trained methods.",
+            f"Work-clock is computed from `attack_wall_sec + train_wall_sec` in `train_steps.csv`, so it includes attack/delta generation or random/solver target generation plus forward/backward/optimizer-step work, and excludes evaluation/plot/upload. Work-clock plots use a `{plot_hours:.3f}` hour x-axis cap from {plot_hours_source}; runs with less logged work-clock simply end before the right edge.",
             "",
             "Observed caveat: under this strict logged work-clock definition, `random_clean_y` reaches only about 2.90 hours and `random_solver_y` reaches about 5.69 hours, while `loss3` reaches about 7.43 hours. The existing selected-worktime bundle is therefore complete as a local artifact bundle, but not a strict equal-work-clock rerun for every method.",
             "",
@@ -484,6 +493,8 @@ def main() -> None:
         "models": MODEL_ORDER,
         "trained_curve_models": TRAINED_MODELS,
         "common_work_clock_hours": common_hours,
+        "workclock_plot_xmax_hours": float(args.workclock_xmax) if args.workclock_xmax is not None else common_hours,
+        "workclock_plot_xmax_source": "explicit_arg" if args.workclock_xmax is not None else "minimum_final_logged_work_clock",
         "eval_metric_rows": int(len(evals)),
         "generalization_curve_rows": int(len(gen_evals)),
         "baseline_is_horizontal_reference": True,
@@ -506,9 +517,9 @@ def main() -> None:
 
     summary = summarize_final_metrics(clean, attack, robust, corr)
     (dirs.data / "final_metric_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
-    write_markdown_report(dirs, summary, audit, work)
+    write_markdown_report(dirs, summary, audit, work, args.workclock_xmax)
 
-    print(json.dumps({"output": rel(dirs.root), "figures": len(list(dirs.figures.glob("*.png"))), "common_work_clock_hours": common_hours}, indent=2))
+    print(json.dumps({"output": rel(dirs.root), "figures": len(list(dirs.figures.glob("*.png"))), "common_work_clock_hours": common_hours, "workclock_plot_xmax_hours": audit["curve_audit"]["workclock_plot_xmax_hours"]}, indent=2))
 
 
 if __name__ == "__main__":

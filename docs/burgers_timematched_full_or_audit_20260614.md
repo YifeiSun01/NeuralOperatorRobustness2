@@ -106,3 +106,5 @@ Follow-up launch status:
   regenerates audit/curve outputs with `--workclock-xmax 8.0`, and uploads those
   outputs to R2 using either process `R2_*` credentials or the temporary
   `/tmp/rclone-r2/rclone.conf` remote.
+  The work-clock plots are intentionally capped near 8 hours, not at the minimum
+  common logged time; shorter random-clean curves stop before the right edge.
