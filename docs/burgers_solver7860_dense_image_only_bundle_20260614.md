@@ -35,12 +35,19 @@ Image contents:
 - No-random-clean variant: five model columns, baseline e500, loss1 e8000,
   loss2 e2000, loss3 e1000, and random solver Y e7860. This variant removes
   random clean Y so its large loss does not compress the other curves/panels.
+- Loss123-only variant: three model columns, loss1 e8000, loss2 e2000, and
+  loss3 e1000. This variant removes baseline, random clean Y, and random
+  solver Y from both the top panels and bottom loss curves.
 - Each model cell contains final attack delta, initial condition before/after
   perturbation, model/solver output, and model-minus-solver output.
 - The bottom row contains per-sample attack loss progression curves for the
   models included in that variant.
-- Four PNGs per group were generated: all-model log-y, all-model linear-y,
-  no-random-clean log-y, and no-random-clean linear-y, for 24 PNGs total.
+- Six PNGs per group were generated: all-model log-y, all-model linear-y,
+  no-random-clean log-y, no-random-clean linear-y, loss123-only log-y, and
+  loss123-only linear-y, for 36 PNGs total.
+- The loss123-only render was produced by
+  `tools/render_burgers_solver7860_loss123_only_dense_20260614.py` from the
+  existing trace NPZ files; no training or attack rerun was started.
 
 Group05 selection:
 
@@ -89,11 +96,11 @@ R2 upload:
 
 Verification:
 
-- Local image-only bundle contains 24 PNG files and no non-PNG files.
+- Local image-only bundle contains 36 PNG files and no non-PNG files.
 - Local trace/data root contains 27 files.
-- R2 image-only bundle `rclone size --json` returned 24 files and 63,769,624 bytes.
-- R2 visualization mirror `rclone size --json` returned 24 files and 63,769,624 bytes.
-- R2 trace/data `rclone size --json` returned 27 files and 203,143,689 bytes.
+- R2 image-only bundle `rclone size --json` returned 36 files and 89,008,328 bytes.
+- R2 visualization mirror `rclone size --json` returned 36 files and 89,008,328 bytes.
+- R2 trace/data `rclone size --json` returned 27 files and 203,170,665 bytes.
 - R2 `lsf --recursive` includes directory markers in addition to PNGs; the
   object-count verification above is from `rclone size`.
 - The organized release also includes the full image-only bundle as

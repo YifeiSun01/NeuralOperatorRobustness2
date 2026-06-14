@@ -165,6 +165,13 @@ Dense four-variant refresh:
 - The no-random-clean version removes `random_clean_y` from the top model
   columns and the bottom loss curves, so the other methods use y-limits not
   dominated by the random-clean failure mode.
+- Added a loss123-only dense variant that removes baseline, `random_clean_y`,
+  and `random_solver_y`, leaving only loss1/loss2/loss3 columns and bottom
+  loss curves. It has both log-y and linear-y versions for every group.
+- The image-only bundle now contains 36 PNGs and 0 non-PNG files. R2
+  `rclone size --json` verified 36 image objects and 89,008,328 bytes.
+- R2 trace/data verification for the dense root returned 27 objects and
+  203,170,665 bytes after the summary JSON update.
 
 Polished report refresh:
 
@@ -199,3 +206,12 @@ Organized release:
   `08_dense_image_only_bundle_full_copy/`.
 - Dedicated note:
   `docs/burgers_solver7860_clean8000_organized_release_20260614.md`.
+
+Organized release loss123-only update:
+
+- Rebuilt the organized release after adding the loss123-only dense panels.
+- Verified from `MANIFEST.json`: 646 files, 1,468,076,040 bytes, 178 PNG, 85
+  CSV, 183 JSON, 137 NPZ, 35 log files, 8 Python scripts, and 0 missing
+  expected inputs.
+- R2 verification for this organized-release update returned 646 objects and
+  1,468,076,040 bytes.

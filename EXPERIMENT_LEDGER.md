@@ -14334,6 +14334,9 @@ Follow-up four-variant refresh:
 - Added `tools/build_burgers_solver7860_loss3_best_group05_20260614.py` and generated `group05`, selected from the existing `group00` through `group04` dense traces for the clearest `loss3` advantage. Eligible samples required `loss3` to be the strict winner for both final attacked MSE and attack loss increase; the selected group keeps one test sample and five generalization samples.
 - Local image-only bundle now has 24 PNGs and 0 non-PNG files.
 - R2 verification: image-only bundle has 24 objects and 63,769,624 bytes; visualization mirror has 24 objects and 63,769,624 bytes; trace/data root has 27 objects and 203,143,689 bytes.
+- Added `tools/render_burgers_solver7860_loss123_only_dense_20260614.py` and rendered the requested loss123-only dense variant from existing trace NPZ files only. This removes baseline, `random_clean_y`, and `random_solver_y`, leaving loss1/loss2/loss3 columns and bottom loss curves.
+- Local image-only bundle now has 36 PNGs and 0 non-PNG files: 6 groups x 6 variants, where each group has all-model log/linear, no-random-clean log/linear, and loss123-only log/linear.
+- R2 verification after the loss123-only render: image-only bundle has 36 objects and 89,008,328 bytes; visualization mirror has 36 objects and 89,008,328 bytes; trace/data root has 27 objects and 203,170,665 bytes.
 
 ## 2026-06-14 - Burgers solver7860/clean8000 polished report refresh
 
@@ -14363,6 +14366,8 @@ Updates:
 - Dedicated note: `docs/burgers_solver7860_clean8000_organized_release_20260614.md`.
 - R2 verification for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_solver7860_clean8000_organized_release_20260614` returned 617 objects and 1,417,514,791 bytes after the dense `group05` addition. The sync log had transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and remote size matches local manifest.
 - The organized release now also contains `08_dense_image_only_bundle_full_copy/`, a full copy of the dense image-only bundle as its own subfolder, with `group00` through `group05`.
+- Rebuilt the organized release after adding the loss123-only dense panels. Observed from `MANIFEST.json`: 646 files, 1,468,076,040 bytes, 178 PNG, 85 CSV, 183 JSON, 137 NPZ, 35 log files, 8 Python scripts, and 0 missing expected inputs.
+- R2 verification for the organized-release loss123-only update returned 646 objects and 1,468,076,040 bytes. The sync log had transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and remote size matches local manifest.
 
 Remaining work:
 - No remaining work for the organized release packaging itself.

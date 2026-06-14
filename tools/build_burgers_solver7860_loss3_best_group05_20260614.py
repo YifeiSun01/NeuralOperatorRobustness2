@@ -233,7 +233,7 @@ def render_group05(clean: np.ndarray, manifest: list[dict[str, Any]], traces: di
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
     outputs: dict[str, str] = {}
-    for variant_key in ["all_models", "no_random_clean"]:
+    for variant_key in ["all_models", "no_random_clean", "loss123_only"]:
         model_order = plotter.MODEL_VARIANTS[variant_key]
         for loss_scale in ["log", "linear"]:
             out_name = plotter.dense_output_name(GROUP_ID, variant_key, loss_scale)
