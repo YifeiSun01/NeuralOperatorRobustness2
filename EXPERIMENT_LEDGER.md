@@ -14848,3 +14848,51 @@ Hard checks:
 Current interpretation:
 - The previous apparent result that `random_solver_y` beat latest `loss3` on full-52 attack was caused by mixing historical old4 data with current random data.
 - The strict current same-dataset full-52 attack result supports the user's visual impression: latest `loss3 e1000` is the best attack-robustness model among the six under this P2Q2 20-step full-52 protocol, and its advantage over `random_solver_y e7860` is statistically significant.
+
+## 2026-06-14 - Burgers final resolution audit after strict attack repair
+
+Status: completed the final consistency sweep for the Burgers solver7860/clean8000 audit bundle after the strict latest full-52 attack repair. This step read existing artifacts only; no training, attack, Jacobian, SVD, or plotting job was rerun.
+
+Purpose:
+- Resolve the remaining user-facing confusion about whether `loss3` or `random_solver_y` is actually better under the current protocol.
+- Verify that the strict latest attack table is same-manifest and same-protocol across all six models.
+- Separate main quality evidence from diagnostic, process, and small-n quantities so the conclusion is strong but not overstated.
+
+New/updated code and reports:
+- New script: `tools/build_burgers_final_resolution_audit_20260614.py`.
+- New report: `docs/burgers_final_resolution_audit_20260614.md`.
+- Output report copy: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_final_resolution_audit_20260614.md`.
+- Output CSVs under `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/final_resolution_audit_20260614/`:
+  - `protocol_validation.csv`
+  - `question_resolution_table.csv`
+  - `evidence_family_summary.csv`
+  - `loss3_significance_family_summary.csv`
+  - `non_loss3_best_strict_evidence_rows.csv`
+  - `final_claim_boundaries.csv`
+- Updated organizer: `tools/organize_burgers_solver7860_clean8000_release_20260614.py` now includes the protocol-confusion, strict-latest-attack, and final-resolution reports in the organized release.
+- Updated bundle integrity report: `docs/burgers_full_data_bundle_integrity_audit_20260614.md`.
+
+Hard checks:
+- Final resolution audit protocol checks: 11 checks, 0 failures.
+- Old4 strict latest attack and current random attack match on steps=20, epsilon RMS=0.12, alpha RMS=0.012, 52 datasets, and 10200 total manifest rows.
+- Old4/random manifests match exactly on `global_sample_id`, `split`, `dataset_id`, `source_index`, and `dataset_sample_offset`.
+- Ranked attack source is now uniquely `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/attack_52dataset_six_models_strict_latest_widevis_long.csv`.
+- Rebuilt organized release: `outputs/burgers_solver7860_clean8000_organized_release_20260614`, 2244 files, 0 missing files.
+- Full data bundle audit after adding final reports: `overall_pass=true`, 1821 parsed files, 0 parse failures, 0 shape failures, 0 ranked failures, 0 summary failures, 0 docs failures, and 0 organized-copy failures.
+
+Key strict latest full-52 attack evidence:
+- `attack_loss_increase_mean`: `loss3` 0.00382075, `loss1` 0.00658905, `loss2` 0.00660586, `random_solver_y` 0.00816719, `baseline` 0.0106693, `random_clean_y` 0.0371569.
+- `attack_loss_increase_median`: `loss3` 0.00298269, `random_solver_y` 0.00656109.
+- `final_loss_mean`: `loss3` 0.00400196, `random_solver_y` 0.00865523.
+- `loss3` wins 52/52 dataset rows against `random_solver_y` for strict full-52 attack increase.
+- Loss3 vs `random_solver_y` attack-increase significance is recorded as strongly significant in `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/metric_loss3_vs_other_six_model_evidence_significance_tests.csv`.
+
+Main conclusion:
+- Observed from the strict current same-manifest evidence: `loss3` is stable best on the main comparable quality evidence: 50-generalization/all-52 clean accuracy, strict full-52 attack robustness, and SVD/error-operator spectrum.
+- Observed from the ranked tables: it is not valid to say `loss3` wins every single recorded scalar. Non-loss3 best rows remain in train/test single-split clean metrics, train/test two-sample local Jacobian/SVD rows, and some model-solver subspace similarity rows. Those are small-n or diagnostic/local rows and do not overturn the main full-52/generalization/spectrum conclusion.
+- Inference from the completed audit: the earlier contradiction was a provenance error, not a real finding that current `random_solver_y e7860` beats current `loss3 e1000` on the strict full-52 attack protocol.
+
+Remaining work:
+- No unresolved local analysis blocker remains for the Burgers conclusion.
+- External GitHub/R2 synchronization for the newest final-resolution files still requires valid credentials in environment variables if not already available in the active shell; no secrets were written to repository files.
+- Current shell credential check showed `GITHUB_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, and `R2_ENDPOINT` unset. A non-interactive `git push origin vast-ai` attempt failed with `could not read Username`; local branch `vast-ai` therefore remains ahead of `origin/vast-ai`.
