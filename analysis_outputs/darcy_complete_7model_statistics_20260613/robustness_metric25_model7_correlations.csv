@@ -1,0 +1,23 @@
+scope,metric,label,n,pearson_r,spearman_rho
+overall_raw,clean_loss_before_attack,clean loss,175,-0.11903385137441838,-0.2329959695476937
+within_sample_centered,clean_loss_before_attack,clean loss,175,0.4458277694667365,0.722857142857143
+overall_raw,relative_l2,relative L2,175,0.053354157364946114,-0.12667711598746081
+within_sample_centered,relative_l2,relative L2,175,0.6796049283331322,0.7671428571428573
+overall_raw,jt_error_l2_norm,||J^T e||,175,-0.03533958514273825,-0.20265562024182712
+within_sample_centered,jt_error_l2_norm,||J^T e||,175,0.5728870781700123,0.6100000000000001
+overall_raw,jt_error_l2_norm_sq,||J^T e||^2,175,-0.11916903146385424,-0.20265562024182712
+within_sample_centered,jt_error_l2_norm_sq,||J^T e||^2,175,0.40812002035666517,0.6100000000000001
+overall_raw,jt_error_linf,||J^T e||_inf,175,-0.044404227920319256,-0.2058284818629646
+within_sample_centered,jt_error_linf,||J^T e||_inf,175,0.5313267896796579,0.5385714285714286
+overall_raw,binary_first_order_mse_gain_positive_topk,binary first-order gain,175,-0.03980404073738792,-0.2106560680698612
+within_sample_centered,binary_first_order_mse_gain_positive_topk,binary first-order gain,175,0.5381844736691693,0.5471428571428573
+overall_raw,one_power_sigma,sigma_max,175,-0.37342110835881936,-0.48420734437975815
+within_sample_centered,one_power_sigma,sigma_max,175,-0.4974746867263195,-0.6100000000000001
+overall_raw,sigma_power_times_error_l2,sigma_max * ||e||,175,-0.09327835861457469,-0.26598522167487687
+within_sample_centered,sigma_power_times_error_l2,sigma_max * ||e||,175,0.507273910320742,0.5714285714285715
+overall_raw,sigma_power_sq_times_error_l2_sq,sigma_max^2 * ||e||^2,175,-0.1558162649541533,-0.26598522167487687
+within_sample_centered,sigma_power_sq_times_error_l2_sq,sigma_max^2 * ||e||^2,175,0.379770861399682,0.5714285714285715
+overall_raw,top_left_error_alignment_abs,"|<e/||e||, u1>|",175,0.45114625227015986,0.17194357366771162
+within_sample_centered,top_left_error_alignment_abs,"|<e/||e||, u1>|",175,0.6552166612623239,0.37285714285714294
+overall_raw,j_error_l2_norm,||J e||,175,-0.09229784984735918,-0.23585535154500673
+within_sample_centered,j_error_l2_norm,||J e||,175,0.481948590226233,0.5485714285714287

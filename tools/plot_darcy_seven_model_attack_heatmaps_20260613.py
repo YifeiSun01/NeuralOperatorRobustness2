@@ -50,8 +50,8 @@ SEVEN_MODELS = [
 
 MODEL_COLORS = {
     **heat.MODEL_COLORS,
-    "random clean y": "#0f766e",
-    "random solver y": "#be123c",
+    "random clean y": "#059669",
+    "random solver y": "#0891b2",
 }
 
 

@@ -67,6 +67,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--suffix", default="")
     parser.add_argument("--task-subdir", default="darcy")
     parser.add_argument("--max-lines-per-panel", type=int, default=5)
+    parser.add_argument("--max-epoch", type=int, default=None)
     parser.add_argument("--skip-fft", action="store_true")
     return parser.parse_args()
 
@@ -97,6 +98,13 @@ def setup_matplotlib() -> None:
             "legend.fontsize": 8,
         }
     )
+
+
+def filter_max_epoch(df: pd.DataFrame, max_epoch: int | None) -> pd.DataFrame:
+    if max_epoch is None or "epoch" not in df.columns:
+        return df
+    epochs = pd.to_numeric(df["epoch"], errors="coerce")
+    return df[epochs <= max_epoch].copy()
 
 
 def name_with_suffix(filename: str, suffix: str) -> str:
@@ -813,12 +821,12 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     polished_dir.mkdir(parents=True, exist_ok=True)
 
-    eval_df = prepare_eval_df(pd.read_csv(darcy_dir / "eval_metrics.csv"))
-    attack_df = pd.read_csv(darcy_dir / "attack_epoch_summary.csv")
+    eval_df = prepare_eval_df(filter_max_epoch(pd.read_csv(darcy_dir / "eval_metrics.csv"), args.max_epoch))
+    attack_df = filter_max_epoch(pd.read_csv(darcy_dir / "attack_epoch_summary.csv"), args.max_epoch)
     bucket_path = darcy_dir / "attack_epsilon_bucket_summary.csv"
-    bucket_df = pd.read_csv(bucket_path) if bucket_path.exists() else pd.DataFrame()
+    bucket_df = filter_max_epoch(pd.read_csv(bucket_path), args.max_epoch) if bucket_path.exists() else pd.DataFrame()
     probe_path = darcy_dir / "attack_probe_samples.csv"
-    probe_df = pd.read_csv(probe_path) if probe_path.exists() and probe_path.stat().st_size else pd.DataFrame()
+    probe_df = filter_max_epoch(pd.read_csv(probe_path), args.max_epoch) if probe_path.exists() and probe_path.stat().st_size else pd.DataFrame()
 
     outputs: list[str] = []
     fft_status = "skipped_by_argument" if args.skip_fft else "not_attempted"

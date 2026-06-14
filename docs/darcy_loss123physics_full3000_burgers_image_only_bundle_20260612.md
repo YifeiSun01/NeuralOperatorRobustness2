@@ -5,10 +5,10 @@ Status: generated a Darcy Flow bundle matching the Burgers image-only bundle str
 - Bundle: `visualizations/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612`
 - Work/stitched data: `analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work`
 - Top-level folders: `comparison_dense`, `loss1`, `loss2`, `loss3`, `physics`
-- PNG count: `136`
+- PNG count: `146`
 - Non-PNG files in bundle: `0`
 - Epoch range: `0..3000`
-- Copied Darcy 2D attack heatmap PNGs: `50`
+- Copied Darcy 2D attack heatmap PNGs: `60`
 - Generated per-generalization 5x5 dense panels: `8`
 
 Important correction: previous Darcy figures were split across first-stage and stage2 directories. This bundle first stitches the formal runs into 0..3000 posthoc visualization runs, then regenerates the per-method and comparison figures.
@@ -20,6 +20,11 @@ Important correction: previous Darcy figures were split across first-stage and s
 - `loss2`: `visualizations/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612/loss2`
 - `loss3`: `visualizations/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612/loss3`
 - `physics`: `visualizations/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612/physics`
+
+## More-Faded Heatmaps
+
+- Added `loss3_more_faded_recommended` and `loss3_more_faded_maxfade_signsame` under `comparison_dense/darcy_2d_attack_heatmaps`.
+- These are merged into the image-only bundle rather than left only as standalone visualization folders.
 
 ## Notes
 

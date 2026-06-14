@@ -15,8 +15,9 @@
     "loss3_worst": 5
   },
   "heatmap_pngs": 50,
-  "method_pngs": 18,
-  "total_pngs": 78,
+  "method_pngs": 78,
+  "dense_generalization_pngs": 8,
+  "total_pngs": 146,
   "non_png_files_in_bundle": 0,
   "methods": [
     "loss1",
@@ -34,5 +35,6 @@
     "physics loss",
     "random clean y",
     "random solver y"
-  ]
+  ],
+  "curve_max_epoch": 1000
 }

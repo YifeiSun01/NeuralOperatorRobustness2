@@ -1,0 +1,3 @@
+task,epoch,epoch_end_global_step,expected_probe_count,captured_probe_count,missing_source_indices,npz_path
+darcy,1,1,2,2,[],adversarial_training_runs/smoke_darcy_random_binary_fixed_y_20260612_codecheck_a/darcy/attack_probe_samples/darcy_epoch001_step000001_attack_probe.npz
+darcy,2,2,2,2,[],adversarial_training_runs/smoke_darcy_random_binary_fixed_y_20260612_codecheck_a/darcy/attack_probe_samples/darcy_epoch002_step000002_attack_probe.npz

@@ -1,0 +1,37 @@
+{
+  "mode": "long",
+  "tag": "20260612_full50_timematched_1000",
+  "generalization_root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+  "eval_max_samples": 10,
+  "max_generalization_eval": 50,
+  "checkpoint_every_epochs": 200,
+  "time_match_reference": "loss1 1000 epochs from measured full50 100-epoch run",
+  "objectives": {
+    "loss1": {
+      "epochs": 1000,
+      "measured_sec_per_epoch_from_full50_100ep": 4.680958273200085,
+      "projected_seconds": 4680.958273200085,
+      "projected_hours": 1.3002661870000236
+    },
+    "loss2": {
+      "epochs": 1026,
+      "measured_sec_per_epoch_from_full50_100ep": 4.562185353540117,
+      "projected_seconds": 4680.802172732159,
+      "projected_hours": 1.3002228257589332
+    },
+    "loss3": {
+      "epochs": 1011,
+      "measured_sec_per_epoch_from_full50_100ep": 4.632201948699949,
+      "projected_seconds": 4683.156170135649,
+      "projected_hours": 1.3008767139265691
+    },
+    "physics": {
+      "epochs": 1040,
+      "measured_sec_per_epoch_from_full50_100ep": 4.499857622220006,
+      "projected_seconds": 4679.851927108806,
+      "projected_hours": 1.299958868641335
+    }
+  },
+  "projected_total_seconds": 18724.7685431767,
+  "projected_total_hours": 5.20132459532686
+}

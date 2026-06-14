@@ -1,0 +1,2 @@
+model,mean_relative_l2,mean_jt_error_l2_norm,mean_jt_error_l2_norm_sq,mean_j_error_l2_norm,mean_spectral_norm_top_sigma,max_spectral_norm_top_sigma
+baseline,0.09663416901209672,0.00013384652993408963,2.1466016241833945e-08,5.412122991401702e-05,0.0017323127947747707,0.001923142932355404

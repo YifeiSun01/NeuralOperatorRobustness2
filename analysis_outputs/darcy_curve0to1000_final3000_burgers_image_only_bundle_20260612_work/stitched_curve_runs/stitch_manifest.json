@@ -1,0 +1,273 @@
+{
+  "max_epoch": 1000,
+  "methods": {
+    "loss1": {
+      "out_run": "analysis_outputs/darcy_curve0to1000_final3000_burgers_image_only_bundle_20260612_work/stitched_curve_runs/loss1",
+      "first_stage_max_epoch": 1000,
+      "npz_links": 1000,
+      "csv": {
+        "eval_metrics.csv": {
+          "rows": 52052,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "eval_split_summary.csv": {
+          "rows": 4004,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "attack_epoch_summary.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_epsilon_bucket_summary.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_samples.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_epochs.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "train_steps.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "optimizer_steps.csv": {
+          "rows": 2000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "evaluation_passes.csv": {
+          "rows": 1001,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "checkpoints.csv": {
+          "rows": 5,
+          "epoch_min": 200,
+          "epoch_max": 1000
+        },
+        "memory.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_batches.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        }
+      }
+    },
+    "loss2": {
+      "out_run": "analysis_outputs/darcy_curve0to1000_final3000_burgers_image_only_bundle_20260612_work/stitched_curve_runs/loss2",
+      "first_stage_max_epoch": 1026,
+      "npz_links": 1000,
+      "csv": {
+        "eval_metrics.csv": {
+          "rows": 52052,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "eval_split_summary.csv": {
+          "rows": 4004,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "attack_epoch_summary.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_epsilon_bucket_summary.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_samples.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_epochs.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "train_steps.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "optimizer_steps.csv": {
+          "rows": 2000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "evaluation_passes.csv": {
+          "rows": 1001,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "checkpoints.csv": {
+          "rows": 5,
+          "epoch_min": 200,
+          "epoch_max": 1000
+        },
+        "memory.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_batches.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        }
+      }
+    },
+    "loss3": {
+      "out_run": "analysis_outputs/darcy_curve0to1000_final3000_burgers_image_only_bundle_20260612_work/stitched_curve_runs/loss3",
+      "first_stage_max_epoch": 1011,
+      "npz_links": 1000,
+      "csv": {
+        "eval_metrics.csv": {
+          "rows": 52052,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "eval_split_summary.csv": {
+          "rows": 4004,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "attack_epoch_summary.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_epsilon_bucket_summary.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_samples.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_epochs.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "train_steps.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "optimizer_steps.csv": {
+          "rows": 2000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "evaluation_passes.csv": {
+          "rows": 1001,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "checkpoints.csv": {
+          "rows": 5,
+          "epoch_min": 200,
+          "epoch_max": 1000
+        },
+        "memory.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_batches.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        }
+      }
+    },
+    "physics": {
+      "out_run": "analysis_outputs/darcy_curve0to1000_final3000_burgers_image_only_bundle_20260612_work/stitched_curve_runs/physics",
+      "first_stage_max_epoch": 1040,
+      "npz_links": 1000,
+      "csv": {
+        "eval_metrics.csv": {
+          "rows": 52052,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "eval_split_summary.csv": {
+          "rows": 4004,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "attack_epoch_summary.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_epsilon_bucket_summary.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_samples.csv": {
+          "rows": 5000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_probe_epochs.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "train_steps.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "optimizer_steps.csv": {
+          "rows": 2000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "evaluation_passes.csv": {
+          "rows": 1001,
+          "epoch_min": 0,
+          "epoch_max": 1000
+        },
+        "checkpoints.csv": {
+          "rows": 5,
+          "epoch_min": 200,
+          "epoch_max": 1000
+        },
+        "memory.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        },
+        "attack_batches.csv": {
+          "rows": 1000,
+          "epoch_min": 1,
+          "epoch_max": 1000
+        }
+      }
+    }
+  }
+}

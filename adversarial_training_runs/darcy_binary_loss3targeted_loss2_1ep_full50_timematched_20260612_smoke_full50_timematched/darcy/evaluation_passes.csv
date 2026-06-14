@@ -1,0 +1,3 @@
+task,phase,epoch,global_step,progress_fraction,eval_wall_sec,checkpoint_saved,checkpoint_path
+darcy,baseline_before_adversarial_training,0,0,0.0,3.88462550699478,0,
+darcy,during_adversarial_training,1,1,1.0,3.5195553209923673,1,adversarial_training_runs/darcy_binary_loss3targeted_loss2_1ep_full50_timematched_20260612_smoke_full50_timematched/darcy/checkpoints/darcy_epoch001_step000001.pt

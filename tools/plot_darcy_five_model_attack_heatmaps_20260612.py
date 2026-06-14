@@ -92,10 +92,10 @@ MODELS = [
 ]
 
 MODEL_COLORS = {
-    "baseline": "#4b5563",
-    "loss1": "#d97706",
-    "loss2": "#2563eb",
-    "loss3": "#059669",
+    "baseline": "#111827",
+    "loss1": "#2563eb",
+    "loss2": "#f97316",
+    "loss3": "#dc2626",
     "physics loss": "#7c3aed",
 }
 

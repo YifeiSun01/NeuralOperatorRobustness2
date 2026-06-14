@@ -46,5 +46,6 @@
       "path": "adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100"
     }
   ],
-  "note": "Random-inclusive training plots use true cumulative wall-clock minutes from baseline eval + attack/random-source generation + optimizer + eval, calibrated to summary elapsed time. Old adversarial methods are first-stage 1000-ish runs; random-source methods are 1100 epoch runs."
+  "curve_max_epoch": 1000,
+  "note": "Random-inclusive training plots use epochs 0..1000 only. Wall-clock minutes are training-only: train_steps.step_wall_sec, excluding baseline and per-epoch evaluation. Old adversarial methods are first-stage 1000-ish runs; random-source methods were trained to 1100, but curve plots are capped at 1000."
 }

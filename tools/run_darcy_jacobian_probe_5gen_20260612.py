@@ -364,9 +364,10 @@ def write_reports(out_dir: Path, viz_dir: Path, rows: list[dict[str, Any]], jt_h
     lim = float(np.nanpercentile(np.abs(vals), 99.0)) if vals.size else 1.0
     lim = max(lim, 1e-20)
     fig, axes = plt.subplots(len(samples), len(models), figsize=(3.2 * len(models), 3.0 * len(samples)))
+    axes_arr = np.asarray(axes, dtype=object).reshape(len(samples), len(models))
     for r, sample in enumerate(samples):
         for c, model in enumerate(models):
-            ax = axes[r, c] if len(samples) > 1 else axes[c]
+            ax = axes_arr[r, c]
             arr = jt_heatmaps.get((model, sample))
             if arr is None:
                 ax.axis("off")
@@ -375,7 +376,7 @@ def write_reports(out_dir: Path, viz_dir: Path, rows: list[dict[str, Any]], jt_h
             ax.set_xticks([])
             ax.set_yticks([])
             ax.set_title(f"{model}\n{sample}", fontsize=8)
-    cbar = fig.colorbar(im, ax=axes.ravel().tolist(), shrink=0.76)
+    cbar = fig.colorbar(im, ax=axes_arr.ravel().tolist(), shrink=0.76)
     cbar.set_label("J^T error")
     fig.suptitle("Darcy Jacobian probe: input-space gradient J^T error", y=0.995)
     fig.savefig(viz_dir / "jt_error_heatmap_grid.png", dpi=220, bbox_inches="tight")

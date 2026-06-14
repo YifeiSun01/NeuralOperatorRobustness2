@@ -1,0 +1,37 @@
+{
+  "mode": "smoke",
+  "tag": "20260612_smoke_full50_timematched",
+  "generalization_root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+  "eval_max_samples": 2,
+  "max_generalization_eval": 50,
+  "checkpoint_every_epochs": 1,
+  "time_match_reference": "loss1 1000 epochs from measured full50 100-epoch run",
+  "objectives": {
+    "loss1": {
+      "epochs": 1,
+      "measured_sec_per_epoch_from_full50_100ep": 4.680958273200085,
+      "projected_seconds": 4.680958273200085,
+      "projected_hours": 0.0013002661870000238
+    },
+    "loss2": {
+      "epochs": 1,
+      "measured_sec_per_epoch_from_full50_100ep": 4.562185353540117,
+      "projected_seconds": 4.562185353540117,
+      "projected_hours": 0.001267273709316699
+    },
+    "loss3": {
+      "epochs": 1,
+      "measured_sec_per_epoch_from_full50_100ep": 4.632201948699949,
+      "projected_seconds": 4.632201948699949,
+      "projected_hours": 0.0012867227635277637
+    },
+    "physics": {
+      "epochs": 1,
+      "measured_sec_per_epoch_from_full50_100ep": 4.499857622220006,
+      "projected_seconds": 4.499857622220006,
+      "projected_hours": 0.0012499604506166682
+    }
+  },
+  "projected_total_seconds": 18.375203197660156,
+  "projected_total_hours": 0.005104223110461155
+}

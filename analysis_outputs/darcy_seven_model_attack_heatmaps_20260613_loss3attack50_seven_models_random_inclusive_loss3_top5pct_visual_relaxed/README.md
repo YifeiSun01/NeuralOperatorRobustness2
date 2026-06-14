@@ -1,6 +1,6 @@
 # Darcy Seven-Model Shared-Range Attack Heatmaps (20260613_loss3attack50_seven_models_random_inclusive_loss3_top5pct_visual_relaxed)
 
-- Created: 2026-06-13T11:56:22+00:00
+- Created: 2026-06-13T21:07:21+00:00
 - Models: baseline, loss1, loss2, loss3, physics loss, random clean y, random solver y.
 - Attack: binary Darcy loss3 solver-consistent attack, steps=50, epsilon_fraction=0.025.
 - Samples: 5 selected samples.

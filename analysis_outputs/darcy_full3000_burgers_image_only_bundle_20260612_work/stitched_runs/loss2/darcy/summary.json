@@ -1,0 +1,12 @@
+{
+  "task": "darcy",
+  "method": "loss2",
+  "stitched_from": [
+    "adversarial_training_runs/darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c",
+    "adversarial_training_runs/darcy_binary_loss3targeted_loss2_continue2053ep_from_1026ep_full50_timematched_20260612_stage2_2000_from_1000c"
+  ],
+  "epochs": 3000,
+  "max_eval_epoch": 3000,
+  "elapsed_seconds": 15951.704392596992,
+  "note": "Posthoc stitched 0..3000 view for visualization only; model checkpoints remain in the source run directories."
+}

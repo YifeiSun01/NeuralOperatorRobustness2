@@ -1,0 +1,28 @@
+{
+  "bundle_dir": "visualizations/darcy_loss123physics_full3000_burgers_image_only_bundle_20260612",
+  "analysis_dir": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work",
+  "stitched_root": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs",
+  "max_epoch": 3000,
+  "top_level_folders": [
+    "comparison_dense",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics"
+  ],
+  "png_count": 146,
+  "non_png_count": 0,
+  "copied_2d_attack_heatmaps": 30,
+  "generated_dense_5x5_panels": 8,
+  "methods": {
+    "loss1": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/loss1",
+    "loss2": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/loss2",
+    "loss3": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/loss3",
+    "physics": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/physics"
+  },
+  "darcy_2d_attack_heatmap_png_count": 60,
+  "added_more_faded_heatmap_folders": [
+    "loss3attack50_five_models_ranked5_batch_polished_loss3_more_faded_recommended",
+    "loss3attack50_five_models_ranked5_batch_polished_loss3_more_faded_maxfade_signsame"
+  ]
+}

@@ -49,13 +49,14 @@ done
 
 if [[ "$RUN_PLOT" == "1" ]]; then
   plot_cmd=(
-    "$PYTHON" tools/plot_darcy_loss123physics_polished_burgers_style_20260611.py
+    "$PYTHON" tools/plot_darcy_loss123physics_adv_training_20260611.py
     --loss1-run-dir "$OUT_ROOT/darcy_binary_loss3targeted_loss1_${EPOCHS}ep_full_logging_${TAG}"
     --loss2-run-dir "$OUT_ROOT/darcy_binary_loss3targeted_loss2_${EPOCHS}ep_full_logging_${TAG}"
     --loss3-run-dir "$OUT_ROOT/darcy_binary_loss3targeted_loss3_${EPOCHS}ep_full_logging_${TAG}"
     --physics-run-dir "$OUT_ROOT/darcy_binary_loss3targeted_physics_${EPOCHS}ep_full_logging_${TAG}"
-    --out-root "visualizations/darcy_loss123physics_full_logging_polished_burgers_style_${EPOCHS}ep_${TAG}"
-    --report-md "docs/darcy_loss123physics_full_logging_polished_burgers_style_${EPOCHS}ep_${TAG}.md"
+    --out-dir "visualizations/darcy_loss123physics_full_logging_${EPOCHS}ep_${TAG}"
+    --report-md "docs/darcy_loss123physics_full_logging_${EPOCHS}ep_${TAG}.md"
+    --derive-full50-from-run-eval
   )
   printf '\n[darcy-full-logging-plot] %s\n' "${plot_cmd[*]}"
   if [[ "$DRY_RUN" != "1" ]]; then

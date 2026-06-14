@@ -1,0 +1,3 @@
+task,phase,epoch,global_step,progress_fraction,eval_wall_sec,checkpoint_saved,checkpoint_path
+darcy,baseline_before_adversarial_training,0,0,0.0,3.7182789430080447,0,
+darcy,during_adversarial_training,1,1,0.001,3.231531429977622,0,

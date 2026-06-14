@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-06-12T06:17:01+00:00",
+  "cuda_available": true,
+  "device_capability": [
+    7,
+    0
+  ],
+  "device_name": "Tesla V100-SXM2-32GB",
+  "jax_backend": "gpu",
+  "jax_devices": [
+    "cuda:0"
+  ],
+  "jax_probe_sum": 32768.0,
+  "jax_version": "0.10.0",
+  "torch_cuda_version": "12.6",
+  "torch_version": "2.8.0+cu126"
+}

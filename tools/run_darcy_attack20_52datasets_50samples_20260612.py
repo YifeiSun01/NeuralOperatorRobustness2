@@ -130,6 +130,11 @@ SAMPLE_FIELDS = [
     "attack_loss_gain_relative",
     "adv_to_clean_ratio",
     "solver_mse_attack_gain_batch",
+    "delta_l2_rms",
+    "delta_linf",
+    "delta_flip_fraction",
+    "darcy_budget_pixels_batch",
+    "boundary_ratio_batch",
 ]
 
 DATASET_FIELDS = [
@@ -154,6 +159,11 @@ DATASET_FIELDS = [
     "median_attack_loss_gain",
     "median_attack_loss_gain_relative",
     "mean_solver_mse_attack_gain_by_batch",
+    "mean_delta_l2_rms",
+    "mean_delta_linf",
+    "mean_delta_flip_fraction",
+    "mean_darcy_budget_pixels_by_batch",
+    "mean_boundary_ratio_by_batch",
     "elapsed_seconds",
 ]
 
@@ -174,6 +184,9 @@ MODEL_FIELDS = [
     "relative_gain_from_means",
     "median_attack_loss_gain",
     "median_attack_loss_gain_relative",
+    "mean_delta_l2_rms",
+    "mean_delta_linf",
+    "mean_delta_flip_fraction",
 ]
 
 
@@ -421,6 +434,9 @@ def summarize_rows(rows: list[dict[str, Any]], *, model: ModelSpec, split: str, 
     adv_after = finite_array(rows, "adv_loss_after_attack")
     gain = finite_array(rows, "attack_loss_gain")
     rel_gain = finite_array(rows, "attack_loss_gain_relative")
+    delta_l2 = finite_array(rows, "delta_l2_rms")
+    delta_linf = finite_array(rows, "delta_linf")
+    delta_flip = finite_array(rows, "delta_flip_fraction")
     clean_mean = mean_or_nan(clean)
     adv_mean = mean_or_nan(adv_after)
     rel_from_means = (adv_mean / clean_mean - 1.0) if math.isfinite(clean_mean) and abs(clean_mean) > 1e-20 else float("nan")
@@ -442,6 +458,9 @@ def summarize_rows(rows: list[dict[str, Any]], *, model: ModelSpec, split: str, 
         "relative_gain_from_means": rel_from_means,
         "median_attack_loss_gain": median_or_nan(gain),
         "median_attack_loss_gain_relative": median_or_nan(rel_gain),
+        "mean_delta_l2_rms": mean_or_nan(delta_l2),
+        "mean_delta_linf": mean_or_nan(delta_linf),
+        "mean_delta_flip_fraction": mean_or_nan(delta_flip),
     }
 
 
@@ -499,6 +518,12 @@ def evaluate_model(
             gain = si["attack_loss_gain"].detach().cpu().numpy().astype(float)
             rel_gain = si["attack_loss_gain_relative"].detach().cpu().numpy().astype(float)
             solver_gain = float(info.get("solver_mse_attack_gain", float("nan")))
+            delta = (result.x_train.detach() - xb[:used_n].detach()).reshape(used_n, -1)
+            delta_l2 = torch.sqrt(delta.pow(2).mean(dim=1)).detach().cpu().numpy().astype(float)
+            delta_linf = delta.abs().max(dim=1).values.detach().cpu().numpy().astype(float)
+            delta_flip = (delta.abs() > 1e-12).float().mean(dim=1).detach().cpu().numpy().astype(float)
+            budget_pixels = float(info.get("darcy_budget_pixels_mean", float("nan")))
+            boundary_ratio = float(info.get("boundary_ratio_mean", float("nan")))
             dataset_batch_solver_gains.append(solver_gain)
             effective_batch_sizes.append(int(used_n))
             for j in range(used_n):
@@ -526,6 +551,11 @@ def evaluate_model(
                     "attack_loss_gain_relative": float(rel_gain[j]),
                     "adv_to_clean_ratio": (a / c) if math.isfinite(c) and abs(c) > 1e-20 else float("nan"),
                     "solver_mse_attack_gain_batch": solver_gain,
+                    "delta_l2_rms": float(delta_l2[j]),
+                    "delta_linf": float(delta_linf[j]),
+                    "delta_flip_fraction": float(delta_flip[j]),
+                    "darcy_budget_pixels_batch": budget_pixels,
+                    "boundary_ratio_batch": boundary_ratio,
                 }
                 sample_rows.append(row)
             del xb, yb, result
@@ -550,6 +580,8 @@ def evaluate_model(
                 "sample_count": len(sample_rows),
                 "attack_batch_size": int(max(effective_batch_sizes)) if effective_batch_sizes else 0,
                 "mean_solver_mse_attack_gain_by_batch": mean_or_nan(dataset_batch_solver_gains),
+                "mean_darcy_budget_pixels_by_batch": mean_or_nan([float(r["darcy_budget_pixels_batch"]) for r in sample_rows]),
+                "mean_boundary_ratio_by_batch": mean_or_nan([float(r["boundary_ratio_batch"]) for r in sample_rows]),
                 "elapsed_seconds": time.perf_counter() - t0,
             }
         )
@@ -596,6 +628,11 @@ def rows_from_csv_numeric(path: Path) -> list[dict[str, Any]]:
         "attack_loss_gain_relative",
         "adv_to_clean_ratio",
         "solver_mse_attack_gain_batch",
+        "delta_l2_rms",
+        "delta_linf",
+        "delta_flip_fraction",
+        "darcy_budget_pixels_batch",
+        "boundary_ratio_batch",
         "dataset_count",
         "sample_count",
         "mean_clean_loss",
@@ -606,6 +643,11 @@ def rows_from_csv_numeric(path: Path) -> list[dict[str, Any]]:
         "median_attack_loss_gain",
         "median_attack_loss_gain_relative",
         "mean_solver_mse_attack_gain_by_batch",
+        "mean_delta_l2_rms",
+        "mean_delta_linf",
+        "mean_delta_flip_fraction",
+        "mean_darcy_budget_pixels_by_batch",
+        "mean_boundary_ratio_by_batch",
         "elapsed_seconds",
     }
     for row in read_csv_rows(path):
@@ -747,12 +789,13 @@ def write_report(summary_rows: list[dict[str, Any]], *, out_dir: Path, viz_dir: 
             f"Lowest relative growth from means overall: `{best_rel['model']}` "
             f"({float(best_rel['relative_gain_from_means']):.6g})."
         )
-    lines += ["", "## Overall", "", "| model | clean | attacked | abs gain | rel gain from means | mean sample rel gain | samples |", "|---|---:|---:|---:|---:|---:|---:|"]
+    lines += ["", "## Overall", "", "| model | clean | attacked | abs gain | rel gain from means | mean sample rel gain | delta RMS | flip frac | samples |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for r in all_rows:
         lines.append(
             f"| {r['model']} | {float(r['mean_clean_loss']):.6g} | {float(r['mean_adv_loss']):.6g} | "
             f"{float(r['mean_attack_loss_gain']):.6g} | {float(r['relative_gain_from_means']):.6g} | "
-            f"{float(r['mean_attack_loss_gain_relative']):.6g} | {int(r['sample_count'])} |"
+            f"{float(r['mean_attack_loss_gain_relative']):.6g} | {float(r.get('mean_delta_l2_rms', float('nan'))):.6g} | "
+            f"{float(r.get('mean_delta_flip_fraction', float('nan'))):.6g} | {int(r['sample_count'])} |"
         )
     lines += ["", "## Split Summary", "", "| model | split | clean | attacked | abs gain | rel gain from means | samples |", "|---|---|---:|---:|---:|---:|---:|"]
     for r in split_rows:

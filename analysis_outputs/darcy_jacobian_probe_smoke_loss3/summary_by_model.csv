@@ -1,0 +1,2 @@
+model,mean_relative_l2,mean_jt_error_l2_norm,mean_jt_error_l2_norm_sq,mean_j_error_l2_norm,mean_spectral_norm_top_sigma,max_spectral_norm_top_sigma
+loss3,0.07858559103353538,0.00012645015376619995,1.8549621641895437e-08,5.049568135291338e-05,0.002082701958715916,0.002312924014404416

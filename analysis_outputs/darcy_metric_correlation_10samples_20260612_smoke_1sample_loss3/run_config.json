@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-06-12T08:09:24+00:00",
+  "tag": "20260612_smoke_1sample_loss3",
+  "attack_steps": 20,
+  "epsilon_fraction": 0.025,
+  "max_samples": 1,
+  "models": [
+    "loss3"
+  ],
+  "block_row_chunk": 128,
+  "device": "cuda"
+}

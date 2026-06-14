@@ -1,0 +1,62 @@
+{
+  "completed_at": "2026-06-12T06:17:18+00:00",
+  "elapsed_seconds": 15.25977369400789,
+  "out_dir": "analysis_outputs/darcy_attack20_52datasets_50samples_probe_attack20_2datasets_50samples_loss3",
+  "summary_by_model_split": [
+    {
+      "attack_steps": 20,
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1011_step001011.pt",
+      "dataset_count": 2,
+      "epsilon_fraction": 0.025,
+      "mean_adv_loss": 1.7906602761286194e-06,
+      "mean_attack_loss_gain": 1.70403051825474e-06,
+      "mean_attack_loss_gain_relative": 27.67933778643608,
+      "mean_clean_loss": 8.662976838991198e-08,
+      "median_attack_loss_gain": 1.4997113453318889e-06,
+      "median_attack_loss_gain_relative": 16.80881977081299,
+      "model": "loss3",
+      "relative_gain_from_means": 19.6702650764231,
+      "sample_count": 100,
+      "split": "all",
+      "trained_epochs": 1011,
+      "training_objective": "loss3"
+    },
+    {
+      "attack_steps": 20,
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1011_step001011.pt",
+      "dataset_count": 1,
+      "epsilon_fraction": 0.025,
+      "mean_adv_loss": 1.7603347407657567e-06,
+      "mean_attack_loss_gain": 1.6774695714616428e-06,
+      "mean_attack_loss_gain_relative": 27.56118490219116,
+      "mean_clean_loss": 8.28651799267277e-08,
+      "median_attack_loss_gain": 1.5532208408330916e-06,
+      "median_attack_loss_gain_relative": 17.526591300964355,
+      "model": "loss3",
+      "relative_gain_from_means": 20.243358698096188,
+      "sample_count": 50,
+      "split": "train",
+      "trained_epochs": 1011,
+      "training_objective": "loss3"
+    },
+    {
+      "attack_steps": 20,
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1011_step001011.pt",
+      "dataset_count": 1,
+      "epsilon_fraction": 0.025,
+      "mean_adv_loss": 1.8209858114914823e-06,
+      "mean_attack_loss_gain": 1.730591465047837e-06,
+      "mean_attack_loss_gain_relative": 27.797490670681,
+      "mean_clean_loss": 9.039435685309626e-08,
+      "median_attack_loss_gain": 1.4997113453318889e-06,
+      "median_attack_loss_gain_relative": 16.563833236694336,
+      "model": "loss3",
+      "relative_gain_from_means": 19.14490588666773,
+      "sample_count": 50,
+      "split": "test",
+      "trained_epochs": 1011,
+      "training_objective": "loss3"
+    }
+  ],
+  "viz_dir": "visualizations/darcy_attack20_52datasets_50samples_probe_attack20_2datasets_50samples_loss3"
+}

@@ -5,22 +5,34 @@ These figures update the Darcy loss/metric plots so the two random-source traini
 - Analysis: `analysis_outputs/darcy_random_inclusive_training_figures_20260613`
 - Figures: `visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense`
 - Random methods: `random clean y`, `random solver y`.
-- Old adversarial methods are first-stage 1000-ish runs; random methods are 1100 epoch runs.
-- Wall-clock plots use true cumulative time: baseline eval + attack/random-source generation + optimizer + eval, calibrated to each run summary elapsed time.
+- Training/loss/Delta curves are capped at epochs `0..1000`.
+- Old adversarial methods are first-stage 1000-ish runs; random methods were trained to 1100, but the curve figures do not plot epochs after 1000.
+- Wall-clock plots use training-only time from `train_steps.step_wall_sec`: delta/random-source generation + x/y training-pair construction + optimizer forward/backward/update. Baseline and per-epoch evaluation are excluded.
 - Wall-clock components CSV: `analysis_outputs/darcy_random_inclusive_training_figures_20260613/six_method_wall_clock_components.csv`
+
+## High-Contrast Line Colors
+
+| method | color |
+|---|---|
+| `loss1` | `#2563eb` |
+| `loss2` | `#f97316` |
+| `loss3` | `#dc2626` |
+| `physics loss` | `#7c3aed` |
+| `random clean y` | `#059669` |
+| `random solver y` | `#0891b2` |
 
 ## Wall-Clock Correction
 
-Earlier generated wall-clock figures incorrectly used only `optimizer_wall_sec`, so the x-axis showed optimizer-update minutes rather than real elapsed wall-clock time. The regenerated figures use baseline evaluation + attack/random-source generation + optimizer updates + evaluation, calibrated to each run summary elapsed time.
+Earlier random-inclusive wall-clock figures included every-epoch evaluation, which made the random-source runs look artificially slow because those two runs were executed concurrently and their evaluation passes were resource-contended. The regenerated figures exclude evaluation and use training-only `step_wall_sec`.
 
-| method | optimizer min | attack/random min | eval min | true elapsed min |
-|---|---:|---:|---:|---:|
-| `loss1` | 3.834 | 8.287 | 62.947 | 77.007 |
-| `loss2` | 3.919 | 7.092 | 63.907 | 77.058 |
-| `loss3` | 3.863 | 7.786 | 63.637 | 77.392 |
-| `physics loss` | 3.985 | 6.145 | 64.804 | 76.689 |
-| `random clean y` | 9.283 | 5.871 | 283.652 | 303.769 |
-| `random solver y` | 10.008 | 8.544 | 282.927 | 306.838 |
+| method | training-only min | attack/random min | optimizer min | eval min excluded | observed elapsed min |
+|---|---:|---:|---:|---:|---:|
+| `loss1` | 13.640 | 8.287 | 3.834 | 62.947 | 77.007 |
+| `loss2` | 12.721 | 7.092 | 3.919 | 63.907 | 77.058 |
+| `loss3` | 13.323 | 7.786 | 3.863 | 63.637 | 77.392 |
+| `physics loss` | 11.446 | 6.145 | 3.985 | 64.804 | 76.689 |
+| `random clean y` | 18.815 | 5.871 | 9.283 | 283.652 | 303.769 |
+| `random solver y` | 22.710 | 8.544 | 10.008 | 282.927 | 306.838 |
 
 ## Figures
 

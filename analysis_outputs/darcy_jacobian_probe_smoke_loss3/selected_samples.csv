@@ -1,0 +1,6 @@
+sample_id,dataset_id,sample_index,pattern_family,x_min,x_max,x_unique
+gen0_matern_smooth_idx0,darcy_binary_loss3targeted_20260611_00_matern_smooth_frac0p12_a3p65909_t2p05625,0,matern_smooth,3.0,12.0,"[3.0, 12.0]"
+gen1_highpass_idx0,darcy_binary_loss3targeted_20260611_02_highpass_grf_frac0p2_a1p39914_t8p09047,0,highpass,3.0,12.0,"[3.0, 12.0]"
+gen2_wave_idx0,darcy_binary_loss3targeted_20260611_04_wave_mix_frac0p12_a2p34332_t2p21748,0,wave,3.0,12.0,"[3.0, 12.0]"
+gen3_blocky_tiles_idx0,darcy_binary_loss3targeted_20260611_05_blocky_tiles_frac0p24_a3p85379_t3p60021,0,blocky_tiles,3.0,12.0,"[3.0, 12.0]"
+gen4_cellular_blobs_idx0,darcy_binary_loss3targeted_20260611_07_cellular_blobs_frac0p16_a1p97385_t4p60937,0,cellular_blobs,3.0,12.0,"[3.0, 12.0]"

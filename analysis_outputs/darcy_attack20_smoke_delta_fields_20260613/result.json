@@ -1,0 +1,50 @@
+{
+  "completed_at": "2026-06-13T21:27:04+00:00",
+  "elapsed_seconds": 7.4590420970343985,
+  "out_dir": "analysis_outputs/darcy_attack20_smoke_delta_fields_20260613",
+  "summary_by_model_split": [
+    {
+      "attack_steps": 1,
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1011_step001011.pt",
+      "dataset_count": 1,
+      "epsilon_fraction": 0.025,
+      "mean_adv_loss": 1.1029118596184162e-07,
+      "mean_attack_loss_gain": 4.631247030317809e-08,
+      "mean_attack_loss_gain_relative": 0.6705863922834396,
+      "mean_clean_loss": 6.397871565866353e-08,
+      "mean_delta_flip_fraction": 0.02505190297961235,
+      "mean_delta_l2_rms": 1.4245014190673828,
+      "mean_delta_linf": 9.0,
+      "median_attack_loss_gain": 4.631247030317809e-08,
+      "median_attack_loss_gain_relative": 0.6705863922834396,
+      "model": "loss3",
+      "relative_gain_from_means": 0.7238730853908097,
+      "sample_count": 2,
+      "split": "all",
+      "trained_epochs": 1011,
+      "training_objective": "loss3"
+    },
+    {
+      "attack_steps": 1,
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1011_step001011.pt",
+      "dataset_count": 1,
+      "epsilon_fraction": 0.025,
+      "mean_adv_loss": 1.1029118596184162e-07,
+      "mean_attack_loss_gain": 4.631247030317809e-08,
+      "mean_attack_loss_gain_relative": 0.6705863922834396,
+      "mean_clean_loss": 6.397871565866353e-08,
+      "mean_delta_flip_fraction": 0.02505190297961235,
+      "mean_delta_l2_rms": 1.4245014190673828,
+      "mean_delta_linf": 9.0,
+      "median_attack_loss_gain": 4.631247030317809e-08,
+      "median_attack_loss_gain_relative": 0.6705863922834396,
+      "model": "loss3",
+      "relative_gain_from_means": 0.7238730853908097,
+      "sample_count": 2,
+      "split": "train",
+      "trained_epochs": 1011,
+      "training_objective": "loss3"
+    }
+  ],
+  "viz_dir": "visualizations/darcy_attack20_smoke_delta_fields_20260613"
+}

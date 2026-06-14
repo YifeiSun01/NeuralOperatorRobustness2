@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import json
 import shutil
+import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -25,9 +27,15 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+TOOLS_ROOT = PROJECT_ROOT / "tools"
+sys.path.insert(0, str(TOOLS_ROOT))
+
+import plot_darcy_random_inclusive_training_figures_20260613 as train_figs  # noqa: E402
+
 ANALYSIS_ROOT = PROJECT_ROOT / "analysis_outputs"
 VIS_ROOT = PROJECT_ROOT / "visualizations"
 DOC_ROOT = PROJECT_ROOT / "docs"
@@ -39,6 +47,8 @@ HEATMAP_GLOB = "darcy_seven_model_attack_heatmaps_20260613_loss3attack50_seven_m
 BUNDLE_DIR = VIS_ROOT / "darcy_random_inclusive_burgers_style_bundle_20260613"
 WORK_DIR = ANALYSIS_ROOT / "darcy_random_inclusive_burgers_style_bundle_20260613"
 REPORT_MD = DOC_ROOT / "darcy_random_inclusive_burgers_style_bundle_20260613.md"
+PER_RUN_PLOTTER = PROJECT_ROOT / "tools/plot_darcy_training_run_visualizations_variable_epoch_20260611.py"
+CURVE_MAX_EPOCH = train_figs.CURVE_MAX_EPOCH
 
 
 @dataclass(frozen=True)
@@ -50,12 +60,12 @@ class MethodSpec:
 
 
 METHODS = [
-    MethodSpec("loss1", "loss1", "#1b6ca8", "o"),
-    MethodSpec("loss2", "loss2", "#d95f02", "s"),
-    MethodSpec("loss3", "loss3", "#2ca25f", "^"),
-    MethodSpec("physics", "physics loss", "#7b3294", "D"),
-    MethodSpec("random_clean_y", "random clean y", "#0f766e", "P"),
-    MethodSpec("random_solver_y", "random solver y", "#be123c", "X"),
+    MethodSpec("loss1", "loss1", "#2563eb", "o"),
+    MethodSpec("loss2", "loss2", "#f97316", "s"),
+    MethodSpec("loss3", "loss3", "#dc2626", "^"),
+    MethodSpec("physics", "physics loss", "#7c3aed", "D"),
+    MethodSpec("random_clean_y", "random clean y", "#059669", "P"),
+    MethodSpec("random_solver_y", "random solver y", "#0891b2", "X"),
 ]
 
 BG = "#fbfaf7"
@@ -104,6 +114,15 @@ def reset_dirs() -> None:
     WORK_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def run_cmd(cmd: list[str]) -> None:
+    print("[run]", " ".join(cmd), flush=True)
+    subprocess.run(cmd, cwd=PROJECT_ROOT, check=True)
+
+
+def regenerate_source_training_figures() -> None:
+    run_cmd([sys.executable, str(PROJECT_ROOT / "tools/plot_darcy_random_inclusive_training_figures_20260613.py")])
+
+
 def copy_comparison_figures() -> list[Path]:
     copied: list[Path] = []
     dst_root = BUNDLE_DIR / "comparison_dense"
@@ -134,6 +153,147 @@ def copy_heatmaps() -> dict[str, int]:
             shutil.copy2(src, dst_root / src.name)
         counts[variant] = len(files)
     return counts
+
+
+def copy_png_tree(src_root: Path, dst_root: Path) -> list[Path]:
+    outputs: list[Path] = []
+    for src in sorted(src_root.rglob("*.png")):
+        dst = dst_root / src.relative_to(src_root)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+        outputs.append(dst)
+    return outputs
+
+
+def build_detailed_method_folders() -> list[Path]:
+    outputs: list[Path] = []
+    work_root = WORK_DIR / "per_method_detailed_curve0to1000"
+    for run in train_figs.RUNS:
+        out_dir = work_root / run.name
+        run_cmd(
+            [
+                sys.executable,
+                str(PER_RUN_PLOTTER),
+                "--run-dir",
+                str(run.path),
+                "--out-dir",
+                str(out_dir),
+                "--suffix",
+                run.name,
+                "--max-lines-per-panel",
+                "5",
+                "--max-epoch",
+                str(CURVE_MAX_EPOCH),
+            ]
+        )
+        outputs.extend(copy_png_tree(out_dir, BUNDLE_DIR / run.name))
+    return outputs
+
+
+def short_dataset_label(dataset_id: str) -> str:
+    s = str(dataset_id)
+    for prefix in ["darcy_binary_loss3targeted_20260611_", "train_original_binary_grf_", "test_original_binary_grf_"]:
+        s = s.replace(prefix, "")
+    return s.replace("matern_", "mat_").replace("highpass_", "hi_").replace("bandpass_", "band_")[:28]
+
+
+def load_eval_metrics() -> pd.DataFrame:
+    frames: list[pd.DataFrame] = []
+    for run in train_figs.RUNS:
+        p = run.path / "darcy/eval_metrics.csv"
+        d = pd.read_csv(p)
+        epochs = pd.to_numeric(d["epoch"], errors="coerce")
+        d = d[epochs <= CURVE_MAX_EPOCH].copy()
+        d["method"] = run.name
+        d["label"] = run.label
+        d["wall_minutes"] = train_figs.map_wall(d["epoch"], train_figs.wall_minutes(run))
+        frames.append(d)
+    return pd.concat(frames, ignore_index=True)
+
+
+def plot_generalization_5x5(eval_df: pd.DataFrame, metric: str, x_col: str, x_label: str, prefix: str) -> list[Path]:
+    gen = eval_df[
+        (eval_df["split"] == "generalization")
+        & (eval_df["phase"].isin(["baseline_before_adversarial_training", "during_adversarial_training"]))
+    ].copy()
+    if gen.empty or metric not in gen.columns:
+        return []
+    if "manual_rank" in gen.columns:
+        meta = gen.groupby("dataset_id", as_index=False).agg({"manual_rank": "min"}).sort_values(["manual_rank", "dataset_id"])
+    else:
+        meta = gen[["dataset_id"]].drop_duplicates().sort_values("dataset_id")
+    datasets = meta["dataset_id"].astype(str).tolist()[:50]
+    color_map = {m.name: m.color for m in METHODS}
+    outputs: list[Path] = []
+    for part_idx, start in enumerate([0, 25], start=1):
+        chunk = datasets[start : start + 25]
+        if not chunk:
+            continue
+        fig, axes = plt.subplots(5, 5, figsize=(23.6, 17.1), sharex=False, sharey=False)
+        axes = axes.ravel()
+        for ax, dataset_id in zip(axes, chunk):
+            dset = gen[gen["dataset_id"].astype(str) == dataset_id]
+            baseline_rows = dset[dset["phase"] == "baseline_before_adversarial_training"]
+            if not baseline_rows.empty:
+                vals = pd.to_numeric(baseline_rows[metric], errors="coerce").dropna()
+                if not vals.empty:
+                    ax.axhline(float(vals.iloc[0]), color="#4b5563", linestyle="--", lw=0.85, alpha=0.62)
+            for method in METHODS:
+                g = dset[(dset["method"] == method.name) & (dset["phase"] == "during_adversarial_training")].sort_values("epoch")
+                if g.empty:
+                    continue
+                ax.plot(
+                    g[x_col],
+                    pd.to_numeric(g[metric], errors="coerce"),
+                    color=color_map[method.name],
+                    lw=0.95,
+                    alpha=0.88,
+                    label=method.label,
+                )
+            ax.set_title(short_dataset_label(dataset_id), fontsize=8.1, loc="left")
+            ax.tick_params(labelsize=7)
+            if metric in {"relative_l2", "rmse"}:
+                ax.set_yscale("log")
+            ax.grid(True, alpha=0.28)
+        for ax in axes[len(chunk) :]:
+            ax.axis("off")
+        handles = [plt.Line2D([], [], color=m.color, lw=2, label=m.label) for m in METHODS]
+        handles.insert(0, plt.Line2D([], [], color="#4b5563", lw=1.4, ls="--", label="baseline"))
+        fig.legend(handles=handles, loc="upper center", ncol=7, frameon=False, bbox_to_anchor=(0.5, 0.974))
+        label = "Relative L2" if metric == "relative_l2" else "RMSE"
+        fig.supxlabel(x_label)
+        fig.supylabel(label)
+        fig.suptitle(
+            f"Darcy six-method curve 0..{CURVE_MAX_EPOCH} {label}: 50 binary generalization datasets, part {part_idx}",
+            fontsize=18,
+            fontweight="bold",
+            y=0.997,
+        )
+        fig.tight_layout(rect=[0.02, 0.025, 0.98, 0.94])
+        out = (
+            BUNDLE_DIR
+            / "comparison_dense"
+            / f"darcy_six_method_curve0to1000_{prefix}_{metric}_generalization_5x5_part{part_idx}.png"
+        )
+        fig.savefig(out, bbox_inches="tight", facecolor=fig.get_facecolor())
+        plt.close(fig)
+        outputs.append(out)
+    return outputs
+
+
+def build_dense_generalization_panels() -> list[Path]:
+    eval_df = load_eval_metrics()
+    outputs: list[Path] = []
+    for metric in ["relative_l2", "rmse"]:
+        outputs += plot_generalization_5x5(eval_df, metric, "epoch", "training epoch", "epoch")
+        outputs += plot_generalization_5x5(
+            eval_df,
+            metric,
+            "wall_minutes",
+            "training-only wall-clock minutes (eval excluded)",
+            "wall_clock",
+        )
+    return outputs
 
 
 def plot_eval_method(eval_df: pd.DataFrame, method: MethodSpec, metric: str, filename: str) -> Path:
@@ -247,7 +407,7 @@ def build_method_folders() -> list[Path]:
     return outputs
 
 
-def write_report(comparison: list[Path], heatmap_counts: dict[str, int], method_outputs: list[Path]) -> None:
+def write_report(comparison: list[Path], heatmap_counts: dict[str, int], method_outputs: list[Path], dense_outputs: list[Path]) -> None:
     pngs = sorted(BUNDLE_DIR.rglob("*.png"))
     non_png = sorted(p for p in BUNDLE_DIR.rglob("*") if p.is_file() and p.suffix.lower() != ".png")
     manifest = {
@@ -257,10 +417,12 @@ def write_report(comparison: list[Path], heatmap_counts: dict[str, int], method_
         "heatmap_variants": heatmap_counts,
         "heatmap_pngs": sum(heatmap_counts.values()),
         "method_pngs": len(method_outputs),
+        "dense_generalization_pngs": len(dense_outputs),
         "total_pngs": len(pngs),
         "non_png_files_in_bundle": len(non_png),
         "methods": [m.label for m in METHODS],
         "heatmap_models": ["baseline", *[m.label for m in METHODS]],
+        "curve_max_epoch": CURVE_MAX_EPOCH,
     }
     (WORK_DIR / "bundle_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
@@ -272,11 +434,22 @@ def write_report(comparison: list[Path], heatmap_counts: dict[str, int], method_
         f"- Bundle: `{rel(BUNDLE_DIR)}`",
         f"- Work manifest: `{rel(WORK_DIR / 'bundle_manifest.json')}`",
         f"- Methods in training/loss curves: `{', '.join(m.label for m in METHODS)}`",
+        f"- Training/loss/Delta/FFT curves: epochs `0..{CURVE_MAX_EPOCH}` only",
         "- Heatmap rows/models: `baseline, loss1, loss2, loss3, physics loss, random clean y, random solver y`",
         f"- Comparison PNGs: `{len(comparison)}`",
         f"- Per-method PNGs: `{len(method_outputs)}`",
+        f"- Dense 5x5 generalization PNGs: `{len(dense_outputs)}`",
         f"- Heatmap PNGs: `{sum(heatmap_counts.values())}` across `{len(heatmap_counts)}` variants",
         f"- Total bundle PNGs: `{len(pngs)}`",
+        "- Line colors use the high-contrast palette below so `loss3`, `random clean y`, and `random solver y` are visually distinct.",
+        "",
+        "## High-Contrast Line Colors",
+        "",
+        "| method | color |",
+        "|---|---|",
+    ]
+    lines.extend(f"| `{m.label}` | `{m.color}` |" for m in METHODS)
+    lines += [
         "",
         "## Layout",
         "",
@@ -300,10 +473,13 @@ def write_report(comparison: list[Path], heatmap_counts: dict[str, int], method_
 def main() -> None:
     setup_style()
     reset_dirs()
+    regenerate_source_training_figures()
     comparison = copy_comparison_figures()
     heatmap_counts = copy_heatmaps()
     method_outputs = build_method_folders()
-    write_report(comparison, heatmap_counts, method_outputs)
+    method_outputs.extend(build_detailed_method_folders())
+    dense_outputs = build_dense_generalization_panels()
+    write_report(comparison, heatmap_counts, method_outputs, dense_outputs)
     print(json.dumps({"bundle": rel(BUNDLE_DIR), "report": rel(REPORT_MD)}, indent=2))
 
 

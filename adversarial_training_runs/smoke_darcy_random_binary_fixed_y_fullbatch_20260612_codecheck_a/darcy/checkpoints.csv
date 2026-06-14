@@ -1,0 +1,2 @@
+task,epoch,global_step,progress_fraction,checkpoint_path,eval_wall_sec,checkpoint_reason,checkpoint_wall_target_seconds,wall_elapsed_seconds
+darcy,1,1,1.0,adversarial_training_runs/smoke_darcy_random_binary_fixed_y_fullbatch_20260612_codecheck_a/darcy/checkpoints/darcy_epoch001_step000001.pt,0.542571060010232,final,,5.145071214006748

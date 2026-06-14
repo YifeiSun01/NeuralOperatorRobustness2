@@ -19,6 +19,7 @@ RUN_ROOT = PROJECT_ROOT / "adversarial_training_runs"
 OUT_DIR = PROJECT_ROOT / "analysis_outputs/darcy_random_inclusive_training_figures_20260613"
 VIZ_DIR = PROJECT_ROOT / "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense"
 DOC_PATH = PROJECT_ROOT / "docs/darcy_random_inclusive_training_figures_20260613.md"
+CURVE_MAX_EPOCH = 1000
 
 
 @dataclass(frozen=True)
@@ -31,12 +32,12 @@ class RunSpec:
 
 
 RUNS = [
-    RunSpec("loss1", "loss1", RUN_ROOT / "darcy_binary_loss3targeted_loss1_1000ep_full50_timematched_20260612_full50_timematched_1000c", "#1b6ca8", "o"),
-    RunSpec("loss2", "loss2", RUN_ROOT / "darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c", "#d95f02", "s"),
-    RunSpec("loss3", "loss3", RUN_ROOT / "darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c", "#2ca25f", "^"),
-    RunSpec("physics", "physics loss", RUN_ROOT / "darcy_binary_loss3targeted_physics_1040ep_full50_timematched_20260612_full50_timematched_1000c", "#7b3294", "D"),
-    RunSpec("random_clean_y", "random clean y", RUN_ROOT / "darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100", "#0f766e", "P"),
-    RunSpec("random_solver_y", "random solver y", RUN_ROOT / "darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100", "#be123c", "X"),
+    RunSpec("loss1", "loss1", RUN_ROOT / "darcy_binary_loss3targeted_loss1_1000ep_full50_timematched_20260612_full50_timematched_1000c", "#2563eb", "o"),
+    RunSpec("loss2", "loss2", RUN_ROOT / "darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c", "#f97316", "s"),
+    RunSpec("loss3", "loss3", RUN_ROOT / "darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c", "#dc2626", "^"),
+    RunSpec("physics", "physics loss", RUN_ROOT / "darcy_binary_loss3targeted_physics_1040ep_full50_timematched_20260612_full50_timematched_1000c", "#7c3aed", "D"),
+    RunSpec("random_clean_y", "random clean y", RUN_ROOT / "darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100", "#059669", "P"),
+    RunSpec("random_solver_y", "random solver y", RUN_ROOT / "darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100", "#0891b2", "X"),
 ]
 
 BG = "#fbfaf7"
@@ -82,6 +83,13 @@ def read_csv(path: Path) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
+def cap_curve_epochs(df: pd.DataFrame) -> pd.DataFrame:
+    if "epoch" not in df.columns:
+        return df
+    epochs = pd.to_numeric(df["epoch"], errors="coerce")
+    return df[epochs <= CURVE_MAX_EPOCH].copy()
+
+
 def _epoch_seconds(path: Path, epoch_col: str, value_col: str) -> pd.Series:
     if not path.exists():
         return pd.Series(dtype=float)
@@ -94,56 +102,32 @@ def _epoch_seconds(path: Path, epoch_col: str, value_col: str) -> pd.Series:
 
 
 def wall_minutes(run: RunSpec) -> dict[int, float]:
-    """Cumulative end-to-end wall-clock minutes by epoch.
+    """Cumulative training-only wall-clock minutes by epoch.
 
-    This includes baseline evaluation, per-epoch random/adversarial generation,
-    optimizer updates, and per-epoch train/test/generalization evaluation.
-    Earlier versions used only optimizer_wall_sec, which is optimizer time rather
-    than true wall-clock time.
+    This intentionally excludes the every-epoch train/test/generalization
+    evaluation pass.  The x-axis should reflect the time spent creating the
+    attacked/random training pairs plus optimizer forward/backward/update time.
+    ``train_steps.step_wall_sec`` is the closest logged quantity: it starts before
+    the per-epoch source generation and ends after the optimizer step, while the
+    evaluation pass is logged later.
     """
     run_dir = run.path / "darcy"
-    opt = _epoch_seconds(run_dir / "optimizer_steps.csv", "epoch", "optimizer_wall_sec")
-    attack = _epoch_seconds(run_dir / "attack_epoch_summary.csv", "epoch", "attack_wall_sec_total")
+    step = _epoch_seconds(run_dir / "train_steps.csv", "epoch", "step_wall_sec")
+    if step.empty:
+        opt = _epoch_seconds(run_dir / "optimizer_steps.csv", "epoch", "optimizer_wall_sec")
+        attack = _epoch_seconds(run_dir / "attack_epoch_summary.csv", "epoch", "attack_wall_sec_total")
+        step = opt.add(attack, fill_value=0.0)
 
-    eval_train = pd.Series(dtype=float)
-    baseline_eval_seconds = 0.0
-    eval_path = run_dir / "eval_split_summary.csv"
-    if eval_path.exists():
-        eval_df = read_csv(eval_path)
-        needed = {"phase", "epoch", "eval_wall_sec"}
-        if needed.issubset(eval_df.columns):
-            uniq = eval_df[["phase", "epoch", "eval_wall_sec"]].drop_duplicates().copy()
-            uniq["epoch"] = pd.to_numeric(uniq["epoch"], errors="coerce").fillna(-1).astype(int)
-            uniq["eval_wall_sec"] = pd.to_numeric(uniq["eval_wall_sec"], errors="coerce").fillna(0.0)
-            baseline_eval_seconds = float(
-                uniq[uniq["phase"] == "baseline_before_adversarial_training"]["eval_wall_sec"].sum()
-            )
-            eval_train = uniq[uniq["phase"] == "during_adversarial_training"].groupby("epoch")["eval_wall_sec"].sum()
-
-    epochs = sorted(set(opt.index.astype(int)) | set(attack.index.astype(int)) | set(eval_train.index.astype(int)))
+    epochs = sorted(set(step.index.astype(int)))
     epochs = [e for e in epochs if e > 0]
     if not epochs:
         return {0: 0.0}
 
     out_sec: dict[int, float] = {0: 0.0}
-    running = baseline_eval_seconds
+    running = 0.0
     for epoch in epochs:
-        running += float(opt.get(epoch, 0.0)) + float(attack.get(epoch, 0.0)) + float(eval_train.get(epoch, 0.0))
+        running += float(step.get(epoch, 0.0))
         out_sec[int(epoch)] = running
-
-    summary_path = run.path / "summary.json"
-    if summary_path.exists():
-        try:
-            summary = json.loads(summary_path.read_text(encoding="utf-8"))
-            observed = float(summary.get("tasks", [{}])[0].get("elapsed_seconds", 0.0))
-        except Exception:
-            observed = 0.0
-        last_epoch = max(epochs)
-        raw_last = out_sec[last_epoch]
-        if observed > raw_last > 0.0:
-            missing = observed - raw_last
-            for epoch in epochs:
-                out_sec[epoch] += missing * (float(epoch) / float(last_epoch))
 
     return {epoch: seconds / 60.0 for epoch, seconds in out_sec.items()}
 
@@ -152,6 +136,7 @@ def wall_component_summary() -> pd.DataFrame:
     rows = []
     for run in RUNS:
         run_dir = run.path / "darcy"
+        step = _epoch_seconds(run_dir / "train_steps.csv", "epoch", "step_wall_sec")
         opt = _epoch_seconds(run_dir / "optimizer_steps.csv", "epoch", "optimizer_wall_sec").sum()
         attack = _epoch_seconds(run_dir / "attack_epoch_summary.csv", "epoch", "attack_wall_sec_total").sum()
         eval_seconds = 0.0
@@ -168,17 +153,17 @@ def wall_component_summary() -> pd.DataFrame:
                 observed = float(json.loads(summary_path.read_text(encoding="utf-8")).get("tasks", [{}])[0].get("elapsed_seconds", np.nan))
             except Exception:
                 observed = np.nan
-        component = float(opt) + float(attack) + float(eval_seconds)
+        training_only = float(step.sum()) if not step.empty else float(opt) + float(attack)
         rows.append(
             {
                 "method": run.name,
                 "label": run.label,
-                "optimizer_minutes": float(opt) / 60.0,
+                "training_only_wall_minutes": training_only / 60.0,
                 "attack_or_random_source_minutes": float(attack) / 60.0,
-                "evaluation_minutes": float(eval_seconds) / 60.0,
-                "component_sum_minutes": component / 60.0,
+                "optimizer_minutes": float(opt) / 60.0,
+                "evaluation_minutes_excluded": float(eval_seconds) / 60.0,
                 "observed_summary_minutes": observed / 60.0 if np.isfinite(observed) else np.nan,
-                "unattributed_overhead_minutes": (observed - component) / 60.0 if np.isfinite(observed) else np.nan,
+                "observed_minus_training_only_minutes": (observed - training_only) / 60.0 if np.isfinite(observed) else np.nan,
             }
         )
     return pd.DataFrame(rows)
@@ -197,7 +182,7 @@ def load_eval_split() -> pd.DataFrame:
     frames = []
     for run in RUNS:
         p = run.path / "darcy/eval_split_summary.csv"
-        d = read_csv(p)
+        d = cap_curve_epochs(read_csv(p))
         d["method"] = run.name
         d["label"] = run.label
         d["wall_minutes"] = map_wall(d["epoch"], wall_minutes(run))
@@ -209,7 +194,7 @@ def load_epoch_table(filename: str) -> pd.DataFrame:
     frames = []
     for run in RUNS:
         p = run.path / f"darcy/{filename}"
-        d = read_csv(p)
+        d = cap_curve_epochs(read_csv(p))
         d["method"] = run.name
         d["label"] = run.label
         d["wall_minutes"] = map_wall(d["epoch"], wall_minutes(run))
@@ -337,8 +322,8 @@ def main() -> None:
     outputs = []
     outputs.append(plot_eval_metric(eval_df, "relative_l2_dataset_mean", "epoch", "training epoch", "darcy_six_method_epoch_relative_l2_train_test_generalization.png"))
     outputs.append(plot_eval_metric(eval_df, "rmse_dataset_mean", "epoch", "training epoch", "darcy_six_method_epoch_rmse_train_test_generalization.png"))
-    outputs.append(plot_eval_metric(eval_df, "relative_l2_dataset_mean", "wall_minutes", "wall-clock minutes", "darcy_six_method_wall_clock_relative_l2_train_test_generalization.png"))
-    outputs.append(plot_eval_metric(eval_df, "rmse_dataset_mean", "wall_minutes", "wall-clock minutes", "darcy_six_method_wall_clock_rmse_train_test_generalization.png"))
+    outputs.append(plot_eval_metric(eval_df, "relative_l2_dataset_mean", "wall_minutes", "training-only wall-clock minutes (eval excluded)", "darcy_six_method_wall_clock_relative_l2_train_test_generalization.png"))
+    outputs.append(plot_eval_metric(eval_df, "rmse_dataset_mean", "wall_minutes", "training-only wall-clock minutes (eval excluded)", "darcy_six_method_wall_clock_rmse_train_test_generalization.png"))
     opt_epoch = opt_df.groupby(["method", "label", "epoch"], as_index=False).agg(train_loss_on_adv_microbatch=("train_loss_on_adv_microbatch", "mean"), grad_norm=("grad_norm", "mean"))
     outputs.append(plot_epoch_metric(opt_epoch, "train_loss_on_adv_microbatch", "Optimizer training loss by epoch", "mean optimizer loss", "darcy_six_method_optimizer_train_loss.png"))
     outputs.append(plot_epoch_metric(opt_epoch, "grad_norm", "Gradient norm by epoch", "mean grad norm", "darcy_six_method_grad_norm.png"))
@@ -352,7 +337,8 @@ def main() -> None:
         "figures": [rel(p) for p in outputs],
         "wall_clock_components_csv": rel(OUT_DIR / "six_method_wall_clock_components.csv"),
         "runs": [{"name": r.name, "label": r.label, "path": rel(r.path)} for r in RUNS],
-        "note": "Random-inclusive training plots use true cumulative wall-clock minutes from baseline eval + attack/random-source generation + optimizer + eval, calibrated to summary elapsed time. Old adversarial methods are first-stage 1000-ish runs; random-source methods are 1100 epoch runs.",
+        "curve_max_epoch": CURVE_MAX_EPOCH,
+        "note": "Random-inclusive training plots use epochs 0..1000 only. Wall-clock minutes are training-only: train_steps.step_wall_sec, excluding baseline and per-epoch evaluation. Old adversarial methods are first-stage 1000-ish runs; random-source methods were trained to 1100, but curve plots are capped at 1000.",
     }
     (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     lines = [
@@ -363,13 +349,41 @@ def main() -> None:
         f"- Analysis: `{rel(OUT_DIR)}`",
         f"- Figures: `{rel(VIZ_DIR)}`",
         "- Random methods: `random clean y`, `random solver y`.",
-        "- Old adversarial methods are first-stage 1000-ish runs; random methods are 1100 epoch runs.",
-        "- Wall-clock plots use true cumulative time: baseline eval + attack/random-source generation + optimizer + eval, calibrated to each run summary elapsed time.",
+        f"- Training/loss/Delta curves are capped at epochs `0..{CURVE_MAX_EPOCH}`.",
+        "- Old adversarial methods are first-stage 1000-ish runs; random methods were trained to 1100, but the curve figures do not plot epochs after 1000.",
+        "- Wall-clock plots use training-only time from `train_steps.step_wall_sec`: delta/random-source generation + x/y training-pair construction + optimizer forward/backward/update. Baseline and per-epoch evaluation are excluded.",
         f"- Wall-clock components CSV: `{rel(OUT_DIR / 'six_method_wall_clock_components.csv')}`",
         "",
+        "## High-Contrast Line Colors",
+        "",
+        "| method | color |",
+        "|---|---|",
+    ]
+    lines.extend(f"| `{run.label}` | `{run.color}` |" for run in RUNS)
+    lines.extend(
+        [
+            "",
+            "## Wall-Clock Correction",
+            "",
+            "Earlier random-inclusive wall-clock figures included every-epoch evaluation, which made the random-source runs look artificially slow because those two runs were executed concurrently and their evaluation passes were resource-contended. The regenerated figures exclude evaluation and use training-only `step_wall_sec`.",
+            "",
+            "| method | training-only min | attack/random min | optimizer min | eval min excluded | observed elapsed min |",
+            "|---|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for row in wall_components.to_dict("records"):
+        lines.append(
+            "| `{label}` | {training_only_wall_minutes:.3f} | {attack_or_random_source_minutes:.3f} | {optimizer_minutes:.3f} | {evaluation_minutes_excluded:.3f} | {observed_summary_minutes:.3f} |".format(
+                **row
+            )
+        )
+    lines.extend(
+        [
+            "",
         "## Figures",
         "",
-    ]
+        ]
+    )
     lines.extend(f"- `{rel(p)}`" for p in outputs)
     DOC_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(json.dumps(manifest, indent=2))
