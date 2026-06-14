@@ -65,17 +65,17 @@ MODEL_SPECS = {
         "color": "#c35b5b",
     },
     "random_clean_y": {
-        "label": "random clean Y",
+        "label": "random clean Y e8000",
         "epochs": 8000,
         "sec_per_epoch": None,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_clean_y_8000ep_continue_20260613/burgers/checkpoints/burgers_epoch8000_step008000.pt",
         "color": "#7b5fb3",
     },
     "random_solver_y": {
-        "label": "random solver Y",
-        "epochs": 6000,
+        "label": "random solver Y e7860",
+        "epochs": 7860,
         "sec_per_epoch": None,
-        "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_6000ep_continue_20260613/burgers/checkpoints/burgers_epoch6000_step006000.pt",
+        "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_7860ep_continue_20260613/burgers/checkpoints/burgers_epoch7860_step007860.pt",
         "color": "#4f9a9a",
     },
 }
@@ -212,6 +212,29 @@ def load_four_model_group_traces(group_trace_root: Path) -> tuple[dict[str, dict
     for model_key, tr in traces.items():
         if tr["loss"].shape[1] != n_samples:
             raise ValueError(f"{model_key} trace has {tr['loss'].shape[1]} samples, expected {n_samples}")
+    return traces, clean, manifest
+
+
+def load_six_model_group_traces(
+    group_trace_root: Path,
+    model_keys: list[str],
+) -> tuple[dict[str, dict[str, np.ndarray]], np.ndarray, list[dict[str, object]]]:
+    manifest_path = group_trace_root / "sample_manifest.json"
+    trace_path = group_trace_root / "six_model_attack_traces.npz"
+    if not manifest_path.exists():
+        raise FileNotFoundError(manifest_path)
+    if not trace_path.exists():
+        raise FileNotFoundError(trace_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    with np.load(trace_path) as z:
+        clean = np.asarray(z["clean"])
+        traces = {
+            model_key: {
+                key: np.asarray(z[f"{model_key}_{key}"])
+                for key in TRACE_KEYS
+            }
+            for model_key in model_keys
+        }
     return traces, clean, manifest
 
 
@@ -478,6 +501,12 @@ def main() -> int:
     parser.add_argument("--source-group-root", type=Path, default=SOURCE_GROUP_ROOT)
     parser.add_argument("--four-model-trace-root", type=Path, default=FOUR_MODEL_TRACE_ROOT)
     parser.add_argument("--reuse-four-model-traces", action="store_true")
+    parser.add_argument(
+        "--reuse-random-clean-traces-from",
+        type=Path,
+        default=None,
+        help="Optional six-model trace root to reuse random_clean_y traces from while recomputing random_solver_y.",
+    )
     parser.add_argument("--only-render", action="store_true")
     parser.add_argument("--loss-scale", choices=["log", "linear", "both"], default="both")
     args = parser.parse_args()
@@ -490,7 +519,9 @@ def main() -> int:
     base.MODEL_ORDER = MODEL_ORDER
     base.LOSS_ORDER = ["loss1", "loss2", "loss3"]
 
-    model_keys_to_run = RANDOM_MODEL_KEYS if args.reuse_four_model_traces else MODEL_ORDER
+    model_keys_to_run = list(RANDOM_MODEL_KEYS if args.reuse_four_model_traces else MODEL_ORDER)
+    if args.reuse_random_clean_traces_from is not None:
+        model_keys_to_run = [model_key for model_key in model_keys_to_run if model_key != "random_clean_y"]
     if not args.only_render:
         for model_key in model_keys_to_run:
             spec = MODEL_SPECS[model_key]
@@ -498,6 +529,8 @@ def main() -> int:
                 raise FileNotFoundError(f"{model_key}: {spec['checkpoint']}")
         if args.reuse_four_model_traces and not args.four_model_trace_root.exists():
             raise FileNotFoundError(args.four_model_trace_root)
+        if args.reuse_random_clean_traces_from is not None and not args.reuse_random_clean_traces_from.exists():
+            raise FileNotFoundError(args.reuse_random_clean_traces_from)
         if not torch.cuda.is_available():
             raise RuntimeError("CUDA is required for attack trace generation")
 
@@ -566,8 +599,19 @@ def main() -> int:
                 if old_clean_np.shape != clean_np.shape or not np.allclose(old_clean_np, clean_np):
                     raise ValueError(f"group{group_id:02d}: reused four-model clean samples do not match current samples")
                 traces = dict(old_traces)
+                if args.reuse_random_clean_traces_from is not None:
+                    random_clean_traces, random_clean_np, random_clean_manifest = load_six_model_group_traces(
+                        args.reuse_random_clean_traces_from / f"group{group_id:02d}",
+                        ["random_clean_y"],
+                    )
+                    if manifest_signature(random_clean_manifest) != manifest_signature(manifest):
+                        raise ValueError(f"group{group_id:02d}: reused random_clean_y manifest does not match current samples")
+                    if random_clean_np.shape != clean_np.shape or not np.allclose(random_clean_np, clean_np):
+                        raise ValueError(f"group{group_id:02d}: reused random_clean_y clean samples do not match current samples")
+                    traces["random_clean_y"] = random_clean_traces["random_clean_y"]
                 for model_key in RANDOM_MODEL_KEYS:
-                    traces[model_key] = base.slice_trace_for_group(all_traces[model_key], payload["sample_slice"], total_samples)
+                    if model_key in all_traces:
+                        traces[model_key] = base.slice_trace_for_group(all_traces[model_key], payload["sample_slice"], total_samples)
                 traces = align_traces_to_reference_steps(traces, RANDOM_MODEL_KEYS[0])
             else:
                 traces = {
@@ -608,6 +652,7 @@ def main() -> int:
             "epsilon_rms": float(args.epsilon_rms),
             "reuse_four_model_traces": bool(args.reuse_four_model_traces),
             "four_model_trace_root": str(args.four_model_trace_root),
+            "reuse_random_clean_traces_from": str(args.reuse_random_clean_traces_from) if args.reuse_random_clean_traces_from else None,
             "batched_attack_total_samples": total_samples,
             "batched_group_sample_slice": [payload["sample_slice"].start, payload["sample_slice"].stop],
         }
@@ -624,6 +669,7 @@ def main() -> int:
         "four_model_trace_root": str(args.four_model_trace_root),
         "outputs": [str(p) for p in outputs],
         "bundle_outputs": [str(p) for p in bundle_outputs],
+        "reuse_random_clean_traces_from": str(args.reuse_random_clean_traces_from) if args.reuse_random_clean_traces_from else None,
     }
     args.trace_root.mkdir(parents=True, exist_ok=True)
     (args.trace_root / "six_model_summary.json").write_text(json.dumps(top_summary, indent=2) + "\n", encoding="utf-8")

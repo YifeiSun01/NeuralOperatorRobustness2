@@ -14311,3 +14311,17 @@ Updates:
 - Added `figures/log_y/no_random_clean/` with the same log-scale-y figures excluding `random_clean_y`.
 - Log-y plots preserve raw evaluation points only, descriptive dataset titles, enlarged legends, transparent lines, and the explicit 8.0 hour wall-clock x-axis cap.
 - R2 sync completed for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_solver7860_clean8000_audit_20260614`; remote listing showed 48 PNGs, 24 log-y PNGs, and 12 log-y no-random-clean PNGs.
+
+## 2026-06-14 - Burgers solver7860/clean8000 dense image-only refresh
+
+Status: generated and synced the missing six-model dense P2Q2 image-only comparison bundle for the latest random baselines.
+
+Updates:
+- Recomputed only `random_solver_y=7860` dense attack traces from `adversarial_training_runs/burgers_wideparam_random_field_solver_y_7860ep_continue_20260613/burgers/checkpoints/burgers_epoch7860_step007860.pt`.
+- Reused baseline/loss1/loss2/loss3 traces from `forensics/burgers_semantic_wideparam_visible_loss3targeted_round00_p2q2_diverse_multi_sample_attack_visuals_batched_20260611`.
+- Reused `random_clean_y=8000` traces from `forensics/burgers_wideparam_loss123_randomfield_selected_worktime_round00_p2q2_six_model_visuals_20260613`.
+- Generated 10 PNGs under `visualizations/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`: five groups times log-y and linear-y attack-loss progression variants.
+- Each figure contains one test sample plus five generalization samples, six model columns, delta/initial-condition/model-vs-solver/error panels, and bottom-row sample-wise attack-loss progression curves.
+- Across the 30 visual samples, final mean attack losses were: baseline `0.0152441`, loss1 `0.00694397`, loss2 `0.00661674`, loss3 `0.00411033`, random_clean_y `0.0569579`, random_solver_y `0.00779751`.
+- R2 sync completed for the image-only bundle, full visualization mirror, and trace/data root under `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Dedicated note: `docs/burgers_solver7860_dense_image_only_bundle_20260614.md`.

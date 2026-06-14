@@ -128,3 +128,18 @@ Plot refresh after final postprocess:
   enlarged legends.
 - Synced the refreshed output bundle to R2 and removed stale `workclock` files
   from the remote output prefix.
+
+Dense image-only six-model refresh:
+
+- Generated the missing dense six-model P2Q2 comparison bundle for
+  `random_clean_y=8000` and `random_solver_y=7860`:
+  `visualizations/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
+- Recomputed only the latest `random_solver_y=7860` dense attack trace; reused
+  existing baseline/loss1/loss2/loss3 traces and reused the existing
+  `random_clean_y=8000` trace.
+- Each of the five group figures has one test sample plus five generalization
+  samples, six model columns, delta/initial-condition/model-vs-solver/error
+  panels, and bottom-row sample-wise attack-loss progression curves.
+- Generated 10 PNGs total: log-y and linear-y attack-loss progression variants
+  for each of five groups.
+- Dedicated note: `docs/burgers_solver7860_dense_image_only_bundle_20260614.md`.
