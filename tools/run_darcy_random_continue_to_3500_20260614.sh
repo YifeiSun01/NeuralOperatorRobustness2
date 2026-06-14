@@ -26,6 +26,7 @@ esac
 
 mapfile -t resume_info < <(adv_robust/bin/python - "$base_run" "$target_epoch" <<'PY'
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -36,7 +37,27 @@ summary_path = root / "adversarial_training_runs" / base_run / "darcy" / "summar
 if not summary_path.exists():
     raise FileNotFoundError(summary_path)
 summary = json.loads(summary_path.read_text(encoding="utf-8"))
-final_epoch = int(summary.get("final_epoch") or summary.get("completed_local_epochs") or 0)
+
+def infer_summary_epoch(summary):
+    for key in ["final_epoch", "completed_global_epochs", "global_epoch"]:
+        value = summary.get(key)
+        if value is not None:
+            try:
+                parsed = int(value)
+                if parsed > 0:
+                    return parsed
+            except (TypeError, ValueError):
+                pass
+    resume_epoch = int(summary.get("resume_epoch_offset") or 0)
+    local_epoch = int(summary.get("completed_local_epochs") or summary.get("epochs") or 0)
+    if resume_epoch or local_epoch:
+        return resume_epoch + local_epoch
+    match = re.search(r"epoch(\d+)", str(summary.get("final_checkpoint") or ""))
+    if match:
+        return int(match.group(1))
+    return 0
+
+final_epoch = infer_summary_epoch(summary)
 final_step = int(summary.get("total_steps") or summary.get("global_step") or final_epoch)
 checkpoint = root / str(summary["final_checkpoint"])
 if final_epoch < 3000:

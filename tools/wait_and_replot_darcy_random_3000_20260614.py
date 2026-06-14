@@ -8,6 +8,7 @@ import json
 import subprocess
 import sys
 import time
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -57,6 +58,27 @@ def read_json(path: Path) -> dict[str, Any] | None:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def infer_summary_epoch(summary: dict[str, Any]) -> int:
+    for key in ["final_epoch", "completed_global_epochs", "global_epoch"]:
+        value = summary.get(key)
+        if value is not None:
+            try:
+                parsed = int(value)
+                if parsed > 0:
+                    return parsed
+            except (TypeError, ValueError):
+                pass
+    resume_epoch = int(summary.get("resume_epoch_offset") or 0)
+    local_epoch = int(summary.get("completed_local_epochs") or summary.get("epochs") or 0)
+    if resume_epoch or local_epoch:
+        return resume_epoch + local_epoch
+    checkpoint = str(summary.get("final_checkpoint") or "")
+    match = re.search(r"epoch(\d+)", checkpoint)
+    if match:
+        return int(match.group(1))
+    return 0
+
+
 def run_state(name: str, run_dir: Path, target_epoch: int, stage: str) -> dict[str, Any]:
     task_dir = run_dir / "darcy"
     train_csv = task_dir / "train_steps.csv"
@@ -75,7 +97,7 @@ def run_state(name: str, run_dir: Path, target_epoch: int, stage: str) -> dict[s
     final_checkpoint = None
     summary_epoch = None
     if summary:
-        summary_epoch = int(summary.get("final_epoch") or summary.get("completed_local_epochs") or 0)
+        summary_epoch = infer_summary_epoch(summary)
         final_checkpoint = summary.get("final_checkpoint")
     return {
         "method": name,
