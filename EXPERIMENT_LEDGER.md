@@ -14422,3 +14422,17 @@ Follow-up ranked all-metric table package:
 - Updated `tools/organize_burgers_solver7860_clean8000_release_20260614.py` so the organized release includes `01_summary_tables/09_ranked_metric_tables_20260614/`, the all-metric Markdown appendix in `00_start_here/`, and the new source script in `07_source_code_and_references/`.
 - Rebuilt `outputs/burgers_solver7860_clean8000_organized_release_20260614/`. Local manifest after de-duplicating overwritten start-here report entries now includes the partial-coverage note table: 1970 files, 266 CSV, 770 JSON, 640 NPZ, 194 PNG, 40 log files, 10 Python scripts, and 0 missing expected inputs. Exact byte size is intentionally read from the current `MANIFEST.json`, because the release contains refreshed docs and this ledger itself.
 - R2 verification after sync: final audit output `{"count":1732,"bytes":5203523912,"sizeless":0}`; organized release has 1970 objects; ranked metric table folder contains 16 CSV objects on R2. Exact organized-release bytes should be checked with the final `rclone size --json` result after the last docs/ledger refresh.
+
+## 2026-06-14 - DarcyFlow time-matched audit prompt port
+
+Status: wrote a reusable prompt to port the completed Burgers time-matched audit workflow to DarcyFlow/data flow; no DarcyFlow training, evaluation, attack, or SVD job was launched by this note.
+
+Updates:
+- Added `docs/darcyflow_timematched_full_audit_prompt_20260614.md`.
+- The prompt adapts the Burgers workflow to DarcyFlow/data flow and explicitly adds DarcyFlow-specific physics loss / PDE residual logging, analysis, and reporting.
+- The prompt records the expected DarcyFlow target range as roughly `3000-3500` loss3 epochs, with timing calibration required before any formal time-matched continuation.
+- It keeps the completed Burgers workflow requirements: audit local/R2 first, avoid blind reruns, smoke tests before missing-run continuations, checkpoint model+optimizer resume, 52-dataset evaluation, 50-sample attack, 25-sample SVD/Jacobian subset, correlations/similarities, ranked CSV/Markdown tables, dense group00-group05 figures, organized release, R2 verification, and GitHub branch `vast-ai` submission.
+- It also carries forward the accepted coverage policy: record all available metrics, write explicit partial-coverage notes for missing expensive artifacts, and do not supplement top50/top100 SVD or full affine/local-gain sweeps unless explicitly requested.
+
+Remaining work:
+- Run this prompt on DarcyFlow/data flow artifacts when the user starts that experiment/audit.
