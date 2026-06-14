@@ -1,7 +1,7 @@
 # Darcy SIR20 Artifact Upload, 2026-06-14
 
 Status: uploaded selected Darcy SIR20 deliverable artifacts to Cloudflare R2 and
-prepared code/docs for the `vast-ai-darcy-flow` GitHub branch.
+pushed code/docs to the `vast-ai-darcy-flow` GitHub branch.
 
 ## R2 Destination
 
@@ -47,3 +47,9 @@ Local upload records are in:
 - `outputs/r2_upload_darcy_20260614/rclone_selected_outputs.log`
 - `outputs/r2_upload_darcy_20260614/remote_size_check.tsv`
 - `outputs/r2_upload_darcy_20260614/paired_audit_remote_figures.txt`
+
+## GitHub
+
+Code, shell scripts, and markdown records were committed and pushed to:
+
+`origin/vast-ai-darcy-flow`

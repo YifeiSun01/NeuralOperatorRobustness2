@@ -14493,8 +14493,8 @@ Report:
 
 ## 2026-06-14 - Darcy selected artifact R2 upload and GitHub branch prep
 
-Status: R2 upload complete; GitHub commit/push prepared in the current working
-tree.
+Status: R2 upload complete; GitHub code/docs push complete on
+`vast-ai-darcy-flow`.
 
 Observed source files:
 - Selected local output directories under `outputs/` for Darcy corrected
@@ -14510,6 +14510,8 @@ Action taken:
 - Verified remote object counts and byte totals after upload.
 - Added a dedicated upload record at
   `docs/darcy_r2_github_upload_20260614.md`.
+- Committed code, shell scripts, and markdown records and pushed them to
+  `origin/vast-ai-darcy-flow`.
 - Local upload logs and remote checks were written under
   `outputs/r2_upload_darcy_20260614/`.
 
