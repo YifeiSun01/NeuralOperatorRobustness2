@@ -15125,3 +15125,40 @@ Follow-up output placement:
   correlations-with-attack table, six-model direction-angle compact table, old4
   direction-pair angle summary, and random clean/solver SVD-attack-bias-gradient
   by-sample table used by the summary.
+
+## 2026-06-14 - Burgers timematched solver7860/clean8000 GitHub and R2 sync
+
+Status: synced the Git-tracked Burgers audit/report updates to GitHub branch
+`vast-ai`, and synced the full output result root to Cloudflare R2 selected
+prefix.
+
+Record file:
+- `docs/burgers_timematched_solver7860_clean8000_github_r2_sync_20260614.md`
+- Output report copy:
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_timematched_solver7860_clean8000_github_r2_sync_20260614.md`
+
+GitHub:
+- Branch `vast-ai` was pushed through local commit
+  `1f93be5 Record Burgers mechanism summary output placement` before this sync
+  record was added.
+- The sync record itself is committed afterward and should be pushed as the next
+  commit.
+
+R2:
+- Uploaded root:
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/`
+- Remote prefix:
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_solver7860_clean8000_audit_20260614/`
+- Verified count/size after upload: 2066 local files and 2066 remote objects,
+  5359656110 local file bytes and 5359656110 remote bytes.
+- Confirmed key mechanism files on R2:
+  `reports/burgers_jte_spectral_attack_mechanism_summary_20260614.md`,
+  `data/jte_spectral_attack_mechanism_summary_20260614/README.md`,
+  `correlations_with_attack_sorted.csv`,
+  `robustness_25sample_metric_long_ranked.csv`, and
+  `random_solver7860_clean8000_svd_attack_bias_gradient_by_sample.csv`.
+
+Credential handling:
+- GitHub and R2 credentials were used only as temporary shell environment
+  variables / temporary askpass. They were not written to code, committed files,
+  git config, or R2 reports.
