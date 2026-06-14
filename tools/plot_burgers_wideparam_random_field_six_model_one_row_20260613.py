@@ -82,6 +82,11 @@ MODEL_SPECS = {
 FOUR_MODEL_KEYS = ["baseline", "loss1", "loss2", "loss3"]
 RANDOM_MODEL_KEYS = ["random_clean_y", "random_solver_y"]
 MODEL_ORDER = FOUR_MODEL_KEYS + RANDOM_MODEL_KEYS
+NO_RANDOM_CLEAN_MODEL_ORDER = [model_key for model_key in MODEL_ORDER if model_key != "random_clean_y"]
+MODEL_VARIANTS = {
+    "all_models": MODEL_ORDER,
+    "no_random_clean": NO_RANDOM_CLEAN_MODEL_ORDER,
+}
 TRACE_KEYS = ["step", "x_adv", "delta", "model", "solver", "diff", "loss", "delta_rms"]
 PANEL_NAMES = ["delta", "initial condition", "model and solver", "model - solver"]
 SOLVER_COLOR = "#17191c"
@@ -107,16 +112,20 @@ def y_limits(vals: np.ndarray, pad: float = 0.05) -> tuple[float, float]:
     return lo - pad * span, hi + pad * span
 
 
-def compute_limits(clean: np.ndarray, traces: dict[str, dict[str, np.ndarray]]) -> dict[str, list[tuple[float, float]]]:
+def compute_limits(
+    clean: np.ndarray,
+    traces: dict[str, dict[str, np.ndarray]],
+    model_order: list[str],
+) -> dict[str, list[tuple[float, float]]]:
     limits = {"input": [], "delta": [], "output": [], "diff": []}
     for i in range(clean.shape[0]):
-        input_vals = np.concatenate([clean[None, i], *[traces[k]["x_adv"][:, i] for k in MODEL_ORDER]], axis=0)
-        delta_vals = np.concatenate([traces[k]["delta"][:, i] for k in MODEL_ORDER], axis=0)
+        input_vals = np.concatenate([clean[None, i], *[traces[k]["x_adv"][:, i] for k in model_order]], axis=0)
+        delta_vals = np.concatenate([traces[k]["delta"][:, i] for k in model_order], axis=0)
         output_vals = np.concatenate(
-            [*[traces[k]["model"][:, i] for k in MODEL_ORDER], *[traces[k]["solver"][:, i] for k in MODEL_ORDER]],
+            [*[traces[k]["model"][:, i] for k in model_order], *[traces[k]["solver"][:, i] for k in model_order]],
             axis=0,
         )
-        diff_vals = np.concatenate([traces[k]["diff"][:, i] for k in MODEL_ORDER], axis=0)
+        diff_vals = np.concatenate([traces[k]["diff"][:, i] for k in model_order], axis=0)
         limits["input"].append(y_limits(input_vals))
         limits["delta"].append(y_limits(delta_vals, 0.12))
         limits["output"].append(y_limits(output_vals))
@@ -125,16 +134,24 @@ def compute_limits(clean: np.ndarray, traces: dict[str, dict[str, np.ndarray]]) 
     return limits
 
 
-def sample_loss_ylim(traces: dict[str, dict[str, np.ndarray]], sample_idx: int) -> tuple[float, float]:
-    vals = np.concatenate([traces[k]["loss"][:, sample_idx].reshape(-1) for k in MODEL_ORDER])
+def sample_loss_ylim(
+    traces: dict[str, dict[str, np.ndarray]],
+    sample_idx: int,
+    model_order: list[str],
+) -> tuple[float, float]:
+    vals = np.concatenate([traces[k]["loss"][:, sample_idx].reshape(-1) for k in model_order])
     vals = vals[np.isfinite(vals) & (vals > 0)]
     if vals.size == 0:
         return 1e-8, 1.0
     return max(float(vals.min()) / 1.35, 1e-10), float(vals.max()) * 1.35
 
 
-def sample_loss_ylim_linear(traces: dict[str, dict[str, np.ndarray]], sample_idx: int) -> tuple[float, float]:
-    vals = np.concatenate([traces[k]["loss"][:, sample_idx].reshape(-1) for k in MODEL_ORDER])
+def sample_loss_ylim_linear(
+    traces: dict[str, dict[str, np.ndarray]],
+    sample_idx: int,
+    model_order: list[str],
+) -> tuple[float, float]:
+    vals = np.concatenate([traces[k]["loss"][:, sample_idx].reshape(-1) for k in model_order])
     vals = vals[np.isfinite(vals)]
     if vals.size == 0:
         return 0.0, 1.0
@@ -299,17 +316,23 @@ def render_one_row(
     traces: dict[str, dict[str, np.ndarray]],
     *,
     loss_scale: str = "log",
+    model_order: list[str] | None = None,
+    variant_label: str = "all models",
     dpi: int = 145,
 ) -> None:
     label_mod.set_style()
+    if model_order is None:
+        model_order = MODEL_ORDER
     n_samples = clean.shape[0]
-    n_models = len(MODEL_ORDER)
-    final_idx = int(len(traces["baseline"]["step"]) - 1)
-    final_step = int(traces["baseline"]["step"][final_idx])
-    limits = compute_limits(clean, traces)
+    n_models = len(model_order)
+    reference_model = model_order[0]
+    final_idx = int(len(traces[reference_model]["step"]) - 1)
+    final_step = int(traces[reference_model]["step"][final_idx])
+    limits = compute_limits(clean, traces, model_order)
     grid = np.linspace(0.0, 1.0, clean.shape[1])
 
-    fig = plt.figure(figsize=(62.0, 18.0), facecolor=BG, dpi=dpi)
+    fig_width = max(50.0, 10.35 * n_models)
+    fig = plt.figure(figsize=(fig_width, 18.0), facecolor=BG, dpi=dpi)
     gs = fig.add_gridspec(
         7,
         n_models * 4,
@@ -325,7 +348,7 @@ def render_one_row(
 
     for row in range(n_samples):
         first_ax = None
-        for group_idx, model_key in enumerate(MODEL_ORDER):
+        for group_idx, model_key in enumerate(model_order):
             color = MODEL_SPECS[model_key]["color"]
             tr = traces[model_key]
             base_col = group_idx * 4
@@ -419,7 +442,7 @@ def render_one_row(
     bottom_gs = gs[6, 0 : n_models * 4].subgridspec(1, n_samples, wspace=0.10)
     for sample_idx in range(n_samples):
         ax = fig.add_subplot(bottom_gs[0, sample_idx])
-        for model_key in MODEL_ORDER:
+        for model_key in model_order:
             tr = traces[model_key]
             ax.plot(
                 tr["step"],
@@ -431,10 +454,10 @@ def render_one_row(
             )
         if loss_scale == "log":
             ax.set_yscale("log")
-            ax.set_ylim(*sample_loss_ylim(traces, sample_idx))
+            ax.set_ylim(*sample_loss_ylim(traces, sample_idx, model_order))
             scale_note = "log"
         else:
-            ax.set_ylim(*sample_loss_ylim_linear(traces, sample_idx))
+            ax.set_ylim(*sample_loss_ylim_linear(traces, sample_idx, model_order))
             scale_note = "linear"
         ax.set_xlim(0, final_step)
         split = str(manifest[sample_idx].get("split", ""))
@@ -456,7 +479,7 @@ def render_one_row(
         )
         ax.tick_params(labelsize=5.6, pad=1.1)
 
-    for idx, model_key in enumerate(MODEL_ORDER):
+    for idx, model_key in enumerate(model_order):
         x = 0.042 + (idx + 0.5) * (0.994 - 0.042) / n_models
         fig.text(
             x,
@@ -470,7 +493,7 @@ def render_one_row(
             bbox={"boxstyle": "round,pad=0.27", "facecolor": "#ffffff", "edgecolor": MODEL_SPECS[model_key]["color"], "alpha": 0.94},
         )
     fig.suptitle(
-        "Burgers wideparam loss3-targeted round00 P2Q2 attack: baseline/loss1/loss2/loss3 plus random-field models",
+        f"Burgers wideparam loss3-targeted round00 P2Q2 attack: {variant_label}",
         fontsize=15.0,
         fontweight="bold",
         y=0.985,
@@ -487,6 +510,33 @@ def render_one_row(
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=dpi)
     plt.close(fig)
+
+
+def dense_output_name(group_id: int, variant_key: str, loss_scale: str) -> str:
+    if variant_key == "all_models":
+        name = (
+            f"wideparam_loss3targeted_round00_group{group_id:02d}_p2q2_"
+            "baseline_loss1_loss2_loss3_random_clean_y_random_solver_y_"
+            "before_after_overlay_six_column_samplewise_loss_one_row.png"
+        )
+    elif variant_key == "no_random_clean":
+        name = (
+            f"wideparam_loss3targeted_round00_group{group_id:02d}_p2q2_"
+            "baseline_loss1_loss2_loss3_random_solver_y_no_random_clean_"
+            "before_after_overlay_five_column_samplewise_loss_one_row.png"
+        )
+    else:
+        raise ValueError(f"unknown model variant: {variant_key}")
+    if loss_scale == "linear":
+        name = name.replace("_samplewise_loss_one_row.png", "_samplewise_loss_linear_y_one_row.png")
+    return name
+
+
+def variant_title(variant_key: str, model_order: list[str]) -> str:
+    labels = " / ".join(str(MODEL_SPECS[model_key]["label"]) for model_key in model_order)
+    if variant_key == "no_random_clean":
+        return f"{labels} (random clean Y removed)"
+    return labels
 
 
 def main() -> int:
@@ -509,6 +559,7 @@ def main() -> int:
     )
     parser.add_argument("--only-render", action="store_true")
     parser.add_argument("--loss-scale", choices=["log", "linear", "both"], default="both")
+    parser.add_argument("--model-variant", choices=["all_models", "no_random_clean", "both"], default="both")
     args = parser.parse_args()
 
     base = load_module("wideparam_base_for_randomfield_20260613", BASE_SCRIPT)
@@ -571,6 +622,7 @@ def main() -> int:
     outputs = []
     bundle_outputs = []
     loss_scales = ["log", "linear"] if args.loss_scale == "both" else [args.loss_scale]
+    model_variants = ["all_models", "no_random_clean"] if args.model_variant == "both" else [args.model_variant]
     for payload in group_payloads:
         group_id = int(payload["group_id"])
         group_trace_root = args.trace_root / f"group{group_id:02d}"
@@ -623,21 +675,28 @@ def main() -> int:
 
         group_outputs: dict[str, str] = {}
         group_bundle_outputs: dict[str, str] = {}
-        base_out_name = f"wideparam_loss3targeted_round00_group{group_id:02d}_p2q2_baseline_loss1_loss2_loss3_random_clean_y_random_solver_y_before_after_overlay_six_column_samplewise_loss_one_row.png"
-        for loss_scale in loss_scales:
-            if loss_scale == "log":
-                out_name = base_out_name
-            else:
-                out_name = base_out_name.replace("_samplewise_loss_one_row.png", "_samplewise_loss_linear_y_one_row.png")
-            out_path = group_vis_dir / out_name
-            render_one_row(labels, out_path, clean_np, manifest, traces, loss_scale=loss_scale)
-            outputs.append(out_path)
-            group_outputs[loss_scale] = str(out_path)
-            bundle_path = args.bundle_root / "comparison_dense" / f"group{group_id:02d}" / out_name
-            bundle_path.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(out_path, bundle_path)
-            bundle_outputs.append(bundle_path)
-            group_bundle_outputs[loss_scale] = str(bundle_path)
+        for variant_key in model_variants:
+            model_order = MODEL_VARIANTS[variant_key]
+            for loss_scale in loss_scales:
+                out_name = dense_output_name(group_id, variant_key, loss_scale)
+                out_path = group_vis_dir / out_name
+                render_one_row(
+                    labels,
+                    out_path,
+                    clean_np,
+                    manifest,
+                    traces,
+                    loss_scale=loss_scale,
+                    model_order=model_order,
+                    variant_label=variant_title(variant_key, model_order),
+                )
+                outputs.append(out_path)
+                group_outputs[f"{variant_key}_{loss_scale}"] = str(out_path)
+                bundle_path = args.bundle_root / "comparison_dense" / f"group{group_id:02d}" / out_name
+                bundle_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(out_path, bundle_path)
+                bundle_outputs.append(bundle_path)
+                group_bundle_outputs[f"{variant_key}_{loss_scale}"] = str(bundle_path)
 
         summary = {
             "group_id": group_id,
@@ -646,6 +705,7 @@ def main() -> int:
             "images": group_outputs,
             "bundle_images": group_bundle_outputs,
             "models": MODEL_ORDER,
+            "model_variants": {key: MODEL_VARIANTS[key] for key in model_variants},
             "model_headers": {model_key: model_header_label(model_key) for model_key in MODEL_ORDER},
             "loss_scales": loss_scales,
             "attack_steps": int(args.attack_steps),
@@ -663,6 +723,7 @@ def main() -> int:
         "visualization_root": str(args.vis_root),
         "bundle_root": str(args.bundle_root),
         "models": MODEL_ORDER,
+        "model_variants": {key: MODEL_VARIANTS[key] for key in model_variants},
         "model_headers": {model_key: model_header_label(model_key) for model_key in MODEL_ORDER},
         "loss_scales": loss_scales,
         "reuse_four_model_traces": bool(args.reuse_four_model_traces),

@@ -144,6 +144,19 @@ Dense image-only six-model refresh:
   for each of five groups.
 - Dedicated note: `docs/burgers_solver7860_dense_image_only_bundle_20260614.md`.
 
+Dense four-variant refresh:
+
+- Re-rendered the dense comparison bundle from existing traces only; no attack
+  or training was rerun.
+- For each of five groups, generated four image variants: all models with log-y
+  loss curves, all models with linear-y loss curves, no-random-clean with log-y
+  loss curves, and no-random-clean with linear-y loss curves.
+- The image-only bundle now contains 20 PNGs and 0 non-PNG files. R2
+  `rclone size --json` verified 20 image objects and 53,529,981 bytes.
+- The no-random-clean version removes `random_clean_y` from the top model
+  columns and the bottom loss curves, so the other methods use y-limits not
+  dominated by the random-clean failure mode.
+
 Polished report refresh:
 
 - Generated the missing polished-report visualization set for `loss1`, `loss2`,
@@ -168,9 +181,9 @@ Organized release:
 - The release gathers the final audit output, summary tables, dense six-model
   attack figures/traces, random-model full-suite outputs, polished report
   figures/data, logs, and source-code references into one reviewable tree.
-- Verified from `MANIFEST.json`: 565 files, 1,285,074,028 bytes, 116 PNG, 82
+- Verified from `MANIFEST.json`: 578 files, 1,309,713,775 bytes, 126 PNG, 82
   CSV, 181 JSON, 136 NPZ, and 0 missing expected inputs.
-- R2 verification for the organized release prefix returned 565 objects and
-  1,285,074,028 bytes.
+- R2 verification for the organized release prefix returned 578 objects and
+  1,309,713,775 bytes.
 - Dedicated note:
   `docs/burgers_solver7860_clean8000_organized_release_20260614.md`.

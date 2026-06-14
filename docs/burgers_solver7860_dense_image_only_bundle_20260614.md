@@ -1,7 +1,7 @@
 # Burgers Solver7860 Dense Image-Only Bundle - 2026-06-14
 
-Status: generated the missing six-model dense image-only comparison bundle for
-the latest random baselines.
+Status: generated the dense image-only comparison bundle for the latest random
+baselines, then refreshed it with both all-model and no-random-clean variants.
 
 Local artifacts:
 
@@ -25,14 +25,17 @@ What was recomputed:
 Image contents:
 
 - Five groups, each with one test sample and five generalization samples.
-- Six model columns: baseline, loss1, loss2, loss3, random clean Y e8000, and
-  random solver Y e7860.
+- All-model variant: six model columns, baseline, loss1, loss2, loss3, random
+  clean Y e8000, and random solver Y e7860.
+- No-random-clean variant: five model columns, baseline, loss1, loss2, loss3,
+  and random solver Y e7860. This variant removes random clean Y so its large
+  loss does not compress the other curves/panels.
 - Each model cell contains final attack delta, initial condition before/after
   perturbation, model/solver output, and model-minus-solver output.
-- The bottom row contains per-sample attack loss progression curves across all
-  six models.
-- Two PNGs per group were generated: log-y loss progression and linear-y loss
-  progression, for 10 PNGs total.
+- The bottom row contains per-sample attack loss progression curves for the
+  models included in that variant.
+- Four PNGs per group were generated: all-model log-y, all-model linear-y,
+  no-random-clean log-y, and no-random-clean linear-y, for 20 PNGs total.
 
 Visual-sample attack loss summary across all 30 samples:
 
@@ -56,7 +59,9 @@ R2 upload:
 
 Verification:
 
-- Local image-only bundle contains 10 PNG files and no non-PNG files.
-- R2 image-only bundle listing contains 10 PNG files plus directory markers.
-- R2 trace/data listing contains 5 NPZ trace files, 5 CSV loss-curve files,
-  and 11 JSON manifest/summary files.
+- Local image-only bundle contains 20 PNG files and no non-PNG files.
+- R2 image-only bundle `rclone size --json` returned 20 files and 53,529,981 bytes.
+- R2 visualization mirror `rclone size --json` returned 20 files and 53,529,981 bytes.
+- R2 trace/data `rclone size --json` returned 21 files and 169,276,310 bytes.
+- R2 `lsf --recursive` includes directory markers in addition to PNGs; the
+  object-count verification above is from `rclone size`.

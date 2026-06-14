@@ -5,13 +5,13 @@ Status: local organized release created and verified.
 Observed from `outputs/burgers_solver7860_clean8000_organized_release_20260614/MANIFEST.json`:
 
 - Organized output root: `outputs/burgers_solver7860_clean8000_organized_release_20260614/`
-- Files: `565`
-- Size recorded in manifest: `1285074028` bytes
-- Disk usage: about `1.2G`
+- Files: `578`
+- Size recorded in manifest: `1309713775` bytes
+- Disk usage: about `1.3G`
 - Missing expected inputs: `0`
-- Figure files: `116` PNG
+- Figure files: `126` PNG
 - Table/data files: `82` CSV, `181` JSON, `136` NPZ, `4` JSONL
-- Logs and code references: `24` log files, `6` Python scripts, `3` shell scripts
+- Logs and code references: `27` log files, `6` Python scripts, `3` shell scripts
 
 Layered layout:
 
@@ -46,5 +46,5 @@ R2 target prefix:
 
 R2 verification:
 
-- `rclone size --json` returned `{"count":565,"bytes":1285074028,"sizeless":0}`.
+- `rclone size --json` returned `{"count":578,"bytes":1309713775,"sizeless":0}`.
 - The sync log showed transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and the verified remote object count/byte size matches local `MANIFEST.json`.
