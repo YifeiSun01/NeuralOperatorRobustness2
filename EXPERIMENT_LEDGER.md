@@ -14506,9 +14506,9 @@ Action taken:
 Evidence:
 - Both audit and organized release contain 554 files.
 - Final local/R2 size checks:
-  `darcyflow_timematched_full_or_audit_20260614` has 1,418,427,564 bytes, and
-  `darcyflow_timematched_organized_release_20260614` has 1,418,431,996 bytes.
-- `rclone check --size-only --one-way` found 0 differences for both uploaded
+  `darcyflow_timematched_full_or_audit_20260614` has 1,555,304,809 bytes, and
+  `darcyflow_timematched_organized_release_20260614` has 1,555,309,241 bytes.
+- `rclone check --size-only` found 0 differences for both uploaded
   R2 paths under
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/`.
 - Required CSV outputs exist:
@@ -14526,7 +14526,7 @@ Evidence:
 
 Coverage notes:
 - Archived required-figure CSV max epochs are loss1 `3000`, loss2 `3079`,
-  loss3 `3033`, physics `3121`, random clean `1100`, and random solver `1100`.
+  loss3 `3033`, physics `3121`, random clean `3500`, and random solver `3500`.
 - Robustness coverage found locally is smoke level: 52 datasets x 2 samples x 7
   models, not 50 samples per dataset.
 - SVD/Jacobian coverage found locally is smoke level: 3 samples per model, not
@@ -14548,7 +14548,7 @@ Report:
 
 ## 2026-06-14 - Darcy random 3000-to-3500 continuation watcher fix
 
-Status: continuation launched; monitoring in progress.
+Status: complete.
 
 Observed issue:
 - The random clean and random solver 3000-epoch base runs had completed and
@@ -14576,10 +14576,16 @@ Evidence:
 - Supervisor started both continuation services:
   `darcy_random_clean_3500_continue` and
   `darcy_random_solver_3500_continue`.
+- Both continuation services exited after reaching epoch `3500`.
+- Final continuation checkpoints exist at epoch `3500` and include optimizer
+  state.
+- `outputs/darcy_random_3000_20260614/replot_status.json` reports
+  `state: complete` with `summary_final_epoch: 3500` for both continuation
+  runs.
 
 Interpretation:
-- The remaining random extension is not a zero-to-3500 rerun. It is a
-  3000-to-3500 continuation from checkpoints that include optimizer state.
+- The random extension was not a zero-to-3500 rerun. It was a 3000-to-3500
+  continuation from checkpoints that include optimizer state.
 
 ## 2026-06-14 - Burgers attack-52 protocol recheck
 
