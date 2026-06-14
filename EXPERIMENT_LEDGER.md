@@ -15030,3 +15030,38 @@ Interpretation:
 - The earlier overall first-vs-runner-up test answered the question "is loss3 better on average across the 52 dataset rows?"
 - This new per-dataset test answers the stricter question "inside each individual dataset row, is loss3 significantly better than the best non-loss3 model over the paired samples?"
 - For attack loss increase and final attack loss, the stricter answer is yes on every one of the 52 dataset rows.
+
+## 2026-06-14 - Burgers clean 52 per-dataset Welch tests
+
+Status: added the per-dataset clean-metric significance table requested by the user for the full 52-dataset clean RMSE/Relative L2/MSE table. This reads existing clean mean/std/n summaries only; no clean evaluation was rerun.
+
+New files:
+- Script: `tools/build_burgers_clean52_per_dataset_welch_tests_20260614.py`.
+- Report: `docs/burgers_clean52_per_dataset_welch_tests_20260614.md`.
+- Output report copy: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_clean52_per_dataset_welch_tests_20260614.md`.
+- Output CSVs under `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/clean52_per_dataset_welch_tests_20260614/`:
+  - `clean52_per_dataset_loss3_vs_best_other_welch_tests.csv`
+  - `clean52_per_dataset_loss3_vs_best_other_welch_tests_compact.csv`
+  - `clean52_per_dataset_welch_metric_summary.csv`
+  - `clean52_per_dataset_welch_split_summary.csv`
+  - `clean52_per_dataset_best_model_counts.csv`
+
+Methods:
+- Dataset rows: 52.
+- Metrics: RMSE, Relative L2, MSE.
+- Total per-dataset clean tests: 156.
+- Direction: lower is better.
+- Comparison: `loss3` versus the best non-loss3 model for the same dataset and metric. When `loss3` is best, that comparison is the runner-up.
+- Test: Welch t-test from per-dataset mean/std/n summaries, with BH/FDR q-values over all 156 clean tests.
+- Method boundary: this is not a paired per-sample test, because a unified six-model per-sample clean table is not present in the final bundle. The old4 source has per-dataset mean/std/sem and old4 internal paired tests; the random source has per-sample and per-dataset summaries.
+
+Key results:
+- RMSE: `loss3` is best on 48/52 dataset rows and significantly lower on 48/52 rows.
+- Relative L2: `loss3` is best on 48/52 dataset rows and significantly lower on 48/52 rows.
+- MSE: `loss3` is best on 49/52 dataset rows and significantly lower on 48/52 rows.
+- Non-loss3 best rows are train/test for all three clean metrics, plus generalization `burgers_widevis_l3target_d11` for RMSE/Relative L2 and `burgers_widevis_l3target_d45` for RMSE/Relative L2/MSE. In all these non-loss3-best clean rows, `random_solver_y` is the best model.
+- `burgers_widevis_l3target_d11` MSE is a loss3 mean-best row but is not significant after the all-156 BH/FDR correction.
+
+Interpretation:
+- Clean evidence remains strongly favorable to `loss3` on the generalization majority, but it is not a 52/52 clean sweep.
+- The 52/52 sweep applies to strict attack `final_loss` and `attack_loss_increase`, not to full clean RMSE/Relative L2/MSE.
