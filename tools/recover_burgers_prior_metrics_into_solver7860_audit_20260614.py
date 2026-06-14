@@ -463,10 +463,10 @@ def write_coverage_audit(root: Path, audit_data: Path, copy_stats: dict[str, dic
         },
         {
             "item": "singular_values_top50_top100_6models",
-            "status": "partial_not_found_for_random_models",
-            "coverage": "old4 has top100; random_clean_y/random_solver_y have top20 only",
-            "path": "data/historical_svd_attack25_reuse3/singular_values_top100_long.csv",
-            "note": "No existing R2/local random top50/top100 SVD payload was found in the checked solver7860/clean8000 or latest-wideparam summaries.",
+            "status": "superseded_by_20260614_top100_supplement",
+            "coverage": "old4 has top100; random_clean_y/random_solver_y exported top20 but stored full Jacobian matrices",
+            "path": "data/random_top100_svd_supplement_20260614/ and data/historical_svd_attack25_reuse3/singular_values_top100_long.csv",
+            "note": "This recovery stage did not find an already-exported random top50/top100 table. The later 20260614 supplement derives random top100 SVD from existing stored 1024x1024 Jacobian matrices without rerunning training, attack, or Jacobian generation.",
         },
         {
             "item": "biased_local_direction_full_old4",
@@ -477,10 +477,10 @@ def write_coverage_audit(root: Path, audit_data: Path, copy_stats: dict[str, dic
         },
         {
             "item": "biased_jerror_direction_random_models",
-            "status": "partial_for_random_models",
-            "coverage": "random_clean_y/random_solver_y J^T error, SVD/outward, attack-delta direction summaries",
-            "path": "data/recovered_prior/six_model_latest_wideparam_summary_20260613/random_models_jerror_transpose_error_25sample.csv",
-            "note": "Random has corrected J^T-error direction rows, but not the full old4 affine local-gain sweep.",
+            "status": "superseded_by_20260614_affine_supplement",
+            "coverage": "random_clean_y/random_solver_y J^T error, SVD/outward, attack-delta direction summaries plus later affine/local-gain supplement",
+            "path": "data/recovered_prior/six_model_latest_wideparam_summary_20260613/random_models_jerror_transpose_error_25sample.csv and data/random_affine_direction_supplement_20260614/",
+            "note": "This recovery stage found corrected J^T-error direction rows. The later 20260614 supplement records random affine/local-gain diagnostics from existing checkpoints and stored Jacobians; attack-delta cosine is unavailable only for sample_id=4.",
         },
         {
             "item": "metric_correlations_pairwise_rank_similarity",
@@ -527,7 +527,7 @@ def write_coverage_audit(root: Path, audit_data: Path, copy_stats: dict[str, dic
                 "- First-master finalmodels top100 SVD metadata recovered from R2: `recovered_prior/first_master_finalmodels_jacobian_svd_rep20_top100_20260608/`.",
                 "- Paired loss3-vs-other statistical test table: `paired_tests_loss3_vs_other_models.csv`.",
                 "",
-                "Remaining genuine gap: old4 has top100 SVD, but the random solver7860/clean8000 SVD source has top20 only; therefore the common six-model singular-value table is top20.",
+                "Superseded gap note: this recovery stage found random exported SVD values through top20 only, while old4 had top100. A later 20260614 supplement derives random top100 SVD from the stored full Jacobian matrices, so use `random_top100_svd_supplement_20260614/` for six-model top50/top100 comparisons.",
                 "",
             ]
         ),

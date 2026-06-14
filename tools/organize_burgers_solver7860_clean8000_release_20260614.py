@@ -296,6 +296,9 @@ def build_release(root: Path, out: Path) -> Organizer:
     six_model_latest = root / "forensics" / "burgers_six_model_latest_wideparam_summary_20260613"
     first_master_attack52 = root / "forensics" / "burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608"
     first_master_top100_meta = root / "forensics" / "burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608"
+    random_top100_svd_supplement = audit / "data" / "random_top100_svd_supplement_20260614"
+    random_affine_direction_supplement = audit / "data" / "random_affine_direction_supplement_20260614"
+    r2_live_gap_search = audit / "data" / "r2_live_gap_search_20260614"
 
     if out.exists():
         shutil.rmtree(out)
@@ -318,6 +321,9 @@ def build_release(root: Path, out: Path) -> Organizer:
         "six_model_latest_wideparam_summary": six_model_latest,
         "first_master_old4_52dataset_attack": first_master_attack52,
         "first_master_finalmodels_top100_metadata": first_master_top100_meta,
+        "random_top100_svd_supplement": random_top100_svd_supplement,
+        "random_affine_direction_supplement": random_affine_direction_supplement,
+        "r2_live_gap_search": r2_live_gap_search,
     }.items():
         org.note_source(label, path)
 
@@ -334,7 +340,20 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "docs" / "burgers_solver7860_polished_reports_20260614.md",
         root / "docs" / "burgers_solver7860_clean8000_organized_release_20260614.md",
         root / "docs" / "burgers_all_metric_ranked_tables_20260614.md",
+        root / "docs" / "burgers_metric_integrity_audit_20260614.md",
+        root / "docs" / "burgers_full_data_bundle_integrity_audit_20260614.md",
+        root / "docs" / "burgers_robustness_numeric_snapshot_20260614.md",
+        root / "docs" / "burgers_attack52_protocol_recheck_20260614.md",
+        root / "docs" / "burgers_random_top100_svd_supplement_20260614.md",
+        root / "docs" / "burgers_random_affine_direction_supplement_20260614.md",
+        root / "docs" / "burgers_r2_live_gap_resolution_20260614.md",
         audit / "reports" / "burgers_all_metric_ranked_tables_20260614.md",
+        audit / "reports" / "burgers_metric_integrity_audit_20260614.md",
+        audit / "reports" / "burgers_full_data_bundle_integrity_audit_20260614.md",
+        audit / "reports" / "burgers_robustness_numeric_snapshot_20260614.md",
+        audit / "reports" / "burgers_random_top100_svd_supplement_20260614.md",
+        audit / "reports" / "burgers_random_affine_direction_supplement_20260614.md",
+        audit / "reports" / "burgers_r2_live_gap_resolution_20260614.md",
         audit / "manifests" / "ranked_metric_tables_manifest_20260614.json",
     ]:
         org.copy_file(src, start / src.name, "start_here_reports")
@@ -434,6 +453,21 @@ def build_release(root: Path, out: Path) -> Organizer:
         "ranked_metric_tables",
     )
 
+    integrity_root = table_root / "10_integrity_and_numeric_audits_20260614"
+    for audit_dir in [
+        "integrity_audit_20260614",
+        "full_data_bundle_integrity_audit_20260614",
+        "robustness_numeric_snapshot_20260614",
+        "random_top100_svd_supplement_20260614",
+        "random_affine_direction_supplement_20260614",
+        "r2_live_gap_search_20260614",
+    ]:
+        org.copy_tree(
+            audit / "data" / audit_dir,
+            integrity_root / audit_dir,
+            "integrity_and_numeric_audits",
+        )
+
     # 02: figures.
     fig_root = audit / "figures"
     org.copy_files(fig_root.glob("*.png"), out / "02_figures" / "01_training_curves_linear" / "all_models", "training_curve_figures")
@@ -500,6 +534,10 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "tools" / "build_burgers_solver7860_loss3_best_group05_20260614.py",
         root / "tools" / "recover_burgers_prior_metrics_into_solver7860_audit_20260614.py",
         root / "tools" / "build_burgers_all_metric_ranked_tables_20260614.py",
+        root / "tools" / "audit_burgers_metric_tables_20260614.py",
+        root / "tools" / "audit_burgers_full_data_bundle_20260614.py",
+        root / "tools" / "build_burgers_random_top100_svd_supplement_20260614.py",
+        root / "tools" / "build_burgers_random_affine_direction_supplement_20260614.py",
         root / "tools" / "run_burgers_random_field_final_models_full_suite_20260613.sh",
         root / "tools" / "run_burgers_timematched_strict_random_continuations_20260614.sh",
         root / "tools" / "watch_burgers_solver7860_then_postprocess_20260614.sh",

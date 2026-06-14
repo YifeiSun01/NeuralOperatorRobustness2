@@ -655,6 +655,159 @@ def svd_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, obj
     }
 
 
+RANDOM_AFFINE_SUPPLEMENT_METRICS = [
+    "clean_residual_mse_recomputed",
+    "clean_residual_norm_l2",
+    "bias_gradient_norm",
+    "error_spectral_norm",
+    "error_fro_norm",
+    "error_effective_rank",
+    "svd_outward_abs_cos",
+    "svd_outward_abs_angle_deg",
+    "svd_affine_eps_abs_cos",
+    "svd_affine_eps_abs_angle_deg",
+    "outward_affine_eps_abs_cos",
+    "attack_delta_svd_abs_cos",
+    "attack_delta_outward_abs_cos",
+    "attack_delta_affine_eps_abs_cos",
+    "svd_local_gain_eps_mse",
+    "svd_local_gain_eps_linear_mse",
+    "svd_local_gain_eps_quadratic_mse",
+    "outward_local_gain_eps_mse",
+    "outward_local_gain_eps_linear_mse",
+    "outward_local_gain_eps_quadratic_mse",
+    "affine_local_gain_eps_mse",
+    "affine_local_gain_eps_linear_mse",
+    "affine_local_gain_eps_quadratic_mse",
+    "affine_over_svd_gain_ratio",
+    "affine_over_outward_gain_ratio",
+]
+
+
+def supplement_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, object]], loss3_tests: list[dict[str, object]]) -> dict[str, pd.DataFrame]:
+    """Attach the 20260614 R2/local gap-resolution supplements.
+
+    These inputs are already-generated CSV supplements. This function only
+    copies/ranks/summarizes them so the main all-metric report no longer treats
+    old4-only top100 fields as if they were the only available evidence.
+    """
+
+    outputs: dict[str, pd.DataFrame] = {}
+
+    top100_root = data_root() / "random_top100_svd_supplement_20260614"
+    top100_long_path = top100_root / "six_model_error_singular_values_top100_ranked_long.csv"
+    topk_path = top100_root / "six_model_error_singular_values_topk_ranked_long.csv"
+    subspace_path = top100_root / "six_model_top50_top100_subspace_ranked_long.csv"
+    if top100_long_path.exists() and topk_path.exists() and subspace_path.exists():
+        top100 = read_csv(top100_long_path)
+        top100["unit_id"] = top100["sample_id"].astype(str) + ":rank" + top100["singular_rank"].astype(str).str.zfill(3)
+        top100 = top100[top100["model"].isin(MODEL_ORDER)].copy()
+        outputs["svd_error_top100_supplement_ranked_long.csv"] = top100
+        add_summary(
+            summary_parts,
+            best_tests,
+            loss3_tests,
+            top100,
+            MetricSpec(
+                "svd_error_spectrum_top100_supplement",
+                "random_top100_svd_supplement_20260614/six_model_error_singular_values_top100_ranked_long.csv",
+                "svd_error_top100_all_values_25sample",
+                "error_singular_value_top100_all",
+                "Error singular values ranks 1-100",
+                "lower",
+            ),
+        )
+
+        topk = read_csv(topk_path)
+        topk["unit_id"] = topk["sample_id"].astype(str)
+        topk = topk[topk["model"].isin(MODEL_ORDER)].copy()
+        outputs["svd_error_topk_top100_supplement_ranked_long.csv"] = topk
+        for metric, metric_df in topk.groupby("metric"):
+            label = str(metric_df["metric_label"].iloc[0])
+            add_summary(
+                summary_parts,
+                best_tests,
+                loss3_tests,
+                metric_df,
+                MetricSpec(
+                    "svd_error_spectrum_top100_supplement",
+                    "random_top100_svd_supplement_20260614/six_model_error_singular_values_topk_ranked_long.csv",
+                    "svd_error_topk_25sample",
+                    str(metric),
+                    label,
+                    "lower",
+                ),
+            )
+
+        subspace = read_csv(subspace_path)
+        subspace["unit_id"] = subspace["sample_id"].astype(str)
+        subspace = subspace[subspace["model"].isin(MODEL_ORDER)].copy()
+        outputs["model_solver_subspace_top100_supplement_ranked_long.csv"] = subspace
+        for metric, metric_df in subspace.groupby("metric"):
+            label = str(metric_df["metric_label"].iloc[0])
+            add_summary(
+                summary_parts,
+                best_tests,
+                loss3_tests,
+                metric_df,
+                MetricSpec(
+                    "model_solver_subspace_top100_supplement",
+                    "random_top100_svd_supplement_20260614/six_model_top50_top100_subspace_ranked_long.csv",
+                    "model_solver_subspace_25sample",
+                    str(metric),
+                    label,
+                    "higher",
+                ),
+            )
+
+    affine_path = data_root() / "random_affine_direction_supplement_20260614" / "random_affine_direction_metrics.csv"
+    if affine_path.exists():
+        affine = read_csv(affine_path)
+        rows: list[dict[str, object]] = []
+        meta_cols = ["sample_id", "source_split", "dataset_id", "local_index", "attack_delta_available"]
+        for _, row in affine.iterrows():
+            model = str(row.get("model", ""))
+            if model not in MODEL_INDEX:
+                continue
+            for metric in RANDOM_AFFINE_SUPPLEMENT_METRICS:
+                if metric not in affine.columns:
+                    continue
+                rec = {c: row.get(c, "") for c in meta_cols if c in affine.columns}
+                rec.update(
+                    {
+                        "source_table": "random_affine_direction_supplement_20260614/random_affine_direction_metrics.csv",
+                        "metric": metric,
+                        "metric_label": metric,
+                        "direction": infer_direction(metric),
+                        "model": model,
+                        "value": row.get(metric, np.nan),
+                    }
+                )
+                rows.append(rec)
+        affine_long = pd.DataFrame(rows)
+        if not affine_long.empty:
+            affine_long["unit_id"] = affine_long["sample_id"].astype(str)
+            ranked_affine = rank_unit_table(affine_long, ["sample_id", "metric"])
+            outputs["random_affine_direction_supplement_metric_long_ranked.csv"] = ranked_affine
+            for metric, metric_df in affine_long.groupby("metric"):
+                direction = str(metric_df["direction"].iloc[0])
+                add_summary(
+                    summary_parts,
+                    best_tests,
+                    loss3_tests,
+                    metric_df,
+                    MetricSpec(
+                        "random_affine_direction_supplement",
+                        "random_affine_direction_supplement_20260614/random_affine_direction_metrics.csv",
+                        "random_affine_25sample",
+                        str(metric),
+                        str(metric),
+                        direction,
+                    ),
+                )
+    return outputs
+
+
 def model_level_tables() -> dict[str, pd.DataFrame]:
     sources = [
         data_root() / "model_level_metric_means_selected_worktime_25sample.csv",
@@ -762,12 +915,12 @@ def coverage_note_table() -> pd.DataFrame:
         },
         {
             "metric_family": "random clean/solver error SVD top50/top100",
-            "coverage_status": "not_found_for_random_models",
-            "source_evidence": "missing_metric_coverage_audit.csv/json; recovered prior R2/local audit",
-            "ranked_outputs": "not included as six-model comparable top50/top100 rows",
+            "coverage_status": "supplemented_from_stored_jacobians",
+            "source_evidence": "random_top100_svd_supplement_20260614; stored random_solver7860/clean8000 1024x1024 Jacobian NPZ payloads",
+            "ranked_outputs": "svd_error_top100_supplement_ranked_long.csv; svd_error_topk_top100_supplement_ranked_long.csv; metric_best_summary_ranked.csv",
             "scope": "random_clean_y and random_solver_y",
-            "note": "old4 models have top100 SVD artifacts, but the recovered random-model completed exports only provide top20 common SVD values/vectors.",
-            "action": "Explicitly documented as not found; do not supplement or rerun.",
+            "note": "The completed random export stored top20 SVD values but also stored full 1024x1024 Jacobian matrices. Top100 SVD was therefore derived from those existing matrices; no training, attack, or Jacobian generation was rerun.",
+            "action": "Recorded as a supplement; use the supplement files for six-model top50/top100 comparisons.",
         },
         {
             "metric_family": "old4 error SVD top100",
@@ -775,7 +928,7 @@ def coverage_note_table() -> pd.DataFrame:
             "source_evidence": "recovered_prior/first_master_finalmodels_jacobian_svd_rep20_top100_20260608; historical_svd_attack25_reuse3",
             "ranked_outputs": "singular_values_top20_model_solver_reference.csv plus recovered prior raw/reference folders",
             "scope": "baseline/loss1/loss2/loss3 historical old4 artifacts",
-            "note": "Top100 exists for old4/historical artifacts; it is not a six-model common random comparison because random top50/top100 was not found.",
+            "note": "Top100 exists for old4/historical artifacts and is now joined to random top100 supplement outputs for the six-model supplement tables.",
             "action": "Recorded as prior/reference evidence only.",
         },
         {
@@ -789,30 +942,30 @@ def coverage_note_table() -> pd.DataFrame:
         },
         {
             "metric_family": "random clean/solver direction similarity",
-            "coverage_status": "available_partial_and_recorded",
-            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; direction_angle_similarity_summary_corrected_jerrT_25sample.csv",
-            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv",
+            "coverage_status": "available_and_supplemented",
+            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; direction_angle_similarity_summary_corrected_jerrT_25sample.csv; random_affine_direction_supplement_20260614",
+            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; random_affine_direction_supplement_metric_long_ranked.csv",
             "scope": "attack delta vs top error singular vector, SVD/outward, and available cosine/angle summaries",
-            "note": "Available random-model direction/cosine metrics are recorded. Some old4-only outward/affine fields are absent for random models and remain documented as partial coverage.",
+            "note": "Available random-model direction/cosine metrics are recorded, with old4-style affine/outward/SVD cosine supplements derived from stored Jacobians and existing checkpoints.",
             "action": "Recorded available fields only.",
         },
         {
             "metric_family": "random clean/solver model-solver subspace similarity",
-            "coverage_status": "available_and_recorded",
-            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; subspace_similarity_summary_corrected_jerrT_25sample.csv",
-            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; metric_best_summary_ranked.csv",
-            "scope": "top1/top5/top10/top20 model-solver subspace similarities on fixed 25 samples",
-            "note": "The six-model common subspace comparisons are recorded through the recovered top20 random-model coverage.",
+            "coverage_status": "available_and_top100_supplemented",
+            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; subspace_similarity_summary_corrected_jerrT_25sample.csv; random_top100_svd_supplement_20260614",
+            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; model_solver_subspace_top100_supplement_ranked_long.csv; metric_best_summary_ranked.csv",
+            "scope": "top1/top5/top10/top20 plus supplement top50/top100 model-solver subspace similarities on fixed 25 samples",
+            "note": "The original common subspace table is top20; the top50/top100 six-model supplement is now available from stored random Jacobians.",
             "action": "Recorded; no rerun requested.",
         },
         {
             "metric_family": "random clean/solver old4-style affine/local-gain biased-direction sweep",
-            "coverage_status": "not_found_for_random_models",
-            "source_evidence": "biased_local_direction/; recovered prior R2/local audit",
-            "ranked_outputs": "old4/local available fields are included where present; no full random affine sweep table exists",
+            "coverage_status": "supplemented_from_existing_checkpoint_and_stored_jacobian",
+            "source_evidence": "random_affine_direction_supplement_20260614/random_affine_direction_metrics.csv",
+            "ranked_outputs": "random_affine_direction_supplement_metric_long_ranked.csv; metric_best_summary_ranked.csv",
             "scope": "random_clean_y and random_solver_y",
-            "note": "Random models have J^T-error, SVD/outward, attack-delta direction, subspace, and correlation tables, but not the complete old4 affine/local-gain biased-direction sweep.",
-            "action": "Explicitly documented as not found; do not supplement or rerun.",
+            "note": "Random affine/local-gain metrics are supplemented from existing checkpoints and stored Jacobians. The full residual vector was recomputed by model forward; attack-delta cosine is missing only for sample_id=4 because that train sample is outside the saved attack manifest.",
+            "action": "Recorded as supplement; no new training, attack generation, or Jacobian generation.",
         },
         {
             "metric_family": "52-dataset clean and attack metrics",
@@ -999,6 +1152,20 @@ def render_report(
     for item in manifest["files"]:
         lines.append(f"- `{item['path']}`: {item['rows']} rows, {item['columns']} columns")
 
+    lines.extend(
+        [
+            "",
+            "## Attack-52 Protocol Caveat",
+            "",
+            "The strict selected-worktime 52-dataset attack table contains baseline, random_clean_y, and random_solver_y only. The recovered six-model 52-dataset attack table is mixed source: baseline/loss1/loss2/loss3 are from the historical old4 full-52 20-step run, while random_clean_y/random_solver_y are from the solver7860/clean8000 random suite. Use the source columns before making strict protocol claims.",
+            "",
+            "## Robustness Metric Comparability Caveat",
+            "",
+            "The 25-sample robustness/Jacobian/SVD tables mix six-model-common metrics, old4-only historical metrics, random-only supplement metrics, and mechanism diagnostics. The phrase `six-model-common` means all six models have finite paired values under the same table scope; old4-only and random-only supplement rows should be interpreted in their own scopes.",
+            "",
+        ]
+    )
+
     lines.extend(["", "## Best Model By Metric", ""])
     best_cols = [
         "family",
@@ -1023,6 +1190,9 @@ def render_report(
         ("attack_robustness_52dataset", "52-Dataset Attack Robustness"),
         ("robustness_svd_jacobian_25sample", "25-Sample Robustness/Jacobian/SVD"),
         ("svd_error_spectrum", "Error-Jacobian Singular Spectrum"),
+        ("svd_error_spectrum_top100_supplement", "Top100 Error-Jacobian Singular Spectrum Supplement"),
+        ("model_solver_subspace_top100_supplement", "Top50/Top100 Model-Solver Subspace Supplement"),
+        ("random_affine_direction_supplement", "Random-Model Affine/Local-Gain Supplement"),
     ]:
         sub = best_summary[best_summary["family"].eq(family)].copy()
         lines.extend(["", f"## {title}", ""])
@@ -1118,9 +1288,11 @@ def render_report(
             "",
             "## Evidence Boundary",
             "",
-            "Observed from local/R2-recovered tables: clean 52-dataset metrics, recovered full 52-dataset attack metrics for six models, selected 25-sample robustness/Jacobian/SVD tables, corrected J^T-error/direction/subspace/correlation summaries, old4 top100 SVD artifacts, and random clean/solver top20 SVD artifacts.",
+            "Observed from local/R2-recovered tables: clean 52-dataset metrics, recovered full 52-dataset attack metrics for six models, selected 25-sample robustness/Jacobian/SVD tables, corrected J^T-error/direction/subspace/correlation summaries, old4 top100 SVD artifacts, random clean/solver top20 SVD artifacts, and the 20260614 random top100/affine supplements derived from existing stored Jacobians/checkpoints.",
             "",
-            "Remaining known gap: an already-exported random clean/random solver top50/top100 SVD table was not found in the checked local/R2 selected-prefix sources. The available random clean/solver SVD coverage is top20, and those top20 values are included here.",
+            "Corrected prior gap statement: an already-exported random clean/random solver top50/top100 SVD table was not found, but the completed random suite stored full Jacobian matrices. The top50/top100 six-model supplement is therefore available here as a derived-from-existing-Jacobian artifact, not as a new model/Jacobian rerun.",
+            "",
+            "Remaining caveat: the 52-dataset attack all-model table is recovered from mixed sources for old4 versus random2, while the dense latest P2Q2 visual traces are same-panel latest traces. Use the source columns when making strict protocol claims.",
             "",
         ]
     )
@@ -1167,6 +1339,7 @@ def main() -> None:
     tables.update(attack_tables(summary_parts, best_tests, loss3_tests))
     tables.update(robustness_tables(summary_parts, best_tests, loss3_tests))
     tables.update(svd_tables(summary_parts, best_tests, loss3_tests))
+    tables.update(supplement_tables(summary_parts, best_tests, loss3_tests))
     tables.update(model_level_tables())
     correlation_outputs = correlation_tables()
     tables.update(correlation_outputs)

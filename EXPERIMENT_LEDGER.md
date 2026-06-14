@@ -14393,7 +14393,7 @@ Follow-up recovered prior metric placement:
 - Generated `attack_52dataset_six_models_recovered_full_long.csv` with 312 rows, covering 52 dataset indices x 6 models.
 - Generated `singular_values_top20_six_models_recovered_long.csv` with 6500 rows, covering solver plus six models at common top20 rank.
 - Generated `paired_tests_loss3_vs_other_models.csv` with 130 paired t-test/Wilcoxon rows.
-- Added `missing_metric_coverage_audit.csv/json`; the remaining known gap is random-clean/random-solver top50/top100 SVD, because the recovered random SVD source contains top20 only while old4 contains top100.
+- Added `missing_metric_coverage_audit.csv/json`; at this recovery stage the apparent remaining gap was random-clean/random-solver top50/top100 SVD, because the exported random SVD source contained top20 only while old4 contained top100. This statement was later superseded on 2026-06-14 by the random top100 supplement derived from stored full Jacobian matrices.
 - Final audit output R2 verification after recovery returned 1055 objects and 4,004,966,533 bytes.
 - Rebuilt organized release after recovery. `MANIFEST.json` reports 1230 files, 4,301,766,869 bytes, 178 PNG, 155 CSV, 446 JSON, 378 NPZ, 37 log files, 9 Python scripts, and 0 missing expected inputs.
 - Organized release R2 verification after recovery returned 1230 objects and 4,301,766,869 bytes.
@@ -14406,19 +14406,19 @@ Follow-up extra prior-history recovery:
 - Updated `tools/organize_burgers_solver7860_clean8000_release_20260614.py` so the organized release includes historical random suites under `04_random_model_full_suite/historical_selected_worktime_20260613/` and `04_random_model_full_suite/historical_final_models_20260613/`, plus first-master top100 metadata and all three six-model summary roots under `01_summary_tables/`.
 - Final audit local count after this placement: 1715 files, 5,196,636,728 bytes. R2 verification returned `{"count":1715,"bytes":5196636728,"sizeless":0}`.
 - Organized release local manifest after this placement: 1949 files, 5,496,318,865 bytes, 194 PNG, 250 CSV, 769 JSON, 640 NPZ, 38 log files, 9 Python scripts, 3 shell scripts, and 0 missing expected inputs. R2 verification returned `{"count":1949,"bytes":5496318865,"sizeless":0}`.
-- Remaining verified gap after the expanded search: old4 top100 SVD is present, and random full Jacobian matrices plus top20 SVD are present, but an already-exported random clean/solver top50/top100 SVD table was not found. Random clean/solver corrected J^T-error, direction, subspace, and delta/loss correlation tables are present; a completed random old4-style affine local-gain sweep was not found under the checked local/R2 selected-prefix sources.
+- Superseded expanded-search note: old4 top100 SVD was present, and random full Jacobian matrices plus exported top20 SVD were present, but an already-exported random clean/solver top50/top100 SVD table was not found at that stage. This is no longer a raw-data gap: the later 2026-06-14 supplement derives random top100 SVD from the stored full Jacobian matrices. The random old4-style affine local-gain sweep was also later supplemented from existing checkpoints plus stored Jacobians.
 
 Follow-up ranked all-metric table package:
 - Added `tools/build_burgers_all_metric_ranked_tables_20260614.py`.
 - Generated `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/` with 16 CSV files.
 - Generated the full Markdown appendix at `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_all_metric_ranked_tables_20260614.md` and mirrored it to `docs/burgers_all_metric_ranked_tables_20260614.md`.
 - The ranked package includes clean 52-dataset per-model/per-dataset values, recovered 52-dataset attack values, 25-sample robustness/Jacobian/SVD values, top20 and top-k error singular-value tables, model-level direction/subspace summaries, attack-correlation tables, best-vs-other paired significance tests, and loss3-vs-other paired significance tests.
-- Added `random_partial_metric_coverage_notes.csv` to explicitly record the currently accepted boundary: random_clean_y/random_solver_y top20 SVD is available and included, random top50/top100 SVD was not found, old4 top100 is retained as prior/reference evidence, random J^T-error/direction/subspace/correlation fields are recorded where present, and the random old4-style affine/local-gain biased-direction sweep was not found and should not be supplemented.
+- Added `random_partial_metric_coverage_notes.csv` to explicitly record the then-current boundary: random_clean_y/random_solver_y top20 SVD was available and included, an already-exported random top50/top100 SVD table had not been found, old4 top100 was retained as prior/reference evidence, and random J^T-error/direction/subspace/correlation fields were recorded where present. This boundary was later corrected by the 2026-06-14 top100 and affine/local-gain supplements derived from existing stored artifacts.
 - `metric_best_summary_ranked.csv` has 273 metric/scope best rows with mean, standard deviation, n, runner-up, runner-up gap, paired t-test p/q values, Wilcoxon p/q values, and `is_best`/`best_model` fields.
 - `metric_model_summary_ranked.csv` has 1334 model-summary rows; `metric_best_vs_other_significance_tests.csv` has 1061 best-vs-other paired test rows; `metric_loss3_vs_other_significance_tests.csv` has 1013 loss3-vs-other paired test rows.
 - Markdown best models are bolded. CSV best models are marked with `rank`, `is_best`, `best_model`, `runner_up_model`, and significance fields.
 - Ranking convention recorded in the report: lower is better for errors, losses, norms, angles, perturbation sizes, local gains, and error singular values; higher is better for cosine/subspace similarity; correlation tables are sorted by absolute correlation strength and are not treated as model-quality rankings.
-- Observed from the generated coverage report: the known remaining gap is still random clean/random solver top50/top100 SVD exports; random clean/solver top20 SVD, corrected J^T-error, direction/subspace, delta/loss correlations, and random full Jacobian payloads are included.
+- Observed from the generated coverage report at that time: the known remaining export gap was random clean/random solver top50/top100 SVD tables; random clean/solver top20 SVD, corrected J^T-error, direction/subspace, delta/loss correlations, and random full Jacobian payloads were included. The later 2026-06-14 supplement uses those full Jacobian payloads to produce top100 six-model tables.
 - Updated `tools/organize_burgers_solver7860_clean8000_release_20260614.py` so the organized release includes `01_summary_tables/09_ranked_metric_tables_20260614/`, the all-metric Markdown appendix in `00_start_here/`, and the new source script in `07_source_code_and_references/`.
 - Rebuilt `outputs/burgers_solver7860_clean8000_organized_release_20260614/`. Local manifest after de-duplicating overwritten start-here report entries now includes the partial-coverage note table: 1970 files, 266 CSV, 770 JSON, 640 NPZ, 194 PNG, 40 log files, 10 Python scripts, and 0 missing expected inputs. Exact byte size is intentionally read from the current `MANIFEST.json`, because the release contains refreshed docs and this ledger itself.
 - R2 verification after sync: final audit output `{"count":1732,"bytes":5203523912,"sizeless":0}`; organized release has 1970 objects; ranked metric table folder contains 16 CSV objects on R2. Exact organized-release bytes should be checked with the final `rclone size --json` result after the last docs/ledger refresh.
@@ -14432,7 +14432,7 @@ Updates:
 - The prompt adapts the Burgers workflow to DarcyFlow/data flow and explicitly adds DarcyFlow-specific physics loss / PDE residual logging, analysis, and reporting.
 - The prompt records the expected DarcyFlow target range as roughly `3000-3500` loss3 epochs, with timing calibration required before any formal time-matched continuation.
 - It keeps the completed Burgers workflow requirements: audit local/R2 first, avoid blind reruns, smoke tests before missing-run continuations, checkpoint model+optimizer resume, 52-dataset evaluation, 50-sample attack, 25-sample SVD/Jacobian subset, correlations/similarities, ranked CSV/Markdown tables, dense group00-group05 figures, organized release, R2 verification, and GitHub branch `vast-ai` submission.
-- It also carries forward the accepted coverage policy: record all available metrics, write explicit partial-coverage notes for missing expensive artifacts, and do not supplement top50/top100 SVD or full affine/local-gain sweeps unless explicitly requested.
+- It also carried forward the then-accepted coverage policy: record all available metrics and write explicit partial-coverage notes for missing expensive artifacts. This policy was updated later the same day for Burgers after the user explicitly requested resolving the top50/top100 SVD and affine/local-gain gaps from existing artifacts.
 
 Remaining work:
 - Run this prompt on DarcyFlow/data flow artifacts when the user starts that experiment/audit.
@@ -14563,3 +14563,147 @@ Evidence:
 Interpretation:
 - The remaining random extension is not a zero-to-3500 rerun. It is a
   3000-to-3500 continuation from checkpoints that include optimizer state.
+
+## 2026-06-14 - Burgers attack-52 protocol recheck
+
+Status: audited a contradiction between the ranked 52-dataset attack table and the latest dense attack panels; no training, attack, SVD, or plot generation was rerun.
+
+Observed evidence:
+- Ranked attack table: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/attack_52dataset_metric_long_ranked.csv`.
+- Recovered attack builder: `tools/recover_burgers_prior_metrics_into_solver7860_audit_20260614.py`.
+- Old-four full-52 source: `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608/summary_by_model_dataset.csv`.
+- Current random full-52 source: `forensics/burgers_random_solver7860_clean8000_full_suite_20260614/p2q2_attack/summary_by_model_dataset.csv`.
+- Latest dense trace source: `forensics/burgers_wideparam_loss123_randomsolver7860_clean8000_round00_p2q2_six_model_visuals_20260614/group*/attack_loss_curves_all_six_models.csv`.
+- Dense metadata: `forensics/burgers_wideparam_loss123_randomsolver7860_clean8000_round00_p2q2_six_model_visuals_20260614/group00/six_model_summary.json`.
+
+Findings:
+- The recovered 52-dataset attack appendix is a mixed historical table, not a strict latest six-model same-protocol full-52 attack rerun.
+- Its old-four rows come from the old `20step` full-52 source and map `loss3` from `loss3_epoch1500`; the latest dense panels label and use `loss3 e1000`.
+- On the mixed recovered table, `random_solver_y` has lower mean attack increase than old `loss3_epoch1500` (`0.008167` vs `0.040146` over all 52; `0.008381` vs `0.041718` over generalization 50), but that should not be presented as a latest `loss3 e1000` full-52 conclusion.
+- Even in the mixed recovered table, `loss3` beats `random_solver_y` by dataset count on attack increase: 35/52 all datasets and 33/50 generalization datasets. The mean is dominated by 17 large old-loss3 Gaussian/Matern outliers.
+- On the latest dense visual trace set using `loss3 e1000`, pooled 36 row occurrences show `loss3` lower than `random_solver_y` on mean attack increase (`0.003685` vs `0.007188`), and `loss3` wins 31/36 row occurrences.
+
+Conclusion:
+- The statement "random_solver_y is significantly more robust than latest loss3 e1000 on the full 52-dataset attack suite" is not currently evidenced by a same-protocol full-52 artifact.
+- Correct wording is that the mixed recovered historical 52-dataset table favors `random_solver_y` by mean against old `loss3_epoch1500`, while latest dense and 25-sample robustness evidence favors `loss3 e1000`.
+- Added `docs/burgers_attack52_protocol_recheck_20260614.md` to record the corrected interpretation and recommended report wording.
+
+## 2026-06-14 - Burgers robustness numeric snapshot
+
+Status: generated a compact numeric snapshot of the 25-sample robustness/SVD tables after the user asked for concrete data instead of conceptual explanations; no training, attack, Jacobian, SVD, or plotting job was rerun.
+
+Observed source tables:
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/metric_model_summary_ranked.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/metric_best_summary_ranked.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/metric_loss3_vs_other_significance_tests.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/correlations_with_attack_sorted.csv`.
+
+Generated files:
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/robustness_numeric_snapshot_20260614/robustness_all_25sample_54metric_model_means.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/robustness_numeric_snapshot_20260614/robustness_core_numeric_table.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/robustness_numeric_snapshot_20260614/svd_error_spectrum_topk_model_means.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/robustness_numeric_snapshot_20260614/svd_error_spectrum_rank1_to_rank20_model_means.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/robustness_numeric_snapshot_20260614/loss3_vs_random_solver_selected_tests.csv`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_robustness_numeric_snapshot_20260614.md`.
+- `docs/burgers_robustness_numeric_snapshot_20260614.md`.
+
+Key observed numbers:
+- In `robustness_all_25sample`, the 54 metric best-model counts are `loss3=34`, `random_solver_y=11`, `random_clean_y=5`, `baseline=3`, and `loss1=1`; significant best counts are `loss3=28`, `random_solver_y=11`, `random_clean_y=3`, `baseline=1`.
+- On the selected 20 core quality/mechanism metrics, `loss3` is best on all 20. Sixteen of those 20 are significant at the stored FDR-q threshold; the non-significant mean-best rows are `error_effective_rank`, `error_spectral_norm`, `model_solver_top1_right_abs_cos`, and `model_solver_top5_right_subspace_mean_cos`.
+- `loss3` versus `random_solver_y` on key 25-sample rows: attack final MSE `0.003419` vs `0.008745`, q `3.24e-06`; attack loss increase `0.003166` vs `0.008003`, q `6.56e-06`; clean residual MSE `0.0002439` vs `0.0007127`, q `0.00449`; clean residual L2 `0.4119` vs `0.6372`, q `0.00204`; `J_error^T error` L2 `0.1120` vs `0.3712`, q `0.000383`; error Frobenius norm `1.8985` vs `2.5122`, q `0.00504`.
+- SVD error spectrum top-k rows: `loss3` is mean-best on all exported top-k rows; top1 has q `0.0570` and is not significant, while top5/top10/top20 rows are significant.
+- Follow-up clarification after user challenge: generated `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/robustness_numeric_snapshot_20260614/robustness_all_25sample_non_loss3_best_rows.csv`, isolating the 20 robustness rows where `loss3` is not best. These are primarily old4-only, random-only, direction-cosine, or perturbation/budget/process fields, explaining why the selected core quality table showed loss3-best rows while the full 54-metric count had non-loss3 winners.
+
+## 2026-06-14 - Burgers metric integrity re-audit after correction
+
+Status: performed a table-level integrity re-audit after the user challenged the incorrect/misleading mixed attack-52 interpretation; no training, attack, Jacobian, SVD, plotting, upload, or git push was run.
+
+Source script and outputs:
+- Added `tools/audit_burgers_metric_tables_20260614.py`.
+- Generated `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/integrity_audit_20260614/`.
+- Generated `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_metric_integrity_audit_20260614.md`.
+- Mirrored the report to `docs/burgers_metric_integrity_audit_20260614.md`.
+- Copied the integrity audit and robustness numeric snapshot into `outputs/burgers_solver7860_clean8000_organized_release_20260614/00_start_here/`.
+
+Hard checks:
+- Recomputed `1334` model-summary means from the ranked long tables: `0` failures after fixing the audit script's rank-by-rank SVD metric-name mapping.
+- Recomputed `273` best-model rows from model-summary means: `0` best-model failures and `0` best-mean failures.
+- Verified the selected-worktime attack table contains only `baseline`, `random_clean_y`, and `random_solver_y`.
+- Verified the recovered attack-52 ranked source contains all six models, but is mixed-source: old-four rows from `r2_first_master_old4_52dataset_20step`, random rows from `solver7860_clean8000_random_52dataset_current`.
+
+Additional correction:
+- Classified the 54 robustness metrics by comparability: `28` six-model-common, `14` old-four-only, and `12` random-only.
+- Updated `docs/burgers_all_metric_ranked_tables_20260614.md`, the output report copy, and the organized-release copy with a robustness comparability caveat.
+- Updated `docs/burgers_robustness_numeric_snapshot_20260614.md` and the output report copy with the same comparability note.
+
+Current interpretation after re-audit:
+- The numeric tables are internally consistent with their ranked long-table sources.
+- The remaining risk is not arithmetic in the generated ranked tables; it is protocol interpretation. The full-52 attack appendix is mixed historical evidence and must not be used as a strict latest `loss3 e1000` versus `random_solver_y e7860` claim.
+- The 54 robustness metric count must not be used as a clean scoreboard without first separating six-model-common, old-four-only, and random-only fields.
+
+## 2026-06-14 - Burgers full data bundle integrity audit
+
+Status: added and ran a broader full-data-bundle audit after the user requested a careful recheck of the aggregate data folder; no training, attack, Jacobian, SVD, plotting, upload, or git push was run.
+
+Source script and outputs:
+- Added `tools/audit_burgers_full_data_bundle_20260614.py`.
+- Generated `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/full_data_bundle_integrity_audit_20260614/`.
+- Generated `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_full_data_bundle_integrity_audit_20260614.md`.
+- Mirrored the report to `docs/burgers_full_data_bundle_integrity_audit_20260614.md`.
+- Copied the full audit outputs into `outputs/burgers_solver7860_clean8000_organized_release_20260614/01_summary_tables/10_integrity_and_numeric_audits_20260614/` and `00_start_here/`.
+
+Hard checks:
+- Parsed `1617` generated data files under the audit data bundle (`csv`, `json`, `jsonl`, `md`, `npz`, `png`, and `txt`): `0` parse failures.
+- Verified expected row counts and model/split coverage for clean 52-dataset, selected/recovered attack 52-dataset, 25-sample robustness, SVD top20/top-k, singular-value reference, summary, and significance-test tables: `0` shape failures.
+- Recomputed all clean best-model fields in `clean_52dataset_six_models_selected_worktime.csv`: `0` failures.
+- Recomputed clean generalization model summary statistics from the 50 generalization rows: `0` failures.
+- Rechecked ranked long-table rank/best/runner-up consistency for clean, attack, robustness, SVD top20, and SVD top-k tables: `0` failures. Fully NaN groups for one known train sample's delta/J-error-delta fields are treated as coverage gaps only because rank/best fields are blank.
+- Recomputed `metric_best_summary_ranked.csv` against `metric_model_summary_ranked.csv`: `0` failures.
+- Recomputed `metric_model_summary_ranked.csv` means and sample counts from ranked long tables, including the special SVD rank-by-rank and top20-all mappings: `0` failures.
+- Verified required caveats are present in the ranked reports: `0` documentation-caveat failures.
+- Verified selected organized-release copies by SHA256, including the new integrity/numeric/full-audit folder: `0` copy failures.
+
+Current interpretation:
+- The generated Burgers aggregate data tables are internally consistent under the audited invariants.
+- The audit does not remove the two evidence-boundary caveats: the recovered full-52 attack table is mixed-source historical evidence, and the 54 robustness metrics must be split by comparability class before using best-model counts as evidence.
+
+## 2026-06-14 - Burgers R2 gap resolution and supplement re-audit
+
+Status: resolved the two previously overstated "missing" coverage gaps and rebuilt the ranked tables, reports, organized release, and audits; no training, attack generation, or Jacobian generation was rerun.
+
+Observed evidence:
+- R2 selected-prefix live search cache: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/r2_live_gap_search_20260614/`.
+- R2 high-priority manifest: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/r2_live_gap_search_20260614/r2_high_priority_listing_manifest.tsv`.
+- Random stored Jacobian source: `forensics/burgers_random_solver7860_clean8000_full_suite_20260614/jacobian_svd/`.
+- Top100 supplement source/output script: `tools/build_burgers_random_top100_svd_supplement_20260614.py`.
+- Random affine supplement source/output script: `tools/build_burgers_random_affine_direction_supplement_20260614.py`.
+- Ranked table builder updated: `tools/build_burgers_all_metric_ranked_tables_20260614.py`.
+- Audit scripts updated: `tools/audit_burgers_metric_tables_20260614.py` and `tools/audit_burgers_full_data_bundle_20260614.py`.
+- Organized release builder updated: `tools/organize_burgers_solver7860_clean8000_release_20260614.py`.
+
+Generated/updated outputs:
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/random_top100_svd_supplement_20260614/`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/random_affine_direction_supplement_20260614/`.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/` now contains 20 CSV files, including the top100 and random-affine supplement ranked long tables.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_r2_live_gap_resolution_20260614.md`.
+- `docs/burgers_r2_live_gap_resolution_20260614.md`.
+- `docs/burgers_all_metric_ranked_tables_20260614.md` now contains explicit Attack-52, robustness comparability, corrected top100 supplement, and random-affine supplement caveats.
+- `outputs/burgers_solver7860_clean8000_organized_release_20260614/` rebuilt with 2230 files and 0 missing expected inputs; supplement data live under `01_summary_tables/10_integrity_and_numeric_audits_20260614/`.
+
+Key observed results:
+- R2 high-priority search listed 15 recursive candidate directories, 1375 objects, and about 4.47 GB of listed high-priority artifacts. Secrets were not written to repository files.
+- The random top50/top100 SVD gap was not a raw-data gap: random exports had only top20 SVD values, but also stored full `1024 x 1024` Jacobian matrices. Top100 SVD was derived from those saved matrices only.
+- Top100 six-model error-spectrum supplement: `loss3` is mean-best on `error_singular_value_top100_all`, top50/top100 mean, and top50/top100 L2; `loss3` vs `random_solver_y` is significant for top100 mean (`q=2.57e-04`) and top100 L2 (`q=0.00418`) in the rebuilt table.
+- Top50/top100 model-solver subspace supplement is not a blanket loss3 proof: `random_solver_y` is mean-best on top100 left/right and top50 left; `loss3` remains best on top5/top10/top20 and top50 right.
+- Random affine/local-gain supplement was rebuilt from existing checkpoints and stored Jacobians. The residual vector was recomputed by model forward because only residual norms/MSE were stored. Attack-delta cosine has 24 pairs per random model because `sample_id=4` is outside the saved attack trace manifest.
+- Random affine supplement examples: `random_solver_y` is better than `random_clean_y` on `affine_local_gain_eps_mse` (`0.0560` vs `0.2799`, q `3.40e-07`), `bias_gradient_norm` (`0.371` vs `4.785`, q `9.66e-08`), and `error_fro_norm` (`2.512` vs `7.225`, q `9.53e-11`).
+
+Hard checks after rebuild:
+- Metric integrity audit: `1522` model-summary rows recomputed with `0` failures; `321` best-model rows recomputed with `0` failures.
+- Robustness comparability classes after adding supplements: `28` six-model-common, `14` old4-only, and `12` random-only metrics.
+- Full bundle audit final result: `overall_pass=true`; parsed `1772` files with `0` parse failures, `0` shape failures, `0` ranked failures, `0` summary failures, `0` model-summary failures, `0` docs failures, and `0` organized-copy failures.
+- SHA256 spot checks confirmed organized copies match current source reports and full audit summary.
+
+Current interpretation:
+- The previous statement that random top50/top100 SVD and random affine/local-gain were simply "not found" is corrected. They are now recorded as supplements derived from existing local/R2 artifacts, not as reruns.
+- The evidence boundary still matters: the full 52-dataset six-model attack table is mixed-source historical evidence, while latest dense panels and selected 25-sample robustness/SVD provide the latest direct comparisons.

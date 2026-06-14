@@ -1,6 +1,6 @@
 # Burgers All-Metric Ranked Tables
 
-Generated: 2026-06-14T09:42:10+00:00
+Generated: 2026-06-14T11:17:59+00:00
 
 This report is generated from already completed Burgers solver7860/clean8000 audit tables. No training, attack, Jacobian, or SVD computation was rerun.
 
@@ -14,31 +14,44 @@ The complete machine-readable tables are in `data/ranked_metric_tables_20260614/
 - `data/ranked_metric_tables_20260614/clean_52dataset_metric_long_ranked.csv`: 936 rows, 21 columns
 - `data/ranked_metric_tables_20260614/correlations_with_attack_sorted.csv`: 56 rows, 14 columns
 - `data/ranked_metric_tables_20260614/existing_paired_tests_loss3_vs_other_models.csv`: 130 rows, 19 columns
-- `data/ranked_metric_tables_20260614/metric_best_summary_ranked.csv`: 273 rows, 20 columns
-- `data/ranked_metric_tables_20260614/metric_best_vs_other_significance_tests.csv`: 1061 rows, 25 columns
-- `data/ranked_metric_tables_20260614/metric_loss3_vs_other_significance_tests.csv`: 1013 rows, 26 columns
-- `data/ranked_metric_tables_20260614/metric_model_summary_ranked.csv`: 1334 rows, 39 columns
+- `data/ranked_metric_tables_20260614/metric_best_summary_ranked.csv`: 321 rows, 20 columns
+- `data/ranked_metric_tables_20260614/metric_best_vs_other_significance_tests.csv`: 1201 rows, 25 columns
+- `data/ranked_metric_tables_20260614/metric_loss3_vs_other_significance_tests.csv`: 1128 rows, 26 columns
+- `data/ranked_metric_tables_20260614/metric_model_summary_ranked.csv`: 1522 rows, 39 columns
 - `data/ranked_metric_tables_20260614/metric_pairwise_correlations_sorted.csv`: 220 rows, 12 columns
 - `data/ranked_metric_tables_20260614/model_level_scalar_ranked.csv`: 306 rows, 15 columns
+- `data/ranked_metric_tables_20260614/model_solver_subspace_top100_supplement_ranked_long.csv`: 1500 rows, 15 columns
 - `data/ranked_metric_tables_20260614/per_sample_model_rank_similarity_summary.csv`: 10 rows, 8 columns
+- `data/ranked_metric_tables_20260614/random_affine_direction_supplement_metric_long_ranked.csv`: 1250 rows, 18 columns
 - `data/ranked_metric_tables_20260614/random_partial_metric_coverage_notes.csv`: 9 rows, 7 columns
 - `data/ranked_metric_tables_20260614/robustness_25sample_metric_long_ranked.csv`: 8100 rows, 17 columns
 - `data/ranked_metric_tables_20260614/singular_values_top20_model_solver_reference.csv`: 3500 rows, 8 columns
+- `data/ranked_metric_tables_20260614/svd_error_top100_supplement_ranked_long.csv`: 15000 rows, 18 columns
 - `data/ranked_metric_tables_20260614/svd_error_top20_ranked_long.csv`: 3000 rows, 19 columns
 - `data/ranked_metric_tables_20260614/svd_error_topk_ranked_long.csv`: 1200 rows, 17 columns
+- `data/ranked_metric_tables_20260614/svd_error_topk_top100_supplement_ranked_long.csv`: 1800 rows, 15 columns
+
+## Attack-52 Protocol Caveat
+
+The strict selected-worktime 52-dataset attack table contains baseline, random_clean_y, and random_solver_y only. The recovered six-model 52-dataset attack table is mixed source: baseline/loss1/loss2/loss3 are from the historical old4 full-52 20-step run, while random_clean_y/random_solver_y are from the solver7860/clean8000 random suite. Use the source columns before making strict protocol claims.
+
+## Robustness Metric Comparability Caveat
+
+The 25-sample robustness/Jacobian/SVD tables mix six-model-common metrics, old4-only historical metrics, random-only supplement metrics, and mechanism diagnostics. The phrase `six-model-common` means all six models have finite paired values under the same table scope; old4-only and random-only supplement rows should be interpreted in their own scopes.
+
 
 ## Best Model By Metric
 
 | family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| attack_robustness_52dataset | attack_all_52dataset | attack_loss_increase_mean | lower | **random_solver_y** | 52 | 0.008167 | 0.00435 | loss2 | 0.03678 | 0.02862 | 0.0016 | 0.0033 | True |
-| attack_robustness_52dataset | attack_all_52dataset | final_delta_rms_mean | lower | **random_clean_y** | 52 | 0.1171 | 0.004473 | loss3 | 0.1199 | 0.00279 | 1.79e-05 | 5.39e-05 | True |
-| attack_robustness_52dataset | attack_all_52dataset | final_loss_mean | lower | **random_solver_y** | 52 | 0.008655 | 0.004796 | random_clean_y | 0.04701 | 0.03836 | 8.02e-31 | 1.10e-28 | True |
-| attack_robustness_52dataset | attack_all_52dataset | initial_loss_mean | lower | **random_solver_y** | 52 | 4.8804e-04 | 4.9857e-04 | random_clean_y | 0.009854 | 0.009366 | 1.64e-18 | 6.55e-17 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | attack_loss_increase_mean | lower | **random_solver_y** | 50 | 0.008381 | 0.004298 | random_clean_y | 0.03694 | 0.02856 | 4.68e-33 | 8.98e-31 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | final_delta_rms_mean | lower | **random_clean_y** | 50 | 0.1171 | 0.004552 | loss3 | 0.1199 | 0.002852 | 2.37e-05 | 7.02e-05 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | final_loss_mean | lower | **random_solver_y** | 50 | 0.008889 | 0.004743 | random_clean_y | 0.04705 | 0.03816 | 2.14e-29 | 2.05e-27 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | initial_loss_mean | lower | **random_solver_y** | 50 | 5.0754e-04 | 4.9862e-04 | random_clean_y | 0.01011 | 0.009606 | 1.35e-18 | 5.65e-17 | True |
+| attack_robustness_52dataset | attack_all_52dataset | attack_loss_increase_mean | lower | **random_solver_y** | 52 | 0.008167 | 0.00435 | loss2 | 0.03678 | 0.02862 | 0.0016 | 0.0030 | True |
+| attack_robustness_52dataset | attack_all_52dataset | final_delta_rms_mean | lower | **random_clean_y** | 52 | 0.1171 | 0.004473 | loss3 | 0.1199 | 0.00279 | 1.79e-05 | 4.81e-05 | True |
+| attack_robustness_52dataset | attack_all_52dataset | final_loss_mean | lower | **random_solver_y** | 52 | 0.008655 | 0.004796 | random_clean_y | 0.04701 | 0.03836 | 8.02e-31 | 8.01e-29 | True |
+| attack_robustness_52dataset | attack_all_52dataset | initial_loss_mean | lower | **random_solver_y** | 52 | 4.8804e-04 | 4.9857e-04 | random_clean_y | 0.009854 | 0.009366 | 1.64e-18 | 5.15e-17 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | attack_loss_increase_mean | lower | **random_solver_y** | 50 | 0.008381 | 0.004298 | random_clean_y | 0.03694 | 0.02856 | 4.68e-33 | 5.72e-31 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | final_delta_rms_mean | lower | **random_clean_y** | 50 | 0.1171 | 0.004552 | loss3 | 0.1199 | 0.002852 | 2.37e-05 | 6.30e-05 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | final_loss_mean | lower | **random_solver_y** | 50 | 0.008889 | 0.004743 | random_clean_y | 0.04705 | 0.03816 | 2.14e-29 | 1.68e-27 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | initial_loss_mean | lower | **random_solver_y** | 50 | 5.0754e-04 | 4.9862e-04 | random_clean_y | 0.01011 | 0.009606 | 1.35e-18 | 4.38e-17 | True |
 | attack_robustness_52dataset | attack_test_1dataset | attack_loss_increase_mean | lower | **loss3** | 1 | 8.7678e-04 | 0 | loss1 | 0.00147 | 5.9312e-04 | NA | NA | False |
 | attack_robustness_52dataset | attack_test_1dataset | final_delta_rms_mean | lower | **random_clean_y** | 1 | 0.1185 | 0 | loss3 | 0.1199 | 0.001305 | NA | NA | False |
 | attack_robustness_52dataset | attack_test_1dataset | final_loss_mean | lower | **loss3** | 1 | 8.9728e-04 | 0 | loss1 | 0.001471 | 5.7340e-04 | NA | NA | False |
@@ -47,223 +60,223 @@ The complete machine-readable tables are in `data/ranked_metric_tables_20260614/
 | attack_robustness_52dataset | attack_train_1dataset | final_delta_rms_mean | lower | **random_clean_y** | 1 | 0.1189 | 0 | loss2 | 0.12 | 0.001144 | NA | NA | False |
 | attack_robustness_52dataset | attack_train_1dataset | final_loss_mean | lower | **loss3** | 1 | 8.4666e-04 | 0 | loss1 | 0.00126 | 4.1350e-04 | NA | NA | False |
 | attack_robustness_52dataset | attack_train_1dataset | initial_loss_mean | lower | **random_solver_y** | 1 | 4.3397e-07 | 0 | loss1 | 5.9293e-07 | 1.5896e-07 | NA | NA | False |
-| clean_generalization | clean_all_52dataset | mse | lower | **loss3** | 52 | 1.9093e-04 | 1.7874e-04 | random_solver_y | 4.8804e-04 | 2.9710e-04 | 1.41e-08 | 7.21e-08 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | **loss3** | 52 | 0.02305 | 0.01321 | random_solver_y | 0.0342 | 0.01115 | 1.82e-10 | 1.21e-09 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | **loss3** | 52 | 0.01175 | 0.005412 | random_solver_y | 0.01749 | 0.005742 | 5.23e-11 | 3.77e-10 | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | **loss3** | 50 | 1.9777e-04 | 1.7891e-04 | random_solver_y | 5.0754e-04 | 3.0976e-04 | 1.00e-08 | 5.32e-08 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | **loss3** | 50 | 0.02364 | 0.01313 | random_solver_y | 0.03551 | 0.01187 | 1.85e-11 | 1.39e-10 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | **loss3** | 50 | 0.01205 | 0.005304 | random_solver_y | 0.01817 | 0.006117 | 3.92e-12 | 3.16e-11 | True |
+| clean_generalization | clean_all_52dataset | mse | lower | **loss3** | 52 | 1.9093e-04 | 1.7874e-04 | random_solver_y | 4.8804e-04 | 2.9710e-04 | 1.41e-08 | 6.61e-08 | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | **loss3** | 52 | 0.02305 | 0.01321 | random_solver_y | 0.0342 | 0.01115 | 1.82e-10 | 1.12e-09 | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | **loss3** | 52 | 0.01175 | 0.005412 | random_solver_y | 0.01749 | 0.005742 | 5.23e-11 | 3.42e-10 | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | **loss3** | 50 | 1.9777e-04 | 1.7891e-04 | random_solver_y | 5.0754e-04 | 3.0976e-04 | 1.00e-08 | 4.84e-08 | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | **loss3** | 50 | 0.02364 | 0.01313 | random_solver_y | 0.03551 | 0.01187 | 1.85e-11 | 1.25e-10 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | **loss3** | 50 | 0.01205 | 0.005304 | random_solver_y | 0.01817 | 0.006117 | 3.92e-12 | 2.84e-11 | True |
 | clean_generalization | clean_test_1dataset | mse | lower | **random_solver_y** | 1 | 5.7009e-07 | 0 | loss1 | 7.7743e-07 | 2.0734e-07 | NA | NA | False |
 | clean_generalization | clean_test_1dataset | relative_l2 | lower | **random_solver_y** | 1 | 0.001379 | 0 | loss1 | 0.001612 | 2.3258e-04 | NA | NA | False |
 | clean_generalization | clean_test_1dataset | rmse | lower | **random_solver_y** | 1 | 7.2826e-04 | 0 | loss1 | 8.3626e-04 | 1.0800e-04 | NA | NA | False |
 | clean_generalization | clean_train_1dataset | mse | lower | **random_solver_y** | 1 | 4.4153e-07 | 0 | loss1 | 5.9900e-07 | 1.5747e-07 | NA | NA | False |
 | clean_generalization | clean_train_1dataset | relative_l2 | lower | **random_solver_y** | 1 | 0.001231 | 0 | loss1 | 0.001447 | 2.1539e-04 | NA | NA | False |
 | clean_generalization | clean_train_1dataset | rmse | lower | **random_solver_y** | 1 | 6.4221e-04 | 0 | loss1 | 7.4693e-04 | 1.0471e-04 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | affine_local_gain_eps_mse | lower | **loss3** | 25 | 0.03274 | 0.0506 | loss1 | 0.06187 | 0.02913 | 0.0014 | 0.0029 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_left_subspace_mean_cos | higher | **random_solver_y** | 25 | 0.5709 | 0.03354 | loss3 | 0.5586 | 0.01231 | 0.1494 | 0.1646 | False |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_right_subspace_mean_cos | higher | **random_solver_y** | 25 | 0.4604 | 0.01963 | loss3 | 0.4497 | 0.01074 | 0.0171 | 0.0264 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9335 | 0.06611 | random_solver_y | 0.8543 | 0.07921 | 3.66e-05 | 9.02e-05 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9579 | 0.04259 | loss1 | 0.9114 | 0.04658 | 3.34e-05 | 8.31e-05 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9433 | 0.03939 | random_solver_y | 0.9141 | 0.02918 | 0.0001 | 0.0002 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 25 | 0.8866 | 0.06892 | random_solver_y | 0.8315 | 0.05513 | 6.78e-08 | 2.79e-07 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_left_subspace_mean_cos | higher | **random_solver_y** | 25 | 0.7541 | 0.06021 | loss3 | 0.7331 | 0.02102 | 0.0274 | 0.0395 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 25 | 0.5992 | 0.0444 | random_solver_y | 0.59 | 0.009196 | 0.0906 | 0.1088 | False |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 25 | 0.8979 | 0.1075 | random_solver_y | 0.8348 | 0.06314 | 0.0038 | 0.0066 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9364 | 0.08524 | loss2 | 0.9244 | 0.01199 | 0.2237 | 0.2364 | False |
+| random_affine_direction_supplement | random_affine_25sample | affine_local_gain_eps_linear_mse | lower | **random_solver_y** | 25 | 7.2671e-04 | 0.001558 | random_clean_y | 0.02374 | 0.02301 | 5.46e-07 | 1.93e-06 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_local_gain_eps_mse | lower | **random_solver_y** | 25 | 0.05601 | 0.072 | random_clean_y | 0.2799 | 0.2239 | 8.55e-08 | 3.40e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_local_gain_eps_quadratic_mse | lower | **random_solver_y** | 25 | 0.05529 | 0.07107 | random_clean_y | 0.2562 | 0.2009 | 2.01e-07 | 7.54e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_over_outward_gain_ratio | lower | **random_clean_y** | 25 | 1.453 | 0.3533 | random_solver_y | 4.46 | 3.008 | 2.79e-06 | 8.84e-06 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_over_svd_gain_ratio | lower | **random_solver_y** | 25 | 1.001 | 0.001489 | random_clean_y | 1.009 | 0.007464 | 0.0009 | 0.0017 | True |
+| random_affine_direction_supplement | random_affine_25sample | attack_delta_affine_eps_abs_cos | higher | **random_clean_y** | 24 | 0.4187 | 0.2477 | random_solver_y | 0.1571 | 0.2616 | 5.72e-05 | 0.0001 | True |
+| random_affine_direction_supplement | random_affine_25sample | attack_delta_outward_abs_cos | higher | **random_solver_y** | 24 | 0.7477 | 0.1533 | random_clean_y | 0.6155 | 0.1322 | 0.0143 | 0.0227 | True |
+| random_affine_direction_supplement | random_affine_25sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | random_solver_y | 0.1428 | 0.2507 | 3.85e-05 | 9.38e-05 | True |
+| random_affine_direction_supplement | random_affine_25sample | bias_gradient_norm | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 9.66e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | clean_residual_mse_recomputed | lower | **random_solver_y** | 25 | 7.1266e-04 | 0.001083 | random_clean_y | 0.008772 | 0.008059 | 1.30e-06 | 4.35e-06 | True |
+| random_affine_direction_supplement | random_affine_25sample | clean_residual_norm_l2 | lower | **random_solver_y** | 25 | 0.6372 | 0.5807 | random_clean_y | 2.75 | 2.113 | 3.40e-09 | 1.75e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | error_effective_rank | lower | **random_clean_y** | 25 | 7.277 | 1.66 | random_solver_y | 9.173 | 1.896 | 0.0470 | 0.0629 | False |
+| random_affine_direction_supplement | random_affine_25sample | error_fro_norm | lower | **random_solver_y** | 25 | 2.512 | 1.749 | random_clean_y | 7.225 | 4.713 | 1.38e-11 | 9.53e-11 | True |
+| random_affine_direction_supplement | random_affine_25sample | error_spectral_norm | lower | **random_solver_y** | 25 | 1.553 | 1.221 | random_clean_y | 4.131 | 2.579 | 1.73e-08 | 7.98e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_affine_eps_abs_cos | higher | **random_clean_y** | 25 | 0.6601 | 0.2072 | random_solver_y | 0.2493 | 0.4108 | 2.41e-07 | 8.96e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_local_gain_eps_linear_mse | lower | **random_solver_y** | 25 | 0.002784 | 0.003158 | random_clean_y | 0.03589 | 0.0331 | 2.15e-08 | 9.66e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_local_gain_eps_mse | lower | **random_solver_y** | 25 | 0.0148 | 0.02711 | random_clean_y | 0.2042 | 0.1894 | 4.31e-09 | 2.18e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_local_gain_eps_quadratic_mse | lower | **random_solver_y** | 25 | 0.01202 | 0.02506 | random_clean_y | 0.1684 | 0.1563 | 1.76e-08 | 8.08e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_affine_eps_abs_angle_deg | lower | **random_solver_y** | 25 | 2.983 | 3.382 | random_clean_y | 7.692 | 4.709 | 0.0013 | 0.0024 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_affine_eps_abs_cos | higher | **random_solver_y** | 25 | 0.997 | 0.008738 | random_clean_y | 0.9851 | 0.01192 | 0.0091 | 0.0150 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_local_gain_eps_linear_mse | lower | **random_solver_y** | 25 | 6.3976e-04 | 0.001549 | random_clean_y | 0.02011 | 0.01947 | 6.87e-06 | 2.02e-05 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_local_gain_eps_mse | lower | **random_solver_y** | 25 | 0.05597 | 0.07197 | random_clean_y | 0.278 | 0.222 | 1.00e-07 | 3.98e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_local_gain_eps_quadratic_mse | lower | **random_solver_y** | 25 | 0.05533 | 0.0711 | random_clean_y | 0.2579 | 0.2025 | 1.73e-07 | 6.66e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_outward_abs_angle_deg | lower | **random_clean_y** | 25 | 53.44 | 20.07 | random_solver_y | 76.71 | 23.27 | 9.24e-05 | 0.0002 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_outward_abs_cos | higher | **random_clean_y** | 25 | 0.5604 | 0.2678 | random_solver_y | 0.2113 | 0.3491 | 2.57e-05 | 6.77e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | affine_local_gain_eps_mse | lower | **loss3** | 25 | 0.03274 | 0.0506 | loss1 | 0.06187 | 0.02913 | 0.0014 | 0.0027 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | atb_norm | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 25 | 0.3405 | 0.3 | loss1 | 0.2266 | 0.1139 | 0.0597 | 0.0798 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_outward_abs_cos | higher | **loss1** | 25 | 0.8031 | 0.07435 | loss2 | 0.7987 | 0.004342 | 0.3961 | 0.4019 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0470 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_delta_rms | lower | **random_clean_y** | 24 | 0.1198 | 7.6345e-04 | loss1 | 0.12 | 1.5583e-04 | 0.1639 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | **loss3** | 25 | 0.003307 | 0.002897 | loss2 | 0.006479 | 0.003172 | 2.98e-07 | 1.22e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_initial_mse | lower | **loss3** | 25 | 2.4392e-04 | 3.6898e-04 | random_solver_y | 7.4232e-04 | 4.9839e-04 | 0.0019 | 0.0038 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | **loss3** | 25 | 0.003063 | 0.0026 | loss2 | 0.005623 | 0.00256 | 1.21e-06 | 4.57e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 25 | 0.3405 | 0.3 | loss1 | 0.2266 | 0.1139 | 0.0597 | 0.0770 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_outward_abs_cos | higher | **loss1** | 25 | 0.8031 | 0.07435 | loss2 | 0.7987 | 0.004342 | 0.3961 | 0.4012 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0448 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_delta_rms | lower | **random_clean_y** | 24 | 0.1198 | 7.6345e-04 | loss1 | 0.12 | 1.5583e-04 | 0.1639 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | **loss3** | 25 | 0.003307 | 0.002897 | loss2 | 0.006479 | 0.003172 | 2.98e-07 | 1.09e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_initial_mse | lower | **loss3** | 25 | 2.4392e-04 | 3.6898e-04 | random_solver_y | 7.4232e-04 | 4.9839e-04 | 0.0019 | 0.0035 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | **loss3** | 25 | 0.003063 | 0.0026 | loss2 | 0.005623 | 0.00256 | 1.21e-06 | 4.07e-06 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_norm | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_norm_original_table | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_rms | lower | **loss3** | 25 | 0.003498 | 0.004014 | loss1 | 0.00987 | 0.006372 | 5.70e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | random_solver_y | 7.1266e-04 | 4.6878e-04 | 0.0021 | 0.0040 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | random_solver_y | 0.6372 | 0.2254 | 0.0009 | 0.0018 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_l2 | lower | **random_clean_y** | 24 | 3.835 | 0.02443 | random_solver_y | 3.84 | 0.004987 | 0.1639 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0470 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_effective_rank | lower | **loss3** | 25 | 6.373 | 3.456 | random_clean_y | 7.079 | 0.7058 | 0.0970 | 0.1171 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0045 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0045 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.502 | 0.6039 | 0.0026 | 0.0050 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 25 | 2.512 | 1.749 | random_clean_y | 7.225 | 4.713 | 1.38e-11 | 1.06e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0470 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_l2 | lower | **random_solver_y** | 24 | 2.091 | 1.531 | random_clean_y | 9.705 | 7.614 | 8.05e-11 | 5.55e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_rms | lower | **random_solver_y** | 24 | 0.06534 | 0.04783 | random_clean_y | 0.3033 | 0.2379 | 8.05e-11 | 5.55e-10 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | random_solver_y | 7.1266e-04 | 4.6878e-04 | 0.0021 | 0.0037 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | random_solver_y | 0.6372 | 0.2254 | 0.0009 | 0.0017 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_l2 | lower | **random_clean_y** | 24 | 3.835 | 0.02443 | random_solver_y | 3.84 | 0.004987 | 0.1639 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0448 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_effective_rank | lower | **loss3** | 25 | 6.373 | 3.456 | random_clean_y | 7.079 | 0.7058 | 0.0970 | 0.1146 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0042 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0042 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.502 | 0.6039 | 0.0026 | 0.0046 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 25 | 2.512 | 1.749 | random_clean_y | 7.225 | 4.713 | 1.38e-11 | 9.53e-11 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0448 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_l2 | lower | **random_solver_y** | 24 | 2.091 | 1.531 | random_clean_y | 9.705 | 7.614 | 8.05e-11 | 5.08e-10 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_rms | lower | **random_solver_y** | 24 | 0.06534 | 0.04783 | random_clean_y | 0.3033 | 0.2379 | 8.05e-11 | 5.08e-10 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_transpose_error_l2 | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_transpose_error_rms | lower | **loss3** | 25 | 0.003498 | 0.004014 | loss1 | 0.00987 | 0.006372 | 5.70e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 25 | 0.5586 | 0.05155 | loss2 | 0.5348 | 0.02375 | 0.0528 | 0.0721 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 25 | 0.4497 | 0.02535 | loss2 | 0.3324 | 0.1173 | 9.16e-17 | 2.21e-15 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9335 | 0.06611 | random_solver_y | 0.8545 | 0.07907 | 3.75e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9579 | 0.04259 | loss1 | 0.9114 | 0.04658 | 3.34e-05 | 9.19e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | **loss3** | 25 | 0.9131 | 0.2046 | loss1 | 0.8416 | 0.07153 | 0.0207 | 0.0331 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | **loss3** | 25 | 0.9601 | 0.168 | loss2 | 0.9401 | 0.02001 | 0.2941 | 0.3032 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9433 | 0.03939 | random_solver_y | 0.9143 | 0.02902 | 0.0001 | 0.0003 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 25 | 0.8866 | 0.06892 | random_solver_y | 0.8313 | 0.05532 | 6.40e-08 | 2.92e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 25 | 0.7331 | 0.0435 | loss2 | 0.5187 | 0.2144 | 1.74e-16 | 3.55e-15 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 25 | 0.5992 | 0.0444 | loss2 | 0.4257 | 0.1735 | 1.21e-15 | 2.04e-14 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 25 | 0.8979 | 0.1075 | random_solver_y | 0.8349 | 0.06301 | 0.0039 | 0.0072 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9364 | 0.08524 | loss2 | 0.9244 | 0.01199 | 0.2237 | 0.2381 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_spectral_norm | lower | **baseline** | 25 | 3.456 | 0.805 | loss3 | 3.605 | 0.1492 | 0.0096 | 0.0170 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | loss1 | 8.2306e-04 | 5.7918e-04 | 0.0012 | 0.0025 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | loss1 | 0.7142 | 0.3023 | 0.0001 | 0.0003 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | outward_local_gain_eps_mse | lower | **loss3** | 25 | 0.00509 | 0.006472 | loss1 | 0.009502 | 0.004413 | 0.0035 | 0.0066 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_norm | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 1.06e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 1.06e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 25 | 7.1266e-04 | 0.001083 | random_clean_y | 0.008772 | 0.008059 | 1.30e-06 | 4.90e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 25 | 0.6372 | 0.5807 | random_clean_y | 2.75 | 2.113 | 3.40e-09 | 1.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_rms | lower | **random_solver_y** | 25 | 0.01991 | 0.01815 | random_clean_y | 0.08595 | 0.06603 | 3.40e-09 | 1.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 1.06e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 1.06e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 25 | 0.5586 | 0.05155 | loss2 | 0.5348 | 0.02375 | 0.0528 | 0.0693 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 25 | 0.4497 | 0.02535 | loss2 | 0.3324 | 0.1173 | 9.16e-17 | 1.72e-15 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9335 | 0.06611 | random_solver_y | 0.8545 | 0.07907 | 3.75e-05 | 9.23e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9579 | 0.04259 | loss1 | 0.9114 | 0.04658 | 3.34e-05 | 8.31e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | **loss3** | 25 | 0.9131 | 0.2046 | loss1 | 0.8416 | 0.07153 | 0.0207 | 0.0312 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | **loss3** | 25 | 0.9601 | 0.168 | loss2 | 0.9401 | 0.02001 | 0.2941 | 0.3020 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9433 | 0.03939 | random_solver_y | 0.9143 | 0.02902 | 0.0001 | 0.0002 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 25 | 0.8866 | 0.06892 | random_solver_y | 0.8313 | 0.05532 | 6.40e-08 | 2.65e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 25 | 0.7331 | 0.0435 | loss2 | 0.5187 | 0.2144 | 1.74e-16 | 2.73e-15 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 25 | 0.5992 | 0.0444 | loss2 | 0.4257 | 0.1735 | 1.21e-15 | 1.59e-14 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 25 | 0.8979 | 0.1075 | random_solver_y | 0.8349 | 0.06301 | 0.0039 | 0.0067 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9364 | 0.08524 | loss2 | 0.9244 | 0.01199 | 0.2237 | 0.2364 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_spectral_norm | lower | **baseline** | 25 | 3.456 | 0.805 | loss3 | 3.605 | 0.1492 | 0.0096 | 0.0158 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | loss1 | 8.2306e-04 | 5.7918e-04 | 0.0012 | 0.0023 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | loss1 | 0.7142 | 0.3023 | 0.0001 | 0.0002 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | outward_local_gain_eps_mse | lower | **loss3** | 25 | 0.00509 | 0.006472 | loss1 | 0.009502 | 0.004413 | 0.0035 | 0.0061 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_norm | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 9.66e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 9.66e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 25 | 7.1266e-04 | 0.001083 | random_clean_y | 0.008772 | 0.008059 | 1.30e-06 | 4.35e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 25 | 0.6372 | 0.5807 | random_clean_y | 2.75 | 2.113 | 3.40e-09 | 1.75e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_rms | lower | **random_solver_y** | 25 | 0.01991 | 0.01815 | random_clean_y | 0.08595 | 0.06603 | 3.40e-09 | 1.75e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 9.66e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 9.66e-08 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | solver_spectral_norm | lower | **baseline** | 25 | 3.755 | 0.8226 | loss1 | 3.755 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | svd_local_gain_eps_mse | lower | **loss3** | 25 | 0.03273 | 0.05059 | loss1 | 0.06184 | 0.02911 | 0.0015 | 0.0029 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_singular_value | lower | **random_solver_y** | 25 | 1.553 | 1.221 | random_clean_y | 4.131 | 2.578 | 1.73e-08 | 8.73e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | affine_local_gain_eps_mse | lower | **loss3** | 21 | 0.03695 | 0.05434 | loss1 | 0.07344 | 0.0365 | 0.0006 | 0.0012 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | atb_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 21 | 0.334 | 0.2886 | loss1 | 0.1727 | 0.1614 | 0.0082 | 0.0147 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_outward_abs_cos | higher | **loss1** | 21 | 0.8155 | 0.07194 | baseline | 0.8039 | 0.0116 | 0.3336 | 0.3411 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1071 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_delta_rms | lower | **random_clean_y** | 21 | 0.1198 | 8.1616e-04 | loss1 | 0.12 | 1.7810e-04 | 0.1646 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | **loss3** | 21 | 0.003806 | 0.002904 | loss2 | 0.007405 | 0.003599 | 3.82e-07 | 1.55e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_initial_mse | lower | **loss3** | 21 | 2.8596e-04 | 3.8958e-04 | random_solver_y | 8.4831e-04 | 5.6235e-04 | 0.0017 | 0.0033 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | **loss3** | 21 | 0.00352 | 0.002595 | loss2 | 0.006387 | 0.002867 | 2.67e-06 | 9.61e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm_original_table | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | random_solver_y | 8.4831e-04 | 5.6240e-04 | 0.0017 | 0.0033 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | svd_local_gain_eps_mse | lower | **loss3** | 25 | 0.03273 | 0.05059 | loss1 | 0.06184 | 0.02911 | 0.0015 | 0.0027 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_singular_value | lower | **random_solver_y** | 25 | 1.553 | 1.221 | random_clean_y | 4.131 | 2.578 | 1.73e-08 | 7.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | affine_local_gain_eps_mse | lower | **loss3** | 21 | 0.03695 | 0.05434 | loss1 | 0.07344 | 0.0365 | 0.0006 | 0.0011 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | atb_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 21 | 0.334 | 0.2886 | loss1 | 0.1727 | 0.1614 | 0.0082 | 0.0137 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_outward_abs_cos | higher | **loss1** | 21 | 0.8155 | 0.07194 | baseline | 0.8039 | 0.0116 | 0.3336 | 0.3401 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1046 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_delta_rms | lower | **random_clean_y** | 21 | 0.1198 | 8.1616e-04 | loss1 | 0.12 | 1.7810e-04 | 0.1646 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | **loss3** | 21 | 0.003806 | 0.002904 | loss2 | 0.007405 | 0.003599 | 3.82e-07 | 1.38e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_initial_mse | lower | **loss3** | 21 | 2.8596e-04 | 3.8958e-04 | random_solver_y | 8.4831e-04 | 5.6235e-04 | 0.0017 | 0.0030 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | **loss3** | 21 | 0.00352 | 0.002595 | loss2 | 0.006387 | 0.002867 | 2.67e-06 | 8.59e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm_original_table | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | random_solver_y | 8.4831e-04 | 5.6240e-04 | 0.0017 | 0.0030 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_norm_l2 | lower | **loss3** | 21 | 0.4612 | 0.29 | random_solver_y | 0.7545 | 0.2933 | 0.0001 | 0.0003 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_l2 | lower | **random_clean_y** | 21 | 3.834 | 0.02612 | random_solver_y | 3.84 | 0.005699 | 0.1646 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1071 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_effective_rank | lower | **random_solver_y** | 21 | 7.086 | 2.554 | loss3 | 7.137 | 0.05165 | 0.4683 | 0.4743 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_l2 | lower | **random_clean_y** | 21 | 3.834 | 0.02612 | random_solver_y | 3.84 | 0.005699 | 0.1646 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1046 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_effective_rank | lower | **random_solver_y** | 21 | 7.086 | 2.554 | loss3 | 7.137 | 0.05165 | 0.4683 | 0.4735 | False |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm | lower | **loss3** | 21 | 2.078 | 1.005 | random_solver_y | 2.945 | 0.8671 | 8.11e-05 | 0.0002 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_comparable | lower | **loss3** | 21 | 2.078 | 1.005 | random_solver_y | 2.945 | 0.8671 | 8.11e-05 | 0.0002 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_original_reported | lower | **loss3** | 21 | 2.078 | 1.005 | random_solver_y | 2.934 | 0.8566 | 9.24e-05 | 0.0002 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 21 | 2.945 | 1.563 | random_clean_y | 7.317 | 4.372 | 2.19e-09 | 1.26e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0040 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1071 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_l2 | lower | **random_solver_y** | 21 | 2.365 | 1.437 | random_clean_y | 9.533 | 7.168 | 3.22e-09 | 1.83e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_rms | lower | **random_solver_y** | 21 | 0.0739 | 0.0449 | random_clean_y | 0.2979 | 0.224 | 3.22e-09 | 1.83e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_l2 | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 21 | 0.561 | 0.05118 | loss2 | 0.5288 | 0.03224 | 0.0252 | 0.0386 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 21 | 0.4488 | 0.02634 | loss2 | 0.3329 | 0.1159 | 9.85e-14 | 1.05e-12 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 21 | 0.9216 | 0.06564 | random_solver_y | 0.8268 | 0.09474 | 1.63e-05 | 4.99e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9501 | 0.04215 | loss1 | 0.8954 | 0.05476 | 2.39e-05 | 7.06e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | **loss3** | 21 | 0.8999 | 0.2216 | loss1 | 0.8114 | 0.08855 | 0.0162 | 0.0270 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | **loss3** | 21 | 0.9525 | 0.183 | loss2 | 0.929 | 0.02354 | 0.2973 | 0.3059 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 21 | 2.945 | 1.563 | random_clean_y | 7.317 | 4.372 | 2.19e-09 | 1.16e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0037 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1046 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_l2 | lower | **random_solver_y** | 21 | 2.365 | 1.437 | random_clean_y | 9.533 | 7.168 | 3.22e-09 | 1.69e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_rms | lower | **random_solver_y** | 21 | 0.0739 | 0.0449 | random_clean_y | 0.2979 | 0.224 | 3.22e-09 | 1.69e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_l2 | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 21 | 0.561 | 0.05118 | loss2 | 0.5288 | 0.03224 | 0.0252 | 0.0367 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 21 | 0.4488 | 0.02634 | loss2 | 0.3329 | 0.1159 | 9.85e-14 | 9.05e-13 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 21 | 0.9216 | 0.06564 | random_solver_y | 0.8268 | 0.09474 | 1.63e-05 | 4.44e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9501 | 0.04215 | loss1 | 0.8954 | 0.05476 | 2.39e-05 | 6.34e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | **loss3** | 21 | 0.8999 | 0.2216 | loss1 | 0.8114 | 0.08855 | 0.0162 | 0.0253 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | **loss3** | 21 | 0.9525 | 0.183 | loss2 | 0.929 | 0.02354 | 0.2973 | 0.3048 | False |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 21 | 0.9338 | 0.03562 | random_solver_y | 0.899 | 0.03483 | 5.74e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 21 | 0.8674 | 0.05716 | random_solver_y | 0.8031 | 0.06431 | 1.57e-08 | 7.97e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 21 | 0.7387 | 0.04516 | loss2 | 0.5215 | 0.2173 | 9.88e-14 | 1.05e-12 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 21 | 0.5908 | 0.04292 | loss2 | 0.4213 | 0.1695 | 9.82e-13 | 8.97e-12 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 21 | 0.8796 | 0.108 | random_solver_y | 0.8035 | 0.07606 | 0.0031 | 0.0059 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9244 | 0.08811 | loss2 | 0.9104 | 0.014 | 0.2292 | 0.2432 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_spectral_norm | lower | **baseline** | 21 | 3.284 | 0.7349 | loss2 | 3.444 | 0.1593 | 0.0396 | 0.0575 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | loss1 | 9.7973e-04 | 6.9382e-04 | 0.0009 | 0.0020 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_norm_l2 | lower | **loss3** | 21 | 0.4612 | 0.29 | loss1 | 0.8458 | 0.3847 | 9.50e-06 | 3.03e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | outward_local_gain_eps_mse | lower | **loss3** | 21 | 0.005953 | 0.006733 | loss1 | 0.01118 | 0.005226 | 0.0034 | 0.0064 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_norm | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.82e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.82e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 21 | 8.4831e-04 | 0.001134 | random_clean_y | 0.009469 | 0.00862 | 3.36e-06 | 1.17e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 21 | 0.7545 | 0.5608 | random_clean_y | 2.964 | 2.21 | 5.31e-09 | 2.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_rms | lower | **random_solver_y** | 21 | 0.02358 | 0.01752 | random_clean_y | 0.09262 | 0.06905 | 5.31e-09 | 2.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.82e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.82e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 21 | 0.8674 | 0.05716 | random_solver_y | 0.8031 | 0.06431 | 1.57e-08 | 7.32e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 21 | 0.7387 | 0.04516 | loss2 | 0.5215 | 0.2173 | 9.88e-14 | 9.05e-13 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 21 | 0.5908 | 0.04292 | loss2 | 0.4213 | 0.1695 | 9.82e-13 | 7.94e-12 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 21 | 0.8796 | 0.108 | random_solver_y | 0.8035 | 0.07606 | 0.0031 | 0.0054 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9244 | 0.08811 | loss2 | 0.9104 | 0.014 | 0.2292 | 0.2415 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_spectral_norm | lower | **baseline** | 21 | 3.284 | 0.7349 | loss2 | 3.444 | 0.1593 | 0.0396 | 0.0548 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | loss1 | 9.7973e-04 | 6.9382e-04 | 0.0009 | 0.0018 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_norm_l2 | lower | **loss3** | 21 | 0.4612 | 0.29 | loss1 | 0.8458 | 0.3847 | 9.50e-06 | 2.70e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | outward_local_gain_eps_mse | lower | **loss3** | 21 | 0.005953 | 0.006733 | loss1 | 0.01118 | 0.005226 | 0.0034 | 0.0059 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_norm | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.55e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.55e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 21 | 8.4831e-04 | 0.001134 | random_clean_y | 0.009469 | 0.00862 | 3.36e-06 | 1.05e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 21 | 0.7545 | 0.5608 | random_clean_y | 2.964 | 2.21 | 5.31e-09 | 2.63e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_rms | lower | **random_solver_y** | 21 | 0.02358 | 0.01752 | random_clean_y | 0.09262 | 0.06905 | 5.31e-09 | 2.63e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.55e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.55e-07 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | solver_spectral_norm | lower | **baseline** | 21 | 3.612 | 0.7947 | loss1 | 3.612 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | svd_local_gain_eps_mse | lower | **loss3** | 21 | 0.03693 | 0.05434 | loss1 | 0.07341 | 0.03647 | 0.0006 | 0.0012 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_singular_value | lower | **random_solver_y** | 21 | 1.827 | 1.138 | random_clean_y | 4.06 | 2.232 | 7.61e-07 | 2.96e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0040 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1457e-05 | loss2 | 0.001422 | 1.1887e-04 | 0.0266 | 0.0405 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | atb_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_affine_eps_abs_cos | higher | **loss1** | 2 | 0.8349 | 0.08498 | loss2 | 0.7581 | 0.0768 | 0.2015 | 0.2164 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8052 | 0.02482 | loss1 | 0.7826 | 0.02261 | 0.2415 | 0.2539 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_svd_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2228 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | **loss3** | 2 | 0.12 | 5.2684e-09 | random_clean_y | 0.12 | 3.7253e-09 | 0.2500 | 0.2623 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_mse | lower | **loss3** | 2 | 6.8292e-04 | 3.9598e-04 | loss1 | 0.001361 | 6.7799e-04 | 0.0672 | 0.0873 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_initial_mse | lower | **random_solver_y** | 2 | 3.4351e-07 | 9.2334e-08 | loss1 | 5.6132e-07 | 2.1781e-07 | 0.2586 | 0.2699 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.6296e-04 | 3.9863e-04 | loss1 | 0.00136 | 6.9739e-04 | 0.0645 | 0.0851 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.00363 | 9.6883e-05 | loss2 | 0.007995 | 0.004365 | 0.0962 | 0.1163 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | loss1 | 5.6584e-07 | 2.2240e-07 | 0.2587 | 0.2699 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | loss1 | 0.02379 | 0.005125 | 0.2595 | 0.2705 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_l2 | lower | **random_clean_y** | 2 | 3.84 | 9.0731e-09 | random_solver_y | 3.84 | 3.7211e-07 | 0.0306 | 0.0459 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_top_error_sv_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2228 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_effective_rank | lower | **loss3** | 2 | 2.137 | 0.5114 | random_clean_y | 5.708 | 3.571 | 0.0720 | 0.0925 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0359 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0359 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.222 | 0.006191 | loss1 | 0.6279 | 0.4059 | 0.0214 | 0.0338 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | random_clean_y | 7.151 | 6.922 | 0.0141 | 0.0240 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0104 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_top_right_delta_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2228 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_l2 | lower | **random_solver_y** | 2 | 0.1894 | 0.02103 | random_clean_y | 10.31 | 10.12 | 0.0245 | 0.0380 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_rms | lower | **random_solver_y** | 2 | 0.005918 | 6.5722e-04 | random_clean_y | 0.3221 | 0.3162 | 0.0245 | 0.0380 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_left_subspace_mean_cos | higher | **baseline** | 2 | 0.5684 | 0.02508 | loss2 | 0.5624 | 0.006059 | 0.4096 | 0.4152 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4534 | 3.6977e-04 | loss2 | 0.3302 | 0.1232 | 0.0363 | 0.0533 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9991 | 6.6940e-04 | loss1 | 0.9987 | 3.3758e-04 | 0.3913 | 0.3975 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 2 | 0.999 | 6.4077e-06 | random_solver_y | 0.9987 | 2.9619e-04 | 0.3313 | 0.3390 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_left_abs_cos | higher | **random_solver_y** | 2 | 0.9999 | 2.5569e-05 | loss1 | 0.9999 | 1.8243e-05 | 0.3639 | 0.3709 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_right_abs_cos | higher | **loss3** | 2 | 0.9999 | 5.4803e-05 | random_solver_y | 0.9999 | 2.6731e-05 | 0.2812 | 0.2906 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9953 | 0.001354 | loss3 | 0.9948 | 4.7274e-04 | 0.3414 | 0.3487 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 2 | 0.9876 | 0.006179 | random_solver_y | 0.9758 | 0.01173 | 0.1574 | 0.1751 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 2 | 0.7069 | 0.01162 | loss2 | 0.4935 | 0.2134 | 0.0639 | 0.0844 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 2 | 0.6469 | 0.02576 | loss2 | 0.4323 | 0.2146 | 0.0282 | 0.0427 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 1.0466e-05 | loss1 | 0.9998 | 5.6344e-05 | 0.3167 | 0.3251 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 3.4613e-05 | loss3 | 0.9998 | 4.3689e-05 | 0.0210 | 0.0336 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_spectral_norm | lower | **baseline** | 2 | 4.616 | 0.1634 | loss3 | 4.644 | 0.02793 | 0.3818 | 0.3882 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_mse_recomputed | lower | **loss1** | 2 | 5.6584e-07 | 2.3989e-07 | loss2 | 2.1893e-06 | 1.6234e-06 | 0.0579 | 0.0778 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02379 | 0.005162 | loss2 | 0.04707 | 0.02328 | 0.0197 | 0.0319 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | outward_local_gain_eps_mse | lower | **loss3** | 2 | 2.2873e-04 | 1.4531e-04 | loss2 | 0.001042 | 8.1360e-04 | 0.1001 | 0.1208 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | random_clean_y | 0.01022 | 0.01022 | 0.1335 | 0.1524 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | random_clean_y | 3.149 | 3.13 | 0.0741 | 0.0937 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_rms | lower | **random_solver_y** | 2 | 5.8337e-04 | 7.9071e-05 | random_clean_y | 0.0984 | 0.09781 | 0.0741 | 0.0937 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | solver_spectral_norm | lower | **baseline** | 2 | 4.705 | 0.03739 | loss1 | 4.705 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | svd_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1473e-05 | loss2 | 0.001422 | 1.1836e-04 | 0.0257 | 0.0392 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | top_error_singular_value | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | random_clean_y | 4.726 | 4.634 | 0.0038 | 0.0072 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | top_error_sv_value | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0104 | True |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 9.5852e-04 | 2.7065e-04 | loss2 | 0.001372 | 4.1305e-04 | 0.0828 | 0.1031 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | atb_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 2 | 0.5097 | 0.6051 | loss2 | 0.4715 | 0.03819 | 0.2655 | 0.2756 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8164 | 0.05842 | baseline | 0.772 | 0.04439 | 0.0375 | 0.0550 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 1 | 0.8458 | 0 | baseline | 0.5024 | 0.3435 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_final_delta_rms | lower | **random_clean_y** | 1 | 0.12 | 0 | random_solver_y | 0.12 | 0 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_final_mse | lower | **loss3** | 2 | 6.9838e-04 | 1.0034e-04 | loss1 | 0.001125 | 4.2633e-04 | 0.2803 | 0.2903 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_initial_mse | lower | **random_solver_y** | 1 | 3.9634e-07 | 0 | loss1 | 4.9225e-07 | 9.5912e-08 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.7187e-04 | 1.1020e-04 | loss1 | 0.001124 | 4.5235e-04 | 0.2730 | 0.2831 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.001751 | 4.0608e-04 | loss2 | 0.009217 | 0.007465 | 0.0692 | 0.0895 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | loss1 | 5.4726e-05 | 1.4395e-05 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | clean_residual_mse_recomputed | lower | **loss1** | 2 | 4.9051e-07 | 2.4295e-07 | random_solver_y | 6.2849e-07 | 1.3797e-07 | 0.1310 | 0.1522 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02205 | 0.00564 | random_solver_y | 0.02492 | 0.002863 | 0.0845 | 0.1052 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | delta_l2 | lower | **random_solver_y** | 1 | 3.84 | 0 | random_clean_y | 3.84 | 8.3138e-08 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 1 | 0.8458 | 0 | baseline | 0.5024 | 0.3435 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_effective_rank | lower | **loss3** | 2 | 2.589 | 0.6743 | random_clean_y | 4.446 | 1.857 | 0.0491 | 0.0681 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | loss1 | 0.6185 | 0.3644 | 0.0399 | 0.0577 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | loss1 | 0.6185 | 0.3644 | 0.0399 | 0.0577 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.2479 | 0.05893 | loss1 | 0.6185 | 0.3705 | 0.0398 | 0.0577 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | random_clean_y | 6.331 | 6.077 | 0.0214 | 0.0338 | True |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | loss1 | 0.2565 | 0.1273 | 0.0520 | 0.0713 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 1 | 0.8458 | 0 | baseline | 0.5024 | 0.3435 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_delta_l2 | lower | **random_solver_y** | 1 | 0.1464 | 0 | random_clean_y | 12.11 | 11.97 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_delta_rms | lower | **random_solver_y** | 1 | 0.004574 | 0 | random_clean_y | 0.3785 | 0.374 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | loss1 | 5.4726e-05 | 1.4395e-05 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 2 | 0.5885 | 0.03586 | loss2 | 0.571 | 0.01747 | 0.3744 | 0.3812 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4555 | 0.0379 | loss2 | 0.3298 | 0.1257 | 0.0518 | 0.0712 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9997 | 1.0687e-04 | loss1 | 0.9996 | 1.3670e-04 | 0.0857 | 0.1065 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | svd_local_gain_eps_mse | lower | **loss3** | 21 | 0.03693 | 0.05434 | loss1 | 0.07341 | 0.03647 | 0.0006 | 0.0011 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_singular_value | lower | **random_solver_y** | 21 | 1.827 | 1.138 | random_clean_y | 4.06 | 2.232 | 7.61e-07 | 2.61e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0037 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1457e-05 | loss2 | 0.001422 | 1.1887e-04 | 0.0266 | 0.0385 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | atb_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_affine_eps_abs_cos | higher | **loss1** | 2 | 0.8349 | 0.08498 | loss2 | 0.7581 | 0.0768 | 0.2015 | 0.2148 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8052 | 0.02482 | loss1 | 0.7826 | 0.02261 | 0.2415 | 0.2523 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_svd_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2214 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | **loss3** | 2 | 0.12 | 5.2684e-09 | random_clean_y | 0.12 | 3.7253e-09 | 0.2500 | 0.2607 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_mse | lower | **loss3** | 2 | 6.8292e-04 | 3.9598e-04 | loss1 | 0.001361 | 6.7799e-04 | 0.0672 | 0.0846 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_initial_mse | lower | **random_solver_y** | 2 | 3.4351e-07 | 9.2334e-08 | loss1 | 5.6132e-07 | 2.1781e-07 | 0.2586 | 0.2684 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.6296e-04 | 3.9863e-04 | loss1 | 0.00136 | 6.9739e-04 | 0.0645 | 0.0822 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.00363 | 9.6883e-05 | loss2 | 0.007995 | 0.004365 | 0.0962 | 0.1138 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | loss1 | 5.6584e-07 | 2.2240e-07 | 0.2587 | 0.2684 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | loss1 | 0.02379 | 0.005125 | 0.2595 | 0.2690 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_l2 | lower | **random_clean_y** | 2 | 3.84 | 9.0731e-09 | random_solver_y | 3.84 | 3.7211e-07 | 0.0306 | 0.0436 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_top_error_sv_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2214 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_effective_rank | lower | **loss3** | 2 | 2.137 | 0.5114 | random_clean_y | 5.708 | 3.571 | 0.0720 | 0.0897 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0340 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0340 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.222 | 0.006191 | loss1 | 0.6279 | 0.4059 | 0.0214 | 0.0319 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | random_clean_y | 7.151 | 6.922 | 0.0141 | 0.0224 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0097 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_top_right_delta_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2214 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_l2 | lower | **random_solver_y** | 2 | 0.1894 | 0.02103 | random_clean_y | 10.31 | 10.12 | 0.0245 | 0.0360 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_rms | lower | **random_solver_y** | 2 | 0.005918 | 6.5722e-04 | random_clean_y | 0.3221 | 0.3162 | 0.0245 | 0.0360 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_left_subspace_mean_cos | higher | **baseline** | 2 | 0.5684 | 0.02508 | loss2 | 0.5624 | 0.006059 | 0.4096 | 0.4145 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4534 | 3.6977e-04 | loss2 | 0.3302 | 0.1232 | 0.0363 | 0.0508 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9991 | 6.6940e-04 | loss1 | 0.9987 | 3.3758e-04 | 0.3913 | 0.3967 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 2 | 0.999 | 6.4077e-06 | random_solver_y | 0.9987 | 2.9619e-04 | 0.3313 | 0.3380 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_left_abs_cos | higher | **random_solver_y** | 2 | 0.9999 | 2.5569e-05 | loss1 | 0.9999 | 1.8243e-05 | 0.3639 | 0.3700 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_right_abs_cos | higher | **loss3** | 2 | 0.9999 | 5.4803e-05 | random_solver_y | 0.9999 | 2.6731e-05 | 0.2812 | 0.2894 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9953 | 0.001354 | loss3 | 0.9948 | 4.7274e-04 | 0.3414 | 0.3477 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 2 | 0.9876 | 0.006179 | random_solver_y | 0.9758 | 0.01173 | 0.1574 | 0.1731 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 2 | 0.7069 | 0.01162 | loss2 | 0.4935 | 0.2134 | 0.0639 | 0.0816 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 2 | 0.6469 | 0.02576 | loss2 | 0.4323 | 0.2146 | 0.0282 | 0.0406 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 1.0466e-05 | loss1 | 0.9998 | 5.6344e-05 | 0.3167 | 0.3240 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 3.4613e-05 | loss3 | 0.9998 | 4.3689e-05 | 0.0210 | 0.0316 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_spectral_norm | lower | **baseline** | 2 | 4.616 | 0.1634 | loss3 | 4.644 | 0.02793 | 0.3818 | 0.3874 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_mse_recomputed | lower | **loss1** | 2 | 5.6584e-07 | 2.3989e-07 | loss2 | 2.1893e-06 | 1.6234e-06 | 0.0579 | 0.0750 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02379 | 0.005162 | loss2 | 0.04707 | 0.02328 | 0.0197 | 0.0300 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | outward_local_gain_eps_mse | lower | **loss3** | 2 | 2.2873e-04 | 1.4531e-04 | loss2 | 0.001042 | 8.1360e-04 | 0.1001 | 0.1182 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0604 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0604 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | random_clean_y | 0.01022 | 0.01022 | 0.1335 | 0.1503 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | random_clean_y | 3.149 | 3.13 | 0.0741 | 0.0911 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_rms | lower | **random_solver_y** | 2 | 5.8337e-04 | 7.9071e-05 | random_clean_y | 0.0984 | 0.09781 | 0.0741 | 0.0911 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0604 | False |
 
-_Showing 220 of 273 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
+_Showing 220 of 321 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 
 ## Clean 52-Dataset Generalization
 
 | family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| clean_generalization | clean_all_52dataset | mse | lower | **loss3** | 52 | 1.9093e-04 | 1.7874e-04 | random_solver_y | 4.8804e-04 | 2.9710e-04 | 1.41e-08 | 7.21e-08 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | **loss3** | 52 | 0.02305 | 0.01321 | random_solver_y | 0.0342 | 0.01115 | 1.82e-10 | 1.21e-09 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | **loss3** | 52 | 0.01175 | 0.005412 | random_solver_y | 0.01749 | 0.005742 | 5.23e-11 | 3.77e-10 | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | **loss3** | 50 | 1.9777e-04 | 1.7891e-04 | random_solver_y | 5.0754e-04 | 3.0976e-04 | 1.00e-08 | 5.32e-08 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | **loss3** | 50 | 0.02364 | 0.01313 | random_solver_y | 0.03551 | 0.01187 | 1.85e-11 | 1.39e-10 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | **loss3** | 50 | 0.01205 | 0.005304 | random_solver_y | 0.01817 | 0.006117 | 3.92e-12 | 3.16e-11 | True |
+| clean_generalization | clean_all_52dataset | mse | lower | **loss3** | 52 | 1.9093e-04 | 1.7874e-04 | random_solver_y | 4.8804e-04 | 2.9710e-04 | 1.41e-08 | 6.61e-08 | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | **loss3** | 52 | 0.02305 | 0.01321 | random_solver_y | 0.0342 | 0.01115 | 1.82e-10 | 1.12e-09 | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | **loss3** | 52 | 0.01175 | 0.005412 | random_solver_y | 0.01749 | 0.005742 | 5.23e-11 | 3.42e-10 | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | **loss3** | 50 | 1.9777e-04 | 1.7891e-04 | random_solver_y | 5.0754e-04 | 3.0976e-04 | 1.00e-08 | 4.84e-08 | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | **loss3** | 50 | 0.02364 | 0.01313 | random_solver_y | 0.03551 | 0.01187 | 1.85e-11 | 1.25e-10 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | **loss3** | 50 | 0.01205 | 0.005304 | random_solver_y | 0.01817 | 0.006117 | 3.92e-12 | 2.84e-11 | True |
 | clean_generalization | clean_test_1dataset | mse | lower | **random_solver_y** | 1 | 5.7009e-07 | 0 | loss1 | 7.7743e-07 | 2.0734e-07 | NA | NA | False |
 | clean_generalization | clean_test_1dataset | relative_l2 | lower | **random_solver_y** | 1 | 0.001379 | 0 | loss1 | 0.001612 | 2.3258e-04 | NA | NA | False |
 | clean_generalization | clean_test_1dataset | rmse | lower | **random_solver_y** | 1 | 7.2826e-04 | 0 | loss1 | 8.3626e-04 | 1.0800e-04 | NA | NA | False |
@@ -275,14 +288,14 @@ _Showing 220 of 273 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 
 | family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| attack_robustness_52dataset | attack_all_52dataset | attack_loss_increase_mean | lower | **random_solver_y** | 52 | 0.008167 | 0.00435 | loss2 | 0.03678 | 0.02862 | 0.0016 | 0.0033 | True |
-| attack_robustness_52dataset | attack_all_52dataset | final_delta_rms_mean | lower | **random_clean_y** | 52 | 0.1171 | 0.004473 | loss3 | 0.1199 | 0.00279 | 1.79e-05 | 5.39e-05 | True |
-| attack_robustness_52dataset | attack_all_52dataset | final_loss_mean | lower | **random_solver_y** | 52 | 0.008655 | 0.004796 | random_clean_y | 0.04701 | 0.03836 | 8.02e-31 | 1.10e-28 | True |
-| attack_robustness_52dataset | attack_all_52dataset | initial_loss_mean | lower | **random_solver_y** | 52 | 4.8804e-04 | 4.9857e-04 | random_clean_y | 0.009854 | 0.009366 | 1.64e-18 | 6.55e-17 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | attack_loss_increase_mean | lower | **random_solver_y** | 50 | 0.008381 | 0.004298 | random_clean_y | 0.03694 | 0.02856 | 4.68e-33 | 8.98e-31 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | final_delta_rms_mean | lower | **random_clean_y** | 50 | 0.1171 | 0.004552 | loss3 | 0.1199 | 0.002852 | 2.37e-05 | 7.02e-05 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | final_loss_mean | lower | **random_solver_y** | 50 | 0.008889 | 0.004743 | random_clean_y | 0.04705 | 0.03816 | 2.14e-29 | 2.05e-27 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | initial_loss_mean | lower | **random_solver_y** | 50 | 5.0754e-04 | 4.9862e-04 | random_clean_y | 0.01011 | 0.009606 | 1.35e-18 | 5.65e-17 | True |
+| attack_robustness_52dataset | attack_all_52dataset | attack_loss_increase_mean | lower | **random_solver_y** | 52 | 0.008167 | 0.00435 | loss2 | 0.03678 | 0.02862 | 0.0016 | 0.0030 | True |
+| attack_robustness_52dataset | attack_all_52dataset | final_delta_rms_mean | lower | **random_clean_y** | 52 | 0.1171 | 0.004473 | loss3 | 0.1199 | 0.00279 | 1.79e-05 | 4.81e-05 | True |
+| attack_robustness_52dataset | attack_all_52dataset | final_loss_mean | lower | **random_solver_y** | 52 | 0.008655 | 0.004796 | random_clean_y | 0.04701 | 0.03836 | 8.02e-31 | 8.01e-29 | True |
+| attack_robustness_52dataset | attack_all_52dataset | initial_loss_mean | lower | **random_solver_y** | 52 | 4.8804e-04 | 4.9857e-04 | random_clean_y | 0.009854 | 0.009366 | 1.64e-18 | 5.15e-17 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | attack_loss_increase_mean | lower | **random_solver_y** | 50 | 0.008381 | 0.004298 | random_clean_y | 0.03694 | 0.02856 | 4.68e-33 | 5.72e-31 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | final_delta_rms_mean | lower | **random_clean_y** | 50 | 0.1171 | 0.004552 | loss3 | 0.1199 | 0.002852 | 2.37e-05 | 6.30e-05 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | final_loss_mean | lower | **random_solver_y** | 50 | 0.008889 | 0.004743 | random_clean_y | 0.04705 | 0.03816 | 2.14e-29 | 1.68e-27 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | initial_loss_mean | lower | **random_solver_y** | 50 | 5.0754e-04 | 4.9862e-04 | random_clean_y | 0.01011 | 0.009606 | 1.35e-18 | 4.38e-17 | True |
 | attack_robustness_52dataset | attack_test_1dataset | attack_loss_increase_mean | lower | **loss3** | 1 | 8.7678e-04 | 0 | loss1 | 0.00147 | 5.9312e-04 | NA | NA | False |
 | attack_robustness_52dataset | attack_test_1dataset | final_delta_rms_mean | lower | **random_clean_y** | 1 | 0.1185 | 0 | loss3 | 0.1199 | 0.001305 | NA | NA | False |
 | attack_robustness_52dataset | attack_test_1dataset | final_loss_mean | lower | **loss3** | 1 | 8.9728e-04 | 0 | loss1 | 0.001471 | 5.7340e-04 | NA | NA | False |
@@ -296,610 +309,673 @@ _Showing 220 of 273 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 
 | family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | affine_local_gain_eps_mse | lower | **loss3** | 25 | 0.03274 | 0.0506 | loss1 | 0.06187 | 0.02913 | 0.0014 | 0.0029 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | affine_local_gain_eps_mse | lower | **loss3** | 25 | 0.03274 | 0.0506 | loss1 | 0.06187 | 0.02913 | 0.0014 | 0.0027 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | atb_norm | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 25 | 0.3405 | 0.3 | loss1 | 0.2266 | 0.1139 | 0.0597 | 0.0798 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_outward_abs_cos | higher | **loss1** | 25 | 0.8031 | 0.07435 | loss2 | 0.7987 | 0.004342 | 0.3961 | 0.4019 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0470 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_delta_rms | lower | **random_clean_y** | 24 | 0.1198 | 7.6345e-04 | loss1 | 0.12 | 1.5583e-04 | 0.1639 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | **loss3** | 25 | 0.003307 | 0.002897 | loss2 | 0.006479 | 0.003172 | 2.98e-07 | 1.22e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_initial_mse | lower | **loss3** | 25 | 2.4392e-04 | 3.6898e-04 | random_solver_y | 7.4232e-04 | 4.9839e-04 | 0.0019 | 0.0038 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | **loss3** | 25 | 0.003063 | 0.0026 | loss2 | 0.005623 | 0.00256 | 1.21e-06 | 4.57e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 25 | 0.3405 | 0.3 | loss1 | 0.2266 | 0.1139 | 0.0597 | 0.0770 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_outward_abs_cos | higher | **loss1** | 25 | 0.8031 | 0.07435 | loss2 | 0.7987 | 0.004342 | 0.3961 | 0.4012 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0448 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_delta_rms | lower | **random_clean_y** | 24 | 0.1198 | 7.6345e-04 | loss1 | 0.12 | 1.5583e-04 | 0.1639 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | **loss3** | 25 | 0.003307 | 0.002897 | loss2 | 0.006479 | 0.003172 | 2.98e-07 | 1.09e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_initial_mse | lower | **loss3** | 25 | 2.4392e-04 | 3.6898e-04 | random_solver_y | 7.4232e-04 | 4.9839e-04 | 0.0019 | 0.0035 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | **loss3** | 25 | 0.003063 | 0.0026 | loss2 | 0.005623 | 0.00256 | 1.21e-06 | 4.07e-06 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_norm | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_norm_original_table | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_rms | lower | **loss3** | 25 | 0.003498 | 0.004014 | loss1 | 0.00987 | 0.006372 | 5.70e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | random_solver_y | 7.1266e-04 | 4.6878e-04 | 0.0021 | 0.0040 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | random_solver_y | 0.6372 | 0.2254 | 0.0009 | 0.0018 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_l2 | lower | **random_clean_y** | 24 | 3.835 | 0.02443 | random_solver_y | 3.84 | 0.004987 | 0.1639 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0470 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_effective_rank | lower | **loss3** | 25 | 6.373 | 3.456 | random_clean_y | 7.079 | 0.7058 | 0.0970 | 0.1171 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0045 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0045 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.502 | 0.6039 | 0.0026 | 0.0050 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 25 | 2.512 | 1.749 | random_clean_y | 7.225 | 4.713 | 1.38e-11 | 1.06e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0470 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_l2 | lower | **random_solver_y** | 24 | 2.091 | 1.531 | random_clean_y | 9.705 | 7.614 | 8.05e-11 | 5.55e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_rms | lower | **random_solver_y** | 24 | 0.06534 | 0.04783 | random_clean_y | 0.3033 | 0.2379 | 8.05e-11 | 5.55e-10 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | random_solver_y | 7.1266e-04 | 4.6878e-04 | 0.0021 | 0.0037 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | random_solver_y | 0.6372 | 0.2254 | 0.0009 | 0.0017 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_l2 | lower | **random_clean_y** | 24 | 3.835 | 0.02443 | random_solver_y | 3.84 | 0.004987 | 0.1639 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0448 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_effective_rank | lower | **loss3** | 25 | 6.373 | 3.456 | random_clean_y | 7.079 | 0.7058 | 0.0970 | 0.1146 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0042 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.512 | 0.6137 | 0.0023 | 0.0042 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | **loss3** | 25 | 1.899 | 1.01 | random_solver_y | 2.502 | 0.6039 | 0.0026 | 0.0046 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 25 | 2.512 | 1.749 | random_clean_y | 7.225 | 4.713 | 1.38e-11 | 9.53e-11 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | baseline | 0.3049 | 0.08859 | 0.0316 | 0.0448 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_l2 | lower | **random_solver_y** | 24 | 2.091 | 1.531 | random_clean_y | 9.705 | 7.614 | 8.05e-11 | 5.08e-10 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_rms | lower | **random_solver_y** | 24 | 0.06534 | 0.04783 | random_clean_y | 0.3033 | 0.2379 | 8.05e-11 | 5.08e-10 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_transpose_error_l2 | lower | **loss3** | 25 | 0.1119 | 0.1285 | loss1 | 0.3159 | 0.2039 | 5.70e-05 | 0.0001 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_transpose_error_rms | lower | **loss3** | 25 | 0.003498 | 0.004014 | loss1 | 0.00987 | 0.006372 | 5.70e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 25 | 0.5586 | 0.05155 | loss2 | 0.5348 | 0.02375 | 0.0528 | 0.0721 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 25 | 0.4497 | 0.02535 | loss2 | 0.3324 | 0.1173 | 9.16e-17 | 2.21e-15 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9335 | 0.06611 | random_solver_y | 0.8545 | 0.07907 | 3.75e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9579 | 0.04259 | loss1 | 0.9114 | 0.04658 | 3.34e-05 | 9.19e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | **loss3** | 25 | 0.9131 | 0.2046 | loss1 | 0.8416 | 0.07153 | 0.0207 | 0.0331 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | **loss3** | 25 | 0.9601 | 0.168 | loss2 | 0.9401 | 0.02001 | 0.2941 | 0.3032 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9433 | 0.03939 | random_solver_y | 0.9143 | 0.02902 | 0.0001 | 0.0003 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 25 | 0.8866 | 0.06892 | random_solver_y | 0.8313 | 0.05532 | 6.40e-08 | 2.92e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 25 | 0.7331 | 0.0435 | loss2 | 0.5187 | 0.2144 | 1.74e-16 | 3.55e-15 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 25 | 0.5992 | 0.0444 | loss2 | 0.4257 | 0.1735 | 1.21e-15 | 2.04e-14 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 25 | 0.8979 | 0.1075 | random_solver_y | 0.8349 | 0.06301 | 0.0039 | 0.0072 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9364 | 0.08524 | loss2 | 0.9244 | 0.01199 | 0.2237 | 0.2381 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_spectral_norm | lower | **baseline** | 25 | 3.456 | 0.805 | loss3 | 3.605 | 0.1492 | 0.0096 | 0.0170 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | loss1 | 8.2306e-04 | 5.7918e-04 | 0.0012 | 0.0025 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | loss1 | 0.7142 | 0.3023 | 0.0001 | 0.0003 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | outward_local_gain_eps_mse | lower | **loss3** | 25 | 0.00509 | 0.006472 | loss1 | 0.009502 | 0.004413 | 0.0035 | 0.0066 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_norm | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 1.06e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 1.06e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 25 | 7.1266e-04 | 0.001083 | random_clean_y | 0.008772 | 0.008059 | 1.30e-06 | 4.90e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 25 | 0.6372 | 0.5807 | random_clean_y | 2.75 | 2.113 | 3.40e-09 | 1.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_rms | lower | **random_solver_y** | 25 | 0.01991 | 0.01815 | random_clean_y | 0.08595 | 0.06603 | 3.40e-09 | 1.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 1.06e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 1.06e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 25 | 0.5586 | 0.05155 | loss2 | 0.5348 | 0.02375 | 0.0528 | 0.0693 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 25 | 0.4497 | 0.02535 | loss2 | 0.3324 | 0.1173 | 9.16e-17 | 1.72e-15 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9335 | 0.06611 | random_solver_y | 0.8545 | 0.07907 | 3.75e-05 | 9.23e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9579 | 0.04259 | loss1 | 0.9114 | 0.04658 | 3.34e-05 | 8.31e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | **loss3** | 25 | 0.9131 | 0.2046 | loss1 | 0.8416 | 0.07153 | 0.0207 | 0.0312 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | **loss3** | 25 | 0.9601 | 0.168 | loss2 | 0.9401 | 0.02001 | 0.2941 | 0.3020 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9433 | 0.03939 | random_solver_y | 0.9143 | 0.02902 | 0.0001 | 0.0002 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 25 | 0.8866 | 0.06892 | random_solver_y | 0.8313 | 0.05532 | 6.40e-08 | 2.65e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 25 | 0.7331 | 0.0435 | loss2 | 0.5187 | 0.2144 | 1.74e-16 | 2.73e-15 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 25 | 0.5992 | 0.0444 | loss2 | 0.4257 | 0.1735 | 1.21e-15 | 1.59e-14 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 25 | 0.8979 | 0.1075 | random_solver_y | 0.8349 | 0.06301 | 0.0039 | 0.0067 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9364 | 0.08524 | loss2 | 0.9244 | 0.01199 | 0.2237 | 0.2364 | False |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_spectral_norm | lower | **baseline** | 25 | 3.456 | 0.805 | loss3 | 3.605 | 0.1492 | 0.0096 | 0.0158 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_mse_recomputed | lower | **loss3** | 25 | 2.4388e-04 | 3.6890e-04 | loss1 | 8.2306e-04 | 5.7918e-04 | 0.0012 | 0.0023 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | old_clean_residual_norm_l2 | lower | **loss3** | 25 | 0.4119 | 0.2889 | loss1 | 0.7142 | 0.3023 | 0.0001 | 0.0002 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | outward_local_gain_eps_mse | lower | **loss3** | 25 | 0.00509 | 0.006472 | loss1 | 0.009502 | 0.004413 | 0.0035 | 0.0061 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_norm | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 9.66e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_bias_gradient_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 9.66e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 25 | 7.1266e-04 | 0.001083 | random_clean_y | 0.008772 | 0.008059 | 1.30e-06 | 4.35e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 25 | 0.6372 | 0.5807 | random_clean_y | 2.75 | 2.113 | 3.40e-09 | 1.75e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_clean_residual_rms | lower | **random_solver_y** | 25 | 0.01991 | 0.01815 | random_clean_y | 0.08595 | 0.06603 | 3.40e-09 | 1.75e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 9.66e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 25 | 0.0116 | 0.01316 | random_clean_y | 0.1495 | 0.1379 | 2.15e-08 | 9.66e-08 | True |
 | robustness_svd_jacobian_25sample | robustness_all_25sample | solver_spectral_norm | lower | **baseline** | 25 | 3.755 | 0.8226 | loss1 | 3.755 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | svd_local_gain_eps_mse | lower | **loss3** | 25 | 0.03273 | 0.05059 | loss1 | 0.06184 | 0.02911 | 0.0015 | 0.0029 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_singular_value | lower | **random_solver_y** | 25 | 1.553 | 1.221 | random_clean_y | 4.131 | 2.578 | 1.73e-08 | 8.73e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | affine_local_gain_eps_mse | lower | **loss3** | 21 | 0.03695 | 0.05434 | loss1 | 0.07344 | 0.0365 | 0.0006 | 0.0012 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | atb_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 21 | 0.334 | 0.2886 | loss1 | 0.1727 | 0.1614 | 0.0082 | 0.0147 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_outward_abs_cos | higher | **loss1** | 21 | 0.8155 | 0.07194 | baseline | 0.8039 | 0.0116 | 0.3336 | 0.3411 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1071 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_delta_rms | lower | **random_clean_y** | 21 | 0.1198 | 8.1616e-04 | loss1 | 0.12 | 1.7810e-04 | 0.1646 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | **loss3** | 21 | 0.003806 | 0.002904 | loss2 | 0.007405 | 0.003599 | 3.82e-07 | 1.55e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_initial_mse | lower | **loss3** | 21 | 2.8596e-04 | 3.8958e-04 | random_solver_y | 8.4831e-04 | 5.6235e-04 | 0.0017 | 0.0033 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | **loss3** | 21 | 0.00352 | 0.002595 | loss2 | 0.006387 | 0.002867 | 2.67e-06 | 9.61e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm_original_table | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | random_solver_y | 8.4831e-04 | 5.6240e-04 | 0.0017 | 0.0033 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | svd_local_gain_eps_mse | lower | **loss3** | 25 | 0.03273 | 0.05059 | loss1 | 0.06184 | 0.02911 | 0.0015 | 0.0027 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_singular_value | lower | **random_solver_y** | 25 | 1.553 | 1.221 | random_clean_y | 4.131 | 2.578 | 1.73e-08 | 7.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | affine_local_gain_eps_mse | lower | **loss3** | 21 | 0.03695 | 0.05434 | loss1 | 0.07344 | 0.0365 | 0.0006 | 0.0011 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | atb_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 21 | 0.334 | 0.2886 | loss1 | 0.1727 | 0.1614 | 0.0082 | 0.0137 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_outward_abs_cos | higher | **loss1** | 21 | 0.8155 | 0.07194 | baseline | 0.8039 | 0.0116 | 0.3336 | 0.3401 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1046 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_delta_rms | lower | **random_clean_y** | 21 | 0.1198 | 8.1616e-04 | loss1 | 0.12 | 1.7810e-04 | 0.1646 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | **loss3** | 21 | 0.003806 | 0.002904 | loss2 | 0.007405 | 0.003599 | 3.82e-07 | 1.38e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_initial_mse | lower | **loss3** | 21 | 2.8596e-04 | 3.8958e-04 | random_solver_y | 8.4831e-04 | 5.6235e-04 | 0.0017 | 0.0030 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | **loss3** | 21 | 0.00352 | 0.002595 | loss2 | 0.006387 | 0.002867 | 2.67e-06 | 8.59e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm_original_table | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | random_solver_y | 8.4831e-04 | 5.6240e-04 | 0.0017 | 0.0030 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_norm_l2 | lower | **loss3** | 21 | 0.4612 | 0.29 | random_solver_y | 0.7545 | 0.2933 | 0.0001 | 0.0003 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_l2 | lower | **random_clean_y** | 21 | 3.834 | 0.02612 | random_solver_y | 3.84 | 0.005699 | 0.1646 | 0.1796 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1071 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_effective_rank | lower | **random_solver_y** | 21 | 7.086 | 2.554 | loss3 | 7.137 | 0.05165 | 0.4683 | 0.4743 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_l2 | lower | **random_clean_y** | 21 | 3.834 | 0.02612 | random_solver_y | 3.84 | 0.005699 | 0.1646 | 0.1779 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1046 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_effective_rank | lower | **random_solver_y** | 21 | 7.086 | 2.554 | loss3 | 7.137 | 0.05165 | 0.4683 | 0.4735 | False |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm | lower | **loss3** | 21 | 2.078 | 1.005 | random_solver_y | 2.945 | 0.8671 | 8.11e-05 | 0.0002 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_comparable | lower | **loss3** | 21 | 2.078 | 1.005 | random_solver_y | 2.945 | 0.8671 | 8.11e-05 | 0.0002 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_original_reported | lower | **loss3** | 21 | 2.078 | 1.005 | random_solver_y | 2.934 | 0.8566 | 9.24e-05 | 0.0002 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 21 | 2.945 | 1.563 | random_clean_y | 7.317 | 4.372 | 2.19e-09 | 1.26e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0040 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1071 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_l2 | lower | **random_solver_y** | 21 | 2.365 | 1.437 | random_clean_y | 9.533 | 7.168 | 3.22e-09 | 1.83e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_rms | lower | **random_solver_y** | 21 | 0.0739 | 0.0449 | random_clean_y | 0.2979 | 0.224 | 3.22e-09 | 1.83e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_l2 | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.81e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 21 | 0.561 | 0.05118 | loss2 | 0.5288 | 0.03224 | 0.0252 | 0.0386 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 21 | 0.4488 | 0.02634 | loss2 | 0.3329 | 0.1159 | 9.85e-14 | 1.05e-12 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 21 | 0.9216 | 0.06564 | random_solver_y | 0.8268 | 0.09474 | 1.63e-05 | 4.99e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9501 | 0.04215 | loss1 | 0.8954 | 0.05476 | 2.39e-05 | 7.06e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | **loss3** | 21 | 0.8999 | 0.2216 | loss1 | 0.8114 | 0.08855 | 0.0162 | 0.0270 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | **loss3** | 21 | 0.9525 | 0.183 | loss2 | 0.929 | 0.02354 | 0.2973 | 0.3059 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 21 | 2.945 | 1.563 | random_clean_y | 7.317 | 4.372 | 2.19e-09 | 1.16e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0037 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 21 | 0.3769 | 0.1942 | baseline | 0.294 | 0.08291 | 0.0866 | 0.1046 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_l2 | lower | **random_solver_y** | 21 | 2.365 | 1.437 | random_clean_y | 9.533 | 7.168 | 3.22e-09 | 1.69e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_delta_rms | lower | **random_solver_y** | 21 | 0.0739 | 0.0449 | random_clean_y | 0.2979 | 0.224 | 3.22e-09 | 1.69e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_l2 | lower | **loss3** | 21 | 0.1314 | 0.1316 | loss1 | 0.3755 | 0.2441 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_rms | lower | **loss3** | 21 | 0.004105 | 0.004113 | loss1 | 0.01173 | 0.007629 | 2.78e-05 | 7.07e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 21 | 0.561 | 0.05118 | loss2 | 0.5288 | 0.03224 | 0.0252 | 0.0367 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 21 | 0.4488 | 0.02634 | loss2 | 0.3329 | 0.1159 | 9.85e-14 | 9.05e-13 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 21 | 0.9216 | 0.06564 | random_solver_y | 0.8268 | 0.09474 | 1.63e-05 | 4.44e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9501 | 0.04215 | loss1 | 0.8954 | 0.05476 | 2.39e-05 | 6.34e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | **loss3** | 21 | 0.8999 | 0.2216 | loss1 | 0.8114 | 0.08855 | 0.0162 | 0.0253 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | **loss3** | 21 | 0.9525 | 0.183 | loss2 | 0.929 | 0.02354 | 0.2973 | 0.3048 | False |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 21 | 0.9338 | 0.03562 | random_solver_y | 0.899 | 0.03483 | 5.74e-05 | 0.0001 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 21 | 0.8674 | 0.05716 | random_solver_y | 0.8031 | 0.06431 | 1.57e-08 | 7.97e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 21 | 0.7387 | 0.04516 | loss2 | 0.5215 | 0.2173 | 9.88e-14 | 1.05e-12 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 21 | 0.5908 | 0.04292 | loss2 | 0.4213 | 0.1695 | 9.82e-13 | 8.97e-12 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 21 | 0.8796 | 0.108 | random_solver_y | 0.8035 | 0.07606 | 0.0031 | 0.0059 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9244 | 0.08811 | loss2 | 0.9104 | 0.014 | 0.2292 | 0.2432 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_spectral_norm | lower | **baseline** | 21 | 3.284 | 0.7349 | loss2 | 3.444 | 0.1593 | 0.0396 | 0.0575 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | loss1 | 9.7973e-04 | 6.9382e-04 | 0.0009 | 0.0020 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_norm_l2 | lower | **loss3** | 21 | 0.4612 | 0.29 | loss1 | 0.8458 | 0.3847 | 9.50e-06 | 3.03e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | outward_local_gain_eps_mse | lower | **loss3** | 21 | 0.005953 | 0.006733 | loss1 | 0.01118 | 0.005226 | 0.0034 | 0.0064 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_norm | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.82e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.82e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 21 | 8.4831e-04 | 0.001134 | random_clean_y | 0.009469 | 0.00862 | 3.36e-06 | 1.17e-05 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 21 | 0.7545 | 0.5608 | random_clean_y | 2.964 | 2.21 | 5.31e-09 | 2.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_rms | lower | **random_solver_y** | 21 | 0.02358 | 0.01752 | random_clean_y | 0.09262 | 0.06905 | 5.31e-09 | 2.89e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.82e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.82e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 21 | 0.8674 | 0.05716 | random_solver_y | 0.8031 | 0.06431 | 1.57e-08 | 7.32e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 21 | 0.7387 | 0.04516 | loss2 | 0.5215 | 0.2173 | 9.88e-14 | 9.05e-13 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 21 | 0.5908 | 0.04292 | loss2 | 0.4213 | 0.1695 | 9.82e-13 | 7.94e-12 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 21 | 0.8796 | 0.108 | random_solver_y | 0.8035 | 0.07606 | 0.0031 | 0.0054 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 21 | 0.9244 | 0.08811 | loss2 | 0.9104 | 0.014 | 0.2292 | 0.2415 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_spectral_norm | lower | **baseline** | 21 | 3.284 | 0.7349 | loss2 | 3.444 | 0.1593 | 0.0396 | 0.0548 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_mse_recomputed | lower | **loss3** | 21 | 2.8592e-04 | 3.8949e-04 | loss1 | 9.7973e-04 | 6.9382e-04 | 0.0009 | 0.0018 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | old_clean_residual_norm_l2 | lower | **loss3** | 21 | 0.4612 | 0.29 | loss1 | 0.8458 | 0.3847 | 9.50e-06 | 2.70e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | outward_local_gain_eps_mse | lower | **loss3** | 21 | 0.005953 | 0.006733 | loss1 | 0.01118 | 0.005226 | 0.0034 | 0.0059 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_norm | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.55e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_bias_gradient_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.55e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 21 | 8.4831e-04 | 0.001134 | random_clean_y | 0.009469 | 0.00862 | 3.36e-06 | 1.05e-05 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 21 | 0.7545 | 0.5608 | random_clean_y | 2.964 | 2.21 | 5.31e-09 | 2.63e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_clean_residual_rms | lower | **random_solver_y** | 21 | 0.02358 | 0.01752 | random_clean_y | 0.09262 | 0.06905 | 5.31e-09 | 2.63e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 21 | 0.4417 | 0.4244 | random_clean_y | 5.211 | 4.769 | 6.11e-08 | 2.55e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 21 | 0.0138 | 0.01326 | random_clean_y | 0.1628 | 0.149 | 6.11e-08 | 2.55e-07 | True |
 | robustness_svd_jacobian_25sample | robustness_generalization_21sample | solver_spectral_norm | lower | **baseline** | 21 | 3.612 | 0.7947 | loss1 | 3.612 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | svd_local_gain_eps_mse | lower | **loss3** | 21 | 0.03693 | 0.05434 | loss1 | 0.07341 | 0.03647 | 0.0006 | 0.0012 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_singular_value | lower | **random_solver_y** | 21 | 1.827 | 1.138 | random_clean_y | 4.06 | 2.232 | 7.61e-07 | 2.96e-06 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0040 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1457e-05 | loss2 | 0.001422 | 1.1887e-04 | 0.0266 | 0.0405 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | atb_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_affine_eps_abs_cos | higher | **loss1** | 2 | 0.8349 | 0.08498 | loss2 | 0.7581 | 0.0768 | 0.2015 | 0.2164 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8052 | 0.02482 | loss1 | 0.7826 | 0.02261 | 0.2415 | 0.2539 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_svd_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2228 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | **loss3** | 2 | 0.12 | 5.2684e-09 | random_clean_y | 0.12 | 3.7253e-09 | 0.2500 | 0.2623 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_mse | lower | **loss3** | 2 | 6.8292e-04 | 3.9598e-04 | loss1 | 0.001361 | 6.7799e-04 | 0.0672 | 0.0873 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_initial_mse | lower | **random_solver_y** | 2 | 3.4351e-07 | 9.2334e-08 | loss1 | 5.6132e-07 | 2.1781e-07 | 0.2586 | 0.2699 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.6296e-04 | 3.9863e-04 | loss1 | 0.00136 | 6.9739e-04 | 0.0645 | 0.0851 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.00363 | 9.6883e-05 | loss2 | 0.007995 | 0.004365 | 0.0962 | 0.1163 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | loss1 | 5.6584e-07 | 2.2240e-07 | 0.2587 | 0.2699 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | loss1 | 0.02379 | 0.005125 | 0.2595 | 0.2705 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_l2 | lower | **random_clean_y** | 2 | 3.84 | 9.0731e-09 | random_solver_y | 3.84 | 3.7211e-07 | 0.0306 | 0.0459 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_top_error_sv_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2228 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_effective_rank | lower | **loss3** | 2 | 2.137 | 0.5114 | random_clean_y | 5.708 | 3.571 | 0.0720 | 0.0925 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0359 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0359 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.222 | 0.006191 | loss1 | 0.6279 | 0.4059 | 0.0214 | 0.0338 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | random_clean_y | 7.151 | 6.922 | 0.0141 | 0.0240 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0104 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | error_top_right_delta_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2228 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_l2 | lower | **random_solver_y** | 2 | 0.1894 | 0.02103 | random_clean_y | 10.31 | 10.12 | 0.0245 | 0.0380 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_rms | lower | **random_solver_y** | 2 | 0.005918 | 6.5722e-04 | random_clean_y | 0.3221 | 0.3162 | 0.0245 | 0.0380 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0249 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_left_subspace_mean_cos | higher | **baseline** | 2 | 0.5684 | 0.02508 | loss2 | 0.5624 | 0.006059 | 0.4096 | 0.4152 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4534 | 3.6977e-04 | loss2 | 0.3302 | 0.1232 | 0.0363 | 0.0533 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9991 | 6.6940e-04 | loss1 | 0.9987 | 3.3758e-04 | 0.3913 | 0.3975 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 2 | 0.999 | 6.4077e-06 | random_solver_y | 0.9987 | 2.9619e-04 | 0.3313 | 0.3390 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_left_abs_cos | higher | **random_solver_y** | 2 | 0.9999 | 2.5569e-05 | loss1 | 0.9999 | 1.8243e-05 | 0.3639 | 0.3709 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_right_abs_cos | higher | **loss3** | 2 | 0.9999 | 5.4803e-05 | random_solver_y | 0.9999 | 2.6731e-05 | 0.2812 | 0.2906 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9953 | 0.001354 | loss3 | 0.9948 | 4.7274e-04 | 0.3414 | 0.3487 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 2 | 0.9876 | 0.006179 | random_solver_y | 0.9758 | 0.01173 | 0.1574 | 0.1751 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 2 | 0.7069 | 0.01162 | loss2 | 0.4935 | 0.2134 | 0.0639 | 0.0844 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 2 | 0.6469 | 0.02576 | loss2 | 0.4323 | 0.2146 | 0.0282 | 0.0427 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 1.0466e-05 | loss1 | 0.9998 | 5.6344e-05 | 0.3167 | 0.3251 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 3.4613e-05 | loss3 | 0.9998 | 4.3689e-05 | 0.0210 | 0.0336 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | model_spectral_norm | lower | **baseline** | 2 | 4.616 | 0.1634 | loss3 | 4.644 | 0.02793 | 0.3818 | 0.3882 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_mse_recomputed | lower | **loss1** | 2 | 5.6584e-07 | 2.3989e-07 | loss2 | 2.1893e-06 | 1.6234e-06 | 0.0579 | 0.0778 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02379 | 0.005162 | loss2 | 0.04707 | 0.02328 | 0.0197 | 0.0319 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | outward_local_gain_eps_mse | lower | **loss3** | 2 | 2.2873e-04 | 1.4531e-04 | loss2 | 0.001042 | 8.1360e-04 | 0.1001 | 0.1208 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | random_clean_y | 0.01022 | 0.01022 | 0.1335 | 0.1524 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | random_clean_y | 3.149 | 3.13 | 0.0741 | 0.0937 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_rms | lower | **random_solver_y** | 2 | 5.8337e-04 | 7.9071e-05 | random_clean_y | 0.0984 | 0.09781 | 0.0741 | 0.0937 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0630 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0630 | False |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | svd_local_gain_eps_mse | lower | **loss3** | 21 | 0.03693 | 0.05434 | loss1 | 0.07341 | 0.03647 | 0.0006 | 0.0011 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_singular_value | lower | **random_solver_y** | 21 | 1.827 | 1.138 | random_clean_y | 4.06 | 2.232 | 7.61e-07 | 2.61e-06 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | **loss3** | 21 | 1.352 | 0.8721 | random_solver_y | 1.827 | 0.475 | 0.0021 | 0.0037 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1457e-05 | loss2 | 0.001422 | 1.1887e-04 | 0.0266 | 0.0385 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | atb_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_affine_eps_abs_cos | higher | **loss1** | 2 | 0.8349 | 0.08498 | loss2 | 0.7581 | 0.0768 | 0.2015 | 0.2148 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8052 | 0.02482 | loss1 | 0.7826 | 0.02261 | 0.2415 | 0.2523 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_delta_svd_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2214 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | **loss3** | 2 | 0.12 | 5.2684e-09 | random_clean_y | 0.12 | 3.7253e-09 | 0.2500 | 0.2607 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_mse | lower | **loss3** | 2 | 6.8292e-04 | 3.9598e-04 | loss1 | 0.001361 | 6.7799e-04 | 0.0672 | 0.0846 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_initial_mse | lower | **random_solver_y** | 2 | 3.4351e-07 | 9.2334e-08 | loss1 | 5.6132e-07 | 2.1781e-07 | 0.2586 | 0.2684 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.6296e-04 | 3.9863e-04 | loss1 | 0.00136 | 6.9739e-04 | 0.0645 | 0.0822 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.00363 | 9.6883e-05 | loss2 | 0.007995 | 0.004365 | 0.0962 | 0.1138 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | loss1 | 5.6584e-07 | 2.2240e-07 | 0.2587 | 0.2684 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | loss1 | 0.02379 | 0.005125 | 0.2595 | 0.2690 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_l2 | lower | **random_clean_y** | 2 | 3.84 | 9.0731e-09 | random_solver_y | 3.84 | 3.7211e-07 | 0.0306 | 0.0436 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | delta_top_error_sv_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2214 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_effective_rank | lower | **loss3** | 2 | 2.137 | 0.5114 | random_clean_y | 5.708 | 3.571 | 0.0720 | 0.0897 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0340 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | loss1 | 0.6279 | 0.3996 | 0.0229 | 0.0340 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.222 | 0.006191 | loss1 | 0.6279 | 0.4059 | 0.0214 | 0.0319 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2283 | 0.008386 | random_clean_y | 7.151 | 6.922 | 0.0141 | 0.0224 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0097 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | error_top_right_delta_abs_cos | higher | **loss1** | 2 | 0.8338 | 0.08553 | loss2 | 0.7442 | 0.08959 | 0.2087 | 0.2214 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_l2 | lower | **random_solver_y** | 2 | 0.1894 | 0.02103 | random_clean_y | 10.31 | 10.12 | 0.0245 | 0.0360 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_delta_rms | lower | **random_solver_y** | 2 | 0.005918 | 6.5722e-04 | random_clean_y | 0.3221 | 0.3162 | 0.0245 | 0.0360 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | loss1 | 0.00363 | 0.002752 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | loss1 | 1.1345e-04 | 8.5985e-05 | 0.0148 | 0.0233 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_left_subspace_mean_cos | higher | **baseline** | 2 | 0.5684 | 0.02508 | loss2 | 0.5624 | 0.006059 | 0.4096 | 0.4145 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4534 | 3.6977e-04 | loss2 | 0.3302 | 0.1232 | 0.0363 | 0.0508 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9991 | 6.6940e-04 | loss1 | 0.9987 | 3.3758e-04 | 0.3913 | 0.3967 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 2 | 0.999 | 6.4077e-06 | random_solver_y | 0.9987 | 2.9619e-04 | 0.3313 | 0.3380 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_left_abs_cos | higher | **random_solver_y** | 2 | 0.9999 | 2.5569e-05 | loss1 | 0.9999 | 1.8243e-05 | 0.3639 | 0.3700 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top1_right_abs_cos | higher | **loss3** | 2 | 0.9999 | 5.4803e-05 | random_solver_y | 0.9999 | 2.6731e-05 | 0.2812 | 0.2894 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9953 | 0.001354 | loss3 | 0.9948 | 4.7274e-04 | 0.3414 | 0.3477 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 2 | 0.9876 | 0.006179 | random_solver_y | 0.9758 | 0.01173 | 0.1574 | 0.1731 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 2 | 0.7069 | 0.01162 | loss2 | 0.4935 | 0.2134 | 0.0639 | 0.0816 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 2 | 0.6469 | 0.02576 | loss2 | 0.4323 | 0.2146 | 0.0282 | 0.0406 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 1.0466e-05 | loss1 | 0.9998 | 5.6344e-05 | 0.3167 | 0.3240 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_solver_top5_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9999 | 3.4613e-05 | loss3 | 0.9998 | 4.3689e-05 | 0.0210 | 0.0316 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | model_spectral_norm | lower | **baseline** | 2 | 4.616 | 0.1634 | loss3 | 4.644 | 0.02793 | 0.3818 | 0.3874 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_mse_recomputed | lower | **loss1** | 2 | 5.6584e-07 | 2.3989e-07 | loss2 | 2.1893e-06 | 1.6234e-06 | 0.0579 | 0.0750 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | old_clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02379 | 0.005162 | loss2 | 0.04707 | 0.02328 | 0.0197 | 0.0300 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | outward_local_gain_eps_mse | lower | **loss3** | 2 | 2.2873e-04 | 1.4531e-04 | loss2 | 0.001042 | 8.1360e-04 | 0.1001 | 0.1182 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_norm | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0604 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_bias_gradient_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0604 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 3.4345e-07 | 9.2255e-08 | random_clean_y | 0.01022 | 0.01022 | 0.1335 | 0.1503 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.01867 | 0.00253 | random_clean_y | 3.149 | 3.13 | 0.0741 | 0.0911 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_clean_residual_rms | lower | **random_solver_y** | 2 | 5.8337e-04 | 7.9071e-05 | random_clean_y | 0.0984 | 0.09781 | 0.0741 | 0.0911 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 8.7885e-04 | 8.4646e-05 | random_clean_y | 4.866 | 4.865 | 0.0448 | 0.0604 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 2.7464e-05 | 2.6452e-06 | random_clean_y | 0.1521 | 0.152 | 0.0448 | 0.0604 | False |
 | robustness_svd_jacobian_25sample | robustness_test_2sample | solver_spectral_norm | lower | **baseline** | 2 | 4.705 | 0.03739 | loss1 | 4.705 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | svd_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1473e-05 | loss2 | 0.001422 | 1.1836e-04 | 0.0257 | 0.0392 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | top_error_singular_value | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | random_clean_y | 4.726 | 4.634 | 0.0038 | 0.0072 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | top_error_sv_value | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0104 | True |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 9.5852e-04 | 2.7065e-04 | loss2 | 0.001372 | 4.1305e-04 | 0.0828 | 0.1031 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | atb_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 2 | 0.5097 | 0.6051 | loss2 | 0.4715 | 0.03819 | 0.2655 | 0.2756 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8164 | 0.05842 | baseline | 0.772 | 0.04439 | 0.0375 | 0.0550 | False |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | svd_local_gain_eps_mse | lower | **loss1** | 2 | 0.001303 | 3.1473e-05 | loss2 | 0.001422 | 1.1836e-04 | 0.0257 | 0.0373 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | top_error_singular_value | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | random_clean_y | 4.726 | 4.634 | 0.0038 | 0.0067 | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | top_error_sv_value | lower | **random_solver_y** | 2 | 0.09268 | 0.001823 | loss1 | 0.2981 | 0.2054 | 0.0057 | 0.0097 | True |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | affine_local_gain_eps_mse | lower | **loss1** | 2 | 9.5852e-04 | 2.7065e-04 | loss2 | 0.001372 | 4.1305e-04 | 0.0828 | 0.1005 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | atb_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1582 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_affine_eps_abs_cos | higher | **baseline** | 2 | 0.5097 | 0.6051 | loss2 | 0.4715 | 0.03819 | 0.2655 | 0.2742 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_outward_abs_cos | higher | **loss2** | 2 | 0.8164 | 0.05842 | baseline | 0.772 | 0.04439 | 0.0375 | 0.0524 | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 1 | 0.8458 | 0 | baseline | 0.5024 | 0.3435 | NA | NA | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | attack_final_delta_rms | lower | **random_clean_y** | 1 | 0.12 | 0 | random_solver_y | 0.12 | 0 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_final_mse | lower | **loss3** | 2 | 6.9838e-04 | 1.0034e-04 | loss1 | 0.001125 | 4.2633e-04 | 0.2803 | 0.2903 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_final_mse | lower | **loss3** | 2 | 6.9838e-04 | 1.0034e-04 | loss1 | 0.001125 | 4.2633e-04 | 0.2803 | 0.2889 | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | attack_initial_mse | lower | **random_solver_y** | 1 | 3.9634e-07 | 0 | loss1 | 4.9225e-07 | 9.5912e-08 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.7187e-04 | 1.1020e-04 | loss1 | 0.001124 | 4.5235e-04 | 0.2730 | 0.2831 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.001751 | 4.0608e-04 | loss2 | 0.009217 | 0.007465 | 0.0692 | 0.0895 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | loss1 | 5.4726e-05 | 1.4395e-05 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | clean_residual_mse_recomputed | lower | **loss1** | 2 | 4.9051e-07 | 2.4295e-07 | random_solver_y | 6.2849e-07 | 1.3797e-07 | 0.1310 | 0.1522 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02205 | 0.00564 | random_solver_y | 0.02492 | 0.002863 | 0.0845 | 0.1052 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | attack_loss_increase | lower | **loss3** | 2 | 6.7187e-04 | 1.1020e-04 | loss1 | 0.001124 | 4.5235e-04 | 0.2730 | 0.2817 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1582 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_norm_original_table | lower | **loss1** | 2 | 0.001751 | 4.0608e-04 | loss2 | 0.009217 | 0.007465 | 0.0692 | 0.0868 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | bias_gradient_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | loss1 | 5.4726e-05 | 1.4395e-05 | 0.1432 | 0.1582 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | clean_residual_mse_recomputed | lower | **loss1** | 2 | 4.9051e-07 | 2.4295e-07 | random_solver_y | 6.2849e-07 | 1.3797e-07 | 0.1310 | 0.1498 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02205 | 0.00564 | random_solver_y | 0.02492 | 0.002863 | 0.0845 | 0.1026 | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | delta_l2 | lower | **random_solver_y** | 1 | 3.84 | 0 | random_clean_y | 3.84 | 8.3138e-08 | NA | NA | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | delta_top_error_sv_abs_cos | higher | **random_clean_y** | 1 | 0.8458 | 0 | baseline | 0.5024 | 0.3435 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_effective_rank | lower | **loss3** | 2 | 2.589 | 0.6743 | random_clean_y | 4.446 | 1.857 | 0.0491 | 0.0681 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | loss1 | 0.6185 | 0.3644 | 0.0399 | 0.0577 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | loss1 | 0.6185 | 0.3644 | 0.0399 | 0.0577 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.2479 | 0.05893 | loss1 | 0.6185 | 0.3705 | 0.0398 | 0.0577 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | random_clean_y | 6.331 | 6.077 | 0.0214 | 0.0338 | True |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | loss1 | 0.2565 | 0.1273 | 0.0520 | 0.0713 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | error_effective_rank | lower | **loss3** | 2 | 2.589 | 0.6743 | random_clean_y | 4.446 | 1.857 | 0.0491 | 0.0653 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | loss1 | 0.6185 | 0.3644 | 0.0399 | 0.0550 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_comparable | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | loss1 | 0.6185 | 0.3644 | 0.0399 | 0.0550 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_original_reported | lower | **random_solver_y** | 2 | 0.2479 | 0.05893 | loss1 | 0.6185 | 0.3705 | 0.0398 | 0.0550 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | error_fro_norm_true_from_full_jacobian | lower | **random_solver_y** | 2 | 0.2541 | 0.058 | random_clean_y | 6.331 | 6.077 | 0.0214 | 0.0319 | True |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | error_spectral_norm | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | loss1 | 0.2565 | 0.1273 | 0.0520 | 0.0685 | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | error_top_right_delta_abs_cos | higher | **random_clean_y** | 1 | 0.8458 | 0 | baseline | 0.5024 | 0.3435 | NA | NA | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_delta_l2 | lower | **random_solver_y** | 1 | 0.1464 | 0 | random_clean_y | 12.11 | 11.97 | NA | NA | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_delta_rms | lower | **random_solver_y** | 1 | 0.004574 | 0 | random_clean_y | 0.3785 | 0.374 | NA | NA | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | loss1 | 5.4726e-05 | 1.4395e-05 | 0.1432 | 0.1599 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 2 | 0.5885 | 0.03586 | loss2 | 0.571 | 0.01747 | 0.3744 | 0.3812 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4555 | 0.0379 | loss2 | 0.3298 | 0.1257 | 0.0518 | 0.0712 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9997 | 1.0687e-04 | loss1 | 0.9996 | 1.3670e-04 | 0.0857 | 0.1065 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top10_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9995 | 4.2070e-05 | loss3 | 0.9989 | 6.1345e-04 | 0.1088 | 0.1291 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top1_left_abs_cos | higher | **loss1** | 2 | 0.9999 | 2.6750e-05 | random_solver_y | 0.9997 | 2.5916e-04 | 0.2574 | 0.2692 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top1_right_abs_cos | higher | **random_solver_y** | 2 | 0.9999 | 9.2156e-06 | loss3 | 0.9998 | 6.4051e-05 | 0.2308 | 0.2443 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top20_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.994 | 0.00409 | loss3 | 0.9915 | 0.002525 | 0.1066 | 0.1269 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 2 | 0.9878 | 0.003902 | random_solver_y | 0.9832 | 0.004559 | 0.2040 | 0.2188 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 2 | 0.7001 | 0.01639 | loss2 | 0.5152 | 0.1849 | 0.0072 | 0.0130 | True |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 2 | 0.6391 | 0.0244 | loss2 | 0.4645 | 0.1746 | 0.0011 | 0.0022 | True |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top5_left_subspace_mean_cos | higher | **loss1** | 2 | 0.9998 | 1.0601e-04 | random_solver_y | 0.9997 | 6.2574e-05 | 0.1607 | 0.1783 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top5_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9998 | 2.3718e-05 | loss3 | 0.9998 | 4.5368e-05 | 0.1978 | 0.2131 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | model_spectral_norm | lower | **baseline** | 2 | 4.092 | 0.7789 | loss3 | 4.251 | 0.1583 | 0.1478 | 0.1646 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | old_clean_residual_mse_recomputed | lower | **loss1** | 2 | 4.9051e-07 | 2.4295e-07 | loss2 | 2.4832e-06 | 1.9927e-06 | 0.0918 | 0.1117 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | old_clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02205 | 0.00564 | loss2 | 0.05025 | 0.02819 | 0.0907 | 0.1114 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | outward_local_gain_eps_mse | lower | **loss1** | 2 | 3.2716e-04 | 3.9471e-05 | loss3 | 8.8479e-04 | 5.5763e-04 | 0.1397 | 0.1583 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_bias_gradient_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | random_clean_y | 0.2325 | 0.2312 | 0.1328 | 0.1522 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_bias_gradient_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | random_clean_y | 0.007266 | 0.007226 | 0.1328 | 0.1522 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 6.2849e-07 | 3.2808e-07 | random_clean_y | 1.2017e-05 | 1.1389e-05 | 0.1140 | 0.1347 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.02492 | 0.006742 | random_clean_y | 0.1089 | 0.08398 | 0.0612 | 0.0817 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_clean_residual_rms | lower | **random_solver_y** | 2 | 7.7865e-04 | 2.1067e-04 | random_clean_y | 0.003403 | 0.002624 | 0.0612 | 0.0817 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | random_clean_y | 0.2325 | 0.2312 | 0.1328 | 0.1522 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | random_clean_y | 0.007266 | 0.007226 | 0.1328 | 0.1522 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | loss1 | 0.001751 | 4.6065e-04 | 0.1432 | 0.1582 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | loss1 | 5.4726e-05 | 1.4395e-05 | 0.1432 | 0.1582 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top100_left_subspace_mean_cos | higher | **loss3** | 2 | 0.5885 | 0.03586 | loss2 | 0.571 | 0.01747 | 0.3744 | 0.3803 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top100_right_subspace_mean_cos | higher | **loss3** | 2 | 0.4555 | 0.0379 | loss2 | 0.3298 | 0.1257 | 0.0518 | 0.0684 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top10_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9997 | 1.0687e-04 | loss1 | 0.9996 | 1.3670e-04 | 0.0857 | 0.1039 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top10_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9995 | 4.2070e-05 | loss3 | 0.9989 | 6.1345e-04 | 0.1088 | 0.1266 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top1_left_abs_cos | higher | **loss1** | 2 | 0.9999 | 2.6750e-05 | random_solver_y | 0.9997 | 2.5916e-04 | 0.2574 | 0.2676 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top1_right_abs_cos | higher | **random_solver_y** | 2 | 0.9999 | 9.2156e-06 | loss3 | 0.9998 | 6.4051e-05 | 0.2308 | 0.2427 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top20_left_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.994 | 0.00409 | loss3 | 0.9915 | 0.002525 | 0.1066 | 0.1244 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 2 | 0.9878 | 0.003902 | random_solver_y | 0.9832 | 0.004559 | 0.2040 | 0.2172 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top50_left_subspace_mean_cos | higher | **loss3** | 2 | 0.7001 | 0.01639 | loss2 | 0.5152 | 0.1849 | 0.0072 | 0.0120 | True |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 2 | 0.6391 | 0.0244 | loss2 | 0.4645 | 0.1746 | 0.0011 | 0.0020 | True |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top5_left_subspace_mean_cos | higher | **loss1** | 2 | 0.9998 | 1.0601e-04 | random_solver_y | 0.9997 | 6.2574e-05 | 0.1607 | 0.1762 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_solver_top5_right_subspace_mean_cos | higher | **random_solver_y** | 2 | 0.9998 | 2.3718e-05 | loss3 | 0.9998 | 4.5368e-05 | 0.1978 | 0.2114 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | model_spectral_norm | lower | **baseline** | 2 | 4.092 | 0.7789 | loss3 | 4.251 | 0.1583 | 0.1478 | 0.1629 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | old_clean_residual_mse_recomputed | lower | **loss1** | 2 | 4.9051e-07 | 2.4295e-07 | loss2 | 2.4832e-06 | 1.9927e-06 | 0.0918 | 0.1092 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | old_clean_residual_norm_l2 | lower | **loss1** | 2 | 0.02205 | 0.00564 | loss2 | 0.05025 | 0.02819 | 0.0907 | 0.1088 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | outward_local_gain_eps_mse | lower | **loss1** | 2 | 3.2716e-04 | 3.9471e-05 | loss3 | 8.8479e-04 | 5.5763e-04 | 0.1397 | 0.1563 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_bias_gradient_norm | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | random_clean_y | 0.2325 | 0.2312 | 0.1328 | 0.1500 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_bias_gradient_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | random_clean_y | 0.007266 | 0.007226 | 0.1328 | 0.1500 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_clean_residual_mse_recomputed | lower | **random_solver_y** | 2 | 6.2849e-07 | 3.2808e-07 | random_clean_y | 1.2017e-05 | 1.1389e-05 | 0.1140 | 0.1322 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_clean_residual_norm_l2 | lower | **random_solver_y** | 2 | 0.02492 | 0.006742 | random_clean_y | 0.1089 | 0.08398 | 0.0612 | 0.0788 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_clean_residual_rms | lower | **random_solver_y** | 2 | 7.7865e-04 | 2.1067e-04 | random_clean_y | 0.003403 | 0.002624 | 0.0612 | 0.0788 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_j_error_transpose_error_l2 | lower | **random_solver_y** | 2 | 0.001291 | 7.2074e-04 | random_clean_y | 0.2325 | 0.2312 | 0.1328 | 0.1500 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | random_j_error_transpose_error_rms | lower | **random_solver_y** | 2 | 4.0330e-05 | 2.2523e-05 | random_clean_y | 0.007266 | 0.007226 | 0.1328 | 0.1500 | False |
 | robustness_svd_jacobian_25sample | robustness_train_2sample | solver_spectral_norm | lower | **baseline** | 2 | 4.3 | 0.883 | loss1 | 4.3 | 0 | 0.5000 | 0.5000 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | svd_local_gain_eps_mse | lower | **loss1** | 2 | 9.5843e-04 | 2.7069e-04 | loss2 | 0.00137 | 4.1125e-04 | 0.0819 | 0.1023 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | top_error_singular_value | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | random_clean_y | 4.285 | 4.156 | 0.0468 | 0.0654 | False |
-| robustness_svd_jacobian_25sample | robustness_train_2sample | top_error_sv_value | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | loss1 | 0.2565 | 0.1273 | 0.0520 | 0.0713 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | svd_local_gain_eps_mse | lower | **loss1** | 2 | 9.5843e-04 | 2.7069e-04 | loss2 | 0.00137 | 4.1125e-04 | 0.0819 | 0.0997 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | top_error_singular_value | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | random_clean_y | 4.285 | 4.156 | 0.0468 | 0.0627 | False |
+| robustness_svd_jacobian_25sample | robustness_train_2sample | top_error_sv_value | lower | **random_solver_y** | 2 | 0.1291 | 0.06626 | loss1 | 0.2565 | 0.1273 | 0.0520 | 0.0685 | False |
 
 ## Error-Jacobian Singular Spectrum
 
 | family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank01 | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank02 | lower | **loss3** | 25 | 0.8395 | 0.4665 | random_solver_y | 1.116 | 0.2763 | 0.0077 | 0.0137 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank01 | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank02 | lower | **loss3** | 25 | 0.8395 | 0.4665 | random_solver_y | 1.116 | 0.2763 | 0.0077 | 0.0127 | True |
 | svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank03 | lower | **loss3** | 25 | 0.5789 | 0.3289 | random_solver_y | 0.8593 | 0.2803 | 0.0002 | 0.0003 | True |
 | svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | **loss3** | 25 | 0.4572 | 0.2642 | random_solver_y | 0.6981 | 0.2408 | 0.0001 | 0.0003 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | **loss3** | 25 | 0.3899 | 0.2294 | random_solver_y | 0.5638 | 0.1739 | 0.0004 | 0.0009 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | **loss3** | 25 | 0.3899 | 0.2294 | random_solver_y | 0.5638 | 0.1739 | 0.0004 | 0.0008 | True |
 | svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank06 | lower | **loss3** | 25 | 0.3162 | 0.1835 | random_solver_y | 0.4559 | 0.1398 | 5.04e-05 | 0.0001 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | **loss3** | 25 | 0.2584 | 0.1472 | random_solver_y | 0.3805 | 0.1222 | 1.83e-05 | 5.47e-05 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | **loss3** | 25 | 0.2124 | 0.1237 | random_solver_y | 0.3314 | 0.119 | 4.57e-06 | 1.54e-05 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | **loss3** | 25 | 0.1799 | 0.1048 | random_solver_y | 0.291 | 0.111 | 8.07e-07 | 3.11e-06 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | **loss3** | 25 | 0.1551 | 0.08358 | random_solver_y | 0.2616 | 0.1065 | 1.47e-06 | 5.46e-06 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | **loss3** | 25 | 0.1354 | 0.07012 | random_solver_y | 0.23 | 0.09456 | 2.97e-06 | 1.04e-05 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | **loss3** | 25 | 0.1199 | 0.05949 | random_solver_y | 0.1975 | 0.07753 | 1.52e-06 | 5.64e-06 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | **loss3** | 25 | 0.1088 | 0.05485 | random_solver_y | 0.1714 | 0.06266 | 8.37e-06 | 2.68e-05 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | **loss3** | 25 | 0.2584 | 0.1472 | random_solver_y | 0.3805 | 0.1222 | 1.83e-05 | 4.89e-05 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | **loss3** | 25 | 0.2124 | 0.1237 | random_solver_y | 0.3314 | 0.119 | 4.57e-06 | 1.38e-05 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | **loss3** | 25 | 0.1799 | 0.1048 | random_solver_y | 0.291 | 0.111 | 8.07e-07 | 2.76e-06 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | **loss3** | 25 | 0.1551 | 0.08358 | random_solver_y | 0.2616 | 0.1065 | 1.47e-06 | 4.86e-06 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | **loss3** | 25 | 0.1354 | 0.07012 | random_solver_y | 0.23 | 0.09456 | 2.97e-06 | 9.33e-06 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | **loss3** | 25 | 0.1199 | 0.05949 | random_solver_y | 0.1975 | 0.07753 | 1.52e-06 | 5.03e-06 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | **loss3** | 25 | 0.1088 | 0.05485 | random_solver_y | 0.1714 | 0.06266 | 8.37e-06 | 2.39e-05 | True |
 | svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | **loss3** | 25 | 0.09924 | 0.05022 | random_solver_y | 0.149 | 0.04979 | 4.98e-05 | 0.0001 | True |
 | svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | **loss3** | 25 | 0.09099 | 0.04489 | random_solver_y | 0.1367 | 0.0457 | 0.0001 | 0.0002 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | **loss3** | 25 | 0.08171 | 0.04077 | loss1 | 0.1218 | 0.04011 | 2.81e-10 | 1.82e-09 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | **loss3** | 25 | 0.07334 | 0.0359 | random_solver_y | 0.1119 | 0.03856 | 3.36e-05 | 9.22e-05 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | **loss3** | 25 | 0.06726 | 0.03277 | loss1 | 0.09956 | 0.0323 | 6.09e-13 | 5.67e-12 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | **loss3** | 25 | 0.06171 | 0.03043 | random_solver_y | 0.09074 | 0.02903 | 2.20e-05 | 6.55e-05 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | **loss3** | 25 | 0.05645 | 0.02733 | loss2 | 0.08124 | 0.0248 | 4.18e-08 | 1.98e-07 | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | **loss3** | 500 | 0.2777 | 0.3885 | random_solver_y | 0.3952 | 0.1175 | 5.06e-23 | 3.46e-21 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_l2 | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_mean | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0570 | False |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_l2 | lower | **loss3** | 25 | 1.779 | 0.9837 | random_solver_y | 2.312 | 0.5327 | 0.0055 | 0.0101 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_mean | lower | **loss3** | 25 | 0.7074 | 0.3799 | random_solver_y | 0.9579 | 0.2505 | 0.0013 | 0.0026 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_l2 | lower | **loss3** | 25 | 1.863 | 1.008 | random_solver_y | 2.451 | 0.5882 | 0.0031 | 0.0059 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | **loss3** | 25 | 0.08171 | 0.04077 | loss1 | 0.1218 | 0.04011 | 2.81e-10 | 1.69e-09 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | **loss3** | 25 | 0.07334 | 0.0359 | random_solver_y | 0.1119 | 0.03856 | 3.36e-05 | 8.34e-05 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | **loss3** | 25 | 0.06726 | 0.03277 | loss1 | 0.09956 | 0.0323 | 6.09e-13 | 5.00e-12 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | **loss3** | 25 | 0.06171 | 0.03043 | random_solver_y | 0.09074 | 0.02903 | 2.20e-05 | 5.87e-05 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | **loss3** | 25 | 0.05645 | 0.02733 | loss2 | 0.08124 | 0.0248 | 4.18e-08 | 1.79e-07 | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | **loss3** | 500 | 0.2777 | 0.3885 | random_solver_y | 0.3952 | 0.1175 | 5.06e-23 | 3.09e-21 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_l2 | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_mean | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_l2 | lower | **loss3** | 25 | 1.779 | 0.9837 | random_solver_y | 2.312 | 0.5327 | 0.0055 | 0.0094 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_mean | lower | **loss3** | 25 | 0.7074 | 0.3799 | random_solver_y | 0.9579 | 0.2505 | 0.0013 | 0.0024 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_l2 | lower | **loss3** | 25 | 1.863 | 1.008 | random_solver_y | 2.451 | 0.5882 | 0.0031 | 0.0054 | True |
 | svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_mean | lower | **loss3** | 25 | 0.4659 | 0.2463 | random_solver_y | 0.651 | 0.1851 | 0.0002 | 0.0005 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_l2 | lower | **loss3** | 25 | 1.891 | 1.011 | random_solver_y | 2.502 | 0.6119 | 0.0024 | 0.0047 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_l2 | lower | **loss3** | 25 | 1.891 | 1.011 | random_solver_y | 2.502 | 0.6119 | 0.0024 | 0.0043 | True |
 | svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | **loss3** | 25 | 0.2777 | 0.1402 | random_solver_y | 0.3952 | 0.1175 | 9.24e-05 | 0.0002 | True |
+
+## Top100 Error-Jacobian Singular Spectrum Supplement
+
+| family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | **loss3** | 2500 | 0.0653 | 0.2039 | random_solver_y | 0.08941 | 0.02411 | 1.72e-22 | 9.93e-21 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_l2 | lower | **loss3** | 25 | 1.898 | 1.01 | random_solver_y | 2.512 | 0.6142 | 0.0023 | 0.0042 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_mean | lower | **loss3** | 25 | 0.0653 | 0.03093 | random_solver_y | 0.08941 | 0.02411 | 0.0001 | 0.0003 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top10_l2 | lower | **loss3** | 25 | 1.863 | 1.008 | random_solver_y | 2.451 | 0.5883 | 0.0031 | 0.0054 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top10_mean | lower | **loss3** | 25 | 0.4659 | 0.2463 | random_solver_y | 0.651 | 0.1851 | 0.0002 | 0.0005 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top1_l2 | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top1_mean | lower | **loss3** | 25 | 1.272 | 0.8203 | random_solver_y | 1.553 | 0.281 | 0.0392 | 0.0543 | False |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_l2 | lower | **loss3** | 25 | 1.891 | 1.011 | random_solver_y | 2.503 | 0.612 | 0.0024 | 0.0043 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_mean | lower | **loss3** | 25 | 0.2777 | 0.1402 | random_solver_y | 0.3952 | 0.1175 | 9.23e-05 | 0.0002 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_l2 | lower | **loss3** | 25 | 1.897 | 1.01 | random_solver_y | 2.512 | 0.6145 | 0.0023 | 0.0042 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_mean | lower | **loss3** | 25 | 0.1246 | 0.06022 | random_solver_y | 0.1748 | 0.05022 | 8.82e-05 | 0.0002 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top5_l2 | lower | **loss3** | 25 | 1.779 | 0.9837 | random_solver_y | 2.312 | 0.5327 | 0.0055 | 0.0094 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top5_mean | lower | **loss3** | 25 | 0.7074 | 0.3799 | random_solver_y | 0.9579 | 0.2505 | 0.0013 | 0.0024 | True |
+
+## Top50/Top100 Model-Solver Subspace Supplement
+
+| family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_left_subspace_mean_cos | higher | **random_solver_y** | 25 | 0.5709 | 0.03354 | loss3 | 0.5586 | 0.01231 | 0.1494 | 0.1646 | False |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_right_subspace_mean_cos | higher | **random_solver_y** | 25 | 0.4604 | 0.01963 | loss3 | 0.4497 | 0.01074 | 0.0171 | 0.0264 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9335 | 0.06611 | random_solver_y | 0.8543 | 0.07921 | 3.66e-05 | 9.02e-05 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9579 | 0.04259 | loss1 | 0.9114 | 0.04658 | 3.34e-05 | 8.31e-05 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_left_subspace_mean_cos | higher | **loss3** | 25 | 0.9433 | 0.03939 | random_solver_y | 0.9141 | 0.02918 | 0.0001 | 0.0002 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_right_subspace_mean_cos | higher | **loss3** | 25 | 0.8866 | 0.06892 | random_solver_y | 0.8315 | 0.05513 | 6.78e-08 | 2.79e-07 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_left_subspace_mean_cos | higher | **random_solver_y** | 25 | 0.7541 | 0.06021 | loss3 | 0.7331 | 0.02102 | 0.0274 | 0.0395 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | **loss3** | 25 | 0.5992 | 0.0444 | random_solver_y | 0.59 | 0.009196 | 0.0906 | 0.1088 | False |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_left_subspace_mean_cos | higher | **loss3** | 25 | 0.8979 | 0.1075 | random_solver_y | 0.8348 | 0.06314 | 0.0038 | 0.0066 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_right_subspace_mean_cos | higher | **loss3** | 25 | 0.9364 | 0.08524 | loss2 | 0.9244 | 0.01199 | 0.2237 | 0.2364 | False |
+
+## Random-Model Affine/Local-Gain Supplement
+
+| family | scope | metric | direction | best_model | n | mean | std | runner_up_model | runner_up_mean | advantage_vs_runner_up | best_vs_runner_t_p_one_sided_better | best_vs_runner_t_q_one_sided_better_bh_fdr | best_vs_runner_significant_q05 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| random_affine_direction_supplement | random_affine_25sample | affine_local_gain_eps_linear_mse | lower | **random_solver_y** | 25 | 7.2671e-04 | 0.001558 | random_clean_y | 0.02374 | 0.02301 | 5.46e-07 | 1.93e-06 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_local_gain_eps_mse | lower | **random_solver_y** | 25 | 0.05601 | 0.072 | random_clean_y | 0.2799 | 0.2239 | 8.55e-08 | 3.40e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_local_gain_eps_quadratic_mse | lower | **random_solver_y** | 25 | 0.05529 | 0.07107 | random_clean_y | 0.2562 | 0.2009 | 2.01e-07 | 7.54e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_over_outward_gain_ratio | lower | **random_clean_y** | 25 | 1.453 | 0.3533 | random_solver_y | 4.46 | 3.008 | 2.79e-06 | 8.84e-06 | True |
+| random_affine_direction_supplement | random_affine_25sample | affine_over_svd_gain_ratio | lower | **random_solver_y** | 25 | 1.001 | 0.001489 | random_clean_y | 1.009 | 0.007464 | 0.0009 | 0.0017 | True |
+| random_affine_direction_supplement | random_affine_25sample | attack_delta_affine_eps_abs_cos | higher | **random_clean_y** | 24 | 0.4187 | 0.2477 | random_solver_y | 0.1571 | 0.2616 | 5.72e-05 | 0.0001 | True |
+| random_affine_direction_supplement | random_affine_25sample | attack_delta_outward_abs_cos | higher | **random_solver_y** | 24 | 0.7477 | 0.1533 | random_clean_y | 0.6155 | 0.1322 | 0.0143 | 0.0227 | True |
+| random_affine_direction_supplement | random_affine_25sample | attack_delta_svd_abs_cos | higher | **random_clean_y** | 24 | 0.3935 | 0.2145 | random_solver_y | 0.1428 | 0.2507 | 3.85e-05 | 9.38e-05 | True |
+| random_affine_direction_supplement | random_affine_25sample | bias_gradient_norm | lower | **random_solver_y** | 25 | 0.3712 | 0.4211 | random_clean_y | 4.785 | 4.414 | 2.15e-08 | 9.66e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | clean_residual_mse_recomputed | lower | **random_solver_y** | 25 | 7.1266e-04 | 0.001083 | random_clean_y | 0.008772 | 0.008059 | 1.30e-06 | 4.35e-06 | True |
+| random_affine_direction_supplement | random_affine_25sample | clean_residual_norm_l2 | lower | **random_solver_y** | 25 | 0.6372 | 0.5807 | random_clean_y | 2.75 | 2.113 | 3.40e-09 | 1.75e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | error_effective_rank | lower | **random_clean_y** | 25 | 7.277 | 1.66 | random_solver_y | 9.173 | 1.896 | 0.0470 | 0.0629 | False |
+| random_affine_direction_supplement | random_affine_25sample | error_fro_norm | lower | **random_solver_y** | 25 | 2.512 | 1.749 | random_clean_y | 7.225 | 4.713 | 1.38e-11 | 9.53e-11 | True |
+| random_affine_direction_supplement | random_affine_25sample | error_spectral_norm | lower | **random_solver_y** | 25 | 1.553 | 1.221 | random_clean_y | 4.131 | 2.579 | 1.73e-08 | 7.98e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_affine_eps_abs_cos | higher | **random_clean_y** | 25 | 0.6601 | 0.2072 | random_solver_y | 0.2493 | 0.4108 | 2.41e-07 | 8.96e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_local_gain_eps_linear_mse | lower | **random_solver_y** | 25 | 0.002784 | 0.003158 | random_clean_y | 0.03589 | 0.0331 | 2.15e-08 | 9.66e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_local_gain_eps_mse | lower | **random_solver_y** | 25 | 0.0148 | 0.02711 | random_clean_y | 0.2042 | 0.1894 | 4.31e-09 | 2.18e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | outward_local_gain_eps_quadratic_mse | lower | **random_solver_y** | 25 | 0.01202 | 0.02506 | random_clean_y | 0.1684 | 0.1563 | 1.76e-08 | 8.08e-08 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_affine_eps_abs_angle_deg | lower | **random_solver_y** | 25 | 2.983 | 3.382 | random_clean_y | 7.692 | 4.709 | 0.0013 | 0.0024 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_affine_eps_abs_cos | higher | **random_solver_y** | 25 | 0.997 | 0.008738 | random_clean_y | 0.9851 | 0.01192 | 0.0091 | 0.0150 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_local_gain_eps_linear_mse | lower | **random_solver_y** | 25 | 6.3976e-04 | 0.001549 | random_clean_y | 0.02011 | 0.01947 | 6.87e-06 | 2.02e-05 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_local_gain_eps_mse | lower | **random_solver_y** | 25 | 0.05597 | 0.07197 | random_clean_y | 0.278 | 0.222 | 1.00e-07 | 3.98e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_local_gain_eps_quadratic_mse | lower | **random_solver_y** | 25 | 0.05533 | 0.0711 | random_clean_y | 0.2579 | 0.2025 | 1.73e-07 | 6.66e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_outward_abs_angle_deg | lower | **random_clean_y** | 25 | 53.44 | 20.07 | random_solver_y | 76.71 | 23.27 | 9.24e-05 | 0.0002 | True |
+| random_affine_direction_supplement | random_affine_25sample | svd_outward_abs_cos | higher | **random_clean_y** | 25 | 0.5604 | 0.2678 | random_solver_y | 0.2113 | 0.3491 | 2.57e-05 | 6.77e-05 | True |
 
 ## Best-Vs-Other Significance Tests
 
 | family | scope | metric | direction | reference_model | other_model | n_pairs | reference_pair_mean | other_pair_mean | mean_advantage_reference_positive | paired_t_p_reference_better_one_sided | paired_t_q_reference_better_bh_fdr | wilcoxon_p_reference_better_one_sided | reference_better_significant_q05 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_clean_y | 500 | 0.2777 | 1.135 | 0.8576 | 2.98e-71 | 2.86e-68 | 2.03e-83 | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss2 | 500 | 0.2777 | 0.4451 | 0.1674 | 1.36e-37 | 6.53e-35 | 2.67e-73 | True |
-| attack_robustness_52dataset | attack_all_52dataset | attack_loss_increase_mean | lower | random_solver_y | random_clean_y | 52 | 0.008167 | 0.03716 | 0.02899 | 5.98e-34 | 1.43e-31 | 1.75e-10 | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | baseline | 500 | 0.2777 | 0.5204 | 0.2427 | 4.64e-34 | 1.43e-31 | 2.00e-78 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | attack_loss_increase_mean | lower | random_solver_y | random_clean_y | 50 | 0.008381 | 0.03694 | 0.02856 | 4.68e-33 | 8.98e-31 | 8.88e-16 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_clean_y | 50 | 0.01205 | 0.0948 | 0.08275 | 4.99e-32 | 7.98e-30 | 8.88e-16 | True |
-| attack_robustness_52dataset | attack_all_52dataset | final_loss_mean | lower | random_solver_y | random_clean_y | 52 | 0.008655 | 0.04701 | 0.03836 | 8.02e-31 | 1.10e-28 | 1.75e-10 | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss1 | 500 | 0.2777 | 0.4307 | 0.153 | 1.10e-30 | 1.32e-28 | 5.51e-68 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_clean_y | 52 | 0.01175 | 0.09274 | 0.08098 | 2.35e-30 | 2.51e-28 | 1.86e-10 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | final_loss_mean | lower | random_solver_y | random_clean_y | 50 | 0.008889 | 0.04705 | 0.03816 | 2.14e-29 | 2.05e-27 | 8.88e-16 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_clean_y | 50 | 0.02364 | 0.181 | 0.1574 | 9.29e-28 | 8.10e-26 | 8.88e-16 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_clean_y | 52 | 0.02305 | 0.1771 | 0.154 | 6.74e-27 | 5.39e-25 | 1.86e-10 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss2 | 50 | 0.01205 | 0.02229 | 0.01024 | 5.73e-24 | 4.23e-22 | 8.88e-16 | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_solver_y | 500 | 0.2777 | 0.3952 | 0.1175 | 5.06e-23 | 3.46e-21 | 6.82e-50 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss1 | 50 | 0.01205 | 0.02103 | 0.008977 | 4.92e-22 | 3.15e-20 | 8.88e-16 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | baseline | 50 | 0.01205 | 0.0299 | 0.01785 | 5.66e-21 | 3.39e-19 | 8.88e-16 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss2 | 52 | 0.01175 | 0.02149 | 0.009739 | 6.93e-21 | 3.91e-19 | 2.09e-10 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | baseline | 52 | 0.01175 | 0.0291 | 0.01735 | 1.11e-20 | 5.91e-19 | 1.75e-10 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss2 | 50 | 0.02364 | 0.04354 | 0.0199 | 8.81e-20 | 4.45e-18 | 8.88e-16 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | random_clean_y | 25 | 0.2777 | 1.135 | 0.8576 | 2.30e-19 | 1.10e-17 | 2.98e-08 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss1 | 52 | 0.01175 | 0.02025 | 0.008496 | 4.91e-19 | 2.24e-17 | 2.35e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.7331 | 0.4632 | 0.2699 | 1.29e-18 | 5.61e-17 | 2.98e-08 | True |
-| attack_robustness_52dataset | attack_generalization_50dataset | initial_loss_mean | lower | random_solver_y | random_clean_y | 50 | 5.0754e-04 | 0.01011 | 0.009606 | 1.35e-18 | 5.65e-17 | 8.88e-16 | True |
-| attack_robustness_52dataset | attack_all_52dataset | initial_loss_mean | lower | random_solver_y | random_clean_y | 52 | 4.8804e-04 | 0.009854 | 0.009366 | 1.64e-18 | 6.55e-17 | 1.75e-10 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_mean | lower | loss3 | random_clean_y | 25 | 0.4659 | 1.943 | 1.477 | 2.06e-18 | 7.91e-17 | 2.98e-08 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | baseline | 50 | 0.02364 | 0.05774 | 0.03409 | 2.16e-18 | 7.95e-17 | 8.88e-16 | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | random_clean_y | 50 | 1.9777e-04 | 0.01011 | 0.009916 | 2.76e-18 | 9.82e-17 | 8.88e-16 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | baseline | 52 | 0.02305 | 0.05618 | 0.03313 | 2.88e-18 | 9.87e-17 | 1.75e-10 | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | random_clean_y | 52 | 1.9093e-04 | 0.009854 | 0.009663 | 3.36e-18 | 1.11e-16 | 1.86e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.4497 | 0.3206 | 0.129 | 5.22e-18 | 1.67e-16 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9579 | 0.6181 | 0.3399 | 6.86e-18 | 2.12e-16 | 2.98e-08 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss2 | 52 | 0.02305 | 0.04198 | 0.01892 | 7.12e-18 | 2.13e-16 | 2.09e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9433 | 0.6879 | 0.2554 | 7.76e-18 | 2.26e-16 | 2.98e-08 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss1 | 50 | 0.02364 | 0.04117 | 0.01753 | 1.03e-17 | 2.92e-16 | 8.88e-16 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9335 | 0.5397 | 0.3938 | 2.40e-17 | 6.59e-16 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.4497 | 0.3134 | 0.1362 | 2.98e-17 | 7.95e-16 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8979 | 0.3779 | 0.52 | 3.54e-17 | 9.17e-16 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.4497 | 0.3324 | 0.1173 | 9.16e-17 | 2.21e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.7331 | 0.4964 | 0.2367 | 9.22e-17 | 2.21e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.5992 | 0.3921 | 0.207 | 9.08e-17 | 2.21e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.5992 | 0.4114 | 0.1878 | 1.29e-16 | 3.02e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.7387 | 0.4591 | 0.2797 | 1.36e-16 | 3.11e-15 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 3.18e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 3.18e-15 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_l2 | lower | loss3 | random_clean_y | 25 | 1.891 | 7.213 | 5.323 | 1.49e-16 | 3.18e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 25 | 1.899 | 7.213 | 5.315 | 1.58e-16 | 3.30e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.7331 | 0.5187 | 0.2144 | 1.74e-16 | 3.55e-15 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank06 | lower | loss3 | random_clean_y | 25 | 0.3162 | 1.482 | 1.166 | 2.33e-16 | 4.65e-15 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_l2 | lower | loss3 | random_clean_y | 25 | 1.863 | 7.119 | 5.255 | 2.50e-16 | 4.89e-15 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | random_clean_y | 25 | 0.1799 | 0.8285 | 0.6486 | 3.69e-16 | 7.08e-15 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | random_clean_y | 25 | 0.3899 | 1.791 | 1.401 | 3.82e-16 | 7.18e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9216 | 0.5108 | 0.4107 | 5.15e-16 | 9.50e-15 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | random_clean_y | 25 | 0.1088 | 0.4147 | 0.306 | 5.42e-16 | 9.81e-15 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9338 | 0.6736 | 0.2602 | 5.68e-16 | 1.01e-14 | 4.77e-07 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss1 | 52 | 0.02305 | 0.03965 | 0.0166 | 6.35e-16 | 1.11e-14 | 2.96e-10 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_mean | lower | loss3 | random_clean_y | 25 | 0.7074 | 2.841 | 2.133 | 9.34e-16 | 1.60e-14 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.5992 | 0.4257 | 0.1735 | 1.21e-15 | 2.04e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | random_clean_y | 25 | 0.07334 | 0.2437 | 0.1704 | 1.45e-15 | 2.36e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | random_clean_y | 25 | 0.06171 | 0.195 | 0.1333 | 1.43e-15 | 2.36e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | baseline | 25 | 0.1551 | 0.3072 | 0.1521 | 1.56e-15 | 2.49e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | random_clean_y | 25 | 0.1551 | 0.7026 | 0.5475 | 1.62e-15 | 2.54e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | random_clean_y | 25 | 0.2124 | 0.9841 | 0.7716 | 1.65e-15 | 2.56e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | random_clean_y | 25 | 0.09924 | 0.3638 | 0.2646 | 1.95e-15 | 2.97e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | random_clean_y | 25 | 0.1354 | 0.5788 | 0.4434 | 2.04e-15 | 3.05e-14 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9364 | 0.5331 | 0.4033 | 2.19e-15 | 3.24e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | random_clean_y | 25 | 0.08171 | 0.2757 | 0.194 | 2.32e-15 | 3.36e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank03 | lower | loss3 | random_clean_y | 25 | 0.5789 | 2.764 | 2.185 | 3.24e-15 | 4.63e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | baseline | 25 | 0.1799 | 0.3713 | 0.1914 | 3.77e-15 | 5.24e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | baseline | 25 | 0.1354 | 0.2698 | 0.1344 | 3.73e-15 | 5.24e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | random_clean_y | 25 | 0.1199 | 0.4887 | 0.3688 | 4.04e-15 | 5.54e-14 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9501 | 0.6205 | 0.3296 | 4.41e-15 | 5.79e-14 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | random_clean_y | 25 | 0.2584 | 1.231 | 0.9726 | 4.30e-15 | 5.79e-14 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_l2 | lower | loss3 | random_clean_y | 25 | 1.779 | 6.655 | 4.876 | 4.40e-15 | 5.79e-14 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.4488 | 0.3212 | 0.1276 | 8.22e-15 | 1.05e-13 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank02 | lower | loss3 | random_clean_y | 25 | 0.8395 | 3.282 | 2.442 | 8.12e-15 | 1.05e-13 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8866 | 0.6462 | 0.2404 | 8.44e-15 | 1.06e-13 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | random_clean_y | 25 | 0.06726 | 0.2155 | 0.1483 | 9.57e-15 | 1.19e-13 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | random_clean_y | 25 | 0.05645 | 0.1786 | 0.1222 | 1.06e-14 | 1.31e-13 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | random_clean_y | 25 | 0.09099 | 0.3213 | 0.2303 | 1.34e-14 | 1.63e-13 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | loss3 | random_clean_y | 24 | 0.003166 | 0.04284 | 0.03968 | 1.67e-14 | 2.00e-13 | 5.96e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9131 | 0.1045 | 0.8085 | 1.87e-14 | 2.22e-13 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8796 | 0.3517 | 0.5278 | 1.91e-14 | 2.23e-13 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.4488 | 0.3118 | 0.1369 | 2.41e-14 | 2.78e-13 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | baseline | 25 | 0.06726 | 0.112 | 0.04473 | 3.36e-14 | 3.84e-13 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | baseline | 25 | 0.2124 | 0.4194 | 0.207 | 3.87e-14 | 4.37e-13 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.7387 | 0.4973 | 0.2414 | 4.94e-14 | 5.51e-13 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | random_clean_y | 25 | 0.4572 | 2.235 | 1.778 | 7.64e-14 | 8.42e-13 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9601 | 0.229 | 0.731 | 8.00e-14 | 8.72e-13 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.4488 | 0.3329 | 0.1159 | 9.85e-14 | 1.05e-12 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.7387 | 0.5215 | 0.2173 | 9.88e-14 | 1.05e-12 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.5908 | 0.3858 | 0.205 | 1.09e-13 | 1.15e-12 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | baseline | 25 | 0.07334 | 0.1246 | 0.05123 | 1.27e-13 | 1.33e-12 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9244 | 0.5456 | 0.3788 | 1.49e-13 | 1.54e-12 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.5908 | 0.4062 | 0.1847 | 1.59e-13 | 1.62e-12 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | baseline | 25 | 0.09099 | 0.1575 | 0.0665 | 1.85e-13 | 1.87e-12 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 2.06e-12 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 2.06e-12 | 4.77e-07 | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss2 | 50 | 1.9777e-04 | 6.4767e-04 | 4.4989e-04 | 2.16e-13 | 2.11e-12 | 8.88e-16 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 21 | 2.078 | 7.305 | 5.227 | 2.20e-13 | 2.13e-12 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | loss3 | random_clean_y | 24 | 0.003419 | 0.05198 | 0.04856 | 2.45e-13 | 2.35e-12 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | baseline | 25 | 0.1199 | 0.2331 | 0.1131 | 3.27e-13 | 3.11e-12 | 2.98e-08 | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss2 | 52 | 1.9093e-04 | 6.2285e-04 | 4.3191e-04 | 5.33e-13 | 5.01e-12 | 2.09e-10 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss1 | 25 | 0.06726 | 0.09956 | 0.0323 | 6.09e-13 | 5.67e-12 | 2.98e-08 | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss1 | 50 | 1.9777e-04 | 5.8219e-04 | 3.8442e-04 | 8.96e-13 | 8.26e-12 | 8.88e-16 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.5908 | 0.4213 | 0.1695 | 9.82e-13 | 8.97e-12 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8674 | 0.6395 | 0.2279 | 1.37e-12 | 1.24e-11 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.31e-11 | 5.96e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.31e-11 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank01 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.31e-11 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_l2 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.31e-11 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_mean | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.31e-11 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | baseline | 25 | 0.08171 | 0.1371 | 0.05538 | 1.53e-12 | 1.31e-11 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | baseline | 25 | 0.06171 | 0.1011 | 0.03938 | 1.70e-12 | 1.44e-11 | 5.96e-08 | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss1 | 52 | 1.9093e-04 | 5.5983e-04 | 3.6889e-04 | 2.06e-12 | 1.74e-11 | 2.09e-10 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 21 | 0.8999 | 0.08364 | 0.8163 | 2.24e-12 | 1.87e-11 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | random_clean_y | 21 | 0.00352 | 0.04333 | 0.03981 | 2.36e-12 | 1.95e-11 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss1 | 25 | 0.06171 | 0.09175 | 0.03004 | 2.53e-12 | 2.08e-11 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | loss2 | 25 | 0.09924 | 0.1636 | 0.06431 | 3.58e-12 | 2.91e-11 | 2.98e-08 | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_solver_y | 50 | 0.01205 | 0.01817 | 0.006117 | 3.92e-12 | 3.16e-11 | 3.82e-14 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | baseline | 25 | 0.1088 | 0.202 | 0.09321 | 4.78e-12 | 3.82e-11 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | loss1 | 25 | 0.05645 | 0.08259 | 0.02614 | 8.44e-12 | 6.69e-11 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | loss2 | 25 | 0.1088 | 0.1876 | 0.07881 | 9.15e-12 | 7.19e-11 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss1 | 25 | 0.07334 | 0.1122 | 0.03883 | 1.21e-11 | 9.42e-11 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 21 | 0.9525 | 0.2057 | 0.7469 | 1.31e-11 | 1.01e-10 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_true_from_full_jacobian | lower | random_solver_y | random_clean_y | 25 | 2.512 | 7.225 | 4.713 | 1.38e-11 | 1.06e-10 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | loss3 | random_clean_y | 21 | 0.003806 | 0.0528 | 0.04899 | 1.57e-11 | 1.19e-10 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | loss1 | 25 | 0.2124 | 0.365 | 0.1525 | 1.80e-11 | 1.36e-10 | 2.98e-08 | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_solver_y | 50 | 0.02364 | 0.03551 | 0.01187 | 1.85e-11 | 1.39e-10 | 4.88e-14 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | baseline | 25 | 0.09924 | 0.1789 | 0.0797 | 2.27e-11 | 1.69e-10 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss2 | 25 | 0.06726 | 0.1017 | 0.03444 | 2.44e-11 | 1.80e-10 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | loss2 | 25 | 0.09099 | 0.1387 | 0.04772 | 2.56e-11 | 1.88e-10 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | baseline | 25 | 0.2584 | 0.4897 | 0.2314 | 4.24e-11 | 3.08e-10 | 2.98e-08 | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_solver_y | 52 | 0.01175 | 0.01749 | 0.005742 | 5.23e-11 | 3.77e-10 | 5.35e-09 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss2 | 25 | 0.07334 | 0.1121 | 0.03874 | 6.07e-11 | 4.34e-10 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | loss2 | 25 | 0.1799 | 0.3279 | 0.1479 | 6.69e-11 | 4.75e-10 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | loss2 | 25 | 0.1199 | 0.2132 | 0.09328 | 7.28e-11 | 5.13e-10 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_norm_l2 | lower | loss3 | random_clean_y | 21 | 0.4612 | 2.964 | 2.503 | 7.54e-11 | 5.28e-10 | 4.77e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_l2 | lower | random_solver_y | random_clean_y | 24 | 2.091 | 9.705 | 7.614 | 8.05e-11 | 5.55e-10 | 5.96e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_delta_rms | lower | random_solver_y | random_clean_y | 24 | 0.06534 | 0.3033 | 0.2379 | 8.05e-11 | 5.55e-10 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | loss2 | 25 | 0.2124 | 0.3802 | 0.1678 | 9.33e-11 | 6.39e-10 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | loss2 | 25 | 0.08171 | 0.1251 | 0.04339 | 1.10e-10 | 7.51e-10 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | loss3 | random_solver_y | 2 | 0.12 | 0.12 | 1.4901e-08 | 1.48e-10 | 1.00e-09 | 0.2500 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | loss2 | 25 | 0.1354 | 0.2522 | 0.1167 | 1.65e-10 | 1.10e-09 | 2.98e-08 | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_solver_y | 52 | 0.02305 | 0.0342 | 0.01115 | 1.82e-10 | 1.21e-09 | 5.07e-09 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | loss3 | random_clean_y | 25 | 0.4119 | 2.75 | 2.338 | 2.25e-10 | 1.48e-09 | 1.49e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss2 | 25 | 0.06171 | 0.09111 | 0.0294 | 2.36e-10 | 1.55e-09 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | baseline | 25 | 0.3899 | 0.6871 | 0.2971 | 2.58e-10 | 1.68e-09 | 5.96e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | loss1 | 25 | 0.08171 | 0.1218 | 0.04011 | 2.81e-10 | 1.82e-09 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | baseline | 25 | 0.2777 | 0.5204 | 0.2427 | 2.92e-10 | 1.88e-09 | 5.96e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.9433 | 0.8006 | 0.1427 | 3.70e-10 | 2.37e-09 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | loss3 | random_clean_y | 21 | 1.352 | 4.06 | 2.707 | 3.80e-10 | 2.40e-09 | 9.54e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | loss3 | random_clean_y | 21 | 1.352 | 4.06 | 2.707 | 3.80e-10 | 2.40e-09 | 9.54e-07 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | loss1 | 21 | 0.00352 | 0.006713 | 0.003194 | 6.13e-10 | 3.84e-09 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | baseline | 25 | 0.05645 | 0.09002 | 0.03357 | 6.53e-10 | 4.07e-09 | 1.49e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | loss2 | 25 | 0.1551 | 0.2948 | 0.1397 | 8.72e-10 | 5.39e-09 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | baseline | 25 | 0.4572 | 0.8253 | 0.3681 | 9.01e-10 | 5.54e-09 | 2.98e-08 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | loss2 | 25 | 0.2584 | 0.4408 | 0.1825 | 9.51e-10 | 5.81e-09 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.8866 | 0.7317 | 0.155 | 1.26e-09 | 7.62e-09 | 2.98e-08 | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | loss3 | loss1 | 21 | 0.003806 | 0.007693 | 0.003888 | 1.33e-09 | 8.01e-09 | 4.77e-07 | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | loss1 | 25 | 0.1799 | 0.329 | 0.1491 | 1.38e-09 | 8.28e-09 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_clean_y | 500 | 0.2777 | 1.135 | 0.8576 | 2.98e-71 | 3.27e-68 | 2.03e-83 | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | random_clean_y | 2500 | 0.0653 | 0.2518 | 0.1865 | 3.13e-66 | 1.72e-63 | 0.00e+00 | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | baseline | 2500 | 0.0653 | 0.131 | 0.06573 | 5.18e-55 | 1.90e-52 | 0.00e+00 | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | loss1 | 2500 | 0.0653 | 0.1068 | 0.0415 | 3.59e-50 | 9.86e-48 | 0.00e+00 | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | loss2 | 2500 | 0.0653 | 0.1063 | 0.04103 | 1.67e-49 | 3.67e-47 | 0.00e+00 | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss2 | 500 | 0.2777 | 0.4451 | 0.1674 | 1.36e-37 | 2.49e-35 | 2.67e-73 | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | baseline | 500 | 0.2777 | 0.5204 | 0.2427 | 4.64e-34 | 7.29e-32 | 2.00e-78 | True |
+| attack_robustness_52dataset | attack_all_52dataset | attack_loss_increase_mean | lower | random_solver_y | random_clean_y | 52 | 0.008167 | 0.03716 | 0.02899 | 5.98e-34 | 8.21e-32 | 1.75e-10 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | attack_loss_increase_mean | lower | random_solver_y | random_clean_y | 50 | 0.008381 | 0.03694 | 0.02856 | 4.68e-33 | 5.72e-31 | 8.88e-16 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_clean_y | 50 | 0.01205 | 0.0948 | 0.08275 | 4.99e-32 | 5.49e-30 | 8.88e-16 | True |
+| attack_robustness_52dataset | attack_all_52dataset | final_loss_mean | lower | random_solver_y | random_clean_y | 52 | 0.008655 | 0.04701 | 0.03836 | 8.02e-31 | 8.01e-29 | 1.75e-10 | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss1 | 500 | 0.2777 | 0.4307 | 0.153 | 1.10e-30 | 1.01e-28 | 5.51e-68 | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_clean_y | 52 | 0.01175 | 0.09274 | 0.08098 | 2.35e-30 | 1.99e-28 | 1.86e-10 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | final_loss_mean | lower | random_solver_y | random_clean_y | 50 | 0.008889 | 0.04705 | 0.03816 | 2.14e-29 | 1.68e-27 | 8.88e-16 | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_clean_y | 50 | 0.02364 | 0.181 | 0.1574 | 9.29e-28 | 6.81e-26 | 8.88e-16 | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_clean_y | 52 | 0.02305 | 0.1771 | 0.154 | 6.74e-27 | 4.63e-25 | 1.86e-10 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss2 | 50 | 0.01205 | 0.02229 | 0.01024 | 5.73e-24 | 3.70e-22 | 8.88e-16 | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_solver_y | 500 | 0.2777 | 0.3952 | 0.1175 | 5.06e-23 | 3.09e-21 | 6.82e-50 | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | random_solver_y | 2500 | 0.0653 | 0.08941 | 0.02411 | 1.72e-22 | 9.93e-21 | 0.6870 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss1 | 50 | 0.01205 | 0.02103 | 0.008977 | 4.92e-22 | 2.70e-20 | 8.88e-16 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | baseline | 50 | 0.01205 | 0.0299 | 0.01785 | 5.66e-21 | 2.84e-19 | 8.88e-16 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_right_subspace_mean_cos | higher | random_solver_y | loss1 | 25 | 0.4604 | 0.3206 | 0.1398 | 5.69e-21 | 2.84e-19 | 2.98e-08 | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss2 | 52 | 0.01175 | 0.02149 | 0.009739 | 6.93e-21 | 3.31e-19 | 2.09e-10 | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | baseline | 52 | 0.01175 | 0.0291 | 0.01735 | 1.11e-20 | 5.08e-19 | 1.75e-10 | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss2 | 50 | 0.02364 | 0.04354 | 0.0199 | 8.81e-20 | 3.87e-18 | 8.88e-16 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | random_clean_y | 25 | 0.2777 | 1.135 | 0.8576 | 2.30e-19 | 9.35e-18 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_mean | lower | loss3 | random_clean_y | 25 | 0.2777 | 1.135 | 0.8577 | 2.29e-19 | 9.35e-18 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_mean | lower | loss3 | random_clean_y | 25 | 0.1246 | 0.4886 | 0.364 | 2.94e-19 | 1.15e-17 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_right_subspace_mean_cos | higher | random_solver_y | loss2 | 25 | 0.4604 | 0.3324 | 0.128 | 3.13e-19 | 1.19e-17 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_mean | lower | loss3 | random_clean_y | 25 | 0.0653 | 0.2518 | 0.1865 | 4.24e-19 | 1.55e-17 | 2.98e-08 | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss1 | 52 | 0.01175 | 0.02025 | 0.008496 | 4.91e-19 | 1.74e-17 | 2.35e-10 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top100_right_subspace_mean_cos | higher | random_solver_y | baseline | 25 | 0.4604 | 0.3134 | 0.147 | 7.86e-19 | 2.70e-17 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.7331 | 0.4632 | 0.2699 | 1.29e-18 | 4.29e-17 | 2.98e-08 | True |
+| attack_robustness_52dataset | attack_generalization_50dataset | initial_loss_mean | lower | random_solver_y | random_clean_y | 50 | 5.0754e-04 | 0.01011 | 0.009606 | 1.35e-18 | 4.38e-17 | 8.88e-16 | True |
+| attack_robustness_52dataset | attack_all_52dataset | initial_loss_mean | lower | random_solver_y | random_clean_y | 52 | 4.8804e-04 | 0.009854 | 0.009366 | 1.64e-18 | 5.15e-17 | 1.75e-10 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_mean | lower | loss3 | random_clean_y | 25 | 0.4659 | 1.943 | 1.477 | 2.06e-18 | 6.12e-17 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top10_mean | lower | loss3 | random_clean_y | 25 | 0.4659 | 1.943 | 1.477 | 2.06e-18 | 6.12e-17 | 2.98e-08 | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | baseline | 50 | 0.02364 | 0.05774 | 0.03409 | 2.16e-18 | 6.24e-17 | 8.88e-16 | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | random_clean_y | 50 | 1.9777e-04 | 0.01011 | 0.009916 | 2.76e-18 | 7.79e-17 | 8.88e-16 | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | baseline | 52 | 0.02305 | 0.05618 | 0.03313 | 2.88e-18 | 7.92e-17 | 1.75e-10 | True |
+| clean_generalization | clean_all_52dataset | mse | lower | loss3 | random_clean_y | 52 | 1.9093e-04 | 0.009854 | 0.009663 | 3.36e-18 | 9.02e-17 | 1.86e-10 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.4497 | 0.3206 | 0.129 | 5.22e-18 | 1.37e-16 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9579 | 0.6182 | 0.3397 | 6.95e-18 | 1.73e-16 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9579 | 0.6181 | 0.3399 | 6.86e-18 | 1.73e-16 | 2.98e-08 | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss2 | 52 | 0.02305 | 0.04198 | 0.01892 | 7.12e-18 | 1.74e-16 | 2.09e-10 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9433 | 0.6877 | 0.2555 | 7.66e-18 | 1.82e-16 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9433 | 0.6879 | 0.2554 | 7.76e-18 | 1.82e-16 | 2.98e-08 | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss1 | 50 | 0.02364 | 0.04117 | 0.01753 | 1.03e-17 | 2.37e-16 | 8.88e-16 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9335 | 0.5396 | 0.3939 | 2.39e-17 | 5.28e-16 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9335 | 0.5397 | 0.3938 | 2.40e-17 | 5.28e-16 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.4497 | 0.3134 | 0.1362 | 2.98e-17 | 6.43e-16 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8979 | 0.3778 | 0.5201 | 3.53e-17 | 7.34e-16 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8979 | 0.3779 | 0.52 | 3.54e-17 | 7.34e-16 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_left_subspace_mean_cos | higher | random_solver_y | loss1 | 25 | 0.7541 | 0.4964 | 0.2577 | 4.29e-17 | 8.74e-16 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_left_subspace_mean_cos | higher | random_solver_y | baseline | 25 | 0.7541 | 0.4632 | 0.2909 | 6.72e-17 | 1.34e-15 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.5992 | 0.3921 | 0.207 | 9.08e-17 | 1.72e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.4497 | 0.3324 | 0.1173 | 9.16e-17 | 1.72e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.7331 | 0.4964 | 0.2367 | 9.22e-17 | 1.72e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.5992 | 0.3921 | 0.207 | 9.08e-17 | 1.72e-15 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.5992 | 0.4114 | 0.1878 | 1.29e-16 | 2.33e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.5992 | 0.4114 | 0.1878 | 1.29e-16 | 2.33e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.7387 | 0.4591 | 0.2797 | 1.36e-16 | 2.41e-15 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 2.41e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 2.41e-15 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_l2 | lower | loss3 | random_clean_y | 25 | 1.891 | 7.213 | 5.323 | 1.49e-16 | 2.41e-15 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_l2 | lower | loss3 | random_clean_y | 25 | 1.898 | 7.225 | 5.327 | 1.48e-16 | 2.41e-15 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_l2 | lower | loss3 | random_clean_y | 25 | 1.891 | 7.213 | 5.323 | 1.49e-16 | 2.41e-15 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_l2 | lower | loss3 | random_clean_y | 25 | 1.897 | 7.224 | 5.327 | 1.48e-16 | 2.41e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 25 | 1.899 | 7.213 | 5.315 | 1.58e-16 | 2.52e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.7331 | 0.5187 | 0.2144 | 1.74e-16 | 2.73e-15 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank06 | lower | loss3 | random_clean_y | 25 | 0.3162 | 1.482 | 1.166 | 2.33e-16 | 3.61e-15 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_l2 | lower | loss3 | random_clean_y | 25 | 1.863 | 7.119 | 5.255 | 2.50e-16 | 3.76e-15 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top10_l2 | lower | loss3 | random_clean_y | 25 | 1.863 | 7.119 | 5.256 | 2.49e-16 | 3.76e-15 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | random_clean_y | 25 | 0.1799 | 0.8285 | 0.6486 | 3.69e-16 | 5.48e-15 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | random_clean_y | 25 | 0.3899 | 1.791 | 1.401 | 3.82e-16 | 5.60e-15 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_left_subspace_mean_cos | higher | random_solver_y | loss2 | 25 | 0.7541 | 0.5187 | 0.2354 | 4.08e-16 | 5.90e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9216 | 0.5108 | 0.4107 | 5.15e-16 | 7.35e-15 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | random_clean_y | 25 | 0.1088 | 0.4147 | 0.306 | 5.42e-16 | 7.64e-15 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9338 | 0.6736 | 0.2602 | 5.68e-16 | 7.91e-15 | 4.77e-07 | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss1 | 52 | 0.02305 | 0.03965 | 0.0166 | 6.35e-16 | 8.72e-15 | 2.96e-10 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_mean | lower | loss3 | random_clean_y | 25 | 0.7074 | 2.841 | 2.133 | 9.34e-16 | 1.25e-14 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top5_mean | lower | loss3 | random_clean_y | 25 | 0.7074 | 2.841 | 2.133 | 9.33e-16 | 1.25e-14 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.5992 | 0.4257 | 0.1735 | 1.21e-15 | 1.59e-14 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.5992 | 0.4257 | 0.1735 | 1.21e-15 | 1.59e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | random_clean_y | 25 | 0.06171 | 0.195 | 0.1333 | 1.43e-15 | 1.84e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | random_clean_y | 25 | 0.07334 | 0.2437 | 0.1704 | 1.45e-15 | 1.85e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | baseline | 25 | 0.1551 | 0.3072 | 0.1521 | 1.56e-15 | 1.97e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | random_clean_y | 25 | 0.1551 | 0.7026 | 0.5475 | 1.62e-15 | 2.02e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | random_clean_y | 25 | 0.2124 | 0.9841 | 0.7716 | 1.65e-15 | 2.04e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | random_clean_y | 25 | 0.09924 | 0.3638 | 0.2646 | 1.95e-15 | 2.39e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | random_clean_y | 25 | 0.1354 | 0.5788 | 0.4434 | 2.04e-15 | 2.46e-14 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9364 | 0.5332 | 0.4032 | 2.21e-15 | 2.61e-14 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9364 | 0.5331 | 0.4033 | 2.19e-15 | 2.61e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | random_clean_y | 25 | 0.08171 | 0.2757 | 0.194 | 2.32e-15 | 2.71e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank03 | lower | loss3 | random_clean_y | 25 | 0.5789 | 2.764 | 2.185 | 3.24e-15 | 3.74e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | baseline | 25 | 0.1799 | 0.3713 | 0.1914 | 3.77e-15 | 4.27e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | baseline | 25 | 0.1354 | 0.2698 | 0.1344 | 3.73e-15 | 4.27e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | random_clean_y | 25 | 0.1199 | 0.4887 | 0.3688 | 4.04e-15 | 4.53e-14 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9501 | 0.6205 | 0.3296 | 4.41e-15 | 4.75e-14 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | random_clean_y | 25 | 0.2584 | 1.231 | 0.9726 | 4.30e-15 | 4.75e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_l2 | lower | loss3 | random_clean_y | 25 | 1.779 | 6.655 | 4.876 | 4.40e-15 | 4.75e-14 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top5_l2 | lower | loss3 | random_clean_y | 25 | 1.779 | 6.655 | 4.876 | 4.39e-15 | 4.75e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank02 | lower | loss3 | random_clean_y | 25 | 0.8395 | 3.282 | 2.442 | 8.12e-15 | 8.66e-14 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.4488 | 0.3212 | 0.1276 | 8.22e-15 | 8.69e-14 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8866 | 0.6462 | 0.2404 | 8.44e-15 | 8.83e-14 | 2.98e-08 | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8866 | 0.6464 | 0.2402 | 8.60e-15 | 8.91e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | random_clean_y | 25 | 0.06726 | 0.2155 | 0.1483 | 9.57e-15 | 9.83e-14 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | random_clean_y | 25 | 0.05645 | 0.1786 | 0.1222 | 1.06e-14 | 1.08e-13 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | random_clean_y | 25 | 0.09099 | 0.3213 | 0.2303 | 1.34e-14 | 1.35e-13 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | loss3 | random_clean_y | 24 | 0.003166 | 0.04284 | 0.03968 | 1.67e-14 | 1.67e-13 | 5.96e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9131 | 0.1045 | 0.8085 | 1.87e-14 | 1.85e-13 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8796 | 0.3517 | 0.5278 | 1.91e-14 | 1.87e-13 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.4488 | 0.3118 | 0.1369 | 2.41e-14 | 2.34e-13 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | baseline | 25 | 0.06726 | 0.112 | 0.04473 | 3.36e-14 | 3.24e-13 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | baseline | 25 | 0.2124 | 0.4194 | 0.207 | 3.87e-14 | 3.70e-13 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.7387 | 0.4973 | 0.2414 | 4.94e-14 | 4.68e-13 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | random_clean_y | 25 | 0.4572 | 2.235 | 1.778 | 7.64e-14 | 7.17e-13 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9601 | 0.229 | 0.731 | 8.00e-14 | 7.45e-13 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.4488 | 0.3329 | 0.1159 | 9.85e-14 | 9.05e-13 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.7387 | 0.5215 | 0.2173 | 9.88e-14 | 9.05e-13 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.5908 | 0.3858 | 0.205 | 1.09e-13 | 9.94e-13 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | baseline | 25 | 0.07334 | 0.1246 | 0.05123 | 1.27e-13 | 1.15e-12 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9244 | 0.5456 | 0.3788 | 1.49e-13 | 1.34e-12 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.5908 | 0.4062 | 0.1847 | 1.59e-13 | 1.41e-12 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | baseline | 25 | 0.09099 | 0.1575 | 0.0665 | 1.85e-13 | 1.63e-12 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 1.80e-12 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 1.80e-12 | 4.77e-07 | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss2 | 50 | 1.9777e-04 | 6.4767e-04 | 4.4989e-04 | 2.16e-13 | 1.86e-12 | 8.88e-16 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 21 | 2.078 | 7.305 | 5.227 | 2.20e-13 | 1.88e-12 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | loss3 | random_clean_y | 24 | 0.003419 | 0.05198 | 0.04856 | 2.45e-13 | 2.07e-12 | 5.96e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | baseline | 25 | 0.1199 | 0.2331 | 0.1131 | 3.27e-13 | 2.74e-12 | 2.98e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_mean | lower | loss3 | baseline | 25 | 0.0653 | 0.131 | 0.06573 | 4.25e-13 | 3.54e-12 | 2.98e-08 | True |
+| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss2 | 52 | 1.9093e-04 | 6.2285e-04 | 4.3191e-04 | 5.33e-13 | 4.40e-12 | 2.09e-10 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss1 | 25 | 0.06726 | 0.09956 | 0.0323 | 6.09e-13 | 5.00e-12 | 2.98e-08 | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss1 | 50 | 1.9777e-04 | 5.8219e-04 | 3.8442e-04 | 8.96e-13 | 7.29e-12 | 8.88e-16 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.5908 | 0.4213 | 0.1695 | 9.82e-13 | 7.94e-12 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8674 | 0.6395 | 0.2279 | 1.37e-12 | 1.10e-11 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank01 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_l2 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_mean | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top1_l2 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.86 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top1_mean | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.86 | 1.51e-12 | 1.15e-11 | 5.96e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | baseline | 25 | 0.08171 | 0.1371 | 0.05538 | 1.53e-12 | 1.16e-11 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | baseline | 25 | 0.06171 | 0.1011 | 0.03938 | 1.70e-12 | 1.28e-11 | 5.96e-08 | True |
+| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss1 | 52 | 1.9093e-04 | 5.5983e-04 | 3.6889e-04 | 2.06e-12 | 1.54e-11 | 2.09e-10 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 21 | 0.8999 | 0.08364 | 0.8163 | 2.24e-12 | 1.67e-11 | 4.77e-07 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | random_clean_y | 21 | 0.00352 | 0.04333 | 0.03981 | 2.36e-12 | 1.74e-11 | 4.77e-07 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss1 | 25 | 0.06171 | 0.09175 | 0.03004 | 2.53e-12 | 1.86e-11 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | loss2 | 25 | 0.09924 | 0.1636 | 0.06431 | 3.58e-12 | 2.61e-11 | 2.98e-08 | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_solver_y | 50 | 0.01205 | 0.01817 | 0.006117 | 3.92e-12 | 2.84e-11 | 3.82e-14 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | baseline | 25 | 0.1088 | 0.202 | 0.09321 | 4.78e-12 | 3.43e-11 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | loss1 | 25 | 0.05645 | 0.08259 | 0.02614 | 8.44e-12 | 6.02e-11 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | loss2 | 25 | 0.1088 | 0.1876 | 0.07881 | 9.15e-12 | 6.49e-11 | 2.98e-08 | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss1 | 25 | 0.07334 | 0.1122 | 0.03883 | 1.21e-11 | 8.51e-11 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 21 | 0.9525 | 0.2057 | 0.7469 | 1.31e-11 | 9.14e-11 | 4.77e-07 | True |
+| random_affine_direction_supplement | random_affine_25sample | error_fro_norm | lower | random_solver_y | random_clean_y | 25 | 2.512 | 7.225 | 4.713 | 1.38e-11 | 9.53e-11 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_true_from_full_jacobian | lower | random_solver_y | random_clean_y | 25 | 2.512 | 7.225 | 4.713 | 1.38e-11 | 9.53e-11 | 2.98e-08 | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | loss3 | random_clean_y | 21 | 0.003806 | 0.0528 | 0.04899 | 1.57e-11 | 1.07e-10 | 4.77e-07 | True |
 
-_Showing 160 of 1061 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
+_Showing 160 of 1201 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 
 ## Loss3-Vs-Other Tests
 
 | family | scope | metric | direction | reference_model | other_model | n_pairs | reference_pair_mean | other_pair_mean | mean_advantage_reference_positive | paired_t_p_reference_better_one_sided | paired_t_q_reference_better_bh_fdr | wilcoxon_p_reference_better_one_sided | reference_better_significant_q05 | loss3_is_mean_best |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_clean_y | 500 | 0.2777 | 1.135 | 0.8576 | 2.98e-71 | 1.38e-68 | 2.03e-83 | True | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss2 | 500 | 0.2777 | 0.4451 | 0.1674 | 1.36e-37 | 4.22e-35 | 2.67e-73 | True | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | baseline | 500 | 0.2777 | 0.5204 | 0.2427 | 4.64e-34 | 1.08e-31 | 2.00e-78 | True | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_clean_y | 50 | 0.01205 | 0.0948 | 0.08275 | 4.99e-32 | 9.28e-30 | 8.88e-16 | True | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss1 | 500 | 0.2777 | 0.4307 | 0.153 | 1.10e-30 | 1.71e-28 | 5.51e-68 | True | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_clean_y | 52 | 0.01175 | 0.09274 | 0.08098 | 2.35e-30 | 3.12e-28 | 1.86e-10 | True | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_clean_y | 50 | 0.02364 | 0.181 | 0.1574 | 9.29e-28 | 1.08e-25 | 8.88e-16 | True | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_clean_y | 52 | 0.02305 | 0.1771 | 0.154 | 6.74e-27 | 6.96e-25 | 1.86e-10 | True | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss2 | 50 | 0.01205 | 0.02229 | 0.01024 | 5.73e-24 | 5.32e-22 | 8.88e-16 | True | True |
-| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_solver_y | 500 | 0.2777 | 0.3952 | 0.1175 | 5.06e-23 | 4.27e-21 | 6.82e-50 | True | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss1 | 50 | 0.01205 | 0.02103 | 0.008977 | 4.92e-22 | 3.81e-20 | 8.88e-16 | True | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | baseline | 50 | 0.01205 | 0.0299 | 0.01785 | 5.66e-21 | 4.04e-19 | 8.88e-16 | True | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss2 | 52 | 0.01175 | 0.02149 | 0.009739 | 6.93e-21 | 4.60e-19 | 2.09e-10 | True | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | baseline | 52 | 0.01175 | 0.0291 | 0.01735 | 1.11e-20 | 6.87e-19 | 1.75e-10 | True | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss2 | 50 | 0.02364 | 0.04354 | 0.0199 | 8.81e-20 | 5.12e-18 | 8.88e-16 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | random_clean_y | 25 | 0.2777 | 1.135 | 0.8576 | 2.30e-19 | 1.25e-17 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss1 | 52 | 0.01175 | 0.02025 | 0.008496 | 4.91e-19 | 2.53e-17 | 2.35e-10 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.7331 | 0.4632 | 0.2699 | 1.29e-18 | 6.30e-17 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | baseline | 50 | 0.02364 | 0.05774 | 0.03409 | 2.16e-18 | 9.54e-17 | 8.88e-16 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_mean | lower | loss3 | random_clean_y | 25 | 0.4659 | 1.943 | 1.477 | 2.06e-18 | 9.54e-17 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | random_clean_y | 50 | 1.9777e-04 | 0.01011 | 0.009916 | 2.76e-18 | 1.16e-16 | 8.88e-16 | True | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | baseline | 52 | 0.02305 | 0.05618 | 0.03313 | 2.88e-18 | 1.16e-16 | 1.75e-10 | True | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | random_clean_y | 52 | 1.9093e-04 | 0.009854 | 0.009663 | 3.36e-18 | 1.30e-16 | 1.86e-10 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.4497 | 0.3206 | 0.129 | 5.22e-18 | 1.94e-16 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss2 | 52 | 0.02305 | 0.04198 | 0.01892 | 7.12e-18 | 2.45e-16 | 2.09e-10 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9579 | 0.6181 | 0.3399 | 6.86e-18 | 2.45e-16 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9433 | 0.6879 | 0.2554 | 7.76e-18 | 2.58e-16 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss1 | 50 | 0.02364 | 0.04117 | 0.01753 | 1.03e-17 | 3.31e-16 | 8.88e-16 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9335 | 0.5397 | 0.3938 | 2.40e-17 | 7.44e-16 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.4497 | 0.3134 | 0.1362 | 2.98e-17 | 8.94e-16 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8979 | 0.3779 | 0.52 | 3.54e-17 | 1.03e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.4497 | 0.3324 | 0.1173 | 9.16e-17 | 2.45e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.7331 | 0.4964 | 0.2367 | 9.22e-17 | 2.45e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.5992 | 0.3921 | 0.207 | 9.08e-17 | 2.45e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.5992 | 0.4114 | 0.1878 | 1.29e-16 | 3.34e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.7387 | 0.4591 | 0.2797 | 1.36e-16 | 3.42e-15 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 3.47e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 3.47e-15 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_l2 | lower | loss3 | random_clean_y | 25 | 1.891 | 7.213 | 5.323 | 1.49e-16 | 3.47e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 25 | 1.899 | 7.213 | 5.315 | 1.58e-16 | 3.58e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.7331 | 0.5187 | 0.2144 | 1.74e-16 | 3.85e-15 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank06 | lower | loss3 | random_clean_y | 25 | 0.3162 | 1.482 | 1.166 | 2.33e-16 | 5.03e-15 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_l2 | lower | loss3 | random_clean_y | 25 | 1.863 | 7.119 | 5.255 | 2.50e-16 | 5.27e-15 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | random_clean_y | 25 | 0.1799 | 0.8285 | 0.6486 | 3.69e-16 | 7.62e-15 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | random_clean_y | 25 | 0.3899 | 1.791 | 1.401 | 3.82e-16 | 7.72e-15 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9216 | 0.5108 | 0.4107 | 5.15e-16 | 1.02e-14 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | random_clean_y | 25 | 0.1088 | 0.4147 | 0.306 | 5.42e-16 | 1.05e-14 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9338 | 0.6736 | 0.2602 | 5.68e-16 | 1.08e-14 | 4.77e-07 | True | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss1 | 52 | 0.02305 | 0.03965 | 0.0166 | 6.35e-16 | 1.18e-14 | 2.96e-10 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_mean | lower | loss3 | random_clean_y | 25 | 0.7074 | 2.841 | 2.133 | 9.34e-16 | 1.70e-14 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.5992 | 0.4257 | 0.1735 | 1.21e-15 | 2.17e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | random_clean_y | 25 | 0.07334 | 0.2437 | 0.1704 | 1.45e-15 | 2.50e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | random_clean_y | 25 | 0.06171 | 0.195 | 0.1333 | 1.43e-15 | 2.50e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | baseline | 25 | 0.1551 | 0.3072 | 0.1521 | 1.56e-15 | 2.63e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | random_clean_y | 25 | 0.1551 | 0.7026 | 0.5475 | 1.62e-15 | 2.68e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | random_clean_y | 25 | 0.2124 | 0.9841 | 0.7716 | 1.65e-15 | 2.69e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | random_clean_y | 25 | 0.09924 | 0.3638 | 0.2646 | 1.95e-15 | 3.13e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | random_clean_y | 25 | 0.1354 | 0.5788 | 0.4434 | 2.04e-15 | 3.21e-14 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9364 | 0.5331 | 0.4033 | 2.19e-15 | 3.40e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | random_clean_y | 25 | 0.08171 | 0.2757 | 0.194 | 2.32e-15 | 3.53e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank03 | lower | loss3 | random_clean_y | 25 | 0.5789 | 2.764 | 2.185 | 3.24e-15 | 4.85e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | baseline | 25 | 0.1799 | 0.3713 | 0.1914 | 3.77e-15 | 5.47e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | baseline | 25 | 0.1354 | 0.2698 | 0.1344 | 3.73e-15 | 5.47e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | random_clean_y | 25 | 0.1199 | 0.4887 | 0.3688 | 4.04e-15 | 5.78e-14 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9501 | 0.6205 | 0.3296 | 4.41e-15 | 6.02e-14 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | random_clean_y | 25 | 0.2584 | 1.231 | 0.9726 | 4.30e-15 | 6.02e-14 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_l2 | lower | loss3 | random_clean_y | 25 | 1.779 | 6.655 | 4.876 | 4.40e-15 | 6.02e-14 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.4488 | 0.3212 | 0.1276 | 8.22e-15 | 1.09e-13 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank02 | lower | loss3 | random_clean_y | 25 | 0.8395 | 3.282 | 2.442 | 8.12e-15 | 1.09e-13 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8866 | 0.6462 | 0.2404 | 8.44e-15 | 1.10e-13 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | random_clean_y | 25 | 0.06726 | 0.2155 | 0.1483 | 9.57e-15 | 1.23e-13 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | random_clean_y | 25 | 0.05645 | 0.1786 | 0.1222 | 1.06e-14 | 1.36e-13 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | random_clean_y | 25 | 0.09099 | 0.3213 | 0.2303 | 1.34e-14 | 1.69e-13 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | loss3 | random_clean_y | 24 | 0.003166 | 0.04284 | 0.03968 | 1.67e-14 | 2.07e-13 | 5.96e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9131 | 0.1045 | 0.8085 | 1.87e-14 | 2.29e-13 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8796 | 0.3517 | 0.5278 | 1.91e-14 | 2.30e-13 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.4488 | 0.3118 | 0.1369 | 2.41e-14 | 2.87e-13 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | baseline | 25 | 0.06726 | 0.112 | 0.04473 | 3.36e-14 | 3.95e-13 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | baseline | 25 | 0.2124 | 0.4194 | 0.207 | 3.87e-14 | 4.50e-13 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.7387 | 0.4973 | 0.2414 | 4.94e-14 | 5.67e-13 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | random_clean_y | 25 | 0.4572 | 2.235 | 1.778 | 7.64e-14 | 8.65e-13 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9601 | 0.229 | 0.731 | 8.00e-14 | 8.96e-13 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.4488 | 0.3329 | 0.1159 | 9.85e-14 | 1.08e-12 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.7387 | 0.5215 | 0.2173 | 9.88e-14 | 1.08e-12 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.5908 | 0.3858 | 0.205 | 1.09e-13 | 1.18e-12 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | baseline | 25 | 0.07334 | 0.1246 | 0.05123 | 1.27e-13 | 1.36e-12 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9244 | 0.5456 | 0.3788 | 1.49e-13 | 1.58e-12 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.5908 | 0.4062 | 0.1847 | 1.59e-13 | 1.66e-12 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | baseline | 25 | 0.09099 | 0.1575 | 0.0665 | 1.85e-13 | 1.91e-12 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 2.10e-12 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 2.10e-12 | 4.77e-07 | True | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss2 | 50 | 1.9777e-04 | 6.4767e-04 | 4.4989e-04 | 2.16e-13 | 2.16e-12 | 8.88e-16 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 21 | 2.078 | 7.305 | 5.227 | 2.20e-13 | 2.18e-12 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | loss3 | random_clean_y | 24 | 0.003419 | 0.05198 | 0.04856 | 2.45e-13 | 2.39e-12 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | baseline | 25 | 0.1199 | 0.2331 | 0.1131 | 3.27e-13 | 3.17e-12 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss2 | 52 | 1.9093e-04 | 6.2285e-04 | 4.3191e-04 | 5.33e-13 | 5.10e-12 | 2.09e-10 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss1 | 25 | 0.06726 | 0.09956 | 0.0323 | 6.09e-13 | 5.78e-12 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss1 | 50 | 1.9777e-04 | 5.8219e-04 | 3.8442e-04 | 8.96e-13 | 8.40e-12 | 8.88e-16 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.5908 | 0.4213 | 0.1695 | 9.82e-13 | 9.13e-12 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8674 | 0.6395 | 0.2279 | 1.37e-12 | 1.26e-11 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.32e-11 | 5.96e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.32e-11 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank01 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.32e-11 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_l2 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.32e-11 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_mean | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.32e-11 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | baseline | 25 | 0.08171 | 0.1371 | 0.05538 | 1.53e-12 | 1.33e-11 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | baseline | 25 | 0.06171 | 0.1011 | 0.03938 | 1.70e-12 | 1.46e-11 | 5.96e-08 | True | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss1 | 52 | 1.9093e-04 | 5.5983e-04 | 3.6889e-04 | 2.06e-12 | 1.76e-11 | 2.09e-10 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 21 | 0.8999 | 0.08364 | 0.8163 | 2.24e-12 | 1.90e-11 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | random_clean_y | 21 | 0.00352 | 0.04333 | 0.03981 | 2.36e-12 | 1.97e-11 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss1 | 25 | 0.06171 | 0.09175 | 0.03004 | 2.53e-12 | 2.10e-11 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | loss2 | 25 | 0.09924 | 0.1636 | 0.06431 | 3.58e-12 | 2.94e-11 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_solver_y | 50 | 0.01205 | 0.01817 | 0.006117 | 3.92e-12 | 3.20e-11 | 3.82e-14 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | baseline | 25 | 0.1088 | 0.202 | 0.09321 | 4.78e-12 | 3.86e-11 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | loss1 | 25 | 0.05645 | 0.08259 | 0.02614 | 8.44e-12 | 6.76e-11 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | loss2 | 25 | 0.1088 | 0.1876 | 0.07881 | 9.15e-12 | 7.26e-11 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss1 | 25 | 0.07334 | 0.1122 | 0.03883 | 1.21e-11 | 9.51e-11 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 21 | 0.9525 | 0.2057 | 0.7469 | 1.31e-11 | 1.02e-10 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | loss3 | random_clean_y | 21 | 0.003806 | 0.0528 | 0.04899 | 1.57e-11 | 1.21e-10 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | loss1 | 25 | 0.2124 | 0.365 | 0.1525 | 1.80e-11 | 1.38e-10 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_solver_y | 50 | 0.02364 | 0.03551 | 0.01187 | 1.85e-11 | 1.41e-10 | 4.88e-14 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | baseline | 25 | 0.09924 | 0.1789 | 0.0797 | 2.27e-11 | 1.71e-10 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss2 | 25 | 0.06726 | 0.1017 | 0.03444 | 2.44e-11 | 1.83e-10 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | loss2 | 25 | 0.09099 | 0.1387 | 0.04772 | 2.56e-11 | 1.90e-10 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | baseline | 25 | 0.2584 | 0.4897 | 0.2314 | 4.24e-11 | 3.13e-10 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_solver_y | 52 | 0.01175 | 0.01749 | 0.005742 | 5.23e-11 | 3.82e-10 | 5.35e-09 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss2 | 25 | 0.07334 | 0.1121 | 0.03874 | 6.07e-11 | 4.40e-10 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | loss2 | 25 | 0.1799 | 0.3279 | 0.1479 | 6.69e-11 | 4.82e-10 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | loss2 | 25 | 0.1199 | 0.2132 | 0.09328 | 7.28e-11 | 5.20e-10 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_norm_l2 | lower | loss3 | random_clean_y | 21 | 0.4612 | 2.964 | 2.503 | 7.54e-11 | 5.35e-10 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | loss2 | 25 | 0.2124 | 0.3802 | 0.1678 | 9.33e-11 | 6.57e-10 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | loss2 | 25 | 0.08171 | 0.1251 | 0.04339 | 1.10e-10 | 7.72e-10 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | loss3 | random_solver_y | 2 | 0.12 | 0.12 | 1.4901e-08 | 1.48e-10 | 1.03e-09 | 0.2500 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | loss2 | 25 | 0.1354 | 0.2522 | 0.1167 | 1.65e-10 | 1.13e-09 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_solver_y | 52 | 0.02305 | 0.0342 | 0.01115 | 1.82e-10 | 1.24e-09 | 5.07e-09 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | loss3 | random_clean_y | 25 | 0.4119 | 2.75 | 2.338 | 2.25e-10 | 1.52e-09 | 1.49e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss2 | 25 | 0.06171 | 0.09111 | 0.0294 | 2.36e-10 | 1.59e-09 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | baseline | 25 | 0.3899 | 0.6871 | 0.2971 | 2.58e-10 | 1.72e-09 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | loss1 | 25 | 0.08171 | 0.1218 | 0.04011 | 2.81e-10 | 1.87e-09 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | baseline | 25 | 0.2777 | 0.5204 | 0.2427 | 2.92e-10 | 1.92e-09 | 5.96e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.9433 | 0.8006 | 0.1427 | 3.70e-10 | 2.42e-09 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | loss3 | random_clean_y | 21 | 1.352 | 4.06 | 2.707 | 3.80e-10 | 2.45e-09 | 9.54e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | loss3 | random_clean_y | 21 | 1.352 | 4.06 | 2.707 | 3.80e-10 | 2.45e-09 | 9.54e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | loss1 | 21 | 0.00352 | 0.006713 | 0.003194 | 6.13e-10 | 3.93e-09 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | baseline | 25 | 0.05645 | 0.09002 | 0.03357 | 6.53e-10 | 4.16e-09 | 1.49e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | loss2 | 25 | 0.1551 | 0.2948 | 0.1397 | 8.72e-10 | 5.51e-09 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | baseline | 25 | 0.4572 | 0.8253 | 0.3681 | 9.01e-10 | 5.66e-09 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | loss2 | 25 | 0.2584 | 0.4408 | 0.1825 | 9.51e-10 | 5.93e-09 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.8866 | 0.7317 | 0.155 | 1.26e-09 | 7.77e-09 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | loss3 | loss1 | 21 | 0.003806 | 0.007693 | 0.003888 | 1.33e-09 | 8.17e-09 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | loss1 | 25 | 0.1799 | 0.329 | 0.1491 | 1.38e-09 | 8.44e-09 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.9338 | 0.78 | 0.1538 | 1.54e-09 | 9.33e-09 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.8866 | 0.7642 | 0.1224 | 1.57e-09 | 9.45e-09 | 5.96e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | baseline | 50 | 1.9777e-04 | 0.001222 | 0.001024 | 1.77e-09 | 1.06e-08 | 8.88e-16 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank06 | lower | loss3 | baseline | 25 | 0.3162 | 0.5849 | 0.2688 | 1.80e-09 | 1.07e-08 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | loss1 | 25 | 0.2584 | 0.4176 | 0.1592 | 2.02e-09 | 1.19e-08 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | baseline | 52 | 1.9093e-04 | 0.001179 | 9.8757e-04 | 2.09e-09 | 1.23e-08 | 1.75e-10 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | loss1 | 25 | 0.09099 | 0.1373 | 0.04631 | 3.34e-09 | 1.95e-08 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | loss3 | loss1 | 25 | 0.003063 | 0.005838 | 0.002775 | 4.00e-09 | 2.33e-08 | 5.96e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.8866 | 0.7605 | 0.1261 | 4.40e-09 | 2.54e-08 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | loss1 | 25 | 0.1199 | 0.2134 | 0.09351 | 6.06e-09 | 3.47e-08 | 2.98e-08 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_mean | lower | loss3 | baseline | 25 | 0.4659 | 0.8803 | 0.4143 | 6.29e-09 | 3.59e-08 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | loss1 | 25 | 0.1354 | 0.2417 | 0.1063 | 7.23e-09 | 4.10e-08 | 2.98e-08 | True | True |
-| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | random_solver_y | 50 | 1.9777e-04 | 5.0754e-04 | 3.0976e-04 | 1.00e-08 | 5.62e-08 | 2.66e-15 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | loss3 | loss1 | 25 | 0.003307 | 0.006661 | 0.003354 | 9.99e-09 | 5.62e-08 | 5.96e-08 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | loss1 | 25 | 0.1551 | 0.2899 | 0.1348 | 1.04e-08 | 5.77e-08 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | atb_norm | lower | loss3 | random_clean_y | 25 | 0.1119 | 4.785 | 4.673 | 1.09e-08 | 5.87e-08 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_norm | lower | loss3 | random_clean_y | 25 | 0.1119 | 4.785 | 4.673 | 1.09e-08 | 5.87e-08 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | bias_gradient_rms | lower | loss3 | random_clean_y | 25 | 0.003498 | 0.1495 | 0.146 | 1.09e-08 | 5.87e-08 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_transpose_error_l2 | lower | loss3 | random_clean_y | 25 | 0.1119 | 4.785 | 4.673 | 1.09e-08 | 5.87e-08 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_all_25sample | j_error_transpose_error_rms | lower | loss3 | random_clean_y | 25 | 0.003498 | 0.1495 | 0.146 | 1.09e-08 | 5.87e-08 | 2.98e-08 | True | True |
-| clean_generalization | clean_all_52dataset | mse | lower | loss3 | random_solver_y | 52 | 1.9093e-04 | 4.8804e-04 | 2.9710e-04 | 1.41e-08 | 7.59e-08 | 2.96e-10 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_solver_y | 21 | 0.8674 | 0.8031 | 0.06431 | 1.57e-08 | 8.39e-08 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | loss1 | 25 | 0.1088 | 0.1823 | 0.07351 | 2.26e-08 | 1.20e-07 | 2.98e-08 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | atb_norm | lower | loss3 | random_clean_y | 21 | 0.1314 | 5.211 | 5.079 | 2.53e-08 | 1.31e-07 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_norm | lower | loss3 | random_clean_y | 21 | 0.1314 | 5.211 | 5.079 | 2.53e-08 | 1.31e-07 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | bias_gradient_rms | lower | loss3 | random_clean_y | 21 | 0.004105 | 0.1628 | 0.1587 | 2.53e-08 | 1.31e-07 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_l2 | lower | loss3 | random_clean_y | 21 | 0.1314 | 5.211 | 5.079 | 2.53e-08 | 1.31e-07 | 4.77e-07 | True | True |
-| robustness_svd_jacobian_25sample | robustness_generalization_21sample | j_error_transpose_error_rms | lower | loss3 | random_clean_y | 21 | 0.004105 | 0.1628 | 0.1587 | 2.53e-08 | 1.31e-07 | 4.77e-07 | True | True |
-| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | loss2 | 25 | 0.2777 | 0.4451 | 0.1674 | 2.91e-08 | 1.49e-07 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_clean_y | 500 | 0.2777 | 1.135 | 0.8576 | 2.98e-71 | 1.56e-68 | 2.03e-83 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | random_clean_y | 2500 | 0.0653 | 0.2518 | 0.1865 | 3.13e-66 | 1.09e-63 | 0.00e+00 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | baseline | 2500 | 0.0653 | 0.131 | 0.06573 | 5.18e-55 | 1.35e-52 | 0.00e+00 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | loss1 | 2500 | 0.0653 | 0.1068 | 0.0415 | 3.59e-50 | 7.49e-48 | 0.00e+00 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | loss2 | 2500 | 0.0653 | 0.1063 | 0.04103 | 1.67e-49 | 2.90e-47 | 0.00e+00 | True | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss2 | 500 | 0.2777 | 0.4451 | 0.1674 | 1.36e-37 | 2.03e-35 | 2.67e-73 | True | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | baseline | 500 | 0.2777 | 0.5204 | 0.2427 | 4.64e-34 | 6.06e-32 | 2.00e-78 | True | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_clean_y | 50 | 0.01205 | 0.0948 | 0.08275 | 4.99e-32 | 5.79e-30 | 8.88e-16 | True | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | loss1 | 500 | 0.2777 | 0.4307 | 0.153 | 1.10e-30 | 1.15e-28 | 5.51e-68 | True | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_clean_y | 52 | 0.01175 | 0.09274 | 0.08098 | 2.35e-30 | 2.23e-28 | 1.86e-10 | True | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_clean_y | 50 | 0.02364 | 0.181 | 0.1574 | 9.29e-28 | 8.08e-26 | 8.88e-16 | True | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_clean_y | 52 | 0.02305 | 0.1771 | 0.154 | 6.74e-27 | 5.41e-25 | 1.86e-10 | True | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss2 | 50 | 0.01205 | 0.02229 | 0.01024 | 5.73e-24 | 4.27e-22 | 8.88e-16 | True | True |
+| svd_error_spectrum | svd_error_top20_all_values_25sample | error_singular_value_top20_all | lower | loss3 | random_solver_y | 500 | 0.2777 | 0.3952 | 0.1175 | 5.06e-23 | 3.52e-21 | 6.82e-50 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_top100_all_values_25sample | error_singular_value_top100_all | lower | loss3 | random_solver_y | 2500 | 0.0653 | 0.08941 | 0.02411 | 1.72e-22 | 1.12e-20 | 0.6870 | True | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | loss1 | 50 | 0.01205 | 0.02103 | 0.008977 | 4.92e-22 | 3.02e-20 | 8.88e-16 | True | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | baseline | 50 | 0.01205 | 0.0299 | 0.01785 | 5.66e-21 | 3.28e-19 | 8.88e-16 | True | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss2 | 52 | 0.01175 | 0.02149 | 0.009739 | 6.93e-21 | 3.81e-19 | 2.09e-10 | True | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | baseline | 52 | 0.01175 | 0.0291 | 0.01735 | 1.11e-20 | 5.79e-19 | 1.75e-10 | True | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss2 | 50 | 0.02364 | 0.04354 | 0.0199 | 8.81e-20 | 4.38e-18 | 8.88e-16 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | random_clean_y | 25 | 0.2777 | 1.135 | 0.8576 | 2.30e-19 | 1.04e-17 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_mean | lower | loss3 | random_clean_y | 25 | 0.2777 | 1.135 | 0.8577 | 2.29e-19 | 1.04e-17 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_mean | lower | loss3 | random_clean_y | 25 | 0.1246 | 0.4886 | 0.364 | 2.94e-19 | 1.28e-17 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_mean | lower | loss3 | random_clean_y | 25 | 0.0653 | 0.2518 | 0.1865 | 4.24e-19 | 1.77e-17 | 2.98e-08 | True | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | loss1 | 52 | 0.01175 | 0.02025 | 0.008496 | 4.91e-19 | 1.97e-17 | 2.35e-10 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.7331 | 0.4632 | 0.2699 | 1.29e-18 | 4.80e-17 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_mean | lower | loss3 | random_clean_y | 25 | 0.4659 | 1.943 | 1.477 | 2.06e-18 | 7.17e-17 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top10_mean | lower | loss3 | random_clean_y | 25 | 0.4659 | 1.943 | 1.477 | 2.06e-18 | 7.17e-17 | 2.98e-08 | True | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | baseline | 50 | 0.02364 | 0.05774 | 0.03409 | 2.16e-18 | 7.26e-17 | 8.88e-16 | True | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | random_clean_y | 50 | 1.9777e-04 | 0.01011 | 0.009916 | 2.76e-18 | 9.02e-17 | 8.88e-16 | True | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | baseline | 52 | 0.02305 | 0.05618 | 0.03313 | 2.88e-18 | 9.12e-17 | 1.75e-10 | True | True |
+| clean_generalization | clean_all_52dataset | mse | lower | loss3 | random_clean_y | 52 | 1.9093e-04 | 0.009854 | 0.009663 | 3.36e-18 | 1.03e-16 | 1.86e-10 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.4497 | 0.3206 | 0.129 | 5.22e-18 | 1.51e-16 | 2.98e-08 | True | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss2 | 52 | 0.02305 | 0.04198 | 0.01892 | 7.12e-18 | 1.90e-16 | 2.09e-10 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9579 | 0.6182 | 0.3397 | 6.95e-18 | 1.90e-16 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9579 | 0.6181 | 0.3399 | 6.86e-18 | 1.90e-16 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9433 | 0.6877 | 0.2555 | 7.66e-18 | 1.98e-16 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9433 | 0.6879 | 0.2554 | 7.76e-18 | 1.98e-16 | 2.98e-08 | True | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | loss1 | 50 | 0.02364 | 0.04117 | 0.01753 | 1.03e-17 | 2.57e-16 | 8.88e-16 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9335 | 0.5396 | 0.3939 | 2.39e-17 | 5.70e-16 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9335 | 0.5397 | 0.3938 | 2.40e-17 | 5.70e-16 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.4497 | 0.3134 | 0.1362 | 2.98e-17 | 6.77e-16 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8979 | 0.3778 | 0.5201 | 3.53e-17 | 7.70e-16 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8979 | 0.3779 | 0.52 | 3.54e-17 | 7.70e-16 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.5992 | 0.3921 | 0.207 | 9.08e-17 | 1.78e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.4497 | 0.3324 | 0.1173 | 9.16e-17 | 1.78e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.7331 | 0.4964 | 0.2367 | 9.22e-17 | 1.78e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.5992 | 0.3921 | 0.207 | 9.08e-17 | 1.78e-15 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.5992 | 0.4114 | 0.1878 | 1.29e-16 | 2.41e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 25 | 0.5992 | 0.4114 | 0.1878 | 1.29e-16 | 2.41e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 2.48e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 25 | 1.899 | 7.225 | 5.326 | 1.48e-16 | 2.48e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.7387 | 0.4591 | 0.2797 | 1.36e-16 | 2.48e-15 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_l2 | lower | loss3 | random_clean_y | 25 | 1.891 | 7.213 | 5.323 | 1.49e-16 | 2.48e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_l2 | lower | loss3 | random_clean_y | 25 | 1.898 | 7.225 | 5.327 | 1.48e-16 | 2.48e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_l2 | lower | loss3 | random_clean_y | 25 | 1.891 | 7.213 | 5.323 | 1.49e-16 | 2.48e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_l2 | lower | loss3 | random_clean_y | 25 | 1.897 | 7.224 | 5.327 | 1.48e-16 | 2.48e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 25 | 1.899 | 7.213 | 5.315 | 1.58e-16 | 2.58e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.7331 | 0.5187 | 0.2144 | 1.74e-16 | 2.75e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank06 | lower | loss3 | random_clean_y | 25 | 0.3162 | 1.482 | 1.166 | 2.33e-16 | 3.63e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top10_l2 | lower | loss3 | random_clean_y | 25 | 1.863 | 7.119 | 5.255 | 2.50e-16 | 3.78e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top10_l2 | lower | loss3 | random_clean_y | 25 | 1.863 | 7.119 | 5.256 | 2.49e-16 | 3.78e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | random_clean_y | 25 | 0.1799 | 0.8285 | 0.6486 | 3.69e-16 | 5.50e-15 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | random_clean_y | 25 | 0.3899 | 1.791 | 1.401 | 3.82e-16 | 5.62e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9216 | 0.5108 | 0.4107 | 5.15e-16 | 7.47e-15 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | random_clean_y | 25 | 0.1088 | 0.4147 | 0.306 | 5.42e-16 | 7.75e-15 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9338 | 0.6736 | 0.2602 | 5.68e-16 | 8.02e-15 | 4.77e-07 | True | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | loss1 | 52 | 0.02305 | 0.03965 | 0.0166 | 6.35e-16 | 8.84e-15 | 2.96e-10 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_mean | lower | loss3 | random_clean_y | 25 | 0.7074 | 2.841 | 2.133 | 9.34e-16 | 1.27e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top5_mean | lower | loss3 | random_clean_y | 25 | 0.7074 | 2.841 | 2.133 | 9.33e-16 | 1.27e-14 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.5992 | 0.4257 | 0.1735 | 1.21e-15 | 1.60e-14 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 25 | 0.5992 | 0.4257 | 0.1735 | 1.21e-15 | 1.60e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | random_clean_y | 25 | 0.06171 | 0.195 | 0.1333 | 1.43e-15 | 1.86e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | random_clean_y | 25 | 0.07334 | 0.2437 | 0.1704 | 1.45e-15 | 1.87e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | baseline | 25 | 0.1551 | 0.3072 | 0.1521 | 1.56e-15 | 1.99e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | random_clean_y | 25 | 0.1551 | 0.7026 | 0.5475 | 1.62e-15 | 2.04e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | random_clean_y | 25 | 0.2124 | 0.9841 | 0.7716 | 1.65e-15 | 2.05e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | random_clean_y | 25 | 0.09924 | 0.3638 | 0.2646 | 1.95e-15 | 2.40e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | random_clean_y | 25 | 0.1354 | 0.5788 | 0.4434 | 2.04e-15 | 2.47e-14 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9364 | 0.5332 | 0.4032 | 2.21e-15 | 2.62e-14 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.9364 | 0.5331 | 0.4033 | 2.19e-15 | 2.62e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | random_clean_y | 25 | 0.08171 | 0.2757 | 0.194 | 2.32e-15 | 2.72e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank03 | lower | loss3 | random_clean_y | 25 | 0.5789 | 2.764 | 2.185 | 3.24e-15 | 3.75e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | baseline | 25 | 0.1799 | 0.3713 | 0.1914 | 3.77e-15 | 4.28e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | baseline | 25 | 0.1354 | 0.2698 | 0.1344 | 3.73e-15 | 4.28e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | random_clean_y | 25 | 0.1199 | 0.4887 | 0.3688 | 4.04e-15 | 4.54e-14 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top10_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9501 | 0.6205 | 0.3296 | 4.41e-15 | 4.75e-14 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | random_clean_y | 25 | 0.2584 | 1.231 | 0.9726 | 4.30e-15 | 4.75e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top05_l2 | lower | loss3 | random_clean_y | 25 | 1.779 | 6.655 | 4.876 | 4.40e-15 | 4.75e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top5_l2 | lower | loss3 | random_clean_y | 25 | 1.779 | 6.655 | 4.876 | 4.39e-15 | 4.75e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank02 | lower | loss3 | random_clean_y | 25 | 0.8395 | 3.282 | 2.442 | 8.12e-15 | 8.65e-14 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.4488 | 0.3212 | 0.1276 | 8.22e-15 | 8.67e-14 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8866 | 0.6462 | 0.2404 | 8.44e-15 | 8.81e-14 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 25 | 0.8866 | 0.6464 | 0.2402 | 8.60e-15 | 8.89e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | random_clean_y | 25 | 0.06726 | 0.2155 | 0.1483 | 9.57e-15 | 9.79e-14 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | random_clean_y | 25 | 0.05645 | 0.1786 | 0.1222 | 1.06e-14 | 1.08e-13 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | random_clean_y | 25 | 0.09099 | 0.3213 | 0.2303 | 1.34e-14 | 1.35e-13 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_loss_increase | lower | loss3 | random_clean_y | 24 | 0.003166 | 0.04284 | 0.03968 | 1.67e-14 | 1.66e-13 | 5.96e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9131 | 0.1045 | 0.8085 | 1.87e-14 | 1.84e-13 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_left_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8796 | 0.3517 | 0.5278 | 1.91e-14 | 1.86e-13 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.4488 | 0.3118 | 0.1369 | 2.41e-14 | 2.33e-13 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | baseline | 25 | 0.06726 | 0.112 | 0.04473 | 3.36e-14 | 3.22e-13 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | baseline | 25 | 0.2124 | 0.4194 | 0.207 | 3.87e-14 | 3.68e-13 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.7387 | 0.4973 | 0.2414 | 4.94e-14 | 4.65e-13 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | random_clean_y | 25 | 0.4572 | 2.235 | 1.778 | 7.64e-14 | 7.12e-13 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 25 | 0.9601 | 0.229 | 0.731 | 8.00e-14 | 7.39e-13 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top100_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.4488 | 0.3329 | 0.1159 | 9.85e-14 | 8.97e-13 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_left_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.7387 | 0.5215 | 0.2173 | 9.88e-14 | 8.97e-13 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | baseline | 21 | 0.5908 | 0.3858 | 0.205 | 1.09e-13 | 9.85e-13 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | baseline | 25 | 0.07334 | 0.1246 | 0.05123 | 1.27e-13 | 1.14e-12 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top5_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.9244 | 0.5456 | 0.3788 | 1.49e-13 | 1.32e-12 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss1 | 21 | 0.5908 | 0.4062 | 0.1847 | 1.59e-13 | 1.39e-12 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | baseline | 25 | 0.09099 | 0.1575 | 0.0665 | 1.85e-13 | 1.61e-12 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 1.78e-12 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_comparable | lower | loss3 | random_clean_y | 21 | 2.078 | 7.317 | 5.239 | 2.08e-13 | 1.78e-12 | 4.77e-07 | True | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss2 | 50 | 1.9777e-04 | 6.4767e-04 | 4.4989e-04 | 2.16e-13 | 1.83e-12 | 8.88e-16 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_fro_norm_original_reported | lower | loss3 | random_clean_y | 21 | 2.078 | 7.305 | 5.227 | 2.20e-13 | 1.85e-12 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | attack_final_mse | lower | loss3 | random_clean_y | 24 | 0.003419 | 0.05198 | 0.04856 | 2.45e-13 | 2.04e-12 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | baseline | 25 | 0.1199 | 0.2331 | 0.1131 | 3.27e-13 | 2.71e-12 | 2.98e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_mean | lower | loss3 | baseline | 25 | 0.0653 | 0.131 | 0.06573 | 4.25e-13 | 3.49e-12 | 2.98e-08 | True | True |
+| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss2 | 52 | 1.9093e-04 | 6.2285e-04 | 4.3191e-04 | 5.33e-13 | 4.35e-12 | 2.09e-10 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss1 | 25 | 0.06726 | 0.09956 | 0.0323 | 6.09e-13 | 4.93e-12 | 2.98e-08 | True | True |
+| clean_generalization | clean_generalization_50dataset | mse | lower | loss3 | loss1 | 50 | 1.9777e-04 | 5.8219e-04 | 3.8442e-04 | 8.96e-13 | 7.19e-12 | 8.88e-16 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top50_right_subspace_mean_cos | higher | loss3 | loss2 | 21 | 0.5908 | 0.4213 | 0.1695 | 9.82e-13 | 7.83e-12 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | random_clean_y | 21 | 0.8674 | 0.6395 | 0.2279 | 1.37e-12 | 1.08e-11 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | error_spectral_norm | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | top_error_sv_value | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank01 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_l2 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top01_mean | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.859 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top1_l2 | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.86 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top1_mean | lower | loss3 | random_clean_y | 25 | 1.272 | 4.131 | 2.86 | 1.51e-12 | 1.14e-11 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | baseline | 25 | 0.08171 | 0.1371 | 0.05538 | 1.53e-12 | 1.14e-11 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | baseline | 25 | 0.06171 | 0.1011 | 0.03938 | 1.70e-12 | 1.26e-11 | 5.96e-08 | True | True |
+| clean_generalization | clean_all_52dataset | mse | lower | loss3 | loss1 | 52 | 1.9093e-04 | 5.5983e-04 | 3.6889e-04 | 2.06e-12 | 1.52e-11 | 2.09e-10 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_left_abs_cos | higher | loss3 | random_clean_y | 21 | 0.8999 | 0.08364 | 0.8163 | 2.24e-12 | 1.64e-11 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | random_clean_y | 21 | 0.00352 | 0.04333 | 0.03981 | 2.36e-12 | 1.71e-11 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss1 | 25 | 0.06171 | 0.09175 | 0.03004 | 2.53e-12 | 1.83e-11 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | loss2 | 25 | 0.09924 | 0.1636 | 0.06431 | 3.58e-12 | 2.56e-11 | 2.98e-08 | True | True |
+| clean_generalization | clean_generalization_50dataset | rmse | lower | loss3 | random_solver_y | 50 | 0.01205 | 0.01817 | 0.006117 | 3.92e-12 | 2.79e-11 | 3.82e-14 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | baseline | 25 | 0.1088 | 0.202 | 0.09321 | 4.78e-12 | 3.37e-11 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | loss1 | 25 | 0.05645 | 0.08259 | 0.02614 | 8.44e-12 | 5.91e-11 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank13 | lower | loss3 | loss2 | 25 | 0.1088 | 0.1876 | 0.07881 | 9.15e-12 | 6.37e-11 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss1 | 25 | 0.07334 | 0.1122 | 0.03883 | 1.21e-11 | 8.35e-11 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | model_solver_top1_right_abs_cos | higher | loss3 | random_clean_y | 21 | 0.9525 | 0.2057 | 0.7469 | 1.31e-11 | 8.96e-11 | 4.77e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_final_mse | lower | loss3 | random_clean_y | 21 | 0.003806 | 0.0528 | 0.04899 | 1.57e-11 | 1.06e-10 | 4.77e-07 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top50_mean | lower | loss3 | baseline | 25 | 0.1246 | 0.2358 | 0.1112 | 1.56e-11 | 1.06e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | loss1 | 25 | 0.2124 | 0.365 | 0.1525 | 1.80e-11 | 1.21e-10 | 2.98e-08 | True | True |
+| clean_generalization | clean_generalization_50dataset | relative_l2 | lower | loss3 | random_solver_y | 50 | 0.02364 | 0.03551 | 0.01187 | 1.85e-11 | 1.24e-10 | 4.88e-14 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank14 | lower | loss3 | baseline | 25 | 0.09924 | 0.1789 | 0.0797 | 2.27e-11 | 1.51e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank18 | lower | loss3 | loss2 | 25 | 0.06726 | 0.1017 | 0.03444 | 2.44e-11 | 1.62e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank15 | lower | loss3 | loss2 | 25 | 0.09099 | 0.1387 | 0.04772 | 2.56e-11 | 1.68e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | baseline | 25 | 0.2584 | 0.4897 | 0.2314 | 4.24e-11 | 2.77e-10 | 2.98e-08 | True | True |
+| clean_generalization | clean_all_52dataset | rmse | lower | loss3 | random_solver_y | 52 | 0.01175 | 0.01749 | 0.005742 | 5.23e-11 | 3.39e-10 | 5.35e-09 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank17 | lower | loss3 | loss2 | 25 | 0.07334 | 0.1121 | 0.03874 | 6.07e-11 | 3.91e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank09 | lower | loss3 | loss2 | 25 | 0.1799 | 0.3279 | 0.1479 | 6.69e-11 | 4.28e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank12 | lower | loss3 | loss2 | 25 | 0.1199 | 0.2132 | 0.09328 | 7.28e-11 | 4.63e-10 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | clean_residual_norm_l2 | lower | loss3 | random_clean_y | 21 | 0.4612 | 2.964 | 2.503 | 7.54e-11 | 4.77e-10 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank08 | lower | loss3 | loss2 | 25 | 0.2124 | 0.3802 | 0.1678 | 9.33e-11 | 5.87e-10 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | loss2 | 25 | 0.08171 | 0.1251 | 0.04339 | 1.10e-10 | 6.91e-10 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_test_2sample | attack_final_delta_rms | lower | loss3 | random_solver_y | 2 | 0.12 | 0.12 | 1.4901e-08 | 1.48e-10 | 9.21e-10 | 0.2500 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank11 | lower | loss3 | loss2 | 25 | 0.1354 | 0.2522 | 0.1167 | 1.65e-10 | 1.02e-09 | 2.98e-08 | True | True |
+| clean_generalization | clean_all_52dataset | relative_l2 | lower | loss3 | random_solver_y | 52 | 0.02305 | 0.0342 | 0.01115 | 1.82e-10 | 1.12e-09 | 5.07e-09 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | clean_residual_norm_l2 | lower | loss3 | random_clean_y | 25 | 0.4119 | 2.75 | 2.338 | 2.25e-10 | 1.37e-09 | 1.49e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank19 | lower | loss3 | loss2 | 25 | 0.06171 | 0.09111 | 0.0294 | 2.36e-10 | 1.43e-09 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank05 | lower | loss3 | baseline | 25 | 0.3899 | 0.6871 | 0.2971 | 2.58e-10 | 1.55e-09 | 5.96e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank16 | lower | loss3 | loss1 | 25 | 0.08171 | 0.1218 | 0.04011 | 2.81e-10 | 1.69e-09 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_topk_25sample | error_singular_values_top20_mean | lower | loss3 | baseline | 25 | 0.2777 | 0.5204 | 0.2427 | 2.92e-10 | 1.73e-09 | 5.96e-08 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top20_mean | lower | loss3 | baseline | 25 | 0.2777 | 0.5204 | 0.2427 | 2.92e-10 | 1.73e-09 | 5.96e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.9433 | 0.8006 | 0.1427 | 3.70e-10 | 2.17e-09 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_all_25sample | model_solver_top20_left_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.9433 | 0.8006 | 0.1427 | 3.70e-10 | 2.17e-09 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | error_spectral_norm | lower | loss3 | random_clean_y | 21 | 1.352 | 4.06 | 2.707 | 3.80e-10 | 2.20e-09 | 9.54e-07 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | top_error_sv_value | lower | loss3 | random_clean_y | 21 | 1.352 | 4.06 | 2.707 | 3.80e-10 | 2.20e-09 | 9.54e-07 | True | True |
+| svd_error_spectrum_top100_supplement | svd_error_topk_25sample | error_singular_value_top100_mean | lower | loss3 | loss2 | 25 | 0.0653 | 0.1063 | 0.04103 | 5.97e-10 | 3.44e-09 | 2.98e-08 | True | True |
+| robustness_svd_jacobian_25sample | robustness_generalization_21sample | attack_loss_increase | lower | loss3 | loss1 | 21 | 0.00352 | 0.006713 | 0.003194 | 6.13e-10 | 3.51e-09 | 4.77e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank20 | lower | loss3 | baseline | 25 | 0.05645 | 0.09002 | 0.03357 | 6.53e-10 | 3.73e-09 | 1.49e-07 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank10 | lower | loss3 | loss2 | 25 | 0.1551 | 0.2948 | 0.1397 | 8.72e-10 | 4.95e-09 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank04 | lower | loss3 | baseline | 25 | 0.4572 | 0.8253 | 0.3681 | 9.01e-10 | 5.09e-09 | 2.98e-08 | True | True |
+| svd_error_spectrum | svd_error_rank_by_rank_25sample | error_singular_value_rank07 | lower | loss3 | loss2 | 25 | 0.2584 | 0.4408 | 0.1825 | 9.51e-10 | 5.34e-09 | 2.98e-08 | True | True |
+| model_solver_subspace_top100_supplement | model_solver_subspace_25sample | model_solver_top20_right_subspace_mean_cos | higher | loss3 | baseline | 25 | 0.8866 | 0.7317 | 0.155 | 1.26e-09 | 6.97e-09 | 2.98e-08 | True | True |
 
-_Showing 180 of 1013 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
+_Showing 180 of 1128 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 
 ## Model-Level Scalar Summary Tables
 
@@ -1110,12 +1186,12 @@ _Showing 80 of 220 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 | metric_family | coverage_status | scope | ranked_outputs | note | action |
 | --- | --- | --- | --- | --- | --- |
 | random clean/solver error SVD top20 | available_and_recorded | six-model common comparison over the fixed 25 SVD/attack samples | svd_error_top20_ranked_long.csv; svd_error_topk_ranked_long.csv; metric_best_summary_ranked.csv | Common six-model SVD comparisons are complete through top20 for random_clean_y and random_solver_y. | Recorded; no rerun requested. |
-| random clean/solver error SVD top50/top100 | not_found_for_random_models | random_clean_y and random_solver_y | not included as six-model comparable top50/top100 rows | old4 models have top100 SVD artifacts, but the recovered random-model completed exports only provide top20 common SVD values/vectors. | Explicitly documented as not found; do not supplement or rerun. |
-| old4 error SVD top100 | available_as_prior_reference | baseline/loss1/loss2/loss3 historical old4 artifacts | singular_values_top20_model_solver_reference.csv plus recovered prior raw/reference folders | Top100 exists for old4/historical artifacts; it is not a six-model common random comparison because random top50/top100 was not found. | Recorded as prior/reference evidence only. |
+| random clean/solver error SVD top50/top100 | supplemented_from_stored_jacobians | random_clean_y and random_solver_y | svd_error_top100_supplement_ranked_long.csv; svd_error_topk_top100_supplement_ranked_long.csv; metric_best_summary_ranked.csv | The completed random export stored top20 SVD values but also stored full 1024x1024 Jacobian matrices. Top100 SVD was therefore derived from those existing matrices; no training, attack, or Jacobian generation was rerun. | Recorded as a supplement; use the supplement files for six-model top50/top100 comparisons. |
+| old4 error SVD top100 | available_as_prior_reference | baseline/loss1/loss2/loss3 historical old4 artifacts | singular_values_top20_model_solver_reference.csv plus recovered prior raw/reference folders | Top100 exists for old4/historical artifacts and is now joined to random top100 supplement outputs for the six-model supplement tables. | Recorded as prior/reference evidence only. |
 | random clean/solver J^T-error and bias-gradient norms | available_and_recorded | fixed 25 samples where recovered corrected J^T-error fields are present | robustness_25sample_metric_long_ranked.csv; metric_model_summary_ranked.csv; metric_best_summary_ranked.csv | Corrected J_error.T @ clean_error L2/RMS and bias-gradient norm/RMS are included where present for random_clean_y and random_solver_y. | Recorded; no rerun requested. |
-| random clean/solver direction similarity | available_partial_and_recorded | attack delta vs top error singular vector, SVD/outward, and available cosine/angle summaries | robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv | Available random-model direction/cosine metrics are recorded. Some old4-only outward/affine fields are absent for random models and remain documented as partial coverage. | Recorded available fields only. |
-| random clean/solver model-solver subspace similarity | available_and_recorded | top1/top5/top10/top20 model-solver subspace similarities on fixed 25 samples | robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; metric_best_summary_ranked.csv | The six-model common subspace comparisons are recorded through the recovered top20 random-model coverage. | Recorded; no rerun requested. |
-| random clean/solver old4-style affine/local-gain biased-direction sweep | not_found_for_random_models | random_clean_y and random_solver_y | old4/local available fields are included where present; no full random affine sweep table exists | Random models have J^T-error, SVD/outward, attack-delta direction, subspace, and correlation tables, but not the complete old4 affine/local-gain biased-direction sweep. | Explicitly documented as not found; do not supplement or rerun. |
+| random clean/solver direction similarity | available_and_supplemented | attack delta vs top error singular vector, SVD/outward, and available cosine/angle summaries | robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; random_affine_direction_supplement_metric_long_ranked.csv | Available random-model direction/cosine metrics are recorded, with old4-style affine/outward/SVD cosine supplements derived from stored Jacobians and existing checkpoints. | Recorded available fields only. |
+| random clean/solver model-solver subspace similarity | available_and_top100_supplemented | top1/top5/top10/top20 plus supplement top50/top100 model-solver subspace similarities on fixed 25 samples | robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; model_solver_subspace_top100_supplement_ranked_long.csv; metric_best_summary_ranked.csv | The original common subspace table is top20; the top50/top100 six-model supplement is now available from stored random Jacobians. | Recorded; no rerun requested. |
+| random clean/solver old4-style affine/local-gain biased-direction sweep | supplemented_from_existing_checkpoint_and_stored_jacobian | random_clean_y and random_solver_y | random_affine_direction_supplement_metric_long_ranked.csv; metric_best_summary_ranked.csv | Random affine/local-gain metrics are supplemented from existing checkpoints and stored Jacobians. The full residual vector was recomputed by model forward; attack-delta cosine is missing only for sample_id=4 because that train sample is outside the saved attack manifest. | Recorded as supplement; no new training, attack generation, or Jacobian generation. |
 | 52-dataset clean and attack metrics | available_and_recorded | train/test plus 50 generalization datasets, six models | clean_52dataset_metric_long_ranked.csv; attack_52dataset_metric_long_ranked.csv; metric_best_summary_ranked.csv | RMSE, Relative L2, MSE, attack clean/final/loss-increase/delta summaries are fully included for the six model set. | Recorded. |
 | loss3-vs-other and best-vs-other statistical tests | available_and_recorded | paired by dataset/sample/rank where both compared models have values | metric_best_vs_other_significance_tests.csv; metric_loss3_vs_other_significance_tests.csv | Mean, std, n, paired t-test, one-sided better test, Wilcoxon, and BH-FDR q-values are recorded where paired sample counts are sufficient. | Recorded. |
 
@@ -1134,14 +1210,18 @@ _Showing 80 of 220 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
 | six_model_selected_and_solver7860_summary_roots | recovered_from_existing_local_r2_tables | selected-worktime and solver7860/clean8000 six-model clean, robustness, correlation, and model-version tables | data/recovered_prior/six_model_selected_worktime_summary_20260613/ and data/recovered_prior/six_model_solver7860_clean8000_summary_20260614/ | Both summary roots are present locally and on R2 selected prefix. |
 | first_master_finalmodels_svd_top100_metadata | recovered_metadata_from_r2 | first-master final-model SVD top100 run metadata/sample manifest | data/recovered_prior/first_master_finalmodels_jacobian_svd_rep20_top100_20260608/ | R2 selected prefix contains 6 small metadata files for this top100 run; no raw NPZ or top singular-value CSV was present under that R2 directory. |
 | singular_values_top20_6models | recovered_and_joined | 25 samples; solver plus six models for model/error top20 singular values | data/singular_values_top20_six_models_recovered_long.csv | Old4 source has top100; random source has top20, so the six-model common-rank table is top20. |
-| singular_values_top50_top100_6models | partial_not_found_for_random_models | old4 has top100; random_clean_y/random_solver_y have top20 only | data/historical_svd_attack25_reuse3/singular_values_top100_long.csv | No existing R2/local random top50/top100 SVD payload was found in the checked solver7860/clean8000 or latest-wideparam summaries. |
+| singular_values_top50_top100_6models | supplemented_from_stored_random_jacobians | 25 samples x 6 models; error singular values ranks 1-100 plus top1/top5/top10/top20/top50/top100 mean/l2 and top50/top100 model-solver subspace | data/random_top100_svd_supplement_20260614/ and data/ranked_metric_tables_20260614/svd_error_top100_supplement_ranked_long.csv | R2/local did not contain an already-exported random top50/top100 table, but the completed random suite stored full 1024x1024 Jacobian matrices. Top100 SVD was derived from those existing matrices; no training, attack, or Jacobian generation was rerun. |
 | biased_local_direction_full_old4 | complete_for_old4 | baseline/loss1/loss2/loss3 25 samples | data/biased_local_direction/ | Full affine/outward/SVD local-gain direction suite is old4 only. |
-| biased_jerror_direction_random_models | partial_for_random_models | random_clean_y/random_solver_y J^T error, SVD/outward, attack-delta direction summaries | data/recovered_prior/six_model_latest_wideparam_summary_20260613/random_models_jerror_transpose_error_25sample.csv | Random has corrected J^T-error direction rows, but not the full old4 affine local-gain sweep. |
+| biased_jerror_direction_random_models | available_and_supplemented | random_clean_y/random_solver_y J^T error, SVD/outward, attack-delta direction summaries plus old4-style affine/local-gain supplement | data/recovered_prior/six_model_latest_wideparam_summary_20260613/random_models_jerror_transpose_error_25sample.csv and data/random_affine_direction_supplement_20260614/ | Random models have corrected J^T-error direction rows and a new supplement with affine/outward/SVD local-gain metrics from existing checkpoints and stored Jacobians. Attack-delta cosine is missing only for sample_id=4 because that train sample is outside the saved attack manifest. |
 | metric_correlations_pairwise_rank_similarity | recovered_and_copied | six-model corrected JerrT metric correlations, pairwise correlations, model/sample rank similarity summaries | data/recovered_prior/six_model_latest_wideparam_summary_20260613/ | R2 source had 42 files; copied into final audit. |
 | loss3_vs_other_paired_tests | computed_from_existing_tables | clean 50-dataset and robustness 25-sample paired t-test/Wilcoxon rows | data/paired_tests_loss3_vs_other_models.csv | Derived only from existing metrics; no model rerun. |
+| random_affine_local_gain_direction_supplement | supplemented_from_existing_checkpoint_and_stored_jacobian | random_clean_y/random_solver_y, 25 fixed SVD samples, affine/SVD/outward local gains, direction cosines/angles, recomputed clean residual vectors, correlations | data/random_affine_direction_supplement_20260614/ and data/ranked_metric_tables_20260614/random_affine_direction_supplement_metric_long_ranked.csv | No training, attack generation, or Jacobian generation was rerun. The residual vector was recomputed by model forward from existing checkpoints; attack-delta cosine has n=24 per model because sample_id=4 is outside the saved attack trace manifest. |
+| r2_live_gap_search_resolution_20260614 | completed | R2 selected-prefix high-priority Burgers directory search and recursive listing manifest | data/r2_live_gap_search_20260614/ | R2 selected prefix was searched for Burgers old4/random/SVD/affine/full-suite artifacts. High-priority manifests are saved locally; secrets were not written to repo files. |
 
 ## Evidence Boundary
 
-Observed from local/R2-recovered tables: clean 52-dataset metrics, recovered full 52-dataset attack metrics for six models, selected 25-sample robustness/Jacobian/SVD tables, corrected J^T-error/direction/subspace/correlation summaries, old4 top100 SVD artifacts, and random clean/solver top20 SVD artifacts.
+Observed from local/R2-recovered tables: clean 52-dataset metrics, recovered full 52-dataset attack metrics for six models, selected 25-sample robustness/Jacobian/SVD tables, corrected J^T-error/direction/subspace/correlation summaries, old4 top100 SVD artifacts, random clean/solver top20 SVD artifacts, and the 20260614 random top100/affine supplements derived from existing stored Jacobians/checkpoints.
 
-Remaining known gap: an already-exported random clean/random solver top50/top100 SVD table was not found in the checked local/R2 selected-prefix sources. The available random clean/solver SVD coverage is top20, and those top20 values are included here.
+Corrected prior gap statement: an already-exported random clean/random solver top50/top100 SVD table was not found, but the completed random suite stored full Jacobian matrices. The top50/top100 six-model supplement is therefore available here as a derived-from-existing-Jacobian artifact, not as a new model/Jacobian rerun.
+
+Remaining caveat: the 52-dataset attack all-model table is recovered from mixed sources for old4 versus random2, while the dense latest P2Q2 visual traces are same-panel latest traces. Use the source columns when making strict protocol claims.
