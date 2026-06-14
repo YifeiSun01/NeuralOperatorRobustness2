@@ -14798,3 +14798,53 @@ R2 verification:
 
 Documentation cleanup:
 - Updated `docs/burgers_solver7860_clean8000_organized_release_20260614.md` and `docs/burgers_timematched_full_or_audit_20260614.md` to replace stale R2 counts and the superseded "random top50/top100 not found" language with the final supplement/verification state.
+
+## 2026-06-14 - Burgers protocol-confusion audit and strict latest full-52 attack fix
+
+Status: resolved the confusing Burgers attack conclusion by auditing source/dataset provenance, then running the missing strict latest full-52 widevis P2Q2 20-step attack for the latest old4 checkpoints. No training, Jacobian, or SVD was rerun.
+
+Problem found:
+- The recovered six-model full-52 attack table was a mixed historical/current table. Old4 rows (`baseline`, `loss1`, `loss2`, `loss3`) came from `forensics/burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608` using `loss3_epoch1500` and `generalization_datasets/burgers`; random rows came from `forensics/burgers_random_solver7860_clean8000_full_suite_20260614` on the current widevis data.
+- In that recovered table, the 50 old4 generalization attack rows were labeled with current widevis descriptive names, but their actual `attack_dataset_id` values were old first/master datasets. Therefore that table must not be used for strict current `loss3 e1000` vs `random_solver_y e7860` full-52 attack claims.
+
+New strict run:
+- Smoke test: `forensics/burgers_latest_old4_widevis_full52_p2q2_20step_20260614_smoke`.
+- Formal run: `forensics/burgers_latest_old4_widevis_full52_p2q2_20step_20260614`.
+- Script: `scripts/run_burgers_latest_old4_widevis_full52_attack_20260614.sh`.
+- Runner: `tools/evaluate_burgers_random_field_final_models_20260613.py --stage attack`.
+- Models:
+  - `baseline`: `1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt`
+  - `loss1`: `adversarial_training_runs/burgers_wideparam_loss1_8000ep_retrain_20260611/burgers/checkpoints/burgers_epoch8000_step008000.pt`
+  - `loss2`: `adversarial_training_runs/burgers_wideparam_loss2_2000ep_retrain_20260611/burgers/checkpoints/burgers_epoch2000_step002000.pt`
+  - `loss3`: `adversarial_training_runs/burgers_wideparam_loss3_1000ep_retrain_20260611/burgers/checkpoints/burgers_epoch1000_step001000.pt`
+- Dataset/protocol: current widevis `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers`, train first 50, full test 150, 50 generalization datasets x 200 samples, 10200 total samples, P2Q2 20 steps, batch size 500, epsilon RMS 0.12, alpha RMS 0.012.
+- GPU path: V100 32GB, peak allocated about 28.6 GiB; each old4 model took about 956 seconds.
+
+Strict latest attack outputs:
+- Long table: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/attack_52dataset_six_models_strict_latest_widevis_long.csv`.
+- Wide table: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/attack_52dataset_six_models_strict_latest_widevis_wide.csv`.
+- Model summary: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/attack_52dataset_six_models_strict_latest_widevis_model_summary.csv`.
+- Strict report: `docs/burgers_strict_latest_attack52_20260614.md`.
+- Protocol audit report: `docs/burgers_protocol_confusion_audit_20260614.md`.
+
+Key strict latest full-52 attack metrics:
+- `attack_loss_increase_mean`: `loss3` 0.00382075, `loss1` 0.00658905, `loss2` 0.00660586, `random_solver_y` 0.00816719, `baseline` 0.0106693, `random_clean_y` 0.0371569.
+- `final_loss_mean`: `loss3` 0.00400196, `loss1` 0.00715168, `loss2` 0.00722935, `random_solver_y` 0.00865523, `baseline` 0.0118478, `random_clean_y` 0.0470111.
+- Dataset winner count: `loss3` is best on 52/52 dataset rows for attack loss increase.
+- Loss3 vs random_solver_y: `loss3` beats `random_solver_y` on 52/52 dataset rows. Paired t-test for attack loss increase gives one-sided q about `2.14e-22` before BH field display and BH-adjusted q about `1.07e-20` in `metric_loss3_vs_other_six_model_evidence_significance_tests.csv`.
+
+Code/report corrections:
+- Added `tools/audit_burgers_protocol_confusions_20260614.py`.
+- Added `tools/build_burgers_strict_latest_attack52_20260614.py`.
+- Updated `tools/build_burgers_all_metric_ranked_tables_20260614.py` so attack rankings prefer the strict latest table when present, and mixed recovered attack rows are not counted as strict latest six-model evidence.
+- Updated `tools/audit_burgers_metric_tables_20260614.py` and `tools/audit_burgers_full_data_bundle_20260614.py` to recognize the strict latest attack table.
+- Regenerated ranked metric tables and reports under `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/` and docs copies under `docs/`.
+- Re-ran `tools/organize_burgers_solver7860_clean8000_release_20260614.py`; organized release now has 2241 files and 0 missing files.
+
+Hard checks:
+- Metric integrity audit: 1522 model-summary rows, 0 mean recompute failures; 321 best-summary rows, 0 best model/mean failures; strict latest attack models include all six.
+- Full data bundle audit: `overall_pass=true`, parsed 1815 files, 0 parse failures, 0 shape failures, 0 ranked failures, 0 summary failures, 0 docs failures, 0 organized-copy failures.
+
+Current interpretation:
+- The previous apparent result that `random_solver_y` beat latest `loss3` on full-52 attack was caused by mixing historical old4 data with current random data.
+- The strict current same-dataset full-52 attack result supports the user's visual impression: latest `loss3 e1000` is the best attack-robustness model among the six under this P2Q2 20-step full-52 protocol, and its advantage over `random_solver_y e7860` is statistically significant.

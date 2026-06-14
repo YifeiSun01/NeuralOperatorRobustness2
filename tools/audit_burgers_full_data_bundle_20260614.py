@@ -165,6 +165,8 @@ def validate_expected_shapes() -> pd.DataFrame:
     clean_summary = read_csv(DATA_ROOT / "clean_generalization_model_summary_selected_worktime.csv")
     attack_selected = read_csv(DATA_ROOT / "attack_52dataset_six_models_selected_worktime_long.csv")
     attack_recovered = read_csv(DATA_ROOT / "attack_52dataset_six_models_recovered_full_long.csv")
+    strict_attack_path = DATA_ROOT / "attack_52dataset_six_models_strict_latest_widevis_long.csv"
+    attack_strict = read_csv(strict_attack_path) if strict_attack_path.exists() else pd.DataFrame()
     robust = read_csv(DATA_ROOT / "robustness_25sample_six_models_selected_worktime.csv")
     clean_long = read_csv(RANKED / "clean_52dataset_metric_long_ranked.csv")
     attack_long = read_csv(RANKED / "attack_52dataset_metric_long_ranked.csv")
@@ -196,6 +198,11 @@ def validate_expected_shapes() -> pd.DataFrame:
         and set(attack_recovered[attack_recovered["model"].isin(OLD4)]["source"].unique()) != set(attack_recovered[attack_recovered["model"].isin(RANDOM2)]["source"].unique())
     )
     add_check(rows, "attack_recovered_has_mixed_source_caveat", recovered_source_ok, "old4 one source and random2 one different source", attack_recovered.groupby(["source", "model"]).size().to_dict())
+    if not attack_strict.empty:
+        add_check(rows, "attack_strict_latest_rows", len(attack_strict) == 312, 312, len(attack_strict))
+        add_check(rows, "attack_strict_latest_models", sorted(attack_strict["model"].unique()) == sorted(MODELS), MODELS, sorted(attack_strict["model"].unique()))
+        add_check(rows, "attack_strict_latest_counts_per_model", attack_strict.groupby("model").size().reindex(MODELS).fillna(0).astype(int).to_dict() == {m: 52 for m in MODELS}, {m: 52 for m in MODELS}, attack_strict.groupby("model").size().reindex(MODELS).fillna(0).astype(int).to_dict())
+        add_check(rows, "attack_ranked_source_is_strict_latest", set(attack_long["source_table"].dropna().unique()) == {"attack_52dataset_six_models_strict_latest_widevis_long.csv"} if "source_table" in attack_long else False, "ranked attack table uses strict latest source", sorted(attack_long["source_table"].dropna().unique()) if "source_table" in attack_long else [])
 
     add_check(rows, "robustness_25sample_rows", len(robust) == 150, 150, len(robust))
     add_check(rows, "robustness_25sample_model_counts", robust.groupby("model").size().reindex(MODELS).fillna(0).astype(int).to_dict() == {m: 25 for m in MODELS}, {m: 25 for m in MODELS}, robust.groupby("model").size().reindex(MODELS).fillna(0).astype(int).to_dict())
@@ -659,6 +666,8 @@ It does not rerun training, attacks, Jacobian, SVD, or plotting.
 - The recovered six-model 52-dataset attack table is mixed source:
   baseline/loss1/loss2/loss3 are from the old full-52 20-step run, while
   random_clean_y/random_solver_y are from the solver7860/clean8000 random suite.
+- The strict latest six-model 52-dataset attack table is now available and the
+  ranked attack table uses `attack_52dataset_six_models_strict_latest_widevis_long.csv`.
 - The 54 robustness metrics are not all six-model-common; some are old4-only
   or random-only and should not be used as one undifferentiated "best model"
   proof.

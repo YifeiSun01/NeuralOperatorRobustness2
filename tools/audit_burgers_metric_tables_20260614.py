@@ -126,8 +126,16 @@ def build_robustness_comparability(robust_long: pd.DataFrame) -> pd.DataFrame:
 def audit_attack52_sources() -> pd.DataFrame:
     selected = pd.read_csv(DATA_ROOT / "attack_52dataset_six_models_selected_worktime_long.csv")
     recovered = pd.read_csv(DATA_ROOT / "attack_52dataset_six_models_recovered_full_long.csv")
+    strict_path = DATA_ROOT / "attack_52dataset_six_models_strict_latest_widevis_long.csv"
+    strict = pd.read_csv(strict_path) if strict_path.exists() else pd.DataFrame()
     rows = []
-    for name, df in [("selected_worktime_original", selected), ("recovered_full_ranked_source", recovered)]:
+    table_sources = [
+        ("selected_worktime_original", selected),
+        ("recovered_full_historical_reference", recovered),
+    ]
+    if not strict.empty:
+        table_sources.append(("strict_latest_widevis_full52_ranked_source", strict))
+    for name, df in table_sources:
         for (source, model), group in df.groupby(["source", "model"], dropna=False):
             rows.append(
                 {
@@ -231,9 +239,11 @@ without rerunning training, attack, Jacobian, SVD, or plotting jobs.
 ## Attack-52 Source Audit
 
 The selected-worktime attack table has only baseline and the two random models.
-The recovered full table used by the ranked appendix is a mixed source table:
+The recovered full table is a mixed source historical/current table:
 old-four rows come from the old full-52 20-step run, while random rows come from
-the current solver7860/clean8000 random full suite.
+the current solver7860/clean8000 random full suite. The current ranked attack
+table now uses `attack_52dataset_six_models_strict_latest_widevis_long.csv`
+when that strict table is available.
 
 {attack_lines}
 
@@ -259,8 +269,9 @@ group00 through group05.
 
 ## Main Corrections
 
-- Do not claim that `random_solver_y` beats latest `loss3 e1000` on a strict
-  full-52 attack protocol. That same-protocol artifact was not found locally.
+- Use the strict latest full-52 widevis attack table for current attack claims:
+  `loss3 e1000` has lower attack increase than `random_solver_y e7860`
+  on the same 52 dataset rows.
 - The recovered attack-52 ranked rows are historical mixed evidence; they remain
   useful only with that caveat.
 - Do not interpret all 54 robustness metrics as equal model-quality rankings.
@@ -271,9 +282,9 @@ group00 through group05.
   derived from existing checkpoints and stored Jacobians; attack-delta cosine
   has n=24 per random model because sample_id=4 is outside the saved attack
   manifest.
-- For latest direct evidence, use the 25-sample robustness/SVD table and dense
-  visual trace set for `loss3 e1000`, plus the clean 52-dataset table for clean
-  generalization.
+- For latest direct evidence, use the strict full-52 attack table, the
+  25-sample robustness/SVD table, the dense visual trace set for `loss3 e1000`,
+  and the clean 52-dataset table for clean generalization.
 """
     OUT_REPORT.write_text(text, encoding="utf-8")
     DOC_REPORT.write_text(text, encoding="utf-8")
@@ -368,6 +379,11 @@ def main() -> None:
         "recovered_attack_models": sorted(
             pd.read_csv(DATA_ROOT / "attack_52dataset_six_models_recovered_full_long.csv")["model"].unique().tolist()
         ),
+        "strict_latest_attack_models": sorted(
+            pd.read_csv(DATA_ROOT / "attack_52dataset_six_models_strict_latest_widevis_long.csv")["model"].unique().tolist()
+        )
+        if (DATA_ROOT / "attack_52dataset_six_models_strict_latest_widevis_long.csv").exists()
+        else [],
     }
     (OUT_DATA / "integrity_audit_summary.json").write_text(json.dumps(checks, indent=2, sort_keys=True), encoding="utf-8")
     write_markdown(checks, attack_sources, comparability, dense)

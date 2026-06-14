@@ -127,6 +127,41 @@ METRIC_ROLE_DEFINITIONS = [
 ]
 
 
+PROTOCOL_CLASS_DEFINITIONS = [
+    {
+        "protocol_comparability_class": "strict_latest_same_dataset",
+        "strict_latest_protocol": True,
+        "meaning": "All compared models are evaluated on the same current dataset rows under the current selected-worktime model set.",
+    },
+    {
+        "protocol_comparability_class": "strict_latest_same_sample_25",
+        "strict_latest_protocol": True,
+        "meaning": "All compared models use the same fixed current 25-sample local robustness/Jacobian/SVD sample set.",
+    },
+    {
+        "protocol_comparability_class": "mixed_historical_current_reference",
+        "strict_latest_protocol": False,
+        "meaning": "The table mixes historical old4 results with current random-model results. It is retained as a reference but must not be counted as strict latest six-model evidence.",
+    },
+    {
+        "protocol_comparability_class": "partial_random_only_supplement",
+        "strict_latest_protocol": False,
+        "meaning": "The table compares only random_clean_y and random_solver_y supplementary fields.",
+    },
+    {
+        "protocol_comparability_class": "scope_specific_reference",
+        "strict_latest_protocol": False,
+        "meaning": "The table is useful in its source scope, but strict latest six-model comparability must be checked from source metadata before broad claims.",
+    },
+]
+
+STRICT_PROTOCOL_CLASSES = {
+    row["protocol_comparability_class"]
+    for row in PROTOCOL_CLASS_DEFINITIONS
+    if bool(row["strict_latest_protocol"])
+}
+
+
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
@@ -299,6 +334,45 @@ def classify_metric_role(family: str, scope: str, metric: str, source_table: str
 
 def metric_counts_as_evidence(role: str) -> bool:
     return role in EVIDENCE_ROLES
+
+
+def classify_protocol_comparability(family: str, source_table: str) -> str:
+    """Classify source/protocol comparability separately from metric role.
+
+    A metric can be meaningful evidence in isolation but still not be strict
+    latest six-model evidence if its source table is a historical/current merge.
+    """
+    fam = family.lower()
+    source = source_table.lower()
+    if fam == "attack_robustness_52dataset" and source == "attack_52dataset_six_models_strict_latest_widevis_long.csv":
+        return "strict_latest_same_dataset"
+    if fam == "attack_robustness_52dataset" and source == "attack_52dataset_six_models_recovered_full_long.csv":
+        return "mixed_historical_current_reference"
+    if fam == "clean_generalization":
+        return "strict_latest_same_dataset"
+    if fam in {
+        "robustness_svd_jacobian_25sample",
+        "svd_error_spectrum",
+        "svd_error_spectrum_top100_supplement",
+        "model_solver_subspace_top100_supplement",
+    }:
+        return "strict_latest_same_sample_25"
+    if fam == "model_level_scalar_summaries" and "selected_worktime_25sample" in source:
+        return "strict_latest_same_sample_25"
+    if fam == "random_affine_direction_supplement":
+        return "partial_random_only_supplement"
+    return "scope_specific_reference"
+
+
+def is_strict_latest_protocol(protocol_class: str) -> bool:
+    return protocol_class in STRICT_PROTOCOL_CLASSES
+
+
+def attach_protocol_fields(df: pd.DataFrame, family: str, source_table: str) -> pd.DataFrame:
+    protocol_class = classify_protocol_comparability(family, source_table)
+    df["protocol_comparability_class"] = protocol_class
+    df["strict_latest_protocol"] = is_strict_latest_protocol(protocol_class)
+    return df
 
 
 def is_better_sort_ascending(direction: str) -> bool:
@@ -475,10 +549,14 @@ def summarize_metric(
 ) -> tuple[pd.DataFrame, list[dict[str, object]], list[dict[str, object]]]:
     metric_role = spec.metric_role or classify_metric_role(spec.family, spec.scope, spec.metric, spec.source_table)
     counts_as_evidence = metric_counts_as_evidence(metric_role)
+    protocol_comparability_class = classify_protocol_comparability(spec.family, spec.source_table)
+    strict_latest_protocol = is_strict_latest_protocol(protocol_comparability_class)
     spec_meta = {
         **spec.__dict__,
         "metric_role": metric_role,
         "counts_as_evidence": counts_as_evidence,
+        "protocol_comparability_class": protocol_comparability_class,
+        "strict_latest_protocol": strict_latest_protocol,
     }
     work = tidy[tidy["model"].isin(MODEL_ORDER)].copy()
     work["value"] = pd.to_numeric(work["value"], errors="coerce")
@@ -488,7 +566,9 @@ def summarize_metric(
         return pd.DataFrame(), [], []
     model_coverage_class = classify_model_coverage(models)
     available_models = ",".join(models)
-    counts_in_six_model_evidence_claim = counts_as_evidence and model_coverage_class == "six_model_common"
+    counts_in_six_model_evidence_claim = (
+        counts_as_evidence and model_coverage_class == "six_model_common" and strict_latest_protocol
+    )
     spec_meta.update(
         {
             "model_coverage_class": model_coverage_class,
@@ -510,6 +590,8 @@ def summarize_metric(
                 "direction": spec.direction,
                 "metric_role": metric_role,
                 "counts_as_evidence": counts_as_evidence,
+                "protocol_comparability_class": protocol_comparability_class,
+                "strict_latest_protocol": strict_latest_protocol,
                 "model_coverage_class": model_coverage_class,
                 "available_models": available_models,
                 "counts_in_six_model_evidence_claim": counts_in_six_model_evidence_claim,
@@ -611,6 +693,7 @@ def clean_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, o
         for metric in long["metric"]
     ]
     long["counts_as_evidence"] = long["metric_role"].map(metric_counts_as_evidence)
+    long = attach_protocol_fields(long, "clean_generalization", path.name)
     ranked = rank_unit_table(long, ["dataset_order", "metric"])
 
     for metric, label in metric_map.items():
@@ -634,7 +717,9 @@ def clean_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, o
 
 
 def attack_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, object]], loss3_tests: list[dict[str, object]]) -> dict[str, pd.DataFrame]:
-    path = data_root() / "attack_52dataset_six_models_recovered_full_long.csv"
+    strict_path = data_root() / "attack_52dataset_six_models_strict_latest_widevis_long.csv"
+    recovered_path = data_root() / "attack_52dataset_six_models_recovered_full_long.csv"
+    path = strict_path if strict_path.exists() else recovered_path
     attack = read_csv(path)
     if "dataset_order" not in attack.columns:
         attack["dataset_order"] = attack["dataset_index"]
@@ -683,6 +768,7 @@ def attack_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, 
         for metric in long["metric"]
     ]
     long["counts_as_evidence"] = long["metric_role"].map(metric_counts_as_evidence)
+    long = attach_protocol_fields(long, "attack_robustness_52dataset", path.name)
     ranked = rank_unit_table(long, ["dataset_order", "metric"])
 
     for metric, label in metric_map.items():
@@ -752,6 +838,7 @@ def robustness_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[s
         for metric in long["metric"]
     ]
     long["counts_as_evidence"] = long["metric_role"].map(metric_counts_as_evidence)
+    long = attach_protocol_fields(long, "robustness_svd_jacobian_25sample", path.name)
     ranked = rank_unit_table(long, ["sample_id", "metric"])
 
     for metric in metric_cols:
@@ -1313,6 +1400,8 @@ def metric_best_table(summary: pd.DataFrame) -> pd.DataFrame:
         "direction",
         "metric_role",
         "counts_as_evidence",
+        "protocol_comparability_class",
+        "strict_latest_protocol",
         "model_coverage_class",
         "available_models",
         "counts_in_six_model_evidence_claim",
@@ -1383,7 +1472,7 @@ def render_report(
             "",
             "This report is generated from already completed Burgers solver7860/clean8000 audit tables. No training, attack, Jacobian, or SVD computation was rerun.",
             "",
-            "Ranking convention: each row is tagged with `metric_role`, `model_coverage_class`, `counts_as_evidence`, and `counts_in_six_model_evidence_claim`. Clean errors, attack outcome losses, clean residuals, error-gradient norms, error-operator norms/singular values, local-response MSE, and direct model-solver subspace similarity are evidence metrics. Direction cosines/angles, perturbation budget quantities, model-only/solver-only spectral norms, effective-rank shape fields, and diagnostic ratios are recorded but not counted as model-quality evidence. Evidence rows with old4-only or random-only coverage are recorded separately and are not used for six-model claims.",
+            "Ranking convention: each row is tagged with `metric_role`, `model_coverage_class`, `protocol_comparability_class`, `strict_latest_protocol`, `counts_as_evidence`, and `counts_in_six_model_evidence_claim`. Clean errors, attack outcome losses, clean residuals, error-gradient norms, error-operator norms/singular values, local-response MSE, and direct model-solver subspace similarity are evidence metrics. Direction cosines/angles, perturbation budget quantities, model-only/solver-only spectral norms, effective-rank shape fields, and diagnostic ratios are recorded but not counted as model-quality evidence. Evidence rows with old4-only/random-only coverage or mixed historical/current protocol are recorded separately and are not used for strict latest six-model claims.",
             "",
             "The complete machine-readable tables are in `data/ranked_metric_tables_20260614/`. CSV files contain `rank`, `is_best`, `best_model`, runner-up advantage, paired t-test p/q values, Wilcoxon p/q values, and the sample count used for each comparison.",
             "",
@@ -1399,7 +1488,7 @@ def render_report(
             "",
             "## Attack-52 Protocol Caveat",
             "",
-            "The strict selected-worktime 52-dataset attack table contains baseline, random_clean_y, and random_solver_y only. The recovered six-model 52-dataset attack table is mixed source: baseline/loss1/loss2/loss3 are from the historical old4 full-52 20-step run, while random_clean_y/random_solver_y are from the solver7860/clean8000 random suite. Use the source columns before making strict protocol claims.",
+            "The strict selected-worktime 52-dataset attack table contains baseline, random_clean_y, and random_solver_y only. The recovered six-model 52-dataset attack table is mixed source: baseline/loss1/loss2/loss3 are from the historical old4 full-52 20-step run, while random_clean_y/random_solver_y are from the solver7860/clean8000 random suite. Its attack outcome rows are evidence in a historical reference sense, but `strict_latest_protocol=false`, so they are excluded from strict latest six-model evidence claims.",
             "",
             "## Robustness Metric Comparability Caveat",
             "",
@@ -1421,13 +1510,15 @@ def render_report(
     )
     diagnostic_best = best_summary[~best_summary["counts_as_evidence"].astype(bool)].copy() if "counts_as_evidence" in best_summary else pd.DataFrame()
 
-    lines.extend(["", "## Six-Model Common Evidence Metrics: Best Model By Metric", ""])
+    lines.extend(["", "## Strict Latest Six-Model Evidence Metrics: Best Model By Metric", ""])
     best_cols = [
         "family",
         "scope",
         "metric",
         "direction",
         "metric_role",
+        "protocol_comparability_class",
+        "strict_latest_protocol",
         "model_coverage_class",
         "best_model",
         "n",
@@ -1442,7 +1533,7 @@ def render_report(
     ]
     lines.append(markdown_table(six_model_evidence_best, [c for c in best_cols if c in six_model_evidence_best.columns], max_rows=220, bold_best_model=True))
 
-    lines.extend(["", "## Partial-Scope Evidence Metrics Recorded Separately", ""])
+    lines.extend(["", "## Partial/Mixed-Scope Evidence Metrics Recorded Separately", ""])
     lines.append(markdown_table(partial_evidence_best, [c for c in best_cols if c in partial_evidence_best.columns], max_rows=120, bold_best_model=True))
 
     lines.extend(["", "## Diagnostic/Process Metrics Recorded But Not Counted", ""])
@@ -1553,6 +1644,16 @@ def render_report(
     lines.extend(["", "## Metric Role Definitions", ""])
     lines.append(markdown_table(role_defs, ["metric_role", "counts_as_evidence", "meaning"], max_rows=None))
 
+    protocol_defs = pd.DataFrame(PROTOCOL_CLASS_DEFINITIONS)
+    lines.extend(["", "## Protocol Comparability Definitions", ""])
+    lines.append(
+        markdown_table(
+            protocol_defs,
+            ["protocol_comparability_class", "strict_latest_protocol", "meaning"],
+            max_rows=None,
+        )
+    )
+
     coverage = data_root() / "missing_metric_coverage_audit.csv"
     if coverage.exists():
         cov = read_csv(coverage)
@@ -1651,6 +1752,7 @@ def main() -> None:
                 loss3_df["counts_in_six_model_evidence_claim"].astype(bool)
             ].sort_values(["family", "scope", "metric", "other_model"])
     tables["metric_role_definitions.csv"] = pd.DataFrame(METRIC_ROLE_DEFINITIONS)
+    tables["protocol_comparability_definitions.csv"] = pd.DataFrame(PROTOCOL_CLASS_DEFINITIONS)
 
     existing_loss3 = data_root() / "paired_tests_loss3_vs_other_models.csv"
     if existing_loss3.exists():
