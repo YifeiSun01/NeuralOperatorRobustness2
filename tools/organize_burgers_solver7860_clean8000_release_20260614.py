@@ -149,13 +149,13 @@ class Organizer:
             "- `01_summary_tables/`: clean 52-dataset metrics, recovered six-model attack metrics, robustness/SVD correlations, model versions, and prior raw payloads.",
             "- `02_figures/`: training curves, log-y variants, no-random-clean variants, polished reports, dense six-model attack panels, and summary plots.",
             "- `03_dense_six_model_attack_data/`: dense groups with manifests, six-model attack curves, summaries, and NPZ traces.",
-            "- `04_random_model_full_suite/`: random clean/random solver clean loss, P2Q2 attacks, Jacobian/SVD, and postprocess tables.",
+            "- `04_random_model_full_suite/`: random clean/random solver clean loss, P2Q2 attacks, Jacobian/SVD, postprocess tables, plus historical selected-worktime/final-model random suites.",
             "- `05_polished_report_data/`: CSV/JSON/log data backing the polished per-model reports.",
             "- `06_logs/`: postprocess and R2 sync logs.",
             "- `07_source_code_and_references/`: scripts and docs that produced or describe the release.",
             "- `08_dense_image_only_bundle_full_copy/`: full copy of the dense image-only bundle as its own subfolder.",
             "",
-            "Recovered prior artifacts are included without rerunning compute. The largest recovered items are old4 SVD25 raw payloads, old4 52-dataset P2Q2 attack raw payloads, six-model corrected metric/correlation summaries, and random solver7860/clean8000 raw attack/SVD outputs.",
+            "Recovered prior artifacts are included without rerunning compute. The largest recovered items are old4 SVD25 raw payloads, old4 52-dataset P2Q2 attack raw payloads, six-model corrected metric/correlation summaries, current random solver7860/clean8000 raw attack/SVD outputs, and historical random selected-worktime/final-model raw suites.",
             "",
             "## Counts",
             "",
@@ -280,7 +280,10 @@ def organize_polished_reports(org: Organizer, polished_root: Path) -> None:
 def build_release(root: Path, out: Path) -> Organizer:
     audit = root / "outputs" / "burgers_timematched_solver7860_clean8000_audit_20260614"
     summary = root / "forensics" / "burgers_six_model_solver7860_clean8000_summary_20260614"
+    selected_summary = root / "forensics" / "burgers_six_model_selected_worktime_summary_20260613"
     random_suite = root / "forensics" / "burgers_random_solver7860_clean8000_full_suite_20260614"
+    random_selected_suite = root / "forensics" / "burgers_random_field_selected_worktime_full_suite_20260613"
+    random_final_suite = root / "forensics" / "burgers_random_field_final_models_full_suite_20260613"
     dense_data = root / "forensics" / "burgers_wideparam_loss123_randomsolver7860_clean8000_round00_p2q2_six_model_visuals_20260614"
     dense_figures = root / "visualizations" / "burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614"
     polished = root / "visualizations" / "burgers_solver7860_clean8000_polished_reports_20260614"
@@ -289,6 +292,7 @@ def build_release(root: Path, out: Path) -> Organizer:
     biased_direction = root / "forensics" / "burgers_wideparam_loss3targeted_full1024_svd_attack25_biased_local_direction_20260611"
     six_model_latest = root / "forensics" / "burgers_six_model_latest_wideparam_summary_20260613"
     first_master_attack52 = root / "forensics" / "burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608"
+    first_master_top100_meta = root / "forensics" / "burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608"
 
     if out.exists():
         shutil.rmtree(out)
@@ -298,7 +302,10 @@ def build_release(root: Path, out: Path) -> Organizer:
     for label, path in {
         "audit_output": audit,
         "six_model_summary": summary,
+        "six_model_selected_worktime_summary": selected_summary,
         "random_model_full_suite": random_suite,
+        "random_selected_worktime_full_suite": random_selected_suite,
+        "random_final_models_full_suite": random_final_suite,
         "dense_six_model_attack_data": dense_data,
         "dense_six_model_attack_figures": dense_figures,
         "polished_reports": polished,
@@ -307,6 +314,7 @@ def build_release(root: Path, out: Path) -> Organizer:
         "biased_local_direction_tables": biased_direction,
         "six_model_latest_wideparam_summary": six_model_latest,
         "first_master_old4_52dataset_attack": first_master_attack52,
+        "first_master_finalmodels_top100_metadata": first_master_top100_meta,
     }.items():
         org.note_source(label, path)
 
@@ -377,8 +385,13 @@ def build_release(root: Path, out: Path) -> Organizer:
         for name in names:
             org.copy_file(audit / "data" / name, table_root / group / name, "summary_tables")
 
-    for src in sorted(summary.glob("*.csv")) + sorted(summary.glob("*.json")):
-        org.copy_file(src, table_root / "06_summary_root_originals" / src.name, "summary_root_original_tables")
+    for label, summary_root in [
+        ("solver7860_clean8000_summary_20260614", summary),
+        ("selected_worktime_summary_20260613", selected_summary),
+        ("latest_wideparam_summary_20260613", six_model_latest),
+    ]:
+        for src in sorted(summary_root.glob("*.csv")) + sorted(summary_root.glob("*.json")) + sorted(summary_root.glob("*.md")):
+            org.copy_file(src, table_root / "06_summary_root_originals" / label / src.name, "summary_root_original_tables")
 
     org.copy_tree(
         historical_svd25,
@@ -391,9 +404,17 @@ def build_release(root: Path, out: Path) -> Organizer:
         "biased_local_direction_tables",
         excluded_names={".biased_direction_hook_done"},
     )
+    org.copy_tree(
+        first_master_top100_meta,
+        table_root / "03_robustness_25sample" / "first_master_finalmodels_svd_top100_metadata",
+        "first_master_top100_metadata",
+    )
     for recovered_name in [
         "six_model_latest_wideparam_summary_20260613",
+        "six_model_selected_worktime_summary_20260613",
+        "six_model_solver7860_clean8000_summary_20260614",
         "first_master_full_p2q2_52datasets_4models_finalonly_20step",
+        "first_master_finalmodels_jacobian_svd_rep20_top100_20260608",
     ]:
         org.copy_tree(
             audit / "data" / "recovered_prior" / recovered_name,
@@ -434,6 +455,16 @@ def build_release(root: Path, out: Path) -> Organizer:
 
     # 04: random clean/random solver full suite.
     org.copy_tree(random_suite, out / "04_random_model_full_suite", "random_model_full_suite")
+    org.copy_tree(
+        random_selected_suite,
+        out / "04_random_model_full_suite" / "historical_selected_worktime_20260613",
+        "random_model_full_suite_historical",
+    )
+    org.copy_tree(
+        random_final_suite,
+        out / "04_random_model_full_suite" / "historical_final_models_20260613",
+        "random_model_full_suite_historical",
+    )
 
     # 06: logs.
     org.copy_tree_filtered(

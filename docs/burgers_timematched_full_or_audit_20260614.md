@@ -295,3 +295,41 @@ Recovered prior metrics update:
 - Remaining known gap: old4 has top100 SVD values/subspaces, but recovered
   random `random_clean_y`/`random_solver_y` SVD only has top20. The common
   six-model singular-value table is therefore top20.
+
+Recovered extra prior-history placement update:
+
+- Rechecked the local tree and the selected R2 prefix for already completed
+  Burgers random/SVD/bias outputs instead of rerunning compute.
+- Pulled the R2 metadata-only directory
+  `forensics/burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608/`
+  into local `forensics/` and the final audit. The selected R2 prefix contains
+  6 small files for this top100 run metadata/sample manifest, but no raw NPZ or
+  top singular-value CSV under that directory.
+- Copied the selected-worktime six-model summary root into
+  `data/recovered_prior/six_model_selected_worktime_summary_20260613/`.
+- Copied the solver7860/clean8000 six-model summary root into
+  `data/recovered_prior/six_model_solver7860_clean8000_summary_20260614/`.
+- Copied the completed selected-worktime random full suite into
+  `data/recovered_prior/random_field_selected_worktime_full_suite_20260613/`.
+  The selected R2 prefix has 313 objects and 594,670,773 bytes for this source.
+- Copied the completed final-model random full suite into
+  `data/recovered_prior/random_field_final_models_full_suite_20260613/`.
+  This source is present locally; the selected R2 prefix did not contain that
+  exact directory.
+- Updated `data/missing_metric_coverage_audit.csv/json` so these recovered
+  roots are explicit. Current final audit local count is 1715 files and
+  5,196,636,728 bytes.
+- Final audit R2 verification after this extra placement returned
+  `{"count":1715,"bytes":5196636728,"sizeless":0}`.
+- Rebuilt the organized release with the extra recovered roots. The manifest
+  now reports 1949 files, 5,496,318,865 bytes, 194 PNG, 250 CSV, 769 JSON, 640
+  NPZ, 38 log files, 9 Python scripts, 3 shell scripts, and 0 missing expected
+  inputs.
+- Organized release R2 verification after this extra placement returned
+  `{"count":1949,"bytes":5496318865,"sizeless":0}`.
+- Remaining verified gap after the expanded search: old4 top100 SVD is present,
+  and random full Jacobian matrices are present, but an already-exported random
+  clean/solver top50/top100 SVD table was not found. Random clean/solver
+  corrected J^T-error, direction, subspace, and delta/loss correlation tables
+  are present; a completed random old4-style affine local-gain sweep was not
+  found under the checked local/R2 selected-prefix sources.

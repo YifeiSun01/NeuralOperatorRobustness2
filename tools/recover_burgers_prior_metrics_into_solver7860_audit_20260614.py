@@ -427,6 +427,34 @@ def write_coverage_audit(root: Path, audit_data: Path, copy_stats: dict[str, dic
             "note": "This was already in the organized release; now also copied into final audit data.",
         },
         {
+            "item": "random_selected_worktime_raw_svd_and_attack",
+            "status": "recovered_from_existing_local_r2_completed_run",
+            "coverage": "random_clean_y/random_solver_y selected-worktime 25-sample Jacobian/SVD and 52-dataset P2Q2 attack raw outputs",
+            "path": "data/recovered_prior/random_field_selected_worktime_full_suite_20260613/",
+            "note": "R2 selected prefix contains 313 objects for this completed suite; copied into final audit.",
+        },
+        {
+            "item": "random_final_models_raw_svd_and_attack",
+            "status": "recovered_from_existing_local_completed_run",
+            "coverage": "random_clean_y/random_solver_y final-model 25-sample Jacobian/SVD and 52-dataset P2Q2 attack raw outputs",
+            "path": "data/recovered_prior/random_field_final_models_full_suite_20260613/",
+            "note": "Local completed suite is present and copied. The selected R2 prefix did not contain this directory.",
+        },
+        {
+            "item": "six_model_selected_and_solver7860_summary_roots",
+            "status": "recovered_from_existing_local_r2_tables",
+            "coverage": "selected-worktime and solver7860/clean8000 six-model clean, robustness, correlation, and model-version tables",
+            "path": "data/recovered_prior/six_model_selected_worktime_summary_20260613/ and data/recovered_prior/six_model_solver7860_clean8000_summary_20260614/",
+            "note": "Both summary roots are present locally and on R2 selected prefix.",
+        },
+        {
+            "item": "first_master_finalmodels_svd_top100_metadata",
+            "status": "recovered_metadata_from_r2",
+            "coverage": "first-master final-model SVD top100 run metadata/sample manifest",
+            "path": "data/recovered_prior/first_master_finalmodels_jacobian_svd_rep20_top100_20260608/",
+            "note": "R2 selected prefix contains 6 small metadata files for this top100 run; no raw NPZ or top singular-value CSV was present under that R2 directory.",
+        },
+        {
             "item": "singular_values_top20_6models",
             "status": "recovered_and_joined",
             "coverage": "25 samples; solver plus six models for model/error top20 singular values",
@@ -493,7 +521,10 @@ def write_coverage_audit(root: Path, audit_data: Path, copy_stats: dict[str, dic
                 "- Old four-model 52-dataset P2Q2 raw attack payloads: `recovered_prior/first_master_full_p2q2_52datasets_4models_finalonly_20step/`.",
                 "- Full old four-model SVD25 raw payload and top100 tables: `historical_svd_attack25_reuse3/`.",
                 "- Six-model latest/corrected metric/correlation/rank-similarity tables: `recovered_prior/six_model_latest_wideparam_summary_20260613/`.",
+                "- Six-model selected-worktime and solver7860/clean8000 summary roots: `recovered_prior/six_model_selected_worktime_summary_20260613/` and `recovered_prior/six_model_solver7860_clean8000_summary_20260614/`.",
                 "- Random solver7860/clean8000 raw attack/SVD suite: `recovered_prior/random_solver7860_clean8000_full_suite_20260614/`.",
+                "- Historical random selected-worktime and final-model raw attack/SVD suites: `recovered_prior/random_field_selected_worktime_full_suite_20260613/` and `recovered_prior/random_field_final_models_full_suite_20260613/`.",
+                "- First-master finalmodels top100 SVD metadata recovered from R2: `recovered_prior/first_master_finalmodels_jacobian_svd_rep20_top100_20260608/`.",
                 "- Paired loss3-vs-other statistical test table: `paired_tests_loss3_vs_other_models.csv`.",
                 "",
                 "Remaining genuine gap: old4 has top100 SVD, but the random solver7860/clean8000 SVD source has top20 only; therefore the common six-model singular-value table is top20.",
@@ -517,11 +548,18 @@ def main() -> None:
     recovered.mkdir(parents=True, exist_ok=True)
 
     source_latest = root / "forensics" / "burgers_six_model_latest_wideparam_summary_20260613"
+    source_selected_summary = root / "forensics" / "burgers_six_model_selected_worktime_summary_20260613"
+    source_solver_summary = root / "forensics" / "burgers_six_model_solver7860_clean8000_summary_20260614"
     source_first_master = (
         root / "forensics" / "burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608"
     )
+    source_first_master_top100_meta = (
+        root / "forensics" / "burgers_first_master_finalmodels_jacobian_svd_rep20_top100_20260608"
+    )
     source_old4_svd = root / "forensics" / "burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611"
     source_random_suite = root / "forensics" / "burgers_random_solver7860_clean8000_full_suite_20260614"
+    source_random_selected_suite = root / "forensics" / "burgers_random_field_selected_worktime_full_suite_20260613"
+    source_random_final_suite = root / "forensics" / "burgers_random_field_final_models_full_suite_20260613"
 
     copy_stats: dict[str, dict[str, int]] = {}
     for label, src, dst, skip_hidden in [
@@ -532,9 +570,27 @@ def main() -> None:
             False,
         ),
         (
+            "six_model_selected_worktime_summary_20260613",
+            source_selected_summary,
+            recovered / "six_model_selected_worktime_summary_20260613",
+            False,
+        ),
+        (
+            "six_model_solver7860_clean8000_summary_20260614",
+            source_solver_summary,
+            recovered / "six_model_solver7860_clean8000_summary_20260614",
+            False,
+        ),
+        (
             "first_master_full_p2q2_52datasets_4models_finalonly_20step",
             source_first_master,
             recovered / "first_master_full_p2q2_52datasets_4models_finalonly_20step",
+            False,
+        ),
+        (
+            "first_master_finalmodels_jacobian_svd_rep20_top100_metadata",
+            source_first_master_top100_meta,
+            recovered / "first_master_finalmodels_jacobian_svd_rep20_top100_20260608",
             False,
         ),
         (
@@ -547,6 +603,18 @@ def main() -> None:
             "random_solver7860_clean8000_full_suite_20260614",
             source_random_suite,
             recovered / "random_solver7860_clean8000_full_suite_20260614",
+            False,
+        ),
+        (
+            "random_field_selected_worktime_full_suite_20260613",
+            source_random_selected_suite,
+            recovered / "random_field_selected_worktime_full_suite_20260613",
+            False,
+        ),
+        (
+            "random_field_final_models_full_suite_20260613",
+            source_random_final_suite,
+            recovered / "random_field_final_models_full_suite_20260613",
             False,
         ),
     ]:
