@@ -57,14 +57,15 @@ R2 verification after the extra recovered-history placement:
 
 - `{"count":1949,"bytes":5496318865,"sizeless":0}`
 
-Latest R2 verification after adding ranked metric tables:
+Latest R2 verification after metric-role cleanup and final sync:
 
-- Final audit output R2: `{"count":1732,"bytes":5203523912,"sizeless":0}`
-- Organized release R2: 1969 objects; exact bytes should be read from the current `MANIFEST.json` and the final `rclone size --json` verification after the last docs/ledger refresh.
-- Ranked tables under organized release R2: `16` CSV objects
+- Final audit output R2: `{"count":1979,"bytes":5345440846,"sizeless":0}`
+- Organized release R2: `{"count":2240,"bytes":5672956642,"sizeless":0}`
+- Ranked tables under organized release R2: `29` CSV objects
 
 Coverage note:
 
-- The recovered random suites contain full saved Jacobian matrices and top20 SVD values/vectors, but no already-exported random top50/top100 SVD table was found in the local/R2 selected-prefix audit.
 - Old4 has top100 SVD values/subspaces in `historical_svd_attack25_reuse3/`.
-- Random clean/solver have corrected J^T-error, SVD/outward, attack-delta direction summaries, subspace similarity, and full10200 delta/loss correlation tables in the six-model summary roots, but no completed random old4-style affine local-gain sweep was found under the checked sources.
+- The recovered random suites contain full saved Jacobian matrices. The random top50/top100 SVD evidence is now supplemented from those stored Jacobians in `data/random_top100_svd_supplement_20260614/`; no training, attack generation, or Jacobian generation was rerun.
+- Random clean/solver affine/local-gain direction evidence is now supplemented in `data/random_affine_direction_supplement_20260614/` from existing checkpoints and stored Jacobians.
+- The ranked metric tables now separate six-model evidence, partial-scope evidence, and diagnostic/process metrics. Use `metric_best_summary_six_model_evidence_ranked.csv` for six-model claims.

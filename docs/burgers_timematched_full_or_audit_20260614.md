@@ -327,9 +327,23 @@ Recovered extra prior-history placement update:
   inputs.
 - Organized release R2 verification after this extra placement returned
   `{"count":1949,"bytes":5496318865,"sizeless":0}`.
-- Remaining verified gap after the expanded search: old4 top100 SVD is present,
-  and random full Jacobian matrices are present, but an already-exported random
-  clean/solver top50/top100 SVD table was not found. Random clean/solver
-  corrected J^T-error, direction, subspace, and delta/loss correlation tables
-  are present; a completed random old4-style affine local-gain sweep was not
-  found under the checked local/R2 selected-prefix sources.
+- This intermediate gap statement was superseded on 2026-06-14. Old4 top100
+  SVD is present, random full Jacobian matrices are present, and the random
+  top50/top100 SVD evidence has now been supplemented from those stored
+  Jacobians in `data/random_top100_svd_supplement_20260614/`. Random
+  affine/local-gain direction evidence has also been supplemented from existing
+  checkpoints and stored Jacobians in
+  `data/random_affine_direction_supplement_20260614/`. No training, attack
+  generation, or Jacobian generation was rerun for either supplement.
+
+Final R2 verification after metric-role cleanup and final sync:
+
+- Final audit output R2:
+  `{"count":1979,"bytes":5345440846,"sizeless":0}`.
+- Organized release R2:
+  `{"count":2240,"bytes":5672956642,"sizeless":0}`.
+- The organized release contains 29 ranked-metric-table CSV files and 19
+  start-here reports.
+- The ranked tables now separate six-model evidence, partial-scope evidence,
+  and diagnostic/process metrics. Use
+  `metric_best_summary_six_model_evidence_ranked.csv` for six-model claims.

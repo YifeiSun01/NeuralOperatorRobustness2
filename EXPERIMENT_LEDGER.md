@@ -14748,3 +14748,30 @@ Current interpretation:
 - The main evidence table is now the six-model common evidence table, not the all-metric table.
 - Diagnostic/process quantities remain available for mechanism analysis, but they must not be used to claim that loss3, random_solver_y, random_clean_y, baseline, loss1, or loss2 is globally better.
 - The meaningful six-model claims must be made metric-family by metric-family: clean/generalization, attack outcomes with protocol caveat, error-operator/SVD spectrum, local model-solver subspace similarity, clean residual, and error-gradient size.
+
+## 2026-06-14 - Burgers metric-role cleanup GitHub and R2 sync
+
+Status: synced the corrected Burgers audit code/docs to GitHub and the final large result folders to R2; no training, attack, Jacobian, SVD, or plotting job was run.
+
+GitHub:
+- The first push attempt was rejected because remote `vast-ai` had advanced.
+- Fetched remote `vast-ai`, rebased the two Burgers commits on top of remote commit `7aba3b0 Add DarcyFlow audit release builder`, resolved the `EXPERIMENT_LEDGER.md` conflict by preserving both the DarcyFlow and Burgers entries, and pushed successfully.
+- Final pushed commits on `vast-ai`: `deaf6d3 Fix Burgers audit gap resolution tables` and `b31e2ae Separate Burgers evidence and diagnostic metrics`.
+
+R2 upload:
+- Used `tools/upload_path_to_r2_20260525.sh` with credentials passed through process environment variables only; no credential file, repository file, git config, or commit was written with secrets.
+- Upload mode was non-deleting `rclone copy`.
+- Upload logs:
+  - `run_logs/r2_sync_burgers_metric_role_20260614/burgers_solver7860_clean8000_organized_release_20260614_e6d05fd44d07_20260614_113924_UTC.log`
+  - `run_logs/r2_sync_burgers_metric_role_20260614/burgers_timematched_solver7860_clean8000_audit_20260614_da7acb84bf74_20260614_113952_UTC.log`
+
+R2 verification:
+- `outputs/burgers_solver7860_clean8000_organized_release_20260614`
+  - local `rclone size --json`: `{"count":2240,"bytes":5672956642,"sizeless":0}`
+  - remote `rclone size --json`: `{"count":2240,"bytes":5672956642,"sizeless":0}`
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614`
+  - local `rclone size --json`: `{"count":1979,"bytes":5345440846,"sizeless":0}`
+  - remote `rclone size --json`: `{"count":1979,"bytes":5345440846,"sizeless":0}`
+
+Documentation cleanup:
+- Updated `docs/burgers_solver7860_clean8000_organized_release_20260614.md` and `docs/burgers_timematched_full_or_audit_20260614.md` to replace stale R2 counts and the superseded "random top50/top100 not found" language with the final supplement/verification state.
