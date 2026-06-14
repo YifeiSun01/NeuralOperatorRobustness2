@@ -25,11 +25,11 @@ What was recomputed:
 Image contents:
 
 - Five groups, each with one test sample and five generalization samples.
-- All-model variant: six model columns, baseline, loss1, loss2, loss3, random
-  clean Y e8000, and random solver Y e7860.
-- No-random-clean variant: five model columns, baseline, loss1, loss2, loss3,
-  and random solver Y e7860. This variant removes random clean Y so its large
-  loss does not compress the other curves/panels.
+- All-model variant: six model columns, baseline e500, loss1 e8000, loss2
+  e2000, loss3 e1000, random clean Y e8000, and random solver Y e7860.
+- No-random-clean variant: five model columns, baseline e500, loss1 e8000,
+  loss2 e2000, loss3 e1000, and random solver Y e7860. This variant removes
+  random clean Y so its large loss does not compress the other curves/panels.
 - Each model cell contains final attack delta, initial condition before/after
   perturbation, model/solver output, and model-minus-solver output.
 - The bottom row contains per-sample attack loss progression curves for the
@@ -60,8 +60,10 @@ R2 upload:
 Verification:
 
 - Local image-only bundle contains 20 PNG files and no non-PNG files.
-- R2 image-only bundle `rclone size --json` returned 20 files and 53,529,981 bytes.
-- R2 visualization mirror `rclone size --json` returned 20 files and 53,529,981 bytes.
-- R2 trace/data `rclone size --json` returned 21 files and 169,276,310 bytes.
+- R2 image-only bundle `rclone size --json` returned 20 files and 53,849,541 bytes.
+- R2 visualization mirror `rclone size --json` returned 20 files and 53,849,541 bytes.
+- R2 trace/data `rclone size --json` returned 21 files and 169,276,448 bytes.
 - R2 `lsf --recursive` includes directory markers in addition to PNGs; the
   object-count verification above is from `rclone size`.
+- The organized release also includes the full image-only bundle as
+  `outputs/burgers_solver7860_clean8000_organized_release_20260614/08_dense_image_only_bundle_full_copy/`.

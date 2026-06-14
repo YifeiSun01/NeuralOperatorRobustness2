@@ -37,28 +37,28 @@ FOUR_MODEL_TRACE_ROOT = (
 
 MODEL_SPECS = {
     "baseline": {
-        "label": "baseline",
+        "label": "baseline e500",
         "epochs": 500,
         "sec_per_epoch": None,
         "checkpoint": REPO / "1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
         "color": "#2f6f9f",
     },
     "loss1": {
-        "label": "loss1",
+        "label": "loss1 e8000",
         "epochs": 8000,
         "sec_per_epoch": 7.3405,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_loss1_8000ep_retrain_20260611/burgers/checkpoints/burgers_epoch8000_step008000.pt",
         "color": "#2f9b75",
     },
     "loss2": {
-        "label": "loss2",
+        "label": "loss2 e2000",
         "epochs": 2000,
         "sec_per_epoch": 19.7521,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_loss2_2000ep_retrain_20260611/burgers/checkpoints/burgers_epoch2000_step002000.pt",
         "color": "#d98a2b",
     },
     "loss3": {
-        "label": "loss3",
+        "label": "loss3 e1000",
         "epochs": 1000,
         "sec_per_epoch": 28.1990,
         "checkpoint": REPO / "adversarial_training_runs/burgers_wideparam_loss3_1000ep_retrain_20260611/burgers/checkpoints/burgers_epoch1000_step001000.pt",

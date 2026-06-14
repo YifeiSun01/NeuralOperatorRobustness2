@@ -70,13 +70,14 @@ class Organizer:
         dst: Path,
         category: str,
         excluded_names: set[str] | None = None,
+        excluded_prefixes: tuple[str, ...] = (),
     ) -> None:
         if not src.exists():
             self.missing.append(rel(src, self.root) if src.is_absolute() else str(src))
             return
         excluded_names = excluded_names or set()
         for file_path in sorted(p for p in src.rglob("*") if p.is_file()):
-            if file_path.name in excluded_names:
+            if file_path.name in excluded_names or file_path.name.startswith(excluded_prefixes):
                 continue
             self.copy_file(file_path, dst / file_path.relative_to(src), category)
 
@@ -152,6 +153,7 @@ class Organizer:
             "- `05_polished_report_data/`: CSV/JSON/log data backing the polished per-model reports.",
             "- `06_logs/`: postprocess and R2 sync logs.",
             "- `07_source_code_and_references/`: scripts and docs that produced or describe the release.",
+            "- `08_dense_image_only_bundle_full_copy/`: full copy of the dense image-only bundle as its own subfolder.",
             "",
             "## Counts",
             "",
@@ -378,6 +380,12 @@ def build_release(root: Path, out: Path) -> Organizer:
                 "dense_six_model_attack_figures",
             )
 
+    org.copy_tree(
+        dense_figures,
+        out / "08_dense_image_only_bundle_full_copy",
+        "dense_image_only_bundle_full_copy",
+    )
+
     org.copy_tree(summary / "plots", out / "02_figures" / "05_summary_plots", "summary_figures")
 
     # 03: dense attack numerical traces.
@@ -391,10 +399,7 @@ def build_release(root: Path, out: Path) -> Organizer:
         logs,
         out / "06_logs" / "postprocess_and_upload_logs",
         "postprocess_logs",
-        excluded_names={
-            "r2_sync_organized_release_20260614_second_pass.log",
-            "r2_sync_organized_release_20260614_third_pass.log",
-        },
+        excluded_prefixes=("r2_sync_organized_release",),
     )
 
     # 07: source and references.

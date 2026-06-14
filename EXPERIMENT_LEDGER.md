@@ -14330,8 +14330,9 @@ Follow-up four-variant refresh:
 - Re-rendered from existing `six_model_attack_traces.npz` files only; no attack or training was rerun.
 - Added no-random-clean dense comparison variants that remove `random_clean_y` from both the top model columns and the bottom sample-wise attack-loss curves.
 - Each group now has four PNGs: all-model log-y, all-model linear-y, no-random-clean log-y, and no-random-clean linear-y.
+- All model headers now include epoch counts: baseline e500, loss1 e8000, loss2 e2000, loss3 e1000, random clean Y e8000, and random solver Y e7860.
 - Local image-only bundle now has 20 PNGs and 0 non-PNG files.
-- R2 verification: image-only bundle has 20 objects and 53,529,981 bytes; visualization mirror has 20 objects and 53,529,981 bytes; trace/data root has 21 objects and 169,276,310 bytes.
+- R2 verification: image-only bundle has 20 objects and 53,849,541 bytes; visualization mirror has 20 objects and 53,849,541 bytes; trace/data root has 21 objects and 169,276,448 bytes.
 
 ## 2026-06-14 - Burgers solver7860/clean8000 polished report refresh
 
@@ -14356,10 +14357,11 @@ Updates:
 - Added `tools/organize_burgers_solver7860_clean8000_release_20260614.py`.
 - Created `outputs/burgers_solver7860_clean8000_organized_release_20260614/`.
 - The release groups artifacts into `00_start_here`, `01_summary_tables`, `02_figures`, `03_dense_six_model_attack_data`, `04_random_model_full_suite`, `05_polished_report_data`, `06_logs`, and `07_source_code_and_references`.
-- Observed from `MANIFEST.json`: 578 files, 1,309,713,775 bytes, 126 PNG, 82 CSV, 181 JSON, 136 NPZ, and 0 missing expected inputs.
+- Observed from `MANIFEST.json`: 600 files, 1,363,789,188 bytes, 146 PNG, 82 CSV, 181 JSON, 136 NPZ, and 0 missing expected inputs.
 - Source roots include the final audit output, six-model summary, random-model full suite, dense six-model trace root, dense image-only bundle, polished report bundle, and postprocess logs.
 - Dedicated note: `docs/burgers_solver7860_clean8000_organized_release_20260614.md`.
-- R2 verification for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_solver7860_clean8000_organized_release_20260614` returned 578 objects and 1,309,713,775 bytes. The sync log had transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and remote size matches local manifest.
+- R2 verification for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_solver7860_clean8000_organized_release_20260614` returned 600 objects and 1,363,789,188 bytes. The sync log had transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and remote size matches local manifest.
+- The organized release now also contains `08_dense_image_only_bundle_full_copy/`, a full copy of the dense image-only bundle as its own subfolder.
 
 Remaining work:
 - No remaining work for the organized release packaging itself.
