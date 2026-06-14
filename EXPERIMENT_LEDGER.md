@@ -15162,3 +15162,40 @@ Credential handling:
 - GitHub and R2 credentials were used only as temporary shell environment
   variables / temporary askpass. They were not written to code, committed files,
   git config, or R2 reports.
+
+## 2026-06-14 - Burgers full new generated data R2 backup
+
+Status: performed the broader backup requested after the initial sync of only the
+main output folder. This pass copied all broad newly generated/untracked Burgers
+artifact roots to Cloudflare R2 under the selected prefix and verified them with
+one-way local-to-remote checks.
+
+Record file:
+- `docs/burgers_full_new_generated_data_r2_backup_20260614.md`
+- Output report copy:
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_full_new_generated_data_r2_backup_20260614.md`
+
+Backed-up roots and check results:
+- `adversarial_training_runs`: 25514 local files, 3895658265 local bytes, 0 R2
+  differences and 25514 matching files.
+- `forensics`: 3099 local files, 5835482614 local bytes, 0 R2 differences and
+  3099 matching files.
+- `generalization_datasets_burgers_semantic_wideparam_visible_20260611`: 4 local
+  files, 101760 local bytes, 0 R2 differences and 4 matching files.
+- `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611`:
+  61 local files, 83901713 local bytes, 0 R2 differences and 61 matching files.
+- `outputs`: 4353 local files, 11410707855 local bytes, 0 R2 differences and
+  4353 matching files.
+- `run_logs`: 76 local files, 3707447 local bytes, 0 R2 differences and 76
+  matching files.
+- `visualizations`: 407 local files, 841675944 local bytes, 0 R2 differences and
+  407 matching files.
+
+Notes:
+- The R2 roots already contain historical objects, so total remote count/bytes
+  are not expected to equal local count/bytes. The validation used
+  `rclone check --one-way --size-only`.
+- One symlink under `forensics` was not preserved as a symlink object; its target
+  directory is under `visualizations`, which passed the R2 one-way check.
+- Full backup logs are stored locally and on R2 under
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/logs/`.
