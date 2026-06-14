@@ -14266,8 +14266,9 @@ Follow-up launched:
 - Formal strict random continuation started at `2026-06-14T00:49:40Z`, PID
   `86717`, log root
   `adversarial_training_runs/burgers_timematched_strict_random_continuations_20260614_logs`.
-  It runs `random_solver_y` epoch `6000 -> 7860` first, then
-  `random_clean_y` epoch `8000 -> 21100`.
+  It runs `random_solver_y` epoch `6000 -> 7860` first. The original driver would
+  then continue `random_clean_y`, but the later user decision below keeps
+  `random_clean_y` at epoch `8000`.
 - Ten-minute monitor was clean: solver-y reached epoch `6130`, train/eval/
   optimizer CSV files were growing, GPU memory was about `6056 MiB`, and no
   traceback appeared. Active monitoring was stopped and the background job is
@@ -14277,8 +14278,9 @@ Follow-up launched:
   `adversarial_training_runs/burgers_wideparam_random_field_clean_y_21100ep_continue_20260613/`
   to prevent accidental clean-y continuation.
 - Added and started `tools/watch_burgers_solver7860_then_postprocess_20260614.sh`.
-  It waits for the solver-y epoch `7860` checkpoint, runs clean+attack
-  evaluation for `random_clean_y=8000` and `random_solver_y=7860`, rebuilds
-  selected summaries, regenerates audit/curve outputs with `--workclock-xmax
-  8.0`, and uploads outputs to R2 when credentials are present in the process
-  environment. It intentionally does not rerun SVD/Jacobian.
+  It waits for the solver-y epoch `7860` checkpoint, runs
+  clean+attack+25-sample SVD/Jacobian+postprocess evaluation for
+  `random_clean_y=8000` and `random_solver_y=7860`, rebuilds selected summaries,
+  regenerates audit/curve outputs with `--workclock-xmax 8.0`, and uploads
+  outputs to R2 using either process `R2_*` credentials or the temporary
+  `/tmp/rclone-r2/rclone.conf` remote.

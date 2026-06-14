@@ -101,7 +101,8 @@ Follow-up launch status:
   to prevent accidental clean-y continuation.
 - Added and started `tools/watch_burgers_solver7860_then_postprocess_20260614.sh`.
   It waits for `random_solver_y` epoch `7860`, then automatically runs
-  clean+attack evaluation for `random_clean_y=8000` and `random_solver_y=7860`,
-  rebuilds selected summaries, regenerates audit/curve outputs with
-  `--workclock-xmax 8.0`, and uploads those outputs to R2 when credentials are
-  present in the process environment. It does not rerun SVD/Jacobian.
+  clean+attack+25-sample SVD/Jacobian+postprocess evaluation for
+  `random_clean_y=8000` and `random_solver_y=7860`, rebuilds selected summaries,
+  regenerates audit/curve outputs with `--workclock-xmax 8.0`, and uploads those
+  outputs to R2 using either process `R2_*` credentials or the temporary
+  `/tmp/rclone-r2/rclone.conf` remote.

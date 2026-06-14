@@ -12,6 +12,7 @@ RANDOM_ROOT="$ROOT/forensics/burgers_random_solver7860_clean8000_full_suite_2026
 SUMMARY_ROOT="$ROOT/forensics/burgers_six_model_solver7860_clean8000_summary_20260614"
 AUDIT_OUT="$ROOT/outputs/burgers_timematched_solver7860_clean8000_audit_20260614"
 R2_PREFIX="${R2_PREFIX:-neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected}"
+RCLONE_CONFIG_FILE="${RCLONE_CONFIG_FILE:-/tmp/rclone-r2/rclone.conf}"
 
 mkdir -p "$LOG_ROOT"
 cd "$ROOT"
@@ -31,15 +32,20 @@ if [[ ! -f "$CLEAN_CKPT" ]]; then
   exit 1
 fi
 
-log "running clean+attack evaluation for random_clean_y=8000 and random_solver_y=7860"
-"$PY" "$ROOT/tools/evaluate_burgers_random_field_final_models_20260613.py" \
+log "running clean+attack+SVD/Jacobian+postprocess evaluation for random_clean_y=8000 and random_solver_y=7860"
+"$PY" "$ROOT/tools/evaluate_burgers_random_field_checkpoint_series_20260613.py" \
   --out-root "$RANDOM_ROOT" \
   --stage clean \
   --stage attack \
+  --stage svd \
+  --stage postprocess \
   --clean-batch-size "${CLEAN_BATCH_SIZE:-256}" \
   --attack-steps "${ATTACK_STEPS:-20}" \
   --attack-batch-size "${ATTACK_BATCH_SIZE:-500}" \
   --attack-train-count "${ATTACK_TRAIN_COUNT:-50}" \
+  --svd-max-samples "${SVD_MAX_SAMPLES:-25}" \
+  --svd-method "${SVD_METHOD:-topk}" \
+  --svd-top-k "${SVD_TOP_K:-20}" \
   --model-spec "random_clean_y=$CLEAN_CKPT" \
   --model-spec "random_solver_y=$SOLVER_CKPT" \
   > "$LOG_ROOT/evaluate_random_clean8000_solver7860.log" 2>&1
@@ -59,8 +65,7 @@ log "building 8h audit/curve bundle"
   --workclock-xmax 8.0 \
   > "$LOG_ROOT/audit_solver7860_clean8000.log" 2>&1
 
-if [[ -n "${R2_ACCESS_KEY_ID:-}" && -n "${R2_SECRET_ACCESS_KEY:-}" && -n "${R2_ENDPOINT:-}" ]]; then
-  log "uploading postprocess outputs to R2 prefix $R2_PREFIX"
+copy_outputs_with_env_remote() {
   RCLONE_CONFIG_R2_TYPE=s3 \
   RCLONE_CONFIG_R2_PROVIDER=Cloudflare \
   RCLONE_CONFIG_R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID" \
@@ -79,8 +84,25 @@ if [[ -n "${R2_ACCESS_KEY_ID:-}" && -n "${R2_SECRET_ACCESS_KEY:-}" && -n "${R2_E
   RCLONE_CONFIG_R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY" \
   RCLONE_CONFIG_R2_ENDPOINT="$R2_ENDPOINT" \
   rclone copy "$AUDIT_OUT" "R2:$R2_PREFIX/outputs/${AUDIT_OUT##*/}" --transfers 8 --checkers 16 --s3-no-check-bucket >> "$LOG_ROOT/r2_upload.log" 2>&1
+}
+
+copy_outputs_with_config_remote() {
+  RCLONE_CONFIG="$RCLONE_CONFIG_FILE" \
+  rclone copy "$RANDOM_ROOT" "r2:$R2_PREFIX/forensics/${RANDOM_ROOT##*/}" --transfers 8 --checkers 16 --s3-no-check-bucket >> "$LOG_ROOT/r2_upload.log" 2>&1
+  RCLONE_CONFIG="$RCLONE_CONFIG_FILE" \
+  rclone copy "$SUMMARY_ROOT" "r2:$R2_PREFIX/forensics/${SUMMARY_ROOT##*/}" --transfers 8 --checkers 16 --s3-no-check-bucket >> "$LOG_ROOT/r2_upload.log" 2>&1
+  RCLONE_CONFIG="$RCLONE_CONFIG_FILE" \
+  rclone copy "$AUDIT_OUT" "r2:$R2_PREFIX/outputs/${AUDIT_OUT##*/}" --transfers 8 --checkers 16 --s3-no-check-bucket >> "$LOG_ROOT/r2_upload.log" 2>&1
+}
+
+if [[ -n "${R2_ACCESS_KEY_ID:-}" && -n "${R2_SECRET_ACCESS_KEY:-}" && -n "${R2_ENDPOINT:-}" ]]; then
+  log "uploading postprocess outputs to R2 prefix $R2_PREFIX using environment credentials"
+  copy_outputs_with_env_remote
+elif [[ -f "$RCLONE_CONFIG_FILE" ]]; then
+  log "uploading postprocess outputs to R2 prefix $R2_PREFIX using rclone config $RCLONE_CONFIG_FILE"
+  copy_outputs_with_config_remote
 else
-  log "R2 env not present; skipping upload"
+  log "R2 env/config not present; skipping upload"
 fi
 
 log "postprocess complete"
