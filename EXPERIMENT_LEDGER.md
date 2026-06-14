@@ -15115,3 +15115,13 @@ Interpretation:
 - The local mechanism evidence is not a per-sample sweep, but it supports the
   claim that `||J_error^T error||` explains attack loss growth better than the
   largest error singular value alone.
+
+Follow-up output placement:
+- Copied the same mechanism summary report into
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_jte_spectral_attack_mechanism_summary_20260614.md`.
+- Added a compact data collection under
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/jte_spectral_attack_mechanism_summary_20260614/`.
+- That folder contains the ranked metric summary, 25-sample long ranked table,
+  correlations-with-attack table, six-model direction-angle compact table, old4
+  direction-pair angle summary, and random clean/solver SVD-attack-bias-gradient
+  by-sample table used by the summary.
