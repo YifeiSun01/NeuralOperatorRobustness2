@@ -1,3 +1,20 @@
+## 2026-06-14 - Burgers actual old4 outlier attack100 diagnostics added
+
+Status: selected the actual high-damage initial conditions from the old `burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608` manifest, restored the six needed old `generalization_datasets/burgers/*.pt` files from R2, and re-attacked those exact initial conditions with the latest `loss1`, `loss2`, `loss3`, and `random_solver_y` checkpoints for 100 P2Q2 steps.
+
+Artifacts:
+- Runner: `tools/run_burgers_old4_outlier_attack100_diagnostics_20260614.py`.
+- Trace/data root: `forensics/burgers_old4_actual_outliers_latest_attack100_diagnostics_20260614`.
+- Figure bundle: `visualizations/burgers_old4_actual_outliers_latest_attack100_dense_bundle_20260614`.
+- Audit copies: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/burgers_old4_actual_outliers_latest_attack100_diagnostics_20260614` and `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_old4_actual_outliers_latest_attack100_dense_bundle_20260614`.
+- Report: `docs/burgers_old4_actual_outlier_attack100_diagnostics_20260614.md`.
+
+Key result: on these six actual old outlier initial conditions, latest `loss3` has lower attack100 increase than `random_solver_y` on `4/6` samples. Mean attack increase is `0.443905` for `loss3` versus `0.501621` for `random_solver_y`; median attack increase is `0.398596` versus `0.459242`. The two samples where `random_solver_y` is lower are `FarSignCenteredScale1Shift0_idx4` and `FarPositiveShiftScale1Shift1_idx41`.
+
+Local diagnostic result: `loss3` has lower mean clean residual MSE (`0.393952` vs `0.689156`), lower mean `J_error^T e` norm (`39.892` vs `55.9101`), and slightly lower mean `J_error delta` L2 (`14.7939` vs `15.3641`) than `random_solver_y` on this outlier subset. The power-iteration spectral norm estimate is close (`loss3` `7.59546`, `random_solver_y` `7.55062`) and should be treated as a directional diagnostic, not a full top-k SVD replacement.
+
+Interpretation: the old mixed-52 mean outlier story was driven by old `loss3_epoch1500` on old first/master initial conditions. Re-attacking those same actual initial conditions with latest `loss3_epoch1000` does not reproduce a broad `random_solver_y` advantage; it leaves two genuine sample-level exceptions.
+
 ## 2026-06-11 - Burgers wideparam loss3 advantage evidence summary written
 
 Status: wrote a consolidated Markdown summary showing the current evidence for a broad `loss3` advantage on the latest wide-parameter Burgers generalization dataset. The summary combines clean generalization loss over 50 datasets, completed 25-sample finite-budget attack growth, and completed 3-sample full `1024 x 1024` SVD/Jacobian metrics.
