@@ -14325,3 +14325,18 @@ Updates:
 - Across the 30 visual samples, final mean attack losses were: baseline `0.0152441`, loss1 `0.00694397`, loss2 `0.00661674`, loss3 `0.00411033`, random_clean_y `0.0569579`, random_solver_y `0.00779751`.
 - R2 sync completed for the image-only bundle, full visualization mirror, and trace/data root under `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
 - Dedicated note: `docs/burgers_solver7860_dense_image_only_bundle_20260614.md`.
+
+## 2026-06-14 - Burgers solver7860/clean8000 polished report refresh
+
+Status: generated and synced the missing polished-report figure family for the final Burgers audit package.
+
+Updates:
+- Generated polished reports for `loss1`, `loss2`, `loss3`, `random_clean_y=8000`, and `random_solver_y=7860`.
+- Each model has 10 PNGs: attack-loss buckets, RMSE heatmap+line, Relative-L2 heatmap+line, checkpoint RMSE and Relative-L2 heatmap+line, Delta FFT raw heatmap with selected smoothed spectra, and raw/MA25 max-five RMSE/Relative-L2 line plots.
+- Full report bundle: `visualizations/burgers_solver7860_clean8000_polished_reports_20260614/` with 50 PNGs, 30 CSVs, and 5 JSON manifests.
+- PNG-only bundle: `visualizations/burgers_solver7860_clean8000_polished_reports_image_only_bundle_20260614/` with 50 PNGs and 0 non-PNG files.
+- Copied the PNG-only bundle into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/polished_reports/`; the final audit output now has 98 PNGs total, including 50 polished-report PNGs.
+- Synced loss1/loss2/loss3 raw attack-probe NPZ files back from R2 before plotting Delta FFT heatmaps; no model training or new attack evaluation was rerun.
+- Updated `tools/plot_burgers_training_run_visualizations_variable_epoch.py` so continuation runs plot their actual available epoch span instead of leaving blank x-axis space before the resumed epoch range.
+- R2 verification: image-only polished bundle has 50 PNGs and 0 non-PNG files; full polished bundle has 50 PNGs, 30 CSVs, and 5 JSON manifests; final output prefix has 98 PNGs with 50 under `figures/polished_reports/`.
+- Dedicated note: `docs/burgers_solver7860_polished_reports_20260614.md`.

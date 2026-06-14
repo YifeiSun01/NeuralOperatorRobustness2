@@ -143,3 +143,20 @@ Dense image-only six-model refresh:
 - Generated 10 PNGs total: log-y and linear-y attack-loss progression variants
   for each of five groups.
 - Dedicated note: `docs/burgers_solver7860_dense_image_only_bundle_20260614.md`.
+
+Polished report refresh:
+
+- Generated the missing polished-report visualization set for `loss1`, `loss2`,
+  `loss3`, `random_clean_y=8000`, and `random_solver_y=7860`.
+- Full report bundle:
+  `visualizations/burgers_solver7860_clean8000_polished_reports_20260614/`.
+- PNG-only bundle:
+  `visualizations/burgers_solver7860_clean8000_polished_reports_image_only_bundle_20260614/`.
+- Copied all polished-report PNGs into the final audit output at
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/polished_reports/`.
+- Each model has 10 PNGs: attack-loss buckets, RMSE/Relative-L2 heatmap+line,
+  checkpoint RMSE/Relative-L2 heatmap+line, Delta FFT heatmap+spectra, and raw/
+  MA25 high-transparency max-five RMSE/Relative-L2 line plots.
+- The final audit output now contains 98 PNGs total, including 50 polished-report
+  PNGs.
+- Dedicated note: `docs/burgers_solver7860_polished_reports_20260614.md`.

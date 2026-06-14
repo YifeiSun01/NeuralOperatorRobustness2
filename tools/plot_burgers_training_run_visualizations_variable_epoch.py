@@ -143,8 +143,21 @@ def major_ticks(max_epoch: int) -> list[int]:
     return ticks
 
 
+def major_ticks_between(min_epoch: int, max_epoch: int) -> list[int]:
+    ticks = [t for t in major_ticks(max_epoch) if min_epoch <= t <= max_epoch]
+    if not ticks or ticks[0] != min_epoch:
+        ticks.insert(0, min_epoch)
+    if ticks[-1] != max_epoch:
+        ticks.append(max_epoch)
+    return ticks
+
+
 def checkpoint_epochs(max_epoch: int, available_epochs: set[int]) -> list[int]:
-    requested = [int(round(max_epoch * i / 10.0)) for i in range(11)]
+    min_epoch = min(available_epochs)
+    if min_epoch > 0:
+        requested = [int(round(x)) for x in np.linspace(min_epoch, max_epoch, 11)]
+    else:
+        requested = [int(round(max_epoch * i / 10.0)) for i in range(11)]
     out: list[int] = []
     for epoch in requested:
         if epoch in available_epochs:
@@ -157,7 +170,10 @@ def checkpoint_epochs(max_epoch: int, available_epochs: set[int]) -> list[int]:
 
 
 def selected_fft_epochs(max_epoch: int, available_epochs: np.ndarray) -> list[int]:
-    if max_epoch >= 2000:
+    min_epoch = int(np.min(available_epochs))
+    if min_epoch > 100:
+        requested = [int(round(x)) for x in np.linspace(min_epoch, max_epoch, 7)]
+    elif max_epoch >= 2000:
         requested = [50, 200, 400, 800, 1200, 1600, 2000]
     else:
         requested = [int(round(max_epoch * f)) for f in [0.05, 0.20, 0.40, 0.60, 0.80, 1.00]]
@@ -230,8 +246,9 @@ def bucket_label(d: pd.DataFrame) -> str:
 
 def plot_attack_loss(attack_df: pd.DataFrame, bucket_df: pd.DataFrame, polished_dir: Path, suffix: str) -> Path:
     summary = make_attack_summary(attack_df, bucket_df)
+    min_epoch = int(summary["epoch"].min())
     max_epoch = int(summary["epoch"].max())
-    ticks = major_ticks(max_epoch)
+    ticks = major_ticks_between(min_epoch, max_epoch)
 
     fig = plt.figure(figsize=(19, 12.8))
     gs = fig.add_gridspec(2, 2, height_ratios=[0.9, 1.05], hspace=0.28, wspace=0.18)
@@ -259,8 +276,8 @@ def plot_attack_loss(attack_df: pd.DataFrame, bucket_df: pd.DataFrame, polished_
     pad = 0.06 * (log_max - log_min)
     ax_top.set_yscale("log")
     ax_top.set_ylim(10 ** (log_min - pad), 10 ** (log_max + pad))
-    ax_top.set_xlim(1, max_epoch)
-    ax_top.set_xticks([t for t in ticks if t > 0])
+    ax_top.set_xlim(min_epoch, max_epoch)
+    ax_top.set_xticks(ticks)
     ax_top.set_xlabel("training epoch")
     ax_top.set_ylabel("MSE, log scale")
     ax_top.set_title("Attack loss before perturbation, after perturbation, and attack gain", loc="left", fontweight="bold")
@@ -290,8 +307,8 @@ def plot_attack_loss(attack_df: pd.DataFrame, bucket_df: pd.DataFrame, polished_
             ax.fill_between(bx, lower, upper, color=color, alpha=0.13, lw=0)
             if use_log:
                 ax.set_yscale("log")
-            ax.set_xlim(1, max_epoch)
-            ax.set_xticks([t for t in ticks if t > 0])
+            ax.set_xlim(min_epoch, max_epoch)
+            ax.set_xticks(ticks)
             ax.set_xlabel("training epoch")
             ax.set_ylabel(ylabel)
             ax.set_title(title, loc="left", fontweight="bold")
@@ -300,7 +317,7 @@ def plot_attack_loss(attack_df: pd.DataFrame, bucket_df: pd.DataFrame, polished_
     if len(finite_rel):
         axes_bottom[1].set_ylim(0, min(10.0, max(1.0, float(finite_rel.quantile(0.995)) * 1.1)))
     axes_bottom[1].legend(title="epsilon jitter bucket", loc="upper right", fontsize=7.6, title_fontsize=8)
-    fig.suptitle(f"Attack loss and attack gain during {max_epoch:,} epochs of adversarial training", fontsize=18, fontweight="bold", y=0.995)
+    fig.suptitle(f"Attack loss and attack gain during available epochs {min_epoch:,}..{max_epoch:,}", fontsize=18, fontweight="bold", y=0.995)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     return savefig(fig, polished_dir / name_with_suffix("corrected_attack_loss_three_lines_plus_buckets.png", suffix))
 
@@ -327,6 +344,7 @@ def plot_corrected_loss(eval_df: pd.DataFrame, metric: str, polished_dir: Path, 
     tiers = d.drop_duplicates("dataset_id")["manual_tier"].tolist()
     pivot = d.pivot_table(index="dataset_id", columns="epoch", values=metric, aggfunc="mean").reindex(order)
     epochs = np.asarray(sorted(pivot.columns.astype(int)), dtype=int)
+    min_epoch = int(epochs[0])
     matrix = pivot.reindex(columns=epochs).to_numpy(dtype=float)
     tier_nums = np.array([TIER_ORDER.index(t) if t in TIER_ORDER else -1 for t in tiers]).reshape(-1, 1)
 
@@ -359,10 +377,10 @@ def plot_corrected_loss(eval_df: pd.DataFrame, metric: str, polished_dir: Path, 
     )
     cbar = fig.colorbar(im, cax=cax, label=label)
     cbar.ax.tick_params(labelsize=8)
-    ax_heat.set_title(f"Raw {label} heatmap: {len(order)} datasets x epochs 0..{max_epoch}", loc="left", fontweight="bold")
+    ax_heat.set_title(f"Raw {label} heatmap: {len(order)} datasets x epochs {min_epoch}..{max_epoch}", loc="left", fontweight="bold")
     ax_heat.set_xlabel("evaluation epoch")
     ax_heat.set_ylabel("")
-    ax_heat.set_xticks(ticks)
+    ax_heat.set_xticks(major_ticks_between(min_epoch, max_epoch))
     ax_heat.set_yticks([])
 
     for i in range(1, len(tiers)):
@@ -381,8 +399,8 @@ def plot_corrected_loss(eval_df: pd.DataFrame, metric: str, polished_dir: Path, 
         color = TIER_COLORS[tier]
         ax_line.plot(x, mean, color=color, lw=1.6, alpha=0.80, label=tier)
         ax_line.fill_between(x, np.maximum(mean - std, 0.0), mean + std, color=color, alpha=0.09, lw=0)
-    ax_line.set_xlim(0, max_epoch)
-    ax_line.set_xticks(ticks)
+    ax_line.set_xlim(min_epoch, max_epoch)
+    ax_line.set_xticks(major_ticks_between(min_epoch, max_epoch))
     ax_line.set_xlabel("evaluation epoch")
     ax_line.set_ylabel(label)
     ax_line.set_title("Group mean trajectory over the full available training horizon", loc="left", fontweight="bold", fontsize=10.5)
@@ -397,6 +415,7 @@ def plot_corrected_loss(eval_df: pd.DataFrame, metric: str, polished_dir: Path, 
 def plot_checkpoint_style_loss(eval_df: pd.DataFrame, metric: str, polished_dir: Path, suffix: str) -> Path:
     label = "Relative L2" if metric == "relative_l2" else "RMSE"
     max_epoch = int(eval_df["epoch"].max())
+    min_epoch = int(eval_df["epoch"].min())
     cps = checkpoint_epochs(max_epoch, set(int(e) for e in eval_df["epoch"].unique()))
     d = tier_sorted(eval_df[eval_df["epoch"].isin(cps)])
     order = d.drop_duplicates("dataset_id")["dataset_id"].tolist()
@@ -458,7 +477,7 @@ def plot_checkpoint_style_loss(eval_df: pd.DataFrame, metric: str, polished_dir:
         ymax = float(np.nanmax(vals))
         pad = 0.05 * (ymax - ymin if ymax > ymin else 1.0)
         ax_line.set_ylim(max(0.0, ymin - pad), ymax + pad)
-    ax_line.set_xlim(0, max_epoch)
+    ax_line.set_xlim(min_epoch, max_epoch)
     ax_line.set_xticks(cps)
     ax_line.set_title("Group mean lineplot at the same checkpoints; no epoch moving average", loc="left", fontweight="bold", fontsize=10.5)
     ax_line.set_xlabel("evaluation epoch")
@@ -489,10 +508,12 @@ def plot_high_transparency_max5(
             panel_defs.append((tier, chunk_idx, datasets[start : start + max_lines_per_panel]))
 
     max_epoch = int(eval_df["epoch"].max())
-    ticks = major_ticks(max_epoch)
-    x_text = max_epoch + 0.01 * max_epoch
-    x_right = max_epoch + 0.07 * max_epoch
-    guide_lines = [int(round(max_epoch * f)) for f in [0.2, 0.4, 0.6, 0.8]]
+    min_epoch = int(eval_df["epoch"].min())
+    ticks = major_ticks_between(min_epoch, max_epoch)
+    span = max(max_epoch - min_epoch, 1)
+    x_text = max_epoch + 0.01 * span
+    x_right = max_epoch + 0.07 * span
+    guide_lines = [int(round(min_epoch + span * f)) for f in [0.2, 0.4, 0.6, 0.8]]
 
     cols = 3
     rows = math.ceil(len(panel_defs) / cols)
@@ -533,7 +554,7 @@ def plot_high_transparency_max5(
         for xline in guide_lines:
             ax.axvline(xline, color="#555555", alpha=0.13, lw=0.9)
         ax.set_title(f"{tier} chunk {chunk_idx}: {len(chunk)} datasets", fontsize=9.8)
-        ax.set_xlim(0, x_right)
+        ax.set_xlim(min_epoch, x_right)
         ax.set_xticks(ticks)
         ax.set_ylim(ylo, yhi)
         ax.legend(
@@ -613,6 +634,7 @@ def plot_delta_fft(burgers_dir: Path, probe_df: pd.DataFrame, polished_dir: Path
     vmin, vmax = np.nanpercentile(finite, [2, 99.5])
 
     max_epoch = int(epochs[-1])
+    min_epoch = int(epochs[0])
     selected = selected_fft_epochs(max_epoch, epochs)
     fig = plt.figure(figsize=(18, 12.2))
     gs = fig.add_gridspec(2, 1, height_ratios=[1.0, 0.28], hspace=0.24)
@@ -635,7 +657,7 @@ def plot_delta_fft(burgers_dir: Path, probe_df: pd.DataFrame, polished_dir: Path
     ax_heat.set_xlabel("Fourier mode")
     ax_heat.set_ylabel("training epoch")
     ax_heat.set_xlim(1, min(512, float(freq_modes[-1])))
-    ax_heat.set_yticks(major_ticks(max_epoch))
+    ax_heat.set_yticks(major_ticks_between(min_epoch, max_epoch))
 
     colors = plt.get_cmap("viridis")(np.linspace(0.05, 0.95, len(selected)))
     for epoch, color in zip(selected, colors):
