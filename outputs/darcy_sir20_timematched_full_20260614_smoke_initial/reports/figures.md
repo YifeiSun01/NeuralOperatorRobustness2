@@ -1,0 +1,17 @@
+# Darcy/SIR20 Figures
+
+Generated figures:
+
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/rmse_split_means_vs_epoch.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/rmse_generalization_part01_vs_epoch.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/rmse_generalization_part02_vs_epoch.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/rmse_split_means_vs_work.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/rmse_generalization_part01_vs_work.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/rmse_generalization_part02_vs_work.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/relative_l2_split_means_vs_epoch.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/relative_l2_generalization_part01_vs_epoch.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/relative_l2_generalization_part02_vs_epoch.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/relative_l2_split_means_vs_work.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/relative_l2_generalization_part01_vs_work.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/relative_l2_generalization_part02_vs_work.png`
+- `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/figures/darcy_2d_attack_heatmap_loss3_robust_sample.png`

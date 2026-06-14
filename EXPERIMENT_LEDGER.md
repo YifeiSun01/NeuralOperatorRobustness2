@@ -1,3 +1,40 @@
+## 2026-06-14 - Darcy/SIR20 time-matched rerun pipeline prepared
+
+Status: implemented the DarcyFlow-focused SIR20 time-matched rerun pipeline requested for baseline plus six training methods (`loss1`, `loss2`, `loss3`, `physics_loss`, `random_clean`, `random_solver`). Smoke/full execution is handled by `tools/run_darcy_sir20_timematched_full_20260614.sh`.
+
+Smoke status:
+- `MODE=smoke TAG=20260614_smoke_initial` completed successfully on 2026-06-14.
+- Smoke covered all six training methods for 1 epoch, full 52-dataset evaluation with `eval_max_samples=1`, checkpoint manifest generation, fixed-sample robustness attacks on all 52 datasets with 2 samples/dataset, 3 fixed SVD/Jacobian samples per model, and visualization.
+- Smoke outputs are under `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/`.
+- Smoke artifact sanity checks: `final_eval_metrics.csv` has `364` rows (`7` models x `52` datasets), `robustness_attack_52datasets_samples.csv` has `728` rows, `data/svd_jacobian_vectors/` has `21` NPZ files, and `figures/` has `13` PNG files.
+- The six trained smoke checkpoints all contain optimizer state; the baseline external `best.pt` does not, as expected.
+
+Full-run launch status:
+- `MODE=full TAG=20260614_full UPLOAD_TO_R2=1 AUTO_GIT_PUSH=0` is running detached via `setsid -f`; PID recorded in `outputs/darcy_sir20_timematched_full_20260614_full/logs/full.pid` as `346318`.
+- Active monitoring was performed for a little over 10 minutes after the successful detached start. At the end of monitoring, `driver_full.log` showed calibration complete and `full_train` running.
+- Calibration outputs are `outputs/darcy_sir20_timematched_full_20260614_full/data/timing_calibration.csv`, `.json`, and `reports/timing_calibration.md`.
+- Stable work-clock seconds/epoch after ignoring the first 2 warmup epochs: `loss1=4.926671`, `loss2=4.375749`, `loss3=4.624874`, `physics_loss=4.033846`, `random_clean=2.891699`, `random_solver=3.010654`.
+- Loss3 3000-epoch work-clock budget is `13874.623` seconds (`3.854` hours). Time-matched epochs: `loss1=2816`, `loss2=3171`, `loss3=3000`, `physics_loss=3440`, `random_clean=4798`, `random_solver=4609`.
+- The full training launcher began `loss1` as `darcy_sir20_full_loss1_3042ep_workmatched` with `--max-work-seconds 13874.623212`; the epoch cap is intentionally above the plan so the work-clock budget can stop the run at the matched time.
+- The launcher was patched to materialize `preflight_check.py` before calling `run_logged`, because this execution environment reaped plain `nohup &` background children; `setsid -f` was verified with a test process before the full run was relaunched.
+
+Observed from local/R2 restore:
+- Restored locally from the selected R2 prefix: `generalization_datasets_darcy_lossdrop50_selected_20260607`, `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607`, and `2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607`.
+- GPU path verified locally: Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126` with `sm_70`, JAX `0.10.0` backend `gpu`.
+- The 50 selected lossdrop generalization datasets are soft-coefficient Darcy fields with `48` samples each, not hard-binary 50-sample files. The new robustness manifest records requested-vs-selected counts instead of fabricating missing samples.
+
+Code changes:
+- `tools/adversarial_training.py` now writes `work_clock_epoch_summary.csv` and supports `--max-work-seconds`; work-clock excludes evaluation, checkpoints, plotting, and upload.
+- `tools/adversarial_training.py` checkpoints now save `model_state_dict`, `optimizer_state_dict`, optimizer/global step, and work-clock metadata. Resume loads AdamW/optimizer state when present and infers epoch/global-step offsets from new-format checkpoints.
+- `tools/evaluate_generalization_models.py` now accepts finite Darcy coefficient fields, so soft lossdrop50 datasets evaluate correctly.
+- Added modular SIR20 scripts: `tools/darcy_sir20_common.py`, `tools/darcy_sir20_calibrate.py`, `tools/darcy_sir20_train_launcher.py`, `tools/darcy_sir20_evaluate.py`, `tools/darcy_sir20_robustness.py`, and `tools/darcy_sir20_visualize.py`.
+- Dedicated run document: `docs/darcy_sir20_timematched_full_20260614.md`.
+
+Planned/remaining work:
+- Run smoke mode first and confirm training, 52-dataset evaluation, checkpoint optimizer-state presence, robustness/SVD diagnostics, visualization, and optional upload hooks.
+- After smoke passes, launch `MODE=full` detached, monitor logs for 10 minutes, then leave the process running.
+- Full outputs should land under `outputs/darcy_sir20_timematched_full_<tag>/` and upload to `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected` when R2 credentials/config are available.
+
 ## 2026-06-11 - Darcy Burgers-style plotting and full-logging pipeline
 
 Status: added a Darcy-specific Burgers-style plotting pipeline and generated plots from the existing loss1/loss2/loss3/physics 100-epoch Darcy runs. The plots are Darcy Flow plots that reuse the Burgers report vocabulary: epoch and wall-clock train/test/generalization curves, attack-gain curves, attacked-train loss curves, runtime/memory diagnostics, final full-50 generated-dataset reduction heatmaps, and generated-set feature scatter plots.
@@ -14299,3 +14336,29 @@ Status: complete.
 - Physics/loss4 attack training loss decreased (`1.15183e-06` to `1.41416e-08`), but its final checkpoint did not produce mean generated-set improvement over baseline.
 - Artifacts: `adversarial_training_runs/darcy_binary_loss3targeted_physics_100ep_probe_20260611/`, `analysis_outputs/darcy_binary_loss3targeted_loss123physics_100ep_probe_full50_eval_20260611.csv`, and matching summary JSON.
 - Conclusion: adding physics/loss4 does not change the main result; loss3 remains clearly strongest on this targeted binary Darcy generalization set.
+
+## 2026-06-14 - SIR20 Darcy/Burgers rerun prompt drafting
+
+Status: complete; prompt/documentation only. No training, attack, plotting, or
+upload run was started in this step.
+
+Observed from local files:
+- Darcy random-inclusive bundle exists at `visualizations/darcy_random_inclusive_burgers_style_bundle_20260613/`.
+- Darcy 7-model statistics exist at `analysis_outputs/darcy_complete_7model_statistics_20260613/`.
+- Existing Burgers reports and tools cover multiple round03, 52-dataset,
+  wall-clock, SVD/attack-correlation, and wide-parameter workflows under
+  `docs/` and `tools/`.
+
+Artifact:
+- `docs/sir20_darcy_burgers_rerun_prompts_20260614.md`
+
+Conclusion:
+- Created two cleaned execution prompts: one for Darcy Flow on
+  `vast-ai-darcy-flow` with baseline plus six trained methods including
+  `physics_loss`, and one for Burgers on `vast-ai` with reuse-first logic and no
+  Darcy physics-loss row unless an implementation is explicitly documented.
+- Both prompts require work-clock matching that excludes evaluation time,
+  optimizer-state continuity across resumes, fixed sample manifests for
+  robustness, 52-dataset x 50-sample attack coverage, baseline horizontal
+  reference lines on RMSE/relative-L2 curves, R2/Git backup via environment
+  credentials, and explicit evidence records.

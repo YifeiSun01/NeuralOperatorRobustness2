@@ -1,0 +1,3 @@
+task,phase,epoch,global_step,progress_fraction,eval_wall_sec,checkpoint_saved,checkpoint_path,work_clock_seconds,work_clock_minutes
+darcy,baseline_before_adversarial_training,0,0,0.0,1.5296896519721486,0,,,
+darcy,during_adversarial_training,1,4,1.0,1.3099352730205283,1,outputs/darcy_sir20_timematched_full_20260614_smoke_initial/data/training_runs/darcy_sir20_smoke_random_solver_1ep/darcy/checkpoints/darcy_epoch001_step000004.pt,4.534960487100761,0.0755826747850127

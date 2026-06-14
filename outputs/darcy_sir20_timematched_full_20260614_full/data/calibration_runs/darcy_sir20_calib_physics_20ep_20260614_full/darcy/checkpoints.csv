@@ -1,0 +1,2 @@
+task,epoch,global_step,progress_fraction,checkpoint_path,eval_wall_sec,checkpoint_reason,checkpoint_wall_target_seconds,wall_elapsed_seconds,work_clock_seconds
+darcy,20,80,1.0,outputs/darcy_sir20_timematched_full_20260614_full/data/calibration_runs/darcy_sir20_calib_physics_20ep_20260614_full/darcy/checkpoints/darcy_epoch020_step000080.pt,0.0916550230467692,final,,87.31690242904006,82.19848694372922

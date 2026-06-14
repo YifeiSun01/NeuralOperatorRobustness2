@@ -1,0 +1,2 @@
+task,epoch,global_step,progress_fraction,checkpoint_path,eval_wall_sec,checkpoint_reason,checkpoint_wall_target_seconds,wall_elapsed_seconds,work_clock_seconds
+darcy,1,4,1.0,outputs/darcy_sir20_timematched_full_20260614_smoke_initial/data/training_runs/darcy_sir20_smoke_loss2_1ep/darcy/checkpoints/darcy_epoch001_step000004.pt,1.2705124199856073,final,,10.698310093022883,5.93631186906714

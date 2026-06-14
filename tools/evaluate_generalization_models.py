@@ -103,7 +103,7 @@ def load_ns2d_model(device: torch.device):
     return model
 
 
-def ensure_darcy_binary_coefficients(x: torch.Tensor, context: str = "Darcy coefficient field") -> None:
+def ensure_darcy_coefficient_field(x: torch.Tensor, context: str = "Darcy coefficient field") -> None:
     field = x[..., 0] if x.ndim == 4 and x.shape[-1] == 1 else x
     if field.ndim != 3:
         raise ValueError(f"{context} must have shape (N,H,W) or (N,H,W,1), got {tuple(x.shape)}")
@@ -111,6 +111,11 @@ def ensure_darcy_binary_coefficients(x: torch.Tensor, context: str = "Darcy coef
     if not bool(finite.all()):
         invalid = int(field.numel() - finite.sum().item())
         raise ValueError(f"{context} contains {invalid} non-finite values")
+
+
+def ensure_darcy_binary_coefficients(x: torch.Tensor, context: str = "Darcy coefficient field") -> None:
+    ensure_darcy_coefficient_field(x, context)
+    field = x[..., 0] if x.ndim == 4 and x.shape[-1] == 1 else x
     unique = torch.unique(field.detach().cpu().float())
     expected = torch.tensor([3.0, 12.0], dtype=torch.float32)
     if unique.numel() != 2 or not torch.allclose(torch.sort(unique).values, expected, rtol=0.0, atol=1e-5):
@@ -127,7 +132,7 @@ def tensor_xy(data: dict[str, Any], task: str) -> tuple[torch.Tensor, torch.Tens
     if task == "burgers":
         return x.unsqueeze(-1), y.unsqueeze(-1)
     if task == "darcy":
-        ensure_darcy_binary_coefficients(x, "Darcy dataset x")
+        ensure_darcy_coefficient_field(x, "Darcy dataset x")
         if x.ndim == 3:
             x = x.unsqueeze(-1)
         if y.ndim == 3:

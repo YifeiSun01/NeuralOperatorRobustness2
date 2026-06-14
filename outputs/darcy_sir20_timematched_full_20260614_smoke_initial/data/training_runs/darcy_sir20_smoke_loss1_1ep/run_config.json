@@ -1,0 +1,219 @@
+{
+  "run_name": "darcy_sir20_smoke_loss1_1ep",
+  "tasks": [
+    "darcy"
+  ],
+  "project_root": "/workspace/NeuralOperatorRobustness2",
+  "generalization_root": "/workspace/NeuralOperatorRobustness2/generalization_datasets_darcy_lossdrop50_selected_20260607",
+  "output_root": "/workspace/NeuralOperatorRobustness2/outputs/darcy_sir20_timematched_full_20260614_smoke_initial/data/training_runs/darcy_sir20_smoke_loss1_1ep",
+  "device": "cuda",
+  "seed": 20260614,
+  "smoke": false,
+  "started_utc": "20260614_010114_UTC",
+  "defaults": {
+    "darcy": {
+      "batch_size": 256,
+      "optimizer_batch_size": 32,
+      "eval_batch_size": 256,
+      "epochs": 1000,
+      "train_max_samples": null,
+      "attack_method": "binary_steepest_replace",
+      "attack_steps": 1,
+      "epsilon_fraction": 0.025,
+      "epsilon_abs": 0.0,
+      "alpha_ratio": 1.0,
+      "alpha_jitter_low": 1.0,
+      "alpha_jitter_high": 1.0,
+      "learning_rate": 0.0001,
+      "weight_decay": 1e-05,
+      "random_start_fraction": 0.0,
+      "eps_jitter_low": 1.0,
+      "eps_jitter_high": 1.0
+    }
+  },
+  "baseline_checkpoints": {
+    "burgers": {
+      "path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt",
+      "checkpoint_role": "retained_trained_baseline",
+      "note": "No separate Burgers best.pt exists in this workspace; this is the retained trained baseline loaded by evaluate_generalization_models.py."
+    },
+    "darcy": {
+      "path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt",
+      "checkpoint_role": "best",
+      "note": "Darcy best checkpoint."
+    },
+    "ns2d": {
+      "path": "/workspace/NeuralOperatorRobustness2/2D_NS_FNO2d_recurrent/saved_models/2D/modes64_modes64_width60_epochs500_Tin10_T10_recurrent_pytorch_20260521_090136_UTC/checkpoints/best.pt",
+      "checkpoint_role": "best",
+      "note": "NS2D recurrent best checkpoint."
+    }
+  },
+  "model_checkpoint_overrides": {
+    "darcy": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607/best.pt"
+  },
+  "dataset_path_overrides": {
+    "darcy_train_path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/train/dim2d_darcy_nx85_N384_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt",
+    "darcy_test_path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/test/dim2d_darcy_nx85_N96_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_test.pt"
+  },
+  "preflight_dataset_counts": [
+    {
+      "task": "darcy",
+      "train_count": 1,
+      "test_count": 1,
+      "generalization_count": 50,
+      "eval_dataset_count_per_pass": 52,
+      "expected_generalization_count": 50,
+      "expected_eval_dataset_count_per_pass": 52,
+      "generalization_ids": [
+        "darcy_lossdrop_pool_soft_l4_h10_b10_02",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_03",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_04",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_05",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_06",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_07",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_08",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_09",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_10",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_11",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_12",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_13",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_15",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_16",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_17",
+        "darcy_lossdrop_pool_soft_l4_h10_b10_18",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_03",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_04",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_06",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_07",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_08",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_09",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_10",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_11",
+        "darcy_lossdrop_pool_soft_l4_h10_b12_12",
+        "darcy_lossdrop_pool_soft_l4_h10_b14_01",
+        "darcy_lossdrop_pool_soft_l4_h10_b14_03",
+        "darcy_lossdrop_pool_soft_l4_h10_b14_06",
+        "darcy_lossdrop_pool_soft_l4_h10_b14_07",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_01",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_02",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_03",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_04",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_05",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_06",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_07",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_08",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_09",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_10",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_11",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_12",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_13",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_14",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_15",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_16",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_17",
+        "darcy_lossdrop_pool_soft_l4_h10_b8_18",
+        "darcy_lossdrop_pool_soft_l4_h10p5_b12_01",
+        "darcy_lossdrop_pool_soft_l4_h10p5_b12_03",
+        "darcy_lossdrop_pool_soft_l4_h10p5_b12_06"
+      ]
+    }
+  ],
+  "planned_workload_estimate": {
+    "created_utc": "20260614_010114_UTC",
+    "expected_generalization_datasets_per_task": 50,
+    "expected_eval_datasets_per_pass": 52,
+    "smoke_reference_summary": null,
+    "tasks": [
+      {
+        "task": "darcy",
+        "baseline_checkpoint": {
+          "path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt",
+          "checkpoint_role": "best",
+          "note": "Darcy best checkpoint."
+        },
+        "full_train_dataset_samples": 384,
+        "train_max_samples": "full",
+        "effective_train_samples": 384,
+        "batch_size": 96,
+        "attack_batch_size": 96,
+        "optimizer_batch_size": 24,
+        "optimizer_microbatches_per_full_attack_batch": 4,
+        "optimizer_steps_per_epoch": 16,
+        "total_optimizer_steps": 16,
+        "epochs": 1,
+        "attack_method": "binary_steepest_replace",
+        "attack_steps": 1,
+        "epsilon_fraction": 0.025,
+        "epsilon_abs": 0.0,
+        "alpha_ratio": 1.0,
+        "alpha_jitter_low": 1.0,
+        "alpha_jitter_high": 1.0,
+        "full_solver_gradient": true,
+        "batches_per_epoch": 4,
+        "total_train_steps": 4,
+        "evaluation_schedule": "every_epoch",
+        "eval_every_steps": 4,
+        "eval_steps_after_baseline": [
+          4
+        ],
+        "eval_pass_count_including_baseline": 2,
+        "checkpoint_every_epochs": 1,
+        "checkpoint_every_fraction": null,
+        "checkpoint_every_steps": 4,
+        "checkpoint_steps": [
+          4
+        ],
+        "eval_dataset_count_per_pass": 52,
+        "estimated_train_seconds_from_smoke": NaN,
+        "estimated_eval_seconds_from_smoke_scaled_to_52_datasets": NaN,
+        "estimated_total_seconds_from_smoke": NaN,
+        "estimated_total_minutes_from_smoke": NaN,
+        "smoke_peak_cuda_allocated_mb": null
+      }
+    ],
+    "estimated_total_seconds_from_smoke": 0.0,
+    "estimated_total_minutes_from_smoke": 0.0
+  },
+  "training_data_mode": "adv-only",
+  "evaluation_schedule": "every_epoch",
+  "eval_every_fraction_deprecated": 0.2,
+  "checkpoint_every_epochs": 1,
+  "checkpoint_every_fraction": null,
+  "checkpoint_wall_seconds": [],
+  "max_wall_seconds": null,
+  "max_work_seconds": null,
+  "darcy_attack_loss_objective": "loss1",
+  "darcy_physics_loss": {
+    "metric": "rel_l2",
+    "bc_weight": 1.0,
+    "forcing_value": 1.0
+  },
+  "darcy_loss1_random_start": {
+    "enabled": true,
+    "fraction": 1.0
+  },
+  "darcy_random_source": {
+    "kernels": "gaussian,matern,highpass,bandpass,mixed",
+    "alpha_values": "1.2,2.2,3.2,4.2,5.2",
+    "lengthscale_min": 0.035,
+    "lengthscale_max": 0.3,
+    "min_flip_fraction": 0.005,
+    "max_flip_fraction": 0.05,
+    "binary_constraint": "inputs are projected back to the per-sample two Darcy coefficient values before training"
+  },
+  "attack_probe": {
+    "samples": 0,
+    "indices": null,
+    "every_n_epochs": 1,
+    "save_targets": true
+  },
+  "epsilon_bucket_count": 5,
+  "remat_options": {
+    "burgers_solver_remat": "none",
+    "burgers_solver_remat_chunk_steps": 20,
+    "ns2d_solver_remat": "chunk",
+    "ns2d_solver_remat_chunk_steps": 20,
+    "darcy_note": "Darcy Flow uses a JAX CG solver with implicit differentiation; this path is tuned by batch and optimizer microbatch rather than a time-rollout remat mode."
+  },
+  "note": "Online adversarial training. The default label mode is solver-label: for Burgers the attack objective can be --burgers-attack-loss-objective loss1/loss2/loss3. Loss1 uses no solver in the attack; loss2 uses solver(x_clean).detach() forward only; loss3 uses solver(x_adv) with solver forward/backward. Training still uses either model(x_adv) -> solver(x_adv) for --training-data-mode adv-only, or both model(x_clean) -> solver(x_clean) and model(x_adv) -> solver(x_adv) for --training-data-mode clean-plus-adv. For NS2D the attack variable is the initial vorticity frame and both model input frames and target frames are regenerated by solver rollout from the attacked initial state. The old clean-label x_adv -> y_clean objective requires the explicit --allow-clean-label ablation flag."
+}

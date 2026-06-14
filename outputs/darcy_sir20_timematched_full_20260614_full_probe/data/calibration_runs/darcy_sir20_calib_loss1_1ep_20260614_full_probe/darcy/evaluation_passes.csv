@@ -1,0 +1,3 @@
+task,phase,epoch,global_step,progress_fraction,eval_wall_sec,checkpoint_saved,checkpoint_path,work_clock_seconds,work_clock_minutes
+darcy,baseline_before_adversarial_training,0,0,0.0,0.2785323510179296,0,,,
+darcy,during_adversarial_training,1,4,1.0,0.04912893404252827,1,outputs/darcy_sir20_timematched_full_20260614_full_probe/data/calibration_runs/darcy_sir20_calib_loss1_1ep_20260614_full_probe/darcy/checkpoints/darcy_epoch001_step000004.pt,6.370521226956043,0.10617535378260072
