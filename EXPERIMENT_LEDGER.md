@@ -14376,3 +14376,10 @@ Follow-up final-audit figure placement:
 - Copied the entire dense image-only bundle into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
 - The final audit output now contains 134 PNG figures total, including 36 dense image-only PNGs in the nested copied bundle and 12 loss123-only dense PNGs.
 - R2 verification for the final audit output prefix returned 161 objects and 576,834,254 bytes; the nested dense final-audit folder returned 36 objects and 89,008,328 bytes.
+
+Follow-up SVD/bias table placement:
+- Copied compact SVD25 reuse3 tables into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/historical_svd_attack25_reuse3/`, including sample manifest, attack step metrics, model pair reductions, cross-model error-subspace similarities, config, and runtime summary.
+- Copied biased-local-direction tables into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/biased_local_direction/`, including biased direction metrics, correlations, quantile summaries, direction pairwise angle summaries, ATB/SVD correlation ranking, config, and summary JSON.
+- Rebuilt the organized release with these tables. Observed from `MANIFEST.json`: 661 files, 1,469,211,584 bytes, 178 PNG, 94 CSV, 187 JSON, 137 NPZ, 37 log files, 8 Python scripts, and 0 missing expected inputs.
+- R2 verification for the final audit output returned 174 objects and 577,938,944 bytes; the nested historical SVD25 reuse3 folder returned 6 objects and 790,734 bytes; the nested biased-local-direction folder returned 7 objects and 313,956 bytes.
+- R2 verification for the organized release returned 661 objects and 1,469,211,584 bytes.

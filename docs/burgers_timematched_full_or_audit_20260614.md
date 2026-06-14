@@ -228,3 +228,33 @@ Final audit output dense-copy update:
   returned 161 objects and 576,834,254 bytes.
 - R2 verification for the nested dense final-audit folder returned 36 objects
   and 89,008,328 bytes.
+
+Final audit data completeness update:
+
+- Added compact historical SVD25 reuse3 tables under
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/historical_svd_attack25_reuse3/`.
+  This includes the 25-sample manifest, attack step metrics, model-pair
+  reductions, cross-model error-subspace similarities, config, and runtime
+  summary.
+- Added biased-local-direction tables under
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/biased_local_direction/`.
+  This includes biased direction metrics, correlations, quantile summaries,
+  direction pairwise angle summaries, ATB/SVD correlation ranking, config, and
+  summary JSON.
+- The final audit output now contains 174 files and 577,938,944 bytes locally.
+- R2 verification for the final audit output returned 174 objects and
+  577,938,944 bytes.
+- R2 verification for `data/historical_svd_attack25_reuse3/` returned 6 objects
+  and 790,734 bytes.
+- R2 verification for `data/biased_local_direction/` returned 7 objects and
+  313,956 bytes.
+
+Organized release data completeness update:
+
+- Rebuilt the organized release after adding those two compact SVD/bias table
+  families.
+- Verified from `MANIFEST.json`: 661 files, 1,469,211,584 bytes, 178 PNG, 94
+  CSV, 187 JSON, 137 NPZ, 37 log files, 8 Python scripts, and 0 missing
+  expected inputs.
+- R2 verification for the organized-release update returned 661 objects and
+  1,469,211,584 bytes.

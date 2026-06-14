@@ -283,6 +283,8 @@ def build_release(root: Path, out: Path) -> Organizer:
     dense_figures = root / "visualizations" / "burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614"
     polished = root / "visualizations" / "burgers_solver7860_clean8000_polished_reports_20260614"
     logs = root / "run_logs" / "burgers_solver7860_postprocess_20260614"
+    historical_svd25 = root / "forensics" / "burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611"
+    biased_direction = root / "forensics" / "burgers_wideparam_loss3targeted_full1024_svd_attack25_biased_local_direction_20260611"
 
     if out.exists():
         shutil.rmtree(out)
@@ -297,6 +299,8 @@ def build_release(root: Path, out: Path) -> Organizer:
         "dense_six_model_attack_figures": dense_figures,
         "polished_reports": polished,
         "postprocess_logs": logs,
+        "historical_svd25_reuse3_compact": historical_svd25,
+        "biased_local_direction_tables": biased_direction,
     }.items():
         org.note_source(label, path)
 
@@ -359,6 +363,18 @@ def build_release(root: Path, out: Path) -> Organizer:
 
     for src in sorted(summary.glob("*.csv")) + sorted(summary.glob("*.json")):
         org.copy_file(src, table_root / "06_summary_root_originals" / src.name, "summary_root_original_tables")
+
+    org.copy_tree(
+        historical_svd25,
+        table_root / "03_robustness_25sample" / "historical_svd_attack25_reuse3",
+        "historical_svd_attack25_compact",
+    )
+    org.copy_tree_filtered(
+        biased_direction,
+        table_root / "04_correlations_and_rankings" / "biased_local_direction",
+        "biased_local_direction_tables",
+        excluded_names={".biased_direction_hook_done"},
+    )
 
     # 02: figures.
     fig_root = audit / "figures"
