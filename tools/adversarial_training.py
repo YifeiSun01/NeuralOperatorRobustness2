@@ -2793,6 +2793,9 @@ def checkpoint_model(
     global_step: int,
     cfg: dict[str, Any],
     *,
+    optimizer=None,
+    optimizer_global_step: int | None = None,
+    work_clock_seconds: float | None = None,
     suffix: str | None = None,
 ) -> Path:
     ckpt_dir = out_dir / "checkpoints"
@@ -2802,20 +2805,24 @@ def checkpoint_model(
         safe = "".join(ch if ch.isalnum() or ch in {"_", "-"} else "_" for ch in str(suffix))
         safe_suffix = f"_{safe}"
     path = ckpt_dir / f"{task}_epoch{epoch:03d}_step{global_step:06d}{safe_suffix}.pt"
-    torch.save(
-        {
-            "task": task,
-            "epoch": epoch,
-            "global_step": global_step,
-            "model_state_dict": model.state_dict(),
-            "config": cfg,
-        },
-        path,
-    )
+    payload = {
+        "task": task,
+        "epoch": epoch,
+        "global_step": global_step,
+        "model_state_dict": model.state_dict(),
+        "config": cfg,
+    }
+    if optimizer is not None:
+        payload["optimizer_state_dict"] = optimizer.state_dict()
+    if optimizer_global_step is not None:
+        payload["optimizer_global_step"] = int(optimizer_global_step)
+    if work_clock_seconds is not None:
+        payload["work_clock_seconds"] = float(work_clock_seconds)
+    torch.save(payload, path)
     return path
 
 
-def load_model_checkpoint_state(model, checkpoint_path: Path, device: torch.device) -> dict[str, Any]:
+def load_model_checkpoint_state(model, checkpoint_path: Path, device: torch.device, optimizer=None) -> dict[str, Any]:
     checkpoint_path = checkpoint_path.expanduser().resolve()
     ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
     if isinstance(ckpt, dict) and "model_state_dict" in ckpt:
@@ -2827,9 +2834,16 @@ def load_model_checkpoint_state(model, checkpoint_path: Path, device: torch.devi
     else:
         raise TypeError(f"checkpoint is not a dict-like object: {checkpoint_path}")
     model.load_state_dict(state, strict=True)
+    optimizer_restored = False
+    if optimizer is not None and isinstance(ckpt, dict) and "optimizer_state_dict" in ckpt:
+        optimizer.load_state_dict(ckpt["optimizer_state_dict"])
+        optimizer_restored = True
     return {
         "path": project_path(checkpoint_path),
         "metadata": to_jsonable(metadata),
+        "optimizer_restored": optimizer_restored,
+        "optimizer_global_step": int(ckpt.get("optimizer_global_step", 0)) if isinstance(ckpt, dict) else 0,
+        "work_clock_seconds": float(ckpt.get("work_clock_seconds", 0.0)) if isinstance(ckpt, dict) else 0.0,
     }
 
 
@@ -2925,6 +2939,7 @@ def train_one_task(
             "ns2d_solver_remat": args.ns2d_solver_remat,
             "ns2d_solver_remat_chunk_steps": args.ns2d_solver_remat_chunk_steps,
             "max_wall_seconds": args.max_wall_seconds,
+            "max_work_seconds": args.max_work_seconds,
             "full_solver_gradient": True,
         }
     )
@@ -3021,10 +3036,6 @@ def train_one_task(
     task_cfg["model_checkpoint_override"] = None if model_checkpoint_override is None else str(model_checkpoint_override.resolve())
     model = load_model(task, device, model_checkpoint_override)
     initial_checkpoint_info: dict[str, Any] | None = None
-    if initial_checkpoint is not None:
-        initial_checkpoint_info = load_model_checkpoint_state(model, Path(initial_checkpoint), device)
-        task_cfg["initial_checkpoint"] = initial_checkpoint_info["path"]
-        task_cfg["initial_checkpoint_metadata"] = initial_checkpoint_info["metadata"]
     (out_dir / "config.json").write_text(json.dumps(to_jsonable({**run_cfg, **task_cfg}), indent=2), encoding="utf-8")
     model.train()
     optimizer = torch.optim.AdamW(
@@ -3032,6 +3043,17 @@ def train_one_task(
         lr=float(task_cfg["learning_rate"]),
         weight_decay=float(task_cfg["weight_decay"]),
     )
+    resumed_work_clock_seconds = 0.0
+    if initial_checkpoint is not None:
+        initial_checkpoint_info = load_model_checkpoint_state(model, Path(initial_checkpoint), device, optimizer=optimizer)
+        task_cfg["initial_checkpoint"] = initial_checkpoint_info["path"]
+        task_cfg["initial_checkpoint_metadata"] = initial_checkpoint_info["metadata"]
+        task_cfg["initial_checkpoint_optimizer_restored"] = bool(initial_checkpoint_info["optimizer_restored"])
+        resumed_work_clock_seconds = float(initial_checkpoint_info.get("work_clock_seconds", 0.0) or 0.0)
+        if int(initial_checkpoint_info.get("optimizer_global_step", 0) or 0) and resume_global_step_offset == 0:
+            resume_global_step_offset = int(initial_checkpoint_info["optimizer_global_step"])
+            task_cfg["resume_global_step_offset"] = resume_global_step_offset
+    (out_dir / "config.json").write_text(json.dumps(to_jsonable({**run_cfg, **task_cfg}), indent=2), encoding="utf-8")
 
     train_spec = task_train_spec(all_specs, task)
     train_max_samples = normalize_max_samples(task_cfg.get("train_max_samples"))
@@ -3052,6 +3074,8 @@ def train_one_task(
     local_epochs = int(task_cfg["epochs"])
     max_wall_seconds = task_cfg.get("max_wall_seconds")
     max_wall_seconds = None if max_wall_seconds is None else float(max_wall_seconds)
+    max_work_seconds = task_cfg.get("max_work_seconds")
+    max_work_seconds = None if max_work_seconds is None else float(max_work_seconds)
     total_epochs_for_progress = resume_epoch_offset + local_epochs
     total_steps = total_epochs_for_progress * max(1, batches_per_epoch)
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
@@ -3160,6 +3184,10 @@ def train_one_task(
     completed_local_epochs = 0
     stop_reason = "completed_configured_epochs"
     wall_stop_seconds = float("nan")
+    cumulative_attack_seconds = 0.0
+    cumulative_train_seconds = 0.0
+    cumulative_optimizer_seconds = 0.0
+    cumulative_work_seconds = resumed_work_clock_seconds
 
     for local_epoch in range(1, local_epochs + 1):
         epoch = resume_epoch_offset + local_epoch
@@ -3183,6 +3211,7 @@ def train_one_task(
             if attack_result.sample_info:
                 epoch_attack_sample_infos.append(attack_result.sample_info)
             attack_sec = time.perf_counter() - attack_start
+            cumulative_attack_seconds += float(attack_sec)
             if probe_this_epoch:
                 epoch_probe_records.extend(
                     collect_attack_probe_records(
@@ -3245,6 +3274,10 @@ def train_one_task(
                     },
                 )
             train_sec = time.perf_counter() - train_start
+            optimizer_sec_total = float(sum(optimizer_secs))
+            cumulative_train_seconds += float(train_sec)
+            cumulative_optimizer_seconds += optimizer_sec_total
+            cumulative_work_seconds += float(attack_sec) + float(train_sec)
             step_sec = time.perf_counter() - step_start
             train_loss_mean = loss_weighted_sum / max(1, loss_weight)
             grad_norm_mean = float(np.mean(grad_norms)) if grad_norms else float("nan")
@@ -3279,7 +3312,13 @@ def train_one_task(
                 "step_sec_per_sample": step_sec / max(1, int(xb.shape[0])),
                 "step_samples_per_sec": int(xb.shape[0]) / max(step_sec, 1e-12),
                 "optimizer_wall_sec_mean": float(np.mean(optimizer_secs)) if optimizer_secs else float("nan"),
+                "optimizer_wall_sec_total": optimizer_sec_total,
                 "step_wall_sec": step_sec,
+                "work_clock_sec": float(attack_sec) + float(train_sec),
+                "cumulative_attack_wall_sec": cumulative_attack_seconds,
+                "cumulative_train_wall_sec": cumulative_train_seconds,
+                "cumulative_optimizer_wall_sec": cumulative_optimizer_seconds,
+                "cumulative_work_clock_sec": cumulative_work_seconds,
                 **memory_stats(device),
             }
             row.update(attack_info)
@@ -3317,7 +3356,17 @@ def train_one_task(
         ckpt: Path | None = None
         checkpoint_path = ""
         if should_checkpoint:
-            ckpt = checkpoint_model(model, out_dir, task, epoch, global_step, task_cfg)
+            ckpt = checkpoint_model(
+                model,
+                out_dir,
+                task,
+                epoch,
+                global_step,
+                task_cfg,
+                optimizer=optimizer,
+                optimizer_global_step=optimizer_global_step,
+                work_clock_seconds=cumulative_work_seconds,
+            )
             last_checkpoint_path = ckpt
             last_checkpoint_epoch = epoch
             checkpoint_path = project_path(ckpt)
@@ -3384,6 +3433,9 @@ def train_one_task(
                 epoch,
                 global_step,
                 task_cfg,
+                optimizer=optimizer,
+                optimizer_global_step=optimizer_global_step,
+                work_clock_seconds=cumulative_work_seconds,
                 suffix=wall_checkpoint_suffix(target_seconds),
             )
             wall_checkpoint_path = project_path(wall_ckpt)
@@ -3418,12 +3470,40 @@ def train_one_task(
                 },
             )
             break
+        if max_work_seconds is not None and cumulative_work_seconds >= max_work_seconds:
+            stop_reason = "max_work_seconds_reached"
+            wall_stop_seconds = wall_elapsed_after_eval
+            write_csv_row(
+                out_dir / "wall_stop.csv",
+                {
+                    "task": task,
+                    "epoch": epoch,
+                    "global_step": global_step,
+                    "progress_fraction": epoch_progress,
+                    "max_work_seconds": max_work_seconds,
+                    "work_clock_seconds": cumulative_work_seconds,
+                    "wall_elapsed_seconds": wall_elapsed_after_eval,
+                    "eval_wall_sec": seconds,
+                    "stop_reason": stop_reason,
+                },
+            )
+            break
 
     final_epoch = resume_epoch_offset + completed_local_epochs
     if last_checkpoint_path is not None and last_checkpoint_epoch == final_epoch:
         final_ckpt = last_checkpoint_path
     else:
-        final_ckpt = checkpoint_model(model, out_dir, task, final_epoch, global_step, task_cfg)
+        final_ckpt = checkpoint_model(
+            model,
+            out_dir,
+            task,
+            final_epoch,
+            global_step,
+            task_cfg,
+            optimizer=optimizer,
+            optimizer_global_step=optimizer_global_step,
+            work_clock_seconds=cumulative_work_seconds,
+        )
     elapsed = time.perf_counter() - train_start_wall
     estimate = estimate_from_smoke(
         task,
@@ -3452,6 +3532,7 @@ def train_one_task(
         "epochs_configured": local_epochs,
         "stop_reason": stop_reason,
         "max_wall_seconds": max_wall_seconds,
+        "max_work_seconds": max_work_seconds,
         "wall_stop_seconds": wall_stop_seconds,
         "resume_epoch_offset": resume_epoch_offset,
         "resume_global_step_offset": resume_global_step_offset,
@@ -3471,6 +3552,12 @@ def train_one_task(
         "attack_probe_save_targets": probe_save_targets,
         "elapsed_seconds": elapsed,
         "elapsed_minutes": elapsed / 60.0,
+        "work_clock_seconds": cumulative_work_seconds,
+        "work_clock_minutes": cumulative_work_seconds / 60.0,
+        "cumulative_attack_wall_sec": cumulative_attack_seconds,
+        "cumulative_train_wall_sec": cumulative_train_seconds,
+        "cumulative_optimizer_wall_sec": cumulative_optimizer_seconds,
+        "resumed_work_clock_seconds": resumed_work_clock_seconds,
         "final_checkpoint": project_path(final_ckpt),
         "memory": memory_stats(device),
         "data_range_summary": data_summary,
@@ -3507,6 +3594,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-wall-seconds", default=None, help="Comma-separated elapsed wall-clock seconds. After an epoch/eval crosses each target, save an extra checkpoint with checkpoint_reason=wall_clock.")
     parser.add_argument("--checkpoint-wall-hours", default=None, help="Comma-separated elapsed wall-clock hours; converted to --checkpoint-wall-seconds targets.")
     parser.add_argument("--max-wall-seconds", type=float, default=None, help="Stop gracefully after the completed epoch/evaluation that first reaches this training wall-clock budget.")
+    parser.add_argument("--max-work-seconds", type=float, default=None, help="Stop gracefully after the completed epoch/evaluation whose attack+optimizer training time reaches this budget. Evaluation time is excluded.")
     parser.add_argument("--resume-epoch-offset", type=int, default=0, help="Epoch number represented by the loaded initial checkpoint; resumed epochs are logged after this offset.")
     parser.add_argument("--resume-global-step-offset", type=int, default=0, help="Global train-step number represented by the loaded initial checkpoint.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
@@ -3659,6 +3747,7 @@ def main() -> None:
         "checkpoint_every_fraction": args.checkpoint_every_fraction,
         "checkpoint_wall_seconds": wall_clock_checkpoint_targets(args.checkpoint_wall_seconds, args.checkpoint_wall_hours),
         "max_wall_seconds": args.max_wall_seconds,
+        "max_work_seconds": args.max_work_seconds,
         "darcy_attack_loss_objective": args.darcy_attack_loss_objective,
         "darcy_physics_loss": {
             "metric": args.darcy_physics_metric,
@@ -3728,6 +3817,7 @@ def main() -> None:
         f"- Burgers attack loss objective: `{args.burgers_attack_loss_objective}`",
         f"- Darcy attack loss objective: `{args.darcy_attack_loss_objective}`",
         f"- Max wall seconds: `{args.max_wall_seconds}`",
+        f"- Max work seconds: `{args.max_work_seconds}`",
         "",
         "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
         "Training data modes: `adv-only` uses only perturbed solver/target pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly perturbed pairs, doubling the training examples per perturbation batch.",
