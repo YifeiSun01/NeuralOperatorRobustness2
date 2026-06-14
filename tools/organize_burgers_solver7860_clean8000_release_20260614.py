@@ -496,6 +496,7 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "tools" / "plot_burgers_training_run_visualizations_variable_epoch.py",
         root / "tools" / "plot_burgers_wideparam_random_field_six_model_one_row_20260613.py",
         root / "tools" / "render_burgers_solver7860_loss123_only_dense_20260614.py",
+        root / "tools" / "render_burgers_solver7860_loss123_randomsolver_dense_20260614.py",
         root / "tools" / "build_burgers_solver7860_loss3_best_group05_20260614.py",
         root / "tools" / "recover_burgers_prior_metrics_into_solver7860_audit_20260614.py",
         root / "tools" / "build_burgers_all_metric_ranked_tables_20260614.py",

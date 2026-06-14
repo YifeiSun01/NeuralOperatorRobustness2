@@ -3,7 +3,9 @@
 Status: generated the dense image-only comparison bundle for the latest random
 baselines, refreshed it with both all-model and no-random-clean variants, then
 added a `group05` panel selected specifically for the clearest `loss3`
-advantage among the existing dense attack traces.
+advantage among the existing dense attack traces. A final correction added the
+requested four-model variant that removes only baseline and random clean Y while
+retaining random solver Y.
 
 Local artifacts:
 
@@ -37,17 +39,26 @@ Image contents:
   random clean Y so its large loss does not compress the other curves/panels.
 - Loss123-only variant: three model columns, loss1 e8000, loss2 e2000, and
   loss3 e1000. This variant removes baseline, random clean Y, and random
-  solver Y from both the top panels and bottom loss curves.
+  solver Y from both the top panels and bottom loss curves. This is retained as
+  a historical extra variant.
+- Loss123+random-solver variant: four model columns, loss1 e8000, loss2 e2000,
+  loss3 e1000, and random solver Y e7860. This is the corrected requested
+  variant: baseline and random clean Y are removed, random solver Y is retained.
 - Each model cell contains final attack delta, initial condition before/after
   perturbation, model/solver output, and model-minus-solver output.
 - The bottom row contains per-sample attack loss progression curves for the
   models included in that variant.
-- Six PNGs per group were generated: all-model log-y, all-model linear-y,
+- Eight PNGs per group were generated: all-model log-y, all-model linear-y,
   no-random-clean log-y, no-random-clean linear-y, loss123-only log-y, and
-  loss123-only linear-y, for 36 PNGs total.
+  loss123-only linear-y, plus loss123+random-solver log-y and linear-y, for
+  48 PNGs total.
 - The loss123-only render was produced by
   `tools/render_burgers_solver7860_loss123_only_dense_20260614.py` from the
   existing trace NPZ files; no training or attack rerun was started.
+- The corrected loss123+random-solver render was produced by
+  `tools/render_burgers_solver7860_loss123_randomsolver_dense_20260614.py`
+  from the same existing trace NPZ files; no training or attack rerun was
+  started.
 
 Group05 selection:
 
@@ -99,13 +110,14 @@ R2 upload:
 
 Verification:
 
-- Local image-only bundle contains 36 PNG files and no non-PNG files.
+- Local image-only bundle contains 48 PNG files and no non-PNG files.
 - Local trace/data root contains 27 files.
-- R2 image-only bundle `rclone size --json` returned 36 files and 89,008,328 bytes.
-- R2 visualization mirror `rclone size --json` returned 36 files and 89,008,328 bytes.
+- R2 image-only bundle `rclone size --json` should be checked after the final
+  sync; locally it contains 48 PNG files.
+- R2 visualization mirror `rclone size --json` should be checked after the
+  final sync; locally it contains the corrected four-model variant.
 - R2 trace/data `rclone size --json` returned 27 files and 203,170,665 bytes.
-- The final-audit-output copy contains the same 36 PNG files. R2 verification
-  for that nested final-audit folder returned 36 files and 89,008,328 bytes.
+- The final-audit-output copy contains the same 48 PNG files.
 - R2 `lsf --recursive` includes directory markers in addition to PNGs; the
   object-count verification above is from `rclone size`.
 - The organized release also includes the full image-only bundle as

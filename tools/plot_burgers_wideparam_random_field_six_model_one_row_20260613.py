@@ -84,10 +84,12 @@ RANDOM_MODEL_KEYS = ["random_clean_y", "random_solver_y"]
 MODEL_ORDER = FOUR_MODEL_KEYS + RANDOM_MODEL_KEYS
 NO_RANDOM_CLEAN_MODEL_ORDER = [model_key for model_key in MODEL_ORDER if model_key != "random_clean_y"]
 LOSS123_ONLY_MODEL_ORDER = ["loss1", "loss2", "loss3"]
+LOSS123_RANDOM_SOLVER_MODEL_ORDER = ["loss1", "loss2", "loss3", "random_solver_y"]
 MODEL_VARIANTS = {
     "all_models": MODEL_ORDER,
     "no_random_clean": NO_RANDOM_CLEAN_MODEL_ORDER,
     "loss123_only": LOSS123_ONLY_MODEL_ORDER,
+    "loss123_random_solver": LOSS123_RANDOM_SOLVER_MODEL_ORDER,
 }
 TRACE_KEYS = ["step", "x_adv", "delta", "model", "solver", "diff", "loss", "delta_rms"]
 PANEL_NAMES = ["delta", "initial condition", "model and solver", "model - solver"]
@@ -533,6 +535,12 @@ def dense_output_name(group_id: int, variant_key: str, loss_scale: str) -> str:
             "loss1_loss2_loss3_only_no_baseline_no_random_clean_no_random_solver_"
             "before_after_overlay_three_column_samplewise_loss_one_row.png"
         )
+    elif variant_key == "loss123_random_solver":
+        name = (
+            f"wideparam_loss3targeted_round00_group{group_id:02d}_p2q2_"
+            "loss1_loss2_loss3_random_solver_y_no_baseline_no_random_clean_"
+            "before_after_overlay_four_column_samplewise_loss_one_row.png"
+        )
     else:
         raise ValueError(f"unknown model variant: {variant_key}")
     if loss_scale == "linear":
@@ -546,6 +554,8 @@ def variant_title(variant_key: str, model_order: list[str]) -> str:
         return f"{labels} (random clean Y removed)"
     if variant_key == "loss123_only":
         return f"{labels} (baseline and random baselines removed)"
+    if variant_key == "loss123_random_solver":
+        return f"{labels} (baseline and random clean Y removed)"
     return labels
 
 
@@ -569,7 +579,11 @@ def main() -> int:
     )
     parser.add_argument("--only-render", action="store_true")
     parser.add_argument("--loss-scale", choices=["log", "linear", "both"], default="both")
-    parser.add_argument("--model-variant", choices=["all_models", "no_random_clean", "loss123_only", "both"], default="both")
+    parser.add_argument(
+        "--model-variant",
+        choices=["all_models", "no_random_clean", "loss123_only", "loss123_random_solver", "both"],
+        default="both",
+    )
     args = parser.parse_args()
 
     base = load_module("wideparam_base_for_randomfield_20260613", BASE_SCRIPT)

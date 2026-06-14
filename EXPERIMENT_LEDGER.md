@@ -14436,3 +14436,18 @@ Updates:
 
 Remaining work:
 - Run this prompt on DarcyFlow/data flow artifacts when the user starts that experiment/audit.
+
+## 2026-06-14 - Burgers solver7860 dense four-model correction
+
+Status: corrected the dense image-only comparison variants after the user clarified that the requested reduced panel should remove baseline and random clean Y, but keep random solver Y.
+
+Updates:
+- Added `loss123_random_solver` to `tools/plot_burgers_wideparam_random_field_six_model_one_row_20260613.py`.
+- Added `tools/render_burgers_solver7860_loss123_randomsolver_dense_20260614.py`.
+- Rendered 12 new PNGs from existing dense trace NPZ files only; no training, attack, or SVD rerun was started.
+- The corrected new variant has four columns: `loss1`, `loss2`, `loss3`, and `random_solver_y`.
+- The old three-column loss123-only variant remains as a historical extra, but it is not the clarified requested panel because it also removes `random_solver_y`.
+- The image-only bundle now has 8 PNGs per group across `group00` through `group05`: all-model log/linear, no-random-clean log/linear, old loss123-only log/linear, and corrected loss123+random-solver log/linear, for 48 PNGs total.
+- Copied the updated bundle into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
+- Rebuilt the organized release; local manifest now includes 218 PNG files and the corrected dense variant in both `02_figures/04_dense_six_model_attack/` and `08_dense_image_only_bundle_full_copy/`.
+- Updated `docs/burgers_solver7860_dense_image_only_bundle_20260614.md` and `docs/burgers_solver7860_clean8000_organized_release_20260614.md` to describe the corrected four-model variant.

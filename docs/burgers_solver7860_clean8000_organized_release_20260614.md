@@ -5,12 +5,12 @@ Status: local organized release rebuilt with ranked metric tables, verified, and
 Observed from `outputs/burgers_solver7860_clean8000_organized_release_20260614/MANIFEST.json`:
 
 - Organized output root: `outputs/burgers_solver7860_clean8000_organized_release_20260614/`
-- Files: `1969`
+- Files: `1995`
 - Exact byte size: see `outputs/burgers_solver7860_clean8000_organized_release_20260614/MANIFEST.json` after each rebuild. This release includes its own docs and ledger, so the byte count changes slightly whenever those records are refreshed.
 - Missing expected inputs: `0`
-- Figure files: `194` PNG
+- Figure files: `218` PNG
 - Table/data files: `266` CSV, `770` JSON, `640` NPZ, `13` JSONL
-- Logs and code references: `40` log files, `10` Python scripts, `3` shell scripts
+- Logs and code references: `40` log files, `11` Python scripts, `3` shell scripts
 
 Layered layout:
 
@@ -27,7 +27,7 @@ Layered layout:
 - `05_polished_report_data/`: CSV/JSON/log data backing the per-model polished reports.
 - `06_logs/`: postprocess and upload logs.
 - `07_source_code_and_references/`: relevant scripts and experiment notes.
-- `08_dense_image_only_bundle_full_copy/`: complete dense image-only bundle as its own subfolder, with 36 PNGs under `comparison_dense/group00..group05`.
+- `08_dense_image_only_bundle_full_copy/`: complete dense image-only bundle as its own subfolder, with 48 PNGs under `comparison_dense/group00..group05`, including the corrected `loss1/loss2/loss3/random_solver_y` variant with baseline and random clean Y removed.
 - `01_summary_tables/09_ranked_metric_tables_20260614/`: complete ranked CSV tables for clean 52-dataset metrics, 52-dataset attack metrics, 25-sample robustness/Jacobian/SVD metrics, top20/top-k error singular values, model-level scalar summaries, correlations, best-vs-other significance tests, loss3-vs-other significance tests, and explicit random-model partial-coverage notes.
 - `00_start_here/burgers_all_metric_ranked_tables_20260614.md`: Markdown appendix with best models bolded, mean/std/n, runner-up gap, paired t-test/Wilcoxon p-values, and BH-FDR q-values.
 
