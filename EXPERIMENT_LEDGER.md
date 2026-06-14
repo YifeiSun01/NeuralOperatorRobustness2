@@ -14451,3 +14451,115 @@ Updates:
 - Copied the updated bundle into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
 - Rebuilt the organized release; local manifest now includes 218 PNG files and the corrected dense variant in both `02_figures/04_dense_six_model_attack/` and `08_dense_image_only_bundle_full_copy/`.
 - Updated `docs/burgers_solver7860_dense_image_only_bundle_20260614.md` and `docs/burgers_solver7860_clean8000_organized_release_20260614.md` to describe the corrected four-model variant.
+
+## 2026-06-14 - DarcyFlow existing-artifact time-matched audit release
+
+Status: complete for existing local artifacts; no new training, robustness,
+SVD/Jacobian, dense groups, or expensive sweeps were launched.
+
+Observed source files:
+- Main 52-dataset training/evaluation CSVs from
+  `outputs/darcy_sir20_required_figures_only_20260614/data/`.
+- Curated existing Darcy bundle from
+  `outputs/darcy_sir20_existing_curated_bundle_20260614/`.
+- Paired raw-vs-artifact-corrected audit figures and source tables from
+  `outputs/darcy_raw_vs_corrected_audit_20260614/`.
+- Smoke final evaluation, robustness, SVD/Jacobian metrics, delta NPZs, and
+  vector NPZs from
+  `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/`.
+
+Action taken:
+- Added `tools/build_darcyflow_timematched_audit_release_20260614.py`.
+- Built final audit directory
+  `outputs/darcyflow_timematched_full_or_audit_20260614/`.
+- Built organized release directory
+  `outputs/darcyflow_timematched_organized_release_20260614/`.
+- Generated 108 raw-point main figures without smoothing: all-six,
+  no-random-clean, and loss123-only variants; linear/log y-scales; epoch,
+  work-clock-hours, and wall-clock-hours x-axes; RMSE and Relative-L2 metrics;
+  split means and generalization part01/part02 grids.
+- Generated ranked/statistical CSVs for clean 52-dataset metrics, smoke
+  robustness, smoke SVD/Jacobian, model-level summaries, best-vs-other paired
+  tests, loss3-vs-other paired tests, correlations, and coverage notes.
+- Copied existing loss3-advantage Darcy attack heatmaps, raw-vs-corrected audit
+  figures, previous required raw figures, smoke robustness delta NPZs, and smoke
+  SVD vector NPZs into the release tree.
+- Added report `docs/darcyflow_timematched_audit_release_20260614.md`.
+
+Evidence:
+- Both audit and organized release contain 554 files.
+- Final local/R2 size checks:
+  `darcyflow_timematched_full_or_audit_20260614` has 1,418,427,564 bytes, and
+  `darcyflow_timematched_organized_release_20260614` has 1,418,431,996 bytes.
+- `rclone check --size-only --one-way` found 0 differences for both uploaded
+  R2 paths under
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/`.
+- Required CSV outputs exist:
+  `metric_model_summary_ranked.csv`, `metric_best_summary_ranked.csv`,
+  `metric_best_vs_other_significance_tests.csv`,
+  `metric_loss3_vs_other_significance_tests.csv`,
+  `clean_52dataset_metric_long_ranked.csv`,
+  `attack_52dataset_metric_long_ranked.csv`,
+  `robustness_25sample_metric_long_ranked.csv`,
+  `svd_error_topk_ranked_tables.csv`, `svd_error_top20_ranked_tables.csv`,
+  `model_level_scalar_ranked_tables.csv`, `correlations_sorted_tables.csv`,
+  `random_coverage_partial_metric_notes.csv`, and `coverage_notes.csv`.
+- Reports exist in both bundle trees:
+  `AUDIT_REPORT.md`, `STATISTICAL_APPENDIX.md`, and `COVERAGE_NOTES.md`.
+
+Coverage notes:
+- Archived required-figure CSV max epochs are loss1 `3000`, loss2 `3079`,
+  loss3 `3033`, physics `3121`, random clean `1100`, and random solver `1100`.
+- Robustness coverage found locally is smoke level: 52 datasets x 2 samples x 7
+  models, not 50 samples per dataset.
+- SVD/Jacobian coverage found locally is smoke level: 3 samples per model, not
+  the requested fixed 25 samples.
+- Full physics/PDE residual evaluation columns were not found in the clean
+  52-dataset evaluation CSVs; physics-run training rows contain
+  `darcy_physics_metric`.
+- Full dense group00..group05 variant matrix was not found; existing
+  loss3-advantage heatmaps were organized and no dense recomputation was
+  launched.
+
+Interpretation:
+- This release is a transparent existing-artifact audit. Tables carry
+  `coverage_status` so partial smoke robustness/SVD results are not confused
+  with complete formal coverage.
+
+Report:
+- `docs/darcyflow_timematched_audit_release_20260614.md`
+
+## 2026-06-14 - Darcy random 3000-to-3500 continuation watcher fix
+
+Status: continuation launched; monitoring in progress.
+
+Observed issue:
+- The random clean and random solver 3000-epoch base runs had completed and
+  saved final checkpoints with optimizer state, but
+  `tools/wait_and_replot_darcy_random_3000_20260614.py` still reported
+  `waiting_base_3000`.
+- The current `summary.json` format records the completed epoch as `epochs`
+  plus `resume_epoch_offset`, and in the final checkpoint path, rather than as
+  `final_epoch`.
+
+Action taken:
+- Updated `tools/wait_and_replot_darcy_random_3000_20260614.py` and
+  `tools/run_darcy_random_continue_to_3500_20260614.sh` to infer summary epoch
+  from `final_epoch`, `completed_global_epochs`, `global_epoch`,
+  `resume_epoch_offset + completed_local_epochs/epochs`, or the checkpoint
+  filename.
+- Syntax-checked both patched entry points.
+- Restarted supervisor service `darcy_random_3000_replot` so the patched
+  watcher is active.
+
+Evidence:
+- The restarted watcher recognized both base runs at epoch `3000`.
+- The restarted watcher verified optimizer state for both base final
+  checkpoints.
+- Supervisor started both continuation services:
+  `darcy_random_clean_3500_continue` and
+  `darcy_random_solver_3500_continue`.
+
+Interpretation:
+- The remaining random extension is not a zero-to-3500 rerun. It is a
+  3000-to-3500 continuation from checkpoints that include optimizer state.
