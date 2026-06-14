@@ -153,8 +153,15 @@ Dense four-variant refresh:
   loss curves, and no-random-clean with linear-y loss curves.
 - All dense model headers include epoch counts: baseline e500, loss1 e8000,
   loss2 e2000, loss3 e1000, random clean Y e8000, and random solver Y e7860.
-- The image-only bundle now contains 20 PNGs and 0 non-PNG files. R2
-  `rclone size --json` verified 20 image objects and 53,849,541 bytes.
+- Added `group05`, a curated loss3-best group selected from the existing
+  `group00` through `group04` dense traces. A candidate had to have `loss3` as
+  the strict winner for both final attacked MSE and attack loss increase; the
+  final group keeps one test sample and five generalization samples with the
+  largest relative `loss3` margins.
+- The image-only bundle now contains 24 PNGs and 0 non-PNG files. R2
+  `rclone size --json` verified 24 image objects and 63,769,624 bytes.
+- R2 trace/data verification for the dense root returned 27 objects and
+  203,143,689 bytes.
 - The no-random-clean version removes `random_clean_y` from the top model
   columns and the bottom loss curves, so the other methods use y-limits not
   dominated by the random-clean failure mode.
@@ -183,10 +190,11 @@ Organized release:
 - The release gathers the final audit output, summary tables, dense six-model
   attack figures/traces, random-model full-suite outputs, polished report
   figures/data, logs, and source-code references into one reviewable tree.
-- Verified from `MANIFEST.json`: 600 files, 1,363,789,188 bytes, 146 PNG, 82
-  CSV, 181 JSON, 136 NPZ, and 0 missing expected inputs.
-- R2 verification for the organized release prefix returned 600 objects and
-  1,363,789,188 bytes.
+- Verified from `MANIFEST.json` after adding dense `group05`: 617 files,
+  1,417,514,791 bytes, 154 PNG, 85 CSV, 183 JSON, 137 NPZ, and 0 missing
+  expected inputs.
+- R2 verification for the organized release prefix returned 617 objects and
+  1,417,514,791 bytes after the `group05` addition.
 - The organized release includes the complete dense image-only bundle as
   `08_dense_image_only_bundle_full_copy/`.
 - Dedicated note:

@@ -5,26 +5,26 @@ Status: local organized release created and verified.
 Observed from `outputs/burgers_solver7860_clean8000_organized_release_20260614/MANIFEST.json`:
 
 - Organized output root: `outputs/burgers_solver7860_clean8000_organized_release_20260614/`
-- Files: `600`
-- Size recorded in manifest: `1363789188` bytes
-- Disk usage: about `1.3G`
+- Files: `617`
+- Size recorded in manifest: `1417514791` bytes
+- Disk usage: about `1.4G`
 - Missing expected inputs: `0`
-- Figure files: `146` PNG
-- Table/data files: `82` CSV, `181` JSON, `136` NPZ, `4` JSONL
-- Logs and code references: `29` log files, `6` Python scripts, `3` shell scripts
+- Figure files: `154` PNG
+- Table/data files: `85` CSV, `183` JSON, `137` NPZ, `4` JSONL
+- Logs and code references: `32` log files, `6` Python scripts, `3` shell scripts
 
 Layered layout:
 
 - `00_start_here/`: final audit report, audit manifest, summary markdown, and current result notes.
 - `01_summary_tables/`: clean 52-dataset tables, 52-dataset attack tables, 25-sample robustness/SVD tables, correlations, rankings, model-version and runtime JSON.
 - `02_figures/`: linear training curves, log-y training curves, no-random-clean variants, polished report figures, dense six-model attack panels, and summary plots.
-- `03_dense_six_model_attack_data/`: five dense six-model attack groups with sample manifests, attack-loss curves, summaries, and NPZ traces.
+- `03_dense_six_model_attack_data/`: six dense six-model attack groups with sample manifests, attack-loss curves, summaries, and NPZ traces, including `group05` selected for strongest `loss3` advantage.
 - `04_random_model_full_suite/`: random-clean/random-solver clean-loss, P2Q2 attack, Jacobian/SVD, and postprocess outputs.
 - `05_polished_report_data/`: CSV/JSON/log data backing the per-model polished reports.
 - `06_logs/`: postprocess and upload logs.
 - `07_source_code_and_references/`: relevant scripts and experiment notes.
 - `08_dense_image_only_bundle_full_copy/`: complete dense image-only bundle as
-  its own subfolder, with 20 PNGs under `comparison_dense/group00..group04`.
+  its own subfolder, with 24 PNGs under `comparison_dense/group00..group05`.
 
 Observed source roots:
 
@@ -48,5 +48,7 @@ R2 target prefix:
 
 R2 verification:
 
-- `rclone size --json` returned `{"count":600,"bytes":1363789188,"sizeless":0}`.
-- The sync log showed transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and the verified remote object count/byte size matches local `MANIFEST.json`.
+- `rclone size --json` returned `{"count":617,"bytes":1417514791,"sizeless":0}`.
+- The sync log again showed transient Cloudflare R2 `501 NotImplemented`
+  retries, but the final retry succeeded and the verified remote object
+  count/byte size matches local `MANIFEST.json`.

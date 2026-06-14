@@ -1,7 +1,9 @@
 # Burgers Solver7860 Dense Image-Only Bundle - 2026-06-14
 
 Status: generated the dense image-only comparison bundle for the latest random
-baselines, then refreshed it with both all-model and no-random-clean variants.
+baselines, refreshed it with both all-model and no-random-clean variants, then
+added a `group05` panel selected specifically for the clearest `loss3`
+advantage among the existing dense attack traces.
 
 Local artifacts:
 
@@ -24,7 +26,10 @@ What was recomputed:
 
 Image contents:
 
-- Five groups, each with one test sample and five generalization samples.
+- Six groups, each with one test sample and five generalization samples.
+  `group00` through `group04` are the original display groups. `group05` is a
+  curated loss3-best group selected from the 30 already attacked samples in
+  `group00` through `group04`.
 - All-model variant: six model columns, baseline e500, loss1 e8000, loss2
   e2000, loss3 e1000, random clean Y e8000, and random solver Y e7860.
 - No-random-clean variant: five model columns, baseline e500, loss1 e8000,
@@ -35,7 +40,32 @@ Image contents:
 - The bottom row contains per-sample attack loss progression curves for the
   models included in that variant.
 - Four PNGs per group were generated: all-model log-y, all-model linear-y,
-  no-random-clean log-y, and no-random-clean linear-y, for 20 PNGs total.
+  no-random-clean log-y, and no-random-clean linear-y, for 24 PNGs total.
+
+Group05 selection:
+
+- Selection script:
+  `tools/build_burgers_solver7860_loss3_best_group05_20260614.py`.
+- It did not rerun training or the old model attacks. It read the existing
+  `group00` through `group04` `six_model_attack_traces.npz` files.
+- A sample was eligible only if `loss3` was the strict winner for both final
+  attacked MSE and attack loss increase.
+- Eligible samples were ranked by the sum of `loss3`'s relative final-loss
+  margin and relative loss-increase margin versus the best non-loss3 model.
+- The resulting `group05` contains one test sample and five generalization
+  samples. The detailed ranking is in
+  `forensics/burgers_wideparam_loss123_randomsolver7860_clean8000_round00_p2q2_six_model_visuals_20260614/group05/source_group_loss3_advantage_ranking.csv`.
+
+Group05 selected samples:
+
+| new sample | source | split | descriptive dataset | best other final | loss3 final | best other increase | loss3 increase |
+|---|---|---|---|---:|---:|---:|---:|
+| S1 | group04/S1 | test | test Gaussian train-dist c=0.03 | 0.00159004 | 0.00124931 | 0.00158854 | 0.00122288 |
+| S2 | group01/S3 | generalization | Gaussian corr=0.009; range [-0.5,1.5]; centroid=10.5; TV=0.025 | 0.0102909 | 0.00366074 | 0.00980776 | 0.00335658 |
+| S3 | group02/S2 | generalization | Matern c=0.08, nu=2.5; range [-0.3,1.3]; centroid=6.0; TV=0.013 | 0.00319419 | 0.00134623 | 0.00314220 | 0.00131662 |
+| S4 | group00/S6 | generalization | Sawtooth freq=2; range [0.15,1.25]; centroid=8.1; TV=0.004 | 0.00701221 | 0.00291792 | 0.00640859 | 0.00289794 |
+| S5 | group00/S5 | generalization | Sine mix f=[7, 19, 43, 89], decay=0.15; range [0,1.5]; centroid=32.1; TV=0.064 | 0.00348057 | 0.00166014 | 0.00307695 | 0.00158509 |
+| S6 | group04/S2 | generalization | Matern c=0.04, nu=2.5; range [-0.3,1.3]; centroid=11.1; TV=0.023 | 0.00660930 | 0.00350358 | 0.00627372 | 0.00338262 |
 
 Visual-sample attack loss summary across all 30 samples:
 
@@ -59,10 +89,11 @@ R2 upload:
 
 Verification:
 
-- Local image-only bundle contains 20 PNG files and no non-PNG files.
-- R2 image-only bundle `rclone size --json` returned 20 files and 53,849,541 bytes.
-- R2 visualization mirror `rclone size --json` returned 20 files and 53,849,541 bytes.
-- R2 trace/data `rclone size --json` returned 21 files and 169,276,448 bytes.
+- Local image-only bundle contains 24 PNG files and no non-PNG files.
+- Local trace/data root contains 27 files.
+- R2 image-only bundle `rclone size --json` returned 24 files and 63,769,624 bytes.
+- R2 visualization mirror `rclone size --json` returned 24 files and 63,769,624 bytes.
+- R2 trace/data `rclone size --json` returned 27 files and 203,143,689 bytes.
 - R2 `lsf --recursive` includes directory markers in addition to PNGs; the
   object-count verification above is from `rclone size`.
 - The organized release also includes the full image-only bundle as
