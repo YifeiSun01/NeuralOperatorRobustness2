@@ -1,6 +1,6 @@
 # Burgers All-Metric Ranked Tables
 
-Generated: 2026-06-14T09:32:37+00:00
+Generated: 2026-06-14T09:42:10+00:00
 
 This report is generated from already completed Burgers solver7860/clean8000 audit tables. No training, attack, Jacobian, or SVD computation was rerun.
 
@@ -21,6 +21,7 @@ The complete machine-readable tables are in `data/ranked_metric_tables_20260614/
 - `data/ranked_metric_tables_20260614/metric_pairwise_correlations_sorted.csv`: 220 rows, 12 columns
 - `data/ranked_metric_tables_20260614/model_level_scalar_ranked.csv`: 306 rows, 15 columns
 - `data/ranked_metric_tables_20260614/per_sample_model_rank_similarity_summary.csv`: 10 rows, 8 columns
+- `data/ranked_metric_tables_20260614/random_partial_metric_coverage_notes.csv`: 9 rows, 7 columns
 - `data/ranked_metric_tables_20260614/robustness_25sample_metric_long_ranked.csv`: 8100 rows, 17 columns
 - `data/ranked_metric_tables_20260614/singular_values_top20_model_solver_reference.csv`: 3500 rows, 8 columns
 - `data/ranked_metric_tables_20260614/svd_error_top20_ranked_long.csv`: 3000 rows, 19 columns
@@ -1103,6 +1104,20 @@ _Showing 180 of 1013 rows; full CSV is in `data/ranked_metric_tables_20260614/`.
 | generalization_all_six_126 | bias_gradient_norm | solver_subspace_mismatch_top20_left | 126 | 0.7551 | 0.7729 | 0.7729 | 2.9460e-26 | 1.5467e-25 |
 
 _Showing 80 of 220 rows; full CSV is in `data/ranked_metric_tables_20260614/`._
+
+## Random-Model Partial Coverage Notes
+
+| metric_family | coverage_status | scope | ranked_outputs | note | action |
+| --- | --- | --- | --- | --- | --- |
+| random clean/solver error SVD top20 | available_and_recorded | six-model common comparison over the fixed 25 SVD/attack samples | svd_error_top20_ranked_long.csv; svd_error_topk_ranked_long.csv; metric_best_summary_ranked.csv | Common six-model SVD comparisons are complete through top20 for random_clean_y and random_solver_y. | Recorded; no rerun requested. |
+| random clean/solver error SVD top50/top100 | not_found_for_random_models | random_clean_y and random_solver_y | not included as six-model comparable top50/top100 rows | old4 models have top100 SVD artifacts, but the recovered random-model completed exports only provide top20 common SVD values/vectors. | Explicitly documented as not found; do not supplement or rerun. |
+| old4 error SVD top100 | available_as_prior_reference | baseline/loss1/loss2/loss3 historical old4 artifacts | singular_values_top20_model_solver_reference.csv plus recovered prior raw/reference folders | Top100 exists for old4/historical artifacts; it is not a six-model common random comparison because random top50/top100 was not found. | Recorded as prior/reference evidence only. |
+| random clean/solver J^T-error and bias-gradient norms | available_and_recorded | fixed 25 samples where recovered corrected J^T-error fields are present | robustness_25sample_metric_long_ranked.csv; metric_model_summary_ranked.csv; metric_best_summary_ranked.csv | Corrected J_error.T @ clean_error L2/RMS and bias-gradient norm/RMS are included where present for random_clean_y and random_solver_y. | Recorded; no rerun requested. |
+| random clean/solver direction similarity | available_partial_and_recorded | attack delta vs top error singular vector, SVD/outward, and available cosine/angle summaries | robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv | Available random-model direction/cosine metrics are recorded. Some old4-only outward/affine fields are absent for random models and remain documented as partial coverage. | Recorded available fields only. |
+| random clean/solver model-solver subspace similarity | available_and_recorded | top1/top5/top10/top20 model-solver subspace similarities on fixed 25 samples | robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; metric_best_summary_ranked.csv | The six-model common subspace comparisons are recorded through the recovered top20 random-model coverage. | Recorded; no rerun requested. |
+| random clean/solver old4-style affine/local-gain biased-direction sweep | not_found_for_random_models | random_clean_y and random_solver_y | old4/local available fields are included where present; no full random affine sweep table exists | Random models have J^T-error, SVD/outward, attack-delta direction, subspace, and correlation tables, but not the complete old4 affine/local-gain biased-direction sweep. | Explicitly documented as not found; do not supplement or rerun. |
+| 52-dataset clean and attack metrics | available_and_recorded | train/test plus 50 generalization datasets, six models | clean_52dataset_metric_long_ranked.csv; attack_52dataset_metric_long_ranked.csv; metric_best_summary_ranked.csv | RMSE, Relative L2, MSE, attack clean/final/loss-increase/delta summaries are fully included for the six model set. | Recorded. |
+| loss3-vs-other and best-vs-other statistical tests | available_and_recorded | paired by dataset/sample/rank where both compared models have values | metric_best_vs_other_significance_tests.csv; metric_loss3_vs_other_significance_tests.csv | Mean, std, n, paired t-test, one-sided better test, Wilcoxon, and BH-FDR q-values are recorded where paired sample counts are sufficient. | Recorded. |
 
 ## Coverage Audit
 

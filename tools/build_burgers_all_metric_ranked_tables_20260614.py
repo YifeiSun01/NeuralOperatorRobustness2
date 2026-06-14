@@ -749,6 +749,93 @@ def correlation_tables() -> dict[str, pd.DataFrame]:
     return outputs
 
 
+def coverage_note_table() -> pd.DataFrame:
+    rows = [
+        {
+            "metric_family": "random clean/solver error SVD top20",
+            "coverage_status": "available_and_recorded",
+            "source_evidence": "singular_values_top20_six_models_recovered_long.csv; robustness_25sample_six_models_selected_worktime.csv",
+            "ranked_outputs": "svd_error_top20_ranked_long.csv; svd_error_topk_ranked_long.csv; metric_best_summary_ranked.csv",
+            "scope": "six-model common comparison over the fixed 25 SVD/attack samples",
+            "note": "Common six-model SVD comparisons are complete through top20 for random_clean_y and random_solver_y.",
+            "action": "Recorded; no rerun requested.",
+        },
+        {
+            "metric_family": "random clean/solver error SVD top50/top100",
+            "coverage_status": "not_found_for_random_models",
+            "source_evidence": "missing_metric_coverage_audit.csv/json; recovered prior R2/local audit",
+            "ranked_outputs": "not included as six-model comparable top50/top100 rows",
+            "scope": "random_clean_y and random_solver_y",
+            "note": "old4 models have top100 SVD artifacts, but the recovered random-model completed exports only provide top20 common SVD values/vectors.",
+            "action": "Explicitly documented as not found; do not supplement or rerun.",
+        },
+        {
+            "metric_family": "old4 error SVD top100",
+            "coverage_status": "available_as_prior_reference",
+            "source_evidence": "recovered_prior/first_master_finalmodels_jacobian_svd_rep20_top100_20260608; historical_svd_attack25_reuse3",
+            "ranked_outputs": "singular_values_top20_model_solver_reference.csv plus recovered prior raw/reference folders",
+            "scope": "baseline/loss1/loss2/loss3 historical old4 artifacts",
+            "note": "Top100 exists for old4/historical artifacts; it is not a six-model common random comparison because random top50/top100 was not found.",
+            "action": "Recorded as prior/reference evidence only.",
+        },
+        {
+            "metric_family": "random clean/solver J^T-error and bias-gradient norms",
+            "coverage_status": "available_and_recorded",
+            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; model_level_metric_means_selected_worktime_25sample.csv",
+            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; metric_model_summary_ranked.csv; metric_best_summary_ranked.csv",
+            "scope": "fixed 25 samples where recovered corrected J^T-error fields are present",
+            "note": "Corrected J_error.T @ clean_error L2/RMS and bias-gradient norm/RMS are included where present for random_clean_y and random_solver_y.",
+            "action": "Recorded; no rerun requested.",
+        },
+        {
+            "metric_family": "random clean/solver direction similarity",
+            "coverage_status": "available_partial_and_recorded",
+            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; direction_angle_similarity_summary_corrected_jerrT_25sample.csv",
+            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv",
+            "scope": "attack delta vs top error singular vector, SVD/outward, and available cosine/angle summaries",
+            "note": "Available random-model direction/cosine metrics are recorded. Some old4-only outward/affine fields are absent for random models and remain documented as partial coverage.",
+            "action": "Recorded available fields only.",
+        },
+        {
+            "metric_family": "random clean/solver model-solver subspace similarity",
+            "coverage_status": "available_and_recorded",
+            "source_evidence": "robustness_25sample_six_models_selected_worktime.csv; subspace_similarity_summary_corrected_jerrT_25sample.csv",
+            "ranked_outputs": "robustness_25sample_metric_long_ranked.csv; model_level_scalar_ranked.csv; metric_best_summary_ranked.csv",
+            "scope": "top1/top5/top10/top20 model-solver subspace similarities on fixed 25 samples",
+            "note": "The six-model common subspace comparisons are recorded through the recovered top20 random-model coverage.",
+            "action": "Recorded; no rerun requested.",
+        },
+        {
+            "metric_family": "random clean/solver old4-style affine/local-gain biased-direction sweep",
+            "coverage_status": "not_found_for_random_models",
+            "source_evidence": "biased_local_direction/; recovered prior R2/local audit",
+            "ranked_outputs": "old4/local available fields are included where present; no full random affine sweep table exists",
+            "scope": "random_clean_y and random_solver_y",
+            "note": "Random models have J^T-error, SVD/outward, attack-delta direction, subspace, and correlation tables, but not the complete old4 affine/local-gain biased-direction sweep.",
+            "action": "Explicitly documented as not found; do not supplement or rerun.",
+        },
+        {
+            "metric_family": "52-dataset clean and attack metrics",
+            "coverage_status": "available_and_recorded",
+            "source_evidence": "clean_52dataset_six_models_selected_worktime.csv; attack_52dataset_six_models_recovered_full_long.csv",
+            "ranked_outputs": "clean_52dataset_metric_long_ranked.csv; attack_52dataset_metric_long_ranked.csv; metric_best_summary_ranked.csv",
+            "scope": "train/test plus 50 generalization datasets, six models",
+            "note": "RMSE, Relative L2, MSE, attack clean/final/loss-increase/delta summaries are fully included for the six model set.",
+            "action": "Recorded.",
+        },
+        {
+            "metric_family": "loss3-vs-other and best-vs-other statistical tests",
+            "coverage_status": "available_and_recorded",
+            "source_evidence": "generated from paired units in clean, attack, robustness, and SVD ranked tables",
+            "ranked_outputs": "metric_best_vs_other_significance_tests.csv; metric_loss3_vs_other_significance_tests.csv",
+            "scope": "paired by dataset/sample/rank where both compared models have values",
+            "note": "Mean, std, n, paired t-test, one-sided better test, Wilcoxon, and BH-FDR q-values are recorded where paired sample counts are sufficient.",
+            "action": "Recorded.",
+        },
+    ]
+    return pd.DataFrame(rows)
+
+
 def finalize_tests(best_tests: list[dict[str, object]], loss3_tests: list[dict[str, object]]) -> tuple[pd.DataFrame, pd.DataFrame]:
     best_df = pd.DataFrame(best_tests)
     loss3_df = pd.DataFrame(loss3_tests)
@@ -1008,6 +1095,18 @@ def render_report(
             )
         )
 
+    coverage_note = out_root() / "random_partial_metric_coverage_notes.csv"
+    if coverage_note.exists():
+        cov_note = read_csv(coverage_note)
+        lines.extend(["", "## Random-Model Partial Coverage Notes", ""])
+        lines.append(
+            markdown_table(
+                cov_note,
+                ["metric_family", "coverage_status", "scope", "ranked_outputs", "note", "action"],
+                max_rows=None,
+            )
+        )
+
     coverage = data_root() / "missing_metric_coverage_audit.csv"
     if coverage.exists():
         cov = read_csv(coverage)
@@ -1071,6 +1170,7 @@ def main() -> None:
     tables.update(model_level_tables())
     correlation_outputs = correlation_tables()
     tables.update(correlation_outputs)
+    tables["random_partial_metric_coverage_notes.csv"] = coverage_note_table()
 
     summary = pd.concat(summary_parts, ignore_index=True) if summary_parts else pd.DataFrame()
     best_df, loss3_df = finalize_tests(best_tests, loss3_tests)

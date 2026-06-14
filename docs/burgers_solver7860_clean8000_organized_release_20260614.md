@@ -9,7 +9,7 @@ Observed from `outputs/burgers_solver7860_clean8000_organized_release_20260614/M
 - Exact byte size: see `outputs/burgers_solver7860_clean8000_organized_release_20260614/MANIFEST.json` after each rebuild. This release includes its own docs and ledger, so the byte count changes slightly whenever those records are refreshed.
 - Missing expected inputs: `0`
 - Figure files: `194` PNG
-- Table/data files: `265` CSV, `770` JSON, `640` NPZ, `13` JSONL
+- Table/data files: `266` CSV, `770` JSON, `640` NPZ, `13` JSONL
 - Logs and code references: `40` log files, `10` Python scripts, `3` shell scripts
 
 Layered layout:
@@ -28,7 +28,7 @@ Layered layout:
 - `06_logs/`: postprocess and upload logs.
 - `07_source_code_and_references/`: relevant scripts and experiment notes.
 - `08_dense_image_only_bundle_full_copy/`: complete dense image-only bundle as its own subfolder, with 36 PNGs under `comparison_dense/group00..group05`.
-- `01_summary_tables/09_ranked_metric_tables_20260614/`: complete ranked CSV tables for clean 52-dataset metrics, 52-dataset attack metrics, 25-sample robustness/Jacobian/SVD metrics, top20/top-k error singular values, model-level scalar summaries, correlations, best-vs-other significance tests, and loss3-vs-other significance tests.
+- `01_summary_tables/09_ranked_metric_tables_20260614/`: complete ranked CSV tables for clean 52-dataset metrics, 52-dataset attack metrics, 25-sample robustness/Jacobian/SVD metrics, top20/top-k error singular values, model-level scalar summaries, correlations, best-vs-other significance tests, loss3-vs-other significance tests, and explicit random-model partial-coverage notes.
 - `00_start_here/burgers_all_metric_ranked_tables_20260614.md`: Markdown appendix with best models bolded, mean/std/n, runner-up gap, paired t-test/Wilcoxon p-values, and BH-FDR q-values.
 
 Recovered source roots now included:
@@ -61,7 +61,7 @@ Latest R2 verification after adding ranked metric tables:
 
 - Final audit output R2: `{"count":1732,"bytes":5203523912,"sizeless":0}`
 - Organized release R2: 1969 objects; exact bytes should be read from the current `MANIFEST.json` and the final `rclone size --json` verification after the last docs/ledger refresh.
-- Ranked tables under organized release R2: `15` CSV objects
+- Ranked tables under organized release R2: `16` CSV objects
 
 Coverage note:
 
