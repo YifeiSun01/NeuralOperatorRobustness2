@@ -475,6 +475,13 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--svd-method", choices=["full", "topk"], default="topk")
     ap.add_argument("--svd-top-k", type=int, default=20)
     ap.add_argument("--svd-solver", choices=["propack", "arpack", "lobpcg"], default="propack")
+    ap.add_argument(
+        "--model-spec",
+        action="append",
+        default=[],
+        metavar="NAME=PATH",
+        help="Override/add model checkpoint path. May be passed multiple times.",
+    )
     ap.add_argument("--burgers-nu", type=float, default=0.001)
     ap.add_argument("--burgers-t-final", type=float, default=1.0)
     ap.add_argument("--burgers-dt", type=float, default=0.001)
@@ -496,6 +503,16 @@ def main() -> int:
     preflight = gpu_preflight()
     write_json(args.out_root / "gpu_preflight.json", preflight)
     model_paths = {name: path.resolve() for name, path in MODEL_SPECS.items()}
+    if args.model_spec:
+        model_paths = {}
+        for spec in args.model_spec:
+            if "=" not in spec:
+                raise ValueError(f"--model-spec must be NAME=PATH, got {spec!r}")
+            name, raw_path = spec.split("=", 1)
+            name = name.strip()
+            if not name:
+                raise ValueError(f"empty model name in --model-spec {spec!r}")
+            model_paths[name] = Path(raw_path).expanduser().resolve()
     for label, path in model_paths.items():
         if not path.exists():
             raise FileNotFoundError(f"{label}: {path}")

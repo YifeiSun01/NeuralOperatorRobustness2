@@ -14272,3 +14272,13 @@ Follow-up launched:
   optimizer CSV files were growing, GPU memory was about `6056 MiB`, and no
   traceback appeared. Active monitoring was stopped and the background job is
   expected to continue.
+- User decision after launch: keep `random_clean_y` at epoch `8000`; do not
+  continue it to epoch `21100`. A sentinel directory was created at
+  `adversarial_training_runs/burgers_wideparam_random_field_clean_y_21100ep_continue_20260613/`
+  to prevent accidental clean-y continuation.
+- Added and started `tools/watch_burgers_solver7860_then_postprocess_20260614.sh`.
+  It waits for the solver-y epoch `7860` checkpoint, runs clean+attack
+  evaluation for `random_clean_y=8000` and `random_solver_y=7860`, rebuilds
+  selected summaries, regenerates audit/curve outputs with `--workclock-xmax
+  8.0`, and uploads outputs to R2 when credentials are present in the process
+  environment. It intentionally does not rerun SVD/Jacobian.

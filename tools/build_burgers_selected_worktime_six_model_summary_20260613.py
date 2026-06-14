@@ -584,6 +584,8 @@ def main() -> int:
     ap.add_argument("--random-root", type=Path, default=DEFAULT_RANDOM_ROOT)
     ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     ap.add_argument("--allow-incomplete", action="store_true")
+    ap.add_argument("--random-clean-checkpoint", default="adversarial_training_runs/burgers_wideparam_random_field_clean_y_8000ep_continue_20260613/burgers/checkpoints/burgers_epoch8000_step008000.pt")
+    ap.add_argument("--random-solver-checkpoint", default="adversarial_training_runs/burgers_wideparam_random_field_solver_y_6000ep_continue_20260613/burgers/checkpoints/burgers_epoch6000_step006000.pt")
     args = ap.parse_args()
     random_root = args.random_root.resolve()
     out_dir = args.out_dir.resolve()
@@ -601,8 +603,8 @@ def main() -> int:
         "old_summary": str(OLD_SUMMARY),
         "model_order": MODEL_ORDER,
         "selected_random_checkpoints": {
-            "random_clean_y": "adversarial_training_runs/burgers_wideparam_random_field_clean_y_8000ep_continue_20260613/burgers/checkpoints/burgers_epoch8000_step008000.pt",
-            "random_solver_y": "adversarial_training_runs/burgers_wideparam_random_field_solver_y_6000ep_continue_20260613/burgers/checkpoints/burgers_epoch6000_step006000.pt",
+            "random_clean_y": args.random_clean_checkpoint,
+            "random_solver_y": args.random_solver_checkpoint,
         },
     }
     (out_dir / "selected_model_versions.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")

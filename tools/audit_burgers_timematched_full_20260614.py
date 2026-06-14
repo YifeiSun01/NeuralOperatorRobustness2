@@ -71,6 +71,7 @@ RUN_DIRS = {
         REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_2000ep_20260612/burgers",
         REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_4000ep_continue_20260613/burgers",
         REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_6000ep_continue_20260613/burgers",
+        REPO / "adversarial_training_runs/burgers_wideparam_random_field_solver_y_7860ep_continue_20260613/burgers",
     ],
 }
 
@@ -248,10 +249,10 @@ def split_summary_curves(evals: pd.DataFrame) -> pd.DataFrame:
     return grouped
 
 
-def plot_split_curves(summary: pd.DataFrame, clean: pd.DataFrame, metric: str, x: str, out: Path) -> None:
+def plot_split_curves(summary: pd.DataFrame, clean: pd.DataFrame, metric: str, x: str, out: Path, workclock_xmax: float | None = None) -> None:
     split_order = ["train", "test", "generalization"]
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.3), sharey=False, constrained_layout=True)
-    xmax_common = float(summary.groupby("model")["work_clock_hours"].max().min())
+    xmax_common = float(workclock_xmax) if workclock_xmax is not None else float(summary.groupby("model")["work_clock_hours"].max().min())
     baseline_values = baseline_split_values(clean, metric)
     for ax, split in zip(axes, split_order, strict=True):
         for model in TRAINED_MODELS:
@@ -272,11 +273,11 @@ def plot_split_curves(summary: pd.DataFrame, clean: pd.DataFrame, metric: str, x
     plt.close(fig)
 
 
-def plot_generalization_grid(evals: pd.DataFrame, clean: pd.DataFrame, metric: str, x: str, part: int, out: Path) -> None:
+def plot_generalization_grid(evals: pd.DataFrame, clean: pd.DataFrame, metric: str, x: str, part: int, out: Path, workclock_xmax: float | None = None) -> None:
     gen_ids = list(clean.loc[clean["split"] == "generalization", "dataset_id"].astype(str))
     selected = gen_ids[:25] if part == 1 else gen_ids[25:50]
     baseline = baseline_dataset_values(clean, metric)
-    xmax_common = float(evals.groupby("model")["work_clock_hours"].max().min())
+    xmax_common = float(workclock_xmax) if workclock_xmax is not None else float(evals.groupby("model")["work_clock_hours"].max().min())
     fig, axes = plt.subplots(5, 5, figsize=(17.5, 13.2), constrained_layout=True)
     for ax, dataset_id in zip(axes.ravel(), selected, strict=True):
         for model in TRAINED_MODELS:
@@ -461,6 +462,7 @@ def write_markdown_report(dirs: OutputDirs, summary: dict[str, object], audit: d
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--workclock-xmax", type=float, default=None)
     args = parser.parse_args()
 
     dirs = make_output_dirs(args.out)
@@ -491,16 +493,16 @@ def main() -> None:
     for metric in ["rmse", "relative_l2"]:
         target = dirs.figures / f"{metric}_epoch_train_test_generalization_mean.png"
         if not target.exists():
-            plot_split_curves(split_curves, clean, metric, "epoch", target)
+            plot_split_curves(split_curves, clean, metric, "epoch", target, args.workclock_xmax)
         target = dirs.figures / f"{metric}_workclock_train_test_generalization_mean.png"
         if not target.exists():
-            plot_split_curves(split_curves, clean, metric, "work_clock_hours", target)
+            plot_split_curves(split_curves, clean, metric, "work_clock_hours", target, args.workclock_xmax)
         for x in ["epoch", "work_clock_hours"]:
             for part in [1, 2]:
                 suffix = "workclock" if x == "work_clock_hours" else "epoch"
                 target = dirs.figures / f"{metric}_{suffix}_generalization_25of50_part{part}.png"
                 if not target.exists():
-                    plot_generalization_grid(evals, clean, metric, x, part, target)
+                    plot_generalization_grid(evals, clean, metric, x, part, target, args.workclock_xmax)
 
     summary = summarize_final_metrics(clean, attack, robust, corr)
     (dirs.data / "final_metric_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
