@@ -100,6 +100,8 @@ def make_output_dirs(root: Path) -> OutputDirs:
     for path in dirs.__dict__.values():
         path.mkdir(parents=True, exist_ok=True)
     (dirs.figures / "no_random_clean").mkdir(parents=True, exist_ok=True)
+    (dirs.figures / "log_y").mkdir(parents=True, exist_ok=True)
+    (dirs.figures / "log_y" / "no_random_clean").mkdir(parents=True, exist_ok=True)
     return dirs
 
 
@@ -290,6 +292,7 @@ def plot_split_curves(
     out: Path,
     wallclock_xmax: float | None = None,
     plot_models: list[str] | None = None,
+    log_y: bool = False,
 ) -> None:
     plot_models = plot_models or TRAINED_MODELS
     split_order = ["train", "test", "generalization"]
@@ -305,15 +308,18 @@ def plot_split_curves(
         ax.axhline(baseline_values[split], color=MODEL_COLORS["baseline"], ls="--", lw=1.35, alpha=0.78, label=MODEL_LABELS["baseline"])
         ax.set_title(split)
         ax.set_xlabel("wall-clock time (hours)" if x == "work_clock_hours" else "epoch")
-        ax.set_ylabel(metric.replace("_", " "))
-        ax.grid(alpha=0.25, lw=0.7)
+        ax.set_ylabel(f"{metric.replace('_', ' ')}{' (log scale)' if log_y else ''}")
+        if log_y:
+            ax.set_yscale("log")
+        ax.grid(alpha=0.25, lw=0.7, which="both")
         if x == "work_clock_hours":
             ax.set_xlim(0, xmax_common)
     handles = [plt.Line2D([], [], color=MODEL_COLORS[m], lw=2.4, alpha=0.8, ls="--" if m == "baseline" else "-") for m in ["baseline", *plot_models]]
     labels = [MODEL_LABELS[m] for m in ["baseline", *plot_models]]
     fig.legend(handles, labels, loc="outside lower center", ncol=min(6, len(labels)), frameon=False, fontsize=12)
     suffix = " without random clean" if "random_clean_y" not in plot_models else ""
-    fig.suptitle(f"Burgers selected-time {metric.replace('_', ' ')}{suffix}", fontsize=14, weight="bold")
+    scale_suffix = " log-y" if log_y else ""
+    fig.suptitle(f"Burgers selected-time {metric.replace('_', ' ')}{suffix}{scale_suffix}", fontsize=14, weight="bold")
     fig.savefig(out, dpi=220)
     plt.close(fig)
 
@@ -328,6 +334,7 @@ def plot_generalization_grid(
     wallclock_xmax: float | None = None,
     plot_models: list[str] | None = None,
     dataset_labels: dict[str, str] | None = None,
+    log_y: bool = False,
 ) -> None:
     plot_models = plot_models or TRAINED_MODELS
     dataset_labels = dataset_labels or {}
@@ -344,7 +351,9 @@ def plot_generalization_grid(
             ax.plot(df[x], df[metric], lw=1.05, color=MODEL_COLORS[model], alpha=0.66)
         ax.axhline(baseline[dataset_id], color=MODEL_COLORS["baseline"], ls="--", lw=0.95, alpha=0.74)
         ax.set_title(wrapped_dataset_label(dataset_id, dataset_labels), fontsize=8.2)
-        ax.grid(alpha=0.22, lw=0.6)
+        if log_y:
+            ax.set_yscale("log")
+        ax.grid(alpha=0.22, lw=0.6, which="both")
         ax.tick_params(labelsize=7)
         if x == "work_clock_hours":
             ax.set_xlim(0, xmax_common)
@@ -352,8 +361,9 @@ def plot_generalization_grid(
     labels = [MODEL_LABELS[m] for m in ["baseline", *plot_models]]
     fig.legend(handles, labels, loc="outside lower center", ncol=min(6, len(labels)), frameon=False, fontsize=12)
     suffix = " without random clean" if "random_clean_y" not in plot_models else ""
+    scale_suffix = " log-y" if log_y else ""
     fig.suptitle(
-        f"Burgers 50 generalization datasets part {part}: {metric.replace('_', ' ')}{suffix} vs "
+        f"Burgers 50 generalization datasets part {part}: {metric.replace('_', ' ')}{suffix}{scale_suffix} vs "
         f"{'wall-clock time' if x == 'work_clock_hours' else 'epoch'}",
         fontsize=14,
         weight="bold",
@@ -576,6 +586,7 @@ def main() -> None:
         "wallclock_plot_xmax_hours": float(args.workclock_xmax) if args.workclock_xmax is not None else common_hours,
         "wallclock_plot_xmax_source": "explicit_arg" if args.workclock_xmax is not None else "minimum_final_logged_wall_clock",
         "curve_smoothing": "none_raw_evaluation_points",
+        "log_y_curve_sets": ["figures/log_y", "figures/log_y/no_random_clean"],
         "curve_alpha": {"trained_lines": 0.72, "generalization_grid_lines": 0.66, "baseline_reference": 0.74},
         "dataset_label_source": rel(GEN_MANIFEST),
         "descriptive_dataset_labels_loaded": len(dataset_labels),
@@ -586,20 +597,22 @@ def main() -> None:
     (dirs.manifests / "audit_manifest.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")
 
     curve_sets = [
-        ("", TRAINED_MODELS, dirs.figures),
-        ("_no_random_clean", [m for m in TRAINED_MODELS if m != "random_clean_y"], dirs.figures / "no_random_clean"),
+        ("", TRAINED_MODELS, dirs.figures, False),
+        ("_no_random_clean", [m for m in TRAINED_MODELS if m != "random_clean_y"], dirs.figures / "no_random_clean", False),
+        ("_logy", TRAINED_MODELS, dirs.figures / "log_y", True),
+        ("_no_random_clean_logy", [m for m in TRAINED_MODELS if m != "random_clean_y"], dirs.figures / "log_y" / "no_random_clean", True),
     ]
     for metric in ["rmse", "relative_l2"]:
-        for file_suffix, plot_models, figure_dir in curve_sets:
+        for file_suffix, plot_models, figure_dir, log_y in curve_sets:
             target = figure_dir / f"{metric}_epoch_train_test_generalization_mean{file_suffix}.png"
-            plot_split_curves(split_curves, clean, metric, "epoch", target, args.workclock_xmax, plot_models)
+            plot_split_curves(split_curves, clean, metric, "epoch", target, args.workclock_xmax, plot_models, log_y=log_y)
             target = figure_dir / f"{metric}_wallclock_train_test_generalization_mean{file_suffix}.png"
-            plot_split_curves(split_curves, clean, metric, "work_clock_hours", target, args.workclock_xmax, plot_models)
+            plot_split_curves(split_curves, clean, metric, "work_clock_hours", target, args.workclock_xmax, plot_models, log_y=log_y)
             for x in ["epoch", "work_clock_hours"]:
                 for part in [1, 2]:
                     suffix = "wallclock" if x == "work_clock_hours" else "epoch"
                     target = figure_dir / f"{metric}_{suffix}_generalization_25of50_part{part}{file_suffix}.png"
-                    plot_generalization_grid(evals, clean, metric, x, part, target, args.workclock_xmax, plot_models, dataset_labels)
+                    plot_generalization_grid(evals, clean, metric, x, part, target, args.workclock_xmax, plot_models, dataset_labels, log_y=log_y)
 
     summary = summarize_final_metrics(clean, attack, robust, corr)
     (dirs.data / "final_metric_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")

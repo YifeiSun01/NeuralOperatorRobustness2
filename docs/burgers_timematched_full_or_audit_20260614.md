@@ -122,5 +122,9 @@ Plot refresh after final postprocess:
 - Increased legend size and made curve lines partially transparent.
 - Added a second figure set under `figures/no_random_clean/` that excludes
   `random_clean_y` so the other methods are not visually compressed.
+- Added log-y copies under `figures/log_y/` and
+  `figures/log_y/no_random_clean/`; these keep the same raw evaluation points,
+  descriptive dataset titles, wall-clock 8h x-axis cap, transparency, and
+  enlarged legends.
 - Synced the refreshed output bundle to R2 and removed stale `workclock` files
   from the remote output prefix.

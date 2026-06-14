@@ -14300,3 +14300,14 @@ Updates:
 - Increased legend size and added line transparency.
 - Added `figures/no_random_clean/` with the same RMSE/Relative-L2 epoch and wall-clock figures excluding `random_clean_y`.
 - R2 sync completed for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_solver7860_clean8000_audit_20260614`; remote listing showed 24 PNGs, 12 no-random-clean PNGs, and 0 stale `workclock`/`work_clock` files.
+
+## 2026-06-14 - Burgers solver7860/clean8000 log-y plot refresh
+
+Status: added log-y copies of the final Burgers audit curves and re-synced the output bundle.
+
+Updates:
+- Rebuilt `outputs/burgers_timematched_solver7860_clean8000_audit_20260614` with 48 PNG figures total.
+- Added `figures/log_y/` with all-model log-scale-y RMSE/Relative-L2 epoch and wall-clock figures.
+- Added `figures/log_y/no_random_clean/` with the same log-scale-y figures excluding `random_clean_y`.
+- Log-y plots preserve raw evaluation points only, descriptive dataset titles, enlarged legends, transparent lines, and the explicit 8.0 hour wall-clock x-axis cap.
+- R2 sync completed for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_solver7860_clean8000_audit_20260614`; remote listing showed 48 PNGs, 24 log-y PNGs, and 12 log-y no-random-clean PNGs.
