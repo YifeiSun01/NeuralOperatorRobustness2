@@ -47,11 +47,13 @@ class Organizer:
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
         stat = dst.stat()
+        dst_rel = rel(dst, self.out)
+        self.entries = [entry for entry in self.entries if entry["path"] != dst_rel]
         self.entries.append(
             {
                 "category": category,
                 "source": rel(src, self.root),
-                "path": rel(dst, self.out),
+                "path": dst_rel,
                 "bytes": stat.st_size,
                 "suffix": dst.suffix.lower() or "<none>",
             }
@@ -154,6 +156,7 @@ class Organizer:
             "- `06_logs/`: postprocess and R2 sync logs.",
             "- `07_source_code_and_references/`: scripts and docs that produced or describe the release.",
             "- `08_dense_image_only_bundle_full_copy/`: full copy of the dense image-only bundle as its own subfolder.",
+            "- `09_ranked_metric_tables/`: comprehensive best-model/rank/significance tables for clean, attack, robustness, SVD, similarity, and correlations.",
             "",
             "Recovered prior artifacts are included without rerunning compute. The largest recovered items are old4 SVD25 raw payloads, old4 52-dataset P2Q2 attack raw payloads, six-model corrected metric/correlation summaries, current random solver7860/clean8000 raw attack/SVD outputs, and historical random selected-worktime/final-model raw suites.",
             "",
@@ -330,6 +333,9 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "docs" / "burgers_solver7860_dense_image_only_bundle_20260614.md",
         root / "docs" / "burgers_solver7860_polished_reports_20260614.md",
         root / "docs" / "burgers_solver7860_clean8000_organized_release_20260614.md",
+        root / "docs" / "burgers_all_metric_ranked_tables_20260614.md",
+        audit / "reports" / "burgers_all_metric_ranked_tables_20260614.md",
+        audit / "manifests" / "ranked_metric_tables_manifest_20260614.json",
     ]:
         org.copy_file(src, start / src.name, "start_here_reports")
 
@@ -422,6 +428,12 @@ def build_release(root: Path, out: Path) -> Organizer:
             "recovered_prior_full_artifacts",
         )
 
+    org.copy_tree(
+        audit / "data" / "ranked_metric_tables_20260614",
+        table_root / "09_ranked_metric_tables_20260614",
+        "ranked_metric_tables",
+    )
+
     # 02: figures.
     fig_root = audit / "figures"
     org.copy_files(fig_root.glob("*.png"), out / "02_figures" / "01_training_curves_linear" / "all_models", "training_curve_figures")
@@ -486,6 +498,7 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "tools" / "render_burgers_solver7860_loss123_only_dense_20260614.py",
         root / "tools" / "build_burgers_solver7860_loss3_best_group05_20260614.py",
         root / "tools" / "recover_burgers_prior_metrics_into_solver7860_audit_20260614.py",
+        root / "tools" / "build_burgers_all_metric_ranked_tables_20260614.py",
         root / "tools" / "run_burgers_random_field_final_models_full_suite_20260613.sh",
         root / "tools" / "run_burgers_timematched_strict_random_continuations_20260614.sh",
         root / "tools" / "watch_burgers_solver7860_then_postprocess_20260614.sh",
