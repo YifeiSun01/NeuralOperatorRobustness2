@@ -39,6 +39,92 @@ class MetricSpec:
     metric: str
     metric_label: str
     direction: str
+    metric_role: str = ""
+
+
+EVIDENCE_ROLES = {
+    "clean_accuracy_evidence",
+    "attack_outcome_evidence",
+    "clean_residual_evidence",
+    "error_gradient_evidence",
+    "error_operator_evidence",
+    "local_response_evidence",
+    "local_similarity_evidence",
+}
+
+
+METRIC_ROLE_DEFINITIONS = [
+    {
+        "metric_role": "clean_accuracy_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Clean model-vs-solver error metrics such as RMSE, Relative L2, and MSE.",
+    },
+    {
+        "metric_role": "attack_outcome_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Attack outcome losses such as final MSE and loss increase; source/protocol caveats still apply.",
+    },
+    {
+        "metric_role": "clean_residual_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Clean residual size ||model(x)-solver(x)|| or its MSE/RMS variants.",
+    },
+    {
+        "metric_role": "error_gradient_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Local error-gradient size, e.g. ||J_error^T e|| with e=model(x)-solver(x).",
+    },
+    {
+        "metric_role": "error_operator_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Magnitude of the local error operator J_model-J_solver, such as error singular values, spectral norm, or Frobenius norm.",
+    },
+    {
+        "metric_role": "local_response_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Finite-epsilon local response/loss under a named diagnostic direction, reported as MSE or linear/quadratic MSE.",
+    },
+    {
+        "metric_role": "local_similarity_evidence",
+        "counts_as_evidence": True,
+        "meaning": "Direct model-solver local feature/subspace similarity, such as top-k model-solver singular subspace cosine.",
+    },
+    {
+        "metric_role": "direction_alignment_diagnostic",
+        "counts_as_evidence": False,
+        "meaning": "Cosine/angle between attack delta and diagnostic directions, or between diagnostic directions. It describes mechanism alignment, not model-solver closeness by itself.",
+    },
+    {
+        "metric_role": "constraint_process",
+        "counts_as_evidence": False,
+        "meaning": "Attack perturbation budget/process quantities such as delta L2/RMS. These are constrained by the attack protocol and should not be used as model quality evidence.",
+    },
+    {
+        "metric_role": "operator_scale_not_error",
+        "counts_as_evidence": False,
+        "meaning": "Model-only or solver-only operator scale, such as model_spectral_norm or solver_spectral_norm. It is not a model-solver error/closeness metric.",
+    },
+    {
+        "metric_role": "directional_response_diagnostic",
+        "counts_as_evidence": False,
+        "meaning": "Error-Jacobian response to the already chosen attack delta, e.g. ||J_error delta||. Useful for mechanism checks, not a standalone closeness metric.",
+    },
+    {
+        "metric_role": "spectrum_shape_diagnostic",
+        "counts_as_evidence": False,
+        "meaning": "Shape-only quantities such as effective rank. They do not directly say the model is closer to the solver.",
+    },
+    {
+        "metric_role": "ratio_diagnostic",
+        "counts_as_evidence": False,
+        "meaning": "Ratios between diagnostic gains/directions. These explain mechanism, not absolute closeness.",
+    },
+    {
+        "metric_role": "diagnostic_only",
+        "counts_as_evidence": False,
+        "meaning": "Recorded diagnostic quantity that should not be counted as evidence for which model is better.",
+    },
+]
 
 
 def repo_root() -> Path:
@@ -141,6 +227,80 @@ def infer_direction(metric: str) -> str:
     return "lower"
 
 
+def classify_metric_role(family: str, scope: str, metric: str, source_table: str = "") -> str:
+    """Classify whether a metric is evidence or only a diagnostic/process quantity."""
+    name = metric.lower()
+    fam = family.lower()
+
+    if "j_error_delta" in name:
+        return "directional_response_diagnostic"
+
+    if name in {"model_spectral_norm", "solver_spectral_norm"}:
+        return "operator_scale_not_error"
+    if name.endswith("_model_spectral_norm") or name.endswith("_solver_spectral_norm"):
+        return "operator_scale_not_error"
+
+    if (
+        name in {"delta_l2", "delta_rms", "attack_final_delta_rms", "final_delta_rms_mean"}
+        or name.endswith("_delta_l2")
+        or name.endswith("_delta_rms")
+        or "final_delta" in name
+    ):
+        return "constraint_process"
+
+    if "effective_rank" in name:
+        return "spectrum_shape_diagnostic"
+
+    if name.endswith("_ratio") or "_ratio_" in name:
+        return "ratio_diagnostic"
+
+    if "model_solver" in name and ("subspace" in name or "abs_cos" in name or "mean_cos" in name):
+        return "local_similarity_evidence"
+
+    if "abs_cos" in name or "angle" in name or name.endswith("_cos") or "cosine" in name:
+        return "direction_alignment_diagnostic"
+
+    if fam == "clean_generalization":
+        return "clean_accuracy_evidence"
+
+    if fam == "attack_robustness_52dataset":
+        if name in {"initial_loss_mean", "final_loss_mean", "attack_loss_increase_mean"}:
+            return "attack_outcome_evidence"
+        return "diagnostic_only"
+
+    if name in {"attack_initial_mse", "attack_final_mse", "attack_loss_increase"}:
+        return "attack_outcome_evidence"
+
+    if "clean_residual" in name:
+        return "clean_residual_evidence"
+
+    if (
+        name in {"atb_norm", "bias_gradient_norm", "bias_gradient_rms"}
+        or "j_error_transpose_error" in name
+        or "bias_gradient" in name
+    ):
+        return "error_gradient_evidence"
+
+    if (
+        "error_singular_value" in name
+        or "singular_values_top" in name
+        or name in {"top_error_singular_value", "top_error_sv_value"}
+        or name.startswith("top_error_singular")
+        or "error_spectral_norm" in name
+        or "error_fro_norm" in name
+    ):
+        return "error_operator_evidence"
+
+    if "local_gain" in name and ("mse" in name or "linear" in name or "quadratic" in name):
+        return "local_response_evidence"
+
+    return "diagnostic_only"
+
+
+def metric_counts_as_evidence(role: str) -> bool:
+    return role in EVIDENCE_ROLES
+
+
 def is_better_sort_ascending(direction: str) -> bool:
     return direction != "higher"
 
@@ -182,6 +342,19 @@ def model_sort_key(model: str) -> int:
 
 def ordered_models(models: Iterable[str]) -> list[str]:
     return sorted({str(m) for m in models if str(m) in MODEL_INDEX}, key=model_sort_key)
+
+
+def classify_model_coverage(models: Iterable[str]) -> str:
+    valid = {str(model) for model in models if str(model) in MODEL_INDEX}
+    if valid == set(MODEL_ORDER):
+        return "six_model_common"
+    if valid == set(MODEL_ORDER[:4]):
+        return "old4_only"
+    if valid == set(MODEL_ORDER[4:]):
+        return "random_only"
+    if "loss3" in valid and len(valid) >= 2:
+        return "partial_with_loss3"
+    return "partial_without_loss3"
 
 
 def descriptive_stats(values: pd.Series) -> dict[str, float | int]:
@@ -300,12 +473,29 @@ def summarize_metric(
     tidy: pd.DataFrame,
     spec: MetricSpec,
 ) -> tuple[pd.DataFrame, list[dict[str, object]], list[dict[str, object]]]:
+    metric_role = spec.metric_role or classify_metric_role(spec.family, spec.scope, spec.metric, spec.source_table)
+    counts_as_evidence = metric_counts_as_evidence(metric_role)
+    spec_meta = {
+        **spec.__dict__,
+        "metric_role": metric_role,
+        "counts_as_evidence": counts_as_evidence,
+    }
     work = tidy[tidy["model"].isin(MODEL_ORDER)].copy()
     work["value"] = pd.to_numeric(work["value"], errors="coerce")
     work = work.dropna(subset=["unit_id", "model", "value"])
     models = ordered_models(work["model"])
     if not models:
         return pd.DataFrame(), [], []
+    model_coverage_class = classify_model_coverage(models)
+    available_models = ",".join(models)
+    counts_in_six_model_evidence_claim = counts_as_evidence and model_coverage_class == "six_model_common"
+    spec_meta.update(
+        {
+            "model_coverage_class": model_coverage_class,
+            "available_models": available_models,
+            "counts_in_six_model_evidence_claim": counts_in_six_model_evidence_claim,
+        }
+    )
 
     rows: list[dict[str, object]] = []
     for model in models:
@@ -318,6 +508,11 @@ def summarize_metric(
                 "metric": spec.metric,
                 "metric_label": spec.metric_label,
                 "direction": spec.direction,
+                "metric_role": metric_role,
+                "counts_as_evidence": counts_as_evidence,
+                "model_coverage_class": model_coverage_class,
+                "available_models": available_models,
+                "counts_in_six_model_evidence_claim": counts_in_six_model_evidence_claim,
                 "model": model,
                 "model_order": model_sort_key(model),
                 **stats_row,
@@ -353,14 +548,14 @@ def summarize_metric(
         if other == best_model or other not in pivot or best_model not in pivot:
             continue
         rec = paired_test(pivot, best_model, other, spec.direction, "best_vs_other")
-        rec.update(spec.__dict__)
+        rec.update(spec_meta)
         best_tests.append(rec)
     if "loss3" in models and "loss3" in pivot:
         for other in models:
             if other == "loss3" or other not in pivot:
                 continue
             rec = paired_test(pivot, "loss3", other, spec.direction, "loss3_vs_other")
-            rec.update(spec.__dict__)
+            rec.update(spec_meta)
             rec["loss3_is_mean_best"] = best_model == "loss3"
             loss3_tests.append(rec)
     return summary, best_tests, loss3_tests
@@ -410,6 +605,12 @@ def clean_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, o
                 rows.append(rec)
     long = pd.DataFrame(rows)
     long["unit_id"] = long["dataset_order"].astype(str)
+    long["family"] = "clean_generalization"
+    long["metric_role"] = [
+        classify_metric_role("clean_generalization", "per_dataset", str(metric), path.name)
+        for metric in long["metric"]
+    ]
+    long["counts_as_evidence"] = long["metric_role"].map(metric_counts_as_evidence)
     ranked = rank_unit_table(long, ["dataset_order", "metric"])
 
     for metric, label in metric_map.items():
@@ -476,6 +677,12 @@ def attack_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, 
             rows.append(rec)
     long = pd.DataFrame(rows)
     long["unit_id"] = long["dataset_order"].astype(str)
+    long["family"] = "attack_robustness_52dataset"
+    long["metric_role"] = [
+        classify_metric_role("attack_robustness_52dataset", "per_dataset", str(metric), path.name)
+        for metric in long["metric"]
+    ]
+    long["counts_as_evidence"] = long["metric_role"].map(metric_counts_as_evidence)
     ranked = rank_unit_table(long, ["dataset_order", "metric"])
 
     for metric, label in metric_map.items():
@@ -539,6 +746,12 @@ def robustness_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[s
             rows.append(rec)
     long = pd.DataFrame(rows)
     long["unit_id"] = long["sample_id"].astype(str)
+    long["family"] = "robustness_svd_jacobian_25sample"
+    long["metric_role"] = [
+        classify_metric_role("robustness_svd_jacobian_25sample", "per_sample", str(metric), path.name)
+        for metric in long["metric"]
+    ]
+    long["counts_as_evidence"] = long["metric_role"].map(metric_counts_as_evidence)
     ranked = rank_unit_table(long, ["sample_id", "metric"])
 
     for metric in metric_cols:
@@ -570,6 +783,9 @@ def svd_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, obj
     error["metric"] = "error_singular_value"
     error["metric_label"] = "Error Jacobian singular value"
     error["direction"] = "lower"
+    error["family"] = "svd_error_spectrum"
+    error["metric_role"] = "error_operator_evidence"
+    error["counts_as_evidence"] = True
     error["value"] = pd.to_numeric(error["singular_value"], errors="coerce")
     error["unit_id"] = error["sample_id"].astype(str) + ":rank" + error["singular_rank"].astype(str).str.zfill(2)
     ranked = rank_unit_table(error, ["sample_id", "singular_rank", "metric"])
@@ -615,6 +831,9 @@ def svd_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, obj
                     "metric": f"error_singular_values_top{k:02d}_mean",
                     "metric_label": f"Mean of error singular values top {k}",
                     "direction": "lower",
+                    "family": "svd_error_spectrum",
+                    "metric_role": "error_operator_evidence",
+                    "counts_as_evidence": True,
                     "value": float(np.nanmean(head)) if len(head) else math.nan,
                     "source_table": path.name,
                     "unit_id": str(sample_id),
@@ -630,6 +849,9 @@ def svd_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[str, obj
                     "metric": f"error_singular_values_top{k:02d}_l2",
                     "metric_label": f"L2 norm of error singular values top {k}",
                     "direction": "lower",
+                    "family": "svd_error_spectrum",
+                    "metric_role": "error_operator_evidence",
+                    "counts_as_evidence": True,
                     "value": float(np.sqrt(np.nansum(head * head))) if len(head) else math.nan,
                     "source_table": path.name,
                     "unit_id": str(sample_id),
@@ -702,6 +924,9 @@ def supplement_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[s
         top100 = read_csv(top100_long_path)
         top100["unit_id"] = top100["sample_id"].astype(str) + ":rank" + top100["singular_rank"].astype(str).str.zfill(3)
         top100 = top100[top100["model"].isin(MODEL_ORDER)].copy()
+        top100["family"] = "svd_error_spectrum_top100_supplement"
+        top100["metric_role"] = "error_operator_evidence"
+        top100["counts_as_evidence"] = True
         outputs["svd_error_top100_supplement_ranked_long.csv"] = top100
         add_summary(
             summary_parts,
@@ -721,6 +946,9 @@ def supplement_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[s
         topk = read_csv(topk_path)
         topk["unit_id"] = topk["sample_id"].astype(str)
         topk = topk[topk["model"].isin(MODEL_ORDER)].copy()
+        topk["family"] = "svd_error_spectrum_top100_supplement"
+        topk["metric_role"] = "error_operator_evidence"
+        topk["counts_as_evidence"] = True
         outputs["svd_error_topk_top100_supplement_ranked_long.csv"] = topk
         for metric, metric_df in topk.groupby("metric"):
             label = str(metric_df["metric_label"].iloc[0])
@@ -742,6 +970,9 @@ def supplement_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[s
         subspace = read_csv(subspace_path)
         subspace["unit_id"] = subspace["sample_id"].astype(str)
         subspace = subspace[subspace["model"].isin(MODEL_ORDER)].copy()
+        subspace["family"] = "model_solver_subspace_top100_supplement"
+        subspace["metric_role"] = "local_similarity_evidence"
+        subspace["counts_as_evidence"] = True
         outputs["model_solver_subspace_top100_supplement_ranked_long.csv"] = subspace
         for metric, metric_df in subspace.groupby("metric"):
             label = str(metric_df["metric_label"].iloc[0])
@@ -776,13 +1007,16 @@ def supplement_tables(summary_parts: list[pd.DataFrame], best_tests: list[dict[s
                 rec.update(
                     {
                         "source_table": "random_affine_direction_supplement_20260614/random_affine_direction_metrics.csv",
+                        "family": "random_affine_direction_supplement",
                         "metric": metric,
                         "metric_label": metric,
                         "direction": infer_direction(metric),
+                        "metric_role": classify_metric_role("random_affine_direction_supplement", "random_affine_25sample", metric, "random_affine_direction_supplement_20260614/random_affine_direction_metrics.csv"),
                         "model": model,
                         "value": row.get(metric, np.nan),
                     }
                 )
+                rec["counts_as_evidence"] = metric_counts_as_evidence(str(rec["metric_role"]))
                 rows.append(rec)
         affine_long = pd.DataFrame(rows)
         if not affine_long.empty:
@@ -826,6 +1060,7 @@ def model_level_tables() -> dict[str, pd.DataFrame]:
             if col in {"n", "sample_count"}:
                 continue
             direction = infer_direction(col)
+            metric_role = classify_metric_role("model_level_scalar_summaries", "model_level", col, str(path.relative_to(data_root())))
             for _, row in df.iterrows():
                 model = str(row.get("model", ""))
                 if model not in MODEL_INDEX:
@@ -837,6 +1072,8 @@ def model_level_tables() -> dict[str, pd.DataFrame]:
                         "metric": col,
                         "metric_label": col,
                         "direction": direction,
+                        "metric_role": metric_role,
+                        "counts_as_evidence": metric_counts_as_evidence(metric_role),
                         "model": model,
                         "value": row.get(col, np.nan),
                         "reported_n": row.get("n", row.get("sample_count", np.nan)),
@@ -1074,6 +1311,11 @@ def metric_best_table(summary: pd.DataFrame) -> pd.DataFrame:
         "metric",
         "metric_label",
         "direction",
+        "metric_role",
+        "counts_as_evidence",
+        "model_coverage_class",
+        "available_models",
+        "counts_in_six_model_evidence_claim",
         "best_model",
         "n",
         "mean",
@@ -1141,7 +1383,7 @@ def render_report(
             "",
             "This report is generated from already completed Burgers solver7860/clean8000 audit tables. No training, attack, Jacobian, or SVD computation was rerun.",
             "",
-            "Ranking convention: lower is better for errors, losses, norms, angles, perturbation sizes, local gains, and error singular values. Higher is better for cosine and subspace similarity metrics. Correlation tables are sorted by absolute Spearman/Pearson strength and are not treated as model-quality rankings.",
+            "Ranking convention: each row is tagged with `metric_role`, `model_coverage_class`, `counts_as_evidence`, and `counts_in_six_model_evidence_claim`. Clean errors, attack outcome losses, clean residuals, error-gradient norms, error-operator norms/singular values, local-response MSE, and direct model-solver subspace similarity are evidence metrics. Direction cosines/angles, perturbation budget quantities, model-only/solver-only spectral norms, effective-rank shape fields, and diagnostic ratios are recorded but not counted as model-quality evidence. Evidence rows with old4-only or random-only coverage are recorded separately and are not used for six-model claims.",
             "",
             "The complete machine-readable tables are in `data/ranked_metric_tables_20260614/`. CSV files contain `rank`, `is_best`, `best_model`, runner-up advantage, paired t-test p/q values, Wilcoxon p/q values, and the sample count used for each comparison.",
             "",
@@ -1166,12 +1408,27 @@ def render_report(
         ]
     )
 
-    lines.extend(["", "## Best Model By Metric", ""])
+    evidence_best = best_summary[best_summary["counts_as_evidence"].astype(bool)].copy() if "counts_as_evidence" in best_summary else best_summary.copy()
+    six_model_evidence_best = (
+        best_summary[best_summary["counts_in_six_model_evidence_claim"].astype(bool)].copy()
+        if "counts_in_six_model_evidence_claim" in best_summary
+        else evidence_best.copy()
+    )
+    partial_evidence_best = (
+        evidence_best[~evidence_best["counts_in_six_model_evidence_claim"].astype(bool)].copy()
+        if "counts_in_six_model_evidence_claim" in evidence_best
+        else pd.DataFrame()
+    )
+    diagnostic_best = best_summary[~best_summary["counts_as_evidence"].astype(bool)].copy() if "counts_as_evidence" in best_summary else pd.DataFrame()
+
+    lines.extend(["", "## Six-Model Common Evidence Metrics: Best Model By Metric", ""])
     best_cols = [
         "family",
         "scope",
         "metric",
         "direction",
+        "metric_role",
+        "model_coverage_class",
         "best_model",
         "n",
         "mean",
@@ -1183,7 +1440,13 @@ def render_report(
         "best_vs_runner_t_q_one_sided_better_bh_fdr",
         "best_vs_runner_significant_q05",
     ]
-    lines.append(markdown_table(best_summary, [c for c in best_cols if c in best_summary.columns], max_rows=220, bold_best_model=True))
+    lines.append(markdown_table(six_model_evidence_best, [c for c in best_cols if c in six_model_evidence_best.columns], max_rows=220, bold_best_model=True))
+
+    lines.extend(["", "## Partial-Scope Evidence Metrics Recorded Separately", ""])
+    lines.append(markdown_table(partial_evidence_best, [c for c in best_cols if c in partial_evidence_best.columns], max_rows=120, bold_best_model=True))
+
+    lines.extend(["", "## Diagnostic/Process Metrics Recorded But Not Counted", ""])
+    lines.append(markdown_table(diagnostic_best, [c for c in best_cols if c in diagnostic_best.columns], max_rows=120, bold_best_model=True))
 
     for family, title in [
         ("clean_generalization", "Clean 52-Dataset Generalization"),
@@ -1194,7 +1457,7 @@ def render_report(
         ("model_solver_subspace_top100_supplement", "Top50/Top100 Model-Solver Subspace Supplement"),
         ("random_affine_direction_supplement", "Random-Model Affine/Local-Gain Supplement"),
     ]:
-        sub = best_summary[best_summary["family"].eq(family)].copy()
+        sub = six_model_evidence_best[six_model_evidence_best["family"].eq(family)].copy()
         lines.extend(["", f"## {title}", ""])
         lines.append(markdown_table(sub, [c for c in best_cols if c in sub.columns], max_rows=None, bold_best_model=True))
 
@@ -1204,6 +1467,7 @@ def render_report(
         "scope",
         "metric",
         "direction",
+        "metric_role",
         "reference_model",
         "other_model",
         "n_pairs",
@@ -1219,6 +1483,10 @@ def render_report(
         ["reference_better_significant_q05", "paired_t_q_reference_better_bh_fdr", "family", "metric"],
         ascending=[False, True, True, True],
     )
+    if "counts_as_evidence" in important_best.columns:
+        important_best = important_best[important_best["counts_as_evidence"].astype(bool)]
+    if "counts_in_six_model_evidence_claim" in important_best.columns:
+        important_best = important_best[important_best["counts_in_six_model_evidence_claim"].astype(bool)]
     lines.append(markdown_table(important_best, [c for c in test_cols if c in important_best.columns], max_rows=160, bold_best_model=False))
 
     lines.extend(["", "## Loss3-Vs-Other Tests", ""])
@@ -1226,6 +1494,10 @@ def render_report(
         ["loss3_is_mean_best", "paired_t_q_reference_better_bh_fdr", "family", "metric"],
         ascending=[False, True, True, True],
     )
+    if "counts_as_evidence" in loss3_view.columns:
+        loss3_view = loss3_view[loss3_view["counts_as_evidence"].astype(bool)]
+    if "counts_in_six_model_evidence_claim" in loss3_view.columns:
+        loss3_view = loss3_view[loss3_view["counts_in_six_model_evidence_claim"].astype(bool)]
     loss3_cols = test_cols + ["loss3_is_mean_best"]
     lines.append(markdown_table(loss3_view, [c for c in loss3_cols if c in loss3_view.columns], max_rows=180, bold_best_model=False))
 
@@ -1238,7 +1510,7 @@ def render_report(
         lines.append(
             markdown_table(
                 scalar_best,
-                ["source_table", "metric", "direction", "best_model", "runner_up_model", "value", "advantage_vs_runner_up", "reported_n"],
+                ["source_table", "metric", "direction", "metric_role", "counts_as_evidence", "best_model", "runner_up_model", "value", "advantage_vs_runner_up", "reported_n"],
                 max_rows=160,
                 bold_best_model=True,
             )
@@ -1276,6 +1548,10 @@ def render_report(
                 max_rows=None,
             )
         )
+
+    role_defs = pd.DataFrame(METRIC_ROLE_DEFINITIONS)
+    lines.extend(["", "## Metric Role Definitions", ""])
+    lines.append(markdown_table(role_defs, ["metric_role", "counts_as_evidence", "meaning"], max_rows=None))
 
     coverage = data_root() / "missing_metric_coverage_audit.csv"
     if coverage.exists():
@@ -1352,8 +1628,29 @@ def main() -> None:
 
     tables["metric_model_summary_ranked.csv"] = summary.sort_values(["family", "scope", "metric", "rank", "model_order"])
     tables["metric_best_summary_ranked.csv"] = best_summary
+    if "counts_as_evidence" in best_summary.columns:
+        evidence_mask = best_summary["counts_as_evidence"].astype(bool)
+        tables["metric_best_summary_evidence_ranked.csv"] = best_summary[evidence_mask].copy()
+        tables["metric_best_summary_diagnostic_ranked.csv"] = best_summary[~evidence_mask].copy()
+        if "counts_in_six_model_evidence_claim" in best_summary.columns:
+            six_model_mask = best_summary["counts_in_six_model_evidence_claim"].astype(bool)
+            tables["metric_best_summary_six_model_evidence_ranked.csv"] = best_summary[six_model_mask].copy()
+            tables["metric_best_summary_partial_scope_evidence_ranked.csv"] = best_summary[evidence_mask & ~six_model_mask].copy()
     tables["metric_best_vs_other_significance_tests.csv"] = best_df.sort_values(["family", "scope", "metric", "other_model"]) if not best_df.empty else best_df
     tables["metric_loss3_vs_other_significance_tests.csv"] = loss3_df.sort_values(["family", "scope", "metric", "other_model"]) if not loss3_df.empty else loss3_df
+    if "counts_as_evidence" in best_df.columns:
+        tables["metric_best_vs_other_evidence_significance_tests.csv"] = best_df[best_df["counts_as_evidence"].astype(bool)].sort_values(["family", "scope", "metric", "other_model"])
+        if "counts_in_six_model_evidence_claim" in best_df.columns:
+            tables["metric_best_vs_other_six_model_evidence_significance_tests.csv"] = best_df[
+                best_df["counts_in_six_model_evidence_claim"].astype(bool)
+            ].sort_values(["family", "scope", "metric", "other_model"])
+    if "counts_as_evidence" in loss3_df.columns:
+        tables["metric_loss3_vs_other_evidence_significance_tests.csv"] = loss3_df[loss3_df["counts_as_evidence"].astype(bool)].sort_values(["family", "scope", "metric", "other_model"])
+        if "counts_in_six_model_evidence_claim" in loss3_df.columns:
+            tables["metric_loss3_vs_other_six_model_evidence_significance_tests.csv"] = loss3_df[
+                loss3_df["counts_in_six_model_evidence_claim"].astype(bool)
+            ].sort_values(["family", "scope", "metric", "other_model"])
+    tables["metric_role_definitions.csv"] = pd.DataFrame(METRIC_ROLE_DEFINITIONS)
 
     existing_loss3 = data_root() / "paired_tests_loss3_vs_other_models.csv"
     if existing_loss3.exists():

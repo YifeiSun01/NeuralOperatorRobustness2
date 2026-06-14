@@ -340,6 +340,7 @@ def build_release(root: Path, out: Path) -> Organizer:
         root / "docs" / "burgers_solver7860_polished_reports_20260614.md",
         root / "docs" / "burgers_solver7860_clean8000_organized_release_20260614.md",
         root / "docs" / "burgers_all_metric_ranked_tables_20260614.md",
+        root / "docs" / "burgers_metric_role_interpretation_20260614.md",
         root / "docs" / "burgers_metric_integrity_audit_20260614.md",
         root / "docs" / "burgers_full_data_bundle_integrity_audit_20260614.md",
         root / "docs" / "burgers_robustness_numeric_snapshot_20260614.md",

@@ -14684,7 +14684,7 @@ Observed evidence:
 Generated/updated outputs:
 - `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/random_top100_svd_supplement_20260614/`.
 - `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/random_affine_direction_supplement_20260614/`.
-- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/` now contains 20 CSV files, including the top100 and random-affine supplement ranked long tables.
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/` contained 20 CSV files after the top100 and random-affine supplement rebuild; this count was superseded later on 2026-06-14 by the metric-role cleanup, which rebuilt the folder with 29 CSV files.
 - `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_r2_live_gap_resolution_20260614.md`.
 - `docs/burgers_r2_live_gap_resolution_20260614.md`.
 - `docs/burgers_all_metric_ranked_tables_20260614.md` now contains explicit Attack-52, robustness comparability, corrected top100 supplement, and random-affine supplement caveats.
@@ -14707,3 +14707,44 @@ Hard checks after rebuild:
 Current interpretation:
 - The previous statement that random top50/top100 SVD and random affine/local-gain were simply "not found" is corrected. They are now recorded as supplements derived from existing local/R2 artifacts, not as reruns.
 - The evidence boundary still matters: the full 52-dataset six-model attack table is mixed-source historical evidence, while latest dense panels and selected 25-sample robustness/SVD provide the latest direct comparisons.
+
+## 2026-06-14 - Burgers metric-role cleanup after diagnostic/evidence objection
+
+Status: rebuilt the Burgers ranked metric tables and reports after the user correctly objected that diagnostic/process quantities were being mixed into best-model evidence counts; no training, attack, Jacobian, SVD, or plotting jobs were rerun.
+
+Code and report changes:
+- Updated `tools/build_burgers_all_metric_ranked_tables_20260614.py` to add explicit `metric_role`, `counts_as_evidence`, `model_coverage_class`, `available_models`, and `counts_in_six_model_evidence_claim` fields.
+- Regenerated `docs/burgers_all_metric_ranked_tables_20260614.md` and the output report copy.
+- Added short interpretation note `docs/burgers_metric_role_interpretation_20260614.md` for the evidence/diagnostic boundary.
+- Rebuilt `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/ranked_metric_tables_20260614/` with 29 CSV files.
+- Rebuilt `outputs/burgers_solver7860_clean8000_organized_release_20260614/` with 2240 files, 29 ranked-metric-table files, 19 start-here reports, and 0 missing expected inputs.
+
+Classification correction:
+- `model_spectral_norm` and `solver_spectral_norm` are now `operator_scale_not_error`; they are not model-solver closeness evidence.
+- `attack_delta_*_abs_cos`, `delta_top_error_sv_abs_cos`, and direction/angle fields are now `direction_alignment_diagnostic`; they describe mechanism alignment, not model quality by themselves.
+- `j_error_delta_l2` and `j_error_delta_rms` are now `directional_response_diagnostic`; they measure the chosen attack delta passed through `J_error`, not a standalone local-closeness score.
+- `final_delta_rms_mean`, `delta_l2`, and delta budget fields are now `constraint_process`; they do not count as model evidence.
+- Random-only or old4-only evidence rows are recorded but excluded from six-model evidence claims through `model_coverage_class`.
+
+New ranked outputs:
+- `metric_best_summary_six_model_evidence_ranked.csv`: only evidence metrics with all six models present.
+- `metric_best_summary_partial_scope_evidence_ranked.csv`: old4-only or random-only evidence metrics, recorded separately.
+- `metric_best_summary_diagnostic_ranked.csv`: diagnostic/process metrics recorded but excluded from quality evidence counts.
+- `metric_best_vs_other_six_model_evidence_significance_tests.csv` and `metric_loss3_vs_other_six_model_evidence_significance_tests.csv`: significance tests restricted to six-model evidence metrics.
+- `metric_role_definitions.csv`: definitions for evidence, diagnostic, process, coverage, and operator-scale roles.
+
+Spot-check results:
+- `model_spectral_norm`: `counts_as_evidence=false`, `model_coverage_class=old4_only`.
+- `attack_delta_outward_abs_cos`: `counts_as_evidence=false`, `metric_role=direction_alignment_diagnostic`.
+- `attack_delta_svd_abs_cos`: `counts_as_evidence=false`, `metric_role=direction_alignment_diagnostic`.
+- `j_error_delta_l2`: `counts_as_evidence=false`, `metric_role=directional_response_diagnostic`, `model_coverage_class=random_only`.
+- `random_clean_residual_mse_recomputed`: `counts_as_evidence=true` but `counts_in_six_model_evidence_claim=false` because it is random-only; it can compare random_solver_y versus random_clean_y only, not loss3 versus all models.
+
+Hard checks after cleanup:
+- Metric integrity audit: `1522` model-summary rows recomputed with `0` failures; `321` best rows recomputed with `0` failures.
+- Full bundle audit: `overall_pass=true`; parsed `1781` files with `0` parse failures, `0` shape failures, `0` ranked failures, `0` summary failures, `0` model-summary failures, `0` docs failures, and `0` organized-copy failures.
+
+Current interpretation:
+- The main evidence table is now the six-model common evidence table, not the all-metric table.
+- Diagnostic/process quantities remain available for mechanism analysis, but they must not be used to claim that loss3, random_solver_y, random_clean_y, baseline, loss1, or loss2 is globally better.
+- The meaningful six-model claims must be made metric-family by metric-family: clean/generalization, attack outcomes with protocol caveat, error-operator/SVD spectrum, local model-solver subspace similarity, clean residual, and error-gradient size.
