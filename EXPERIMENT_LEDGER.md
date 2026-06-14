@@ -14998,3 +14998,35 @@ Interpretation notes:
 - Scalar quantities with a meaningful direction are the tables to use for "best model" and significance claims.
 - Vector direction cosine/angle, delta norms, and some subspace similarity rows are diagnostic quantities; they are summarized and correlated, but they should not all be converted into a blanket "model quality winner" claim.
 - The inventory keeps this boundary explicit so the final conclusion remains: `loss3` is strongly supported on clean accuracy, strict attack loss increase/final loss, and error-Jacobian/SVD spectrum, while not every diagnostic vector/subspace/process quantity is a direct quality metric.
+
+## 2026-06-14 - Burgers per-dataset loss3 significance tests
+
+Status: added the per-dataset version of the significance test requested by the user. This is different from the earlier first-vs-second test, which used the 52 dataset rows as paired units for an overall test. The new test runs inside each dataset row using the strict latest same-manifest P2Q2 attack NPZ files. No attack was rerun.
+
+New files:
+- Script: `tools/build_burgers_per_dataset_loss3_significance_20260614.py`.
+- Report: `docs/burgers_per_dataset_loss3_significance_20260614.md`.
+- Output report copy: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_per_dataset_loss3_significance_20260614.md`.
+- Output CSVs under `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/per_dataset_loss3_significance_20260614/`:
+  - `per_dataset_loss3_vs_best_other_significance.csv`
+  - `per_dataset_loss3_vs_best_other_significance_compact.csv`
+  - `per_dataset_loss3_significance_metric_summary.csv`
+  - `per_dataset_loss3_significance_split_summary.csv`
+
+Methods:
+- Paired unit: one attack-manifest sample inside one dataset.
+- Dataset rows: 52.
+- Metrics: clean `initial_loss`, attack `final_loss`, and `attack_loss_increase`.
+- Total per-dataset tests: 156.
+- Comparison: `loss3` versus the best non-loss3 model for the same dataset and metric. When `loss3` is rank 1, this comparison model is the runner-up.
+- Tests: one-sided paired t-test, one-sided Wilcoxon signed-rank test, BH/FDR q-values over all 156 rows, and 20000 paired bootstrap resamples of the mean advantage.
+
+Key results:
+- `attack_loss_increase`: `loss3` is rank 1 on 52/52 dataset rows and significantly better on 52/52 rows after all-156 BH/FDR plus bootstrap. Mean advantage versus the best non-loss3 model is 0.002469; the smallest per-dataset mean advantage is still positive at 0.0002118.
+- Attack `final_loss`: `loss3` is rank 1 on 52/52 dataset rows and significantly better on 52/52 rows. Mean advantage versus the best non-loss3 model is 0.002872.
+- Clean `initial_loss` on the attack manifest: `loss3` is rank 1 on 49/52 dataset rows and significantly better on 49/52 rows; it is significantly worse on 2 rows. This is clean MSE on the attack manifest, not the separate full clean RMSE/Relative L2 table.
+
+Interpretation:
+- The earlier overall first-vs-runner-up test answered the question "is loss3 better on average across the 52 dataset rows?"
+- This new per-dataset test answers the stricter question "inside each individual dataset row, is loss3 significantly better than the best non-loss3 model over the paired samples?"
+- For attack loss increase and final attack loss, the stricter answer is yes on every one of the 52 dataset rows.
