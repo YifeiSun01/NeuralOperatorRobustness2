@@ -14927,3 +14927,44 @@ Key results:
 Current interpretation:
 - Locally, no analysis-side Burgers blocker remains.
 - The valid conclusion is still metric-family specific: `loss3` is stable best on main comparable current evidence, but not literally every diagnostic or small-n scalar.
+
+## 2026-06-14 - Burgers first-vs-second significance check
+
+Status: added an explicit paired first-vs-runner-up significance check for the user's question about whether `loss3` is significantly lower than the actual second-best model on clean loss/error and attack loss increase. This step read existing tables only; no training, attack, Jacobian, SVD, or plotting job was rerun.
+
+New files:
+- Script: `tools/build_burgers_first_vs_second_significance_20260614.py`.
+- Report: `docs/burgers_first_vs_second_significance_20260614.md`.
+- Output report copy: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_first_vs_second_significance_20260614.md`.
+- Output CSVs:
+  - `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/first_vs_second_significance_20260614/first_vs_second_key_metric_significance.csv`
+  - `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/first_vs_second_significance_20260614/first_vs_second_key_metric_significance_compact.csv`
+
+Methods:
+- Paired unit: dataset row.
+- Clean scopes: all 52 rows and 50 generalization rows.
+- Attack scopes: strict latest all 52 rows and 50 generalization rows.
+- Direction: lower is better.
+- Tests: paired one-sided t-test, one-sided Wilcoxon signed-rank test, and 100000 paired bootstrap resamples of the mean improvement.
+- Improvement is `runner_up - loss3`; positive means `loss3` is lower/better.
+
+Key results:
+- All 10 checked rows have `loss3` as the mean-best model and have bootstrap 95% CI above zero.
+- Clean all-52:
+  - MSE: `loss3` 0.000190935 vs runner-up `random_solver_y` 0.000488038; paired t p=1.41e-08; bootstrap CI [0.000212535, 0.000388249].
+  - RMSE: `loss3` 0.01175196 vs runner-up `random_solver_y` 0.01749374; paired t p=5.23e-11; bootstrap CI [0.00438757, 0.00714612].
+  - Relative L2: `loss3` 0.02305057 vs runner-up `random_solver_y` 0.03419701; paired t p=1.82e-10; bootstrap CI [0.00841893, 0.01397739].
+- Clean generalization-50:
+  - MSE: `loss3` 0.000197775 vs runner-up `random_solver_y` 0.000507539; paired t p=1.00e-08.
+  - RMSE: `loss3` 0.01204956 vs runner-up `random_solver_y` 0.01816608; paired t p=3.92e-12.
+  - Relative L2: `loss3` 0.02364375 vs runner-up `random_solver_y` 0.03551268; paired t p=1.85e-11.
+- Attack all-52:
+  - Attack loss increase: `loss3` 0.00382075 vs runner-up `loss1` 0.00658905; `loss3` wins 52/52 rows; paired t p=8.89e-22; bootstrap CI [0.00243581, 0.00311029].
+  - Final loss: `loss3` 0.00400196 vs runner-up `loss1` 0.00715168; `loss3` wins 52/52 rows; paired t p=5.37e-21.
+- Attack generalization-50:
+  - Attack loss increase: `loss3` 0.00394899 vs runner-up `loss1` 0.00679898; `loss3` wins 50/50 rows; paired t p=3.38e-22.
+  - Final loss: `loss3` 0.00413720 vs runner-up `loss1` 0.00738407; `loss3` wins 50/50 rows; paired t p=1.86e-21.
+
+Current interpretation:
+- For clean all-52 and clean generalization-50, `loss3` is significantly lower than the actual runner-up on MSE/RMSE/Relative L2 in paired dataset-row tests.
+- For attack all-52 and attack generalization-50, `loss3` is significantly lower than the actual runner-up on attack loss increase and final loss, and wins every dataset row for those attack metrics.
