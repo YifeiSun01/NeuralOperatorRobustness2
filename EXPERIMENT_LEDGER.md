@@ -14366,7 +14366,7 @@ Conclusion:
 
 ## 2026-06-14 - Darcy random-source 3500-epoch completion for required figures
 
-Status: running under supervisor.
+Status: complete.
 
 Observed from local files:
 - Existing `random_clean` and `random_solver` formal Darcy random-source runs
@@ -14404,18 +14404,18 @@ Action taken:
   `darcy_random_clean_3500_continue` and
   `darcy_random_solver_3500_continue`.
 
-Current evidence:
+Completion evidence:
 - GPU path verified on Tesla V100-SXM2-32GB with PyTorch CUDA available.
-- Supervisor reported all three programs as running after launch.
-- Early train rows were observed for both fresh random base runs, and
-  `outputs/darcy_random_3000_20260614/replot_status.md` recorded the watcher in
-  `waiting_base_3000` state with final target epoch `3500`.
-
-Remaining work:
-- Let the two fresh random runs reach epoch `3000`.
-- Let the optimizer-continuous continuation runs reach epoch `3500`.
-- Confirm `optimizer_state_dict` in base and continuation final checkpoints.
-- Confirm the regenerated required figures show epoch axes through `3500`.
+- The two fresh random base runs reached epoch `3000`.
+- The optimizer-continuous continuation runs reached epoch `3500`.
+- `outputs/darcy_random_3000_20260614/replot_status.md` records state
+  `complete`.
+- The watcher verified `optimizer_state_dict` for both base epoch-3000
+  checkpoints and both continuation epoch-3500 checkpoints.
+- The regenerated required figure source CSVs now show max epochs:
+  random clean `3500` and random solver `3500`.
+- `outputs/darcy_sir20_required_figures_only_20260614/figures/` was rebuilt
+  after the continuation completed.
 
 Report:
 - `docs/darcy_random_3000_replot_20260614.md`
@@ -14493,7 +14493,7 @@ Report:
 
 ## 2026-06-14 - Darcy random 3000-to-3500 continuation watcher fix
 
-Status: continuation launched; monitoring in progress.
+Status: complete.
 
 Observed issue:
 - The random clean and random solver 3000-epoch base runs had completed and
@@ -14521,10 +14521,16 @@ Evidence:
 - Supervisor started both continuation services:
   `darcy_random_clean_3500_continue` and
   `darcy_random_solver_3500_continue`.
+- Both continuation services exited after reaching epoch `3500`.
+- Final continuation checkpoints exist at epoch `3500` and include optimizer
+  state.
+- `outputs/darcy_random_3000_20260614/replot_status.json` reports
+  `state: complete` with `summary_final_epoch: 3500` for both continuation
+  runs.
 
 Interpretation:
-- The remaining random extension is not a zero-to-3500 rerun. It is a
-  3000-to-3500 continuation from checkpoints that include optimizer state.
+- The random extension was not a zero-to-3500 rerun. It was a 3000-to-3500
+  continuation from checkpoints that include optimizer state.
 
 ## 2026-06-14 - Darcy selected artifact R2 upload and GitHub branch prep
 
@@ -14646,8 +14652,11 @@ Action taken:
   `docs/darcyflow_timematched_audit_release_20260614.md`.
 
 Evidence:
-- Both audit and organized release manifests report `554` files and
-  `1418427564` bytes.
+- Both audit and organized release manifests report `554` files after the
+  random 3000-to-3500 continuation was incorporated.
+- Final local/remote size checks report `1555304809` bytes for
+  `outputs/darcyflow_timematched_full_or_audit_20260614/` and `1555309241`
+  bytes for `outputs/darcyflow_timematched_organized_release_20260614/`.
 - The generated main figure count is `108`.
 - Required CSV outputs exist:
   `metric_model_summary_ranked.csv`,
@@ -14668,7 +14677,8 @@ Evidence:
 
 Coverage notes:
 - Archived required-figure CSV max epochs are loss1 `3000`, loss2 `3079`,
-  loss3 `3033`, physics `3121`, random clean `1100`, and random solver `1100`.
+  loss3 `3033`, physics `3121`, random clean `3500`, and random solver
+  `3500`.
 - Robustness coverage found locally is smoke level: 52 datasets x 2 samples x 7
   models, not 50 samples per dataset.
 - SVD/Jacobian coverage found locally is smoke level: 3 samples per model, not
@@ -14693,11 +14703,13 @@ R2 upload:
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/darcyflow_timematched_full_or_audit_20260614`.
 - Uploaded `outputs/darcyflow_timematched_organized_release_20260614/` to
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/darcyflow_timematched_organized_release_20260614`.
-- Verified the final remote audit path with `rclone check --size-only --one-way`:
-  `554` matching files and `0` differences; remote size `1418427564` bytes.
-- Verified the final remote organized-release path with
-  `rclone check --size-only --one-way`: `554` matching files and
-  `0` differences; remote size `1418431996` bytes.
+- Re-synced both directories after random clean/solver reached epoch `3500`.
+- Verified the final remote audit path with `rclone size --json` and
+  `rclone check --size-only`: `554` matching files and `0` differences; remote
+  size `1555304809` bytes.
+- Verified the final remote organized-release path with `rclone size --json` and
+  `rclone check --size-only`: `554` matching files and `0` differences; remote
+  size `1555309241` bytes.
 - R2 returned transient `501 Not Implemented` errors during the first multipart
   pass; rclone retried and the final remote checks matched local files.
 

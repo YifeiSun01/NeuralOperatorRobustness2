@@ -55,10 +55,10 @@ Existing diagnostic figures were copied separately:
 
 ## Coverage
 
-Observed coverage from local files:
+Observed coverage from local files after the random 3000-to-3500 continuation completed:
 
-- Clean 52-dataset evaluation is available for baseline plus loss1/loss2/loss3/physics and partial random clean/solver.
-- Archived required-figure CSV max epochs are loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`, random clean `1100`, random solver `1100`.
+- Clean 52-dataset evaluation is available for baseline plus loss1/loss2/loss3/physics/random clean/random solver.
+- Archived required-figure CSV max epochs are loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`, random clean `3500`, random solver `3500`.
 - Robustness found locally is smoke coverage: 52 datasets x 2 samples x 7 models, not 50 samples per dataset.
 - SVD/Jacobian found locally is smoke coverage: 3 samples per model, not 25 samples.
 - Full physics/PDE residual evaluation columns were not found in the clean 52-dataset evaluation CSVs.
@@ -87,11 +87,9 @@ Uploaded under:
 Verified paths:
 
 - `darcyflow_timematched_full_or_audit_20260614`: 554 objects,
-  1,418,427,564 bytes, `rclone check --size-only --one-way` found
-  0 differences.
+  1,555,304,809 bytes on R2; `rclone check --size-only` found 0 differences.
 - `darcyflow_timematched_organized_release_20260614`: 554 objects,
-  1,418,431,996 bytes, `rclone check --size-only --one-way` found
-  0 differences.
+  1,555,309,241 bytes on R2; `rclone check --size-only` found 0 differences.
 
 The first R2 multipart upload attempt reported transient `501 Not Implemented`
 responses; rclone retried, then both final remote checks matched the local

@@ -646,6 +646,24 @@ def write_reports(
     now = datetime.now(timezone.utc).isoformat()
     reports = AUDIT / "reports"
     rel_reports = RELEASE / "reports"
+    training_cov = coverage[coverage["component"].eq("training_curves_52dataset_eval")].copy()
+    epoch_parts = []
+    if not training_cov.empty:
+        for _, row in training_cov.sort_values(["method"]).iterrows():
+            epoch_parts.append(f"{row['method']} {int(row['observed_n'])}")
+    epoch_text = ", ".join(epoch_parts) if epoch_parts else "not available"
+    random_cov = training_cov[training_cov["method"].isin(["random_clean", "random_solver"])]
+    random_complete = not random_cov.empty and (pd.to_numeric(random_cov["observed_n"], errors="coerce") >= 3000).all()
+    if random_complete:
+        clean_eval_note = (
+            "- Clean 52-dataset evaluation and raw-point training curves are available for "
+            f"loss1/loss2/loss3/physics/random clean/random solver. Max epochs: {epoch_text}."
+        )
+    else:
+        clean_eval_note = (
+            "- Clean 52-dataset evaluation and raw-point training curves are available for "
+            f"loss1/loss2/loss3/physics, with random clean/solver partial where noted. Max epochs: {epoch_text}."
+        )
     for out_dir in [reports, rel_reports]:
         out_dir.mkdir(parents=True, exist_ok=True)
         main_lines = [
@@ -657,7 +675,7 @@ def write_reports(
             "",
             "## Main Findings",
             "",
-            "- Clean 52-dataset evaluation and raw-point training curves are available for loss1/loss2/loss3/physics, with random clean/solver currently partial in the archived figure CSVs.",
+            clean_eval_note,
             "- Physics/PDE residual metrics are not available as full 52-dataset evaluation columns; physics-specific training metrics exist only in physics-run training logs.",
             "- Robustness and SVD/Jacobian artifacts found locally are smoke/partial coverage, so all ranked robustness/SVD tables carry partial coverage notes.",
             "- Existing loss3-advantage Darcy heatmaps were copied into the release, but the full requested group00..group05 dense variant matrix was not found locally and was not recomputed.",
@@ -925,6 +943,11 @@ def write_manifest(base: Path) -> pd.DataFrame:
     return df
 
 
+def current_file_count_and_bytes(base: Path) -> tuple[int, int]:
+    files = [p for p in base.rglob("*") if p.is_file()]
+    return len(files), sum(p.stat().st_size for p in files)
+
+
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
@@ -1022,17 +1045,21 @@ def main() -> None:
                 if target != p:
                     link_or_copy(p, target)
 
-    audit_manifest = write_manifest(AUDIT)
-    release_manifest = write_manifest(RELEASE)
-    summary_payload = {
-        "audit_files": int(len(audit_manifest)),
-        "audit_bytes": int(audit_manifest["bytes"].sum()) if not audit_manifest.empty else 0,
-        "release_files": int(len(release_manifest)),
-        "release_bytes": int(release_manifest["bytes"].sum()) if not release_manifest.empty else 0,
-        "generated_figures": len(generated_figures),
-    }
-    write_json(AUDIT / "manifests" / "bundle_size_summary.json", summary_payload)
-    write_json(RELEASE / "manifests" / "bundle_size_summary.json", summary_payload)
+    summary_payload: dict[str, Any] = {"generated_figures": len(generated_figures)}
+    for _ in range(3):
+        write_manifest(AUDIT)
+        write_manifest(RELEASE)
+        audit_files, audit_bytes = current_file_count_and_bytes(AUDIT)
+        release_files, release_bytes = current_file_count_and_bytes(RELEASE)
+        summary_payload = {
+            "audit_files": int(audit_files),
+            "audit_bytes": int(audit_bytes),
+            "release_files": int(release_files),
+            "release_bytes": int(release_bytes),
+            "generated_figures": len(generated_figures),
+        }
+        write_json(AUDIT / "manifests" / "bundle_size_summary.json", summary_payload)
+        write_json(RELEASE / "manifests" / "bundle_size_summary.json", summary_payload)
     print(json.dumps(summary_payload, indent=2))
 
 
