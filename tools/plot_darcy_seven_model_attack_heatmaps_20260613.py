@@ -78,14 +78,14 @@ def plot_sample_seven(sample: heat.SampleSpec, records: list[dict[str, Any]], ra
             "figure.dpi": 150,
         }
     )
-    fig_height = 8.5 + 2.15 * len(model_order)
-    fig = plt.figure(figsize=(21.5, fig_height), constrained_layout=False, facecolor="white")
+    fig_height = 9.6 + 2.35 * len(model_order)
+    fig = plt.figure(figsize=(23.6, fig_height), constrained_layout=False, facecolor="white")
     gs = fig.add_gridspec(
         len(model_order) + 3,
         len(cols),
-        height_ratios=[1.0] * len(model_order) + [0.085, 0.24, 1.05],
-        hspace=0.13,
-        wspace=0.045,
+        height_ratios=[1.0] * len(model_order) + [0.10, 0.42, 1.16],
+        hspace=0.17,
+        wspace=0.055,
     )
     heat_axes = np.asarray([[fig.add_subplot(gs[i, j]) for j in range(len(cols))] for i in range(len(model_order))])
     cbar_axes = [fig.add_subplot(gs[len(model_order), j]) for j in range(len(cols))]
@@ -110,7 +110,7 @@ def plot_sample_seven(sample: heat.SampleSpec, records: list[dict[str, Any]], ra
                     f"{model_name}\nDelta L {gain:.2e}\nrel {rel_l2:.3f}",
                     fontsize=8.4,
                     rotation=0,
-                    labelpad=55,
+                    labelpad=64,
                     va="center",
                 )
             ax.set_xticks([])
@@ -122,9 +122,9 @@ def plot_sample_seven(sample: heat.SampleSpec, records: list[dict[str, Any]], ra
     for j, (_key, _title, range_key) in enumerate(cols):
         rr = ranges[range_key]
         cb = fig.colorbar(images_by_col[j], cax=cbar_axes[j], orientation="horizontal")
-        cb.ax.tick_params(labelsize=7, length=2, pad=1)
+        cb.ax.tick_params(labelsize=6.9, length=2, pad=1)
         cb.outline.set_linewidth(0.45)
-        cbar_axes[j].set_xlabel(f"{rr['vmin']:.2g} to {rr['vmax']:.2g}", fontsize=7, labelpad=1, color="#4b5563")
+        cbar_axes[j].set_xlabel(f"{rr['vmin']:.2g} to {rr['vmax']:.2g}", fontsize=6.8, labelpad=2, color="#4b5563")
 
     line_handles = []
     for model_name in model_order:
@@ -148,22 +148,23 @@ def plot_sample_seven(sample: heat.SampleSpec, records: list[dict[str, Any]], ra
         handles=line_handles,
         loc="center",
         ncol=4,
-        fontsize=8.4,
+        fontsize=8.2,
         frameon=True,
         fancybox=False,
         framealpha=1.0,
         edgecolor="#e5e7eb",
         facecolor="#ffffff",
-        handlelength=2.1,
-        columnspacing=1.3,
-        borderpad=0.55,
+        handlelength=2.2,
+        columnspacing=1.15,
+        borderpad=0.62,
+        labelspacing=0.44,
     )
 
     curve_ax.axhline(0.0, color="#6b7280", linewidth=0.8, alpha=0.65)
     curve_ax.set_xlim(0, max(1, int(max(len(by_model[m]["attack_loss_gain_history"]) for m in model_order)) - 1))
     curve_ax.set_xlabel("binary attack step")
     curve_ax.set_ylabel("attack loss gain")
-    curve_ax.set_title("Loss growth during the same binary attack", fontsize=10.5, fontweight="semibold", pad=7)
+    curve_ax.set_title("Loss growth during the same binary attack", fontsize=10.7, fontweight="semibold", pad=8)
     curve_ax.grid(True, color="#e5e7eb", linewidth=0.7, alpha=0.95)
     curve_ax.spines["top"].set_visible(False)
     curve_ax.spines["right"].set_visible(False)
@@ -182,7 +183,7 @@ def plot_sample_seven(sample: heat.SampleSpec, records: list[dict[str, Any]], ra
         va="top",
     )
     fig.text(0.987, 0.985, "seven models, shared color scales by column", fontsize=8.8, color="#4b5563", ha="right", va="top")
-    fig.subplots_adjust(left=0.086, right=0.99, top=0.935, bottom=0.052)
+    fig.subplots_adjust(left=0.095, right=0.987, top=0.932, bottom=0.052)
     out_path = out_dir / f"{sample.sample_id}_seven_model_attack_heatmap_with_loss_curve.png"
     fig.savefig(out_path, dpi=230, facecolor="white")
     plt.close(fig)

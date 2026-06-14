@@ -17,6 +17,7 @@ Full-run launch status:
 - Loss3 3000-epoch work-clock budget is `13874.623` seconds (`3.854` hours). Time-matched epochs: `loss1=2816`, `loss2=3171`, `loss3=3000`, `physics_loss=3440`, `random_clean=4798`, `random_solver=4609`.
 - The full training launcher began `loss1` as `darcy_sir20_full_loss1_3042ep_workmatched` with `--max-work-seconds 13874.623212`; the epoch cap is intentionally above the plan so the work-clock budget can stop the run at the matched time.
 - The launcher was patched to materialize `preflight_check.py` before calling `run_logged`, because this execution environment reaped plain `nohup &` background children; `setsid -f` was verified with a test process before the full run was relaunched.
+- User reconsidered the 3000-epoch loss3 reference because the full run was too long once per-epoch 52-dataset evaluation wall time was included. The detached run was stopped with SIGTERM on 2026-06-14 while `loss1` was at epoch `233`; the latest complete checkpoint is `outputs/darcy_sir20_timematched_full_20260614_full/data/training_runs/darcy_sir20_full_loss1_3042ep_workmatched/darcy/checkpoints/darcy_epoch200_step000800.pt` with work-clock `975.502` seconds.
 
 Observed from local/R2 restore:
 - Restored locally from the selected R2 prefix: `generalization_datasets_darcy_lossdrop50_selected_20260607`, `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607`, and `2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607`.
@@ -14362,3 +14363,211 @@ Conclusion:
   robustness, 52-dataset x 50-sample attack coverage, baseline horizontal
   reference lines on RMSE/relative-L2 curves, R2/Git backup via environment
   credentials, and explicit evidence records.
+
+## 2026-06-14 - Darcy random-source 3500-epoch completion for required figures
+
+Status: running under supervisor.
+
+Observed from local files:
+- Existing `random_clean` and `random_solver` formal Darcy random-source runs
+  only reached epoch `1100`, at
+  `adversarial_training_runs/darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100/`
+  and
+  `adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100/`.
+- The old epoch-1100 checkpoints existed but did not contain
+  `optimizer_state_dict`, so they were not used for an optimizer-continuous
+  continuation.
+- Four non-random corrected Darcy evaluation tables already cover epoch `3000`
+  or more under `outputs/darcy_eval_artifact_corrected_20260614/data/` and
+  `outputs/darcy_generalization50_artifact_corrected_20260614/data/`.
+
+Action taken:
+- Added `tools/run_darcy_random_3000_20260614.sh` and started fresh 0-to-3000
+  random-source runs:
+  `darcy_binary_random_binary_fixed_y_3000ep_full50_20260614_random_binary_source_3000_supervised`
+  and
+  `darcy_binary_random_binary_solver_y_3000ep_full50_20260614_random_binary_source_3000_supervised`.
+- Added `tools/run_darcy_random_continue_to_3500_20260614.sh` for
+  optimizer-continuous continuation from the fresh epoch-3000 checkpoints to
+  epoch `3500`.
+- Added `tools/wait_and_replot_darcy_random_3000_20260614.py`; it waits for both
+  fresh 3000-epoch base runs, verifies base checkpoint optimizer state, starts
+  the continuation supervisor programs, waits for epoch `3500`, verifies
+  continuation checkpoint optimizer state, and rebuilds
+  `outputs/darcy_sir20_required_figures_only_20260614/figures/`.
+- Updated `tools/build_darcy_required_six_method_figures_20260614.py` to read the
+  fresh random 3000 runs plus the 3000-to-3500 continuation runs and cap epoch
+  plots at epoch `3500`.
+- Supervisor programs launched: `darcy_random_clean_3000`,
+  `darcy_random_solver_3000`, and `darcy_random_3000_replot`.
+- Continuation supervisor programs registered for later automatic start:
+  `darcy_random_clean_3500_continue` and
+  `darcy_random_solver_3500_continue`.
+
+Current evidence:
+- GPU path verified on Tesla V100-SXM2-32GB with PyTorch CUDA available.
+- Supervisor reported all three programs as running after launch.
+- Early train rows were observed for both fresh random base runs, and
+  `outputs/darcy_random_3000_20260614/replot_status.md` recorded the watcher in
+  `waiting_base_3000` state with final target epoch `3500`.
+
+Remaining work:
+- Let the two fresh random runs reach epoch `3000`.
+- Let the optimizer-continuous continuation runs reach epoch `3500`.
+- Confirm `optimizer_state_dict` in base and continuation final checkpoints.
+- Confirm the regenerated required figures show epoch axes through `3500`.
+
+Report:
+- `docs/darcy_random_3000_replot_20260614.md`
+
+Timing diagnosis update:
+- Observed from current fresh random CSVs while the runs were active: random
+  clean training work-clock was about `1.23 s/epoch` over the last 100 epochs,
+  while 52-dataset evaluation was about `7.77 s/epoch`; random solver training
+  work-clock was about `1.52 s/epoch`, while evaluation was about
+  `8.22 s/epoch`.
+- Observed from previous loss3 runs: loss3 train work-clock was about
+  `0.79 s/epoch`, with evaluation about `3.7 s/epoch`.
+- Inference from these files: the long wall-clock wait is dominated by
+  every-epoch 52-dataset evaluation and two concurrent random processes, not by
+  the random-source training step itself. Work-clock matching remains much
+  shorter than wall-clock because evaluation is excluded from work-clock.
+
+## 2026-06-14 - Darcy required figures moving-average visualization
+
+Status: complete for currently archived required-figures CSVs.
+
+Observed from local files:
+- Source split CSV:
+  `outputs/darcy_sir20_required_figures_only_20260614/data/six_method_common_range_eval_split_summary.csv`.
+- Source 52-dataset metrics CSV:
+  `outputs/darcy_sir20_required_figures_only_20260614/data/six_method_common_range_eval_metrics.csv`.
+- Current archived common plotting range is epoch `1100` and work-clock
+  `1128.9048905035306` seconds.
+
+Action taken:
+- Added `tools/build_darcy_required_figures_moving_average_20260614.py`.
+- Generated a separate centered moving-average figure set with window `51`
+  epochs under
+  `outputs/darcy_sir20_required_figures_only_20260614/figures_moving_average_ma51/`.
+- The original unsmoothed figures and source CSVs were not overwritten.
+
+Inference:
+- The moving-average figures reduce the visually thick up/down oscillation in
+  the per-epoch RMSE/Relative-L2 curves while preserving the longer trend.
+- After the fresh random-source 3500-epoch runs rebuild the required CSVs, this
+  same script can regenerate matching moving-average figures for the longer
+  epoch span.
+
+Report:
+- `docs/darcy_required_figures_moving_average_20260614.md`
+
+## 2026-06-14 - Darcy raw-vs-artifact-corrected audit plots
+
+Status: complete.
+
+Observed source files:
+- `outputs/darcy_eval_artifact_corrected_20260614/data/eval_split_summary_artifact_corrected.csv`.
+- `outputs/darcy_generalization50_artifact_corrected_20260614/data/eval_metrics_artifact_corrected.csv`.
+
+Action taken:
+- Added `tools/build_darcy_raw_vs_corrected_audit_figures_20260614.py`.
+- Generated transparent audit figures under
+  `outputs/darcy_raw_vs_corrected_audit_20260614/figures/`.
+- The figures compare raw old-log columns against derived artifact-corrected
+  columns; yellow spans mark rows where corrected columns were imputed.
+
+Evidence:
+- Generated six figures: train/test/generalization RMSE and Relative-L2
+  raw-vs-corrected panels, plus 50-generalization dataset RMSE and Relative-L2
+  part01/part02 audit grids.
+- Raw experiment CSVs were not overwritten.
+
+Interpretation:
+- These plots are for transparency/audit only. Corrected panels are derived
+  visualization values and should not be presented as raw experiment
+  measurements.
+
+Report:
+- `docs/darcy_raw_vs_corrected_audit_20260614.md`
+
+## 2026-06-14 - Darcy selected artifact R2 upload and GitHub branch prep
+
+Status: R2 upload complete; GitHub commit/push prepared in the current working
+tree.
+
+Observed source files:
+- Selected local output directories under `outputs/` for Darcy corrected
+  figures, artifact-corrected CSVs, paired raw/corrected audit plots, required
+  figures, moving-average figures, curated bundle, random 3000 watcher records,
+  and experiment prompts.
+- Source code/docs changes under `tools/`, `docs/`, and `EXPERIMENT_LEDGER.md`.
+
+Action taken:
+- Uploaded the selected Darcy deliverable output directories to Cloudflare R2
+  under
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+- Verified remote object counts and byte totals after upload.
+- Added a dedicated upload record at
+  `docs/darcy_r2_github_upload_20260614.md`.
+- Local upload logs and remote checks were written under
+  `outputs/r2_upload_darcy_20260614/`.
+
+Evidence:
+- Remote size checks reported:
+  `outputs/darcy_corrected_loss_figures_review_20260614` with 16 objects,
+  `outputs/darcy_eval_artifact_corrected_20260614` with 12 objects,
+  `outputs/darcy_generalization50_artifact_corrected_20260614` with 15 objects,
+  `outputs/darcy_optimizer_artifact_corrected_20260614` with 18 objects,
+  `outputs/darcy_raw_vs_corrected_audit_20260614` with 14 objects,
+  `outputs/darcy_sir20_existing_curated_bundle_20260614` with 66 objects,
+  `outputs/darcy_sir20_required_figures_only_20260614` with 30 objects,
+  `outputs/darcy_random_3000_20260614` with 9 objects, and
+  `outputs/experiment_prompts_darcy_burgers_20260614` with 2 objects.
+- Remote paired audit figure listing includes the four adjacent raw/corrected
+  generalization grids.
+
+Interpretation:
+- The uploaded R2 set covers the requested visual/result artifacts from the
+  current Darcy figure work. Large smoke/probe/full training working directories
+  remain local unless separately requested for bulk archival.
+
+Report:
+- `docs/darcy_r2_github_upload_20260614.md`
+
+## 2026-06-14 - Darcy paired raw-vs-artifact-corrected audit grids
+
+Status: complete.
+
+Observed source files:
+- `outputs/darcy_eval_artifact_corrected_20260614/data/eval_split_summary_artifact_corrected.csv`.
+- `outputs/darcy_generalization50_artifact_corrected_20260614/data/eval_metrics_artifact_corrected.csv`.
+
+Action taken:
+- Updated `tools/build_darcy_raw_vs_corrected_audit_figures_20260614.py` with
+  adjacent paired raw/corrected generalization grids.
+- Regenerated the paired-only figures so each dataset's raw panel and corrected
+  panel are side by side in the same local group, rather than all raw panels in
+  one block and all corrected panels in a separate block.
+- Updated `docs/darcy_raw_vs_corrected_audit_20260614.md` to list the paired
+  outputs.
+
+Evidence:
+- Generated four paired figures under
+  `outputs/darcy_raw_vs_corrected_audit_20260614/figures/`:
+  `paired_raw_vs_corrected_rmse_generalization_part01_epoch.png`,
+  `paired_raw_vs_corrected_rmse_generalization_part02_epoch.png`,
+  `paired_raw_vs_corrected_relative_l2_generalization_part01_epoch.png`, and
+  `paired_raw_vs_corrected_relative_l2_generalization_part02_epoch.png`.
+- Visually inspected
+  `paired_raw_vs_corrected_rmse_generalization_part01_epoch.png`; the layout is
+  now 25 adjacent dataset pairs with raw on the left and corrected on the right
+  for each dataset.
+
+Interpretation:
+- These paired plots are audit/diagnostic visualizations of raw old logs versus
+  derived artifact-corrected columns. Raw logs remain preserved and the corrected
+  panels should not be described as raw experiment measurements.
+
+Report:
+- `docs/darcy_raw_vs_corrected_audit_20260614.md`
