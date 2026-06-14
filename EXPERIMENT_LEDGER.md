@@ -14257,3 +14257,18 @@ Remaining work:
   `outputs/burgers_timematched_full_or_audit_20260614/` is complete at
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_full_or_audit_20260614`;
   `rclone lsf --recursive` showed 39 files plus 4 directory markers.
+
+Follow-up launched:
+- Added `tools/run_burgers_timematched_strict_random_continuations_20260614.sh`.
+- Smoke resume passed for `random_clean_y` epoch `8000 -> 8001` and
+  `random_solver_y` epoch `6000 -> 6001`; the smoke checkpoint top-level keys
+  include `optimizer_state_dict`.
+- Formal strict random continuation started at `2026-06-14T00:49:40Z`, PID
+  `86717`, log root
+  `adversarial_training_runs/burgers_timematched_strict_random_continuations_20260614_logs`.
+  It runs `random_solver_y` epoch `6000 -> 7860` first, then
+  `random_clean_y` epoch `8000 -> 21100`.
+- Ten-minute monitor was clean: solver-y reached epoch `6130`, train/eval/
+  optimizer CSV files were growing, GPU memory was about `6056 MiB`, and no
+  traceback appeared. Active monitoring was stopped and the background job is
+  expected to continue.

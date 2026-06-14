@@ -80,3 +80,18 @@ SVD/Jacobian does not need to be the first expensive rerun. The existing
 25-sample joined table is useful evidence, but its checkpoint/work-clock
 alignment should be treated as audit evidence until strict endpoint selection is
 finished.
+
+Follow-up launch status:
+
+- Added `tools/run_burgers_timematched_strict_random_continuations_20260614.sh`
+  to run the strict random-baseline continuations from the existing optimizer
+  checkpoints.
+- Smoke resume passed for `random_clean_y` epoch `8000 -> 8001` and
+  `random_solver_y` epoch `6000 -> 6001`; both smoke checkpoints contain
+  `optimizer_state_dict`.
+- Formal continuation started at `2026-06-14T00:49:40Z`, PID `86717`, log root
+  `adversarial_training_runs/burgers_timematched_strict_random_continuations_20260614_logs`.
+- Ten-minute monitoring was clean: solver-y reached epoch `6130`, train/eval/
+  optimizer CSVs were growing, GPU memory stayed around `6056 MiB`, and no
+  traceback appeared. Active tailing was then stopped so the background job can
+  continue.
