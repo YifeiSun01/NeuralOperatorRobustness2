@@ -215,3 +215,16 @@ Organized release loss123-only update:
   expected inputs.
 - R2 verification for this organized-release update returned 646 objects and
   1,468,076,040 bytes.
+
+Final audit output dense-copy update:
+
+- Copied the full dense image-only bundle into the solver7860 final audit
+  output:
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
+- The final audit output now has 134 PNG figures, including the 36 dense
+  image-only PNGs under that nested bundle.
+- R2 verification for
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_solver7860_clean8000_audit_20260614`
+  returned 161 objects and 576,834,254 bytes.
+- R2 verification for the nested dense final-audit folder returned 36 objects
+  and 89,008,328 bytes.

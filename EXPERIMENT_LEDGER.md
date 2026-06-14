@@ -14371,3 +14371,8 @@ Updates:
 
 Remaining work:
 - No remaining work for the organized release packaging itself.
+
+Follow-up final-audit figure placement:
+- Copied the entire dense image-only bundle into `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
+- The final audit output now contains 134 PNG figures total, including 36 dense image-only PNGs in the nested copied bundle and 12 loss123-only dense PNGs.
+- R2 verification for the final audit output prefix returned 161 objects and 576,834,254 bytes; the nested dense final-audit folder returned 36 objects and 89,008,328 bytes.

@@ -93,6 +93,9 @@ R2 upload:
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/visualizations/burgers_wideparam_loss123_randomsolver7860_clean8000_round00_p2q2_six_model_visuals_20260614`.
 - Trace/data root synced to
   `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/forensics/burgers_wideparam_loss123_randomsolver7860_clean8000_round00_p2q2_six_model_visuals_20260614`.
+- The whole image-only bundle was also copied into the final solver7860 audit
+  output under
+  `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/figures/burgers_wideparam_loss123_randomsolver7860_clean8000_comparison_dense_image_only_bundle_20260614/`.
 
 Verification:
 
@@ -101,6 +104,8 @@ Verification:
 - R2 image-only bundle `rclone size --json` returned 36 files and 89,008,328 bytes.
 - R2 visualization mirror `rclone size --json` returned 36 files and 89,008,328 bytes.
 - R2 trace/data `rclone size --json` returned 27 files and 203,170,665 bytes.
+- The final-audit-output copy contains the same 36 PNG files. R2 verification
+  for that nested final-audit folder returned 36 files and 89,008,328 bytes.
 - R2 `lsf --recursive` includes directory markers in addition to PNGs; the
   object-count verification above is from `rclone size`.
 - The organized release also includes the full image-only bundle as
