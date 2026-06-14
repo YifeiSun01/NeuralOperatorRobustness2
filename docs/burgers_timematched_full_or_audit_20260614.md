@@ -108,3 +108,19 @@ Follow-up launch status:
   `/tmp/rclone-r2/rclone.conf` remote.
   The work-clock plots are intentionally capped near 8 hours, not at the minimum
   common logged time; shorter random-clean curves stop before the right edge.
+
+Plot refresh after final postprocess:
+
+- Regenerated the audit curve bundle using
+  `forensics/burgers_six_model_solver7860_clean8000_summary_20260614` and
+  `forensics/burgers_random_solver7860_clean8000_full_suite_20260614`.
+- Replaced compact `dXX` subplot titles with descriptive dataset names from
+  `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/manifest.json`.
+- Renamed curve outputs and labels from work-clock to wall-clock, kept the 8h
+  x-axis cap, and recorded that curves are raw evaluation points with no moving
+  average or smoothing.
+- Increased legend size and made curve lines partially transparent.
+- Added a second figure set under `figures/no_random_clean/` that excludes
+  `random_clean_y` so the other methods are not visually compressed.
+- Synced the refreshed output bundle to R2 and removed stale `workclock` files
+  from the remote output prefix.

@@ -14287,3 +14287,16 @@ Follow-up launched:
   The work-clock plots are intentionally capped near 8 hours, not at the
   minimum common logged time; shorter random-clean curves stop before the right
   edge.
+
+## 2026-06-14 - Burgers solver7860/clean8000 plot refresh
+
+Status: regenerated and re-synced the postprocess audit curve bundle after the final `random_solver_y=7860`, `random_clean_y=8000` run completed.
+
+Updates:
+- Rebuilt `outputs/burgers_timematched_solver7860_clean8000_audit_20260614` using `forensics/burgers_six_model_solver7860_clean8000_summary_20260614` and `forensics/burgers_random_solver7860_clean8000_full_suite_20260614`.
+- Replaced compact `dXX` subplot titles with descriptive dataset labels from `generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/manifest.json`.
+- Renamed curve files/labels from work-clock to wall-clock while keeping the explicit 8.0 hour cap; short `random_clean_y` curves stop before the right edge.
+- Recorded that curves are raw evaluation points only: no moving average, rolling mean, smoothing, or interpolation.
+- Increased legend size and added line transparency.
+- Added `figures/no_random_clean/` with the same RMSE/Relative-L2 epoch and wall-clock figures excluding `random_clean_y`.
+- R2 sync completed for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_solver7860_clean8000_audit_20260614`; remote listing showed 24 PNGs, 12 no-random-clean PNGs, and 0 stale `workclock`/`work_clock` files.

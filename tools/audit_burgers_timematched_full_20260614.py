@@ -13,6 +13,7 @@ import math
 import os
 import shutil
 import subprocess
+import textwrap
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -31,16 +32,17 @@ DEFAULT_OUT = REPO / "outputs/burgers_timematched_full_or_audit_20260614"
 CURVE_ROOT = REPO / "visualizations/burgers_wideparam_selected_worktime_loss123_random_training_curves_20260613"
 SUMMARY_ROOT = REPO / "forensics/burgers_six_model_selected_worktime_summary_20260613"
 FULL_SUITE_ROOT = REPO / "forensics/burgers_random_field_final_models_full_suite_20260613"
+GEN_MANIFEST = REPO / "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/manifest.json"
 
 MODEL_ORDER = ["baseline", "loss1", "loss2", "loss3", "random_clean_y", "random_solver_y"]
 TRAINED_MODELS = ["loss1", "loss2", "loss3", "random_clean_y", "random_solver_y"]
 MODEL_LABELS = {
-    "baseline": "baseline",
-    "loss1": "loss1",
-    "loss2": "loss2",
-    "loss3": "loss3",
-    "random_clean_y": "random clean",
-    "random_solver_y": "random solver",
+    "baseline": "Baseline",
+    "loss1": "Loss 1",
+    "loss2": "Loss 2",
+    "loss3": "Loss 3",
+    "random_clean_y": "Random clean",
+    "random_solver_y": "Random solver",
 }
 MODEL_COLORS = {
     "baseline": "#333333",
@@ -97,6 +99,7 @@ def make_output_dirs(root: Path) -> OutputDirs:
     )
     for path in dirs.__dict__.values():
         path.mkdir(parents=True, exist_ok=True)
+    (dirs.figures / "no_random_clean").mkdir(parents=True, exist_ok=True)
     return dirs
 
 
@@ -122,6 +125,36 @@ def run_command(args: list[str]) -> dict[str, object]:
 
 def read_clean_table() -> pd.DataFrame:
     return pd.read_csv(SUMMARY_ROOT / "clean_52dataset_six_models_selected_worktime.csv")
+
+
+def load_generalization_labels(path: Path) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(rows, dict):
+        rows = rows.get("datasets", rows.get("items", []))
+    labels: dict[str, str] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        dataset_id = str(row.get("dataset_id", ""))
+        params = row.get("params") if isinstance(row.get("params"), dict) else {}
+        label = (
+            params.get("descriptive_name")
+            or params.get("display_label")
+            or row.get("descriptive_name")
+            or row.get("display_label")
+            or row.get("description")
+            or dataset_id
+        )
+        labels[dataset_id] = str(label)
+    return labels
+
+
+def wrapped_dataset_label(dataset_id: str, labels: dict[str, str]) -> str:
+    label = labels.get(dataset_id, dataset_id)
+    label = label.replace("; ", "\n")
+    return "\n".join(textwrap.wrap(label, width=32, break_long_words=False, break_on_hyphens=False))
 
 
 def baseline_dataset_values(clean: pd.DataFrame, metric: str) -> dict[str, float]:
@@ -249,55 +282,80 @@ def split_summary_curves(evals: pd.DataFrame) -> pd.DataFrame:
     return grouped
 
 
-def plot_split_curves(summary: pd.DataFrame, clean: pd.DataFrame, metric: str, x: str, out: Path, workclock_xmax: float | None = None) -> None:
+def plot_split_curves(
+    summary: pd.DataFrame,
+    clean: pd.DataFrame,
+    metric: str,
+    x: str,
+    out: Path,
+    wallclock_xmax: float | None = None,
+    plot_models: list[str] | None = None,
+) -> None:
+    plot_models = plot_models or TRAINED_MODELS
     split_order = ["train", "test", "generalization"]
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.3), sharey=False, constrained_layout=True)
-    xmax_common = float(workclock_xmax) if workclock_xmax is not None else float(summary.groupby("model")["work_clock_hours"].max().min())
+    fig, axes = plt.subplots(1, 3, figsize=(16.5, 4.8), sharey=False, constrained_layout=True)
+    xmax_common = float(wallclock_xmax) if wallclock_xmax is not None else float(summary.groupby("model")["work_clock_hours"].max().min())
     baseline_values = baseline_split_values(clean, metric)
     for ax, split in zip(axes, split_order, strict=True):
-        for model in TRAINED_MODELS:
+        for model in plot_models:
             df = summary[(summary["model"] == model) & (summary["split"] == split)].sort_values(x)
             if x == "work_clock_hours":
                 df = df[df[x] <= xmax_common + 1e-9]
-            ax.plot(df[x], df[metric], lw=1.55, color=MODEL_COLORS[model], label=MODEL_LABELS[model])
-        ax.axhline(baseline_values[split], color=MODEL_COLORS["baseline"], ls="--", lw=1.2, label="baseline")
+            ax.plot(df[x], df[metric], lw=1.8, color=MODEL_COLORS[model], alpha=0.72, label=MODEL_LABELS[model])
+        ax.axhline(baseline_values[split], color=MODEL_COLORS["baseline"], ls="--", lw=1.35, alpha=0.78, label=MODEL_LABELS["baseline"])
         ax.set_title(split)
-        ax.set_xlabel("work-clock hours" if x == "work_clock_hours" else "epoch")
+        ax.set_xlabel("wall-clock time (hours)" if x == "work_clock_hours" else "epoch")
         ax.set_ylabel(metric.replace("_", " "))
         ax.grid(alpha=0.25, lw=0.7)
         if x == "work_clock_hours":
             ax.set_xlim(0, xmax_common)
-    axes[0].legend(fontsize=8, frameon=False)
-    fig.suptitle(f"Burgers selected-worktime {metric.replace('_', ' ')}", fontsize=13, weight="bold")
+    handles = [plt.Line2D([], [], color=MODEL_COLORS[m], lw=2.4, alpha=0.8, ls="--" if m == "baseline" else "-") for m in ["baseline", *plot_models]]
+    labels = [MODEL_LABELS[m] for m in ["baseline", *plot_models]]
+    fig.legend(handles, labels, loc="outside lower center", ncol=min(6, len(labels)), frameon=False, fontsize=12)
+    suffix = " without random clean" if "random_clean_y" not in plot_models else ""
+    fig.suptitle(f"Burgers selected-time {metric.replace('_', ' ')}{suffix}", fontsize=14, weight="bold")
     fig.savefig(out, dpi=220)
     plt.close(fig)
 
 
-def plot_generalization_grid(evals: pd.DataFrame, clean: pd.DataFrame, metric: str, x: str, part: int, out: Path, workclock_xmax: float | None = None) -> None:
+def plot_generalization_grid(
+    evals: pd.DataFrame,
+    clean: pd.DataFrame,
+    metric: str,
+    x: str,
+    part: int,
+    out: Path,
+    wallclock_xmax: float | None = None,
+    plot_models: list[str] | None = None,
+    dataset_labels: dict[str, str] | None = None,
+) -> None:
+    plot_models = plot_models or TRAINED_MODELS
+    dataset_labels = dataset_labels or {}
     gen_ids = list(clean.loc[clean["split"] == "generalization", "dataset_id"].astype(str))
     selected = gen_ids[:25] if part == 1 else gen_ids[25:50]
     baseline = baseline_dataset_values(clean, metric)
-    xmax_common = float(workclock_xmax) if workclock_xmax is not None else float(evals.groupby("model")["work_clock_hours"].max().min())
-    fig, axes = plt.subplots(5, 5, figsize=(17.5, 13.2), constrained_layout=True)
+    xmax_common = float(wallclock_xmax) if wallclock_xmax is not None else float(evals.groupby("model")["work_clock_hours"].max().min())
+    fig, axes = plt.subplots(5, 5, figsize=(22.0, 16.2), constrained_layout=True)
     for ax, dataset_id in zip(axes.ravel(), selected, strict=True):
-        for model in TRAINED_MODELS:
+        for model in plot_models:
             df = evals[(evals["model"] == model) & (evals["dataset_id"] == dataset_id)].sort_values(x)
             if x == "work_clock_hours":
                 df = df[df[x] <= xmax_common + 1e-9]
-            ax.plot(df[x], df[metric], lw=0.95, color=MODEL_COLORS[model], alpha=0.95)
-        ax.axhline(baseline[dataset_id], color=MODEL_COLORS["baseline"], ls="--", lw=0.9)
-        ax.set_title(dataset_id.replace("burgers_widevis_l3target_", "d"), fontsize=8)
+            ax.plot(df[x], df[metric], lw=1.05, color=MODEL_COLORS[model], alpha=0.66)
+        ax.axhline(baseline[dataset_id], color=MODEL_COLORS["baseline"], ls="--", lw=0.95, alpha=0.74)
+        ax.set_title(wrapped_dataset_label(dataset_id, dataset_labels), fontsize=8.2)
         ax.grid(alpha=0.22, lw=0.6)
         ax.tick_params(labelsize=7)
         if x == "work_clock_hours":
             ax.set_xlim(0, xmax_common)
-    handles = [plt.Line2D([], [], color=MODEL_COLORS[m], lw=1.6, ls="--" if m == "baseline" else "-") for m in MODEL_ORDER]
-    labels = [MODEL_LABELS[m] for m in MODEL_ORDER]
-    fig.legend(handles, labels, loc="outside lower center", ncol=6, frameon=False, fontsize=9)
+    handles = [plt.Line2D([], [], color=MODEL_COLORS[m], lw=2.2, alpha=0.78, ls="--" if m == "baseline" else "-") for m in ["baseline", *plot_models]]
+    labels = [MODEL_LABELS[m] for m in ["baseline", *plot_models]]
+    fig.legend(handles, labels, loc="outside lower center", ncol=min(6, len(labels)), frameon=False, fontsize=12)
+    suffix = " without random clean" if "random_clean_y" not in plot_models else ""
     fig.suptitle(
-        f"Burgers 50 generalization datasets part {part}: {metric.replace('_', ' ')} vs "
-        f"{'work-clock' if x == 'work_clock_hours' else 'epoch'}",
-        fontsize=13,
+        f"Burgers 50 generalization datasets part {part}: {metric.replace('_', ' ')}{suffix} vs "
+        f"{'wall-clock time' if x == 'work_clock_hours' else 'epoch'}",
+        fontsize=14,
         weight="bold",
     )
     fig.savefig(out, dpi=220)
@@ -359,7 +417,7 @@ def write_markdown_report(
         work_rows.append((model, int(m["epoch"].max()), float(m["work_clock_hours"].max())))
     common_hours = float(work.groupby("model")["work_clock_hours"].max().min())
     plot_hours = float(workclock_plot_xmax) if workclock_plot_xmax is not None else common_hours
-    plot_hours_source = "explicit `--workclock-xmax`" if workclock_plot_xmax is not None else "minimum final logged work-clock across trained methods"
+    plot_hours_source = "explicit `--workclock-xmax`" if workclock_plot_xmax is not None else "minimum final logged wall-clock across trained methods"
 
     best_clean = min(MODEL_ORDER, key=lambda m: clean_summary[m]["generalization_rmse_mean"])
     best_attack = min(attack_summary, key=lambda m: attack_summary.get(m, {}).get("generalization_attack_loss_increase_mean", math.inf))
@@ -383,9 +441,9 @@ def write_markdown_report(
             f"- R2 status: `{audit['r2_audit']['status']}`; environment flags were `{audit['r2_audit']['env_present']}`.",
             f"- 52-dataset attack table model coverage: present `{attack_present}`, missing `{attack_missing}`.",
         "",
-        "## Work-Clock Coverage",
+        "## Wall-Clock Coverage",
         "",
-        "| model | max epoch | logged work-clock hours |",
+        "| model | max epoch | logged wall-clock hours |",
         "|---|---:|---:|",
     ]
     for model, epoch, hours in work_rows:
@@ -393,9 +451,11 @@ def write_markdown_report(
     lines.extend(
         [
             "",
-            f"Work-clock is computed from `attack_wall_sec + train_wall_sec` in `train_steps.csv`, so it includes attack/delta generation or random/solver target generation plus forward/backward/optimizer-step work, and excludes evaluation/plot/upload. Work-clock plots use a `{plot_hours:.3f}` hour x-axis cap from {plot_hours_source}; runs with less logged work-clock simply end before the right edge.",
+            f"Wall-clock time is computed from `attack_wall_sec + train_wall_sec` in `train_steps.csv`, so it includes attack/delta generation or random/solver target generation plus forward/backward/optimizer-step work, and excludes evaluation/plot/upload. Wall-clock plots use a `{plot_hours:.3f}` hour x-axis cap from {plot_hours_source}; runs with less logged time simply end before the right edge.",
             "",
-            "Observed caveat: under this strict logged work-clock definition, `random_clean_y` reaches only about 2.90 hours and `random_solver_y` reaches about 5.69 hours, while `loss3` reaches about 7.43 hours. The existing selected-worktime bundle is therefore complete as a local artifact bundle, but not a strict equal-work-clock rerun for every method.",
+            "The training curves are raw evaluation points connected by lines. No moving average, rolling mean, smoothing, or interpolation is applied.",
+            "",
+            "Observed caveat: under this strict logged wall-clock definition, `random_clean_y` reaches only about 2.90 hours and `random_solver_y` reaches about 5.69 hours, while `loss3` reaches about 7.43 hours. The existing selected-time bundle is therefore complete as a local artifact bundle, but not a strict equal-wall-clock rerun for every method.",
             "",
             "## Clean Generalization",
             "",
@@ -445,23 +505,23 @@ def write_markdown_report(
             "",
         ]
     )
-    for path in sorted(dirs.figures.glob("*.png")):
+    for path in sorted(dirs.figures.rglob("*.png")):
         lines.append(f"- `{rel(path)}`")
     lines.extend(
         [
             "",
             "## Rerun Required Determination",
             "",
-            "Determination after local/R2 audit: follow-up work is required before this can be called a strict six-model equal-work-clock result. The existing artifacts are useful for audit and plotting, but they are not final.",
+            "Determination after local/R2 audit: follow-up work is required before this can be called a strict six-model equal-wall-clock result. The existing artifacts are useful for audit and plotting, but they are not final.",
             "",
             "Required follow-up:",
             "",
-            "- Select loss1/loss2 checkpoints by the loss3 work-clock target instead of using over-budget final endpoints. The nearest local epochs to the loss3 target (`7.427461557h`) are loss1 epoch `2757` and loss2 epoch `1499`; available checkpoint candidates are loss1 epoch `2700/2800` and loss2 epoch `1455/1500`.",
-            "- Continue random baselines to the loss3 work-clock target. Latest local timing estimates imply `random_clean_y` needs about `13,100` more epochs beyond epoch `8000`, and `random_solver_y` needs about `1,860` more epochs beyond epoch `6000`.",
-            "- Run/evaluate strict selected-work-clock six-model 52-dataset clean and P2Q2 attack tables. The current selected-worktime 52-dataset attack table is missing `loss1`, `loss2`, and `loss3`.",
+            "- Select loss1/loss2 checkpoints by the loss3 wall-clock target instead of using over-budget final endpoints. The nearest local epochs to the loss3 target (`7.427461557h`) are loss1 epoch `2757` and loss2 epoch `1499`; available checkpoint candidates are loss1 epoch `2700/2800` and loss2 epoch `1455/1500`.",
+            "- Continue random baselines to the loss3 wall-clock target. Latest local timing estimates imply `random_clean_y` needs about `13,100` more epochs beyond epoch `8000`, and `random_solver_y` needs about `1,860` more epochs beyond epoch `6000`.",
+            "- Run/evaluate strict selected-wall-clock six-model 52-dataset clean and P2Q2 attack tables. The current selected-time 52-dataset attack table is missing `loss1`, `loss2`, and `loss3`.",
             "- Rebuild the summary tables and RMSE/relative-L2 figures from the strict selected endpoints.",
             "",
-            "SVD/Jacobian should not be the first expensive rerun. The existing 25-sample joined table is useful evidence, but its checkpoint/work-clock alignment should be treated as audit evidence until strict endpoint selection is complete.",
+            "SVD/Jacobian should not be the first expensive rerun. The existing 25-sample joined table is useful evidence, but its checkpoint/wall-clock alignment should be treated as audit evidence until strict endpoint selection is complete.",
             "",
         ]
     )
@@ -469,12 +529,29 @@ def write_markdown_report(
 
 
 def main() -> None:
+    global SUMMARY_ROOT, FULL_SUITE_ROOT, CURVE_ROOT, GEN_MANIFEST
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--workclock-xmax", type=float, default=None)
+    parser.add_argument("--summary-root", type=Path, default=SUMMARY_ROOT)
+    parser.add_argument("--full-suite-root", type=Path, default=FULL_SUITE_ROOT)
+    parser.add_argument("--curve-root", type=Path, default=CURVE_ROOT)
+    parser.add_argument("--gen-manifest", type=Path, default=GEN_MANIFEST)
     args = parser.parse_args()
+    SUMMARY_ROOT = args.summary_root.resolve()
+    FULL_SUITE_ROOT = args.full_suite_root.resolve()
+    CURVE_ROOT = args.curve_root.resolve()
+    GEN_MANIFEST = args.gen_manifest.resolve()
 
     dirs = make_output_dirs(args.out)
+    for stale in list(dirs.figures.glob("*workclock*.png")) + list((dirs.figures / "no_random_clean").glob("*workclock*.png")):
+        stale.unlink()
+    for stale in dirs.data.glob("*workclock*"):
+        stale.unlink()
+    for stale_name in ["work_clock_by_epoch.csv"]:
+        stale = dirs.data / stale_name
+        if stale.exists():
+            stale.unlink()
     audit = audit_required_artifacts(dirs)
     clean = read_clean_table()
     evals, work = load_eval_metrics()
@@ -483,10 +560,11 @@ def main() -> None:
     robust = pd.read_csv(SUMMARY_ROOT / "robustness_25sample_six_models_selected_worktime.csv")
     corr = pd.read_csv(SUMMARY_ROOT / "metric_correlations_with_attack_selected_worktime_25sample.csv")
 
-    work.to_csv(dirs.data / "work_clock_by_epoch.csv", index=False)
-    split_curves.to_csv(dirs.data / "eval_split_curves_by_epoch_workclock.csv", index=False)
+    dataset_labels = load_generalization_labels(GEN_MANIFEST)
+    work.to_csv(dirs.data / "wall_clock_by_epoch.csv", index=False)
+    split_curves.to_csv(dirs.data / "eval_split_curves_by_epoch_wallclock.csv", index=False)
     gen_evals = evals[evals["split"] == "generalization"].copy()
-    gen_evals.to_csv(dirs.data / "generalization_dataset_curves_by_epoch_workclock.csv", index=False)
+    gen_evals.to_csv(dirs.data / "generalization_dataset_curves_by_epoch_wallclock.csv", index=False)
 
     common_hours = float(work.groupby("model")["work_clock_hours"].max().min())
     audit["curve_audit"] = {
@@ -495,31 +573,49 @@ def main() -> None:
         "common_work_clock_hours": common_hours,
         "workclock_plot_xmax_hours": float(args.workclock_xmax) if args.workclock_xmax is not None else common_hours,
         "workclock_plot_xmax_source": "explicit_arg" if args.workclock_xmax is not None else "minimum_final_logged_work_clock",
+        "wallclock_plot_xmax_hours": float(args.workclock_xmax) if args.workclock_xmax is not None else common_hours,
+        "wallclock_plot_xmax_source": "explicit_arg" if args.workclock_xmax is not None else "minimum_final_logged_wall_clock",
+        "curve_smoothing": "none_raw_evaluation_points",
+        "curve_alpha": {"trained_lines": 0.72, "generalization_grid_lines": 0.66, "baseline_reference": 0.74},
+        "dataset_label_source": rel(GEN_MANIFEST),
+        "descriptive_dataset_labels_loaded": len(dataset_labels),
         "eval_metric_rows": int(len(evals)),
         "generalization_curve_rows": int(len(gen_evals)),
         "baseline_is_horizontal_reference": True,
     }
     (dirs.manifests / "audit_manifest.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")
 
+    curve_sets = [
+        ("", TRAINED_MODELS, dirs.figures),
+        ("_no_random_clean", [m for m in TRAINED_MODELS if m != "random_clean_y"], dirs.figures / "no_random_clean"),
+    ]
     for metric in ["rmse", "relative_l2"]:
-        target = dirs.figures / f"{metric}_epoch_train_test_generalization_mean.png"
-        if not target.exists():
-            plot_split_curves(split_curves, clean, metric, "epoch", target, args.workclock_xmax)
-        target = dirs.figures / f"{metric}_workclock_train_test_generalization_mean.png"
-        if not target.exists():
-            plot_split_curves(split_curves, clean, metric, "work_clock_hours", target, args.workclock_xmax)
-        for x in ["epoch", "work_clock_hours"]:
-            for part in [1, 2]:
-                suffix = "workclock" if x == "work_clock_hours" else "epoch"
-                target = dirs.figures / f"{metric}_{suffix}_generalization_25of50_part{part}.png"
-                if not target.exists():
-                    plot_generalization_grid(evals, clean, metric, x, part, target, args.workclock_xmax)
+        for file_suffix, plot_models, figure_dir in curve_sets:
+            target = figure_dir / f"{metric}_epoch_train_test_generalization_mean{file_suffix}.png"
+            plot_split_curves(split_curves, clean, metric, "epoch", target, args.workclock_xmax, plot_models)
+            target = figure_dir / f"{metric}_wallclock_train_test_generalization_mean{file_suffix}.png"
+            plot_split_curves(split_curves, clean, metric, "work_clock_hours", target, args.workclock_xmax, plot_models)
+            for x in ["epoch", "work_clock_hours"]:
+                for part in [1, 2]:
+                    suffix = "wallclock" if x == "work_clock_hours" else "epoch"
+                    target = figure_dir / f"{metric}_{suffix}_generalization_25of50_part{part}{file_suffix}.png"
+                    plot_generalization_grid(evals, clean, metric, x, part, target, args.workclock_xmax, plot_models, dataset_labels)
 
     summary = summarize_final_metrics(clean, attack, robust, corr)
     (dirs.data / "final_metric_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     write_markdown_report(dirs, summary, audit, work, args.workclock_xmax)
 
-    print(json.dumps({"output": rel(dirs.root), "figures": len(list(dirs.figures.glob("*.png"))), "common_work_clock_hours": common_hours, "workclock_plot_xmax_hours": audit["curve_audit"]["workclock_plot_xmax_hours"]}, indent=2))
+    print(
+        json.dumps(
+            {
+                "output": rel(dirs.root),
+                "figures": len(list(dirs.figures.rglob("*.png"))),
+                "common_work_clock_hours": common_hours,
+                "wallclock_plot_xmax_hours": audit["curve_audit"]["wallclock_plot_xmax_hours"],
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

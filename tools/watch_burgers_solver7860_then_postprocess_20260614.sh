@@ -63,6 +63,9 @@ log "building 8h audit/curve bundle"
 "$PY" "$ROOT/tools/audit_burgers_timematched_full_20260614.py" \
   --out "$AUDIT_OUT" \
   --workclock-xmax 8.0 \
+  --summary-root "$SUMMARY_ROOT" \
+  --full-suite-root "$RANDOM_ROOT" \
+  --gen-manifest "$ROOT/generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/manifest.json" \
   > "$LOG_ROOT/audit_solver7860_clean8000.log" 2>&1
 
 copy_outputs_with_env_remote() {
