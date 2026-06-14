@@ -14749,3 +14749,59 @@ Interpretation:
 
 Report:
 - `docs/darcy_raw_vs_corrected_audit_20260614.md`
+
+## 2026-06-14 - Darcy cflow time-matched audit release
+
+Status: complete.
+
+Observed source files:
+- `outputs/darcyflow_timematched_full_or_audit_20260614/`.
+- `outputs/darcyflow_timematched_organized_release_20260614/`.
+- `outputs/darcy_random_3000_20260614/replot_status.json`.
+
+Action taken:
+- Added `tools/build_darcy_cflow_timematched_audit_20260614.py`.
+- Built cflow-specific audit and organized-release payloads from existing
+  DarcyFlow artifacts, without rerunning training, attack, SVD/Jacobian, or dense
+  heatmap generation.
+- Added cflow-specific clean, attack, SVD/Jacobian, scalar-correlation,
+  first-place, bootstrap/significance, and coverage-policy CSVs.
+- Added `reports/R2_GITHUB_SYNC_RECORD.md` to both cflow payload directories.
+
+Evidence:
+- Local payloads:
+  `outputs/darcy_cflow_timematched_full_or_audit_20260614/` and
+  `outputs/darcy_cflow_timematched_organized_release_20260614/`.
+- Each final payload has `569` files and `1,560,307,897` logical bytes.
+- Key report:
+  `outputs/darcy_cflow_timematched_full_or_audit_20260614/reports/DARCY_CFLOW_AUDIT_REPORT.md`.
+- Sync record:
+  `outputs/darcy_cflow_timematched_full_or_audit_20260614/reports/R2_GITHUB_SYNC_RECORD.md`.
+
+R2 upload:
+- Uploaded both cflow payloads to
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/`.
+- Verified `outputs/darcy_cflow_timematched_full_or_audit_20260614` with
+  `rclone size --json`: `569` objects, `1,560,307,897` bytes.
+- Verified `outputs/darcy_cflow_timematched_organized_release_20260614` with
+  `rclone size --json`: `569` objects, `1,560,307,897` bytes.
+- Verified both remote paths with `rclone check --size-only`: `0` differences
+  and `569` matching files each.
+- R2 returned transient `501 Not Implemented` errors on the first multipart pass;
+  rclone retried and final verification matched local files.
+
+Interpretation:
+- Clean/generalization summaries favor `loss3` for RMSE, Relative L2, MSE, MAE,
+  and accuracy-score metrics in the available 52-dataset tables.
+- Attack smoke summaries are mixed: `physics` is best for final adversarial loss
+  and clean loss, while `loss3` is best for all-dataset loss increase and
+  relative increase. Delta norms remain process diagnostics only.
+- SVD/Jacobian and attack evidence are limited by existing smoke coverage:
+  3 SVD/Jacobian samples per model and 2 attack samples per dataset/model, not
+  the requested full 25-sample SVD/Jacobian and 50-sample attack coverage.
+- Full per-dataset physics/PDE residual columns were not found in clean eval
+  tables, so physics residual is documented as partial coverage and not merged
+  into RMSE/Relative-L2 conclusions.
+
+Report:
+- `docs/darcy_cflow_timematched_audit_release_20260614.md`
