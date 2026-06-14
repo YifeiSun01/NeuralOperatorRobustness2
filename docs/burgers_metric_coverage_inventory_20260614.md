@@ -56,6 +56,28 @@ Yes: the requested quantities are present locally, but they are split across sev
 | random_clean_y | 0.283088 | 0.191025 | 0.541534 | 0.414371 | 0.656611 | 0.675828 |
 | random_solver_y | 0.917669 | 0.820936 | 0.919859 | 0.824118 | 0.802382 | 0.89008 |
 
+## JTe Versus Spectral Norm Correlation With Attack
+
+This table isolates the mechanism check: whether the loss-gradient direction norm
+`||J_error^T error||` tracks `attack_loss_increase` more strongly than the largest
+singular value `spectral_norm(J_error)`.
+
+| scope | metric | n | Pearson with attack_loss_increase | Spearman with attack_loss_increase |
+| --- | --- | ---: | ---: | ---: |
+| all_six_150 | `||J_error^T error||` | 150 | 0.8997 | 0.8976 |
+| all_six_150 | `spectral_norm(J_error)` | 150 | 0.6938 | 0.8312 |
+| generalization_all_six_126 | `||J_error^T error||` | 126 | 0.9254 | 0.8758 |
+| generalization_all_six_126 | `spectral_norm(J_error)` | 126 | 0.6377 | 0.7863 |
+| random_two_50 | `||J_error^T error||` | 50 | 0.8844 | 0.9114 |
+| random_two_50 | `spectral_norm(J_error)` | 50 | 0.7698 | 0.8259 |
+| old_four_100 | `||J_error^T error||` | 100 | 0.7453 | 0.8507 |
+| old_four_100 | `spectral_norm(J_error)` | 100 | 0.6372 | 0.7778 |
+
+Across all four scopes, `||J_error^T error||` has higher Pearson and higher
+Spearman correlation with `attack_loss_increase` than `spectral_norm(J_error)`.
+This supports the interpretation that attack loss growth is better explained by
+the local loss-gradient direction than by the largest singular direction alone.
+
 ## Top Correlations With Attack
 
 | scope | metric | metric_label | meaning | target | n | pearson | spearman | abs_pearson | abs_spearman | pearson_p_approx | spearman_p_approx | pearson_q_bh_fdr | spearman_q_bh_fdr |

@@ -15065,3 +15065,53 @@ Key results:
 Interpretation:
 - Clean evidence remains strongly favorable to `loss3` on the generalization majority, but it is not a 52/52 clean sweep.
 - The 52/52 sweep applies to strict attack `final_loss` and `attack_loss_increase`, not to full clean RMSE/Relative L2/MSE.
+
+## 2026-06-14 - Burgers JTe versus spectral-norm correlation table display fix
+
+Status: fixed a report readability issue only; no numerical analysis was rerun and no source CSV values were changed.
+
+Updated files:
+- `docs/burgers_metric_coverage_inventory_20260614.md`
+- `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_metric_coverage_inventory_20260614.md`
+
+Observed from `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/metric_coverage_inventory_20260614/top_correlations_with_attack.csv`:
+- In `all_six_150`, `||J_error^T error||` has Pearson/Spearman 0.8997/0.8976 with `attack_loss_increase`, versus `spectral_norm(J_error)` 0.6938/0.8312.
+- In `generalization_all_six_126`, the same comparison is 0.9254/0.8758 versus 0.6377/0.7863.
+- In `random_two_50`, the same comparison is 0.8844/0.9114 versus 0.7698/0.8259.
+- In `old_four_100`, the same comparison is 0.7453/0.8507 versus 0.6372/0.7778.
+
+Interpretation:
+- The cleaned table now makes the mechanism claim explicit: `||J_error^T error||` correlates more strongly with attack loss increase than the largest error singular value across all four scopes.
+
+## 2026-06-14 - Burgers JTe/spectral/attack mechanism conclusion record
+
+Status: added a dedicated Git-tracked Markdown record for the user's follow-up
+questions about sample counts, per-sample winner counts, correlations, vector
+angles, and the interpretation of `J_error^T error` versus spectral norm. No new
+training, attack generation, Jacobian generation, or SVD computation was run.
+
+New file:
+- `docs/burgers_jte_spectral_attack_mechanism_summary_20260614.md`
+
+Observed from existing local CSV/report artifacts:
+- Strict latest full-52 attack loss increase and final loss: `loss3` is best on
+  52/52 dataset rows and significantly better per dataset.
+- 25-sample local metrics: `loss3` is not first on every sample. It is first on
+  22/25 attack-loss-increase rows, 23/25 attack-final-MSE rows, 15/25
+  error-spectral-norm rows, 16/25 error-Frobenius rows, and 16/25
+  `||J_error^T error||` rows.
+- Generalization-21 local metrics: `loss3` is first on 19/21 attack-loss-increase
+  rows, 20/21 attack-final-MSE rows, 15/21 error-spectral-norm rows, 16/21
+  error-Frobenius rows, and 16/21 `||J_error^T error||` rows.
+- Correlation sample counts are recorded as all_six_150, generalization_all_six_126,
+  old_four_100, random_two_50, with partial `j_error_delta_l2` fields at n=48/42.
+- Direction-angle tables record all six models on 25 samples per model and support
+  the mechanism conclusion that attack delta is closer to `J_error^T error` than
+  to the top error singular vector.
+
+Interpretation:
+- The strongest direct robustness evidence is still strict latest full-52 attack
+  loss increase/final loss, where `loss3` is a 52/52 significant winner.
+- The local mechanism evidence is not a per-sample sweep, but it supports the
+  claim that `||J_error^T error||` explains attack loss growth better than the
+  largest error singular value alone.
