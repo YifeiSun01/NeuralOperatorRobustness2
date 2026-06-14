@@ -14340,3 +14340,19 @@ Updates:
 - Updated `tools/plot_burgers_training_run_visualizations_variable_epoch.py` so continuation runs plot their actual available epoch span instead of leaving blank x-axis space before the resumed epoch range.
 - R2 verification: image-only polished bundle has 50 PNGs and 0 non-PNG files; full polished bundle has 50 PNGs, 30 CSVs, and 5 JSON manifests; final output prefix has 98 PNGs with 50 under `figures/polished_reports/`.
 - Dedicated note: `docs/burgers_solver7860_polished_reports_20260614.md`.
+
+## 2026-06-14 - Burgers solver7860/clean8000 organized release
+
+Status: built a non-destructive organized release folder for the final Burgers solver7860/clean8000 audit artifacts.
+
+Updates:
+- Added `tools/organize_burgers_solver7860_clean8000_release_20260614.py`.
+- Created `outputs/burgers_solver7860_clean8000_organized_release_20260614/`.
+- The release groups artifacts into `00_start_here`, `01_summary_tables`, `02_figures`, `03_dense_six_model_attack_data`, `04_random_model_full_suite`, `05_polished_report_data`, `06_logs`, and `07_source_code_and_references`.
+- Observed from `MANIFEST.json`: 565 files, 1,285,074,028 bytes, 116 PNG, 82 CSV, 181 JSON, 136 NPZ, and 0 missing expected inputs.
+- Source roots include the final audit output, six-model summary, random-model full suite, dense six-model trace root, dense image-only bundle, polished report bundle, and postprocess logs.
+- Dedicated note: `docs/burgers_solver7860_clean8000_organized_release_20260614.md`.
+- R2 verification for `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_solver7860_clean8000_organized_release_20260614` returned 565 objects and 1,285,074,028 bytes. The sync log had transient Cloudflare R2 `501 NotImplemented` retries, but the final retry succeeded and remote size matches local manifest.
+
+Remaining work:
+- No remaining work for the organized release packaging itself.

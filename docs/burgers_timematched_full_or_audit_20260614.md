@@ -160,3 +160,17 @@ Polished report refresh:
 - The final audit output now contains 98 PNGs total, including 50 polished-report
   PNGs.
 - Dedicated note: `docs/burgers_solver7860_polished_reports_20260614.md`.
+
+Organized release:
+
+- Built a non-destructive, layered release folder at
+  `outputs/burgers_solver7860_clean8000_organized_release_20260614/`.
+- The release gathers the final audit output, summary tables, dense six-model
+  attack figures/traces, random-model full-suite outputs, polished report
+  figures/data, logs, and source-code references into one reviewable tree.
+- Verified from `MANIFEST.json`: 565 files, 1,285,074,028 bytes, 116 PNG, 82
+  CSV, 181 JSON, 136 NPZ, and 0 missing expected inputs.
+- R2 verification for the organized release prefix returned 565 objects and
+  1,285,074,028 bytes.
+- Dedicated note:
+  `docs/burgers_solver7860_clean8000_organized_release_20260614.md`.
