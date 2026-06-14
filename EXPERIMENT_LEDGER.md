@@ -14203,3 +14203,57 @@ Validation:
 - Dry-run trigger chain passed with `WAIT_PID=0`, `REQUIRE_RETRAIN_SUMMARIES=0`, `WAIT_GPU_FREE=0`, `DRY_RUN=1`, `RUN_PLOTS=0`.
 - Live watcher started with PID recorded in `adversarial_training_runs/burgers_wideparam_random_field_training_20260612_logs/watch_retrain_then_random_field_20260612.pid`.
 
+## 2026-06-14 - Burgers selected-worktime audit and clean curve package
+
+Status: audit package complete; no training, attack rerun, or SVD recomputation
+was performed.
+
+Source files:
+- `tools/audit_burgers_timematched_full_20260614.py`
+- `forensics/burgers_six_model_selected_worktime_summary_20260613/`
+- `forensics/burgers_random_field_final_models_full_suite_20260613/`
+- `visualizations/burgers_wideparam_selected_worktime_loss123_random_training_curves_20260613/`
+- adversarial training CSVs under the requested Burgers loss1/loss2/loss3 and
+  random-field run directories.
+
+Output files:
+- `outputs/burgers_timematched_full_or_audit_20260614/`
+- `docs/burgers_timematched_full_or_audit_20260614.md`
+
+Observed evidence:
+- The output bundle contains 12 requested RMSE/relative-L2 PNG curves: epoch and
+  work-clock train/test/generalization means plus two 25-dataset panels for all
+  50 generalization datasets for each metric.
+- The copied clean 52-dataset table shows `loss3` has the best mean clean
+  generalization RMSE (`0.0120496`) and relative L2 (`0.0236437`).
+- The 25-sample robustness/SVD table shows `loss3` has the lowest attack loss
+  increase mean (`0.00306321`) and lowest error spectral norm mean (`1.27153`).
+- Error spectral norm correlates with attack loss increase at Pearson `0.7216`
+  and Spearman `0.8393`; `J_error.T @ clean_error` / `bias_gradient_norm`
+  correlates at Pearson `0.8572` and Spearman `0.8928`.
+
+Determination:
+- Follow-up work is required. Existing local/R2-visible artifacts are sufficient
+  for audit and plotting, but not sufficient to claim a strict six-model
+  equal-work-clock final experiment.
+- Under strict logged work-clock (`attack_wall_sec + train_wall_sec`), endpoints
+  are `loss1=13.816h`, `loss2=9.890h`, `loss3=7.427h`,
+  `random_clean_y=2.902h`, and `random_solver_y=5.690h`.
+- For the loss3 target `7.427461557h`, nearest local epochs are loss1 epoch
+  `2757` and loss2 epoch `1499`; available checkpoint candidates are loss1
+  epoch `2700/2800` and loss2 epoch `1455/1500`.
+- Latest local timing estimates imply `random_clean_y` needs about `13,100`
+  additional epochs beyond epoch `8000`, and `random_solver_y` needs about
+  `1,860` additional epochs beyond epoch `6000`.
+- The selected-worktime 52-dataset attack CSV currently covers `baseline`,
+  `random_clean_y`, and `random_solver_y`, but is missing `loss1`, `loss2`, and
+  `loss3`.
+
+Remaining work:
+- If a strict final equal-work-clock experiment is required, extend/evaluate the
+  random baselines to the loss3 work-clock target and run a full six-model
+  selected-worktime 52-dataset attack.
+- R2 upload/verification for
+  `outputs/burgers_timematched_full_or_audit_20260614/` is complete at
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/burgers_timematched_full_or_audit_20260614`;
+  `rclone lsf --recursive` showed 39 files plus 4 directory markers.
