@@ -1,6 +1,6 @@
 # Burgers Final Resolution Audit, 20260614
 
-Generated: 2026-06-14T14:48:08+00:00
+Generated: 2026-06-14T14:56:57+00:00
 
 This report is the final sweep of the confusing Burgers conclusions after the strict latest full-52 attack repair. It reads existing artifacts only.
 

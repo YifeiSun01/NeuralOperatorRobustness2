@@ -14896,3 +14896,34 @@ Remaining work:
 - No unresolved local analysis blocker remains for the Burgers conclusion.
 - External GitHub/R2 synchronization for the newest final-resolution files still requires valid credentials in environment variables if not already available in the active shell; no secrets were written to repository files.
 - Current shell credential check showed `GITHUB_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, and `R2_ENDPOINT` unset. A non-interactive `git push origin vast-ai` attempt failed with `could not read Username`; local branch `vast-ai` therefore remains ahead of `origin/vast-ai`.
+
+## 2026-06-14 - Burgers rerun explanation and remaining-gap status
+
+Status: added a short explicit report answering what was rerun, why the previous full-52 attack conclusion was wrong, why the strict latest comparison is now valid, and what remains incomplete. This step read existing artifacts only; no training, attack, Jacobian, SVD, or plotting job was rerun.
+
+New/updated files:
+- New script: `tools/build_burgers_rerun_explanation_and_gap_status_20260614.py`.
+- New report: `docs/burgers_rerun_explanation_gap_status_20260614.md`.
+- Output report copy: `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/reports/burgers_rerun_explanation_gap_status_20260614.md`.
+- Output CSVs under `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/data/rerun_explanation_gap_status_20260614/`:
+  - `rerun_summary.csv`
+  - `remaining_gap_status.csv`
+  - `old_mixed_vs_strict_latest_attack_summary.csv`
+  - `old_mixed_bad_source_rows.csv`
+  - `strict_protocol_validation_copy.csv`
+  - `final_claim_boundaries_copy.csv`
+- Updated organizer: `tools/organize_burgers_solver7860_clean8000_release_20260614.py` now includes the rerun-explanation report in `00_start_here`.
+- Updated full bundle integrity report: `docs/burgers_full_data_bundle_integrity_audit_20260614.md`.
+
+Key results:
+- The repaired run was exactly the latest old4 full-52 P2Q2 attack on the current 10200-row widevis manifest; it was not a training rerun and did not rerun random models.
+- The previous recovered six-model full-52 attack table was invalid for the current strict claim because old4 rows came from historical first-master data while random rows came from the current solver7860/clean8000 random suite.
+- Current strict protocol validation remains clean: 11 protocol checks, 0 failures.
+- `loss3` beats `random_solver_y` on 52/52 strict latest dataset rows.
+- Remaining blocking gap count in the new report is 2, both external sync only: GitHub push and R2 upload lack credentials in the active environment.
+- Organized release after adding this report: `outputs/burgers_solver7860_clean8000_organized_release_20260614`, 2245 files, 0 missing.
+- Full data bundle audit after adding this report: `overall_pass=true`, 1827 parsed files, and 0 parse/shape/ranked/summary/docs/copy failures.
+
+Current interpretation:
+- Locally, no analysis-side Burgers blocker remains.
+- The valid conclusion is still metric-family specific: `loss3` is stable best on main comparable current evidence, but not literally every diagnostic or small-n scalar.

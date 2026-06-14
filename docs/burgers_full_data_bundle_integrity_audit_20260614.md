@@ -6,7 +6,7 @@ It does not rerun training, attacks, Jacobian, SVD, or plotting.
 ## Verdict
 
 - Overall pass: **True**
-- Parsed files checked: **1821**
+- Parsed files checked: **1827**
 - Parse failures: **0**
 - Expected-shape failures: **0**
 - Clean best-field failures: **0**
