@@ -14673,3 +14673,41 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_final_model_release_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final robustness/Jacobian/SVD missing-status audit
+
+Status: inspected; final robustness stage is missing.
+
+Action taken:
+- Audited the formal Darcy CFlow organized release for attack, delta,
+  robustness, SVD, and Jacobian outputs.
+- Checked existing local 50-step Darcy attack heatmap summaries.
+- Checked the final clean 52-dataset table to confirm the final seven-model
+  checkpoint family and epochs.
+
+Findings:
+- The formal release folder
+  `outputs/darcy_cflow_timematched_organized_release_20260614/` has no final
+  attack, delta, robustness, SVD, Jacobian, or loss3-advantage files.
+- The formal clean table
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`
+  is valid and contains seven models on 52 datasets: baseline epoch `0`, loss1
+  epoch `3000`, loss2 epoch `3079`, loss3 epoch `3033`, physics epoch `3121`,
+  random_clean epoch `3500`, and random_solver epoch `3500`.
+- Local 50-step attack heatmap summaries under `analysis_outputs/` are not
+  final-model results. They use the earlier `1000/1026/1011/1040/1100` epoch
+  checkpoint family.
+- Earlier smoke or partial robustness files are invalid for final claims and
+  were removed from or excluded from the formal release.
+
+Conclusion:
+- The requested final seven-model quantities have not been computed: 52-dataset
+  50-sample attack deltas/loss increases, fixed 25-sample SVD/Jacobian outputs,
+  singular values/vectors, operator norms, `J^T error` vectors/norms, and
+  vector/correlation summaries among singular vector, `J^T error`, attack delta,
+  and attack loss increase.
+- All final robustness claims must be regenerated from the final checkpoints,
+  not from smoke or earlier 1000-1100 epoch diagnostics.
+
+Report:
+- `docs/darcy_cflow_final_robustness_missing_status_20260615.md`
