@@ -15007,3 +15007,32 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
+
+## 2026-06-15 - Darcy cflow relative-increase denominator check
+
+Status: complete.
+
+Action taken:
+- Checked why physics can have smaller absolute attack `loss_increase` while
+  loss3 has smaller `relative_increase`.
+- Updated the physics/loss3 attack-Jacobian clarification report with the
+  denominator explanation and overlap counts.
+
+Evidence:
+- Source table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_attack_metric_long_ranked.csv`.
+- Generalization attack means: physics `clean_loss` `1.358e-07`, loss3
+  `clean_loss` `1.890e-07`; physics `loss_increase` `3.644e-08`, loss3
+  `loss_increase` `4.031e-08`; physics `relative_increase` `0.3345`, loss3
+  `relative_increase` `0.2268`.
+- Paired overlap count: `45/100` generalization samples have physics lower
+  absolute `loss_increase` while loss3 lower `relative_increase`.
+
+Interpretation:
+- The apparent contradiction is a denominator effect:
+  `relative_increase = loss_increase / clean_loss`. Physics often starts with a
+  lower clean loss, so a smaller absolute increase can still be a larger
+  percentage increase.
+
+Report:
+- `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`

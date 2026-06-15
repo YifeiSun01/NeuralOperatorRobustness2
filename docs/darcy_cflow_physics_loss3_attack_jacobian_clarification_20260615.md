@@ -48,6 +48,23 @@ So the precise statement is: in this partial smoke attack table, physics has
 smaller absolute post-attack loss and absolute loss increase on average, while
 loss3 has smaller relative loss increase.
 
+This can happen because `relative_increase` divides by each model's own
+`clean_loss`. In the generalization attack table, physics usually starts from a
+smaller clean loss:
+
+| metric mean | physics | loss3 | physics / loss3 |
+|---|---:|---:|---:|
+| clean_loss | 1.358e-07 | 1.890e-07 | 0.718 |
+| adv_loss | 1.722e-07 | 2.293e-07 | 0.751 |
+| loss_increase | 3.644e-08 | 4.031e-08 | 0.904 |
+| relative_increase | 0.3345 | 0.2268 | 1.475 |
+
+The absolute increase is only about 10% smaller for physics, but its clean-loss
+denominator is about 28% smaller. That smaller denominator can make the
+percentage increase larger. Direct paired counts confirm the overlap: in `45`
+of the 100 generalization samples, physics has a smaller absolute
+`loss_increase` while loss3 has a smaller `relative_increase`.
+
 ## Jacobian / SVD Quantities: What They Mean
 
 Observed source:
