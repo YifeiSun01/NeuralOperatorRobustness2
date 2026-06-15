@@ -16,9 +16,6 @@ This index organizes the main conclusions, formulas, references, source files, a
 - `docs/20260608_burgers_training_attack_visual_summary.md`  
   Burgers round03 loss1/loss2/loss3 training, loss1 `5000 -> 8000`, p2q2 attack visual/metric summary, and all-dataset 20-step p2q2 attack pilot status.
 
-- `docs/20260608_darcy_flow_self_training_summary.md`  
-  Darcy Flow lossdrop50 dataset selection, loss3 500-epoch self-training result, train/test/generalization behavior, accuracy-score definition, and Jacobian feasibility.
-
 ## Detailed Existing Reports Referenced
 
 - `docs/burgers_jacobian_downsample_svd_probe_20260607.md`
@@ -28,8 +25,6 @@ This index organizes the main conclusions, formulas, references, source files, a
 - `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md`
 - `docs/burgers_loss1_5000to8000_launch_20260607.md`
 - `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`
-- `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`
-- `docs/darcy_candidate_generalization_gradient_screen_20260607.md`
 - `docs/darcy_flow_naming_audit_20260607.md`
 
 ## Main One-Line Conclusions
@@ -42,7 +37,7 @@ Observed from FFT/projection correlation: higher Fourier high-frequency fraction
 
 Observed from Burgers p2q2 six-sample attack metrics: under the same `delta_rms≈0.12` and 100 attack steps, loss3 epoch1500 has the best attacked-output stability by mean MSE/RMS, but loss1/loss2/loss3 should be compared together rather than only loss3 versus baseline.
 
-Observed from Darcy Flow loss3 self-training: selected 50 generalization datasets improved clean generalization RMSE/relative-L2 by about `46%`, but train/test clean metrics worsened, indicating specialization to the selected generalization distribution.
+Darcy Flow old-root self-training summary material was removed from the current release; current Darcy/SIR20 analysis uses the binary 20260611 root.
 
 Observed limitation: local full-Jacobian SVD artifacts exist for round03 `loss1_epoch5000`, `loss2_epoch2000`, and `loss3_epoch1500`. A local `loss1_epoch8000` full-Jacobian NPZ was not found, so the downsample-Jacobian comparison uses `loss1_epoch5000` for loss1.
 

@@ -36,7 +36,7 @@ Observed sample sources:
 - `burgers_mid_matern_corr1_nu4`, index `29`, from `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
 - `burgers_far_sawtooth_add_scale0p3_shift0`, index `11`, from `generalization_datasets_rmse_1p5_3x_all_ns50/burgers`.
 
-Inference: this visualization is a mixed test/generalization probe: `1/6` test and `5/6` generalization. It is not a train-set visualization and it is not drawn from the newer Darcy Flow lossdrop50 suite.
+Inference: this visualization is a mixed test/generalization probe: `1/6` test and `5/6` generalization. It is not a train-set visualization.
 
 
 

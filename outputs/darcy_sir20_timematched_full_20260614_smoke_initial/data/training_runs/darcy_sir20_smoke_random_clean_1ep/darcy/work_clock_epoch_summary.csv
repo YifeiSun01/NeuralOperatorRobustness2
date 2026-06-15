@@ -1,2 +1,0 @@
-task,epoch,local_epoch,global_step,optimizer_global_step,work_clock_epoch_seconds,work_clock_attack_seconds,work_clock_optimizer_seconds,work_clock_cumulative_seconds,work_clock_cumulative_minutes,work_clock_resume_offset_seconds,attack_batches,optimizer_steps_this_epoch,max_work_seconds
-darcy,1,1,4,16,3.2222148449509405,1.0386386850150302,2.1835761599359103,3.2222148449509405,0.05370358074918234,0.0,4,16,

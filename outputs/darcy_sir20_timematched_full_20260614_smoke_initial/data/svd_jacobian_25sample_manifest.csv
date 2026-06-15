@@ -1,4 +1,0 @@
-dataset_id,split,source_sample_index,svd_role
-train_screen_binary_grf_alpha2_tau3_n384,train,0,train2
-train_screen_binary_grf_alpha2_tau3_n384,train,1,train2
-test_screen_binary_grf_alpha2_tau3_n96,test,0,test2
