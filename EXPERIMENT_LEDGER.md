@@ -15008,6 +15008,45 @@ Interpretation:
 Report:
 - `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
 
+## 2026-06-15 - Darcy cflow best model by metric table
+
+Status: complete.
+
+Action taken:
+- Aggregated the organized-release clean, attack, and SVD/Jacobian long tables
+  into a "best model by metric" table.
+- Reported both best-by-mean and best-by-first-place-count where applicable.
+- Wrote a docs-level summary distinguishing performance metrics from mechanism
+  diagnostics.
+
+Evidence:
+- Generated folder:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/best_model_by_metric_20260615/`.
+- Generated output report:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/BEST_MODEL_BY_METRIC_20260615.md`.
+- Docs report:
+  `docs/darcy_cflow_best_model_by_metric_20260615.md`.
+
+Observed results:
+- Clean generalization main metrics (`relative_l2`, `rmse`, `mae`, `data_mse`,
+  `accuracy_score`) are all best by `loss3`, with `47/50` first-place count on
+  each.
+- Partial-smoke surrogate attack generalization metrics are best by `physics`
+  for `clean_loss`, `adv_loss`, `loss_increase`, `delta_l2_rms`, and
+  `delta_linf`; `relative_increase` is best by `loss3`.
+- Visible SVD/Jacobian diagnostics have no single winner; best model depends on
+  the diagnostic quantity and sample count is small.
+
+Interpretation:
+- `loss3` is the clear best model for clean predictive/generalization quality.
+- `physics` is strongest on several absolute attack-loss quantities in the
+  current partial-smoke attack table.
+- SVD/Jacobian "best" rows should be treated as diagnostic directions, not as a
+  global model-quality ranking.
+
+Report:
+- `docs/darcy_cflow_best_model_by_metric_20260615.md`
+
 ## 2026-06-15 - Darcy cflow relative-increase denominator check
 
 Status: complete.
