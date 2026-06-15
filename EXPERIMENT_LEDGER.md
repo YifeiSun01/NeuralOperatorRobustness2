@@ -14963,3 +14963,47 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`
+
+## 2026-06-15 - Darcy cflow physics/loss3 attack-Jacobian clarification
+
+Status: complete.
+
+Action taken:
+- Recomputed direct `physics` vs `loss3` pairwise counts for the organized
+  release attack metrics.
+- Recomputed visible SVD/Jacobian pairwise counts and wrote a definitions note
+  explaining `adv_loss`, `loss_increase`, `relative_increase`, singular vectors,
+  `J^T error`, and attack delta angle/correlation metrics.
+
+Evidence:
+- Attack table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_attack_metric_long_ranked.csv`.
+- SVD/Jacobian table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_svd_jacobian_metric_long_ranked.csv`.
+- Source SVD/Jacobian table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/svd_jacobian_metrics.csv`.
+- Report:
+  `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`.
+
+Observed results:
+- Generalization attack `adv_loss`: physics lower than loss3 on `91/100`
+  samples.
+- Generalization attack `loss_increase`: physics lower than loss3 on `72/100`
+  samples.
+- Generalization attack `relative_increase`: loss3 lower than physics on
+  `72/100` samples.
+- Visible SVD/Jacobian diagnostics cover only `3` train/test samples per model.
+  On those visible samples, loss3 has lower `attack_loss_increase` on `3/3`,
+  while physics has lower `sigma_input_right` on `3/3`.
+
+Interpretation:
+- The earlier statement that physics is better on some attack metrics means
+  better on average and on a majority of partial-smoke generalization samples,
+  not better on every sample.
+- The attack table is partial smoke coverage, not the complete requested
+  full-sample robustness sweep.
+- The visible SVD/Jacobian diagnostics should be treated as qualitative
+  mechanism evidence because of the very small sample count.
+
+Report:
+- `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
