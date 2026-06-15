@@ -14879,3 +14879,44 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_polished_report_expansion_20260615.md`
+
+## 2026-06-15 - Darcy cflow extra loss3-advantage heatmaps
+
+Status: complete.
+
+Action taken:
+- Selected 15 additional generalization samples from the final clean Relative-L2
+  table where `loss3` beats the best non-loss3 method.
+- Expanded the selection beyond the original five heatmap datasets to cover
+  `matern_smooth`, `rectangles`, `wave_mix`, `blocky_tiles`,
+  `cellular_blobs`, `bandpass_grf`, `matern_fine`, and `highpass_grf`.
+- Ran the seven-model Darcy binary loss3 attack heatmap script with
+  `attack_steps=50` and `epsilon_fraction=0.025`.
+- Copied the 15 new heatmaps into the organized release and created a combined
+  old-5 plus new-15 folder.
+
+Evidence:
+- Manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/loss3_advantage_extra15_manifest_20260615.csv`.
+- Source analysis output:
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/`.
+- New organized-release figure folder:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/dense_existing/group15_loss3_advantage_extra/`.
+- Combined organized-release figure folder:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/dense_existing/group20_loss3_advantage_combined/`.
+- New PNG count is `15`; combined PNG count is `20`.
+- Attack-rank table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_extra15_attack_ranks_20260615.csv`.
+- In the new 15-sample attack-rank table, `loss3` is best on `15/15` samples for
+  `attack_loss_gain`, `adv_relative_l2_model_vs_solver`, and
+  `adv_rmse_model_vs_solver`.
+
+Interpretation:
+- The added samples satisfy the requested loss3-advantage condition using both
+  the clean final Relative-L2 selection table and the newly generated seven-model
+  attack diagnostics.
+- Pixel variance checks on the output PNGs were nonzero, confirming that the
+  copied images are not blank.
+
+Report:
+- `docs/darcy_cflow_loss3_advantage_extra15_20260615.md`
