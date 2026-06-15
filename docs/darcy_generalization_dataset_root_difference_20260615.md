@@ -19,6 +19,21 @@ By dataset naming and `.pt` file mtimes:
 The top-level directory mtime for `lossdrop50_selected` was later touched on
 2026-06-14, but the actual selected `.pt` dataset files are from 2026-06-07.
 
+Local Darcy generalization roots currently present:
+
+| root | `.pt` count | `.pt` generation window |
+|---|---:|---|
+| `generalization_datasets_darcy_lossdrop50_selected_20260607` | 50 | 2026-06-07 17:37 to 17:44 |
+| `generalization_datasets_darcy_stockgeneralization_20260608` | 50 | inspected as an older stock/generalization root |
+| `generalization_datasets_darcy_binary_diverse_preview_20260611` | 8 | 2026-06-11 21:02 |
+| `generalization_datasets_darcy_binary_diverse_20260611` | 50 | 2026-06-11 21:03 to 21:05 |
+| `generalization_datasets_darcy_binary_loss3targeted_20260611` | 50 | 2026-06-11 21:21 to 21:24 |
+
+Among the full 50-dataset local Darcy roots by `.pt` generation time,
+`generalization_datasets_darcy_binary_loss3targeted_20260611` is the newest.
+`lossdrop50_selected_20260607` is not the newest; it is an older selected
+soft-field suite.
+
 ## Coefficient Field Check
 
 The Darcy coefficient field is stored in key `x` in the `.pt` files.

@@ -14960,6 +14960,10 @@ Findings:
   2026-06-14.
 - `binary_loss3targeted_20260611` is newer by dataset generation date. Its `.pt`
   files are from 2026-06-11.
+- Among the full 50-dataset local Darcy roots by `.pt` generation time,
+  `generalization_datasets_darcy_binary_loss3targeted_20260611` is the newest
+  inspected root; `lossdrop50_selected_20260607` is not the newest even though
+  its top-level directory was later touched during sync.
 - `lossdrop50_selected_20260607` is not binary. The `x` coefficient fields are
   continuous soft fields with hundreds of thousands of unique values per file;
   observed x range was roughly 4.0 to 10.5 across the 50 files.
