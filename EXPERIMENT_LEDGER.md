@@ -14812,6 +14812,50 @@ Postprocess waiter:
 Report:
 - `docs/darcy_cflow_final7_attack20_svd25_run_20260615.md`
 
+## 2026-06-15 - Darcy CFlow final scalar correlation and vector alignment digest
+
+Status: complete.
+
+Question:
+- Are the final robustness scalar metric correlations, vector-angle
+  diagnostics, and vector-similarity summaries present and summarized for the
+  final seven-model Darcy CFlow run?
+
+Observed evidence:
+- Source bundle:
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/`.
+- The bundle contains the final attack20/SVD25 outputs, not smoke robustness
+  outputs.
+- Per-sample SVD/Jacobian metrics:
+  `data/svd_jacobian_metrics.csv` with `175` rows = seven models x 25 fixed
+  samples.
+- Scalar correlation summary:
+  `data/svd_attack_scalar_correlations.csv` with `522` rows.
+- Vector alignment summary:
+  `data/vector_alignment_summary_by_model.csv` with `28` rows.
+
+New digest outputs:
+- `data/final_scalar_correlation_digest.csv`.
+- `data/final_vector_alignment_digest.csv`.
+- `data/final_top_scalar_correlations.csv`.
+- `reports/final_correlation_alignment_summary.md`.
+
+Implementation:
+- Added `tools/summarize_darcy_final_correlation_alignment_20260615.py`.
+
+Key conclusion:
+- Yes, the requested scalar correlations and vector
+  angle/cosine/correlation diagnostics are present and summarized.
+- These SVD/Jacobian diagnostics intentionally cover the fixed 25-sample set,
+  while the clean/attack 52 x seven-model x eight-metric matrix remains the full
+  52-dataset summary.
+- Single-vector alignments between the leading singular vector, `J^T error`,
+  and attack delta are weak on average; top-k singular-subspace overlap with
+  attack delta is moderate but not close to one.
+
+Report:
+- `docs/darcy_cflow_final_correlation_alignment_summary_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
 
 Status: complete.
