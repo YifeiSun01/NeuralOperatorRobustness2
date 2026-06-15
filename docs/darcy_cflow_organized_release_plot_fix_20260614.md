@@ -31,7 +31,7 @@ Final organized-release counts after the fix:
 - Required raw alpha figures: `12`
 - Polished overview figures: `6`
 - Total payload files: `552`
-- Total payload bytes: `1,609,334,075`
+- Total payload bytes: `1,609,334,208`
 
 Important data note:
 

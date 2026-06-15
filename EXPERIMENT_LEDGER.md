@@ -14828,7 +14828,7 @@ Evidence:
 - Main `epoch` figure count is `36`.
 - Required raw alpha figure count is `12`.
 - Polished overview figure count is `6`.
-- Final organized-release payload size is `552` files and `1,609,334,075`
+- Final organized-release payload size is `552` files and `1,609,334,208`
   logical bytes.
 - Manifest:
   `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/cflow_plot_layout_fix_20260614.json`.
