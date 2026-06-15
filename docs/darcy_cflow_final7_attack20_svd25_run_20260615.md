@@ -128,6 +128,34 @@ Final output counts:
 The raw attack/SVD CSVs keep the machine key `physics_loss`; postprocessed
 summary tables and reports display that method as `Physics Loss`.
 
+SVD/Jacobian contents verified:
+
+- `data/svd_jacobian_metrics.csv` contains `175` rows and non-null values for:
+  `error_l2_norm`, `jt_error_l2_norm`, `sigma_input_right`, `block2_sigma1`,
+  `block2_top_singular_values_json`, `attack_loss_increase`, and
+  `attack_relative_increase`.
+- The same table contains same-sample vector alignment metrics:
+  `cos_singular_jt_error`, `angle_singular_jt_error_deg`,
+  `corr_singular_jt_error`, `cos_singular_attack_delta`,
+  `angle_singular_attack_delta_deg`, `corr_singular_attack_delta`,
+  `cos_jt_error_attack_delta`, `angle_jt_error_attack_delta_deg`, and
+  `corr_jt_error_attack_delta`.
+- It also contains top-k singular-subspace alignment metrics:
+  `topk_subspace_cos_jt_error`, `topk_subspace_angle_jt_error_deg`,
+  `topk_subspace_cos_attack_delta`, and
+  `topk_subspace_angle_attack_delta_deg`.
+- Each row points to a vector NPZ in `data/svd_jacobian_vectors/`; those NPZ
+  files store `x`, `y`, `pred`, `error`, `jt_error`, `attack_delta`,
+  `input_right_singular_vector`, `output_left_singular_vector`,
+  `block2_top_singular_values`, `block2_top_right_singular_vectors`,
+  `block2_top_left_singular_vectors`, and
+  `top_right_singular_vector_basis_full`.
+- `data/svd_attack_scalar_correlations.csv` contains same-sample scalar
+  correlations among singular-value diagnostics, `J^T error` norm, attack loss
+  increase, and attack relative increase.
+- `data/vector_alignment_summary_by_model.csv` contains by-model/by-split
+  summaries of the singular-vector, `J^T error`, and attack-delta alignments.
+
 ## Automatic postprocess
 
 The automatic postprocess waiter completed:

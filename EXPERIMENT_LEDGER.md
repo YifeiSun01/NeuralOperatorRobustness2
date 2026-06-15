@@ -14922,6 +14922,22 @@ Final output counts:
 - Reports:
   `reports/robustness_and_svd.md` and `reports/final_robustness_summary.md`.
 
+SVD/Jacobian content verification:
+- `data/svd_jacobian_metrics.csv` has non-null `error_l2_norm`,
+  `jt_error_l2_norm`, `sigma_input_right`, `block2_sigma1`,
+  `block2_top_singular_values_json`, `attack_loss_increase`, and
+  `attack_relative_increase` for all `175` rows.
+- The same table has same-sample cosine/angle/correlation fields for singular
+  vector vs `J^T error`, singular vector vs attack delta, and `J^T error` vs
+  attack delta.
+- The vector NPZ files in `data/svd_jacobian_vectors/` store the actual
+  `error`, `jt_error`, `attack_delta`, `input_right_singular_vector`,
+  `output_left_singular_vector`, top singular values/vectors, and top-k
+  right-singular-vector basis.
+- `data/svd_attack_scalar_correlations.csv` and
+  `data/vector_alignment_summary_by_model.csv` contain the requested scalar
+  correlation and vector-alignment summaries.
+
 Naming note:
 - Raw attack/SVD CSVs retain the machine key `physics_loss`; postprocessed
   summary tables and reports display that method as `Physics Loss`.
