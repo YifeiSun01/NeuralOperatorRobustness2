@@ -5,7 +5,7 @@ Date: 2026-06-15.
 ## What Was Checked
 
 This note separates the real attack-loss-increase artifacts from the earlier
-one-epoch preflight placeholder table.
+wrong placeholder table.
 
 Definitions:
 
@@ -111,8 +111,7 @@ so it is not an unbiased robustness ranking.
 
 For the available real 20-step full attack table, `loss3` is best on absolute
 attack loss increase and final attacked loss. The earlier "physics is better"
-statement came from the wrong one-epoch preflight placeholder table and should
-not be used.
+statement came from the wrong placeholder table and should not be used.
 
 For attack50, only selected subsets were found locally. Those subsets also show
 lower absolute attack loss increase for `loss3`, but they are not a complete

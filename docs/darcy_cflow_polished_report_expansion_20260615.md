@@ -1,56 +1,56 @@
 # Darcy CFlow Polished Report Expansion - 2026-06-15
 
-Terminology: `1ep` = one epoch. Preflight/smoke diagnostics are small
-pipeline-validation artifacts, not final model results.
-
 ## Scope
 
-Expanded the Darcy CFlow organized release with Burgers-style per-method
-polished-report figures.
+This note records the current formal Darcy CFlow polished-report contents after
+the release cleanup on 2026-06-15.
 
-Target payload:
+Target folder:
 
 `outputs/darcy_cflow_timematched_organized_release_20260614/`
 
-## What Changed
+## Current Polished Report Contents
 
-- Added `tools/build_darcy_cflow_polished_report_20260615.py`.
-- Rebuilt `figures/polished_report/<method>/` for:
-  - `loss1`
-  - `loss2`
-  - `loss3`
-  - `physics`
-  - `random_clean`
-  - `random_solver`
-- Added 7 per-method PNG figures for each method:
-  - full RMSE heatmap with dataset-family line plot
-  - 11-checkpoint RMSE heatmap with dataset-family line plot
-  - full Relative L2 heatmap with dataset-family line plot
-  - 11-checkpoint Relative L2 heatmap with dataset-family line plot
-  - smoke attack clean/adv/gain diagnostics
-  - smoke delta and SVD/Jacobian diagnostics
-  - six-panel polished diagnostic dashboard
-- Added 6 per-method CSV tables for each method under
-  `data/polished_report/<method>/`.
-- Added manifest:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/darcy_cflow_polished_report_20260615.json`.
+The current `figures/polished_report/` folder contains clean-evaluation figures
+only:
 
-## Counts
+- Cross-method split-mean RMSE and Relative L2 panels.
+- Per-method 52-dataset RMSE and Relative L2 heatmaps.
+- Per-method 11-checkpoint RMSE and Relative L2 heatmaps.
 
-- Newly generated per-method polished PNG files: `42`.
-- Total polished-report PNG files including the previous overview panels: `48`.
-- Newly generated polished-report CSV files: `36`.
-- Main-curve `work_hours` PNG count remains `0`.
-- Organized-release logical size after expansion:
-  `1,688,634,476` bytes.
+The current per-method folders are:
 
-## Notes
+- `loss1`
+- `loss2`
+- `loss3`
+- `physics`
+- `random_clean`
+- `random_solver`
 
-- The attack and SVD/Jacobian polished panels use the organized-release smoke
-  robustness/SVD diagnostic tables, not final time-matched robustness runs. Those
-  source rows use one-epoch preflight checkpoints with path pattern
-  `darcy_sir20_smoke_*_1ep` (`1ep` means one epoch) and should not be
-  interpreted as final rankings.
-- Random clean and random solver do not have `wall_seconds` in the source eval
-  tables. The per-method polished report therefore uses epoch axes and does not
-  generate any `work_hours` plots.
+The corresponding clean CSV tables remain under
+`data/polished_report/<method>/`.
+
+## Cleanup
+
+The formal organized release no longer contains the earlier pre-run attack or
+SVD/Jacobian diagnostic panels, dashboards, source tables, vectors, or derived
+rankings. Those files were moved out of the formal release folder and retained
+only for traceability at:
+
+`outputs/darcy_cflow_timematched_organized_release_20260614_excluded_preflight_20260615/`
+
+## Evidence
+
+Observed from local file scan after cleanup:
+
+- `figures/polished_report/` has no attack/SVD/dashboard diagnostic PNGs.
+- `data/polished_report/` has no attack/SVD diagnostic CSVs.
+- The formal release file names and Markdown/JSON/TXT files have no residual
+  partial/pre-run diagnostic labels.
+
+## Interpretation
+
+Use this polished-report folder for clean RMSE and Relative L2 visualization
+only. Use the real attack20 audit document for attack-loss-increase evidence:
+
+`docs/darcy_cflow_attack20_attack50_loss_increase_audit_20260615.md`
