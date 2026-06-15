@@ -14895,6 +14895,54 @@ Corrected interpretation:
 Report:
 - `docs/darcy_cflow_generalization_root_ranking_clarification_20260615.md`
 
+## 2026-06-15 - Darcy CFlow final Delta FFT polished-report addendum
+
+Status: complete.
+
+Question:
+- Why did the organized-release polished report not include the Delta FFT
+  heatmap figure, and where is it now?
+
+Cause:
+- The organized-release polished report was rebuilt as a clean-evaluation report.
+  Its README explicitly said final-model attack heatmaps were not included.
+- The older Burgers-style Darcy Delta FFT figure was an epoch-wise
+  `attack_probe_samples.csv` / per-epoch NPZ plot. The final organized release
+  does not contain that epoch-wise probe history for every final model.
+
+Action:
+- Added `tools/add_darcy_cflow_final_delta_fft_polished_report_20260615.py`.
+- Generated final-checkpoint attack-delta FFT addendum figures from the completed
+  attack20 delta NPZ files under
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/robustness_deltas/`.
+- Updated the polished-report README in
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/README.md`
+  so it no longer says final attack diagnostics are absent.
+
+Generated outputs:
+- Top-level overview:
+  `figures/polished_report/final_delta_fft/polished_final_delta_fft_log_magnitude_grid_all7.png`.
+- Top-level radial spectrum:
+  `figures/polished_report/final_delta_fft/polished_final_delta_radial_spectrum_all7.png`.
+- Per-model final Delta FFT log-magnitude and dataset-radial heatmaps under
+  `figures/polished_report/<method>/`.
+- Data:
+  `data/polished_report/final_delta_fft/final_delta_fft_dataset_metrics.csv`
+  and
+  `data/polished_report/final_delta_fft/final_delta_fft_summary_by_model.csv`.
+- Manifest:
+  `manifests/final_delta_fft_polished_report_20260615.json`.
+
+Validation:
+- The addendum covers seven models: baseline, loss1, loss2, loss3, Physics Loss,
+  random clean, and random solver.
+- It covers 50 generalization datasets and 2400 delta samples per model.
+- Spot-checked generated overview and loss3 heatmap images for gross
+  title/legend/colorbar overlap.
+
+Report:
+- `docs/darcy_cflow_final_delta_fft_polished_report_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
 
 Status: complete.
