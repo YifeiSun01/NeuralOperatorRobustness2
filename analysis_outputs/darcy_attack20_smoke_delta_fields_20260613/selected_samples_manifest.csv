@@ -1,3 +1,0 @@
-dataset_id,split,source,manual_tier,manual_rank,path,sample_ordinal,source_sample_index,sample_policy,seed,total_samples_available
-train_original_binary_grf_alpha2_tau3,train,original,train,0.0,2D_Darcy_FNO2d/datasets/grf_darcy_20260528_N1500/train/dim2d_darcy_nx85_N1200_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt,0,0,first,20260612,1200
-train_original_binary_grf_alpha2_tau3,train,original,train,0.0,2D_Darcy_FNO2d/datasets/grf_darcy_20260528_N1500/train/dim2d_darcy_nx85_N1200_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt,1,1,first,20260612,1200
