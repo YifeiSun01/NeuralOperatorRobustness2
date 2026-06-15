@@ -2,8 +2,8 @@
 
 ## Status
 
-The final seven-model robustness/Jacobian/SVD run has been launched and is
-currently running in the background.
+Complete. The final seven-model robustness/Jacobian/SVD run finished, and the
+automatic postprocess summary also finished.
 
 This run is intended to replace the invalid smoke/partial/1000-epoch diagnostics
 for robustness claims.
@@ -94,18 +94,51 @@ Log file:
 
 `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/setsid_final7_attack20_svd25.out`
 
+## Completion Evidence
+
+Observed after completion:
+
+- Main worker PID `440496` has exited.
+- Postprocess waiter PID `445388` has exited.
+- Waiter log recorded completion at `2026-06-15T03:03:56Z`.
+- Attack log lines: `364 / 364`.
+- SVD log lines: `175 / 175`.
+- SVD rows by model:
+  baseline `25`, loss1 `25`, loss2 `25`, loss3 `25`,
+  Physics Loss `25`, random_clean `25`, random_solver `25`.
+
+Final output counts:
+
+- Attack sample rows:
+  `17,500` in
+  `data/robustness_attack_52datasets_samples.csv`.
+- Attack delta NPZ files:
+  `364` in `data/robustness_deltas/`.
+- SVD/Jacobian rows:
+  `175` in `data/svd_jacobian_metrics.csv`.
+- SVD/Jacobian vector NPZ files:
+  `175` in `data/svd_jacobian_vectors/`.
+- Attack summary rows:
+  `28` in `data/attack20_summary_by_model_split.csv`.
+- Scalar correlation rows:
+  `522` in `data/svd_attack_scalar_correlations.csv`.
+- Vector alignment summary rows:
+  `28` in `data/vector_alignment_summary_by_model.csv`.
+
+The raw attack/SVD CSVs keep the machine key `physics_loss`; postprocessed
+summary tables and reports display that method as `Physics Loss`.
+
 ## Automatic postprocess
 
-An automatic postprocess waiter is running:
+The automatic postprocess waiter completed:
 
-- Waiter PID: `445388`.
 - Waiter log:
   `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/postprocess_waiter.out`
-- It waits for worker PID `440496` to exit.
-- If `data/svd_jacobian_metrics.csv` exists, it runs:
+- It waited for worker PID `440496` to exit.
+- It then ran:
   `tools/summarize_darcy_final_robustness_20260615.py`
 
-The postprocess creates:
+The postprocess created:
 
 - `data/attack20_summary_by_model_split.csv`
 - `data/svd_attack_scalar_correlations.csv`

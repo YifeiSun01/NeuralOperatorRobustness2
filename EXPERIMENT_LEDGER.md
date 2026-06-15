@@ -14890,3 +14890,41 @@ Validation:
 
 Report:
 - `docs/darcy_cflow_required_raw_alpha_full_six_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final seven-model attack20/SVD25 completion
+
+Status: complete.
+
+Question:
+- Did the formal final robustness/Jacobian/SVD run finish for baseline plus
+  loss1, loss2, loss3, Physics Loss, random clean, and random solver?
+
+Observed evidence:
+- Main worker PID `440496` and postprocess waiter PID `445388` have exited.
+- Waiter log
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/postprocess_waiter.out`
+  recorded main-process completion at `2026-06-15T03:03:56Z` and wrote
+  `reports/final_robustness_summary.md`.
+- Main log has `364` attack batch lines and `175` SVD/Jacobian lines.
+- SVD/Jacobian rows by model are complete: baseline `25`, loss1 `25`,
+  loss2 `25`, loss3 `25`, Physics Loss `25`, random_clean `25`, and
+  random_solver `25`.
+
+Final output counts:
+- `data/robustness_attack_52datasets_samples.csv`: `17,500` data rows,
+  all with `attack_steps = 20`.
+- `data/robustness_deltas/`: `364` delta NPZ files.
+- `data/svd_jacobian_metrics.csv`: `175` data rows.
+- `data/svd_jacobian_vectors/`: `175` vector NPZ files.
+- `data/attack20_summary_by_model_split.csv`: `28` rows.
+- `data/svd_attack_scalar_correlations.csv`: `522` rows.
+- `data/vector_alignment_summary_by_model.csv`: `28` rows.
+- Reports:
+  `reports/robustness_and_svd.md` and `reports/final_robustness_summary.md`.
+
+Naming note:
+- Raw attack/SVD CSVs retain the machine key `physics_loss`; postprocessed
+  summary tables and reports display that method as `Physics Loss`.
+
+Report:
+- `docs/darcy_cflow_final7_attack20_svd25_run_20260615.md`
