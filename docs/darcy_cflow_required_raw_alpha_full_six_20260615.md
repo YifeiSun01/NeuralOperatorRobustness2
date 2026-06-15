@@ -35,7 +35,9 @@ Validation:
   `data/source_tables/six_method_common_range_eval_split_summary.csv`
   and `data/source_tables/six_method_common_range_eval_metrics.csv`.
 - Expected method curves:
-  `loss1`, `loss2`, `loss3`, `physics`, `random_clean`, `random_solver`.
+  `loss1`, `loss2`, `loss3`, `Physics Loss`, `random_clean`,
+  `random_solver`.
+- Internal source-table key `physics` is displayed as `Physics Loss`.
 - Generated PNGs: `12`.
 - Retired old wall-axis alpha PNGs: `6`.
 - Manifest validation result:

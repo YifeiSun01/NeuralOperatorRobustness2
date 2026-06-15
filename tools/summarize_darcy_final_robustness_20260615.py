@@ -14,6 +14,18 @@ import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
+DISPLAY_NAMES = {
+    "baseline": "baseline",
+    "loss1": "loss1",
+    "loss2": "loss2",
+    "loss3": "loss3",
+    "physics": "Physics Loss",
+    "physics_loss": "Physics Loss",
+    "random_clean": "random clean",
+    "random_solver": "random solver",
+    "ALL_METHODS_POOLED": "ALL_METHODS_POOLED",
+}
+
 
 def rel(path: Path) -> str:
     try:
@@ -30,6 +42,11 @@ def finite_float_series(values: pd.Series) -> pd.Series:
 def mean_or_nan(values: pd.Series) -> float:
     vals = finite_float_series(values)
     return float(vals.mean()) if len(vals) else float("nan")
+
+
+def method_display(method: object) -> str:
+    key = str(method)
+    return DISPLAY_NAMES.get(key, key)
 
 
 def corr_value(df: pd.DataFrame, x_col: str, y_col: str, method: str) -> tuple[float, int]:
@@ -73,7 +90,8 @@ def attack_summary(attack: pd.DataFrame) -> pd.DataFrame:
         groups.extend((str(split), sub) for split, sub in sub_m.groupby("split", sort=False))
         for split, sub in groups:
             row: dict[str, object] = {
-                "method": method,
+                "method_key": str(method),
+                "method": method_display(method),
                 "split": split,
                 "datasets": int(sub["dataset_id"].nunique()),
                 "samples": int(len(sub)),
@@ -111,7 +129,8 @@ def scalar_correlations(svd: pd.DataFrame) -> pd.DataFrame:
                     value, n = corr_value(sub, x_col, y_col, corr_method)
                     rows.append(
                         {
-                            "method": method,
+                            "method_key": str(method),
+                            "method": method_display(method),
                             "split": split,
                             "x": x_col,
                             "y": y_col,
@@ -126,7 +145,8 @@ def scalar_correlations(svd: pd.DataFrame) -> pd.DataFrame:
             value, n = corr_value(pooled, x_col, y_col, corr_method)
             rows.append(
                 {
-                    "method": "ALL_METHODS_POOLED",
+                    "method_key": "ALL_METHODS_POOLED",
+                    "method": method_display("ALL_METHODS_POOLED"),
                     "split": "ALL",
                     "x": x_col,
                     "y": y_col,
@@ -160,7 +180,8 @@ def vector_alignment_summary(svd: pd.DataFrame) -> pd.DataFrame:
         groups.extend((str(split), sub) for split, sub in sub_m.groupby("split", sort=False))
         for split, sub in groups:
             row: dict[str, object] = {
-                "method": method,
+                "method_key": str(method),
+                "method": method_display(method),
                 "split": split,
                 "samples": int(len(sub)),
             }

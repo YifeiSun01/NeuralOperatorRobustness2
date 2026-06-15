@@ -84,7 +84,7 @@ METHODS: dict[str, MethodSpec] = {
     ),
     "physics_loss": MethodSpec(
         "physics_loss",
-        "physics loss",
+        "Physics Loss",
         "physics",
         "adv-only",
         "physics",
@@ -368,4 +368,3 @@ def angle_deg_from_cos(cosine: float) -> float:
     if not math.isfinite(cosine):
         return float("nan")
     return float(math.degrees(math.acos(max(-1.0, min(1.0, cosine)))))
-

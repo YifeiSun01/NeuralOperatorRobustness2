@@ -63,7 +63,7 @@ rows = [
     },
     {
         "method": "physics_loss",
-        "display_name": "physics loss",
+        "display_name": "Physics Loss",
         "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_physics_continue2081ep_from_1040ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3121_step003121.pt",
         "epochs_completed": 3121,
         "role": "trained_final",

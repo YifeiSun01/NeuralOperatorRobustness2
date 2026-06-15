@@ -19,6 +19,7 @@ import torch
 
 from darcy_sir20_common import (
     METHOD_ORDER,
+    METHODS,
     default_bundle_root,
     ensure_bundle_dirs,
     rel,
@@ -40,6 +41,7 @@ from tools.benchmark_darcy_jacobian_svd_20260612 import explicit_jacobian_rows, 
 
 ATTACK_FIELDS = [
     "method",
+    "method_display",
     "checkpoint",
     "dataset_id",
     "split",
@@ -64,6 +66,7 @@ ATTACK_FIELDS = [
 
 SVD_FIELDS = [
     "method",
+    "method_display",
     "checkpoint",
     "dataset_id",
     "split",
@@ -99,6 +102,16 @@ def checkpoint_rows(path: Path) -> list[dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload.get("checkpoints", [])
     return [r for r in rows if r.get("method") in METHOD_ORDER]
+
+
+def display_name(method: str, manifest_row: dict[str, Any] | None = None) -> str:
+    if manifest_row and manifest_row.get("display_name"):
+        return str(manifest_row["display_name"])
+    if method in METHODS:
+        return METHODS[method].display_name
+    if method in {"physics", "physics_loss"}:
+        return "Physics Loss"
+    return method
 
 
 def resolve(path_text: str) -> Path:
@@ -371,7 +384,8 @@ def write_report(path: Path, attack_rows: list[dict[str, Any]], svd_rows: list[d
         "|---|---|---:|---:|---:|---:|---:|",
     ]
     if not df.empty:
-        for (method, split), sub in df.groupby(["method", "split"], sort=False):
+        label_col = "method_display" if "method_display" in df.columns else "method"
+        for (method, split), sub in df.groupby([label_col, "split"], sort=False):
             lines.append(
                 f"| {method} | {split} | {len(sub)} | {sub['clean_loss'].astype(float).mean():.6g} | "
                 f"{sub['adv_loss'].astype(float).mean():.6g} | {sub['loss_increase'].astype(float).mean():.6g} | "
@@ -419,6 +433,7 @@ def main() -> None:
 
     for manifest_row in rows:
         method = str(manifest_row["method"])
+        method_label = display_name(method, manifest_row)
         checkpoint = resolve(str(manifest_row["checkpoint"]))
         model = load_model(checkpoint, device)
         for spec in specs:
@@ -460,6 +475,7 @@ def main() -> None:
                 attack_rows.append(
                     {
                         "method": method,
+                        "method_display": method_label,
                         "checkpoint": rel(checkpoint),
                         "dataset_id": spec.dataset_id,
                         "split": spec.split,
@@ -496,6 +512,7 @@ def main() -> None:
     svd_rows: list[dict[str, Any]] = []
     for manifest_row in rows:
         method = str(manifest_row["method"])
+        method_label = display_name(method, manifest_row)
         checkpoint = resolve(str(manifest_row["checkpoint"]))
         model = load_model(checkpoint, device)
         for svd_row in svd_manifest_rows:
@@ -550,6 +567,7 @@ def main() -> None:
             )
             out = {
                 "method": method,
+                "method_display": method_label,
                 "checkpoint": rel(checkpoint),
                 "dataset_id": spec.dataset_id,
                 "split": spec.split,

@@ -14861,7 +14861,9 @@ Observed evidence:
 - Source table
   `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv`
   contains all six trained methods:
-  `loss1`, `loss2`, `loss3`, `physics`, `random_clean`, and `random_solver`.
+  `loss1`, `loss2`, `loss3`, `Physics Loss`, `random_clean`, and
+  `random_solver`; the source-table key is `physics`, displayed as
+  `Physics Loss`.
 - The same source table has `wall_seconds = NaN` for `random_clean` and
   `random_solver`, while `work_seconds` is present for all six methods.
 - The old wall-axis alpha files therefore could not contain all six method

@@ -40,7 +40,7 @@ METHOD_LABELS = {
     "loss1": "loss1",
     "loss2": "loss2",
     "loss3": "loss3",
-    "physics": "physics loss",
+    "physics": "Physics Loss",
     "random_clean": "random clean",
     "random_solver": "random solver",
 }
@@ -413,6 +413,7 @@ def validate_manifest(records: list[dict[str, object]]) -> dict[str, object]:
                 incomplete.append({"file": record["file"], "panel": panel, "missing_methods": missing})
     return {
         "expected_methods": METHOD_ORDER,
+        "expected_display_names": [METHOD_LABELS[m] for m in METHOD_ORDER],
         "expected_method_count": len(METHOD_ORDER),
         "incomplete_panels": incomplete,
         "all_panels_have_six_methods": not incomplete,
