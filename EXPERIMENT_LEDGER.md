@@ -15404,3 +15404,32 @@ Follow-up correction:
 - Scanned all locally stored Codex session input images; no `ringsL1 avg` or
   `ringsLinf avg` `pert/orig/diff` screenshot was present beyond the forcing
   tile itself.
+
+## 2026-06-15 - GitHub and R2 sync for NS forcing figure and Darcy artifacts
+
+Status: completed.
+
+Question:
+- Back up the current code/Markdown to GitHub and the generated images, data,
+  and result artifacts to Cloudflare R2.
+
+GitHub:
+- Pushed code and Markdown to `YifeiSun01/NeuralOperatorRobustness2` branch
+  `vast-ai-darcy-flow`.
+- Commit pushed before the sync note: `1a4210a`
+  (`Add NS external forcing crop-stitch figures`).
+
+R2:
+- Incrementally copied `analysis_outputs/`, `outputs/`, and
+  `adversarial_training_runs/` to
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+- Verified the two final NS external-forcing uploaded-screenshot PNGs on R2.
+- Verified an NS range-removal replot PNG, a Darcy final robustness CSV, and
+  representative 3000-epoch Darcy supervised run CSVs on R2.
+
+Notes:
+- R2 sync used temporary rclone environment variables; no credentials were
+  written to repository files.
+- The `outputs/` clean pass used `--no-update-modtime` for Cloudflare R2
+  compatibility and excluded live rclone logs under
+  `outputs/r2_upload_darcy_20260615/*.log`.
