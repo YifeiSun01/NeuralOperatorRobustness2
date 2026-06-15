@@ -32,12 +32,9 @@ The corresponding clean CSV tables remain under
 
 ## Cleanup
 
-The formal organized release no longer contains the earlier pre-run attack or
+The formal organized release no longer contains non-final attack or
 SVD/Jacobian diagnostic panels, dashboards, source tables, vectors, or derived
-rankings. Those files were moved out of the formal release folder and retained
-only for traceability at:
-
-`outputs/darcy_cflow_timematched_organized_release_20260614_excluded_preflight_20260615/`
+rankings.
 
 ## Evidence
 
@@ -46,7 +43,7 @@ Observed from local file scan after cleanup:
 - `figures/polished_report/` has no attack/SVD/dashboard diagnostic PNGs.
 - `data/polished_report/` has no attack/SVD diagnostic CSVs.
 - The formal release file names and Markdown/JSON/TXT files have no residual
-  partial/pre-run diagnostic labels.
+  non-final diagnostic labels.
 
 ## Interpretation
 

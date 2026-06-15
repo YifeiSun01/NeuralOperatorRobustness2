@@ -15008,47 +15008,53 @@ Interpretation:
 Report:
 - `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
 
-## 2026-06-15 - Darcy cflow formal release pre-run diagnostic exclusion
+## 2026-06-15 - Darcy cflow final-model release cleanup
 
 Status: complete.
 
 Action taken:
-- Removed pre-run attack/SVD/Jacobian diagnostic artifacts from the formal Darcy
-  CFlow organized release folder.
-- Moved the excluded diagnostic source tables, vectors, arrays, derived
+- Cleaned the formal Darcy CFlow organized release so it contains final-model
+  clean-evaluation artifacts for the intended seven models only.
+- Removed non-final attack/SVD/Jacobian source tables, vectors, arrays, derived
   rankings, stale reports, stale manifests, and polished-report diagnostic
-  panels to a separate traceability folder:
-  `outputs/darcy_cflow_timematched_organized_release_20260614_excluded_preflight_20260615/`.
+  panels from the formal output set.
+- Removed the local non-final Darcy CFlow diagnostic output directories from
+  `outputs/`.
 - Rewrote the formal release polished-report README so it describes clean RMSE
   and Relative L2 figures only.
 - Added a formal release contents report:
   `outputs/darcy_cflow_timematched_organized_release_20260614/reports/FINAL_RELEASE_CONTENTS_20260615.md`.
 - Regenerated the formal release file manifest:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/file_manifest_20260615_no_preflight.json`.
-- Removed obsolete docs that ranked or explained the excluded pre-run diagnostic
-  tables as if they belonged in the formal result discussion.
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/file_manifest_20260615_final_models_only.json`.
+- Removed obsolete docs that ranked or explained non-final diagnostic tables as
+  if they belonged in the formal result discussion.
 
 Evidence:
 - Formal release folder:
   `outputs/darcy_cflow_timematched_organized_release_20260614/`.
-- Excluded traceability folder:
-  `outputs/darcy_cflow_timematched_organized_release_20260614_excluded_preflight_20260615/`.
-- Verification scans after cleanup found no residual pre-run diagnostic labels
-  in formal release filenames or in formal release Markdown/JSON/TXT content.
+- Final clean table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
+- Final clean table contains exactly seven methods with epochs:
+  baseline `0`, loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`,
+  random_clean `3500`, and random_solver `3500`.
+- Each of the seven methods has clean metrics on `52` datasets: train, test,
+  and `50` generalization datasets.
+- Verification scans after cleanup found no obsolete diagnostic labels in formal
+  release filenames or in formal release Markdown/JSON/TXT content.
 - Current formal release reports folder contains only
   `FINAL_RELEASE_CONTENTS_20260615.md`.
 
 Interpretation:
-- The formal organized release is now clean-evaluation focused: final clean
-  52-dataset metrics, main RMSE/Relative L2 curves, clean-only polished report
-  figures, and selected non-pre-run attack heatmap examples.
-- The release no longer presents pre-run attack/SVD/Jacobian diagnostics as
+- The formal organized release is final-model focused: final clean 52-dataset
+  metrics, main RMSE/Relative L2 curves, clean-only polished report figures,
+  and selected final-model attack heatmap examples.
+- The release no longer presents non-final attack/SVD/Jacobian diagnostics as
   final robustness evidence.
 - A complete final robustness ranking still requires a final-model attack/SVD
   run from the intended time-matched checkpoints.
 
 Report:
-- `docs/darcy_cflow_organized_release_preflight_exclusion_20260615.md`
+- `docs/darcy_cflow_final_model_release_cleanup_20260615.md`
 
 ## 2026-06-15 - Darcy cflow ten-pass consistency audit
 
