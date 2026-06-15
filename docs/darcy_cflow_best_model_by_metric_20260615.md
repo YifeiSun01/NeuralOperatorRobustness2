@@ -2,6 +2,18 @@
 
 Date: 2026-06-15.
 
+## Important Correction
+
+The attack and SVD/Jacobian rows in this note come from the organized-release
+smoke diagnostic tables, not from final time-matched robustness runs. The source
+attack table uses `darcy_sir20_smoke_*_1ep` checkpoints and `attack_steps=1`.
+Therefore, the attack/SVD "best model" rows below must not be used as final
+model rankings.
+
+For final clean generalization, `loss3` beats `physics` on all 50 generalization
+datasets for Relative L2, RMSE, and data MSE. See
+`docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`.
+
 ## Evidence
 
 Observed from:

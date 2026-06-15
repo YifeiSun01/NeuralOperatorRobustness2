@@ -15047,6 +15047,39 @@ Interpretation:
 Report:
 - `docs/darcy_cflow_best_model_by_metric_20260615.md`
 
+## 2026-06-15 - Darcy cflow smoke attack metric correction
+
+Status: complete.
+
+Action taken:
+- Audited the source checkpoints behind the organized-release attack and
+  SVD/Jacobian tables after noticing a contradiction with final generalization
+  plots.
+- Added correction notes to the affected docs and output reports.
+- Added a dedicated correction report.
+
+Evidence:
+- Source attack table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/robustness_attack_52datasets_samples.csv`.
+- The source table has `attack_steps=1`.
+- The six trained-method checkpoints point to
+  `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/.../darcy_sir20_smoke_*_1ep/.../darcy_epoch001_step000004.pt`.
+- Final clean table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
+- On final clean generalization metrics, `loss3` beats `physics` in `50/50`
+  datasets for Relative L2, RMSE, and data MSE.
+
+Interpretation:
+- The apparent "physics clean_loss lower than loss3" result came from smoke
+  attack diagnostics, not from final time-matched model evaluation.
+- It should not be used to contradict the final 25-per-figure generalization
+  loss curves.
+- A final-model robustness comparison still requires recomputing attack and
+  SVD/Jacobian tables from the final time-matched checkpoints.
+
+Report:
+- `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`
+
 ## 2026-06-15 - Darcy cflow relative-increase denominator check
 
 Status: complete.
