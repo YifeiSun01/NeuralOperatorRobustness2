@@ -4,9 +4,10 @@ Date: 2026-06-15.
 
 ## Important Correction
 
-The attack and SVD/Jacobian rows in this note come from the organized-release
-smoke diagnostic tables, not from final time-matched robustness runs. The source
-attack table uses `darcy_sir20_smoke_*_1ep` checkpoints and `attack_steps=1`.
+The attack and SVD/Jacobian rows in this note come from organized-release
+preflight/smoke diagnostic tables, not from final time-matched robustness runs.
+Here `1ep` = one epoch: the source attack table uses one-epoch preflight
+checkpoints with path pattern `darcy_sir20_smoke_*_1ep` and `attack_steps=1`.
 Therefore, the attack/SVD "best model" rows below must not be used as final
 model rankings.
 

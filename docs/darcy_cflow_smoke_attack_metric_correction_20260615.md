@@ -2,6 +2,9 @@
 
 Date: 2026-06-15.
 
+Terminology: `1ep` = one epoch. Preflight/smoke diagnostics are small
+pipeline-validation artifacts, not final model results.
+
 ## Correction
 
 The organized-release `cflow_attack_metric_long_ranked.csv` and
@@ -14,10 +17,12 @@ Observed from
 - `attack_steps` is `1`.
 - The six trained-method checkpoints are from
   `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/...`.
-- The method checkpoints are `darcy_sir20_smoke_*_1ep/.../darcy_epoch001_step000004.pt`.
+- The method checkpoints are one-epoch preflight checkpoints with path pattern
+  `darcy_sir20_smoke_*_1ep/.../darcy_epoch001_step000004.pt` (`1ep` means one
+  epoch).
 
 Therefore, the attack `clean_loss`, `adv_loss`, `loss_increase`, and
-`relative_increase` tables are smoke-run diagnostics, not final-model results.
+`relative_increase` tables are preflight diagnostics, not final-model results.
 
 ## Why This Matters
 
@@ -38,7 +43,7 @@ on the 50 final generalization datasets:
 
 So the apparent statement that "physics clean loss is smaller than loss3" is
 not true for the final generalization curves. It came from the smoke attack
-source table, which used 1-epoch smoke checkpoints and a different attack
+source table, which used one-epoch preflight checkpoints and a different attack
 objective table.
 
 ## Correct Interpretation

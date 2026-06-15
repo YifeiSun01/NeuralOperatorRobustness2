@@ -4,11 +4,12 @@ Date: 2026-06-15.
 
 ## Important Correction
 
-The attack and SVD/Jacobian tables referenced here are smoke diagnostics from
-`outputs/darcy_sir20_timematched_full_20260614_smoke_initial`, with
-`darcy_sir20_smoke_*_1ep` checkpoints and `attack_steps=1`. They are not final
-time-matched robustness results. Only the clean 52-dataset tables should be used
-for final clean predictive/generalization conclusions.
+The attack and SVD/Jacobian tables referenced here are preflight/smoke
+diagnostics from `outputs/darcy_sir20_timematched_full_20260614_smoke_initial`.
+Here `1ep` = one epoch: the checkpoints use path pattern
+`darcy_sir20_smoke_*_1ep`, and the attack table uses `attack_steps=1`. They are
+not final time-matched robustness results. Only the clean 52-dataset tables
+should be used for final clean predictive/generalization conclusions.
 
 For final clean generalization, `loss3` is better than `physics` on all 50
 generalization datasets for Relative L2, RMSE, and data MSE. See

@@ -7,7 +7,7 @@ Smoke status:
 - Smoke covered all six training methods for 1 epoch, full 52-dataset evaluation with `eval_max_samples=1`, checkpoint manifest generation, fixed-sample robustness attacks on all 52 datasets with 2 samples/dataset, 3 fixed SVD/Jacobian samples per model, and visualization.
 - Smoke outputs are under `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/`.
 - Smoke artifact sanity checks: `final_eval_metrics.csv` has `364` rows (`7` models x `52` datasets), `robustness_attack_52datasets_samples.csv` has `728` rows, `data/svd_jacobian_vectors/` has `21` NPZ files, and `figures/` has `13` PNG files.
-- The six trained smoke checkpoints all contain optimizer state; the baseline external `best.pt` does not, as expected.
+- The six trained one-epoch preflight checkpoints all contain optimizer state; the baseline external `best.pt` does not, as expected.
 
 Full-run launch status:
 - `MODE=full TAG=20260614_full UPLOAD_TO_R2=1 AUTO_GIT_PUSH=0` is running detached via `setsid -f`; PID recorded in `outputs/darcy_sir20_timematched_full_20260614_full/logs/full.pid` as `346318`.
@@ -15032,8 +15032,8 @@ Evidence:
 
 Observed results:
 - Attack source rows have unique `attack_steps=[1]`, `728/728` delta paths
-  contain `smoke_initial`, and `624/624` non-baseline rows use smoke
-  checkpoints.
+  contain `smoke_initial`, and `624/624` non-baseline rows use one-epoch
+  preflight checkpoints.
 - SVD/Jacobian has only `21` rows: exactly `3` samples per model.
 - Final clean generalization: `loss3` beats `physics` on `50/50` datasets for
   Relative L2, RMSE, data MSE, and accuracy.
@@ -15044,6 +15044,30 @@ Interpretation:
   generalization curves.
 - Current final clean conclusions support `loss3`; complete final robustness
   still requires recomputing attack/SVD from final time-matched checkpoints.
+
+## 2026-06-15 - Darcy cflow one-epoch preflight terminology clarification
+
+Status: complete.
+
+Action taken:
+- Reworded the Darcy cflow correction docs and organized-release Markdown so
+  `darcy_sir20_smoke_*_1ep` is explicitly defined as a one-epoch preflight
+  checkpoint path pattern.
+- Clarified that `1ep` means one epoch and that preflight/smoke diagnostics are
+  small pipeline-validation artifacts, not final model results.
+
+Evidence:
+- Updated docs include
+  `docs/darcy_cflow_best_model_by_metric_20260615.md`,
+  `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`,
+  `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`,
+  `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`, and
+  `docs/darcy_cflow_ten_pass_consistency_audit_20260615.md`.
+
+Interpretation:
+- The underlying data conclusion is unchanged: final clean generalization favors
+  `loss3`; the attack/SVD tables in the current organized release are only
+  one-epoch preflight diagnostics.
 
 ## 2026-06-15 - Darcy cflow best model by metric table
 
@@ -15099,8 +15123,9 @@ Evidence:
 - Source attack table:
   `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/robustness_attack_52datasets_samples.csv`.
 - The source table has `attack_steps=1`.
-- The six trained-method checkpoints point to
-  `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/.../darcy_sir20_smoke_*_1ep/.../darcy_epoch001_step000004.pt`.
+- The six trained-method checkpoints point to one-epoch preflight checkpoints:
+  `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/.../darcy_sir20_smoke_*_1ep/.../darcy_epoch001_step000004.pt`
+  (`1ep` means one epoch).
 - Final clean table:
   `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
 - On final clean generalization metrics, `loss3` beats `physics` in `50/50`

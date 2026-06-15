@@ -4,9 +4,10 @@ Date: 2026-06-15.
 
 ## Important Correction
 
-The attack and SVD/Jacobian quantities in this note come from smoke diagnostic
-tables, not from final time-matched model robustness. The source attack table
-uses `darcy_sir20_smoke_*_1ep` checkpoints and `attack_steps=1`.
+The attack and SVD/Jacobian quantities in this note come from preflight/smoke
+diagnostic tables, not from final time-matched model robustness. Here
+`1ep` = one epoch: the source attack table uses one-epoch preflight checkpoints
+with path pattern `darcy_sir20_smoke_*_1ep` and `attack_steps=1`.
 
 Therefore, statements such as "physics has lower clean_loss than loss3" apply
 only to that smoke attack table. They are not true for the final clean

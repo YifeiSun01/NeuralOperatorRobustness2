@@ -1,5 +1,8 @@
 # Darcy CFlow Polished Report Expansion - 2026-06-15
 
+Terminology: `1ep` = one epoch. Preflight/smoke diagnostics are small
+pipeline-validation artifacts, not final model results.
+
 ## Scope
 
 Expanded the Darcy CFlow organized release with Burgers-style per-method
@@ -45,7 +48,8 @@ Target payload:
 
 - The attack and SVD/Jacobian polished panels use the organized-release smoke
   robustness/SVD diagnostic tables, not final time-matched robustness runs. Those
-  source rows use `darcy_sir20_smoke_*_1ep` checkpoints and should not be
+  source rows use one-epoch preflight checkpoints with path pattern
+  `darcy_sir20_smoke_*_1ep` (`1ep` means one epoch) and should not be
   interpreted as final rankings.
 - Random clean and random solver do not have `wall_seconds` in the source eval
   tables. The per-method polished report therefore uses epoch axes and does not

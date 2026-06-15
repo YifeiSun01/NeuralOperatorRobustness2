@@ -12,7 +12,8 @@ Observed from
 
 - all attack rows have `attack_steps = 1`;
 - all attack delta paths contain `smoke_initial`;
-- all non-baseline attack checkpoints are `darcy_sir20_smoke_*_1ep`.
+- all non-baseline attack checkpoints are one-epoch preflight checkpoints with
+  path pattern `darcy_sir20_smoke_*_1ep` (`1ep` means one epoch).
 
 Observed from
 `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/svd_jacobian_metrics.csv`:
@@ -31,7 +32,7 @@ generalization curves.
 |---|---:|---|
 | 1. Attack source steps | PASS | unique `attack_steps` is `[1]` |
 | 2. Attack delta provenance | PASS | `728/728` delta paths contain `smoke_initial` |
-| 3. Attack checkpoint provenance | PASS | `624/624` non-baseline rows use smoke checkpoints |
+| 3. Attack checkpoint provenance | PASS | `624/624` non-baseline rows use one-epoch preflight checkpoints |
 | 4. Attack ranked-table coverage label | PASS | all `4368` rows are `partial_smoke_2sample_per_dataset` |
 | 5. SVD vector provenance | PASS | `21/21` vector paths contain `smoke_initial` |
 | 6. SVD sample count | PASS | every model has exactly `3` rows |
@@ -53,7 +54,7 @@ Smoke robustness diagnostics:
 - `physics` appears smaller on smoke attack `clean_loss`, `adv_loss`, and
   absolute `loss_increase` in parts of the current smoke table.
 - That evidence is not final-model robustness evidence because the source run is
-  a 1-step smoke diagnostic from 1-epoch smoke checkpoints.
+  a 1-step preflight/smoke diagnostic from one-epoch checkpoints.
 
 ## Files Updated
 
