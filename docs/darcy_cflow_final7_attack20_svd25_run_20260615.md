@@ -94,6 +94,27 @@ Log file:
 
 `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/setsid_final7_attack20_svd25.out`
 
+## Automatic postprocess
+
+An automatic postprocess waiter is running:
+
+- Waiter PID: `445388`.
+- Waiter log:
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/postprocess_waiter.out`
+- It waits for worker PID `440496` to exit.
+- If `data/svd_jacobian_metrics.csv` exists, it runs:
+  `tools/summarize_darcy_final_robustness_20260615.py`
+
+The postprocess creates:
+
+- `data/attack20_summary_by_model_split.csv`
+- `data/svd_attack_scalar_correlations.csv`
+- `data/vector_alignment_summary_by_model.csv`
+- `reports/final_robustness_summary.md`
+
+This specifically covers the scalar same-sample correlations among singular
+value, `J^T error` norm, and attack loss increase/relative increase.
+
 ## Outputs to inspect after completion
 
 - `data/attack_50sample_manifest.csv`
@@ -116,3 +137,6 @@ Log file:
 - `tools/run_darcy_cflow_final_robustness_20260615.sh`
   - New launcher that creates the final seven-model checkpoint manifest and runs
     preflight or full final robustness.
+- `tools/summarize_darcy_final_robustness_20260615.py`
+  - New postprocess summarizer for attack metrics, scalar correlations, vector
+    alignment summaries, and the final Markdown robustness report.

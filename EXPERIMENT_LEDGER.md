@@ -14722,8 +14722,13 @@ Action taken:
   and attack delta.
 - Added `tools/run_darcy_cflow_final_robustness_20260615.sh`, a launcher for the
   final seven-model checkpoint family.
+- Added `tools/summarize_darcy_final_robustness_20260615.py`, a postprocess
+  summarizer for attack summaries, same-sample scalar correlations, vector
+  alignment summaries, and a final Markdown report.
 - Ran a tiny final-checkpoint preflight successfully.
 - Launched the full final attack20/SVD25 job in a detached background process.
+- Launched an automatic postprocess waiter that will summarize the final CSVs
+  after the main worker exits.
 
 Final full output folder:
 - `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/`
@@ -14790,6 +14795,19 @@ Ten-minute tracking evidence:
 
 Log:
 - `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/setsid_final7_attack20_svd25.out`
+
+Postprocess waiter:
+- PID `445388`.
+- Log:
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/postprocess_waiter.out`
+- It will run
+  `tools/summarize_darcy_final_robustness_20260615.py --bundle outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25`
+  after the main worker exits and `svd_jacobian_metrics.csv` exists.
+- Expected postprocess outputs:
+  `data/attack20_summary_by_model_split.csv`,
+  `data/svd_attack_scalar_correlations.csv`,
+  `data/vector_alignment_summary_by_model.csv`, and
+  `reports/final_robustness_summary.md`.
 
 Report:
 - `docs/darcy_cflow_final7_attack20_svd25_run_20260615.md`
