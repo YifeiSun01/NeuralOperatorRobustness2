@@ -14805,3 +14805,39 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_timematched_audit_release_20260614.md`
+
+## 2026-06-14 - Darcy cflow organized-release plot layout fix
+
+Status: complete.
+
+Action taken:
+- Added `tools/fix_darcy_cflow_organized_release_plots_20260614.py`.
+- Updated
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/main_curves/`
+  in place.
+- Removed unwanted `*_work_hours.png` main-curve plots.
+- Redrew main-curve `epoch` and `wall_hours` plots with legends outside the axes
+  and wall-clock x-limits truncated to `0-4` hours.
+- Added transparent-line required raw replacements under
+  `figures/diagnostic_existing/required_raw_figures_alpha/`.
+- Added compact overview figures under `figures/polished_report/`.
+
+Evidence:
+- Main `work_hours` figure count is now `0`.
+- Main `wall_hours` figure count is `36`.
+- Main `epoch` figure count is `36`.
+- Required raw alpha figure count is `12`.
+- Polished overview figure count is `6`.
+- Final organized-release payload size is `552` files and `1,609,334,075`
+  logical bytes.
+- Manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/cflow_plot_layout_fix_20260614.json`.
+
+Interpretation:
+- Random clean and random solver remain present in epoch plots.
+- The source split/eval tables do not contain `wall_seconds` for random clean or
+  random solver; wall-hour plots keep those labels in the legend but do not
+  fabricate wall-hour curves.
+
+Report:
+- `docs/darcy_cflow_organized_release_plot_fix_20260614.md`
