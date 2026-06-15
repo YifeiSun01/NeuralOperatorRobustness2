@@ -15325,3 +15325,82 @@ Contents:
 - Vector similarity table for attack delta vs residual `J_res^T error` vector,
   residual top singular vector, and residual top10 subspace.
 - Source file list for all full CSVs and raw rerun attack outputs.
+
+## 2026-06-15 - NS external forcing mean perturbation crop-stitch figure
+
+Status: complete for local crop-stitch from available rendered notebook images;
+raw external-forcing attack tensors are missing locally.
+
+Question:
+- Generate a visual summary for the claim that averaged 2D Navier-Stokes attack
+  perturbations/deltas resemble their external forcing patterns, using rendered
+  notebook output crops because the original tensors are unavailable.
+
+Sources:
+- `2D_NS_FNO2d_recurrent/external_forcing_patterns/draw_patterns.ipynb`.
+- `solvers.py` and `EXPONAX_SOLVER_CODE_WALKTHROUGH.md` for the default
+  45-degree forcing formula.
+- Rendered local notebook images under
+  `analysis_outputs/ns_external_forcing_summary_20260615/raw_notebook_images/`.
+- Expansion logs under
+  `2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/logs/`.
+
+Outputs:
+- `tools/make_ns_external_forcing_crop_stitch.py`.
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_crops_available_only.png`.
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_crops_full_status.png`.
+- `docs/ns_external_forcing_mean_perturbation_crops_20260615.md`.
+
+Observed:
+- Local crop sources support `ringsCos`, `isoCircles`, and `petals` first/last
+  averaged delta or difference images.
+- Local `none` images are random-field sequence crops, not true attack-average
+  delta images.
+- Local filesystem search did not find external-forcing attack `.pt`, `.pth`,
+  `.npz`, `.npy`, or `.pkl` tensors under the external-forcing directory.
+- Logs point to historical `/blue/.../expanded_datasets/` attack tensors for
+  `ringsCos`, `sBands`, `isoCircles`, `petals`, `ringsL1`, `ringsLinf`, and
+  `none`.
+
+Conclusion:
+- The clean available-evidence figure shows the visual forcing/delta alignment
+  for the locally recoverable rows and labels the `none` row as a random-field
+  crop. The full-status figure preserves the intended 8-row structure and marks
+  missing local attack-average cells rather than filling them with invented
+  images.
+
+Remaining work:
+- Restore the historical `/blue/.../expanded_datasets/*.pt` tensors or saved
+  rendered average figures to create a fully complete 8-row attack-average
+  figure.
+
+Correction after user review:
+- The first user message included the relevant rendered screenshots as embedded
+  `data:image/png;base64` images in the Codex session JSONL. These were decoded
+  from
+  `/root/.codex/sessions/2026/06/15/rollout-2026-06-15T12-17-17-019ecb36-f7f7-76e3-ac1d-6f9e68bb15f6.jsonl`.
+- Added `tools/make_ns_external_forcing_from_uploaded_screenshots.py`, which
+  extracts the uploaded screenshots, crops `orig/pert/diff` at `t=0` and
+  `t=19`, and rebuilds the figure.
+- New outputs:
+  `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_8row.png`
+  and
+  `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_available_rows.png`.
+- The uploaded screenshots recover rows for the 45-degree default
+  (`diagonalinit0`), `ringsCos`, `sBands`, `isoCircles`, `petals`, and `none`.
+  The upload contains a duplicate `ringsCos avg` image; no `ringsL1` or
+  `ringsLinf` averaged screenshot is present in that uploaded set.
+
+Follow-up correction:
+- Rebuilt the uploaded-screenshot figures using external forcing cropped
+  directly from the user-provided `Field f` and six-forcing-grid screenshots,
+  rather than formula-regenerating the first column.
+- Switched the second temporal slice from `t=20` to `t=19`, because the
+  uploaded 45-degree grid has constant/blank `t=20` cells and the user requested
+  the first and penultimate frames.
+- Vertically flipped only the first-row 45-degree external-forcing crop to align
+  that standalone `Field f` panel with the uploaded attack-grid orientation; the
+  six-forcing-grid tiles keep their original uploaded orientation.
+- Scanned all locally stored Codex session input images; no `ringsL1 avg` or
+  `ringsLinf avg` `pert/orig/diff` screenshot was present beyond the forcing
+  tile itself.
