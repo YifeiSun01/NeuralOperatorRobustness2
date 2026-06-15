@@ -14856,6 +14856,45 @@ Key conclusion:
 Report:
 - `docs/darcy_cflow_final_correlation_alignment_summary_20260615.md`
 
+## 2026-06-15 - Darcy CFlow root-specific ranking clarification
+
+Status: complete.
+
+Question:
+- Why did one summary say `random solver` is best while the organized-release
+  training curves visibly show `loss3` best and `random clean` better than
+  `random solver`?
+
+Audit finding:
+- Two different 50-dataset generalization roots were being discussed together.
+- The organized-release curves and polished report source tables use
+  `generalization_datasets_darcy_binary_loss3targeted_20260611/`.
+- The final attack20/SVD25 bundle and aligned 52 x seven-model x eight-metric
+  matrix use
+  `generalization_datasets_darcy_lossdrop50_selected_20260607/`.
+
+Observed rankings:
+- On the organized-release curve root, `clean_52dataset_metric_long_ranked.csv`
+  gives generalization mean Relative L2:
+  loss3 `0.056154`, loss2 `0.081638`, random clean `0.082881`, loss1
+  `0.087929`, Physics Loss `0.088293`, baseline `0.091337`, random solver
+  `0.100569`. Best-counts out of 50 are loss3 `47`, random clean `2`, loss2
+  `1`, random solver `0`.
+- On the final lossdrop50-selected matrix, generalization mean Relative L2 is:
+  random solver `0.043099`, loss3 `0.046147`, Physics Loss `0.059502`, loss1
+  `0.068733`, loss2 `0.074334`, baseline `0.093380`, random clean `0.096630`.
+
+Corrected interpretation:
+- For the organized-release plots, the user's reading is correct: loss3 is
+  clearly best and random clean is better than random solver.
+- For the separate lossdrop50-selected final attack20/SVD25 matrix, random
+  solver is best on clean RMSE, clean Relative L2, attack final loss, and
+  absolute attack loss increase.
+- These two rankings must not be stated as one unqualified conclusion.
+
+Report:
+- `docs/darcy_cflow_generalization_root_ranking_clarification_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
 
 Status: complete.
