@@ -14920,3 +14920,46 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_loss3_advantage_extra15_20260615.md`
+
+## 2026-06-15 - Darcy cflow loss3/random statistical summary
+
+Status: complete.
+
+Action taken:
+- Aggregated the organized-release clean, attack, and SVD/Jacobian long tables
+  into focused model-level and pairwise summaries.
+- Wrote a dedicated output report for `loss3`, `random_clean`, and
+  `random_solver`.
+- Wrote a docs-level conclusion separating observed evidence from inference.
+
+Evidence:
+- Summary folder:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_random_clean_solver_stat_summary_20260615/`.
+- Main generated report:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/LOSS3_RANDOM_STAT_SUMMARY_20260615.md`.
+- Docs report:
+  `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`.
+- Clean generalization Relative L2: `loss3` mean `0.056154`, first place
+  `47/50`; `random_clean` mean `0.082881`; `random_solver` mean `0.100569`.
+- Clean generalization RMSE: `loss3` mean `0.0005946`, first place `47/50`;
+  `random_clean` mean `0.0008840`; `random_solver` mean `0.0010673`.
+- Attack generalization partial-smoke loss increase: `physics` is best on mean
+  absolute increase; `loss3` is second and better than `random_clean` and
+  `random_solver`.
+- `random_clean` beats `random_solver` on clean generalization Relative L2 in
+  `50/50` datasets and in every visible dataset family.
+
+Interpretation:
+- The complete clean 52-dataset evidence strongly supports broad `loss3`
+  superiority.
+- On available attack aggregate metrics, `loss3` is very strong but not
+  universally best because `physics` wins the mean adversarial-loss and absolute
+  loss-increase metrics.
+- The observed `random_clean` advantage over `random_solver` is broad rather
+  than a plotting accident. The plausible mechanism is that random clean acts as
+  input augmentation with stable targets, while random solver changes the target
+  distribution and may introduce harder/off-manifold solver responses. This
+  mechanism is an inference from observed evidence, not a separate ablation.
+
+Report:
+- `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`
