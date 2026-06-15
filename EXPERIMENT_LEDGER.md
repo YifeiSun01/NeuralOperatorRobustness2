@@ -14967,12 +14967,23 @@ Findings:
   coefficient values are 3.0 and 12.0, not 5.0 and 13.0.
 - Therefore neither currently checked root is exactly a 5/13 binary
   coefficient-field suite.
+- The required raw previous loss figures under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/diagnostic_existing/required_raw_figures_previous/`
+  use `six_method_common_range_eval_metrics.csv`; its 50 unique generalization
+  dataset paths point only to
+  `generalization_datasets_darcy_binary_loss3targeted_20260611/`, not
+  `generalization_datasets_darcy_lossdrop50_selected_20260607/`.
 
 Verification:
 - Loaded the `.pt` files with `torch.load(..., map_location="cpu")` and scanned
   key `x` across all 50 files in each root.
 - `binary_loss3targeted_20260611/darcy/generation_summary.json` also records
   `low=3.0`, `high=12.0`, and `all_binary_verified=true`.
+- Scanned
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv`
+  and found 962250 generalization rows, 50 unique generalization dataset IDs,
+  and exactly one generalization root:
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
 
 Report:
 - `docs/darcy_generalization_dataset_root_difference_20260615.md`

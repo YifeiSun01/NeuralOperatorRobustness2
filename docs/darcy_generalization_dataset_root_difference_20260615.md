@@ -79,3 +79,37 @@ generalization suite:
   the older continuous soft-field root.
 
 Those are different out-of-distribution test distributions.
+
+## Required Raw Figure Provenance
+
+The figures under:
+
+```text
+outputs/darcy_cflow_timematched_organized_release_20260614/figures/diagnostic_existing/required_raw_figures_previous/
+```
+
+use source tables:
+
+```text
+outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv
+outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_split_summary.csv
+```
+
+The generalization rows in `six_method_common_range_eval_metrics.csv` point only
+to:
+
+```text
+generalization_datasets_darcy_binary_loss3targeted_20260611/
+```
+
+Verification from the source table:
+
+- generalization rows: `962250`
+- unique generalization dataset IDs: `50`
+- unique generalization root dirs in `path`: `generalization_datasets_darcy_binary_loss3targeted_20260611`
+- methods: `loss1`, `loss2`, `loss3`, `physics`, `random_clean`,
+  `random_solver`
+
+Therefore the required raw previous loss figures are on the newer binary
+`20260611` root, not on the older continuous `lossdrop50_selected_20260607`
+root.
