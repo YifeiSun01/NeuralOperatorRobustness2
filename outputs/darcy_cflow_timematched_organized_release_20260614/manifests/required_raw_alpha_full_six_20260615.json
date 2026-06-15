@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-06-15T02:50:13.347872+00:00",
+  "release_dir": "outputs/darcy_cflow_timematched_organized_release_20260614",
+  "source_tables": [
+    "outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_split_summary.csv",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv"
+  ],
+  "previous_raw_dir_preserved": "figures/diagnostic_existing/required_raw_figures_previous",
+  "alpha_dir": "figures/diagnostic_existing/required_raw_figures_alpha",
+  "retired_old_wall_alpha_files": [
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_relative_l2_generalization_part01_vs_wall_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_relative_l2_generalization_part02_vs_wall_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_rmse_generalization_part01_vs_wall_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_rmse_generalization_part02_vs_wall_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_wall_clock_relative_l2_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_wall_clock_rmse_train_test_generalization_alpha.png"
+  ],
+  "retired_note": "Old wall-axis alpha files were moved aside because source wall_seconds is NaN for random_clean and random_solver; the rebuilt required-raw alpha set mirrors the previous work-clock raw figures and therefore contains all six trained methods.",
+  "line_alpha": 0.58,
+  "baseline_alpha": 0.72,
+  "target_max_epoch": 3500,
+  "common_max_work_seconds": 2056.575676355278,
+  "generated_files": [
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_epoch_rmse_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_work_clock_rmse_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_rmse_generalization_part01_vs_epoch_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_rmse_generalization_part01_vs_work_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_rmse_generalization_part02_vs_epoch_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_rmse_generalization_part02_vs_work_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_epoch_relative_l2_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_work_clock_relative_l2_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_relative_l2_generalization_part01_vs_epoch_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_relative_l2_generalization_part01_vs_work_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_relative_l2_generalization_part02_vs_epoch_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_relative_l2_generalization_part02_vs_work_alpha.png"
+  ],
+  "validation": {
+    "expected_methods": [
+      "loss1",
+      "loss2",
+      "loss3",
+      "physics",
+      "random_clean",
+      "random_solver"
+    ],
+    "expected_method_count": 6,
+    "incomplete_panels": [],
+    "all_panels_have_six_methods": true
+  }
+}

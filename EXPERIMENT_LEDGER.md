@@ -14847,3 +14847,44 @@ Conclusion:
 
 Report:
 - `docs/darcy_cflow_existing_figures_checkpoint_audit_20260615.md`
+
+## 2026-06-15 - Darcy CFlow required-raw alpha figure six-method fix
+
+Status: complete.
+
+Question:
+- Do the transparent alpha variants under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/diagnostic_existing/required_raw_figures_alpha/`
+  include all six trained methods plus the baseline horizontal line?
+
+Observed evidence:
+- Source table
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv`
+  contains all six trained methods:
+  `loss1`, `loss2`, `loss3`, `physics`, `random_clean`, and `random_solver`.
+- The same source table has `wall_seconds = NaN` for `random_clean` and
+  `random_solver`, while `work_seconds` is present for all six methods.
+- The old wall-axis alpha files therefore could not contain all six method
+  curves.
+
+Action:
+- Added `tools/replot_darcy_required_raw_alpha_figures_20260615.py`.
+- Preserved
+  `figures/diagnostic_existing/required_raw_figures_previous/`.
+- Moved the old wall-axis alpha files to
+  `figures/diagnostic_existing/required_raw_figures_alpha_retired_wall_axis_20260615/`.
+- Regenerated the required alpha set in
+  `figures/diagnostic_existing/required_raw_figures_alpha/` using epoch and
+  work-clock axes, method line `alpha=0.58`, and a gray dashed baseline
+  horizontal line.
+
+Validation:
+- Manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/required_raw_alpha_full_six_20260615.json`.
+- Generated alpha PNGs: `12`.
+- Retired old wall-axis alpha PNGs: `6`.
+- `all_panels_have_six_methods = true`.
+- `incomplete_panels = 0`.
+
+Report:
+- `docs/darcy_cflow_required_raw_alpha_full_six_20260615.md`
