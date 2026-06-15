@@ -14811,3 +14811,39 @@ Postprocess waiter:
 
 Report:
 - `docs/darcy_cflow_final7_attack20_svd25_run_20260615.md`
+
+## 2026-06-15 - Darcy CFlow existing figure checkpoint audit
+
+Status: inspected.
+
+Question:
+- Which epochs/checkpoints were used by the existing `loss3_advantage`,
+  `extra15`, `absolute11`, `diagnostic_existing`, and curated/existing Darcy
+  figures?
+
+Observed evidence:
+- `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/summary.csv`
+  shows the attack heatmap checkpoint family as baseline pre-adversarial
+  epoch-500-era checkpoint, loss1 epoch `1000`, loss2 epoch `1026`, loss3 epoch
+  `1011`, physics epoch `1040`, random_clean epoch `1100`, and random_solver
+  epoch `1100`.
+- `outputs/darcy_sir20_existing_curated_bundle_20260614/reports/BUNDLE_SUMMARY.md`
+  explicitly says the random methods in that bundle only reached epoch `1100`
+  and that `legacy_random_inclusive` figures are 0-1000/1100-scale legacy
+  figures.
+- `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`
+  shows the final clean-evaluation organized-release checkpoint family:
+  baseline `0`, loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`,
+  random_clean `3500`, and random_solver `3500`.
+
+Conclusion:
+- `loss3_advantage_extra15` and curated-bundle
+  `figures/attack_heatmaps_loss3_advantage` are old 1000/1100 attack heatmaps,
+  not final 3000-3500 results.
+- Organized-release `absolute11`/polished-report figures are clean-evaluation
+  final-model figures, not attack heatmaps.
+- The separate final attack20/SVD25 run is still under
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/`.
+
+Report:
+- `docs/darcy_cflow_existing_figures_checkpoint_audit_20260615.md`
