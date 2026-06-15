@@ -14841,3 +14841,41 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_organized_release_plot_fix_20260614.md`
+
+## 2026-06-15 - Darcy cflow Burgers-style polished report expansion
+
+Status: complete.
+
+Action taken:
+- Added `tools/build_darcy_cflow_polished_report_20260615.py`.
+- Expanded
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/`
+  from compact overview panels into Burgers-style per-method polished-report
+  bundles.
+- Added per-method report folders for `loss1`, `loss2`, `loss3`, `physics`,
+  `random_clean`, and `random_solver`.
+- For each method, added full RMSE/Relative-L2 heatmaps, 11-checkpoint
+  RMSE/Relative-L2 heatmaps, final attack diagnostics, final delta/SVD
+  diagnostics, and a six-panel dashboard.
+- Added companion CSV tables under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/polished_report/`.
+
+Evidence:
+- Newly generated per-method polished PNG count: `42`.
+- Total polished-report PNG count, including previous overview panels: `48`.
+- Newly generated polished-report CSV count: `36`.
+- Main `work_hours` figure count remains `0`.
+- Organized-release payload size after this expansion is `1,688,634,476`
+  logical bytes.
+- Manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/darcy_cflow_polished_report_20260615.json`.
+
+Interpretation:
+- The new per-method report mirrors the Burgers-style polished-report layout
+  while using the Darcy organized-release source tables.
+- Final attack panels are explicitly labeled as final robustness sample
+  diagnostics because the organized release does not contain epoch-wise
+  attack-batch logs for all methods.
+
+Report:
+- `docs/darcy_cflow_polished_report_expansion_20260615.md`
