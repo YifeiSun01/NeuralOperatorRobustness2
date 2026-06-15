@@ -43,7 +43,6 @@ Current formal-release contents:
 - Final clean evaluation source tables under `data/source_tables/`.
 - Main RMSE/Relative L2 curves under `figures/main_curves/`.
 - Clean-only polished report figures under `figures/polished_report/`.
-- Selected final-model attack heatmap examples under `figures/dense_existing/`.
 - Current manifest:
   `manifests/file_manifest_20260615_final_models_only.json`.
 
@@ -58,9 +57,13 @@ Observed after cleanup:
   diagnostic labels.
 - The formal release model/epoch table contains exactly the intended seven
   models and final epochs listed above.
+- Existing local 50-step attack heatmaps were checked and found to use earlier
+  1000-1100 epoch checkpoints, so they were removed from the formal final-model
+  release.
 
 ## Remaining Work
 
-A complete final robustness ranking still requires a final-model attack/SVD run
-from these same final checkpoints. Until that exists locally, the formal release
-should not contain attack/SVD ranking tables.
+A complete final robustness ranking and final attack heatmaps still require a
+50-step attack/SVD run from these same final checkpoints. Until that exists
+locally, the formal release should not contain attack/SVD ranking tables or
+attack heatmaps.

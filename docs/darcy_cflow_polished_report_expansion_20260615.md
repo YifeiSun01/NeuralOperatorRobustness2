@@ -33,8 +33,8 @@ The corresponding clean CSV tables remain under
 ## Cleanup
 
 The formal organized release no longer contains non-final attack or
-SVD/Jacobian diagnostic panels, dashboards, source tables, vectors, or derived
-rankings.
+SVD/Jacobian diagnostic panels, dashboards, source tables, vectors, heatmaps, or
+derived rankings.
 
 ## Evidence
 
@@ -42,12 +42,14 @@ Observed from local file scan after cleanup:
 
 - `figures/polished_report/` has no attack/SVD/dashboard diagnostic PNGs.
 - `data/polished_report/` has no attack/SVD diagnostic CSVs.
+- The previous selected attack heatmaps were checked and removed because their
+  source summaries used 50 attack steps but earlier 1000-1100 epoch checkpoints,
+  not the final 3000-3500 epoch models.
 - The formal release file names and Markdown/JSON/TXT files have no residual
   non-final diagnostic labels.
 
 ## Interpretation
 
 Use this polished-report folder for clean RMSE and Relative L2 visualization
-only. Use the real attack20 audit document for attack-loss-increase evidence:
-
-`docs/darcy_cflow_attack20_attack50_loss_increase_audit_20260615.md`
+only. Final-model attack heatmaps must be regenerated from the final checkpoints
+before they are added to the formal release.

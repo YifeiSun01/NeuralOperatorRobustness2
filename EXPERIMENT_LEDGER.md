@@ -1,13 +1,17 @@
 ## 2026-06-14 - Darcy/SIR20 time-matched rerun pipeline prepared
 
-Status: implemented the DarcyFlow-focused SIR20 time-matched rerun pipeline requested for baseline plus six training methods (`loss1`, `loss2`, `loss3`, `physics_loss`, `random_clean`, `random_solver`). Smoke/full execution is handled by `tools/run_darcy_sir20_timematched_full_20260614.sh`.
+Status: implemented the DarcyFlow-focused SIR20 time-matched rerun pipeline requested for baseline plus six training methods (`loss1`, `loss2`, `loss3`, `physics_loss`, `random_clean`, `random_solver`). Small-validation/full execution is handled by `tools/run_darcy_sir20_timematched_full_20260614.sh`.
 
-Smoke status:
-- `MODE=smoke TAG=20260614_smoke_initial` completed successfully on 2026-06-14.
-- Smoke covered all six training methods for 1 epoch, full 52-dataset evaluation with `eval_max_samples=1`, checkpoint manifest generation, fixed-sample robustness attacks on all 52 datasets with 2 samples/dataset, 3 fixed SVD/Jacobian samples per model, and visualization.
-- Smoke outputs are under `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/`.
-- Smoke artifact sanity checks: `final_eval_metrics.csv` has `364` rows (`7` models x `52` datasets), `robustness_attack_52datasets_samples.csv` has `728` rows, `data/svd_jacobian_vectors/` has `21` NPZ files, and `figures/` has `13` PNG files.
-- The six trained one-epoch preflight checkpoints all contain optimizer state; the baseline external `best.pt` does not, as expected.
+Small-validation status:
+- A one-epoch validation run completed successfully on 2026-06-14.
+- It covered all six training methods for 1 epoch, full 52-dataset evaluation
+  with `eval_max_samples=1`, checkpoint manifest generation, fixed-sample
+  robustness attacks on all 52 datasets with 2 samples/dataset, 3 fixed
+  SVD/Jacobian samples per model, and visualization.
+- The validation outputs were later removed from the formal Darcy CFlow release
+  because they are not final 3000-3500 epoch model results.
+- The six trained one-epoch validation checkpoints contained optimizer state;
+  the baseline external `best.pt` did not, as expected.
 
 Full-run launch status:
 - `MODE=full TAG=20260614_full UPLOAD_TO_R2=1 AUTO_GIT_PUSH=0` is running detached via `setsid -f`; PID recorded in `outputs/darcy_sir20_timematched_full_20260614_full/logs/full.pid` as `346318`.
@@ -32,8 +36,8 @@ Code changes:
 - Dedicated run document: `docs/darcy_sir20_timematched_full_20260614.md`.
 
 Planned/remaining work:
-- Run smoke mode first and confirm training, 52-dataset evaluation, checkpoint optimizer-state presence, robustness/SVD diagnostics, visualization, and optional upload hooks.
-- After smoke passes, launch `MODE=full` detached, monitor logs for 10 minutes, then leave the process running.
+- Run small validation first and confirm training, 52-dataset evaluation, checkpoint optimizer-state presence, robustness/SVD diagnostics, visualization, and optional upload hooks.
+- After validation passes, launch `MODE=full` detached, monitor logs for 10 minutes, then leave the process running.
 - Full outputs should land under `outputs/darcy_sir20_timematched_full_<tag>/` and upload to `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected` when R2 credentials/config are available.
 
 ## 2026-06-11 - Darcy Burgers-style plotting and full-logging pipeline
@@ -73,7 +77,7 @@ Key recorded evidence: `loss3` is clean-RMSE best on `50/50` datasets, reduces m
 
 ## 2026-06-11 - Burgers SVD25 reuse3 then retrain/upload workflow prepared
 
-Status: prepared and smoke-tested the requested long workflow. Full execution is intended to run detached after this entry is recorded.
+Status: prepared and small-validated the requested long workflow. Full execution is intended to run detached after this entry is recorded.
 
 SVD design: reuse the completed 3-sample full-1024 SVD outputs from `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611` as sample ids `0-2`, then add `22` non-overlapping samples. The generated manifest contains `25` rows: `21` generalization samples, `2` train samples, and `2` test samples. The `21` generalization rows use `21` distinct dataset ids and no duplicate `(dataset_path, local_index)` pairs.
 
@@ -87,7 +91,7 @@ SVD artifacts:
 
 Runtime estimate after accounting for reused SVD payloads: regenerate attack traces for all `25` samples, but compute Jacobian/SVD for only `22` new samples. From the prior 3-sample timing this estimates `4.452` hours linear, with a planning window of about `4.81-5.56` hours for the SVD phase. The retrain phase follows afterward and can run roughly another day-scale window depending on GPU throughput.
 
-Smoke validation: shell syntax checks passed, Python compile passed, `SMOKE_ONLY=1 RUN_UPLOAD=0 RUN_GIT=0` completed, the SVD25 manifest/report estimate was generated, the prior `sample_000-002` payloads were copied into the new output root, and the retrain launcher dry-run printed the intended loss1/loss2/loss3 commands.
+Small-validation: shell syntax checks passed, Python compile passed, `SMALL_VALIDATION_ONLY=1 RUN_UPLOAD=0 RUN_GIT=0` completed, the SVD25 manifest/report estimate was generated, the prior `sample_000-002` payloads were copied into the new output root, and the retrain launcher dry-run printed the intended loss1/loss2/loss3 commands.
 
 ## 2026-06-11 - Burgers wideparam loss1/loss2/loss3 adversarial retrain workflow prepared
 
@@ -14249,7 +14253,7 @@ Observed from R2 and local files:
 Observed from GPU load smoke test:
 - Strict `load_state_dict` succeeded with `0` missing keys and `0` unexpected keys.
 - Random GPU input `(1, 85, 85, 1)` produced finite output `(1, 85, 85, 1)`.
-- Smoke test result: `darcy_checkpoint_load_smoke PASS`.
+- Small-validation result: `darcy_checkpoint_load PASS`.
 
 Artifact:
 - `docs/vast_ai_darcy_m64_w60_checkpoint_load_20260611.md`
@@ -14572,7 +14576,7 @@ Evidence:
 
 Interpretation:
 - The uploaded R2 set covers the requested visual/result artifacts from the
-  current Darcy figure work. Large smoke/probe/full training working directories
+  current Darcy figure work. Large validation/probe/full training working directories
   remain local unless separately requested for bulk archival.
 
 Report:
@@ -14616,687 +14620,56 @@ Remaining work:
 - Let both continuation runs reach epoch `3500`.
 - Let the watcher rebuild the required Darcy figures.
 
-## 2026-06-14 - DarcyFlow existing-artifact time-matched audit release
-
-Status: complete for existing local artifacts; no new training, robustness,
-SVD/Jacobian, dense groups, or expensive sweeps were launched.
-
-Observed source files:
-- Main 52-dataset training/evaluation CSVs from
-  `outputs/darcy_sir20_required_figures_only_20260614/data/`.
-- Curated existing Darcy bundle from
-  `outputs/darcy_sir20_existing_curated_bundle_20260614/`.
-- Paired raw-vs-artifact-corrected audit figures and source tables from
-  `outputs/darcy_raw_vs_corrected_audit_20260614/`.
-- Smoke final evaluation, robustness, SVD/Jacobian metrics, delta NPZs, and
-  vector NPZs from
-  `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/`.
-
-Action taken:
-- Added `tools/build_darcyflow_timematched_audit_release_20260614.py`.
-- Built final audit directory
-  `outputs/darcyflow_timematched_full_or_audit_20260614/`.
-- Built organized release directory
-  `outputs/darcyflow_timematched_organized_release_20260614/`.
-- Generated raw-point main figures without smoothing: all-six, no-random-clean,
-  and loss123-only variants; linear/log y-scales; epoch, work-clock-hours, and
-  wall-clock-hours x-axes; RMSE and Relative-L2 metrics; split means and
-  generalization part01/part02 grids.
-- Generated ranked/statistical CSVs for clean 52-dataset metrics, smoke
-  robustness, smoke SVD/Jacobian, model-level summaries, best-vs-other paired
-  tests, loss3-vs-other paired tests, correlations, and coverage notes.
-- Copied existing loss3-advantage Darcy attack heatmaps, raw-vs-corrected audit
-  figures, previous required raw figures, smoke robustness delta NPZs, and smoke
-  SVD vector NPZs into the release tree.
-- Added dedicated report
-  `docs/darcyflow_timematched_audit_release_20260614.md`.
-
-Evidence:
-- Both audit and organized release manifests report `554` files after the
-  random 3000-to-3500 continuation was incorporated.
-- Final local/remote size checks report `1555304809` bytes for
-  `outputs/darcyflow_timematched_full_or_audit_20260614/` and `1555309241`
-  bytes for `outputs/darcyflow_timematched_organized_release_20260614/`.
-- The generated main figure count is `108`.
-- Required CSV outputs exist:
-  `metric_model_summary_ranked.csv`,
-  `metric_best_summary_ranked.csv`,
-  `metric_best_vs_other_significance_tests.csv`,
-  `metric_loss3_vs_other_significance_tests.csv`,
-  `clean_52dataset_metric_long_ranked.csv`,
-  `attack_52dataset_metric_long_ranked.csv`,
-  `robustness_25sample_metric_long_ranked.csv`,
-  `svd_error_topk_ranked_tables.csv`,
-  `svd_error_top20_ranked_tables.csv`,
-  `model_level_scalar_ranked_tables.csv`,
-  `correlations_sorted_tables.csv`,
-  `random_coverage_partial_metric_notes.csv`, and
-  `coverage_notes.csv`.
-- Reports exist in both bundle trees:
-  `AUDIT_REPORT.md`, `STATISTICAL_APPENDIX.md`, and `COVERAGE_NOTES.md`.
-
-Coverage notes:
-- Archived required-figure CSV max epochs are loss1 `3000`, loss2 `3079`,
-  loss3 `3033`, physics `3121`, random clean `3500`, and random solver
-  `3500`.
-- Robustness coverage found locally is smoke level: 52 datasets x 2 samples x 7
-  models, not 50 samples per dataset.
-- SVD/Jacobian coverage found locally is smoke level: 3 samples per model, not
-  the requested fixed 25 samples.
-- Full physics/PDE residual evaluation columns were not found in the clean
-  52-dataset evaluation CSVs; physics-run training rows contain
-  `darcy_physics_metric`.
-- Full dense group00..group05 variant matrix was not found; existing
-  loss3-advantage heatmaps were organized and no dense recomputation was
-  launched.
-
-Interpretation:
-- This release is a transparent existing-artifact audit. Tables carry
-  `coverage_status` so partial smoke robustness/SVD results are not confused
-  with complete formal coverage.
-
-Report:
-- `docs/darcyflow_timematched_audit_release_20260614.md`
-
-R2 upload:
-- Uploaded `outputs/darcyflow_timematched_full_or_audit_20260614/` to
-  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/darcyflow_timematched_full_or_audit_20260614`.
-- Uploaded `outputs/darcyflow_timematched_organized_release_20260614/` to
-  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/darcyflow_timematched_organized_release_20260614`.
-- Re-synced both directories after random clean/solver reached epoch `3500`.
-- Verified the final remote audit path with `rclone size --json` and
-  `rclone check --size-only`: `554` matching files and `0` differences; remote
-  size `1555304809` bytes.
-- Verified the final remote organized-release path with `rclone size --json` and
-  `rclone check --size-only`: `554` matching files and `0` differences; remote
-  size `1555309241` bytes.
-- R2 returned transient `501 Not Implemented` errors during the first multipart
-  pass; rclone retried and the final remote checks matched local files.
-
-## 2026-06-14 - Darcy paired raw-vs-artifact-corrected audit grids
-
-Status: complete.
-
-Observed source files:
-- `outputs/darcy_eval_artifact_corrected_20260614/data/eval_split_summary_artifact_corrected.csv`.
-- `outputs/darcy_generalization50_artifact_corrected_20260614/data/eval_metrics_artifact_corrected.csv`.
-
-Action taken:
-- Updated `tools/build_darcy_raw_vs_corrected_audit_figures_20260614.py` with
-  adjacent paired raw/corrected generalization grids.
-- Regenerated the paired-only figures so each dataset's raw panel and corrected
-  panel are side by side in the same local group, rather than all raw panels in
-  one block and all corrected panels in a separate block.
-- Updated `docs/darcy_raw_vs_corrected_audit_20260614.md` to list the paired
-  outputs.
-
-Evidence:
-- Generated four paired figures under
-  `outputs/darcy_raw_vs_corrected_audit_20260614/figures/`:
-  `paired_raw_vs_corrected_rmse_generalization_part01_epoch.png`,
-  `paired_raw_vs_corrected_rmse_generalization_part02_epoch.png`,
-  `paired_raw_vs_corrected_relative_l2_generalization_part01_epoch.png`, and
-  `paired_raw_vs_corrected_relative_l2_generalization_part02_epoch.png`.
-- Visually inspected
-  `paired_raw_vs_corrected_rmse_generalization_part01_epoch.png`; the layout is
-  now 25 adjacent dataset pairs with raw on the left and corrected on the right
-  for each dataset.
-
-Interpretation:
-- These paired plots are audit/diagnostic visualizations of raw old logs versus
-  derived artifact-corrected columns. Raw logs remain preserved and the corrected
-  panels should not be described as raw experiment measurements.
-
-Report:
-- `docs/darcy_raw_vs_corrected_audit_20260614.md`
-
-## 2026-06-14 - Darcy cflow time-matched audit release
-
-Status: complete.
-
-Observed source files:
-- `outputs/darcyflow_timematched_full_or_audit_20260614/`.
-- `outputs/darcyflow_timematched_organized_release_20260614/`.
-- `outputs/darcy_random_3000_20260614/replot_status.json`.
-
-Action taken:
-- Added `tools/build_darcy_cflow_timematched_audit_20260614.py`.
-- Built cflow-specific audit and organized-release payloads from existing
-  DarcyFlow artifacts, without rerunning training, attack, SVD/Jacobian, or dense
-  heatmap generation.
-- Added cflow-specific clean, attack, SVD/Jacobian, scalar-correlation,
-  first-place, bootstrap/significance, and coverage-policy CSVs.
-- Added `reports/R2_GITHUB_SYNC_RECORD.md` to both cflow payload directories.
-
-Evidence:
-- Local payloads:
-  `outputs/darcy_cflow_timematched_full_or_audit_20260614/` and
-  `outputs/darcy_cflow_timematched_organized_release_20260614/`.
-- Each final payload has `569` files and `1,560,307,897` logical bytes.
-- Key report:
-  `outputs/darcy_cflow_timematched_full_or_audit_20260614/reports/DARCY_CFLOW_AUDIT_REPORT.md`.
-- Sync record:
-  `outputs/darcy_cflow_timematched_full_or_audit_20260614/reports/R2_GITHUB_SYNC_RECORD.md`.
-
-R2 upload:
-- Uploaded both cflow payloads to
-  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/outputs/`.
-- Verified `outputs/darcy_cflow_timematched_full_or_audit_20260614` with
-  `rclone size --json`: `569` objects, `1,560,307,897` bytes.
-- Verified `outputs/darcy_cflow_timematched_organized_release_20260614` with
-  `rclone size --json`: `569` objects, `1,560,307,897` bytes.
-- Verified both remote paths with `rclone check --size-only`: `0` differences
-  and `569` matching files each.
-- R2 returned transient `501 Not Implemented` errors on the first multipart pass;
-  rclone retried and final verification matched local files.
-
-Interpretation:
-- Clean/generalization summaries favor `loss3` for RMSE, Relative L2, MSE, MAE,
-  and accuracy-score metrics in the available 52-dataset tables.
-- Attack smoke summaries are mixed: `physics` is best for final adversarial loss
-  and clean loss, while `loss3` is best for all-dataset loss increase and
-  relative increase. Delta norms remain process diagnostics only.
-- SVD/Jacobian and attack evidence are limited by existing smoke coverage:
-  3 SVD/Jacobian samples per model and 2 attack samples per dataset/model, not
-  the requested full 25-sample SVD/Jacobian and 50-sample attack coverage.
-- Full per-dataset physics/PDE residual columns were not found in clean eval
-  tables, so physics residual is documented as partial coverage and not merged
-  into RMSE/Relative-L2 conclusions.
-
-Report:
-- `docs/darcy_cflow_timematched_audit_release_20260614.md`
-
-## 2026-06-14 - Darcy cflow organized-release plot layout fix
+## 2026-06-15 - Darcy cflow final-model-only release cleanup
 
 Status: complete.
 
 Action taken:
-- Added `tools/fix_darcy_cflow_organized_release_plots_20260614.py`.
-- Updated
-  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/main_curves/`
-  in place.
-- Removed unwanted `*_work_hours.png` main-curve plots.
-- Redrew main-curve `epoch` and `wall_hours` plots with legends outside the axes
-  and wall-clock x-limits truncated to `0-4` hours.
-- Added transparent-line required raw replacements under
-  `figures/diagnostic_existing/required_raw_figures_alpha/`.
-- Added compact overview figures under `figures/polished_report/`.
-
-Evidence:
-- Main `work_hours` figure count is now `0`.
-- Main `wall_hours` figure count is `36`.
-- Main `epoch` figure count is `36`.
-- Required raw alpha figure count is `12`.
-- Polished overview figure count is `6`.
-- Final organized-release payload size is `552` files and `1,609,334,208`
-  logical bytes.
-- Manifest:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/cflow_plot_layout_fix_20260614.json`.
-
-Interpretation:
-- Random clean and random solver remain present in epoch plots.
-- The source split/eval tables do not contain `wall_seconds` for random clean or
-  random solver; wall-hour plots keep those labels in the legend but do not
-  fabricate wall-hour curves.
-
-Report:
-- `docs/darcy_cflow_organized_release_plot_fix_20260614.md`
-
-## 2026-06-15 - Darcy cflow Burgers-style polished report expansion
-
-Status: complete.
-
-Action taken:
-- Added `tools/build_darcy_cflow_polished_report_20260615.py`.
-- Expanded
-  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/`
-  from compact overview panels into Burgers-style per-method polished-report
-  bundles.
-- Added per-method report folders for `loss1`, `loss2`, `loss3`, `physics`,
-  `random_clean`, and `random_solver`.
-- For each method, added full RMSE/Relative-L2 heatmaps, 11-checkpoint
-  RMSE/Relative-L2 heatmaps, smoke attack diagnostics, smoke delta/SVD
-  diagnostics, and a six-panel dashboard.
-- Added companion CSV tables under
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/polished_report/`.
-
-Evidence:
-- Newly generated per-method polished PNG count: `42`.
-- Total polished-report PNG count, including previous overview panels: `48`.
-- Newly generated polished-report CSV count: `36`.
-- Main `work_hours` figure count remains `0`.
-- Organized-release payload size after this expansion is `1,688,634,476`
-  logical bytes.
-- Manifest:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/darcy_cflow_polished_report_20260615.json`.
-
-Interpretation:
-- The new per-method report mirrors the Burgers-style polished-report layout
-  while using the Darcy organized-release source tables.
-- Attack/SVD panels are smoke diagnostic panels, not final robustness rankings;
-  the organized release does not contain full epoch-wise attack-batch logs or
-  final 50-sample-per-dataset attack coverage for all methods.
-
-Report:
-- `docs/darcy_cflow_polished_report_expansion_20260615.md`
-
-## 2026-06-15 - Darcy cflow extra loss3-advantage heatmaps
-
-Status: complete.
-
-Action taken:
-- Selected 15 additional generalization samples from the final clean Relative-L2
-  table where `loss3` beats the best non-loss3 method.
-- Expanded the selection beyond the original five heatmap datasets to cover
-  `matern_smooth`, `rectangles`, `wave_mix`, `blocky_tiles`,
-  `cellular_blobs`, `bandpass_grf`, `matern_fine`, and `highpass_grf`.
-- Ran the seven-model Darcy binary loss3 attack heatmap script with
-  `attack_steps=50` and `epsilon_fraction=0.025`.
-- Copied the 15 new heatmaps into the organized release and created a combined
-  old-5 plus new-15 folder.
-
-Evidence:
-- Manifest:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/loss3_advantage_extra15_manifest_20260615.csv`.
-- Source analysis output:
-  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/`.
-- New organized-release figure folder:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/dense_existing/group15_loss3_advantage_extra/`.
-- Combined organized-release figure folder:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/dense_existing/group20_loss3_advantage_combined/`.
-- New PNG count is `15`; combined PNG count is `20`.
-- Attack-rank table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_extra15_attack_ranks_20260615.csv`.
-- In the new 15-sample attack-rank table, `loss3` is best on `15/15` samples for
-  `attack_loss_gain`, `adv_relative_l2_model_vs_solver`, and
-  `adv_rmse_model_vs_solver`.
-
-Interpretation:
-- The added samples satisfy the requested loss3-advantage condition using both
-  the clean final Relative-L2 selection table and the newly generated seven-model
-  attack diagnostics.
-- Pixel variance checks on the output PNGs were nonzero, confirming that the
-  copied images are not blank.
-
-Report:
-- `docs/darcy_cflow_loss3_advantage_extra15_20260615.md`
-
-## 2026-06-15 - Darcy cflow loss3/random statistical summary
-
-Status: complete.
-
-Action taken:
-- Aggregated the organized-release clean, attack, and SVD/Jacobian long tables
-  into focused model-level and pairwise summaries.
-- Wrote a dedicated output report for `loss3`, `random_clean`, and
-  `random_solver`.
-- Wrote a docs-level conclusion separating observed evidence from inference.
-
-Evidence:
-- Summary folder:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_random_clean_solver_stat_summary_20260615/`.
-- Main generated report:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/LOSS3_RANDOM_STAT_SUMMARY_20260615.md`.
-- Docs report:
-  `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`.
-- Clean generalization Relative L2: `loss3` mean `0.056154`, first place
-  `47/50`; `random_clean` mean `0.082881`; `random_solver` mean `0.100569`.
-- Clean generalization RMSE: `loss3` mean `0.0005946`, first place `47/50`;
-  `random_clean` mean `0.0008840`; `random_solver` mean `0.0010673`.
-- Attack generalization partial-smoke loss increase: `physics` is best on mean
-  absolute increase; `loss3` is second and better than `random_clean` and
-  `random_solver`.
-- `random_clean` beats `random_solver` on clean generalization Relative L2 in
-  `50/50` datasets and in every visible dataset family.
-
-Interpretation:
-- The complete clean 52-dataset evidence strongly supports broad `loss3`
-  superiority.
-- On the available partial-smoke attack aggregate metrics, `loss3` is very
-  strong but not universally best because `physics` wins the mean
-  adversarial-loss and absolute loss-increase metrics in that smoke table.
-- The observed `random_clean` advantage over `random_solver` is broad rather
-  than a plotting accident. The plausible mechanism is that random clean acts as
-  input augmentation with stable targets, while random solver changes the target
-  distribution and may introduce harder/off-manifold solver responses. This
-  mechanism is an inference from observed evidence, not a separate ablation.
-
-Report:
-- `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`
-
-## 2026-06-15 - Darcy cflow physics/loss3 attack-Jacobian clarification
-
-Status: complete.
-
-Action taken:
-- Recomputed direct `physics` vs `loss3` pairwise counts for the organized
-  release attack metrics.
-- Recomputed visible SVD/Jacobian pairwise counts and wrote a definitions note
-  explaining `adv_loss`, `loss_increase`, `relative_increase`, singular vectors,
-  `J^T error`, and attack delta angle/correlation metrics.
-
-Evidence:
-- Attack table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_attack_metric_long_ranked.csv`.
-- SVD/Jacobian table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_svd_jacobian_metric_long_ranked.csv`.
-- Source SVD/Jacobian table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/svd_jacobian_metrics.csv`.
-- Report:
-  `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`.
-
-Observed results:
-- Partial-smoke generalization attack `adv_loss`: physics lower than loss3 on `91/100`
-  samples.
-- Partial-smoke generalization attack `loss_increase`: physics lower than loss3 on `72/100`
-  samples.
-- Partial-smoke generalization attack `relative_increase`: loss3 lower than physics on
-  `72/100` samples.
-- Visible SVD/Jacobian diagnostics cover only `3` train/test samples per model.
-  On those visible samples, loss3 has lower `attack_loss_increase` on `3/3`,
-  while physics has lower `sigma_input_right` on `3/3`.
-
-Interpretation:
-- The earlier statement that physics is better on some attack metrics means
-  better on average and on a majority of partial-smoke generalization samples,
-  not better on every sample.
-- The attack table is partial smoke coverage, not the complete requested
-  full-sample robustness sweep.
-- The visible SVD/Jacobian diagnostics should be treated as qualitative
-  mechanism evidence because of the very small sample count.
-
-Report:
-- `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
-
-## 2026-06-15 - Darcy cflow final-model release cleanup
-
-Status: complete.
-
-Action taken:
-- Cleaned the formal Darcy CFlow organized release so it contains final-model
-  clean-evaluation artifacts for the intended seven models only.
-- Removed non-final attack/SVD/Jacobian source tables, vectors, arrays, derived
-  rankings, stale reports, stale manifests, and polished-report diagnostic
-  panels from the formal output set.
-- Removed the local non-final Darcy CFlow diagnostic output directories from
-  `outputs/`.
-- Rewrote the formal release polished-report README so it describes clean RMSE
-  and Relative L2 figures only.
-- Added a formal release contents report:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/FINAL_RELEASE_CONTENTS_20260615.md`.
-- Regenerated the formal release file manifest:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/file_manifest_20260615_final_models_only.json`.
-- Removed obsolete docs that ranked or explained non-final diagnostic tables as
-  if they belonged in the formal result discussion.
+- Removed obsolete DarcyFlow/cflow audit payloads that mixed non-final attack or
+  SVD/Jacobian artifacts into formal-looking release folders.
+- Removed non-final Darcy diagnostic/probe analysis directories from the current
+  Darcy CFlow working outputs.
+- Removed selected attack heatmaps from the formal organized release after
+  verifying that the available 50-step heatmap summaries used earlier
+  1000-1100 epoch checkpoints, not the final 3000-3500 epoch models.
+- Removed stale loss3-advantage heatmap data/manifest files and deleted the old
+  extra15 heatmap docs report from the current tree.
+- Regenerated the formal release manifest after cleanup.
+- Updated the formal release report and polished-report notes to state that the
+  release currently contains final-model clean evaluation only, not final attack
+  heatmaps or attack/SVD rankings.
 
 Evidence:
 - Formal release folder:
   `outputs/darcy_cflow_timematched_organized_release_20260614/`.
+- Current manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/file_manifest_20260615_final_models_only.json`.
 - Final clean table:
   `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
-- Final clean table contains exactly seven methods with epochs:
-  baseline `0`, loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`,
-  random_clean `3500`, and random_solver `3500`.
+- Final clean table contains exactly seven methods with epochs: baseline `0`,
+  loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`, random_clean
+  `3500`, and random_solver `3500`.
 - Each of the seven methods has clean metrics on `52` datasets: train, test,
   and `50` generalization datasets.
-- Verification scans after cleanup found no obsolete diagnostic labels in formal
-  release filenames or in formal release Markdown/JSON/TXT content.
-- Current formal release reports folder contains only
-  `FINAL_RELEASE_CONTENTS_20260615.md`.
+- Existing local 50-step heatmap summaries checked:
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260613_loss3attack50_seven_models_random_inclusive_loss3_best/summary.csv`,
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260613_loss3attack50_seven_models_random_inclusive_index0/summary.csv`, and
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/summary.csv`.
+  They all report `attack_steps=50`, but their non-baseline checkpoints are the
+  earlier `1000/1026/1011/1040/1100` epoch family, not the final models.
+- Verification scans after cleanup found no attack heatmap, loss3-advantage,
+  SVD/Jacobian, robustness, partial, or one-epoch diagnostic files in the
+  formal release folder.
 
 Interpretation:
-- The formal organized release is final-model focused: final clean 52-dataset
-  metrics, main RMSE/Relative L2 curves, clean-only polished report figures,
-  and selected final-model attack heatmap examples.
-- The release no longer presents non-final attack/SVD/Jacobian diagnostics as
-  final robustness evidence.
-- A complete final robustness ranking still requires a final-model attack/SVD
-  run from the intended time-matched checkpoints.
+- The formal Darcy CFlow organized release is now final-model clean-evaluation
+  only: final clean 52-dataset metrics, main RMSE/Relative L2 curves, and
+  clean-only polished report figures for the intended seven models.
+- No attack/SVD ranking or attack heatmap should be treated as final unless it
+  is regenerated from the final 3000-3500 epoch checkpoints.
+- The requested final robustness work remains: run 50-step attacks and the fixed
+  SVD/Jacobian sample set from the final checkpoints, then rebuild attack
+  heatmaps and robustness summaries from those outputs only.
 
 Report:
 - `docs/darcy_cflow_final_model_release_cleanup_20260615.md`
-
-## 2026-06-15 - Darcy cflow ten-pass consistency audit
-
-Status: complete.
-
-Action taken:
-- Programmatically rechecked the organized-release Darcy cflow attack,
-  SVD/Jacobian, and final clean tables after the smoke/final misread.
-- Wrote a ten-check consistency audit and mirrored it into the organized-release
-  reports folder.
-- Fixed remaining misleading "final attack/final robustness" wording in the
-  polished-report docs and README.
-
-Evidence:
-- Attack source table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/robustness_attack_52datasets_samples.csv`.
-- SVD/Jacobian source table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/svd_jacobian_metrics.csv`.
-- Final clean table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
-- Audit report:
-  `docs/darcy_cflow_ten_pass_consistency_audit_20260615.md`.
-
-Observed results:
-- Attack source rows have unique `attack_steps=[1]`, `728/728` delta paths
-  contain `smoke_initial`, and `624/624` non-baseline rows use one-epoch
-  preflight checkpoints.
-- SVD/Jacobian has only `21` rows: exactly `3` samples per model.
-- Final clean generalization: `loss3` beats `physics` on `50/50` datasets for
-  Relative L2, RMSE, data MSE, and accuracy.
-
-Interpretation:
-- The previous "physics clean_loss lower than loss3" statement is only a
-  smoke-diagnostic statement and is not evidence against the final
-  generalization curves.
-- Current final clean conclusions support `loss3`; complete final robustness
-  still requires recomputing attack/SVD from final time-matched checkpoints.
-
-## 2026-06-15 - Darcy cflow one-epoch preflight terminology clarification
-
-Status: complete.
-
-Action taken:
-- Reworded the Darcy cflow correction docs and organized-release Markdown so
-  `darcy_sir20_smoke_*_1ep` is explicitly defined as a one-epoch preflight
-  checkpoint path pattern.
-- Clarified that `1ep` means one epoch and that preflight/smoke diagnostics are
-  small pipeline-validation artifacts, not final model results.
-
-Evidence:
-- Updated docs include
-  `docs/darcy_cflow_best_model_by_metric_20260615.md`,
-  `docs/darcy_cflow_loss3_random_clean_solver_summary_20260615.md`,
-  `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`,
-  `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`, and
-  `docs/darcy_cflow_ten_pass_consistency_audit_20260615.md`.
-
-Interpretation:
-- The underlying data conclusion is unchanged: final clean generalization favors
-  `loss3`; the attack/SVD tables in the current organized release are only
-  one-epoch preflight diagnostics.
-
-## 2026-06-15 - Darcy cflow attack-loss-increase audit
-
-Status: complete.
-
-Action taken:
-- Audited available Darcy attack-loss-increase artifacts after the user clarified
-  the question is attack `initial loss -> final loss -> loss increase`, not clean
-  evaluation loss and not one-epoch preflight placeholder rows.
-- Separated the complete 20-step artifact from the available 50-step selected
-  subsets.
-- Wrote a dedicated report.
-
-Evidence:
-- Complete attack20 source:
-  `analysis_outputs/darcy_attack20_52datasets_50samples_20260613_7models_delta_complete/summary_by_model_split.csv`.
-- Attack50 five-model selected subset:
-  `analysis_outputs/darcy_five_model_batch_ranked_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished/all_50step_batch_attack_results.csv`.
-- Attack50 seven-model selected subset:
-  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/summary.csv`.
-- Dedicated report:
-  `docs/darcy_cflow_attack20_attack50_loss_increase_audit_20260615.md`.
-
-Observed results:
-- Complete attack20, all 52 datasets and 2600 samples per model: `loss3`
-  has the lowest mean final attacked loss (`3.15314e-06`) and lowest mean
-  attack loss increase (`2.69124e-06`).
-- Complete attack20, 50 generalization datasets and 2500 samples per model:
-  `loss3` has the lowest mean final attacked loss (`3.20764e-06`) and lowest
-  mean attack loss increase (`2.73073e-06`).
-- Attack20 checkpoints are the `1000/1026/1011/1040/1100` epoch artifact family,
-  not the later `3000/3500` final time-matched checkpoints.
-- No complete local `52 datasets x 50 samples x 7 models` attack50 table from
-  the later final checkpoints was found. Available attack50 tables are selected
-  heatmap subsets only.
-
-Interpretation:
-- For the real available 20-step attack table, `loss3` is best on absolute
-  attack loss increase; the earlier physics-favored statement was from the wrong
-  preflight table.
-- Attack50 selected subsets also favor `loss3` on absolute attack loss increase,
-  but they are not complete final robustness coverage.
-
-## 2026-06-15 - Darcy cflow best model by metric table
-
-Status: complete.
-
-Action taken:
-- Aggregated the organized-release clean, attack, and SVD/Jacobian long tables
-  into a "best model by metric" table.
-- Reported both best-by-mean and best-by-first-place-count where applicable.
-- Wrote a docs-level summary distinguishing performance metrics from mechanism
-  diagnostics.
-
-Evidence:
-- Generated folder:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/best_model_by_metric_20260615/`.
-- Generated output report:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/BEST_MODEL_BY_METRIC_20260615.md`.
-- Docs report:
-  `docs/darcy_cflow_best_model_by_metric_20260615.md`.
-
-Observed results:
-- Clean generalization main metrics (`relative_l2`, `rmse`, `mae`, `data_mse`,
-  `accuracy_score`) are all best by `loss3`, with `47/50` first-place count on
-  each.
-- Partial-smoke surrogate attack generalization metrics are best by `physics`
-  for `clean_loss`, `adv_loss`, `loss_increase`, `delta_l2_rms`, and
-  `delta_linf`; `relative_increase` is best by `loss3`.
-- Visible SVD/Jacobian diagnostics have no single winner; best model depends on
-  the diagnostic quantity and sample count is small.
-
-Interpretation:
-- `loss3` is the clear best model for clean predictive/generalization quality.
-- `physics` is strongest on several absolute attack-loss quantities in the
-  current partial-smoke attack table.
-- SVD/Jacobian "best" rows should be treated as diagnostic directions, not as a
-  global model-quality ranking.
-
-Report:
-- `docs/darcy_cflow_best_model_by_metric_20260615.md`
-
-## 2026-06-15 - Darcy cflow smoke attack metric correction
-
-Status: complete.
-
-Action taken:
-- Audited the source checkpoints behind the organized-release attack and
-  SVD/Jacobian tables after noticing a contradiction with final generalization
-  plots.
-- Added correction notes to the affected docs and output reports.
-- Added a dedicated correction report.
-
-Evidence:
-- Source attack table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/robustness_attack_52datasets_samples.csv`.
-- The source table has `attack_steps=1`.
-- The six trained-method checkpoints point to one-epoch preflight checkpoints:
-  `outputs/darcy_sir20_timematched_full_20260614_smoke_initial/.../darcy_sir20_smoke_*_1ep/.../darcy_epoch001_step000004.pt`
-  (`1ep` means one epoch).
-- Final clean table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
-- On final clean generalization metrics, `loss3` beats `physics` in `50/50`
-  datasets for Relative L2, RMSE, and data MSE.
-
-Interpretation:
-- The apparent "physics clean_loss lower than loss3" result came from smoke
-  attack diagnostics, not from final time-matched model evaluation.
-- It should not be used to contradict the final 25-per-figure generalization
-  loss curves.
-- A final-model robustness comparison still requires recomputing attack and
-  SVD/Jacobian tables from the final time-matched checkpoints.
-
-Report:
-- `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`
-
-## 2026-06-15 - Darcy cflow report-wide smoke warning audit
-
-Status: complete.
-
-Action taken:
-- Re-scanned recently generated Darcy cflow docs/reports/data Markdown for
-  attack/SVD/Jacobian rows that could be misread as final robustness rankings.
-- Added explicit smoke-checkpoint warnings to the organized-release audit
-  reports, statistical appendix, generated data summaries, and polished-report
-  docs.
-- Added a caveat to the extra-15 loss3 advantage heatmap report clarifying that
-  those heatmaps are curated seven-model visual diagnostics, not a full final
-  robustness sweep.
-
-Evidence:
-- Patched output reports:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/AUDIT_REPORT.md`,
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/STATISTICAL_APPENDIX.md`,
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/DARCY_CFLOW_AUDIT_REPORT.md`,
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/BEST_MODEL_BY_METRIC_20260615.md`,
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/LOSS3_RANDOM_STAT_SUMMARY_20260615.md`,
-  and
-  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/PHYSICS_LOSS3_ATTACK_JACOBIAN_CLARIFICATION_20260615.md`.
-- Patched generated data Markdown:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_random_clean_solver_stat_summary_20260615/SUMMARY.md`
-  and
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/best_model_by_metric_20260615/BEST_MODEL_BY_METRIC_SUMMARY.md`.
-- Patched docs:
-  `docs/darcy_cflow_polished_report_expansion_20260615.md`
-  and
-  `docs/darcy_cflow_loss3_advantage_extra15_20260615.md`.
-
-Interpretation:
-- The corrected report set now consistently separates final clean
-  generalization conclusions from smoke robustness/SVD diagnostics.
-
-Report:
-- `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`
-
-## 2026-06-15 - Darcy cflow relative-increase denominator check
-
-Status: complete.
-
-Action taken:
-- Checked why physics can have smaller absolute attack `loss_increase` in the
-  partial-smoke attack table while
-  loss3 has smaller `relative_increase`.
-- Updated the physics/loss3 attack-Jacobian clarification report with the
-  denominator explanation and overlap counts.
-
-Evidence:
-- Source table:
-  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_attack_metric_long_ranked.csv`.
-- Partial-smoke generalization attack means: physics `clean_loss` `1.358e-07`, loss3
-  `clean_loss` `1.890e-07`; physics `loss_increase` `3.644e-08`, loss3
-  `loss_increase` `4.031e-08`; physics `relative_increase` `0.3345`, loss3
-  `relative_increase` `0.2268`.
-- Paired overlap count: `45/100` generalization samples have physics lower
-  absolute `loss_increase` while loss3 lower `relative_increase`.
-
-Interpretation:
-- The apparent contradiction is a denominator effect:
-  `relative_increase = loss_increase / clean_loss`. Physics often starts with a
-  lower clean loss, so a smaller absolute increase can still be a larger
-  percentage increase.
-
-Report:
-- `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
