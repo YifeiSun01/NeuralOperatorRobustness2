@@ -14992,6 +14992,49 @@ Verification:
 Report:
 - `docs/darcy_generalization_dataset_root_difference_20260615.md`
 
+## 2026-06-15 - Darcy CFlow output provenance audit for 20260607 vs 20260611 roots
+
+Status: complete.
+
+Question:
+- Did the 25-dataset-per-page generalization loss-curve figures use the older
+  `generalization_datasets_darcy_lossdrop50_selected_20260607` root or the newer
+  `generalization_datasets_darcy_binary_loss3targeted_20260611` root?
+- Which existing outputs should not be used for current latest-binary
+  conclusions?
+
+Observed evidence:
+- Checked
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv`.
+  Its generalization rows point only to
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- Checked polished clean report CSVs under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/polished_report/`;
+  their dataset IDs use `darcy_binary_loss3targeted_20260611_*` for the 50
+  generalization sets, plus original binary train/test sets.
+- Checked
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/selected_samples.csv`;
+  selected sample dataset IDs use `darcy_binary_loss3targeted_20260611_*`.
+- Checked
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_eval_metrics.csv`
+  and
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_52dataset_7model_8metric_matrix.csv`;
+  those use `generalization_datasets_darcy_lossdrop50_selected_20260607` /
+  `darcy_lossdrop_pool_soft_*`.
+
+Conclusion:
+- The 25-dataset-per-page generalization loss-curve figures are on the newer
+  binary `20260611` root, not on the older continuous `20260607` root.
+- The final robustness/eight-metric matrix built on
+  `lossdrop50_selected_20260607` is invalid for the current latest-binary Darcy
+  conclusions and should not be used unless the question is explicitly about the
+  older continuous soft-field suite.
+- Current latest-binary robustness/SVD/Jacobian and 52-dataset 7-model matrices
+  must be recomputed against `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+
+Report:
+- `docs/darcy_generalization_dataset_root_difference_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
 
 Status: complete.

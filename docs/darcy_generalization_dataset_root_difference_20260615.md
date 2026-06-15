@@ -128,3 +128,21 @@ Verification from the source table:
 Therefore the required raw previous loss figures are on the newer binary
 `20260611` root, not on the older continuous `lossdrop50_selected_20260607`
 root.
+
+## Current Output Validity Audit
+
+Observed from local source tables on 2026-06-15:
+
+| output/artifact family | source table checked | generalization root | status for latest binary analysis |
+|---|---|---|---|
+| 25-dataset-per-page loss curves in `required_raw_figures_previous/` and related alpha/raw curve sets | `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv` | `generalization_datasets_darcy_binary_loss3targeted_20260611` | valid for the newer binary root |
+| polished clean generalization heatmaps/curves under `data/polished_report/` | polished report CSVs with `darcy_binary_loss3targeted_20260611_*` dataset IDs | `generalization_datasets_darcy_binary_loss3targeted_20260611` plus original train/test binary sets | valid for the newer binary root |
+| extra 15 seven-model attack heatmaps under `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/` | `selected_samples.csv` | `generalization_datasets_darcy_binary_loss3targeted_20260611` | valid for the newer binary root, subject to its checkpoint/epoch provenance |
+| `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_eval_metrics.csv` | `final_eval_metrics.csv` | `generalization_datasets_darcy_lossdrop50_selected_20260607` | invalid for current latest-binary conclusions |
+| `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_52dataset_7model_8metric_matrix.csv` | `final_52dataset_7model_8metric_matrix.csv` | `generalization_datasets_darcy_lossdrop50_selected_20260607` | invalid for current latest-binary conclusions |
+
+Practical rule going forward: do not use
+`generalization_datasets_darcy_lossdrop50_selected_20260607` for the current
+Darcy binary generalization/robustness claims. Any final robustness, SVD/Jacobian,
+or 52-dataset 7-model metric matrix for the current analysis must be recomputed
+against `generalization_datasets_darcy_binary_loss3targeted_20260611`.
