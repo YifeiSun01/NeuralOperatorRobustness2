@@ -75,6 +75,12 @@ SVD_FIELDS = [
     "error_l2_norm",
     "jt_error_l2_norm",
     "sigma_input_right",
+    "block2_sigma1",
+    "block2_top_singular_values_json",
+    "topk_subspace_cos_jt_error",
+    "topk_subspace_angle_jt_error_deg",
+    "topk_subspace_cos_attack_delta",
+    "topk_subspace_angle_attack_delta_deg",
     "cos_singular_jt_error",
     "angle_singular_jt_error_deg",
     "corr_singular_jt_error",
@@ -271,7 +277,20 @@ def lift_block_vector_to_full(v_block: torch.Tensor, x0: torch.Tensor, factor: i
     return normalize(v_full)
 
 
-def singular_vectors(model, x: torch.Tensor, row_chunk: int) -> dict[str, Any]:
+def subspace_cosine(vector: torch.Tensor, basis: torch.Tensor) -> float:
+    if basis.numel() == 0:
+        return float("nan")
+    vec = vector.detach().reshape(-1)
+    vec_norm = torch.linalg.vector_norm(vec)
+    if float(vec_norm.detach().cpu()) <= 1e-30:
+        return float("nan")
+    basis_flat = basis.detach().reshape(basis.shape[0], -1)
+    projection = torch.mv(basis_flat, vec)
+    cos_val = torch.linalg.vector_norm(projection) / torch.clamp(vec_norm, min=1e-30)
+    return float(torch.clamp(cos_val, 0.0, 1.0).detach().cpu())
+
+
+def singular_vectors(model, x: torch.Tensor, row_chunk: int, top_k: int) -> dict[str, Any]:
     block_func, z_block, _crop_h, _crop_w = make_block_func(model, x, 2)
     jac, jac_sec = explicit_jacobian_rows(block_func, z_block, row_chunk)
     if torch.cuda.is_available():
@@ -281,6 +300,7 @@ def singular_vectors(model, x: torch.Tensor, row_chunk: int) -> dict[str, Any]:
     if torch.cuda.is_available():
         torch.cuda.synchronize()
     svd_sec = time.perf_counter() - t0
+    k = max(1, min(int(top_k), int(vh.shape[0])))
     v0 = lift_block_vector_to_full(vh[0].detach(), x, factor=2)
     jv0 = jvp(model, x, v0)
     sigma0 = norm2(jv0)
@@ -295,11 +315,16 @@ def singular_vectors(model, x: torch.Tensor, row_chunk: int) -> dict[str, Any]:
         jv1 = jvp(model, x, v_right)
         sigma = norm2(jv1)
         u_left = jv1.reshape(-1) / torch.clamp(torch.linalg.vector_norm(jv1.reshape(-1)), min=1e-30)
+    top_right_full = torch.stack([lift_block_vector_to_full(vh[i].detach(), x, factor=2) for i in range(k)])
     out = {
         "sigma_input_right": sigma,
         "input_right_singular_vector": v_right.detach(),
         "output_left_singular_vector": u_left.detach(),
         "block2_sigma1": float(s[0].detach().cpu()),
+        "block2_top_singular_values": [float(v) for v in s[:k].detach().cpu().tolist()],
+        "block2_top_right_singular_vectors": vh[:k].detach(),
+        "block2_top_left_singular_vectors": u[:, :k].T.detach(),
+        "top_right_singular_vector_basis_full": top_right_full.detach(),
         "block2_jacobian_seconds": jac_sec,
         "block2_svd_seconds": svd_sec,
     }
@@ -366,6 +391,7 @@ def main() -> None:
     parser.add_argument("--epsilon-fraction", type=float, default=0.025)
     parser.add_argument("--max-datasets", type=int, default=0)
     parser.add_argument("--svd-max-samples", type=int, default=25)
+    parser.add_argument("--svd-top-k", type=int, default=10)
     parser.add_argument("--block-row-chunk", type=int, default=128)
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
@@ -487,8 +513,9 @@ def main() -> None:
             ].iloc[0]
             delta = torch.as_tensor(load_delta_for_row(row_match), device=device, dtype=x.dtype).unsqueeze(0)
             pred, error, jt_error, _half_sse = clean_error_and_jt(model, x, y)
-            sig = singular_vectors(model, x, int(args.block_row_chunk))
+            sig = singular_vectors(model, x, int(args.block_row_chunk), int(args.svd_top_k))
             v = sig["input_right_singular_vector"]
+            top_basis = sig["top_right_singular_vector_basis_full"]
             pairs = {
                 "singular_jt_error": (v, jt_error),
                 "singular_attack_delta": (v, delta),
@@ -500,6 +527,8 @@ def main() -> None:
                 pair_metrics[f"cos_{name}"] = c
                 pair_metrics[f"angle_{name}_deg"] = angle_deg_from_cos(c)
                 pair_metrics[f"corr_{name}"] = corr(a, b)
+            jt_subspace_cos = subspace_cosine(jt_error, top_basis)
+            delta_subspace_cos = subspace_cosine(delta, top_basis)
             vector_npz = vector_dir / f"{method}__{spec.dataset_id}__idx{source_idx:04d}.npz"
             np.savez_compressed(
                 vector_npz,
@@ -514,6 +543,10 @@ def main() -> None:
                 attack_delta=delta.detach().float().cpu().numpy(),
                 input_right_singular_vector=v.detach().float().cpu().numpy(),
                 output_left_singular_vector=sig["output_left_singular_vector"].detach().float().cpu().numpy(),
+                block2_top_singular_values=np.asarray(sig["block2_top_singular_values"], dtype=np.float32),
+                block2_top_right_singular_vectors=sig["block2_top_right_singular_vectors"].detach().float().cpu().numpy(),
+                block2_top_left_singular_vectors=sig["block2_top_left_singular_vectors"].detach().float().cpu().numpy(),
+                top_right_singular_vector_basis_full=top_basis.detach().float().cpu().numpy(),
             )
             out = {
                 "method": method,
@@ -528,6 +561,12 @@ def main() -> None:
                 "error_l2_norm": norm2(error),
                 "jt_error_l2_norm": norm2(jt_error),
                 "sigma_input_right": float(sig["sigma_input_right"]),
+                "block2_sigma1": float(sig["block2_sigma1"]),
+                "block2_top_singular_values_json": json.dumps(sig["block2_top_singular_values"]),
+                "topk_subspace_cos_jt_error": jt_subspace_cos,
+                "topk_subspace_angle_jt_error_deg": angle_deg_from_cos(jt_subspace_cos),
+                "topk_subspace_cos_attack_delta": delta_subspace_cos,
+                "topk_subspace_angle_attack_delta_deg": angle_deg_from_cos(delta_subspace_cos),
                 **pair_metrics,
                 "vector_npz": rel(vector_npz),
                 "elapsed_seconds": time.perf_counter() - t0,

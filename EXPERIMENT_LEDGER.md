@@ -14711,3 +14711,85 @@ Conclusion:
 
 Report:
 - `docs/darcy_cflow_final_robustness_missing_status_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final seven-model attack20/SVD25 run launched
+
+Status: running in background.
+
+Action taken:
+- Updated `tools/darcy_sir20_robustness.py` to store top-k block SVD singular
+  values/vectors and top-k right-singular subspace angle metrics for `J^T error`
+  and attack delta.
+- Added `tools/run_darcy_cflow_final_robustness_20260615.sh`, a launcher for the
+  final seven-model checkpoint family.
+- Ran a tiny final-checkpoint preflight successfully.
+- Launched the full final attack20/SVD25 job in a detached background process.
+
+Final full output folder:
+- `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/`
+
+Preflight output folder:
+- `outputs/darcy_cflow_final_robustness_20260615_preflight/`
+
+Important path note:
+- `outputs/darcy_cflow_final_robustness_20260615/` is not the formal final run
+  folder. It contains partial files from a foreground timeout startup check and
+  should not be used as final robustness evidence.
+
+Final checkpoint manifest:
+- `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/checkpoints_manifest/final_7model_checkpoints.json`
+
+Final checkpoint family:
+- baseline: epoch `0`,
+  `2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607/best.pt`
+- loss1: epoch `3000`,
+  `adversarial_training_runs/darcy_binary_loss3targeted_loss1_continue2000ep_from_1000ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3000_step003000.pt`
+- loss2: epoch `3079`,
+  `adversarial_training_runs/darcy_binary_loss3targeted_loss2_continue2053ep_from_1026ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3079_step003079.pt`
+- loss3: epoch `3033`,
+  `adversarial_training_runs/darcy_binary_loss3targeted_loss3_continue2022ep_from_1011ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3033_step003033.pt`
+- physics_loss: epoch `3121`,
+  `adversarial_training_runs/darcy_binary_loss3targeted_physics_continue2081ep_from_1040ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3121_step003121.pt`
+- random_clean: epoch `3500`,
+  `adversarial_training_runs/darcy_binary_random_binary_fixed_y_continue_to3500_from_3000_20260614_supervised/darcy/checkpoints/darcy_epoch3500_step003500.pt`
+- random_solver: epoch `3500`,
+  `adversarial_training_runs/darcy_binary_random_binary_solver_y_continue_to3500_from_3000_20260614_supervised/darcy/checkpoints/darcy_epoch3500_step003500.pt`
+
+Run configuration:
+- Attack steps: `20`.
+- Attack objective: loss3 solver-consistent Darcy attack.
+- Epsilon fraction: `0.025`.
+- Requested attack samples per dataset: `50`.
+- Observed dataset limit: the 50 lossdrop generalization tensors each contain
+  `48` samples, so final selected generalization samples are `48` per dataset
+  and the manifest records truncation from the requested 50.
+- Fixed SVD/Jacobian sample set: `25` samples shared by all seven models
+  (train `2`, test `2`, first `21` generalization datasets x one sample).
+- SVD top-k stored: `10`.
+- Block Jacobian projection: factor `2`, block matrix `1764 x 1764`,
+  row chunk `128`.
+
+Expected final counts:
+- Attack batches / delta NPZ files: `364`.
+- Attack sample rows: `17,500`.
+- SVD/Jacobian rows and vector NPZ files: `175`.
+
+Preflight evidence:
+- `outputs/darcy_cflow_final_robustness_20260615_preflight/data/robustness_attack_52datasets_samples.csv`
+  had `28` rows, seven methods x two datasets x two samples.
+- `outputs/darcy_cflow_final_robustness_20260615_preflight/data/svd_jacobian_metrics.csv`
+  had `14` rows, seven methods x two fixed samples.
+
+Ten-minute tracking evidence:
+- Parent PID `440473`; worker PID `440496`.
+- Attack log lines: `216 / 364`.
+- Delta NPZ files: `216 / 364`.
+- SVD rows: `0 / 175`, expected because SVD starts after all attacks complete.
+- The job had completed attack for baseline, loss1, loss2, and loss3 and had
+  started physics_loss.
+
+Log:
+- `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/logs/setsid_final7_attack20_svd25.out`
+
+Report:
+- `docs/darcy_cflow_final7_attack20_svd25_run_20260615.md`
