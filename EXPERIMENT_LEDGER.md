@@ -14943,6 +14943,40 @@ Validation:
 Report:
 - `docs/darcy_cflow_final_delta_fft_polished_report_20260615.md`
 
+## 2026-06-15 - Darcy generalization dataset root difference check
+
+Status: complete.
+
+Question:
+- What is the difference between
+  `generalization_datasets_darcy_lossdrop50_selected_20260607/` and
+  `generalization_datasets_darcy_binary_loss3targeted_20260611/`?
+- Which one is newer?
+- Are both coefficient fields binary with values 5 and 13?
+
+Findings:
+- `lossdrop50_selected_20260607` is older by dataset generation date. Its `.pt`
+  files are from 2026-06-07, though the top-level directory was later touched on
+  2026-06-14.
+- `binary_loss3targeted_20260611` is newer by dataset generation date. Its `.pt`
+  files are from 2026-06-11.
+- `lossdrop50_selected_20260607` is not binary. The `x` coefficient fields are
+  continuous soft fields with hundreds of thousands of unique values per file;
+  observed x range was roughly 4.0 to 10.5 across the 50 files.
+- `binary_loss3targeted_20260611` is binary across all 50 files, but the two
+  coefficient values are 3.0 and 12.0, not 5.0 and 13.0.
+- Therefore neither currently checked root is exactly a 5/13 binary
+  coefficient-field suite.
+
+Verification:
+- Loaded the `.pt` files with `torch.load(..., map_location="cpu")` and scanned
+  key `x` across all 50 files in each root.
+- `binary_loss3targeted_20260611/darcy/generation_summary.json` also records
+  `low=3.0`, `high=12.0`, and `all_binary_verified=true`.
+
+Report:
+- `docs/darcy_generalization_dataset_root_difference_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
 
 Status: complete.
