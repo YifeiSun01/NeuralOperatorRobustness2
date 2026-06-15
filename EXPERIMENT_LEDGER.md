@@ -14812,6 +14812,50 @@ Postprocess waiter:
 Report:
 - `docs/darcy_cflow_final7_attack20_svd25_run_20260615.md`
 
+## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
+
+Status: complete.
+
+Question:
+- What is the final `52 datasets x 7 models x 8 metrics` result, combining
+  clean RMSE/Relative L2 with six attack20 robustness metrics?
+
+Observed evidence:
+- Ran the final seven-model clean evaluation on the same lossdrop50 selected
+  52-dataset root used by attack20/SVD:
+  `generalization_datasets_darcy_lossdrop50_selected_20260607/`.
+- Clean evaluation output:
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_eval_metrics.csv`
+  has `364` rows.
+- Built the aligned 8-metric matrix:
+  `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_52dataset_7model_8metric_matrix.csv`
+  with `364` rows and no missing metric values.
+- Built ranked matrix, model means, best-count tables, and SVD/Jacobian mean
+  summaries.
+
+Generalization mean conclusion:
+- `random solver` is best on clean RMSE (`2.6392e-04`), clean Relative L2
+  (`0.043099`), attack final loss (`1.0384e-07`), and absolute attack loss
+  increase (`3.3746e-08`).
+- `loss3` is the strongest adversarial/self-attack objective on clean
+  generalization error among loss1/loss2/loss3/Physics Loss, with clean RMSE
+  `2.8260e-04` and Relative L2 `0.046147`.
+- `relative increase` behaves differently because it divides by clean loss:
+  random clean and loss2 win many relative-increase counts, but they do not win
+  absolute clean/adv/loss-increase metrics.
+
+SVD/Jacobian conclusion:
+- SVD/Jacobian remains the requested `25 samples x 7 models = 175` diagnostic,
+  not a full 52-dataset matrix.
+- `random solver` has the lowest mean `J^T error` norm (`2.0164e-05`), with
+  `loss3` very close (`2.1018e-05`).
+- `loss3` has the largest mean top singular value in this diagnostic
+  (`0.001572`), so top singular value alone does not explain the final attack
+  robustness.
+
+Report:
+- `docs/darcy_cflow_final_8metric_matrix_summary_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow existing figure checkpoint audit
 
 Status: inspected.
