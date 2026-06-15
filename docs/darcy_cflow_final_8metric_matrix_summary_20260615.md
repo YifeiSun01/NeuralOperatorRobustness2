@@ -1,6 +1,21 @@
 # Darcy CFlow Final 8-Metric Matrix Summary - 2026-06-15
 
-Status: complete.
+Status: deprecated for the current Darcy binary analysis.
+
+Important correction: this document summarizes an output bundle that used the
+older continuous soft-field root
+`generalization_datasets_darcy_lossdrop50_selected_20260607`. It must not be
+used for the current Darcy/SIR20 binary loss3-targeted conclusions. The current
+required root is:
+
+```text
+generalization_datasets_darcy_binary_loss3targeted_20260611/
+```
+
+The numeric tables below are retained only as historical provenance for the old
+root. Current clean evaluation, attack20, SVD/Jacobian, correlations, heatmaps,
+and 52-dataset x 7-model metric matrices must be recomputed on the 20260611
+binary root.
 
 Observed from the final seven-model clean evaluation, attack20 outputs, and
 SVD/Jacobian outputs in:
@@ -36,8 +51,8 @@ The eight metrics are:
 - `attack_delta_l2_rms_mean`
 - `attack_delta_linf_mean`
 
-Clean metrics were evaluated on the same lossdrop50 selected dataset root used
-by attack20/SVD:
+In this deprecated historical bundle, clean metrics were evaluated on the same
+old lossdrop50 selected dataset root used by attack20/SVD:
 
 ```text
 generalization_datasets_darcy_lossdrop50_selected_20260607/
@@ -70,7 +85,7 @@ diagnostic and are not by themselves a robustness claim.
 | random clean | 0 | 0 | 0 | 0 | 0 | 34 |
 | random solver | 50 | 50 | 50 | 50 | 50 | 0 |
 
-Conclusion from these final lossdrop50 results:
+Historical old-root conclusion from these deprecated lossdrop50 results:
 
 - `random solver` is best on clean RMSE, clean Relative L2, attack clean loss,
   attack final loss, and absolute attack loss increase across all 50

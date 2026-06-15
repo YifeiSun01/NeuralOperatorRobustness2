@@ -21,7 +21,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PYTHON = PROJECT_ROOT / "adv_robust" / "bin" / "python"
 PYTHON = Path(os.environ.get("PYTHON", str(DEFAULT_PYTHON)))
 
-GENERALIZATION_ROOT = PROJECT_ROOT / "generalization_datasets_darcy_lossdrop50_selected_20260607"
+CURRENT_BINARY_GENERALIZATION_ROOT = PROJECT_ROOT / "generalization_datasets_darcy_binary_loss3targeted_20260611"
+DISALLOWED_LOSSDROP50_ROOT = PROJECT_ROOT / "generalization_datasets_darcy_lossdrop50_selected_20260607"
+GENERALIZATION_ROOT = Path(os.environ.get("DARCY_SIR20_GENERALIZATION_ROOT", str(CURRENT_BINARY_GENERALIZATION_ROOT)))
+if not GENERALIZATION_ROOT.is_absolute():
+    GENERALIZATION_ROOT = PROJECT_ROOT / GENERALIZATION_ROOT
 BASELINE_CHECKPOINT = PROJECT_ROOT / "2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607/best.pt"
 SCREEN_TRAIN_PATH = PROJECT_ROOT / "2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/train/dim2d_darcy_nx85_N384_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt"
 SCREEN_TEST_PATH = PROJECT_ROOT / "2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/test/dim2d_darcy_nx85_N96_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_test.pt"
@@ -191,12 +195,30 @@ def require_paths(paths: Iterable[Path]) -> None:
         raise FileNotFoundError("missing required Darcy/SIR20 paths:\n" + "\n".join(str(p) for p in missing))
 
 
+def validate_current_generalization_root() -> None:
+    root = GENERALIZATION_ROOT.resolve()
+    current = CURRENT_BINARY_GENERALIZATION_ROOT.resolve()
+    disallowed = DISALLOWED_LOSSDROP50_ROOT.resolve()
+    if root == disallowed or "lossdrop50_selected_20260607" in str(root):
+        raise RuntimeError(
+            "Refusing to use the obsolete Darcy lossdrop50 selected root for current SIR20 analysis: "
+            f"{root}. Use {current}."
+        )
+    if root != current:
+        raise RuntimeError(
+            "Current Darcy/SIR20 analysis is locked to the binary loss3-targeted 20260611 root. "
+            f"Observed {root}; expected {current}."
+        )
+
+
 def validate_inputs() -> None:
+    validate_current_generalization_root()
     require_paths(
         [
             PYTHON,
-            GENERALIZATION_ROOT / "candidate_manifest.csv",
             GENERALIZATION_ROOT / "darcy",
+            GENERALIZATION_ROOT / "darcy" / "candidate_manifest.csv",
+            GENERALIZATION_ROOT / "darcy" / "generation_summary.json",
             BASELINE_CHECKPOINT,
             SCREEN_TRAIN_PATH,
             SCREEN_TEST_PATH,

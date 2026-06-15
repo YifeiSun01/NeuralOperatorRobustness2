@@ -146,3 +146,17 @@ Practical rule going forward: do not use
 Darcy binary generalization/robustness claims. Any final robustness, SVD/Jacobian,
 or 52-dataset 7-model metric matrix for the current analysis must be recomputed
 against `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+
+## Current Code Guard
+
+As of the follow-up correction on 2026-06-15, the modular Darcy/SIR20 pipeline
+in `tools/darcy_sir20_common.py` is locked to:
+
+```text
+generalization_datasets_darcy_binary_loss3targeted_20260611/
+```
+
+It rejects `generalization_datasets_darcy_lossdrop50_selected_20260607` for
+current SIR20/Darcy analysis. This guard applies to the shared evaluation and
+robustness entry points that import `darcy_sir20_common.py`, including
+`tools/darcy_sir20_evaluate.py` and `tools/darcy_sir20_robustness.py`.

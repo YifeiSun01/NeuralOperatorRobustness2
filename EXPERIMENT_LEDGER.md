@@ -15035,17 +15035,53 @@ Conclusion:
 Report:
 - `docs/darcy_generalization_dataset_root_difference_20260615.md`
 
+## 2026-06-15 - Darcy/SIR20 current-root guard for binary loss3-targeted analysis
+
+Status: implemented.
+
+User correction:
+- All current Darcy/SIR20 analyses requested in this thread must use
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- `generalization_datasets_darcy_lossdrop50_selected_20260607` must not be used
+  for any current clean evaluation, attack20, SVD/Jacobian, correlations,
+  heatmaps, or 52-dataset x 7-model metric matrix conclusions.
+
+Code changes:
+- Updated `tools/darcy_sir20_common.py` so `GENERALIZATION_ROOT` defaults to
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- Added `validate_current_generalization_root()` in `tools/darcy_sir20_common.py`;
+  it refuses the old `lossdrop50_selected_20260607` root and refuses any root
+  other than the current binary loss3-targeted 20260611 root for this modular
+  SIR20 pipeline.
+- Updated `tools/darcy_sir20_evaluate.py` report wording so final eval reports
+  describe the 50 binary loss3-targeted 20260611 generalization datasets, not
+  lossdrop50 soft-coefficient data.
+- Marked `docs/darcy_cflow_final_8metric_matrix_summary_20260615.md` as
+  deprecated for the current binary analysis because it summarizes the old
+  continuous soft-field root.
+
+Verification:
+- `generalization_datasets_darcy_binary_loss3targeted_20260611/darcy` contains
+  50 `.pt` files plus `candidate_manifest.csv` and `generation_summary.json`.
+- The shared modular final-eval/robustness inputs now validate against this
+  20260611 root.
+
+Report:
+- `docs/darcy_generalization_dataset_root_difference_20260615.md`
+- `docs/darcy_cflow_final_8metric_matrix_summary_20260615.md`
+
 ## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
 
-Status: complete.
+Status: deprecated for the current Darcy binary analysis; complete only as a
+historical result for the older continuous soft-field root.
 
 Question:
 - What is the final `52 datasets x 7 models x 8 metrics` result, combining
   clean RMSE/Relative L2 with six attack20 robustness metrics?
 
 Observed evidence:
-- Ran the final seven-model clean evaluation on the same lossdrop50 selected
-  52-dataset root used by attack20/SVD:
+- This historical bundle ran the final seven-model clean evaluation on the same
+  old lossdrop50 selected 52-dataset root used by attack20/SVD:
   `generalization_datasets_darcy_lossdrop50_selected_20260607/`.
 - Clean evaluation output:
   `outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25/data/final_eval_metrics.csv`
@@ -15056,7 +15092,7 @@ Observed evidence:
 - Built ranked matrix, model means, best-count tables, and SVD/Jacobian mean
   summaries.
 
-Generalization mean conclusion:
+Historical old-root generalization mean conclusion:
 - `random solver` is best on clean RMSE (`2.6392e-04`), clean Relative L2
   (`0.043099`), attack final loss (`1.0384e-07`), and absolute attack loss
   increase (`3.3746e-08`).
@@ -15067,7 +15103,7 @@ Generalization mean conclusion:
   random clean and loss2 win many relative-increase counts, but they do not win
   absolute clean/adv/loss-increase metrics.
 
-SVD/Jacobian conclusion:
+Historical old-root SVD/Jacobian conclusion:
 - SVD/Jacobian remains the requested `25 samples x 7 models = 175` diagnostic,
   not a full 52-dataset matrix.
 - `random solver` has the lowest mean `J^T error` norm (`2.0164e-05`), with

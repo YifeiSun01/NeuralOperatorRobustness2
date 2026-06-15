@@ -110,7 +110,7 @@ def write_report(path: Path, summary_rows: list[dict[str, Any]], metrics_csv: Pa
     lines = [
         "# Darcy/SIR20 Final 52-Dataset Evaluation",
         "",
-        "Observed from baseline plus final trained checkpoints on screen train/test and the 50 selected lossdrop50 soft-coefficient generalization datasets.",
+        "Observed from baseline plus final trained checkpoints on screen train/test and the 50 binary loss3-targeted 20260611 generalization datasets.",
         "",
         "| method | split | datasets | RMSE mean | Relative L2 mean | accuracy score |",
         "|---|---|---:|---:|---:|---:|",
