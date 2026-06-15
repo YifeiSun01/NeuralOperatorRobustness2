@@ -15069,6 +15069,48 @@ Interpretation:
   `loss3`; the attack/SVD tables in the current organized release are only
   one-epoch preflight diagnostics.
 
+## 2026-06-15 - Darcy cflow attack-loss-increase audit
+
+Status: complete.
+
+Action taken:
+- Audited available Darcy attack-loss-increase artifacts after the user clarified
+  the question is attack `initial loss -> final loss -> loss increase`, not clean
+  evaluation loss and not one-epoch preflight placeholder rows.
+- Separated the complete 20-step artifact from the available 50-step selected
+  subsets.
+- Wrote a dedicated report.
+
+Evidence:
+- Complete attack20 source:
+  `analysis_outputs/darcy_attack20_52datasets_50samples_20260613_7models_delta_complete/summary_by_model_split.csv`.
+- Attack50 five-model selected subset:
+  `analysis_outputs/darcy_five_model_batch_ranked_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished/all_50step_batch_attack_results.csv`.
+- Attack50 seven-model selected subset:
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/summary.csv`.
+- Dedicated report:
+  `docs/darcy_cflow_attack20_attack50_loss_increase_audit_20260615.md`.
+
+Observed results:
+- Complete attack20, all 52 datasets and 2600 samples per model: `loss3`
+  has the lowest mean final attacked loss (`3.15314e-06`) and lowest mean
+  attack loss increase (`2.69124e-06`).
+- Complete attack20, 50 generalization datasets and 2500 samples per model:
+  `loss3` has the lowest mean final attacked loss (`3.20764e-06`) and lowest
+  mean attack loss increase (`2.73073e-06`).
+- Attack20 checkpoints are the `1000/1026/1011/1040/1100` epoch artifact family,
+  not the later `3000/3500` final time-matched checkpoints.
+- No complete local `52 datasets x 50 samples x 7 models` attack50 table from
+  the later final checkpoints was found. Available attack50 tables are selected
+  heatmap subsets only.
+
+Interpretation:
+- For the real available 20-step attack table, `loss3` is best on absolute
+  attack loss increase; the earlier physics-favored statement was from the wrong
+  preflight table.
+- Attack50 selected subsets also favor `loss3` on absolute attack loss increase,
+  but they are not complete final robustness coverage.
+
 ## 2026-06-15 - Darcy cflow best model by metric table
 
 Status: complete.
