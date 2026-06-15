@@ -85,6 +85,12 @@ are not mounted here.
 - Uploaded-screenshot available-row figure with no empty attack-average rows,
   using uploaded external-forcing tiles and `t=0/t=19` attack frames:
   `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_available_rows.png`.
+- Polished uploaded-screenshot figures now use publication-facing column
+  labels (`original initial condition`, `perturbed initial condition`, `added
+  perturbation`, `original final condition`, `perturbed final condition`, and
+  the final-condition difference), include explicit `T = 0` / `T = 19` labels,
+  and draw full-column black outlines around the external-forcing column and the
+  added-perturbation column.
 
 ## Interpretation
 
@@ -100,6 +106,9 @@ delta/difference crops for the recovered rows
 `petals`) have coherent large-scale structures that visually align with their
 external-forcing families. The `none` row is random-looking rather than a fixed
 external-forcing template.
+
+The figure subtitle now states the averaging basis explicitly: each row averages
+attack results over 1150 random-field initial conditions.
 
 Inference from the available evidence and expansion logs: a complete 8-row
 version should be possible if the historical `/blue/.../expanded_datasets/*.pt`

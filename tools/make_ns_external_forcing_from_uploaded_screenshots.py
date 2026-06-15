@@ -47,6 +47,10 @@ ROW_TO_UPLOAD = {
     "none": "06_none_avg.png",
 }
 
+ROW_LABELS = {
+    "45 deg default": "45°\n(default)",
+}
+
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
     name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
@@ -59,10 +63,9 @@ def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
 
 FONT_TITLE = font(31, True)
 FONT_SUBTITLE = font(20)
-FONT_HEADER = font(17, True)
+FONT_HEADER = font(12, True)
 FONT_LABEL = font(20)
 FONT_SMALL = font(14)
-FONT_NOTE = font(16)
 
 
 def extract_uploaded_images() -> None:
@@ -208,42 +211,48 @@ def paste_cell(
     draw.rectangle([x, y, x + size, y + size], outline=border, width=width)
 
 
-def build(rows: list[str], output: Path, note: str) -> None:
+def build(rows: list[str], output: Path) -> None:
     tile = 118
     left = 160
-    top = 190
+    top = 260
     col_gap = 22
     row_gap = 36
-    columns = ["External\nforcing", "orig\nt=0", "pert\nt=0", "delta\nt=0", "orig\nt=19", "pert\nt=19", "delta\nt=19"]
+    columns = [
+        "External\nforcing",
+        "original\ninitial\ncondition\n(T = 0)",
+        "perturbed\ninitial\ncondition\n(T = 0)",
+        "added\nperturbation\n(T = 0)",
+        "original\nfinal\ncondition\n(T = 19)",
+        "perturbed\nfinal\ncondition\n(T = 19)",
+        "difference between\nperturbed final\ncondition and\noriginal final\ncondition\n(T = 19)",
+    ]
     width = left + len(columns) * tile + (len(columns) - 1) * col_gap + 40
-    height = top + len(rows) * (tile + row_gap) + 78
+    body_bottom = top + (len(rows) - 1) * (tile + row_gap) + tile
+    height = body_bottom + 44
     canvas = Image.new("RGB", (width, height), "white")
     draw = ImageDraw.Draw(canvas)
 
-    draw_centered(draw, (0, 18, width, 62), "2D NS: mean attack perturbations echo forcing", FONT_TITLE, fill=(10, 10, 10))
+    draw_centered(draw, (0, 18, width, 62), "2D NS external-forcing attack perturbations", FONT_TITLE, fill=(10, 10, 10))
     draw_centered(
         draw,
-        (40, 70, width - 40, 126),
-        "Random-field initial conditions are attacked; averaging by forcing tag/time makes the perturbation pattern visible.",
+        (40, 74, width - 40, 144),
+        "Each row averages attack results over 1150 random-field initial conditions;\nsample averaging reveals forcing-shaped perturbation patterns.",
         FONT_SUBTITLE,
         fill=(45, 45, 45),
     )
 
     xs = [left + i * (tile + col_gap) for i in range(len(columns))]
     for x, header in zip(xs, columns):
-        draw_centered(draw, (x - 5, top - 58, x + tile + 5, top - 8), header, FONT_HEADER, fill=(20, 20, 20))
+        draw_centered(draw, (x - 8, top - 104, x + tile + 8, top - 22), header, FONT_HEADER, fill=(20, 20, 20))
 
     tile_names = ["orig_t0", "pert_t0", "diff_t0", "orig_t19", "pert_t19", "diff_t19"]
     for r, row_name in enumerate(rows):
         y = top + r * (tile + row_gap)
-        draw_centered(draw, (8, y, left - 14, y + tile), row_name, FONT_LABEL, fill=(18, 18, 18))
+        draw_centered(draw, (8, y, left - 14, y + tile), ROW_LABELS.get(row_name, row_name), FONT_LABEL, fill=(18, 18, 18))
         forcing = load_external_forcing(row_name, tile)
-        force_border = (232, 98, 0) if row_name == "45 deg default" else (55, 55, 55)
-        force_width = 5 if row_name == "45 deg default" else 3
-        paste_cell(canvas, draw, forcing, xs[0], y, tile, border=force_border, width=force_width, missing="none\n(no external\nforcing)")
+        paste_cell(canvas, draw, forcing, xs[0], y, tile, border=(110, 110, 110), width=2, missing="none\n(no external\nforcing)")
         for c, tile_name in enumerate(tile_names, start=1):
             image = load_tile(row_name, tile_name, tile)
-            is_first_delta = tile_name == "diff_t0"
             paste_cell(
                 canvas,
                 draw,
@@ -251,12 +260,17 @@ def build(rows: list[str], output: Path, note: str) -> None:
                 xs[c],
                 y,
                 tile,
-                border=(232, 98, 0) if is_first_delta else (110, 110, 110),
-                width=5 if is_first_delta else 2,
+                border=(110, 110, 110),
+                width=2,
                 missing="not in\nuploaded\nscreenshots",
             )
 
-    draw_centered(draw, (35, height - 58, width - 35, height - 12), note, FONT_NOTE, fill=(80, 80, 80))
+    first_y = top
+    last_y = body_bottom
+    pad = 14
+    for col_index in (0, 3):
+        x = xs[col_index]
+        draw.rectangle([x - pad, first_y - pad, x + tile + pad, last_y + pad], outline=(0, 0, 0), width=5)
     output.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(output, optimize=True)
 
@@ -268,12 +282,10 @@ def main() -> None:
     build(
         ["45 deg default", "ringsCos", "sBands", "isoCircles", "petals", "ringsL1", "ringsLinf", "none"],
         EIGHT_ROW_OUT,
-        "Orange marks: 45-degree forcing and first-frame delta. ringsL1/ringsLinf avg screenshots were not in the upload.",
     )
     build(
         ["45 deg default", "ringsCos", "sBands", "isoCircles", "petals", "none"],
         AVAILABLE_OUT,
-        "Only rows present in the uploaded screenshots are shown here; orange boxes mark the emphasized first-frame delta.",
     )
     print(EIGHT_ROW_OUT)
     print(AVAILABLE_OUT)

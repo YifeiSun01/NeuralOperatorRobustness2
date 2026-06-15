@@ -15433,3 +15433,27 @@ Notes:
 - The `outputs/` clean pass used `--no-update-modtime` for Cloudflare R2
   compatibility and excluded live rclone logs under
   `outputs/r2_upload_darcy_20260615/*.log`.
+
+## 2026-06-15 - NS external forcing figure label and outline polish
+
+Status: completed and backed up to R2; queued for GitHub push.
+
+Question:
+- Polish the NS external-forcing attack perturbation figure so the highlighted
+  columns are clearer and the labels explain the first/final-frame panels.
+
+Changes:
+- Replaced abbreviated column headers with publication-facing labels:
+  original/perturbed initial condition, added perturbation, original/perturbed
+  final condition, and final-condition difference.
+- Added explicit `T = 0` and `T = 19` text to the relevant column headers.
+- Removed the bottom explanatory footnote from the figure.
+- Replaced per-cell orange highlights with full-column black outlines around
+  the external-forcing column and the added-perturbation column, with padding
+  between the frame and tile edges.
+- Updated the subtitle to state that each row averages attack results over 1150
+  random-field initial conditions.
+
+Outputs:
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_available_rows.png`
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_8row.png`
