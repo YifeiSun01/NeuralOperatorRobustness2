@@ -1,0 +1,34 @@
+{
+  "figures": [
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/baseline/polished_final_delta_fft_log_magnitude_heatmap_baseline.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/baseline/polished_final_delta_fft_dataset_radial_heatmap_baseline.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/loss1/polished_final_delta_fft_log_magnitude_heatmap_loss1.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/loss1/polished_final_delta_fft_dataset_radial_heatmap_loss1.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/loss2/polished_final_delta_fft_log_magnitude_heatmap_loss2.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/loss2/polished_final_delta_fft_dataset_radial_heatmap_loss2.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/loss3/polished_final_delta_fft_log_magnitude_heatmap_loss3.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/loss3/polished_final_delta_fft_dataset_radial_heatmap_loss3.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/physics_loss/polished_final_delta_fft_log_magnitude_heatmap_physics_loss.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/physics_loss/polished_final_delta_fft_dataset_radial_heatmap_physics_loss.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/random_clean/polished_final_delta_fft_log_magnitude_heatmap_random_clean.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/random_clean/polished_final_delta_fft_dataset_radial_heatmap_random_clean.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/random_solver/polished_final_delta_fft_log_magnitude_heatmap_random_solver.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/random_solver/polished_final_delta_fft_dataset_radial_heatmap_random_solver.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/final_delta_fft/polished_final_delta_fft_log_magnitude_grid_all7.png",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/final_delta_fft/polished_final_delta_radial_spectrum_all7.png"
+  ],
+  "final_bundle": "outputs/darcy_cflow_final_robustness_20260615",
+  "generated_utc": "2026-06-15T06:44:55.739983+00:00",
+  "notes": [
+    "These are final-checkpoint attack50 delta FFT diagnostics on the binary 20260611 root.",
+    "They are not the old epoch-wise attack-probe FFT history because the organized release does not contain per-epoch attack_probe_samples for every final model."
+  ],
+  "release": "outputs/darcy_cflow_timematched_organized_release_20260614",
+  "source_attack_csv": "outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv",
+  "source_delta_dir": "outputs/darcy_cflow_final_robustness_20260615/data/robustness_deltas",
+  "split": "generalization",
+  "tables": [
+    "outputs/darcy_cflow_timematched_organized_release_20260614/data/polished_report/final_delta_fft/final_delta_fft_dataset_metrics.csv",
+    "outputs/darcy_cflow_timematched_organized_release_20260614/data/polished_report/final_delta_fft/final_delta_fft_summary_by_model.csv"
+  ]
+}

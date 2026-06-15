@@ -1,0 +1,31 @@
+{
+  "artifact": "darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15",
+  "copied_into_release_utc": "2026-06-15T06:55:00Z",
+  "source_figures": "visualizations/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15",
+  "source_data": "analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15",
+  "release_figures": "outputs/darcy_cflow_timematched_organized_release_20260614/figures/attack_heatmaps_loss3_advantage_extra15",
+  "release_data": "outputs/darcy_cflow_timematched_organized_release_20260614/data/attack_heatmaps_loss3_advantage_extra15",
+  "figure_count": 15,
+  "data_file_count": 110,
+  "dataset_root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+  "dataset_check": {
+    "summary_rows": 105,
+    "selected_samples": 15,
+    "all_dataset_ids_are_binary_20260611": true,
+    "old_rejected_root_token_found": false
+  },
+  "attack": {
+    "steps": 50,
+    "epsilon_fraction": 0.025
+  },
+  "models": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics loss",
+    "random clean y",
+    "random solver y"
+  ],
+  "checkpoint_scope_note": "These are the existing seven-model heatmaps generated from the earlier 1000c/1100-era checkpoint set, not the newly completed final 3000-3500 epoch robustness bundle. They are included here as requested visual supplemental figures."
+}

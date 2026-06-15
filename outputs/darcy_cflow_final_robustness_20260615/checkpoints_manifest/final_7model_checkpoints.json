@@ -1,0 +1,64 @@
+{
+  "bundle": "outputs/darcy_cflow_final_robustness_20260615",
+  "checkpoints": [
+    {
+      "checkpoint": "2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607/best.pt",
+      "display_name": "baseline",
+      "epochs_completed": 0,
+      "method": "baseline",
+      "role": "baseline_final"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss1_continue2000ep_from_1000ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3000_step003000.pt",
+      "display_name": "loss1",
+      "epochs_completed": 3000,
+      "method": "loss1",
+      "role": "trained_final"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss2_continue2053ep_from_1026ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3079_step003079.pt",
+      "display_name": "loss2",
+      "epochs_completed": 3079,
+      "method": "loss2",
+      "role": "trained_final"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_continue2022ep_from_1011ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3033_step003033.pt",
+      "display_name": "loss3",
+      "epochs_completed": 3033,
+      "method": "loss3",
+      "role": "trained_final"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_physics_continue2081ep_from_1040ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/checkpoints/darcy_epoch3121_step003121.pt",
+      "display_name": "Physics Loss",
+      "epochs_completed": 3121,
+      "method": "physics_loss",
+      "role": "trained_final"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_continue_to3500_from_3000_20260614_supervised/darcy/checkpoints/darcy_epoch3500_step003500.pt",
+      "display_name": "random clean",
+      "epochs_completed": 3500,
+      "method": "random_clean",
+      "role": "trained_final"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_random_binary_solver_y_continue_to3500_from_3000_20260614_supervised/darcy/checkpoints/darcy_epoch3500_step003500.pt",
+      "display_name": "random solver",
+      "epochs_completed": 3500,
+      "method": "random_solver",
+      "role": "trained_final"
+    }
+  ],
+  "method_order": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics_loss",
+    "random_clean",
+    "random_solver"
+  ],
+  "mode": "final_robustness"
+}

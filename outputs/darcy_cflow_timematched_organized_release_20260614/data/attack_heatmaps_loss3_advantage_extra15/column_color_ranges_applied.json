@@ -1,0 +1,33 @@
+{
+  "delta": {
+    "cmap": "coolwarm",
+    "vmax": 9.0,
+    "vmin": -9.0
+  },
+  "initial + delta": {
+    "cmap": "viridis",
+    "vmax": 12.0,
+    "vmin": 3.0
+  },
+  "initial condition": {
+    "cmap": "viridis",
+    "vmax": 12.0,
+    "vmin": 3.0
+  },
+  "model - solver": {
+    "cmap": "coolwarm",
+    "vmax": 0.00537632592022419,
+    "vmin": -0.00537632592022419
+  },
+  "model output": {
+    "cmap": "viridis",
+    "vmax": 0.02427038550376892,
+    "vmin": -0.0003429315984249115
+  },
+  "note": "These vmin/vmax values are applied to every row/model in the corresponding column. Model output and solver output intentionally share the exact same range.",
+  "solver output": {
+    "cmap": "viridis",
+    "vmax": 0.02427038550376892,
+    "vmin": -0.0003429315984249115
+  }
+}

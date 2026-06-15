@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-06-15T00:02:22.851954+00:00",
+  "release_dir": "outputs/darcy_cflow_timematched_organized_release_20260614",
+  "actions": {
+    "deleted_work_hour_main_curve_png": 0,
+    "redrawn_epoch_and_wall_hour_main_curve_png": 24,
+    "added_required_raw_alpha_png": 4,
+    "added_polished_report_png": 6
+  },
+  "wall_hour_xmax": 4.0,
+  "line_alpha": 0.58,
+  "baseline_alpha": 0.62,
+  "mode": "split_polished_only",
+  "deleted_files": [],
+  "redrawn_files": [
+    "figures/main_curves/all_six_models/linear/rmse_split_means_vs_epoch.png",
+    "figures/main_curves/all_six_models/linear/rmse_split_means_vs_wall_hours.png",
+    "figures/main_curves/all_six_models/linear/relative_l2_split_means_vs_epoch.png",
+    "figures/main_curves/all_six_models/linear/relative_l2_split_means_vs_wall_hours.png",
+    "figures/main_curves/all_six_models/log/rmse_split_means_vs_epoch.png",
+    "figures/main_curves/all_six_models/log/rmse_split_means_vs_wall_hours.png",
+    "figures/main_curves/all_six_models/log/relative_l2_split_means_vs_epoch.png",
+    "figures/main_curves/all_six_models/log/relative_l2_split_means_vs_wall_hours.png",
+    "figures/main_curves/no_random_clean/linear/rmse_split_means_vs_epoch.png",
+    "figures/main_curves/no_random_clean/linear/rmse_split_means_vs_wall_hours.png",
+    "figures/main_curves/no_random_clean/linear/relative_l2_split_means_vs_epoch.png",
+    "figures/main_curves/no_random_clean/linear/relative_l2_split_means_vs_wall_hours.png",
+    "figures/main_curves/no_random_clean/log/rmse_split_means_vs_epoch.png",
+    "figures/main_curves/no_random_clean/log/rmse_split_means_vs_wall_hours.png",
+    "figures/main_curves/no_random_clean/log/relative_l2_split_means_vs_epoch.png",
+    "figures/main_curves/no_random_clean/log/relative_l2_split_means_vs_wall_hours.png",
+    "figures/main_curves/loss123_only/linear/rmse_split_means_vs_epoch.png",
+    "figures/main_curves/loss123_only/linear/rmse_split_means_vs_wall_hours.png",
+    "figures/main_curves/loss123_only/linear/relative_l2_split_means_vs_epoch.png",
+    "figures/main_curves/loss123_only/linear/relative_l2_split_means_vs_wall_hours.png",
+    "figures/main_curves/loss123_only/log/rmse_split_means_vs_epoch.png",
+    "figures/main_curves/loss123_only/log/rmse_split_means_vs_wall_hours.png",
+    "figures/main_curves/loss123_only/log/relative_l2_split_means_vs_epoch.png",
+    "figures/main_curves/loss123_only/log/relative_l2_split_means_vs_wall_hours.png"
+  ],
+  "required_raw_alpha_files": [
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_epoch_rmse_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_wall_clock_rmse_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_epoch_relative_l2_train_test_generalization_alpha.png",
+    "figures/diagnostic_existing/required_raw_figures_alpha/six_method_wall_clock_relative_l2_train_test_generalization_alpha.png"
+  ],
+  "polished_report_files": [
+    "figures/polished_report/polished_all_six_models_rmse_split_means_epoch_wall.png",
+    "figures/polished_report/polished_all_six_models_relative_l2_split_means_epoch_wall.png",
+    "figures/polished_report/polished_no_random_clean_rmse_split_means_epoch_wall.png",
+    "figures/polished_report/polished_no_random_clean_relative_l2_split_means_epoch_wall.png",
+    "figures/polished_report/polished_loss123_only_rmse_split_means_epoch_wall.png",
+    "figures/polished_report/polished_loss123_only_relative_l2_split_means_epoch_wall.png"
+  ],
+  "notes": [
+    "Main curves now keep only epoch and wall_hours axes.",
+    "All main wall_hours plots are truncated to 0-4 wall-clock hours.",
+    "Legends are placed outside the axes at the bottom; titles are at the top with reserved spacing.",
+    "Original required_raw_figures_previous files are preserved; transparent-line variants are written separately.",
+    "Random clean/random solver have no wall_seconds in the source split/eval tables; wall-hour legends still list them, but no wall-hour curve is fabricated when data is missing."
+  ]
+}

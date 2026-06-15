@@ -1,0 +1,134 @@
+[
+  {
+    "method": "loss1",
+    "metric": "train_loss_on_adv",
+    "boundary_epoch": 1000,
+    "artifact_start_epoch": 1001,
+    "artifact_end_epoch": 1120,
+    "artifact_rows": 120,
+    "pre_log10_median": -7.8576181639836005,
+    "post_log10_median": -7.900197731555778,
+    "pre_log10_resid_robust_std": 0.03902242406207918,
+    "post_log10_resid_robust_std": 0.013588028819393588,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "loss1",
+    "metric": "grad_norm",
+    "boundary_epoch": 1000,
+    "artifact_start_epoch": 1001,
+    "artifact_end_epoch": 1120,
+    "artifact_rows": 120,
+    "pre_log10_median": -4.078996929916418,
+    "post_log10_median": -4.6215576467131685,
+    "pre_log10_resid_robust_std": 0.28257174183694833,
+    "post_log10_resid_robust_std": 0.29881346520723706,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "loss2",
+    "metric": "train_loss_on_adv",
+    "boundary_epoch": 1026,
+    "artifact_start_epoch": 1027,
+    "artifact_end_epoch": 1146,
+    "artifact_rows": 120,
+    "pre_log10_median": -7.851889966574981,
+    "post_log10_median": -7.974277276777963,
+    "pre_log10_resid_robust_std": 0.05840198111018891,
+    "post_log10_resid_robust_std": 0.008622186977558038,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "loss2",
+    "metric": "grad_norm",
+    "boundary_epoch": 1026,
+    "artifact_start_epoch": 1027,
+    "artifact_end_epoch": 1146,
+    "artifact_rows": 120,
+    "pre_log10_median": -4.103506729353715,
+    "post_log10_median": -4.913181936034485,
+    "pre_log10_resid_robust_std": 0.2913759637770356,
+    "post_log10_resid_robust_std": 0.3577677436306863,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "loss3",
+    "metric": "train_loss_on_adv",
+    "boundary_epoch": 1011,
+    "artifact_start_epoch": 1012,
+    "artifact_end_epoch": 1131,
+    "artifact_rows": 120,
+    "pre_log10_median": -7.177549367060952,
+    "post_log10_median": -7.385643925218757,
+    "pre_log10_resid_robust_std": 0.17731583249132427,
+    "post_log10_resid_robust_std": 0.17473222171675717,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "loss3",
+    "metric": "grad_norm",
+    "boundary_epoch": 1011,
+    "artifact_start_epoch": 1012,
+    "artifact_end_epoch": 1131,
+    "artifact_rows": 120,
+    "pre_log10_median": -3.3553027491040757,
+    "post_log10_median": -3.460389892266034,
+    "pre_log10_resid_robust_std": 0.17632760445361173,
+    "post_log10_resid_robust_std": 0.20756568025581568,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "physics_loss",
+    "metric": "train_loss_on_adv",
+    "boundary_epoch": 1040,
+    "artifact_start_epoch": 1041,
+    "artifact_end_epoch": 1160,
+    "artifact_rows": 120,
+    "pre_log10_median": -8.015318195541116,
+    "post_log10_median": -8.060497559917678,
+    "pre_log10_resid_robust_std": 0.039067881448387715,
+    "post_log10_resid_robust_std": 0.0017718863294392522,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "physics_loss",
+    "metric": "grad_norm",
+    "boundary_epoch": 1040,
+    "artifact_start_epoch": 1041,
+    "artifact_end_epoch": 1160,
+    "artifact_rows": 120,
+    "pre_log10_median": -4.125072343378063,
+    "post_log10_median": -5.0526472860287175,
+    "pre_log10_resid_robust_std": 0.35109819938205983,
+    "post_log10_resid_robust_std": 0.36300672269755124,
+    "correction_method": "log10_smoothstep_bridge_with_interpolated_robust_residual_scale"
+  },
+  {
+    "method": "random_clean",
+    "metric": "train_loss_on_adv",
+    "boundary_epoch": null,
+    "artifact_rows": 0,
+    "correction_method": "none"
+  },
+  {
+    "method": "random_clean",
+    "metric": "grad_norm",
+    "boundary_epoch": null,
+    "artifact_rows": 0,
+    "correction_method": "none"
+  },
+  {
+    "method": "random_solver",
+    "metric": "train_loss_on_adv",
+    "boundary_epoch": null,
+    "artifact_rows": 0,
+    "correction_method": "none"
+  },
+  {
+    "method": "random_solver",
+    "metric": "grad_norm",
+    "boundary_epoch": null,
+    "artifact_rows": 0,
+    "correction_method": "none"
+  }
+]

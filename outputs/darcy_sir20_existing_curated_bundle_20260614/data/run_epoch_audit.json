@@ -1,0 +1,82 @@
+[
+  {
+    "method_or_stage": "loss1",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss1_1000ep_full50_timematched_20260612_full50_timematched_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 1000,
+    "min_epoch": 1,
+    "max_epoch": 1000
+  },
+  {
+    "method_or_stage": "loss1_stage2",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss1_continue2000ep_from_1000ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 2000,
+    "min_epoch": 1001,
+    "max_epoch": 3000
+  },
+  {
+    "method_or_stage": "loss2",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 1026,
+    "min_epoch": 1,
+    "max_epoch": 1026
+  },
+  {
+    "method_or_stage": "loss2_stage2",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss2_continue2053ep_from_1026ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 2053,
+    "min_epoch": 1027,
+    "max_epoch": 3079
+  },
+  {
+    "method_or_stage": "loss3",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 1011,
+    "min_epoch": 1,
+    "max_epoch": 1011
+  },
+  {
+    "method_or_stage": "loss3_stage2",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_continue2022ep_from_1011ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 2022,
+    "min_epoch": 1012,
+    "max_epoch": 3033
+  },
+  {
+    "method_or_stage": "physics",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_physics_1040ep_full50_timematched_20260612_full50_timematched_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 1040,
+    "min_epoch": 1,
+    "max_epoch": 1040
+  },
+  {
+    "method_or_stage": "physics_stage2",
+    "path": "adversarial_training_runs/darcy_binary_loss3targeted_physics_continue2081ep_from_1040ep_full50_timematched_20260612_stage2_2000_from_1000c/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 2081,
+    "min_epoch": 1041,
+    "max_epoch": 3121
+  },
+  {
+    "method_or_stage": "random_clean",
+    "path": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 1100,
+    "min_epoch": 1,
+    "max_epoch": 1100
+  },
+  {
+    "method_or_stage": "random_solver",
+    "path": "adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100/darcy/train_steps.csv",
+    "exists": true,
+    "rows": 1100,
+    "min_epoch": 1,
+    "max_epoch": 1100
+  }
+]

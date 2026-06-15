@@ -1,0 +1,21 @@
+{
+  "source_split_csv": "outputs/darcy_sir20_required_figures_only_20260614/data/six_method_common_range_eval_split_summary.csv",
+  "source_metrics_csv": "outputs/darcy_sir20_required_figures_only_20260614/data/six_method_common_range_eval_metrics.csv",
+  "window_epochs": 51,
+  "max_epoch": 1100,
+  "max_work_seconds": 1128.9048905035306,
+  "figures": [
+    "ma51_epoch_relative_l2_train_test_generalization.png",
+    "ma51_epoch_rmse_train_test_generalization.png",
+    "ma51_relative_l2_generalization_part01_vs_epoch.png",
+    "ma51_relative_l2_generalization_part01_vs_work.png",
+    "ma51_relative_l2_generalization_part02_vs_epoch.png",
+    "ma51_relative_l2_generalization_part02_vs_work.png",
+    "ma51_rmse_generalization_part01_vs_epoch.png",
+    "ma51_rmse_generalization_part01_vs_work.png",
+    "ma51_rmse_generalization_part02_vs_epoch.png",
+    "ma51_rmse_generalization_part02_vs_work.png",
+    "ma51_work_clock_relative_l2_train_test_generalization.png",
+    "ma51_work_clock_rmse_train_test_generalization.png"
+  ]
+}

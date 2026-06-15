@@ -1,3 +1,68 @@
+## 2026-06-15 - Darcy CFlow final robustness rerun on binary 20260611 root completed
+
+Status: completed the final post-hoc Darcy/SIR20 robustness run for the seven
+requested models using only `generalization_datasets_darcy_binary_loss3targeted_20260611/`.
+The rejected June-7 `lossdrop50_selected` root was not used in this run.
+
+Artifacts:
+- Bundle: `outputs/darcy_cflow_final_robustness_20260615/`
+- Runner: `tools/run_darcy_cflow_final_robustness_20260615.sh`
+- Summarizer: `tools/summarize_darcy_cflow_final_robustness_20260615.py`
+- Report: `outputs/darcy_cflow_final_robustness_20260615/reports/final_robustness_summary_20260615.md`
+- Dedicated note: `docs/darcy_cflow_final_robustness_binary20260611_20260615.md`
+
+Verification:
+- Generalization root check: all 50 generalization datasets use the binary 20260611 prefix.
+- Old-root check: `old_lossdrop50_token_found=false`.
+- Attack table: `18200` rows, corresponding to 7 models x 52 datasets x 50 samples.
+- Attack steps: `50`.
+- Delta files: `364` NPZ files, corresponding to 7 models x 52 datasets.
+- SVD/Jacobian table: `175` rows, corresponding to 7 models x 25 fixed samples.
+- SVD/Jacobian vector payloads: `175` NPZ files.
+
+Main observed result on the 50 binary 20260611 generalization datasets:
+- loss3 has the lowest mean clean loss (`2.88169e-07`), adversarial loss
+  (`1.98716e-06`), absolute loss increase (`1.699e-06`), and relative increase
+  (`8.48128`) among the seven models.
+- random clean is generally the next strongest random baseline on this root;
+  random solver is not better than random clean on the organized-release binary
+  20260611 setting.
+- On the fixed 25 SVD/Jacobian samples, loss3 has the lowest attack increase,
+  error norm, and `J^T error` norm. Top singular value alone does not rank loss3
+  best and should not be interpreted as the whole robustness explanation.
+- Added final attack50 Delta FFT polished-report figures from the binary
+  20260611 robustness deltas under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/`.
+- Copied the existing 15 seven-model same-initial-condition attack heatmaps
+  (`darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15`) into
+  the organized release under
+  `figures/attack_heatmaps_loss3_advantage_extra15/`, with corresponding data
+  under `data/attack_heatmaps_loss3_advantage_extra15/`. These heatmaps are
+  confirmed to use binary 20260611 datasets and attack50, but they are the
+  earlier 1000-1100 checkpoint visual supplemental set, not final 3000-3500
+  checkpoint robustness rankings.
+- Built detailed Loss3 advantage metric tables under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_metric_tables_20260615/`
+  with report
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/loss3_advantage_metric_tables_20260615.md`.
+  The tables include clean 52-dataset x 7-model RMSE/Relative L2 values and
+  attack50 52-dataset x 7-model x 6 robustness metrics. On the 50 binary
+  20260611 generalization datasets, Loss3 is best by mean on clean RMSE,
+  clean Relative L2, attack clean loss, attack adv loss, attack loss increase,
+  and attack relative increase; strict per-dataset wins are 47/50, 47/50,
+  44/50, 50/50, 50/50, and 16/50 respectively.
+- Built paired t-tests for the binary 20260611 50-generalization dataset unit
+  under `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_ttests_20260615/`
+  with report
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/loss3_paired_ttests_20260615.md`.
+  Loss3 is significantly lower than the second-best mean model on clean data
+  MSE (`p=1.18e-13` one-sided), RMSE (`p=1.18e-17`), Relative L2
+  (`p=9.56e-19`), attack clean loss (`p=3.59e-10`), attack adv loss
+  (`p=1.12e-27`), and attack loss increase (`p=1.59e-21`). Attack relative
+  increase is weaker but still one-sided significant versus the second-best
+  mean model (`p=0.0326`, BH adjusted second-only `p=0.0419`). Delta L2 RMS is
+  not a Loss3 win, and delta Linf is tied by construction.
+
 ## 2026-06-14 - Darcy/SIR20 time-matched rerun pipeline prepared
 
 Status: implemented the DarcyFlow-focused SIR20 time-matched rerun pipeline requested for baseline plus six training methods (`loss1`, `loss2`, `loss3`, `physics_loss`, `random_clean`, `random_solver`). Small-validation/full execution is handled by `tools/run_darcy_sir20_timematched_full_20260614.sh`.
@@ -14517,3 +14582,746 @@ Observed evidence:
 
 Report:
 - `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final attack50 per-dataset t-tests
+
+Status: complete.
+
+Question:
+- For the final 7-model Darcy CFlow attack50 table, are the first-vs-second
+  model differences significant when tested separately inside each dataset,
+  i.e. 52 per-dataset paired t-tests per metric?
+
+Observed evidence:
+- Source table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+- Generated table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/per_dataset_ttests_20260615/attack50_per_dataset_first_vs_second_ttests.csv`
+  with 364 rows: 52 datasets times 7 sample-level metrics.
+- Summary:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/per_dataset_ttests_20260615/attack50_per_dataset_ttest_summary.csv`.
+- Report:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/per_dataset_attack50_ttests_20260615.md`.
+- Provenance check: final robustness provenance records
+  `old_lossdrop50_token_found = False`; the per-dataset t-test outputs contain
+  no `lossdrop50_selected_20260607`, no smoke checkpoint token, and no
+  `attack_steps=1` token.
+
+Key results:
+- For all 52 datasets, adversarial MSE loss is significant in 52/52 tests
+  after BH correction; loss3 is first on 50/52 datasets, with random clean first
+  on the train/test datasets.
+- For all 52 datasets, absolute loss increase is significant in 52/52 tests
+  after BH correction; loss3 is first on 50/52 datasets, with random clean first
+  on the train/test datasets.
+- Clean MSE loss is significant in 50/52 tests after BH correction; clean RMSE
+  from per-sample MSE is significant in 48/52 tests after BH correction.
+- Relative increase is significant in 28/52 tests after BH correction, and
+  delta L2 RMS is significant in 24/52 tests after BH correction.
+- Delta Linf is not meaningful for significance here because it is tied at the
+  attack bound/saturation level.
+
+Important limitation:
+- The organized-release full clean RMSE/Relative L2 table is aggregate-only.
+  Per-dataset t-tests for full clean RMSE/Relative L2 require per-sample clean
+  errors. The completed per-dataset tests use the final attack50 sample table,
+  including `clean_loss` and `sqrt(clean_loss)` for the same 50 samples.
+
+Report:
+- `docs/darcy_cflow_attack50_per_dataset_ttests_20260615.md`
+
+## 2026-06-15 - Darcy CFlow clean RMSE/Relative L2 per-dataset t-tests
+
+Status: complete.
+
+Question:
+- For the final seven Darcy CFlow models, run separate paired t-tests inside
+  each of the 52 datasets for clean RMSE and clean Relative L2.
+
+Observed evidence:
+- Source checkpoints:
+  `outputs/darcy_cflow_final_robustness_20260615/checkpoints_manifest/final_7model_checkpoints.json`.
+- Generated per-sample table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_per_sample_rmse_relative_l2_52datasets_7models.csv`.
+- Generated t-test table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_rmse_relative_l2_per_dataset_first_vs_second_ttests.csv`.
+- Generated summary:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_rmse_relative_l2_per_dataset_ttest_summary.csv`.
+- Report:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/clean_rmse_relative_l2_per_dataset_ttests_20260615.md`.
+- Provenance:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_per_sample_ttest_provenance.json`.
+
+Settings:
+- Generalization root locked to
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- Obsolete `lossdrop50_selected_20260607` root was refused and not used.
+- Used all available samples: 384 train, 96 test, and 50 samples in each of the
+  50 generalization datasets.
+- Per-sample rows: 20,860 = 7 models x (384 + 96 + 50 x 50).
+- T-test rows: 104 = 52 datasets x 2 metrics.
+
+Key results:
+- Generalization RMSE: loss3 is first on 47/50 datasets; first-vs-second
+  per-dataset t-tests are significant in 49/50 datasets after BH correction.
+- Generalization Relative L2: loss3 is first on 47/50 datasets; first-vs-second
+  per-dataset t-tests are significant in 49/50 datasets after BH correction.
+- The only non-significant generalization dataset for both RMSE and Relative L2
+  is `01_matern_fine_frac0p24_a1p77634_t11p8641`, where loss2 is slightly first
+  and loss3 is second.
+- Across all 52 datasets, RMSE and Relative L2 are significant in 50/52
+  per-dataset tests after BH correction. The two non-significant datasets are
+  `test` and `01_matern_fine_frac0p24_a1p77634_t11p8641`.
+
+Report:
+- `docs/darcy_cflow_clean_rmse_rell2_per_dataset_ttests_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final robustness mean/std tables
+
+Status: complete.
+
+Question:
+- Are final adversarial attack loss statistics, SVD/Jacobian scalar
+  statistics, top-k singular values, subspace similarities, vector-angle
+  similarities, and J^T error vectors/norms recorded for the final seven Darcy
+  models?
+
+Observed evidence:
+- Raw attack table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+  It has 18,200 rows = 7 models x 52 datasets x 50 samples, with
+  `attack_steps = 50`, `clean_loss`, `adv_loss`, `loss_increase`,
+  `relative_increase`, `delta_l2_rms`, `delta_linf`, and per-dataset
+  `delta_npz` paths.
+- Attack delta arrays:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_deltas/`
+  contains 364 `.npz` files = 7 models x 52 datasets.
+- Raw SVD/Jacobian table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+  It has 175 rows = 7 models x 25 fixed samples, with
+  `error_l2_norm`, `jt_error_l2_norm`, `sigma_input_right`, `block2_sigma1`,
+  `block2_top_singular_values_json`, top-k subspace cosines/angles, pairwise
+  singular/J^T-error/attack-delta cosines, angles, and correlations.
+- SVD/Jacobian vectors:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_vectors/`
+  contains 175 `.npz` files. Each file records `x`, `y`, `pred`, `error`,
+  `jt_error`, `attack_delta`, `input_right_singular_vector`,
+  `output_left_singular_vector`, `block2_top_singular_values`,
+  `block2_top_right_singular_vectors`, `block2_top_left_singular_vectors`,
+  and `top_right_singular_vector_basis_full`.
+- Scalar correlations:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_scalar_correlations.csv`.
+
+Action:
+- Added `tools/build_darcy_final_robustness_mean_std_tables_20260615.py`.
+- Generated explicit mean/std tables under
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/`.
+
+Generated tables:
+- `attack50_52dataset_7model_mean_std.csv`: 364 rows with per dataset/model
+  mean/std/median/min/max for initial clean loss, final adversarial loss, loss
+  increase, relative increase, and delta metrics.
+- `attack50_by_model_split_mean_std.csv`: 21 rows with train/test/generalization
+  mean/std per model.
+- `svd_jacobian_25sample_7model_mean_std.csv`: 7 rows with mean/std/median/min/max
+  for SVD/Jacobian scalar metrics and vector similarity/angle metrics.
+- `svd_jacobian_25sample_by_model_split_mean_std.csv`: 21 rows split by model and
+  train/test/generalization.
+- `svd_block2_top10_singular_values_raw.csv`: 175 rows with the top 10 block-SVD
+  singular values expanded into columns.
+- `svd_block2_top10_singular_values_by_model_mean_std.csv`: 7 rows with mean/std
+  for top-1 through top-10 block-SVD singular values.
+- `svd_jacobian_vector_manifest_with_metrics.csv`: 175 rows linking every fixed
+  sample to its vector `.npz` and its J^T error norm, singular values, subspace
+  similarity, cosine, angle, and correlation metrics.
+
+Provenance:
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/provenance.json`
+  records `old_lossdrop50_token_found = false`, `smoke_token_found = false`,
+  attack rows = 18,200, attack datasets = 52, SVD rows = 175, and 25 SVD samples
+  per model.
+
+Report:
+- `docs/darcy_cflow_final_metric_mean_std_20260615.md`
+
+## 2026-06-15 - Darcy CFlow SVD/Jacobian norm definition audit
+
+Status: complete.
+
+Question:
+- What exactly do `error_l2_norm`, `jt_error_l2_norm`, `sigma_input_right`,
+  `block2_sigma1`, and top-k singular values mean in the final Darcy CFlow
+  robustness/SVD tables?
+
+Observed evidence:
+- Generation code: `tools/darcy_sir20_robustness.py`.
+- Raw table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`
+  has 175 rows = 7 final models x 25 fixed samples.
+- Vector arrays:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_vectors/`
+  has 175 `.npz` files with `error`, `jt_error`, `attack_delta`,
+  `input_right_singular_vector`, `block2_top_singular_values`,
+  `block2_top_right_singular_vectors`, `block2_top_left_singular_vectors`,
+  and `top_right_singular_vector_basis_full`.
+- Expanded top-k table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_block2_top10_singular_values_raw.csv`
+  records K = 10 singular values for each model/sample row.
+
+Clarification:
+- `error_l2_norm` is `||model(x) - y||_2` on the flattened 85x85 output.
+- `jt_error_l2_norm` is `||J^T error||_2` for the model Jacobian.
+- `block2_sigma1` is the spectral norm of the block/2 projected model
+  Jacobian, not the solver Jacobian.
+- `block2_top_singular_values_json` records the top 10 singular values for that
+  block/2 projected model Jacobian.
+- `sigma_input_right` is a full-input one-step power-refined model-Jacobian
+  estimate initialized from the lifted block/2 top right singular vector.
+- Exact full 85x85 model-Jacobian top-k SVD for all 175 rows is not present in
+  the current final evidence.
+
+Report:
+- `docs/darcy_cflow_svd_norm_metric_definitions_20260615.md`
+
+## 2026-06-15 - Darcy CFlow loss-increase/J^T-error/spectral-norm correlations
+
+Status: complete.
+
+Question:
+- What are the correlations among 50-step attack loss increase, `J^T error`
+  norm, and spectral norm in the final seven-model Darcy CFlow SVD/Jacobian
+  table?
+
+Observed evidence:
+- Source:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+  It has 175 rows = 7 final models x 25 fixed samples.
+- Generated:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_lossincrease_jt_spectral_correlations_20260615.csv`.
+
+Key results:
+- Pooled all 175 rows: loss increase vs `J^T error` norm has Pearson
+  `0.382521` and Spearman `0.429304`.
+- Pooled all 175 rows: loss increase vs block/2 spectral norm has Pearson
+  `-0.319092` and Spearman `-0.215947`.
+- Generalization-only 147 rows: loss increase vs block/2 spectral norm has
+  Pearson `-0.816533` and Spearman `-0.726549`.
+- Block/2 spectral norm and full-input sigma estimate are almost identical as
+  rankings: Pearson `0.999172`, Spearman `0.998990`.
+
+Inference:
+- Spectral norm alone does not explain attack loss increase in this final Darcy
+  result. Loss3 has the largest spectral norm but lower residual/J^T-error and
+  lower attack loss increase.
+- `J^T error` norm is more aligned with attack loss increase in the pooled
+  table, though the relationship weakens on the generalization-only subset.
+
+Report:
+- `docs/darcy_cflow_svd_lossincrease_jt_spectral_correlations_20260615.md`
+
+## 2026-06-15 - Darcy CFlow singular-vector/delta/J^T-error angle summary
+
+Status: complete.
+
+Question:
+- What are the cosine similarities and average angles among attack delta, the
+  top singular vector, and `J^T error`; and how do the top-K singular subspace
+  angles compare?
+
+Observed evidence:
+- Source:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Generated:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_vector_cosine_angle_summary_20260615.csv`.
+
+Key results:
+- All 175 rows: singular vector vs `J^T error` has signed cosine mean
+  `0.546203`, absolute cosine mean `0.877174`, and sign-invariant acute-angle
+  mean `24.7984` degrees.
+- All 175 rows: singular vector vs attack delta has signed cosine mean
+  `0.0274889`, absolute cosine mean `0.127962`, and acute-angle mean
+  `82.5348` degrees.
+- All 175 rows: `J^T error` vs attack delta has signed cosine mean
+  `-0.0295667`, absolute cosine mean `0.108833`, and signed-angle mean
+  `91.7419` degrees.
+- Top-K lifted singular subspace vs `J^T error`: cosine mean `0.973333`,
+  angle mean `12.6770` degrees.
+- Top-K lifted singular subspace vs attack delta: cosine mean `0.324149`,
+  angle mean `70.9043` degrees.
+
+Inference:
+- `J^T error` is strongly represented in the top-K singular subspace, but the
+  actual discrete binary attack delta is nearly orthogonal to both the top
+  singular vector and `J^T error`.
+
+Report:
+- `docs/darcy_cflow_svd_vector_delta_jterror_angles_20260615.md`
+
+## 2026-06-15 - Darcy CFlow correlation decomposition sanity check
+
+Status: complete.
+
+Question:
+- Why can attack loss increase be positively correlated with `J^T error` norm,
+  negatively correlated with spectral norm, while `J^T error` norm and spectral
+  norm are positively correlated? Is the result internally contradictory?
+
+Observed evidence:
+- Source:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Generated:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_correlation_decomposition_20260615.csv`.
+
+Key results:
+- Pooled all 175 rows: attack loss increase vs `J^T error` norm Pearson
+  `0.382521`; attack loss increase vs block/2 spectral norm Pearson
+  `-0.319092`; `J^T error` norm vs block/2 spectral norm Pearson `0.357818`.
+- Generalization 147 rows: attack loss increase vs `J^T error` norm Pearson
+  `0.0649105`; attack loss increase vs block/2 spectral norm Pearson
+  `-0.816533`.
+- Between-model means explain most of the negative attack-vs-spectral-norm
+  relation: all 175 between-model Pearson `-0.884774`; generalization-only
+  between-model Pearson `-0.909367`.
+- Generalization attack-vs-`J^T error` drops because effects cancel:
+  between-model Pearson `0.322801`, within-model demeaned Pearson `-0.369513`,
+  and two-way method/sample demeaned Pearson `-0.0145743`.
+
+Inference:
+- This is not a column mismatch or a mathematical contradiction. It is a pooled
+  correlation with strong model-level and sample-level effects.
+- Spectral norm alone is not predictive of attack loss increase here because it
+  measures a worst-case model-Jacobian direction, while the actual binary attack
+  delta is nearly orthogonal to that direction and to `J^T error`.
+
+Report:
+- `docs/darcy_cflow_correlation_decomposition_interpretation_20260615.md`
+
+## 2026-06-15 - Darcy CFlow SVD metric consistency audit
+
+Status: complete.
+
+Question:
+- Are the surprising SVD/Jacobian correlations caused by a local analysis
+  mistake, wrong dataset, smoke data, wrong attack step count, wrong join key,
+  wrong vector file, or wrong delta sample?
+
+Observed evidence:
+- Source SVD table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Source attack table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+- Generated audit JSON:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_metric_consistency_audit_20260615.json`.
+
+Audit checks:
+- SVD rows = 175 = 7 models x 25 samples.
+- Attack rows = 18,200 = 7 models x 52 datasets x 50 samples.
+- Attack steps are all 50.
+- Old `lossdrop50_selected_20260607` token is absent.
+- `smoke` token is absent in the audited SVD/attack sample.
+- Generalization dataset count is 50 and all generalization dataset IDs start
+  with `darcy_binary_loss3targeted_20260611`.
+- Every SVD row joins to the attack table with no missing key.
+- SVD `clean_loss`, `attack_loss_increase`, and `attack_relative_increase`
+  match the attack table exactly.
+- Every vector `.npz` exists and has required arrays.
+- Vector `.npz` method/dataset/index identifiers match the CSV row.
+- Recomputed vector metrics match the CSV within numerical tolerance.
+- Vector `attack_delta` matches the original per-dataset delta `.npz` exactly
+  with max absolute difference `0.0`.
+
+Result:
+- `issue_count = 0`.
+- The surprising correlations are therefore not explained by a detected local
+  column/join/provenance/vector/delta mistake in the current final artifacts.
+
+Report:
+- `docs/darcy_cflow_svd_metric_consistency_audit_20260615.md`
+
+## 2026-06-15 - Darcy CFlow spectral-norm operator clarification
+
+Status: complete.
+
+Question:
+- Does the reported Darcy CFlow `block2_sigma1` spectral norm measure the
+  model-minus-solver residual operator, or only the model Jacobian?
+
+Observed evidence:
+- Code path:
+  `tools/darcy_sir20_robustness.py` calls `make_block_func(model, x, 2)` and
+  then runs `torch.linalg.svd(jac, full_matrices=False)` on that model-only
+  block Jacobian.
+- `tools/benchmark_darcy_jacobian_svd_20260612.py` defines `make_block_func`
+  with `return project(model(lift(z)))`, so the Jacobian is of the trained
+  model output with respect to the coefficient field.
+
+Clarification:
+- The current `block2_sigma1` is
+  `||P_out J_model L_in||_2`.
+- It is not `||P_out (J_model - J_solver) L_in||_2`.
+- Therefore baseline having the smallest current `block2_sigma1` is not evidence
+  that baseline has the smallest model-solver residual Jacobian.
+
+Report:
+- Updated `docs/darcy_cflow_svd_norm_metric_definitions_20260615.md`.
+
+## 2026-06-15 - Darcy CFlow model-vs-solver singular subspace similarity
+
+Status: complete.
+
+Question:
+- Is Loss3's local singular subspace more similar to the solver's local
+  singular subspace than the other models?
+
+Observed evidence:
+- Existing model-Jacobian vectors:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_vectors/`.
+- New solver-Jacobian vectors:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/solver_block2_svd_vectors/`.
+- Solver SVD sample table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/solver_block2_svd_25samples.csv`.
+- Model-vs-solver similarity rows:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/model_solver_block2_subspace_similarity_25samples_7models.csv`.
+- By-model summary:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/model_solver_block2_subspace_similarity_by_model.csv`.
+
+Key results:
+- Loss3 has the largest right/input top-10 projection Frobenius cosine:
+  `0.748112`.
+- Loss3 has the smallest right/input top-10 principal angle mean:
+  `41.5617` degrees.
+- Loss3 has the largest right/input top-1 absolute cosine: `0.897148`.
+- Loss3 has the largest left/output top-10 projection Frobenius cosine:
+  `0.855752`.
+- Loss3 has the largest left/output top-1 absolute cosine: `0.958681`.
+
+Inference:
+- Yes. In the observed final 25-sample block/2 evidence, Loss3 is the model
+  whose local singular subspace is most similar to the solver's local singular
+  subspace.
+- This does not yet include explicit SVD of `J_model - J_solver`; it compares
+  existing `J_model` top-10 subspaces to newly computed `J_solver` top-10
+  subspaces.
+
+Report:
+- `docs/darcy_cflow_model_solver_subspace_similarity_20260615.md`
+
+## 2026-06-15 - Darcy CFlow residual Jacobian SVD
+
+Status: complete.
+
+Question:
+- For the final seven Darcy CFlow models, what are the true residual-operator
+  Jacobian metrics for `J_model - J_solver`, and do they explain the attack50
+  robustness behavior better than the earlier model-only Jacobian metrics?
+
+Inputs:
+- Final attack table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+- Existing model-only SVD/Jacobian table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Generalization root used by the fixed samples:
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+
+Computed:
+- `J_solver` block/2 Jacobians and top-10 SVDs for the 25 fixed samples.
+- `J_model - J_solver` block/2 top-10 SVD for all seven models on the same
+  25 fixed samples.
+- True residual gradient
+  `(J_model - J_solver)^T (model(x) - solver(x))`.
+- Alignment/correlation against the existing 50-step attack deltas.
+
+Outputs:
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_svd_25samples_7models.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_svd_by_model.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_aligned_25samples_7models.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_correlations_20260615.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_winner_counts_20260615.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_summary_20260615.md`.
+
+Key results:
+- Loss3 has the lowest residual spectral norm on `25/25` fixed samples.
+- Loss3 has the lowest residual JT error norm on `20/25` fixed samples.
+- Loss3 has the lowest 50-step attack loss increase on `21/25` fixed samples.
+- By-model means: Loss3 residual sigma1 `0.00170213`, residual error L2
+  `0.0334209`, residual JT norm `4.7257e-05`, attack loss increase
+  `1.7162e-06`.
+
+Interpretation:
+- The earlier model-only spectral norm should not be interpreted as the
+  residual model-solver spectral norm.
+- Directly computing `J_model - J_solver` removes the earlier contradiction:
+  Loss3 is best on the residual operator scalar metrics in this fixed-sample
+  diagnostic.
+
+Report:
+- `docs/darcy_cflow_residual_jacobian_svd_20260615.md`
+
+## 2026-06-15 - Darcy CFlow per-dataset and fixed-25 table extraction
+
+Status: complete.
+
+Question:
+- Provide separated tables instead of only aggregate summaries: 52 datasets
+  separated, and 25 fixed Jacobian/SVD samples separated.
+
+Inputs:
+- Clean RMSE wide table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_metric_tables_20260615/clean_52dataset_7model_rmse_wide.csv`.
+- Clean Relative L2 wide table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_metric_tables_20260615/clean_52dataset_7model_relative_l2_wide.csv`.
+- Attack50 per-dataset mean/std table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/attack50_52dataset_7model_mean_std.csv`.
+- Residual Jacobian attack-aligned fixed-25 table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_aligned_25samples_7models.csv`.
+- Model-solver fixed-25 subspace table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/model_solver_block2_subspace_similarity_25samples_7models.csv`.
+
+Output:
+- `outputs/darcy_cflow_final_robustness_20260615/reports/per_dataset_and_fixed25_tables_20260615.md`.
+
+Checks:
+- Used only the `generalization_datasets_darcy_binary_loss3targeted_20260611`
+  generalization tables.
+- Found no `lossdrop50_selected` token in the extracted source tables.
+- Found no smoke/partial-smoke token in the extracted source tables.
+- Attack-aligned tables have `attack_steps=50`.
+
+Contents:
+- Full clean RMSE and Relative L2 table for all 52 datasets and 7 models.
+- Full attack50 `adv_loss`, `loss_increase`, and `delta_l2_rms` tables for all
+  52 datasets and 7 models.
+- Full fixed-25 `adv_loss`, `loss_increase`, residual sigma1, residual error L2
+  norm, and residual JT error norm tables for all 25 samples and 7 models.
+- Per-fixed-sample model-solver top-10 subspace winner table with Loss3 values.
+
+## 2026-06-15 - Darcy CFlow final robustness records copied into timematched release data
+
+Status: complete.
+
+Question:
+- Save the final Darcy CFlow/SIR20 clean/generalization and robustness evidence
+  as Markdown/CSV records, and place the source tables plus derived tables under
+  the large timematched organized release `data/` directory.
+
+Output bundle:
+- `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/`.
+
+Contents:
+- `source_tables/`: 29 copied source CSV/MD/JSON files used in the final
+  summaries, including clean RMSE/Relative L2, attack50, model-only SVD,
+  residual Jacobian/SVD, model-solver subspace similarity, scalar correlations,
+  and vector-angle summary tables.
+- `derived_tables/`: 23 derived CSV tables, including 52-dataset clean metric
+  tables, 52-dataset attack scalar tables, all52/generalization50 mean/std
+  tables, fixed-25 residual metric long/wide tables, fixed-25 model-solver
+  subspace tables, model-only top-10 SVD summaries, residual vector-angle
+  summaries, and model-only/residual correlation tables.
+- Bundle README:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/README.md`.
+- Source manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/source_tables_manifest.csv`.
+- Derived manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/derived_tables_manifest.csv`.
+
+Checks:
+- Strict scan of copied CSV source tables found no `lossdrop50_selected` or
+  `generalization_datasets_darcy_lossdrop50_selected_20260607` token.
+- Copied CSV source tables found no smoke/partial-smoke token.
+- Attack and residual-aligned tables have `attack_steps=50`.
+- The bundle does not duplicate large `.npz` Jacobian/vector arrays; it records
+  the CSV/MD/JSON source tables and derived CSV summaries used for the report.
+
+## 2026-06-15 - Darcy CFlow residual correlation interpretation note
+
+Status: complete.
+
+Question:
+- Record the interpretation that the final attack50 correlation behavior differs
+  from the small-epsilon derivation: infinitesimal theory predicts residual
+  `J_res^T error` should dominate, while finite attack50 also reflects residual
+  spectral high-gain directions.
+
+Evidence:
+- Residual all-25 x 7 correlations:
+  loss increase vs residual JT norm Pearson/Spearman `0.504257 / 0.502891`;
+  loss increase vs residual sigma1 `0.561659 / 0.438184`;
+  loss increase vs residual error L2 `0.534601 / 0.495813`.
+- Generalization-only 21 x 7 correlations:
+  loss increase vs residual JT norm `0.353294 / 0.209620`;
+  loss increase vs residual sigma1 `0.346862 / 0.114519`;
+  loss increase vs residual error L2 `0.345888 / 0.201369`.
+- Model-solver subspace similarity still supports Loss3: Loss3 is first on the
+  right/input and left/output top-k similarity metrics.
+- Residual operator metrics still support Loss3: residual sigma1 mean
+  `0.00170213`, residual error L2 mean `0.0334209`, residual JT norm mean
+  `4.7257e-05`, attack loss increase mean `1.7162e-06`.
+
+Outputs:
+- `docs/darcy_cflow_residual_correlation_interpretation_20260615.md`.
+- `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/residual_correlation_interpretation_20260615.md`.
+
+Conclusion:
+- The small-epsilon derivation is not contradicted. It applies to infinitesimal
+  first-order behavior. The final attack50 table is a finite-step protocol, so
+  attack loss increase can also correlate strongly with residual spectral norm.
+  residual JT norm and residual sigma1 should be reported as complementary
+  diagnostics.
+
+## 2026-06-15 - Darcy CFlow epsilon-budget attack sweep vs residual Jacobian correlations
+
+Status: complete.
+
+Question:
+- Re-run attack50 on the fixed residual-Jacobian 25 samples x 7 models with
+  smaller/larger attack budgets, then test whether `loss_increase` correlates
+  more with residual `J_res^T error` when epsilon is small.
+
+Protocol:
+- New reruns: epsilon fractions `0.0025` (`0.1x`), `0.005` (`0.2x`),
+  `0.0125` (`0.5x`), and `0.125` (`5x`).
+- Existing final run reused for `1x`: final attack50 epsilon fraction `0.025`,
+  filtered from the 18,200-row final attack table to the fixed 175 rows. The
+  accidental partial `eps_1x` rerun was interrupted and excluded from all final
+  statistics.
+- All usable sweep tables have 175 rows, 7 models, fixed 25 samples,
+  `attack_steps=50`, and no `20260607`/`lossdrop50_selected` rows.
+- Residual metrics and vectors come from the existing
+  `J_model - J_solver` fixed-25 residual table; no training and no residual SVD
+  recomputation were performed.
+
+Key results:
+- Generalization-only 21 samples x 7 models:
+  - `0.1x`: loss increase vs residual JT norm `0.567467 / 0.654825`;
+    vs residual sigma1 `0.506495 / 0.506033`; vs residual error L2
+    `0.583907 / 0.663832`.
+  - `0.2x`: loss increase vs residual JT norm `0.447471 / 0.378035`;
+    vs residual sigma1 `0.446991 / 0.297176`; vs residual error L2
+    `0.433758 / 0.360705`.
+  - `0.5x`: loss increase vs residual JT norm `0.397756 / 0.298238`;
+    vs residual sigma1 `0.399102 / 0.209257`.
+  - `1x`: loss increase vs residual JT norm `0.353294 / 0.209620`;
+    vs residual sigma1 `0.346862 / 0.114519`.
+  - `5x`: loss increase vs residual JT norm `0.302126 / 0.049717`;
+    vs residual sigma1 `0.306626 / -0.013468`.
+- All 25 samples x 7 models:
+  - `0.1x`: loss increase vs residual JT norm `0.658889 / 0.769111`;
+    vs residual sigma1 `0.667559 / 0.672806`; vs residual error L2
+    `0.698067 / 0.772588`.
+  - `1x`: loss increase vs residual JT norm `0.504257 / 0.502891`;
+    vs residual sigma1 `0.561659 / 0.438184`.
+  - `5x`: loss increase vs residual JT norm `0.385627 / 0.311153`;
+    vs residual sigma1 `0.406477 / 0.266352`.
+- Loss3 remains pointwise majority-best for `adv_loss` and `loss_increase`
+  across all epsilon budgets: `22/25` at `0.1x`, `21/25` at `0.2x`, `0.5x`,
+  `1x`, and `5x`.
+- Vector angle trend: residual JT error vs attack delta cosine decreases as
+  epsilon grows (`0.171231` at `0.1x`, `0.148373` at `1x`, `0.092815` at `5x`);
+  residual top10 subspace vs attack delta cosine is around `0.238-0.243` for
+  `0.1x-1x` and drops to `0.216688` at `5x`.
+
+Conclusion:
+- The epsilon sweep supports the direction of the small-epsilon theory:
+  smaller budgets make the loss-increase relationship with residual JT norm
+  stronger, especially in the generalization-only scope. However, the strongest
+  scalar at the smallest budget is residual error L2 in these tables, so the
+  correct conclusion is a trend/partial support rather than a strict claim that
+  residual JT norm is always the single strongest correlate.
+
+Outputs:
+- `outputs/darcy_cflow_epsilon_sweep_20260615/reports/epsilon_sweep_summary.md`.
+- `docs/darcy_cflow_epsilon_sweep_correlation_20260615.md`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_attack_rows_fixed25_7models.csv`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_residual_correlations.csv`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_by_model_mean_std.csv`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_vector_angles_rows.csv`.
+- Copied release records and raw usable sweep attack outputs:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/`.
+
+## 2026-06-15 - Darcy CFlow epsilon sweep extended to 0.01x, 0.05x, and 10x
+
+Status: complete.
+
+Question:
+- Add three more attack budgets to the fixed-25 residual-Jacobian epsilon sweep:
+  `0.01x`, `0.05x`, and `10x`, then update scalar correlations and vector
+  similarity summaries.
+
+Protocol:
+- New reruns: epsilon fractions `0.00025` (`0.01x`), `0.00125` (`0.05x`),
+  and `0.25` (`10x`).
+- Same fixed 25 samples x 7 models, `attack_steps=50`, no training, no residual
+  SVD recomputation.
+- Final sweep table now covers 8 epsilon budgets: `0.01x`, `0.05x`, `0.1x`,
+  `0.2x`, `0.5x`, `1x`, `5x`, and `10x`. The `1x` result still comes from the
+  existing final attack50 table, filtered to the fixed 175 rows.
+
+Key results:
+- Generalization-only 21 samples x 7 models:
+  - `0.01x`: loss increase vs residual JT norm `0.588872 / 0.620364`;
+    vs residual sigma1 `0.421332 / 0.425364`; vs residual error L2
+    `0.651664 / 0.668883`.
+  - `0.05x`: loss increase vs residual JT norm `0.591960 / 0.648146`;
+    vs residual sigma1 `0.474381 / 0.477748`; vs residual error L2
+    `0.638526 / 0.678554`.
+  - `10x`: loss increase vs residual JT norm `0.227265 / -0.096015`;
+    vs residual sigma1 `0.234954 / -0.153401`; vs residual error L2
+    `0.219544 / -0.102502`.
+- All 25 samples x 7 models:
+  - `0.01x`: loss increase vs residual JT norm `0.658555 / 0.753842`;
+    vs residual sigma1 `0.543971 / 0.628417`; vs residual error L2
+    `0.711126 / 0.781373`.
+  - `0.05x`: loss increase vs residual JT norm `0.674528 / 0.764536`;
+    vs residual sigma1 `0.622718 / 0.654680`; vs residual error L2
+    `0.724575 / 0.780909`.
+  - `10x`: loss increase vs residual JT norm `0.242870 / -0.053247`;
+    vs residual sigma1 `0.234327 / -0.093820`; vs residual error L2
+    `0.236418 / -0.064172`.
+- Loss3 remains mean-best for `loss_increase` at the new budgets:
+  `1.701477e-07` at `0.01x`, `6.812274e-07` at `0.05x`, and
+  `8.990511e-07` at `10x`.
+- Pointwise `loss_increase` winner counts for Loss3:
+  `22/25` at `0.01x`, `21/25` at `0.05x`, and `17/25` at `10x`.
+- Vector similarity:
+  residual JT error vs attack delta cosine is `0.122768` at `0.01x`,
+  `0.168713` at `0.05x`, and drops to `0.024717` at `10x`.
+  residual top10 subspace vs attack delta cosine is `0.166792` at `0.01x`,
+  `0.224642` at `0.05x`, and `0.215356` at `10x`.
+
+Conclusion:
+- The extended sweep strengthens the qualitative story: very small budgets
+  greatly increase the Pearson/Spearman relationship between attack loss
+  increase and residual first-order quantities, while the 10x budget weakens
+  the monotone/rank relationship substantially. Loss3 remains mean-best for
+  attack `loss_increase` at all tested epsilon budgets, but at 10x it is no
+  longer as strongly pointwise dominant (`17/25` rather than `21-22/25`).
+
+Outputs:
+- Updated `outputs/darcy_cflow_epsilon_sweep_20260615/reports/epsilon_sweep_summary.md`.
+- Updated `docs/darcy_cflow_epsilon_sweep_correlation_20260615.md`.
+- Updated release bundle:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/`.
+
+## 2026-06-15 - Darcy CFlow epsilon sweep full Markdown record
+
+Status: complete.
+
+Question:
+- Record the full epsilon sweep numbers and conclusions in a single Markdown
+  file, including Loss3 winner checks, scalar correlations, vector similarities,
+  provenance, and links to the full CSV/raw data sources.
+
+Output:
+- `docs/darcy_cflow_epsilon_sweep_full_record_20260615.md`.
+- Release copy:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/darcy_cflow_epsilon_sweep_full_record_20260615.md`.
+
+Contents:
+- Provenance table for all 8 epsilon budgets.
+- Loss3 mean-best table for `loss_increase`, with second-best model, gap,
+  relative gap, and pointwise winner count.
+- Scalar correlations for both generalization-only 21 x 7 and all fixed 25 x 7
+  scopes.
+- Vector similarity table for attack delta vs residual `J_res^T error` vector,
+  residual top singular vector, and residual top10 subspace.
+- Source file list for all full CSVs and raw rerun attack outputs.

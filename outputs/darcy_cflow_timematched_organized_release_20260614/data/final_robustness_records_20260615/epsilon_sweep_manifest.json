@@ -1,0 +1,70 @@
+{
+  "created_for": "Darcy CFlow epsilon sweep attack/residual correlation analysis",
+  "date": "2026-06-15",
+  "attack_steps": 50,
+  "epsilon_runs": [
+    {
+      "label": "0p01x",
+      "multiplier": 0.01,
+      "epsilon_fraction": 0.00025,
+      "source_kind": "sweep"
+    },
+    {
+      "label": "0p05x",
+      "multiplier": 0.05,
+      "epsilon_fraction": 0.00125,
+      "source_kind": "sweep"
+    },
+    {
+      "label": "0p1x",
+      "multiplier": 0.1,
+      "epsilon_fraction": 0.0025,
+      "source_kind": "sweep"
+    },
+    {
+      "label": "0p2x",
+      "multiplier": 0.2,
+      "epsilon_fraction": 0.005,
+      "source_kind": "sweep"
+    },
+    {
+      "label": "0p5x",
+      "multiplier": 0.5,
+      "epsilon_fraction": 0.0125,
+      "source_kind": "sweep"
+    },
+    {
+      "label": "1x",
+      "multiplier": 1.0,
+      "epsilon_fraction": 0.025,
+      "source_kind": "existing_final_attack50"
+    },
+    {
+      "label": "5x",
+      "multiplier": 5.0,
+      "epsilon_fraction": 0.125,
+      "source_kind": "sweep"
+    },
+    {
+      "label": "10x",
+      "multiplier": 10.0,
+      "epsilon_fraction": 0.25,
+      "source_kind": "sweep"
+    }
+  ],
+  "residual_source": "outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_aligned_25samples_7models.csv",
+  "outputs": {
+    "attack": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_attack_rows_fixed25_7models.csv",
+    "joined": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_attack_residual_joined_fixed25_7models.csv",
+    "provenance": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_provenance_checks.csv",
+    "by_model": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_by_model_mean_std.csv",
+    "winner_counts": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_winner_counts_by_epsilon.csv",
+    "correlations": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_residual_correlations.csv",
+    "vector_rows": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_vector_angles_rows.csv",
+    "vector_by_model": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_vector_angles_by_model.csv",
+    "vector_overall": "outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_vector_angles_overall.csv"
+  },
+  "summary": "outputs/darcy_cflow_epsilon_sweep_20260615/reports/epsilon_sweep_summary.md",
+  "doc": "docs/darcy_cflow_epsilon_sweep_correlation_20260615.md",
+  "release_root": "outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615"
+}

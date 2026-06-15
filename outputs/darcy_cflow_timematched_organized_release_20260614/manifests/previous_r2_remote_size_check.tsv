@@ -1,0 +1,9 @@
+outputs/darcy_corrected_loss_figures_review_20260614	objects=16 bytes=23386780
+outputs/darcy_eval_artifact_corrected_20260614	objects=12 bytes=72262123
+outputs/darcy_generalization50_artifact_corrected_20260614	objects=15 bytes=1042705371
+outputs/darcy_optimizer_artifact_corrected_20260614	objects=18 bytes=6830367
+outputs/darcy_raw_vs_corrected_audit_20260614	objects=14 bytes=581974888
+outputs/darcy_sir20_existing_curated_bundle_20260614	objects=66 bytes=1155057170
+outputs/darcy_sir20_required_figures_only_20260614	objects=30 bytes=716219908
+outputs/darcy_random_3000_20260614	objects=9 bytes=2311
+outputs/experiment_prompts_darcy_burgers_20260614	objects=2 bytes=9355

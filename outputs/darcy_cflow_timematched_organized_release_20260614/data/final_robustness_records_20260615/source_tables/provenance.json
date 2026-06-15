@@ -1,0 +1,38 @@
+{
+  "attack_datasets": 52,
+  "attack_methods": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics_loss",
+    "random_clean",
+    "random_solver"
+  ],
+  "attack_rows": 18200,
+  "attack_steps": [
+    50
+  ],
+  "old_lossdrop50_token_found": false,
+  "smoke_token_found": false,
+  "svd_datasets": 23,
+  "svd_methods": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics_loss",
+    "random_clean",
+    "random_solver"
+  ],
+  "svd_rows": 175,
+  "svd_samples_per_model": {
+    "baseline": 25,
+    "loss1": 25,
+    "loss2": 25,
+    "loss3": 25,
+    "physics_loss": 25,
+    "random_clean": 25,
+    "random_solver": 25
+  }
+}

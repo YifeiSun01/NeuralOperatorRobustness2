@@ -16,7 +16,7 @@ import pandas as pd
 
 PROJECT = Path(__file__).resolve().parents[1]
 DEFAULT_RELEASE = PROJECT / "outputs/darcy_cflow_timematched_organized_release_20260614"
-DEFAULT_FINAL = PROJECT / "outputs/darcy_cflow_final_robustness_20260615_full_attack20_svd25"
+DEFAULT_FINAL = PROJECT / "outputs/darcy_cflow_final_robustness_20260615"
 
 
 @dataclass(frozen=True)
@@ -226,7 +226,10 @@ def plot_method_fft(
     ax_heat.set_ylabel("generalization datasets")
     tick_idx = np.linspace(0, len(sorted_ids) - 1, min(10, len(sorted_ids))).astype(int)
     ax_heat.set_yticks(tick_idx + 0.5)
-    ax_heat.set_yticklabels([sorted_ids[i].replace("darcy_lossdrop_pool_", "") for i in tick_idx], fontsize=7)
+    ax_heat.set_yticklabels(
+        [sorted_ids[i].replace("darcy_binary_loss3targeted_20260611_", "") for i in tick_idx],
+        fontsize=7,
+    )
     cbar = fig.colorbar(im, ax=ax_heat, fraction=0.024, pad=0.018)
     cbar.set_label("log10 normalized radial FFT power")
 
@@ -269,7 +272,14 @@ def plot_overview(method_images: dict[str, np.ndarray], method_radials: dict[str
         cbar = fig.colorbar(im, ax=axes.tolist(), fraction=0.022, pad=0.018)
         cbar.set_label("log10 normalized mean FFT power")
     fig.suptitle("Darcy CFlow final attack delta FFT heatmaps", fontsize=17, fontweight="bold", y=0.98)
-    fig.text(0.5, 0.94, "Mean over final attack20 deltas on the 50 lossdrop generalization datasets.", ha="center", fontsize=10.5, color="#4b5563")
+    fig.text(
+        0.5,
+        0.94,
+        "Mean over final attack50 deltas on the 50 binary 20260611 generalization datasets.",
+        ha="center",
+        fontsize=10.5,
+        color="#4b5563",
+    )
     out = out_dir / "polished_final_delta_fft_log_magnitude_grid_all7.png"
     fig.savefig(out)
     plt.close(fig)
@@ -301,7 +311,7 @@ def update_readme(readme: Path, generated: list[Path]) -> None:
     marker = "\n## Final Delta FFT Addendum\n"
     section = marker + "\n".join(
         [
-            "Final attack-delta FFT figures were added from the completed attack20 delta NPZ files.",
+            "Final attack-delta FFT figures were added from the completed attack50 delta NPZ files.",
             "",
             "These are final-checkpoint FFT diagnostics, not epoch-wise attack-probe histories.",
             "",
@@ -383,7 +393,7 @@ def main() -> None:
         "figures": [rel(p) for p in generated],
         "tables": [rel(metrics_csv), rel(summary_csv)],
         "notes": [
-            "These are final-checkpoint attack20 delta FFT diagnostics.",
+            "These are final-checkpoint attack50 delta FFT diagnostics on the binary 20260611 root.",
             "They are not the old epoch-wise attack-probe FFT history because the organized release does not contain per-epoch attack_probe_samples for every final model.",
         ],
     }

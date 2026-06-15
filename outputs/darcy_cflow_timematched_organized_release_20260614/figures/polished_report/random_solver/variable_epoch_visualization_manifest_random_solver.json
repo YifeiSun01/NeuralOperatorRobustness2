@@ -1,0 +1,27 @@
+{
+  "display_name": "random solver",
+  "figures": [
+    "figures/polished_report/random_solver/corrected_rmse_full_heatmap_raw_group_line_random_solver.png",
+    "figures/polished_report/random_solver/polished_checkpoint_style_rmse_absolute11_heatmap_line_below_random_solver.png",
+    "figures/polished_report/random_solver/corrected_relative_l2_full_heatmap_raw_group_line_random_solver.png",
+    "figures/polished_report/random_solver/polished_checkpoint_style_relative_l2_absolute11_heatmap_line_below_random_solver.png",
+    "figures/polished_report/random_solver/corrected_attack_loss_three_lines_plus_buckets_random_solver.png",
+    "figures/polished_report/random_solver/polished_final_delta_svd_diagnostics_random_solver.png",
+    "figures/polished_report/random_solver/polished_report_dashboard_random_solver.png"
+  ],
+  "generated_utc": "2026-06-15T00:23:18.232196+00:00",
+  "method": "random_solver",
+  "notes": [
+    "Final attack diagnostics use the organized-release final robustness attack table.",
+    "The organized-release attack table is not an epoch-wise attack-batch time series.",
+    "Random clean/random solver do not have wall_seconds in the source tables; polished per-method plots use epoch axes."
+  ],
+  "tables": [
+    "data/polished_report/random_solver/corrected_rmse_full_heatmap_values_random_solver.csv",
+    "data/polished_report/random_solver/polished_checkpoint_style_rmse_absolute11_heatmap_line_below_random_solver.csv",
+    "data/polished_report/random_solver/corrected_relative_l2_full_heatmap_values_random_solver.csv",
+    "data/polished_report/random_solver/polished_checkpoint_style_relative_l2_absolute11_heatmap_line_below_random_solver.csv",
+    "data/polished_report/random_solver/corrected_attack_loss_three_lines_plus_buckets_random_solver.csv",
+    "data/polished_report/random_solver/polished_final_delta_svd_diagnostics_random_solver.csv"
+  ]
+}
