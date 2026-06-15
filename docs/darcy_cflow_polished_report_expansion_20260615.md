@@ -24,8 +24,8 @@ Target payload:
   - 11-checkpoint RMSE heatmap with dataset-family line plot
   - full Relative L2 heatmap with dataset-family line plot
   - 11-checkpoint Relative L2 heatmap with dataset-family line plot
-  - final attack clean/adv/gain diagnostics
-  - final delta and SVD/Jacobian diagnostics
+  - smoke attack clean/adv/gain diagnostics
+  - smoke delta and SVD/Jacobian diagnostics
   - six-panel polished diagnostic dashboard
 - Added 6 per-method CSV tables for each method under
   `data/polished_report/<method>/`.
@@ -43,9 +43,10 @@ Target payload:
 
 ## Notes
 
-- The final attack plots use the organized-release final robustness sample table.
-  That table is not an epoch-wise attack-batch training log, so those figures are
-  intentionally labeled as final attack samples rather than epoch trajectories.
+- The attack and SVD/Jacobian polished panels use the organized-release smoke
+  robustness/SVD diagnostic tables, not final time-matched robustness runs. Those
+  source rows use `darcy_sir20_smoke_*_1ep` checkpoints and should not be
+  interpreted as final rankings.
 - Random clean and random solver do not have `wall_seconds` in the source eval
   tables. The per-method polished report therefore uses epoch axes and does not
   generate any `work_hours` plots.

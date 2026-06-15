@@ -14855,7 +14855,7 @@ Action taken:
 - Added per-method report folders for `loss1`, `loss2`, `loss3`, `physics`,
   `random_clean`, and `random_solver`.
 - For each method, added full RMSE/Relative-L2 heatmaps, 11-checkpoint
-  RMSE/Relative-L2 heatmaps, final attack diagnostics, final delta/SVD
+  RMSE/Relative-L2 heatmaps, smoke attack diagnostics, smoke delta/SVD
   diagnostics, and a six-panel dashboard.
 - Added companion CSV tables under
   `outputs/darcy_cflow_timematched_organized_release_20260614/data/polished_report/`.
@@ -14873,9 +14873,9 @@ Evidence:
 Interpretation:
 - The new per-method report mirrors the Burgers-style polished-report layout
   while using the Darcy organized-release source tables.
-- Final attack panels are explicitly labeled as final robustness sample
-  diagnostics because the organized release does not contain epoch-wise
-  attack-batch logs for all methods.
+- Attack/SVD panels are smoke diagnostic panels, not final robustness rankings;
+  the organized release does not contain full epoch-wise attack-batch logs or
+  final 50-sample-per-dataset attack coverage for all methods.
 
 Report:
 - `docs/darcy_cflow_polished_report_expansion_20260615.md`
@@ -14952,9 +14952,9 @@ Evidence:
 Interpretation:
 - The complete clean 52-dataset evidence strongly supports broad `loss3`
   superiority.
-- On available attack aggregate metrics, `loss3` is very strong but not
-  universally best because `physics` wins the mean adversarial-loss and absolute
-  loss-increase metrics.
+- On the available partial-smoke attack aggregate metrics, `loss3` is very
+  strong but not universally best because `physics` wins the mean
+  adversarial-loss and absolute loss-increase metrics in that smoke table.
 - The observed `random_clean` advantage over `random_solver` is broad rather
   than a plotting accident. The plausible mechanism is that random clean acts as
   input augmentation with stable targets, while random solver changes the target
@@ -14986,11 +14986,11 @@ Evidence:
   `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`.
 
 Observed results:
-- Generalization attack `adv_loss`: physics lower than loss3 on `91/100`
+- Partial-smoke generalization attack `adv_loss`: physics lower than loss3 on `91/100`
   samples.
-- Generalization attack `loss_increase`: physics lower than loss3 on `72/100`
+- Partial-smoke generalization attack `loss_increase`: physics lower than loss3 on `72/100`
   samples.
-- Generalization attack `relative_increase`: loss3 lower than physics on
+- Partial-smoke generalization attack `relative_increase`: loss3 lower than physics on
   `72/100` samples.
 - Visible SVD/Jacobian diagnostics cover only `3` train/test samples per model.
   On those visible samples, loss3 has lower `attack_loss_increase` on `3/3`,
@@ -15007,6 +15007,43 @@ Interpretation:
 
 Report:
 - `docs/darcy_cflow_physics_loss3_attack_jacobian_clarification_20260615.md`
+
+## 2026-06-15 - Darcy cflow ten-pass consistency audit
+
+Status: complete.
+
+Action taken:
+- Programmatically rechecked the organized-release Darcy cflow attack,
+  SVD/Jacobian, and final clean tables after the smoke/final misread.
+- Wrote a ten-check consistency audit and mirrored it into the organized-release
+  reports folder.
+- Fixed remaining misleading "final attack/final robustness" wording in the
+  polished-report docs and README.
+
+Evidence:
+- Attack source table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/robustness_attack_52datasets_samples.csv`.
+- SVD/Jacobian source table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/svd_jacobian_metrics.csv`.
+- Final clean table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
+- Audit report:
+  `docs/darcy_cflow_ten_pass_consistency_audit_20260615.md`.
+
+Observed results:
+- Attack source rows have unique `attack_steps=[1]`, `728/728` delta paths
+  contain `smoke_initial`, and `624/624` non-baseline rows use smoke
+  checkpoints.
+- SVD/Jacobian has only `21` rows: exactly `3` samples per model.
+- Final clean generalization: `loss3` beats `physics` on `50/50` datasets for
+  Relative L2, RMSE, data MSE, and accuracy.
+
+Interpretation:
+- The previous "physics clean_loss lower than loss3" statement is only a
+  smoke-diagnostic statement and is not evidence against the final
+  generalization curves.
+- Current final clean conclusions support `loss3`; complete final robustness
+  still requires recomputing attack/SVD from final time-matched checkpoints.
 
 ## 2026-06-15 - Darcy cflow best model by metric table
 
@@ -15080,12 +15117,52 @@ Interpretation:
 Report:
 - `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`
 
+## 2026-06-15 - Darcy cflow report-wide smoke warning audit
+
+Status: complete.
+
+Action taken:
+- Re-scanned recently generated Darcy cflow docs/reports/data Markdown for
+  attack/SVD/Jacobian rows that could be misread as final robustness rankings.
+- Added explicit smoke-checkpoint warnings to the organized-release audit
+  reports, statistical appendix, generated data summaries, and polished-report
+  docs.
+- Added a caveat to the extra-15 loss3 advantage heatmap report clarifying that
+  those heatmaps are curated seven-model visual diagnostics, not a full final
+  robustness sweep.
+
+Evidence:
+- Patched output reports:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/AUDIT_REPORT.md`,
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/STATISTICAL_APPENDIX.md`,
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/DARCY_CFLOW_AUDIT_REPORT.md`,
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/BEST_MODEL_BY_METRIC_20260615.md`,
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/LOSS3_RANDOM_STAT_SUMMARY_20260615.md`,
+  and
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/PHYSICS_LOSS3_ATTACK_JACOBIAN_CLARIFICATION_20260615.md`.
+- Patched generated data Markdown:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_random_clean_solver_stat_summary_20260615/SUMMARY.md`
+  and
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/best_model_by_metric_20260615/BEST_MODEL_BY_METRIC_SUMMARY.md`.
+- Patched docs:
+  `docs/darcy_cflow_polished_report_expansion_20260615.md`
+  and
+  `docs/darcy_cflow_loss3_advantage_extra15_20260615.md`.
+
+Interpretation:
+- The corrected report set now consistently separates final clean
+  generalization conclusions from smoke robustness/SVD diagnostics.
+
+Report:
+- `docs/darcy_cflow_smoke_attack_metric_correction_20260615.md`
+
 ## 2026-06-15 - Darcy cflow relative-increase denominator check
 
 Status: complete.
 
 Action taken:
-- Checked why physics can have smaller absolute attack `loss_increase` while
+- Checked why physics can have smaller absolute attack `loss_increase` in the
+  partial-smoke attack table while
   loss3 has smaller `relative_increase`.
 - Updated the physics/loss3 attack-Jacobian clarification report with the
   denominator explanation and overlap counts.
@@ -15093,7 +15170,7 @@ Action taken:
 Evidence:
 - Source table:
   `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_attack_metric_long_ranked.csv`.
-- Generalization attack means: physics `clean_loss` `1.358e-07`, loss3
+- Partial-smoke generalization attack means: physics `clean_loss` `1.358e-07`, loss3
   `clean_loss` `1.890e-07`; physics `loss_increase` `3.644e-08`, loss3
   `loss_increase` `4.031e-08`; physics `relative_increase` `0.3345`, loss3
   `relative_increase` `0.2268`.

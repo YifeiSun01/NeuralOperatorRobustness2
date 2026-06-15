@@ -1,5 +1,11 @@
 # Darcy cflow loss3 advantage extra-15 heatmaps (2026-06-15)
 
+## Important Scope Correction
+
+These 15 extra heatmaps are curated seven-model visual diagnostics selected
+from final clean Relative-L2 loss3-advantage cases. They are not the complete
+50-sample-per-dataset robustness sweep and are not final robustness evidence.
+
 ## Status
 
 Complete.
@@ -29,6 +35,14 @@ The manifest is:
 - `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/loss3_advantage_extra15_manifest_20260615.json`
 
 ## Attack Heatmaps
+
+Important caveat: these heatmaps are curated seven-model visual diagnostics.
+The samples were selected from the final clean Relative-L2 table, but the
+heatmap attack comparison itself was generated with the existing seven-model
+heatmap script/checkpoints, not a complete 3000-epoch robustness sweep.
+Therefore, the 15/15 attack advantage statement below applies only to this
+curated heatmap run and must not be generalized as the complete robustness
+ranking.
 
 The seven-model binary loss3 attack heatmap script was run with 50 attack steps
 and epsilon fraction 0.025. The attack run produced:
@@ -62,6 +76,7 @@ Image checks:
 ## Interpretation
 
 Observed evidence supports using these fifteen extra heatmaps as a stronger and
-more diverse `loss3 advantage` panel. The selection is not limited to the
-previous matern-fine/highpass/rectangles/bandpass pool, and the generated attack
-metrics independently confirm loss3 as the best model on the chosen samples.
+more diverse curated `loss3 advantage` visual panel. The selection is not
+limited to the previous matern-fine/highpass/rectangles/bandpass pool, and the
+generated attack metrics confirm loss3 as the best model on the chosen samples
+within this specific seven-model heatmap run.
