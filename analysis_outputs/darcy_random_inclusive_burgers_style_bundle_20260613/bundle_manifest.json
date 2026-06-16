@@ -1,0 +1,40 @@
+{
+  "bundle_dir": "visualizations/darcy_random_inclusive_burgers_style_bundle_20260613",
+  "analysis_dir": "analysis_outputs/darcy_random_inclusive_burgers_style_bundle_20260613",
+  "comparison_pngs": 10,
+  "heatmap_variants": {
+    "index0": 5,
+    "loss3_best": 5,
+    "loss3_lower_quartile": 5,
+    "loss3_median": 5,
+    "loss3_more_faded_maxfade_signsame": 5,
+    "loss3_more_faded_recommended": 5,
+    "loss3_top10pct_visual_relaxed": 5,
+    "loss3_top5pct_visual_relaxed": 5,
+    "loss3_upper_quartile": 5,
+    "loss3_worst": 5
+  },
+  "heatmap_pngs": 50,
+  "method_pngs": 78,
+  "dense_generalization_pngs": 8,
+  "total_pngs": 146,
+  "non_png_files_in_bundle": 0,
+  "methods": [
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics loss",
+    "random clean y",
+    "random solver y"
+  ],
+  "heatmap_models": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics loss",
+    "random clean y",
+    "random solver y"
+  ],
+  "curve_max_epoch": 1000
+}

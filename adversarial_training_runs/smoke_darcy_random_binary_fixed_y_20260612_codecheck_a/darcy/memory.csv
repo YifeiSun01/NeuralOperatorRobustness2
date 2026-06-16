@@ -1,0 +1,3 @@
+task,epoch,global_step,cuda_allocated_mb,cuda_reserved_mb,cuda_peak_allocated_mb
+darcy,1,1,3617.7412109375,5528.0,4517.97607421875
+darcy,2,2,3617.7412109375,5980.0,4517.97607421875

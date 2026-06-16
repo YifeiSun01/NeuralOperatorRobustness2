@@ -14,6 +14,139 @@ Key result: on these six actual old outlier initial conditions, latest `loss3` h
 Local diagnostic result: `loss3` has lower mean clean residual MSE (`0.393952` vs `0.689156`), lower mean `J_error^T e` norm (`39.892` vs `55.9101`), and slightly lower mean `J_error delta` L2 (`14.7939` vs `15.3641`) than `random_solver_y` on this outlier subset. The power-iteration spectral norm estimate is close (`loss3` `7.59546`, `random_solver_y` `7.55062`) and should be treated as a directional diagnostic, not a full top-k SVD replacement.
 
 Interpretation: the old mixed-52 mean outlier story was driven by old `loss3_epoch1500` on old first/master initial conditions. Re-attacking those same actual initial conditions with latest `loss3_epoch1000` does not reproduce a broad `random_solver_y` advantage; it leaves two genuine sample-level exceptions.
+## 2026-06-15 - Darcy CFlow final robustness rerun on binary 20260611 root completed
+
+Status: completed the final post-hoc Darcy/SIR20 robustness run for the seven
+requested models using only `generalization_datasets_darcy_binary_loss3targeted_20260611/`.
+The rejected June-7 `lossdrop50_selected` root was not used in this run.
+
+Artifacts:
+- Bundle: `outputs/darcy_cflow_final_robustness_20260615/`
+- Runner: `tools/run_darcy_cflow_final_robustness_20260615.sh`
+- Summarizer: `tools/summarize_darcy_cflow_final_robustness_20260615.py`
+- Report: `outputs/darcy_cflow_final_robustness_20260615/reports/final_robustness_summary_20260615.md`
+- Dedicated note: `docs/darcy_cflow_final_robustness_binary20260611_20260615.md`
+
+Verification:
+- Generalization root check: all 50 generalization datasets use the binary 20260611 prefix.
+- Old-root check: `old_lossdrop50_token_found=false`.
+- Attack table: `18200` rows, corresponding to 7 models x 52 datasets x 50 samples.
+- Attack steps: `50`.
+- Delta files: `364` NPZ files, corresponding to 7 models x 52 datasets.
+- SVD/Jacobian table: `175` rows, corresponding to 7 models x 25 fixed samples.
+- SVD/Jacobian vector payloads: `175` NPZ files.
+
+Main observed result on the 50 binary 20260611 generalization datasets:
+- loss3 has the lowest mean clean loss (`2.88169e-07`), adversarial loss
+  (`1.98716e-06`), absolute loss increase (`1.699e-06`), and relative increase
+  (`8.48128`) among the seven models.
+- random clean is generally the next strongest random baseline on this root;
+  random solver is not better than random clean on the organized-release binary
+  20260611 setting.
+- On the fixed 25 SVD/Jacobian samples, loss3 has the lowest attack increase,
+  error norm, and `J^T error` norm. Top singular value alone does not rank loss3
+  best and should not be interpreted as the whole robustness explanation.
+- Added final attack50 Delta FFT polished-report figures from the binary
+  20260611 robustness deltas under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/polished_report/`.
+- Copied the existing 15 seven-model same-initial-condition attack heatmaps
+  (`darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15`) into
+  the organized release under
+  `figures/attack_heatmaps_loss3_advantage_extra15/`, with corresponding data
+  under `data/attack_heatmaps_loss3_advantage_extra15/`. These heatmaps are
+  confirmed to use binary 20260611 datasets and attack50, but they are the
+  earlier 1000-1100 checkpoint visual supplemental set, not final 3000-3500
+  checkpoint robustness rankings.
+- Built detailed Loss3 advantage metric tables under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_metric_tables_20260615/`
+  with report
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/loss3_advantage_metric_tables_20260615.md`.
+  The tables include clean 52-dataset x 7-model RMSE/Relative L2 values and
+  attack50 52-dataset x 7-model x 6 robustness metrics. On the 50 binary
+  20260611 generalization datasets, Loss3 is best by mean on clean RMSE,
+  clean Relative L2, attack clean loss, attack adv loss, attack loss increase,
+  and attack relative increase; strict per-dataset wins are 47/50, 47/50,
+  44/50, 50/50, 50/50, and 16/50 respectively.
+- Built paired t-tests for the binary 20260611 50-generalization dataset unit
+  under `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_ttests_20260615/`
+  with report
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/loss3_paired_ttests_20260615.md`.
+  Loss3 is significantly lower than the second-best mean model on clean data
+  MSE (`p=1.18e-13` one-sided), RMSE (`p=1.18e-17`), Relative L2
+  (`p=9.56e-19`), attack clean loss (`p=3.59e-10`), attack adv loss
+  (`p=1.12e-27`), and attack loss increase (`p=1.59e-21`). Attack relative
+  increase is weaker but still one-sided significant versus the second-best
+  mean model (`p=0.0326`, BH adjusted second-only `p=0.0419`). Delta L2 RMS is
+  not a Loss3 win, and delta Linf is tied by construction.
+
+## 2026-06-14 - Darcy/SIR20 time-matched rerun pipeline prepared
+
+Status: implemented the DarcyFlow-focused SIR20 time-matched rerun pipeline requested for baseline plus six training methods (`loss1`, `loss2`, `loss3`, `physics_loss`, `random_clean`, `random_solver`). Small-validation/full execution is handled by `tools/run_darcy_sir20_timematched_full_20260614.sh`.
+
+Small-validation status:
+- A one-epoch validation run completed successfully on 2026-06-14.
+- It covered all six training methods for 1 epoch, full 52-dataset evaluation
+  with `eval_max_samples=1`, checkpoint manifest generation, fixed-sample
+  robustness attacks on all 52 datasets with 2 samples/dataset, 3 fixed
+  SVD/Jacobian samples per model, and visualization.
+- The validation outputs were later removed from the formal Darcy CFlow release
+  because they are not final 3000-3500 epoch model results.
+- The six trained one-epoch validation checkpoints contained optimizer state;
+  the baseline external `best.pt` did not, as expected.
+
+Full-run launch status:
+- `MODE=full TAG=20260614_full UPLOAD_TO_R2=1 AUTO_GIT_PUSH=0` is running detached via `setsid -f`; PID recorded in `outputs/darcy_sir20_timematched_full_20260614_full/logs/full.pid` as `346318`.
+- Active monitoring was performed for a little over 10 minutes after the successful detached start. At the end of monitoring, `driver_full.log` showed calibration complete and `full_train` running.
+- Calibration outputs are `outputs/darcy_sir20_timematched_full_20260614_full/data/timing_calibration.csv`, `.json`, and `reports/timing_calibration.md`.
+- Stable work-clock seconds/epoch after ignoring the first 2 warmup epochs: `loss1=4.926671`, `loss2=4.375749`, `loss3=4.624874`, `physics_loss=4.033846`, `random_clean=2.891699`, `random_solver=3.010654`.
+- Loss3 3000-epoch work-clock budget is `13874.623` seconds (`3.854` hours). Time-matched epochs: `loss1=2816`, `loss2=3171`, `loss3=3000`, `physics_loss=3440`, `random_clean=4798`, `random_solver=4609`.
+- The full training launcher began `loss1` as `darcy_sir20_full_loss1_3042ep_workmatched` with `--max-work-seconds 13874.623212`; the epoch cap is intentionally above the plan so the work-clock budget can stop the run at the matched time.
+- The launcher was patched to materialize `preflight_check.py` before calling `run_logged`, because this execution environment reaped plain `nohup &` background children; `setsid -f` was verified with a test process before the full run was relaunched.
+- User reconsidered the 3000-epoch loss3 reference because the full run was too long once per-epoch 52-dataset evaluation wall time was included. The detached run was stopped with SIGTERM on 2026-06-14 while `loss1` was at epoch `233`; the latest complete checkpoint is `outputs/darcy_sir20_timematched_full_20260614_full/data/training_runs/darcy_sir20_full_loss1_3042ep_workmatched/darcy/checkpoints/darcy_epoch200_step000800.pt` with work-clock `975.502` seconds.
+
+Observed from local/R2 restore:
+- GPU path verified locally: Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126` with `sm_70`, JAX `0.10.0` backend `gpu`.
+- The initially restored June-7 soft-field Darcy generalization root was later
+  rejected for the current analysis. Current Darcy/SIR20 results must use the
+  June-11 binary loss3-targeted root only.
+
+Code changes:
+- `tools/adversarial_training.py` now writes `work_clock_epoch_summary.csv` and supports `--max-work-seconds`; work-clock excludes evaluation, checkpoints, plotting, and upload.
+- `tools/adversarial_training.py` checkpoints now save `model_state_dict`, `optimizer_state_dict`, optimizer/global step, and work-clock metadata. Resume loads AdamW/optimizer state when present and infers epoch/global-step offsets from new-format checkpoints.
+- `tools/evaluate_generalization_models.py` now accepts finite Darcy coefficient fields.
+- Added modular SIR20 scripts: `tools/darcy_sir20_common.py`, `tools/darcy_sir20_calibrate.py`, `tools/darcy_sir20_train_launcher.py`, `tools/darcy_sir20_evaluate.py`, `tools/darcy_sir20_robustness.py`, and `tools/darcy_sir20_visualize.py`.
+- Current-root cleanup document: `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`.
+
+Planned/remaining work:
+- Run small validation first and confirm training, 52-dataset evaluation, checkpoint optimizer-state presence, robustness/SVD diagnostics, visualization, and optional upload hooks.
+- After validation passes, launch `MODE=full` detached, monitor logs for 10 minutes, then leave the process running.
+- Full outputs should land under `outputs/darcy_sir20_timematched_full_<tag>/` and upload to `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected` when R2 credentials/config are available.
+
+## 2026-06-11 - Darcy Burgers-style plotting and full-logging pipeline
+
+Status: added a Darcy-specific Burgers-style plotting pipeline and generated plots from the existing loss1/loss2/loss3/physics 100-epoch Darcy runs. The plots are Darcy Flow plots that reuse the Burgers report vocabulary: epoch and wall-clock train/test/generalization curves, attack-gain curves, attacked-train loss curves, runtime/memory diagnostics, final full-50 generated-dataset reduction heatmaps, and generated-set feature scatter plots.
+
+Artifacts:
+- Plotter: `tools/plot_darcy_loss123physics_adv_training_20260611.py`.
+- Full logging launcher: `tools/run_darcy_loss123physics_full_logging_20260611.sh`.
+- Report: `docs/darcy_loss123physics_burgers_style_report_20260611.md`.
+- Visualization root: `visualizations/darcy_loss123physics_burgers_style_20260611/`.
+
+Observed limitation of the existing 100-epoch runs: their saved config used `eval_max_samples=10`, `max_generalization_eval=8`, and `attack_probe_samples=0`, so the existing logs can produce polished aggregate curves and final full-50 posthoc comparisons, but cannot reconstruct every-epoch full-50 dataset curves or fixed-probe delta FFT histories. The new full-logging launcher fixes this for future runs by using `--eval-max-samples 0`, `--max-generalization-eval 50`, `--attack-probe-samples 5`, and `--attack-probe-every-n-epochs 1` for all four Darcy objectives, then calling the new plotter with `--derive-full50-from-run-eval`.
+
+Validation: Python compile passed, shell syntax check passed, dry-run printed the four full-logging training commands plus the final plotting command, and all generated PNGs opened as nonblank images.
+
+## 2026-06-11 - Darcy vs Burgers solver forward/backward benchmark
+
+Status: completed a solver-only GPU timing benchmark to answer whether the current Darcy solver is much faster than the current Burgers solver in both forward and backward passes. No model forward, optimizer, evaluation, or checkpoint I/O is included.
+
+Artifacts:
+- Benchmark script: `tools/benchmark_darcy_vs_burgers_solver_runtime_20260611.py`.
+- Main output: `analysis_outputs/darcy_vs_burgers_solver_forward_backward_benchmark_20260611/solver_runtime_summary.json`.
+- Larger Burgers batch output: `analysis_outputs/darcy_vs_burgers_solver_forward_backward_benchmark_20260611_large_burgers_batches/solver_runtime_summary.json`.
+- Report: `docs/darcy_vs_burgers_solver_forward_backward_benchmark_20260611.md`.
+
+Key result: using warmed-up means, same-batch comparison shows Burgers is about `64x-90x` slower than Darcy for forward-with-grad and about `53x-70x` slower for backward-only. Darcy backward-only is about `1.84x-2.09x` of its forward-with-grad, consistent with the user's memory that Darcy solver backward is roughly twice forward. Burgers backward-only is about `1.56x-1.61x` of graph-building forward, or about `1.9x` of no-grad forward.
 
 ## 2026-06-11 - Burgers wideparam loss3 advantage evidence summary written
 
@@ -26,7 +159,7 @@ Key recorded evidence: `loss3` is clean-RMSE best on `50/50` datasets, reduces m
 
 ## 2026-06-11 - Burgers SVD25 reuse3 then retrain/upload workflow prepared
 
-Status: prepared and smoke-tested the requested long workflow. Full execution is intended to run detached after this entry is recorded.
+Status: prepared and small-validated the requested long workflow. Full execution is intended to run detached after this entry is recorded.
 
 SVD design: reuse the completed 3-sample full-1024 SVD outputs from `forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611` as sample ids `0-2`, then add `22` non-overlapping samples. The generated manifest contains `25` rows: `21` generalization samples, `2` train samples, and `2` test samples. The `21` generalization rows use `21` distinct dataset ids and no duplicate `(dataset_path, local_index)` pairs.
 
@@ -40,7 +173,7 @@ SVD artifacts:
 
 Runtime estimate after accounting for reused SVD payloads: regenerate attack traces for all `25` samples, but compute Jacobian/SVD for only `22` new samples. From the prior 3-sample timing this estimates `4.452` hours linear, with a planning window of about `4.81-5.56` hours for the SVD phase. The retrain phase follows afterward and can run roughly another day-scale window depending on GPU throughput.
 
-Smoke validation: shell syntax checks passed, Python compile passed, `SMOKE_ONLY=1 RUN_UPLOAD=0 RUN_GIT=0` completed, the SVD25 manifest/report estimate was generated, the prior `sample_000-002` payloads were copied into the new output root, and the retrain launcher dry-run printed the intended loss1/loss2/loss3 commands.
+Small-validation: shell syntax checks passed, Python compile passed, `SMALL_VALIDATION_ONLY=1 RUN_UPLOAD=0 RUN_GIT=0` completed, the SVD25 manifest/report estimate was generated, the prior `sample_000-002` payloads were copied into the new output root, and the retrain launcher dry-run printed the intended loss1/loss2/loss3 commands.
 
 ## 2026-06-11 - Burgers wideparam loss1/loss2/loss3 adversarial retrain workflow prepared
 
@@ -535,40 +668,22 @@ Inference:
 Remaining work:
 - Regenerate downstream plots directly from `darcy_cflow_raw52x5_wallclock_long.csv` or `darcy_cflow_raw52x5_wallclock_wide.csv` if per-dataset visualization is needed.
 
-## 2026-06-08 - Darcy/C-flow wall-clock matched comparison clarification
+## 2026-06-08 - Darcy/C-flow old-root wall-clock comparison
 
-Status: corrected the Darcy/C-flow comparison axis to wall-clock time rather than epoch count. The fair comparison uses each time-matched run's final checkpoint, because all visible runs finished around the same `82.8-82.9 min` wall-clock budget.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Exact metrics came from the local `summary.json` and `darcy/eval_split_summary.csv` files for loss1, loss2, loss3, and physics.
-- Dedicated result file: `docs/darcy_cflow_wallclock_matched_comparison_20260608.md`.
-- Same-wall-clock final rows: loss1 epoch `683` at `82.93 min`, loss2 epoch `733` at `82.90 min`, loss3 epoch `500` at `82.78 min`, physics epoch `778` at `82.91 min`.
-- Generalization relative-L2 drops vs baseline at the same wall-clock budget: loss1 `2.03%`, loss2 `17.68%`, loss3 `46.21%`, physics `31.80%`.
+Current correction:
+- This wall-clock comparison used the old Darcy soft-field root. Its result
+  files and reports were removed from the current release and must not be used
+  for the current binary 20260611 Darcy/SIR20 analysis.
 
-Inference:
-- The fair wall-clock matched ranking on the 50-dataset generalization split is loss3 strongest, physics second, loss2 third, loss1 weakest. Epoch 650 should only be treated as a diagnostic point, not as the comparison axis, because physics/loss3 have different epoch speeds.
+## 2026-06-08 - Darcy/C-flow old-root loss1/loss2 to-650 inspection
 
-Remaining work:
-- Regenerate any combined plots/tables whose labels imply an epoch-matched comparison; they should be labeled as wall-clock matched final-checkpoint comparisons.
+Status: obsolete historical entry.
 
-## 2026-06-08 - Darcy/C-flow loss1/loss2 single-GPU to-650 status inspection
-
-Status: inspected local Darcy/C-flow artifacts for the user's to-650 question. The dedicated `continue_to650` pipeline has a plan document and runner, but no local run logs, stitched output, or R2 upload evidence. The clean single-GPU sequential time-matched loss1/loss2 rerun did complete and exceeded epoch 650.
-
-Observed evidence:
-- Source driver log: `adversarial_training_runs/darcy_loss12_single_gpu_time_matched_20260608_logs/driver.log` shows loss1 ran from `2026-06-08T05:49:24Z` to `2026-06-08T07:12:29Z`, then loss2 from `2026-06-08T07:12:33Z` to `2026-06-08T08:35:37Z`.
-- loss1 summary: `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608/darcy/summary.json` reports epoch `683`, `82.93` minutes, final checkpoint `darcy_epoch683_step002732.pt`.
-- loss2 summary: `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608/darcy/summary.json` reports epoch `733`, `82.90` minutes, final checkpoint `darcy_epoch733_step002932.pt`.
-- Exact split metrics came from each run's `darcy/eval_split_summary.csv`; dedicated result file: `docs/darcy_cflow_loss12_single_gpu_to650_status_20260608.md`.
-- At epoch 650, generalization relative-L2 drops vs baseline were: loss1 `5.59%`, loss2 `-6.33%`, physics `24.34%`; loss3 has no epoch 650 row because the visible run completed at epoch 500.
-- Final generalization relative-L2 drops vs baseline were: loss1 `2.03%` at epoch 683, loss2 `17.68%` at epoch 733, loss3 `46.21%` at epoch 500, physics `31.80%` at epoch 778.
-
-Inference:
-- The earlier under-650 concern is resolved for the clean sequential time-matched rerun because loss1 and loss2 exceeded 650 epochs on one GPU. However, the separately requested stitched `continue_to650` workflow itself is not evidenced as completed locally.
-- For the visible local 50-dataset generalization split, loss3 remains strongest; physics is second; loss2 is acceptable by final epoch but bad exactly at 650; loss1 is train/test-improving but weak on final generalization.
-
-Remaining work:
-- If a strict stitched-to-650 artifact and R2 upload are still required, run `tools/run_darcy_loss12_continue_to650_20260608.sh` or regenerate a corrected combined summary from the single-GPU loss1/loss2 plus loss3/physics artifacts.
+Current correction:
+- This inspection used old-root result artifacts. The associated reports and
+  run directories were removed from the current release.
 
 ## 2026-06-08 - Darcy other30 stockgeneralization stockloss3other20 launch
 
@@ -738,33 +853,13 @@ Remaining work:
 
 - Use this note as the reference wording when describing local robustness versus finite-radius PGD robustness in Burgers/Darcy reports.
 
-## 2026-06-08 - Darcy Flow time-matched loss1/loss2/physics duration check
+## 2026-06-08 - Darcy Flow old-root time-matched duration check
 
-Status: inspected current wall-clock schedule for Darcy Flow loss1, loss2, and physics self-training.
+Status: obsolete historical entry.
 
-Observed source/log files:
-
-- `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608_logs/driver.log`
-- `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608_logs/driver.log`
-- `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608/darcy/eval_split_summary.csv`
-- `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608/darcy/eval_split_summary.csv`
-- `docs/darcy_time_matched_loss1_loss2_physics_pipeline_20260608.md`
-
-Observed timing:
-
-- Each objective is capped by `--max-wall-seconds 4966.925741452724`, matching the prior Darcy loss3 500-epoch elapsed time.
-- Loss1 driver start: `2026-06-08T02:06:58Z`.
-- Loss2 driver start: `2026-06-08T02:07:00Z`.
-- At `2026-06-08T02:27:42Z`, loss1/loss2 tmux sessions were still active and the physics waiter session was still queued behind them.
-- Latest inspected eval rows: loss1 reached epoch 92; loss2 reached epoch 62.
-- GPU status at inspection: `24684 MiB / 32768 MiB`, `98%` utilization, `62C`.
-- Log scan found no `Traceback`, `CUDA out of memory`, `RuntimeError`, or `Killed` lines in the active loss1/loss2 run/log directories.
-
-Inference:
-
-- Sequential loss1 + loss2 + physics would take about `14900.78s`, or `4h 08m 21s`, plus postprocessing/upload overhead.
-- Current schedule runs loss1 and loss2 concurrently, then starts physics afterward, so expected training wall-clock is about `9933.85s`, or `2h 45m 34s`, plus postprocessing/upload overhead.
-- From the `2026-06-08T02:27:42Z` check, expected remaining training time was roughly `2h 24m 45s`, with expected completion around `2026-06-08T04:52:30Z` if there is no failure or extra queuing delay.
+Current correction:
+- This timing check was tied to old-root runs and is not part of the current
+  binary 20260611 Darcy/SIR20 result set.
 
 ## 2026-06-08 - Burgers self-training dataset-dependence conclusion note
 
@@ -799,45 +894,14 @@ Remaining work:
 - Push this lightweight Markdown/ledger update to GitHub when credentials are available; generated large artifacts remain outside Git.
 
 
-## 2026-06-08 - Darcy Flow loss1/loss2/physics time-matched self-training pipeline
+## 2026-06-08 - Darcy Flow old-root time-matched self-training pipeline
 
-Status: code implemented; timing probes completed; official loss1/loss2 runs launched and monitored for about ten minutes; physics is queued behind loss1/loss2.
+Status: obsolete historical entry.
 
-Observed source files:
-
-- `tools/adversarial_training.py`
-- `tools/run_darcy_lossdrop50_time_matched_objective_20260608.sh`
-- `tools/summarize_darcy_time_matched_runs_20260608.py`
-
-Observed timing runs:
-
-- `adversarial_training_runs/darcy_lossdrop50_loss1_timing5ep_20260608`: 5 epochs, 39.21667575277388 seconds, peak allocated 10131.2085 MB.
-- `adversarial_training_runs/darcy_lossdrop50_loss2_timing5ep_20260608`: 5 epochs, 39.598233016207814 seconds, peak allocated 9328.6514 MB.
-- `adversarial_training_runs/darcy_lossdrop50_physics_timing5ep_20260608`: 5 epochs, 34.802722845226526 seconds, peak allocated 9331.3574 MB.
-
-Inference from timing:
-
-- Matching the existing Darcy loss3 elapsed time `4966.925741452724` seconds implies roughly loss1 633 epochs, loss2 627 epochs, and physics 714 epochs, but the official jobs are controlled by `--max-wall-seconds` rather than a fixed epoch count.
-- Three concurrent jobs are likely unsafe on V100 32GB; loss1+loss2 concurrency stabilized at about 24684 MiB used, so physics was queued behind them.
-
-Observed official run state after about ten minutes:
-
-- tmux sessions: `darcy_loss1_timematch_20260608`, `darcy_loss2_timematch_20260608`, and queued `darcy_physics_timematch_waiter_20260608`.
-- loss1 run dir: `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608`; at 2026-06-08T02:16:49Z last eval epoch 41, step 164.
-- loss2 run dir: `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608`; at 2026-06-08T02:16:49Z last eval epoch 27, step 108, last train step 111.
-- GPU status at 2026-06-08T02:16:49Z: 24684 MiB / 32768 MiB, 100% utilization, 61C.
-- No OOM, no session exit, and no traceback observed during the monitoring window.
-
-Dedicated note:
-
-- `docs/darcy_time_matched_loss1_loss2_physics_pipeline_20260608.md`
-
-Remaining work:
-
-- Let loss1/loss2 finish; the physics waiter should then start the physics run.
-- After completion, run combined postprocess and upload generated artifacts to R2. The current environment had no `/tmp/neural_operator_r2_auto_rclone.conf` and no `R2_*` env variables, so R2 upload was not armed for the running jobs in this turn.
-- Keep generated CSV/NPZ/checkpoint/PNG artifacts out of Git; commit/push lightweight source and Markdown records to GitHub.
-- Local Git commit `a8ed7db` was created for the lightweight source/Markdown records. `git push origin vast-ai` failed in this shell because no GitHub credential helper/token is available.
+Current correction:
+- This pipeline targeted old-root Darcy runs. Its generated result directories
+  and reports were removed from the current release; current code is locked to
+  the binary 20260611 root for Darcy/SIR20 analysis.
 
 ## 2026-06-07 - Burgers Loss1 8000 plot curve verification
 
@@ -859,78 +923,49 @@ Remaining work:
 
 ## 2026-06-07 - Plot and Jacobian/SVD analysis status clarification
 
-Status: inspected whether the requested plots and Jacobian/SVD-style analyses are completed for the current Burgers and Darcy Flow tasks.
+Status: inspected whether the requested plots and Jacobian/SVD-style analyses are completed for the current Burgers task. Old-root Darcy status details were later removed from current interpretation.
 
 Observed evidence:
 - Check time: `2026-06-07T19:42:33Z`.
 - Burgers Loss1 epoch8000 plot artifacts now live in the existing folders: `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_plot_manifest.txt`, `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/round03_long_training_comparison_plot_manifest.txt`, and `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`.
-- Darcy Flow Loss3 500ep final artifacts do not yet exist: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` and `darcy/checkpoints/darcy_epoch500_step002000.pt` are not present.
-- Darcy latest observed progress from `eval_split_summary.csv`: epoch `302/500`, step `1208`, progress fraction `0.604`.
-- Searches under `visualizations`, `docs`, and `forensics` found no completed Darcy Loss3 plot/Jacobian/SVD outputs for this 500ep run yet.
 - Existing local Jacobian/SVD tools include `tools/analyze_fno_solver_jacobian_similarity.py`, `tools/compare_burgers_adversarial_jacobian_svd.py`, `tools/compare_burgers_checkpoint_series_jacobian_svd.py`, and related Burgers/FNO SVD plotting utilities, but no completed Darcy Loss3 500ep post-analysis artifact is evidenced yet.
 
 Inference:
 - Burgers epoch8000 plots are done.
-- Darcy Flow final plots and Jacobian/SVD analyses are not done yet because the 500ep training run is still in progress.
-- Based on launch at `2026-06-07T18:40:28Z` and latest epoch `302` at `2026-06-07T19:42:33Z`, estimated Darcy completion is about `2026-06-07T20:23Z`, roughly `41` minutes after the check.
+- Old-root Darcy status from this date is not used in the current binary 20260611 analysis.
 
 Remaining work:
-- Let Darcy Flow Loss3 reach epoch500.
-- After completion, generate the requested plots and then run/implement the Jacobian curve/coefficient and Jacobian matrix singular-value decomposition analysis against the completed checkpoints and selected 50 generalization datasets.
+- None for current Darcy/SIR20; use the binary 20260611 result set instead.
 
-## 2026-06-07 - Concurrent Burgers/Darcy status check
+## 2026-06-07 - Concurrent Burgers status check
 
-Status: inspected the two active/recent tasks after the user asked whether either run had stopped or OOMed and how long remains.
+Status: inspected the active/recent Burgers task after the user asked whether runs had stopped or OOMed and how long remains. Old-root Darcy details were later removed from current interpretation.
 
 Observed evidence:
 - Check time: `2026-06-07T19:39:02Z`.
 - Burgers Loss1 session is no longer active because the training completed; final checkpoint exists at `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/burgers/checkpoints/burgers_epoch8000_step024000.pt` and summary exists at `adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/summary.json`.
 - Burgers driver log recorded training completion at `2026-06-07T19:35:51Z` and then plot refresh. The automatic dense-comparison plot wrapper initially failed with a Python dataclass import-wrapper error, not an OOM. `tools/plot_burgers_round03_loss1_8000_dense_comparison.py` was fixed and rerun successfully.
 - Burgers plot outputs now live in the existing folders: `visualizations/burgers_loss3_selective_round03_long_training_comparison_dense_20260605/round03_dense_plot_manifest.txt`, `visualizations/burgers_loss3_selective_round03_long_training_comparison_20260605/round03_long_training_comparison_plot_manifest.txt`, and `docs/burgers_loss3_selective_round03_loss1_8000_plot_report_20260607.md`.
-- Darcy Flow Loss3 tmux session `darcy_lossdrop50_loss3_500ep_20260607` is still running.
-- Latest Darcy progress from `eval_split_summary.csv`: epoch `265/500`, step `1060`, progress fraction `0.53`.
-- Latest Darcy regular checkpoint observed: `darcy_epoch250_step001000.pt`.
 - `nvidia-smi` at check time showed Tesla V100-SXM2-32GB, `11834 MiB / 32768 MiB`, and about `95%` utilization.
-- Searching Darcy logs for `Traceback`, `CUDA out of memory`, `out of memory`, `Killed`, `ERROR`, and `RuntimeError` returned no matches.
-- Dedicated notes updated: `docs/burgers_loss1_5000to8000_launch_20260607.md` and `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Dedicated note updated: `docs/burgers_loss1_5000to8000_launch_20260607.md`.
 
 Inference:
 - Burgers Loss1 5000-to-8000 is complete; the only issue was a post-training plot wrapper bug, now fixed and rerun.
-- Darcy Flow Loss3 500-epoch run is healthy and has not OOMed or stopped.
-- Darcy observed speed is about `13.26` seconds per epoch; remaining `235` epochs imply completion around `2026-06-07T20:31Z`, about `52` minutes after the check.
+- Old-root Darcy status from this date is not used in the current binary 20260611 analysis.
 
 Remaining work:
 - Let Darcy continue to epoch500.
 - After Darcy completion, verify final `summary.json`, epoch500 checkpoint, all CSVs, and attack probe outputs.
 
-## 2026-06-07 - Darcy Flow Loss3 500-epoch training launched on selected lossdrop50 suite
+## 2026-06-07 - Darcy Flow Loss3 500-epoch soft-field run
 
-Status: launched the requested Darcy Flow Loss3 adversarial training run for 500 epochs using the selected 50 loss-drop generalization datasets, plus screening train/test data.
+Status: obsolete historical entry.
 
-Observed evidence:
-- tmux session: `darcy_lossdrop50_loss3_500ep_20260607`.
-- Run directory: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607`.
-- Logs: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607_logs`.
-- Runner: `tools/run_darcy_lossdrop50_loss3_500ep_20260607.sh`.
-- Patched source: `tools/adversarial_training.py` now supports explicit Darcy model/train/test overrides.
-- Selected 50 generalization root: `generalization_datasets_darcy_lossdrop50_selected_20260607`.
-- Train override: `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/train/dim2d_darcy_nx85_N384_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt`.
-- Test override: `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/test/dim2d_darcy_nx85_N96_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_test.pt`.
-- Starting model checkpoint override: `2D_Darcy_FNO2d/saved_models/2D/darcy_screen_baseline_m64_w60_e50_20260607/best.pt`.
-- Dataset preflight passed with train=1, test=1, generalization=50.
-- At `2026-06-07T18:44:10Z`, the run had reached epoch `14/500`, step `56`, progress fraction `0.028`.
-- Output files observed: `darcy/train_steps.csv`, `darcy/attack_batches.csv`, `darcy/eval_split_summary.csv`, `darcy/attack_epoch_summary.csv`, `darcy/attack_epsilon_bucket_summary.csv`, `darcy/attack_probe_epochs.csv`, `darcy/attack_probe_samples.csv`, and `darcy/attack_probe_samples/*.npz`.
-- GPU monitoring showed Tesla V100-SXM2-32GB execution, `16726 MiB / 32768 MiB`, and `100%` utilization while Burgers and Darcy were active.
-- Dedicated launch note: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
-
-Inference:
-- The run is active and producing Burgers-style adversarial-training analysis artifacts.
-- This is a screening-baseline Darcy Flow Loss3 run, not an official full Darcy benchmark, because official Darcy artifacts were missing locally and explicit screening overrides were used.
-- Early speed is roughly `15-16` seconds per epoch; epoch500 ETA is around two hours after launch, possibly faster after the concurrent Burgers run finishes.
-
-Remaining work:
-- Let tmux session continue to epoch500.
-- After completion, verify final `summary.json`, epoch500 checkpoint, all CSV row counts, attack probe NPZ outputs, and then prepare visualization/analysis scripts as needed.
+Current correction:
+- This run used the old June-7 soft-field Darcy generalization root. Per the
+  current user correction, its generated results and reports are not part of the
+  current Darcy/SIR20 analysis and must not be cited.
+- Current Darcy/SIR20 analysis must use the June-11 binary loss3-targeted root.
 
 ## 2026-06-07 - Burgers Loss1 5000-to-8000 status and ETA check
 
@@ -955,36 +990,16 @@ Remaining work:
 - Let the tmux run continue.
 - After completion, verify `burgers_epoch8000_step024000.pt`, `summary.json`, and plot output directories before claiming completion.
 
-## 2026-06-07 - Darcy Flow selected 50 loss-drop generalization datasets
+## 2026-06-07 - Darcy Flow selected 50 soft-field generalization datasets
 
-Status: generated and screened an oversized Darcy Flow loss-drop candidate pool, then selected 50 generalization datasets whose individual eval losses decreased after the 50-step adversarial-training probe.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Dedicated result note: `docs/darcy_lossdrop50_selected_generalization_suite_20260607.md`.
-- Runner: `tools/run_darcy_lossdrop50_pool_screen_20260607.sh`.
-- Pool generator: `tools/generate_darcy_lossdrop50_pool_20260607.py`.
-- Selector: `tools/select_darcy_lossdrop50_20260607.py`.
-- Pool root: `generalization_datasets_darcy_lossdrop50_pool_20260607`.
-- Pool screen summary: `forensics/darcy_lossdrop50_pool_gradient_screen_20260607/candidate_screen_summary.csv`.
-- Selected 50 root: `generalization_datasets_darcy_lossdrop50_selected_20260607`.
-- Selected manifest: `generalization_datasets_darcy_lossdrop50_selected_20260607/candidate_manifest.csv`.
-- Selected evidence table: `generalization_datasets_darcy_lossdrop50_selected_20260607/selection_summary.csv`.
-- Selected `.pt` files: `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/*.pt` has 50 files.
-- Driver log: pool generation started `2026-06-07T17:36:55Z`, screen started `2026-06-07T17:46:15Z`, selection started `2026-06-07T18:05:18Z`, and selection completed `2026-06-07T18:05:19Z`.
-- Probe reached `[darcy-screen] step 50/50` and wrote `forensics/darcy_lossdrop50_pool_gradient_screen_20260607`.
-- Pool candidates screened: 72; candidates with `first50 eval_loss_delta < 0`: 72; non-decreasing candidates: 0.
-- Selected count: 50; all selected `eval_loss_delta` values are negative.
-- Selected loss delta range: most negative `-2.3176673143628549e-07`, least negative `-1.8023750669726724e-07`, mean `-2.0133049086249833e-07`.
-
-Inference:
-- The user's corrected 50-dataset requirement is satisfied in this screening setup: every selected dataset has observed generalization loss decrease after the short adversarial-training probe.
-- The selected suite prioritizes loss decrease over high cosine. Selected cosine means are moderate, roughly `0.7595` to `0.7723`, with `6/50` negative-cosine steps.
-- The current result remains a screening-baseline result because official Darcy artifacts were missing locally.
-
-Remaining work:
-- Use `generalization_datasets_darcy_lossdrop50_selected_20260607` for follow-up Darcy Flow screening/training.
-- Restore or regenerate official Darcy train/test/checkpoint artifacts before official benchmark claims.
-- If the next target is stronger gradient-direction agreement, run a local sweep around the selected soft low-contrast family using cosine as a secondary objective.
+Current correction:
+- The selected June-7 soft-field suite was later found not to match the current
+  binary Darcy/SIR20 requirement. Generated results based on that suite were
+  deleted or deprecated for the current analysis.
+- Do not use this suite for current clean evaluation, attack20, SVD/Jacobian,
+  correlation, heatmap, or 52-dataset x 7-model matrix conclusions.
 
 ## 2026-06-07 - Darcy Flow loss-direction clarification
 
@@ -12013,7 +12028,7 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Dedicated report: `docs/darcy_flow_naming_audit_20260607.md`.
 - Observed pre-correction issue: current records included stale misspelled or ambiguous Darcy naming in `EXPERIMENT_LEDGER.md` and related docs; current scripts/docs also used an older alternate-flow label.
 - Correction: replaced those current user-facing labels with `Darcy Flow` in current docs, ledger entries, Darcy helper scripts, candidate-screen READMEs, `tools/analyze_generalization_loss_patterns.py`, and `tools/adversarial_training.py`.
-- Observed verification after correction: searches for the known wrong-spelling patterns and stale alternate-flow patterns across current `EXPERIMENT_LEDGER.md`, `docs`, `tools`, `visualizations`, `forensics`, and `generalization_datasets_darcy_lossdrop50_selected_20260607` returned no matches, excluding binary/image files and this audit wording before it was sanitized.
+- Observed verification after correction: searches for the known wrong-spelling patterns and stale alternate-flow patterns across current `EXPERIMENT_LEDGER.md`, `docs`, `tools`, `visualizations`, `forensics`, and the then-current Darcy generalization files returned no matches, excluding binary/image files and this audit wording before it was sanitized.
 - Observed PNG check: no current Darcy PNG files were found under `visualizations`, `forensics`, or `docs`; no PNG filenames contain the known wrong or stale Darcy labels.
 - Inference: current user-facing text and future current-script generated labels now use `Darcy Flow`; there were no existing Darcy bitmap figures requiring redraw for embedded text.
 
@@ -12141,17 +12156,16 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Inference: the task is running normally and matches the batch-500 runtime/memory estimate. It was launched to replace six-sample visual impressions with all-dataset final-delta FFT evidence for the suspected high-frequency shift.
 
 
-## Burgers/Darcy Flow GPU Status Check - 2026-06-07T22:19:52Z
+## Burgers GPU Status Check - 2026-06-07T22:19:52Z
 
-- Status: inspected current GPU memory, Burgers p2q2 pilot progress, and Darcy Flow 500-epoch run completion; no new training/attack was started by this status check.
-- Dedicated reports updated: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md` and `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Status: inspected current GPU memory and Burgers p2q2 pilot progress; no new training/attack was started by this status check.
+- Dedicated report updated: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md`.
 - Observed GPU state: `nvidia-smi` at `2026-06-07T22:18:44Z` showed Tesla V100-SXM2-32GB using `30084 MiB / 32768 MiB`, utilization about `43%`, temperature `51C`, with no OOM/ECC error shown.
 - Observed process state: `pgrep` showed active Burgers runner PID `865719`; `tmux list-sessions` showed `burgers_p2q2_20step_20260607`; no Darcy Flow training tmux session was active.
 - Observed Burgers progress: `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/progress.jsonl` had `27` completed batches out of expected `84`; baseline completed all samples and loss1 epoch8000 had completed through sample range `2500:3000`; `summary.json` was not yet written.
 - Observed latest Burgers batch: loss1 epoch8000 `2500:3000`, `54.2218s`, final loss mean `0.0028975329`, final delta RMS mean `0.1199999973`, peak allocated `28.5961 GiB`.
 - Inference: Burgers p2q2 pilot has not blown GPU memory and is running normally; ETA from this check is roughly `55-65` minutes plus final FFT/write overhead.
-- Observed Darcy Flow completion: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` reports finished UTC `20260607_200325_UTC`, `epochs=500`, final checkpoint `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/checkpoints/darcy_epoch500_step002000.pt`, total wall `4975.1246s` (`82.9187 min`), and CUDA peak allocated `9335.814 MB`.
-- Inference: Darcy Flow completed normally and is no longer running, so the current ~30 GiB GPU use is from the Burgers p2q2 pilot, not from simultaneous Darcy Flow plus Burgers.
+- Inference: the current ~30 GiB GPU use is from the Burgers p2q2 pilot.
 
 ## Burgers Round03 Full P2Q2 20-Step Pilot Resume Preparation - 2026-06-07T22:28:42Z
 
@@ -12175,28 +12189,17 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 - Observed GPU state: `nvidia-smi` reported `30084 MiB / 32768 MiB`, about `42%` utilization, temperature `50C`, and no OOM/ECC error.
 - Inference: the 20-step run writes final deltas at each model boundary as expected; the prepared 20-to-40/60 resume path should have usable per-model starting deltas after loss2/loss3 complete and the global summary is written.
 
-## Darcy Flow Loss3 Self-Training Generalization Result - 2026-06-07T22:41Z
+## Darcy Flow old-root Loss3 self-training generalization result - 2026-06-07T22:41Z
 
-- Status: inspected completed Darcy Flow loss3 self-training evaluation CSVs to answer whether generalization loss decreased; no new training or attack was started.
-- Dedicated report updated: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
-- Source files inspected: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/eval_split_summary.csv`, `eval_metrics.csv`, and `summary.json`.
-- Observed scope: clean evaluation during Darcy Flow loss3 self-training on train/test plus `50` selected generalization datasets; this is not an adversarial attack evaluation.
-- Observed generalization epoch0 to epoch500: RMSE dataset mean `0.0005717215820` to `0.0003075836784` (`46.20%` lower), MAE dataset mean `0.0004752948281` to `0.0002511947812` (`47.15%` lower), relative L2 dataset mean `0.09337999846` to `0.05023221956` (`46.21%` lower), and accuracy score mean `91.46002810` to `95.21719090` (`+3.7572` points).
-- Observed per-dataset result: all `50/50` generalization datasets improved at epoch500 for RMSE, MAE, relative L2, and accuracy score versus baseline.
-- Observed best clean generalization checkpoint: epoch `479`, global step `1916`, with RMSE dataset mean `0.0001979864422`, relative L2 dataset mean `0.03234040494`, and MAE dataset mean `0.0001593592566`; epoch500 remains improved versus baseline but is worse than epoch479.
-- Observed train/test epoch0 to epoch500: train RMSE worsened from `0.0002389861588` to `0.0004251050391` (`77.88%` higher); test RMSE worsened from `0.0003051046005` to `0.0004394615336` (`44.04%` higher); train MAE worsened from `0.0001717641692` to `0.0003802275410` (`121.37%` higher); test MAE worsened from `0.0002191964648` to `0.0003843123580` (`75.33%` higher); train relative L2 worsened from `0.03555337338` to `0.06324181391` (`77.88%` higher); test relative L2 worsened from `0.04471923445` to `0.06441195355` (`44.04%` higher); train accuracy score dropped from `96.56672710` to `94.05198205` (`-2.5147` points); test accuracy score dropped from `95.71949736` to `93.94858792` (`-1.7709` points).
-- Inference: Darcy Flow loss3 self-training did lower clean generalization loss on the selected 50 generalization datasets, but the improvement is not monotonic and comes with clean train/test degradation, suggesting specialization to the selected generalization distribution.
+- Status: obsolete historical entry.
+- Current correction: this result used the old Darcy soft-field root and is not
+  part of the current binary 20260611 Darcy/SIR20 analysis.
 
-## Darcy Flow Loss1/Loss2 Comparison And Jacobian-SVD Feasibility Inspection - 2026-06-07T22:50Z
+## Darcy Flow old-root Loss1/Loss2/Jacobian feasibility inspection - 2026-06-07T22:50Z
 
-- Status: inspected local Darcy Flow training artifacts, adversarial-training code paths, and dataset shape to answer whether loss3 was compared with loss1/loss2 self-training and whether full Jacobian/SVD is feasible; no new training, attack, or Jacobian computation was started.
-- Dedicated report updated: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
-- Source files inspected: `tools/run_darcy_lossdrop50_loss3_500ep_20260607.sh`, `tools/adversarial_training.py`, `tools/analyze_local_jacobian_fno_deeponet.py`, `tools/compare_burgers_adversarial_jacobian_svd.py`, and the Darcy train dataset `2D_Darcy_FNO2d/datasets/grf_darcy_screen_20260607/train/dim2d_darcy_nx85_N384_solver=jaxcg_solve421_alpha2_tau3_binary3-12_f1_seed45_train.pt`.
-- Observed comparison status: the current Darcy Flow lossdrop50 selected-dataset self-training has a completed loss3-style run but no matching local loss1/loss2 500-epoch self-training runs on the same 50 selected generalization datasets.
-- Observed code behavior: `--burgers-attack-loss-objective loss1/loss2/loss3` is Burgers-only; non-Burgers attack targets use attacked solver output and are labeled loss3-style. The current Darcy launcher has no Darcy-specific loss1/loss2 switch.
-- Observed Darcy data shape: train `x` and `y` are `(384, 85, 85)`, so one single-sample dense local Jacobian is `7225 x 7225` with `52,200,625` entries.
-- Observed Burgers Jacobian code path: the existing explicit Jacobian helper computes dense rows by one autograd backward pass per output coordinate; existing top-k SVD code uses sparse `svds` after the dense matrix is available.
-- Inference: there is currently no valid loss3-vs-loss1/loss2 Darcy self-training comparison. A direct dense Jacobian/SVD diagnostic for Darcy is much more expensive than Burgers and should not be the default. For current `85x85`, one or a few dense probes might be possible but expensive; for `400x400`, dense Jacobian storage alone would be about `102 GB` per float32 matrix and is not practical. Matrix-free top-k JVP/VJP or finite-difference directional probes are the better path.
+- Status: obsolete historical entry.
+- Current correction: this inspection was tied to old-root Darcy artifacts and
+  has been removed from current result interpretation.
 
 
 ## Darcy Flow Loss1/Loss2 Concurrent Memory Feasibility With Active Burgers Attack - 2026-06-07T22:53Z
@@ -12204,12 +12207,11 @@ Inference from current and historical runtimes: the remaining `loss2` methods sh
 Observed evidence:
 - Observed from `nvidia-smi` at `2026-06-07T22:52:47Z`: Tesla V100-SXM2-32GB used `30084 MiB / 32768 MiB`, about `42%` GPU utilization, and no OOM/ECC error was shown. The NVIDIA process table did not list the Python process, but `pgrep` showed active Burgers runner PID `865719` in tmux session `burgers_p2q2_20step_20260607`.
 - Observed from `forensics/burgers_round03_full_p2q2_52datasets_4models_finalonly_20step_20260607/progress.jsonl`: the Burgers p2q2 20-step final-only attack had `64/84` completed batch rows; latest batch `loss3_epoch1500 0:500` reported `peak_allocated_gib=28.59606409072876` and recent batch times around `54-59s`.
-- Observed from `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json`: the completed Darcy Flow loss3 self-training with `batch_size=96`, `attack_batch_size=96`, `optimizer_batch_size=24` reported `cuda_peak_allocated_mb=9335.81396484375`, `cuda_reserved_mb=11288.0`, and final `cuda_allocated_mb=3626.45068359375`.
+- Old-root Darcy memory evidence was removed from current interpretation.
 
 Inference:
-- A same-settings Darcy Flow self-training run should not be launched concurrently with the currently active Burgers attack on this 32GB V100: only about `2684 MiB` is free, while Darcy loss3 alone previously needed about `9.1 GiB` peak allocated and reserved about `11.0 GiB`.
-- After the Burgers attack finishes and releases memory, one Darcy Flow self-training run at the previous loss3 settings should fit. Running Darcy loss1 and loss2 simultaneously without Burgers may fit in raw memory if their footprints match loss3, but is risky due to transient attack/evaluation overhead and allocator fragmentation; sequential loss1 then loss2 is the safer default.
-- The current Darcy Flow run is loss3-style; true Darcy loss1/loss2 needs a Darcy-specific objective or launcher adjustment because the existing `--burgers-attack-loss-objective` switch is Burgers-only.
+- This memory note should not be used for current binary 20260611 Darcy/SIR20
+  scheduling or scientific interpretation.
 
 
 ## Darcy Flow Accuracy Score Definition Audit - 2026-06-07T22:58Z
@@ -12324,7 +12326,7 @@ Inference:
 
 ## 2026-06-08 Cross-Topic Summary Markdown Bundle
 
-Status: created a multi-file Markdown summary bundle covering the key theoretical references, Burgers 1024/512/256 Jacobian downsample experiments, frequency/projection-residual analysis, Burgers p2q2 attack and training plots, and Darcy Flow loss3 self-training results discussed in the recent analysis thread.
+Status: created a multi-file Markdown summary bundle covering the key theoretical references, Burgers 1024/512/256 Jacobian downsample experiments, frequency/projection-residual analysis, and Burgers p2q2 attack/training plots discussed in the recent analysis thread. Old-root Darcy summary material was later removed from the current release.
 
 Observed output files:
 - `docs/20260608_experiment_summary_index.md`
@@ -12332,14 +12334,13 @@ Observed output files:
 - `docs/20260608_burgers_downsample_svd_1024_512_256_summary.md`
 - `docs/20260608_burgers_frequency_projection_residual_summary.md`
 - `docs/20260608_burgers_training_attack_visual_summary.md`
-- `docs/20260608_darcy_flow_self_training_summary.md`
 
 Observed sources summarized:
 - Burgers downsample SVD reports: `docs/burgers_jacobian_downsample_svd_probe_20260607.md`, `docs/burgers_round03_loss123_downsample_svd_probe_20260607.md`, and their CSVs under `forensics/`.
 - Burgers frequency/projection residual report: `docs/burgers_round03_svd_vector_frequency_proxy_interpretation_20260608.md` and source CSVs under `forensics/burgers_round03_loss123_svd_vector_frequency_probe_20260608`.
 - Burgers p2q2 attack metrics: `docs/burgers_round03_p2q2_metrics_record_20260607.md`.
 - Burgers all-dataset p2q2 pilot: `docs/burgers_round03_full_p2q2_20step_pilot_launch_20260607.md`.
-- Darcy Flow loss3 self-training: `docs/darcy_lossdrop50_loss3_500ep_launch_20260607.md`.
+- Old-root Darcy self-training summary material was removed from current interpretation.
 - Literature/reference notes: Rayleigh-Ritz/Galerkin, Davis-Kahan, Wedin, and StablePDENet arXiv `2601.06472`.
 
 Inference:
@@ -12538,142 +12539,53 @@ Remaining work:
 - No new GPU experiment was run for this audit.
 
 
-## 2026-06-08 - Darcy lossdrop50 time-matched loss1/loss2/loss3/physics completion check and plot bundle
+## 2026-06-08 - Darcy old-root time-matched completion check and plot bundle
 
-Status: completed status audit and posthoc plotting from existing run artifacts. No new GPU training experiment was launched in this audit.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Current GPU/process check at `2026-06-08T05:21Z`: `nvidia-smi` showed Tesla V100-SXM2-32GB with `0 MiB / 32768 MiB`, `0%` utilization, and no running GPU processes; process table showed no Darcy training or plotting process.
-- Loss1 driver log: `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608_logs/driver.log` recorded start `2026-06-08T02:06:58Z`, done `2026-06-08T03:30:08Z`, workflow complete `2026-06-08T03:30:11Z`.
-- Loss2 driver log: `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608_logs/driver.log` recorded start `2026-06-08T02:07:00Z`, done `2026-06-08T03:30:12Z`, workflow complete `2026-06-08T03:30:15Z`.
-- Physics driver log: `adversarial_training_runs/darcy_lossdrop50_physics_time_matched_loss3wall_20260608_logs/driver.log` recorded start `2026-06-08T03:31:04Z`, done `2026-06-08T04:54:09Z`, workflow complete `2026-06-08T04:54:12Z`.
-- Loss3 source summary: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` reports finished UTC `20260607_200325_UTC`, `500` epochs, `2000` global steps, and final checkpoint `darcy/checkpoints/darcy_epoch500_step002000.pt`.
-- Generated/confirmed result doc: `docs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608.md`.
-- Generated loss3 posthoc doc: `docs/darcy_lossdrop50_loss3_500ep_time_matched_summary_20260608.md`.
-- Generated combined CSV: `adversarial_training_runs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608/darcy_time_matched_summary.csv`.
-- Generated/confirmed per-run plots under `adversarial_training_runs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608/*/{rmse_split_curves.png,relative_l2_split_curves.png,attack_objective_and_solver_mse_curves.png}`.
-- Loss3 standalone posthoc plots also exist under `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy_time_matched_summary/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/`.
-
-Key settings:
-- Same target wall time as the completed loss3 run: approximately `4966.93` seconds, about `82.8-83.0` minutes.
-- All runs used Darcy lossdrop50 selected generalization data with `batch_size=96`, `attack_batch_size=96`, `optimizer_batch_size=24`, adv-only training, solver labels, and every-epoch evaluation.
-- Loss1/loss2/physics stopped by `max_wall_seconds_reached`; loss3 was the prior `500` epoch baseline whose observed wall time was used for matching.
-
-Key metrics observed from `darcy_time_matched_summary.csv`:
-- Loss1: `352` epochs, `1408` steps, `82.97` minutes, generalization RMSE `0.000571722 -> 0.000552445` (`3.37%` lower), relative L2 `0.09338 -> 0.0902246` (`3.38%` lower), peak CUDA `10131.2 MB`.
-- Loss2: `240` epochs, `960` steps, `83.01` minutes, generalization RMSE `0.000571722 -> 0.000665826` (`16.46%` higher), relative L2 `0.09338 -> 0.108746` (`16.46%` higher), peak CUDA `9328.7 MB`.
-- Loss3: `500` epochs, `2000` steps, `82.78` minutes, generalization RMSE `0.000571722 -> 0.000307584` (`46.20%` lower), relative L2 `0.09338 -> 0.0502322` (`46.21%` lower), peak CUDA `9335.8 MB`.
-- Physics: `778` epochs, `3112` steps, `82.91` minutes, generalization RMSE `0.000571722 -> 0.000389987` (`31.79%` lower), relative L2 `0.09338 -> 0.0636878` (`31.80%` lower), peak CUDA `9331.4 MB`.
-
-Inference:
-- The four Darcy lossdrop50 time-matched runs are complete locally, and the requested plots now exist for loss1, loss2, loss3, and physics/loss4 style objectives.
-- On final generalization metrics at the matched wall time, loss3 is best, physics is second, loss1 is a small improvement, and loss2 regresses relative to baseline.
-- Loss3 and physics had better intermediate best epochs than their final checkpoints for generalization; final-checkpoint ranking should not be interpreted as a monotonic training trend.
-
-Remaining work:
-- Inspect the generated PNGs visually if presentation quality matters.
-- If official reporting needs exact best-checkpoint comparison, select/checkpoint the best observed epoch per objective rather than using only final wall-stop checkpoints.
-- Large checkpoints/images remain local/R2-style artifacts unless explicitly staged; lightweight scripts/docs should be staged explicitly when saving to Git.
+Current correction:
+- This completion check and plot bundle used old-root Darcy artifacts. The
+  generated reports and run directories were removed from the current release.
 
 
 
-## 2026-06-08 - Darcy lossdrop50 loss1/loss2 concurrency caveat
+## 2026-06-08 - Darcy old-root loss1/loss2 concurrency caveat
 
-Status: inspected launch logs and attack summaries after noticing loss1/loss2 completed fewer epochs than loss3 despite using cheaper objectives.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Loss1 driver log: `adversarial_training_runs/darcy_lossdrop50_loss1_time_matched_loss3wall_20260608_logs/driver.log` shows start `2026-06-08T02:06:58Z` and done `2026-06-08T03:30:08Z`.
-- Loss2 driver log: `adversarial_training_runs/darcy_lossdrop50_loss2_time_matched_loss3wall_20260608_logs/driver.log` shows start `2026-06-08T02:07:00Z` and done `2026-06-08T03:30:12Z`.
-- Physics driver log: `adversarial_training_runs/darcy_lossdrop50_physics_time_matched_loss3wall_20260608_logs/driver.log` shows start `2026-06-08T03:31:04Z`, after loss1/loss2 completed.
-- Per-run elapsed speed from `darcy/summary.json`: loss1 `352` epochs in `4978.108s` (`14.142s/epoch`), loss2 `240` epochs in `4980.536s` (`20.752s/epoch`), loss3 `500` epochs in `4966.926s` (`9.934s/epoch`), physics `778` epochs in `4974.570s` (`6.394s/epoch`).
-- Attack objective metadata in `darcy/attack_epoch_summary.csv`: loss1 `attack_uses_solver_forward=0`, `attack_uses_solver_backward=0`; loss2 `1/0`; physics `0/0`. The Darcy loss3 code path in `tools/adversarial_training.py` uses `MSE(model(a_adv), solver(a_adv))` and records solver backward when solver target gradients are enabled.
-- Result doc updated with this caveat: `docs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608.md`.
-
-Inference:
-- The low completed epoch counts for loss1/loss2 are very likely a concurrency artifact from running both jobs on the same GPU at the same time.
-- The current final-checkpoint rows for loss1/loss2 should not be treated as an official fair single-GPU time-matched comparison against standalone loss3 or physics.
-- A fair comparison should rerun loss1 and loss2 sequentially on an otherwise idle GPU using the same target wall time and settings.
-
-Remaining work:
-- Rerun Darcy loss1 and loss2 sequentially if official wall-clock conclusions are needed.
-- Keep the current artifacts as concurrency-contaminated diagnostic runs unless explicitly superseded.
+Current correction:
+- This caveat concerned old-root runs; the related reports and run directories
+  were removed from the current release.
 
 
 
-## 2026-06-08 - Darcy loss1/loss2 single-GPU 5-epoch timing probe
+## 2026-06-08 - Darcy old-root loss1/loss2 timing probe
 
-Status: ran fresh sequential 5-epoch timing probes for Darcy loss1 and loss2 on an idle V100. Loss1 finished before loss2 was started; no concurrent training process was present.
+Status: obsolete historical entry.
 
-Observed evidence:
-- GPU before launch: `nvidia-smi` showed Tesla V100-SXM2-32GB, `0 MiB / 32768 MiB`, no running GPU processes.
-- PyTorch/JAX GPU path verified with `adv_robust/bin/python`: PyTorch `2.8.0+cu126`, CUDA `12.6`, device `Tesla V100-SXM2-32GB`, capability `(7, 0)`, arch list includes `sm_70`, JAX backend `gpu`, JAX device `cuda:0`.
-- GPU/preflight records: `forensics/darcy_lossdrop50_single_gpu_timing5ep_20260608_gpu_preflight/`.
-- Loss1 source run: `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_timing5ep_20260608/darcy/summary.json`.
-- Loss2 source run: `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_timing5ep_20260608/darcy/summary.json`.
-- Timing estimate CSV: `forensics/darcy_lossdrop50_single_gpu_timing5ep_20260608_gpu_preflight/single_gpu_timing_estimates.csv`.
-- Result doc: `docs/darcy_lossdrop50_loss12_single_gpu_timing5ep_20260608.md`.
-- Loss1 observed `5` epochs in `39.3177948417142s`, or `7.863559s/epoch`.
-- Loss2 observed `5` epochs in `39.61514286324382s`, or `7.923029s/epoch`.
-- Loss3 reference wall time is `4966.925741452724s` from `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/summary.json`.
-
-Inference:
-- Direct 5-epoch total-time estimate: loss1 would run about `631.64` epochs and loss2 about `626.90` epochs in the same wall time as loss3.
-- Warmed/amortized smoke estimates are higher: roughly `655` loss1 epochs and `651` loss2 epochs at the same loss3 wall time.
-- This confirms the previous loss1/loss2 low epoch counts were a concurrency artifact, not objective-intrinsic slowness.
-
-Remaining work:
-- Launch official sequential single-GPU time-matched loss1 and loss2 full runs to replace the concurrency-contaminated rows.
+Current correction:
+- This timing probe targeted old-root runs and is no longer part of the current
+  binary 20260611 Darcy/SIR20 result set.
 
 
 
-## 2026-06-08 - Darcy loss1/loss2 official sequential single-GPU time-matched rerun launch
+## 2026-06-08 - Darcy old-root sequential single-GPU rerun launch
 
-Status: launched official sequential single-GPU time-matched reruns to supersede the concurrency-contaminated loss1/loss2 runs. The workflow runs loss1 first and starts loss2 only after loss1 finishes.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Runner script: `tools/run_darcy_loss12_single_gpu_time_matched_20260608.sh`.
-- tmux session: `darcy_loss12_single_gpu_20260608`.
-- Driver log: `adversarial_training_runs/darcy_loss12_single_gpu_time_matched_20260608_logs/driver.log`.
-- GPU preflight/output records: `forensics/darcy_loss12_single_gpu_time_matched_20260608_gpu_preflight/`.
-- Driver log records loss1 start at `2026-06-08T05:49:24Z`: `darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608`, target wall seconds `4966.925741452724`.
-- Process check at about `2026-06-08T05:49:41Z` showed one active `adversarial_training.py` process for the loss1 single-GPU time-matched run. No loss2 training process was active.
-- `nvidia-smi` at about `2026-06-08T05:49:41Z` showed Tesla V100-SXM2-32GB at about `12838 MiB / 32768 MiB` and `96%` GPU utilization.
-
-Key settings:
-- Target wall time: loss3 elapsed seconds `4966.925741452724`.
-- Run names: `darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608` then `darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608`.
-- Same selected Darcy lossdrop50 generalization suite, `batch_size=96`, `attack_batch_size=96`, `optimizer_batch_size=24`, adv-only training, solver labels, every-epoch evaluation, and `max_generalization_eval=50`.
-
-Inference:
-- This launch should produce the fair single-GPU wall-clock comparison for loss1/loss2 against the standalone loss3 and physics rows.
-- Based on the 5-epoch timing probe, expected completed epochs are roughly `630-655` for loss1 and `627-651` for loss2, depending on fixed-overhead amortization.
-
-Remaining work:
-- Monitor the tmux session until loss1 completes and loss2 starts.
-- After both runs finish, generate the combined loss1/loss2/loss3/physics summary and update docs/ledger with final metrics.
+Current correction:
+- This launch targeted old-root runs and is no longer part of the current binary
+  20260611 Darcy/SIR20 result set.
 
 
 
-## 2026-06-08 - Darcy loss1/loss2 continue-to-650 pipeline code preparation
+## 2026-06-08 - Darcy old-root continue-to-650 pipeline preparation
 
-Status: prepared code to continue Darcy loss1/loss2 self-training from existing checkpoints to explicit epoch 650. This entry records code preparation, not completion of the continuation runs.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Added Darcy resume CLI support in `tools/adversarial_training.py`: `--darcy-initial-checkpoint` now uses the existing generic initial-checkpoint/resume-offset path for Darcy.
-- Added stitching helper: `tools/stitch_darcy_continuation_run_20260608.py`.
-- Added continuation runner: `tools/run_darcy_loss12_continue_to650_20260608.sh`.
-- Added pipeline note: `docs/darcy_loss12_continue_to650_pipeline_20260608.md`.
-- Static checks passed: `bash -n tools/run_darcy_loss12_continue_to650_20260608.sh`; `adv_robust/bin/python -m py_compile tools/adversarial_training.py tools/stitch_darcy_continuation_run_20260608.py`; CLI help shows `--darcy-initial-checkpoint`.
-
-Key behavior:
-- Defaults to source runs `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608` and `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608`.
-- Waits for source `darcy/summary.json` files by default, computes `local_epochs = 650 - source_epoch`, and runs sequential loss1 then loss2 continuations.
-- Uses `--darcy-initial-checkpoint`, `--resume-epoch-offset`, and `--resume-global-step-offset` so final checkpoint numbering reaches epoch 650.
-- Creates stitched full-history CSV/JSON records for plotting baseline-to-650 curves.
-- Runs summary/plot postprocessing and uploads source, continuation, stitched, combined summary, docs, logs, and preflight artifacts to R2 by default.
-
-Inference:
-- This code is ready to launch once the current single-GPU time-matched loss1/loss2 source runs have completed, or it can be launched with `WAIT_FOR_SOURCE=1` to wait for them.
+Current correction:
+- This pipeline was configured around old-root source runs and its result
+  documentation was removed from the current release.
 
 Remaining work:
 - Launch `tools/run_darcy_loss12_continue_to650_20260608.sh` in tmux after confirming the desired source runs.
@@ -12727,30 +12639,14 @@ Remaining work:
 - Repeat the same clean-vs-attack mismatch audit on any replacement externally valid generalization suite once that suite is finalized.
 
 
-## 2026-06-08 - Darcy Flow generalization dataset provenance attack audit
+## 2026-06-08 - Darcy Flow old soft-field dataset provenance audit
 
-Status: completed a provenance audit of the Darcy Flow lossdrop50 and stockgeneralization dataset roots to answer whether they were created by attacking train/test samples. This was file/code/metadata inspection, not a new training or solver run.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Source generator inspected: `tools/generate_darcy_lossdrop50_pool_20260607.py`.
-- Shared candidate generator inspected: `tools/generate_darcy_generalization_candidates.py`.
-- Selector inspected: `tools/select_darcy_lossdrop50_20260607.py`.
-- Stock pipeline launcher inspected: `tools/run_darcy_other30_stockgeneralization_loss3other20_20260608.sh`.
-- Existing dataset doc inspected: `docs/darcy_lossdrop50_selected_generalization_suite_20260607.md`.
-- Lossdrop pool manifest: `generalization_datasets_darcy_lossdrop50_pool_20260607/candidate_manifest.csv` has 72 generated pool datasets.
-- Lossdrop selected manifest: `generalization_datasets_darcy_lossdrop50_selected_20260607/candidate_manifest.csv` has 50 selected datasets.
-- Stock pool manifest: `generalization_datasets_darcy_stockgeneralization_pool_20260608/candidate_manifest.csv` has 72 generated pool datasets.
-- Stock selected manifest: `generalization_datasets_darcy_stockgeneralization_20260608/candidate_manifest.csv` has 50 selected datasets.
-- Selected manifests record `source_pool_path` back to the generated pool roots and parameters such as `alpha`, `tau`, `low`, `high`, `soft_coefficients`, `soft_beta`, `samples`, `resolution`, and `solve_resolution`.
-- Spot-checked selected `.pt` payloads contain `x`, `y`, `latent`, and `metadata`; metadata reports `split=generalization`, `similarity_tier=lossdrop_pool_soft`, coefficient/sampling parameters, and solver `jax_matrix_free_cg_second_order_fd`.
-- Result doc: `docs/darcy_generalization_dataset_provenance_attack_audit_20260608.md`.
-
-Inference:
-- The Darcy Flow generalization datasets were not generated by adversarially attacking existing train/test tensors. They were independently generated from GRF/coefficient-family samplers and solved with the Darcy solver, then selected from the pool using a short adversarial-training gradient/loss screen.
-- The important caveat is that these selected roots are screening-biased loss-drop suites, not unbiased random external generalization benchmarks.
-
-Remaining work:
-- If an unbiased external Darcy generalization benchmark is needed, generate a separate unfiltered suite and record its provenance separately.
+Current correction:
+- This provenance audit concerned old soft-field Darcy generalization roots and
+  is not part of the current binary 20260611 Darcy/SIR20 analysis.
+- Related generated reports were deleted or deprecated for the current release.
 
 
 ## 2026-06-08 - Burgers round03 full-52 per-sample clean versus adversarial-tag mismatch audit
@@ -12824,33 +12720,14 @@ Remaining work:
 - Restore R2 access or provide the exact Run2 root if the user intends a different remote root, then repeat this provenance check.
 
 
-## 2026-06-08 - Darcy selected-50 generalization parameter distribution audit
+## 2026-06-08 - Darcy selected-50 old soft-field parameter distribution audit
 
-Status: summarized how the Darcy Flow selected-50 generalization roots were generated and what parameter/distribution differences exist across the selected datasets. This was manifest/code inspection and CSV summarization, not a new generation/training run.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Source generator inspected: `tools/generate_darcy_generalization_candidates.py`.
-- Darcy sampler/solver inspected: `2D_Darcy_FNO2d/solvers/darcy_jax_solver.py`.
-- Pool generator inspected: `tools/generate_darcy_lossdrop50_pool_20260607.py`.
-- Lossdrop selected manifest: `generalization_datasets_darcy_lossdrop50_selected_20260607/candidate_manifest.csv`.
-- Lossdrop selected screen summary: `generalization_datasets_darcy_lossdrop50_selected_20260607/selection_summary.csv`.
-- Stock selected manifest: `generalization_datasets_darcy_stockgeneralization_20260608/candidate_manifest.csv`.
-- Stock selected screen summary: `generalization_datasets_darcy_stockgeneralization_20260608/selection_summary.csv`.
-- Derived tables: `forensics/darcy_generalization_50_parameter_distribution_20260608/`.
-- Result doc: `docs/darcy_generalization_50_parameter_distribution_20260608.md`.
-
-Key settings:
-- Generation samples latent GRF fields with `alpha=2.0`, `tau=3.0`, converts them with `a = low + (high-low) * sigmoid(beta * latent)`, solves Darcy with JAX CG at `solve_resolution=421`, and saves/downsamples to `resolution=85`.
-- Each selected dataset has `48` samples and includes `x`, `y`, `latent`, and `metadata`.
-
-Observed parameter distribution:
-- `lossdrop50_selected_20260607`: selected families are `low4_high10_beta8` count `18`, `low4_high10_beta10` count `16`, `low4_high10_beta12` count `9`, `low4_high10_beta14` count `4`, and `low4_high10p5_beta12` count `3`.
-- `stockgeneralization_20260608`: selected families are `low3_high12_beta6` count `2`, `low4_high10_beta8` count `18`, `low4_high10_beta10` count `15`, `low4_high10_beta12` count `6`, `low4_high10_beta14` count `3`, and `low4_high10p5_beta12` count `6`.
-
-Inference:
-- The selected 50 roots are mostly independent draws from a few soft-coefficient Darcy families, not 50 unrelated broad OOD distributions.
-- The main distribution differences are coefficient range (`low/high`) and soft-threshold sharpness (`soft_beta`); `alpha/tau` are fixed across selected datasets.
-- These roots are suitable for the intended loss-drop/self-training screen but should be described as narrow, screening-biased soft-coefficient suites rather than unbiased random external generalization benchmarks.
+Current correction:
+- This audit summarized old soft-field selected roots and is not part of the
+  current binary 20260611 Darcy/SIR20 analysis.
+- Related generated reports were deleted or deprecated for the current release.
 
 Remaining work:
 - If a broad external Darcy benchmark is required, generate an unfiltered suite with wider variation in `alpha`, `tau`, binary/soft mode, coefficient range, and latent transforms.
@@ -13047,20 +12924,13 @@ Remaining work:
 - Run or locate a direct full fixed-budget P2Q2 attack/tag table for the first root if a first-root robustness conclusion is required.
 - Run or locate a separate full third-root attack/tag table if the third-root robustness claim needs the same sample-scale strength as the second-root artifact.
 
-## 2026-06-08 - Darcy/C-flow visualization location recheck
+## 2026-06-08 - Darcy/C-flow old-root visualization location recheck
 
-Status: rechecked local Darcy/C-flow visualization locations in response to a user request. No new plotting, model evaluation, solver evaluation, training, or attack run was launched.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Existing location record: `docs/darcy_cflow_visualization_artifact_locations_20260608.md`.
-- Main combined copied PNG directory: `adversarial_training_runs/darcy_lossdrop50_time_matched_loss123_physics_summary_20260608/`.
-- Corrected single-GPU loss1/loss2 PNGs are under each run's `darcy_time_matched_summary/` directory.
-- Current stockloss3other20 PNGs are under `adversarial_training_runs/darcy_stockloss3other20training_20260608/darcy_time_matched_summary/`.
-- Raw attack-probe metrics/data are present under each run's `darcy/attack_probe_samples.csv` and `darcy/attack_probe_samples/`.
-
-Inference:
-- The existing Darcy/C-flow PNGs cover RMSE split curves, relative-L2 split curves, attack objective/solver-MSE curves, and eval/train progress where available.
-- Standalone Darcy/C-flow perturbation-frequency/spectrum PNGs were not found locally; only raw FFT/TV/sign-change metrics and NPZ probe data are present.
+Current correction:
+- This location recheck referred to old-root Darcy/C-flow visualization outputs.
+  Those result docs/directories were removed from the current release.
 
 
 
@@ -13100,81 +12970,21 @@ Remaining work:
 - Monitor first-root completion, then third-root completion.
 - After both runs finish, generate winner/count summaries and update the three-root conclusion doc with observed first/third robustness rankings.
 
-## 2026-06-08 - Darcy/C-flow image-only loss-method comparison bundle
+## 2026-06-08 - Darcy/C-flow old-root image-only loss-method comparison bundle
 
-Status: built the requested image-only Darcy/C-flow figure bundle. No new training, attack, model-forward evaluation, or solver-forward evaluation was launched. Existing PNGs were copied, and additional comparison PNGs were generated from existing local CSV/NPZ artifacts.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
-- Image-only output directory: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`.
-- Output verification: `27` PNG files, and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
-- Build tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-- Source runs: `adversarial_training_runs/darcy_lossdrop50_loss1_single_gpu_time_matched_loss3wall_20260608/`, `adversarial_training_runs/darcy_lossdrop50_loss2_single_gpu_time_matched_loss3wall_20260608/`, `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/`, `adversarial_training_runs/darcy_lossdrop50_physics_time_matched_loss3wall_20260608/`, and `adversarial_training_runs/darcy_stockloss3other20training_20260608/`.
-- Numeric source files used per run: `darcy/eval_split_summary.csv`, `darcy/attack_epoch_summary.csv`, `darcy/attack_probe_samples.csv`, `darcy/attack_probe_samples/*.npz`, `darcy/train_steps.csv`, and available summary JSON files. Exact per-run source paths are enumerated in `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
+Current correction:
+- This image-only bundle used old-root Darcy artifacts. The image directory and
+  report were removed from the current release.
 
-Key settings:
-- Formal methods compared: loss1, loss2, loss3, physics/loss4.
-- Reference run included: stockloss3other20.
-- Baseline in RMSE/relative-L2/final-best figures: lossdrop50 epoch-0 clean-evaluation baseline from the formal-method set.
-- X-axis for generated comparison curves: wall minutes reconstructed from cumulative `train_steps.csv:step_wall_sec`, scaled to recorded elapsed seconds when available.
+## 2026-06-08 - Darcy/C-flow old-root polished loss-only bundle correction
 
-Key generated figures:
-- `comparison_rmse_all_methods_vs_baseline.png`.
-- `comparison_relative_l2_all_methods_vs_baseline.png`.
-- `comparison_generalization_final_best_bars_vs_baseline.png`.
-- `comparison_attack_solver_mse_all_methods.png`.
-- `comparison_attack_objective_normalized_all_methods.png`.
-- `comparison_attack_probe_frequency_metrics_all_methods.png`.
-- `comparison_final_delta_radial_spectrum_all_methods.png`.
-- `comparison_final_delta_maps_all_methods.png`.
+Status: obsolete historical entry.
 
-Inference:
-- The bundle now satisfies the requested single-folder image-only organization and adds same-figure comparisons for the four formal Darcy/C-flow loss methods plus the stockloss3other20 reference.
-- Because evaluation CSVs do not contain exact cumulative evaluation timestamps, the wall-minute x-axis is reconstructed/scaled from train-step timing and should be treated as a visualization aid rather than exact timestamp evidence.
-
-Remaining work:
-- Log exact cumulative evaluation timestamps in future runs if exact wall-time curve alignment is required.
-- Extend perturbation-map plotting beyond the first stored final probe if full probe-rank grids are needed.
-
-## 2026-06-08 - Darcy/C-flow polished loss-only bundle correction
-
-Status: replaced the earlier broad Darcy/C-flow image bundle with a polished loss-method-only bundle in response to user feedback. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was launched.
-
-Observed evidence:
-- Current result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
-- Current image-only output directory: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`.
-- Current output verification: `4` PNG files, and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
-- Build tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-- Syntax check passed: `adv_robust/bin/python -m py_compile tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-
-Key correction:
-- Removed `stockloss3other20` from the plotted curves. It is a separate 20-epoch stock/generalization reference run, not one of the four formal loss-objective methods in this Darcy/C-flow comparison.
-- Removed copied old per-run PNGs with raw run-directory titles.
-- Removed delta, spectrum, perturbation-frequency, and robustness-style PNGs from the current bundle.
-- Regenerated only polished loss-focused figures using the Burgers-style visual template.
-
-Current generated figures:
-- `comparison_attack_objective_normalized_all_methods.png`.
-- `darcy_cflow_clean_rmse_loss_methods.png`.
-- `darcy_cflow_clean_relative_l2_loss_methods.png`.
-- `darcy_cflow_generalization_final_best_loss_methods.png`.
-
-Key settings:
-- Formal methods plotted: loss1, loss2, loss3, physics/loss4.
-- Baseline handling: epoch-0 clean-evaluation baseline is printed as a panel note, not drawn as an extra curve, so the line plots contain only four method curves.
-- Attack objective normalization: each objective is normalized to its own first finite nonzero value because absolute objective scales differ by definition.
-
-Observed source files:
-- Exact per-run source paths are enumerated in `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
-- Core numeric sources are each formal run's `darcy/eval_split_summary.csv`, `darcy/attack_epoch_summary.csv`, `darcy/train_steps.csv`, and summary JSON files.
-
-Inference:
-- The current bundle supersedes the earlier 27-PNG version for the user's requested polished four-loss-method comparison.
-- The previous broad bundle included useful exploratory plots, but it did not match the requested clean loss-comparison deliverable.
-
-Remaining work:
-- If exact wall-clock x-axis values at evaluation time are required, future runs should log cumulative wall timestamps directly into evaluation outputs.
-- Keep perturbation/spectrum/robustness figures separate from this loss-method figure bundle unless explicitly requested.
+Current correction:
+- This polished bundle used old-root Darcy artifacts. The image directory and
+  report were removed from the current release.
 
 ## 2026-06-08 - Darcy stockloss3other20 naming clarification
 
@@ -13261,48 +13071,14 @@ Inference:
 - The corrected statement is that SVD was done for several Burgers generalization roots/families, especially second ns50 and third round03; the missing/unclear SVD evidence is specifically first/master semantic root, not all roots.
 - The currently running background job is attack/tag only, not SVD.
 
-## 2026-06-08 - Darcy/C-flow baseline-plus-perturbation bundle correction
+## 2026-06-08 - Darcy/C-flow old-root baseline-plus-perturbation bundle
 
-Status: regenerated the Darcy/C-flow visualization bundle after user feedback. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was launched.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Current result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
-- Current image-only output directory: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/`.
-- Current output verification: `7` PNG files, and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
-- Build tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-- Syntax check passed: `adv_robust/bin/python -m py_compile tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-- PIL nonblank checks recorded nonzero RGB standard deviations for all seven generated PNGs.
-
-Key correction:
-- Added `baseline model` back into clean-evaluation figures and the generalization summary bar chart.
-- Clarified attack-objective panel labels: perturbed-input objective value and attack-induced objective increase.
-- Restored perturbation example and perturbation-frequency analysis figures from existing probe CSV/NPZ artifacts.
-- Kept `stockloss3other20` excluded from method curves because it is a separate 20-epoch stock/generalization pipeline run using loss3, not a fifth formal objective.
-
-Current generated figures:
-- `comparison_attack_objective_normalized_all_methods.png`.
-- `darcy_cflow_clean_rmse_loss_methods.png`.
-- `darcy_cflow_clean_relative_l2_loss_methods.png`.
-- `darcy_cflow_generalization_final_best_loss_methods.png`.
-- `darcy_cflow_final_perturbation_examples.png`.
-- `darcy_cflow_final_delta_radial_spectrum_loss_methods.png`.
-- `darcy_cflow_perturbation_frequency_metrics_loss_methods.png`.
-
-Observed source files:
-- Exact per-run source paths are enumerated in `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
-- Core clean-eval sources: each formal run's `darcy/eval_split_summary.csv`.
-- Core attack-objective sources: each formal run's `darcy/attack_epoch_summary.csv`.
-- Core perturbation sources: each formal run's `darcy/attack_probe_samples.csv` and `darcy/attack_probe_samples/*.npz`.
-- Timing sources: each formal run's `darcy/train_steps.csv` and summary JSON files.
-
-Inference:
-- The bundle now separates three concepts explicitly: clean prediction error, attack-generation objective diagnostics, and perturbation/frequency diagnostics.
-- RMSE and Relative L2 clean plots have similar structure because both come from the same clean evaluation passes; RMSE is absolute error, while Relative L2 is scale-normalized error.
-- Attack objective curves should be read within each method only because objective definitions differ across loss1/loss2/loss3/physics.
-
-Remaining work:
-- If exact wall-clock x-axis values at evaluation time are required, future runs should log cumulative wall timestamps directly into evaluation outputs.
-- Generate a separate paper-ready final robustness metric figure if needed; do not conflate it with attack-generation objective curves.
+Current correction:
+- This visualization bundle was generated from old-root Darcy artifacts. The
+  corresponding image directory and Markdown report were removed from the
+  current release.
 
 
 
@@ -13331,124 +13107,50 @@ Remaining work:
 - Push the Markdown records to GitHub.
 - After local attack/tag finishes, summarize first/third full-tag results and optionally upload artifacts to R2.
 
-## 2026-06-09 - Darcy/C-flow perturbation example layout correction
+## 2026-06-09 - Darcy/C-flow old-root perturbation example layout correction
 
-Status: corrected the layout of the generated Darcy/C-flow final perturbation example figure. No new training, attack generation, model-forward evaluation, or solver-forward evaluation was run; only the plotting layout was changed and the existing-image bundle was regenerated from existing CSV/NPZ artifacts.
+Status: obsolete historical entry.
 
-Observed evidence:
-- Updated result doc: `docs/darcy_cflow_loss123_physics_baseline_image_only_bundle_20260608.md`.
-- Updated plotting tool: `tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-- Corrected PNG: `visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608/darcy_cflow_final_perturbation_examples.png`.
-- Output verification: the bundle contains `7` PNG files and `find visualizations/darcy_cflow_loss123_physics_baseline_image_only_20260608 -maxdepth 1 -type f ! -name '*.png' -print` returned no files.
-- PIL verification for the corrected perturbation figure: size `2470 x 2605`, nonzero RGB standard deviations `[66.79, 86.64, 81.73]`.
-- Syntax check passed: `adv_robust/bin/python -m py_compile tools/build_darcy_cflow_image_only_bundle_20260608.py`.
-
-Key correction:
-- Replaced the perturbation-example figure's `constrained_layout` title handling with a fixed reserved top band for title/subtitle and fixed right-side colorbar bands, avoiding overlap between text and image panels.
-
-Remaining work:
-- If additional visual polish is requested, inspect the generated PNG manually and tune margins/label sizes further; no numeric rerun is needed for that.
+Current correction:
+- This layout correction applied to the old-root image bundle, which has now
+  been removed from the current release.
 
 
-## 2026-06-09 - Darcy/C-flow five-model one-batch tag comparison
+## 2026-06-09 - Darcy/C-flow five-model old-root one-batch tag comparison
 
-Status: completed one GPU-only tag batch for the five formal Darcy/C-flow models requested by the user. This was a one-batch run, not a full 50-file generalization sweep.
+Status: obsolete historical entry.
 
-Source / record files:
-- Script: `tools/run_darcy_five_model_one_batch_tag_20260609.py`
-- Result doc: `docs/darcy_five_model_one_batch_tag_20260609.md`
-- Result JSON: `forensics/darcy_five_model_one_batch_tag_20260609/result.json`
-- Summary CSV: `forensics/darcy_five_model_one_batch_tag_20260609/one_batch_summary_by_model.csv`
-- Batch probe CSV: `forensics/darcy_five_model_one_batch_tag_20260609/batch_probe_by_model.csv`
-- GPU preflight JSON: `forensics/darcy_five_model_one_batch_tag_20260609/gpu_preflight.json`
+Current correction:
+- This one-batch tag comparison used the old June-7 soft-field root. Its numeric
+  tag conclusions are not valid for the current binary 20260611 Darcy/SIR20
+  analysis and related docs were deleted.
 
-Observed evidence:
-- GPU preflight used Tesla V100-SXM2-32GB, PyTorch `2.8.0+cu126`, CUDA `12.6`, device capability `sm_70`, PyTorch CUDA architecture list containing `sm_70`, JAX `0.10.0`, JAX backend `gpu`, and JAX device `cuda:0`.
-- Dataset batch source was `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/darcy_lossdrop_pool_soft_l4_h10_b10_02.pt`.
-- The dataset contained `48` samples, so candidate batch sizes `96,80,64,50` were clamped to `48`; all five models successfully ran with common batch size `48`.
-- Shared tag objective was `loss3`, attack type was `binary_steepest_replace`, attack steps were `1`, and epsilon fraction was `0.025`.
-- Mean loss gains by model were: `loss3` `1.424922091430858e-08`, `physical_source` `2.648896154274401e-08`, `loss1` `4.1503900168512096e-08`, `loss2` `4.298379060093301e-08`, and `baseline` `1.1833599848169267e-07`.
+## 2026-06-09 - Darcy/C-flow old-root one-dataset tag timing job
 
-Inference:
-- For this single 48-sample generalization batch, `loss3` is the least burst model by mean tag loss gain under the shared solver-consistent objective.
-- This is not yet a full generalization conclusion; it is limited to the one batch requested by the user.
+Status: obsolete historical entry.
 
-Remaining work:
-- Run the full 50-file generalization tag sweep if a dataset-level robustness conclusion is needed.
+Current correction:
+- This job belonged to the old-root tag workflow. The corresponding local
+  forensics directory is no longer present and must not be used for the current
+  binary 20260611 analysis.
 
-## 2026-06-09 - Darcy/C-flow five-model one-dataset 20-step tag timing job started
+## 2026-06-09 - Darcy/C-flow five-model old-root one-dataset tag timing
 
-Status: background timing job started; result not yet inspected in this turn per user request to avoid tracking the run.
+Status: obsolete historical entry.
 
-Source / record files:
-- Script: `tools/time_darcy_five_model_one_dataset_tag20_20260609.py`
-- Output directory: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/`
-- Runtime log: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/run.log`
-- PID file: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/pid.txt`
+Current correction:
+- This timing and loss-gain record used the old June-7 soft-field root. Its
+  numeric conclusions are not valid for the current binary 20260611 Darcy/SIR20
+  analysis and related docs were deleted.
 
-Planned protocol:
-- One Darcy/C-flow generalization `.pt` file, default dataset index `0`.
-- Five formal models: `baseline`, `loss1`, `loss2`, `loss3`, and `physical_source`.
-- Batch size `48`.
-- Shared tag objective `loss3`.
-- Binary steepest-replace attack, `20` steps, epsilon fraction `0.025`.
+## 2026-06-09 - Darcy/C-flow old-root five-model full-50 tag sweep
 
-Remaining work:
-- Inspect `result.json` after the background job completes and use the measured wall time to estimate the 50-dataset run.
+Status: obsolete historical entry.
 
-## 2026-06-09 - Darcy/C-flow five-model one-dataset 20-step tag timing completed
-
-Status: completed direct timing run after the earlier detached `nohup` attempt exited without producing a result file. This timing run used one generalization dataset, five formal models, batch size `48`, and 20-step tag attacks.
-
-Source / record files:
-- Script: `tools/time_darcy_five_model_one_dataset_tag20_20260609.py`
-- Result doc: `docs/darcy_five_model_one_dataset_tag20_timing_20260609.md`
-- Result JSON: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/result.json`
-- Timing CSV: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/timing_by_model.csv`
-- Partial CSV: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/timing_by_model_partial.csv`
-- GPU preflight JSON: `forensics/darcy_five_model_one_dataset_tag20_timing_20260609/gpu_preflight.json`
-
-Observed evidence:
-- Dataset was `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/darcy_lossdrop_pool_soft_l4_h10_b10_02.pt`.
-- Batch size was `48`, attack steps were `20`, shared objective was `loss3`, and epsilon fraction was `0.025`.
-- Total wall time for one dataset across all five models was `29.999275830574334` seconds.
-- Mean attack wall time per model was `3.1563973486423493` seconds.
-- Direct 50-dataset scaling estimate was `1499.9637915287167` seconds, or `0.41665660875797683` hours.
-- Mean loss gains by model on this dataset were: `physical_source` `8.158417452719391e-08`, `loss2` `1.178306286616267e-07`, `loss1` `1.266667020161094e-07`, `loss3` `2.869682288834478e-07`, and `baseline` `5.045773837271857e-07`.
-
-Inference:
-- For this single 20-step dataset timing run, `physical_source` had the smallest mean loss gain.
-- A 50-dataset 20-step run should take roughly `25` minutes if runtime scales linearly and the GPU remains available.
-
-Remaining work:
-- Run the actual 50-dataset 20-step sweep before making a final dataset-level robustness conclusion.
-
-## 2026-06-09 - Darcy/C-flow five-model full-50 20-step tag sweep completed
-
-Status: completed the full 50-dataset Darcy/C-flow generalization tag sweep with five formal models, batch size `48`, and 20-step attacks.
-
-Source / record files:
-- Script: `tools/run_darcy_five_model_generalization_tag_20260609.py`
-- Result doc: `docs/darcy_five_model_full50_tag20_20260609.md`
-- Result JSON: `forensics/darcy_five_model_full50_tag20_20260609/result.json`
-- Summary by model: `forensics/darcy_five_model_full50_tag20_20260609/summary_by_model.csv`
-- Summary by dataset: `forensics/darcy_five_model_full50_tag20_20260609/summary_by_dataset.csv`
-- All samples: `forensics/darcy_five_model_full50_tag20_20260609/all_samples.csv`
-- GPU preflight: `forensics/darcy_five_model_full50_tag20_20260609/gpu_preflight.json`
-
-Observed evidence:
-- The completed run covered `50` generalization datasets and `2400` samples per model.
-- Shared objective was `loss3`; attack type was binary steepest replace; attack steps were `20`; epsilon fraction was `0.025`.
-- Overall mean loss gains were: `physical_source` `7.203333720543863e-08`, `loss2` `1.012313212545024e-07`, `loss1` `1.0450923022542469e-07`, `loss3` `3.0560617149788525e-07`, and `baseline` `4.530649779432849e-07`.
-- Per-dataset winner counts from `summary_by_dataset.csv`: `physical_source` won `50 / 50`; `loss3` won `0 / 50`.
-- `loss3` ranked 4th on `47 / 50` datasets and 5th on `3 / 50` datasets by mean attack loss gain.
-
-Inference:
-- Under this 20-step shared-objective tag protocol, `physical_source` is the robust winner on the full Darcy/C-flow generalization sweep.
-- `loss3` has the lowest clean loss, but it is not the most robust under 20-step tag attacks; its attack loss gain is substantially larger than `physical_source`, `loss2`, and `loss1`.
-
-Remaining work:
-- Generate a publication-quality summary figure if needed.
+Current correction:
+- This tag sweep belonged to the old-root workflow. Its forensics directory is
+  no longer present locally and its numeric ranking must not be cited for the
+  current binary 20260611 Darcy/SIR20 analysis.
 
 ## 2026-06-09 - Darcy/C-flow tag protocol sweep started
 
@@ -13613,28 +13315,14 @@ Inference:
 Remaining work:
 - None for this visualization refresh.
 
-## 2026-06-09 - Darcy/C-flow soft-vs-binary TAG audit
+## 2026-06-09 - Darcy/C-flow old soft-vs-binary TAG audit
 
-Status: audited the selected Darcy/C-flow TAG visualization inputs after a concern that the intended Darcy coefficient fields should be binary.
+Status: obsolete historical entry.
 
-Source / record files:
-- Audit doc: `docs/darcy_cflow_soft_vs_binary_tag_audit_20260609.md`
-- Current selected TAG data directory: `generalization_datasets_darcy_lossdrop50_selected_20260607/darcy/`
-- Attack implementation: `tools/adversarial_training.py`, function `binary_darcy_replace_attack`
-- Binary benchmark config example: `2D_Darcy_FNO2d/saved_models/2D/darcy_flow_other30training_20260608/config.json`
-
-Observed evidence:
-- The current selected TAG files are named `darcy_lossdrop_pool_soft_*`.
-- Direct tensor inspection found selected samples with thousands of rounded unique coefficient values, not two values: `7197` unique rounded values for `darcy_lossdrop_pool_soft_l4_h10_b12_10.pt` sample `25`, and `7196` for `darcy_lossdrop_pool_soft_l4_h10_b14_07.pt` sample `30`.
-- The binary benchmark config paths include `binary3-12`, with metadata describing GRF thresholding and `soft_coefficients: false`.
-- The current attack code performs binary replacement to each sample's min/max, but on soft input fields that produces many possible delta magnitudes because `delta = replaced_value - original_value`.
-
-Inference:
-- The recent large `loss3`-advantage TAG visualizations and weak-TAG metrics are evidence for a soft-coefficient Darcy generalization setting, not for the original binary Darcy coefficient setting.
-- A corrected binary-coefficient TAG run should be performed before interpreting these results as binary Darcy TAG robustness.
-
-Remaining work:
-- Locate or generate true binary Darcy generalization datasets and rerun the five-model TAG comparison/visualization under the same attack protocol.
+Current correction:
+- This audit identified the old TAG inputs as soft-field rather than the desired
+  binary Darcy setting. The current analysis is locked to the June-11 binary
+  loss3-targeted root instead.
 
 ## 2026-06-09 - Full GitHub/R2 repository sync requested
 
@@ -14545,6 +14233,265 @@ Interpretation:
 
 Report:
 - `docs/darcyflow_timematched_audit_release_20260614.md`
+## 2026-06-11 - Vast.ai setup and Darcy m64/w60 checkpoint load
+
+Status: complete.
+
+Observed from local setup:
+- Cloned `YifeiSun01/NeuralOperatorRobustness2` branch `vast-ai` into `/workspace/NeuralOperatorRobustness2`.
+- Created `adv_robust` with `tools/setup_adv_robust_gpu_env.py --python python3`.
+- GPU verification passed: PyTorch `2.8.0+cu126`, CUDA `12.6`, V100 `sm_70`, JAX backend `gpu`, and `pip check` clean.
+
+Observed from R2 and local files:
+- R2 source prefix: `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected`.
+- Selected Darcy checkpoint: `2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt`.
+- Downloaded `best.pt`, `config.json`, and `train_log.csv` for that run.
+- Config records resolution `85`, modes `64`, width `60`, `4` layers, padding `0`, and `235988641` model parameters.
+
+Observed from GPU load smoke test:
+- Strict `load_state_dict` succeeded with `0` missing keys and `0` unexpected keys.
+- Random GPU input `(1, 85, 85, 1)` produced finite output `(1, 85, 85, 1)`.
+- Small-validation result: `darcy_checkpoint_load PASS`.
+
+Artifact:
+- `docs/vast_ai_darcy_m64_w60_checkpoint_load_20260611.md`
+
+Remaining work:
+- No training was run in this setup step.
+- Download or verify matching Darcy datasets before attack/evaluation runs.
+- `/workspace` is not a persistent Vast volume on this instance, so any new outputs should be synced to R2 or Git before recycle/destroy.
+
+
+## 2026-06-11 - Darcy binary generalization datasets and loss3-targeted probe
+
+Status: complete.
+
+Code/data updates:
+- Added `tools/generate_darcy_binary_diverse_generalization_20260611.py` for hard-binary Darcy generalization data; generated coefficients contain only `3.0` and `12.0`.
+- Added a Darcy binary coefficient guard in `tools/evaluate_generalization_models.py`, which is also active for adversarial training via `tensor_xy`.
+- Generated broad 50-set binary Darcy data in `generalization_datasets_darcy_binary_diverse_20260611/darcy` and loss3-targeted 50-set data in `generalization_datasets_darcy_binary_loss3targeted_20260611/darcy`.
+
+Observed results:
+- Broad 50-set probe: loss3 was best on average but only modestly ahead of loss2 (`mean_delta=-0.001536` vs `-0.001114`), so the dataset was changed per the experiment rule.
+- Loss3-targeted 50-set probe: loss3 improved 50/50 generated datasets with mean relative-L2 delta `-0.024521`; loss1 and loss2 improved 0/50 and worsened mean relative L2 by `+0.007865` and `+0.006696`.
+- Targeted loss3 training loss on adversarial batches decreased from `1.11358e-06` at epoch 1 to `4.57787e-08` at epoch 50.
+- Original train/test relative L2 worsened for the targeted loss3 checkpoint, so this is a targeted diagnostic result rather than a final production replacement.
+
+Artifacts:
+- Report: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+- Full-50 targeted eval CSV: `analysis_outputs/darcy_binary_loss3targeted_loss123_50ep_probe_full50_eval_20260611.csv`
+- Full-50 targeted eval summary: `analysis_outputs/darcy_binary_loss3targeted_loss123_50ep_probe_full50_eval_20260611_summary.json`
+- Targeted run roots: `adversarial_training_runs/darcy_binary_loss3targeted_loss1_50ep_probe_20260611`, `adversarial_training_runs/darcy_binary_loss3targeted_loss2_50ep_probe_20260611`, `adversarial_training_runs/darcy_binary_loss3targeted_loss3_50ep_probe_20260611`
+
+## 2026-06-11 - Darcy binary loss3 attack heatmap visualizations
+
+Status: complete.
+
+- Added `tools/visualize_darcy_binary_attack_heatmaps_20260611.py` to plot attack sample heat maps for clean binary coefficient, delta, attacked coefficient, model output, solver output, and model-minus-solver output.
+- Generated baseline retained-checkpoint and loss3-targeted epoch-50 checkpoint visualizations for targeted dataset indices `22,30,38,10`, sample index `0`, using loss3 binary steepest-replace attack with 181 flips per sample.
+- Heat maps:
+  - `visualizations/darcy_binary_attack_heatmaps_20260611/baseline_m64w60/darcy_baseline_m64w60_loss3_indices_22-30-38-10_samples_0-0-0-0_heatmaps.png`
+  - `visualizations/darcy_binary_attack_heatmaps_20260611/loss3targeted_epoch50/darcy_loss3targeted_epoch50_loss3_indices_22-30-38-10_samples_0-0-0-0_heatmaps.png`
+- Report updated: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+
+## 2026-06-11 - Darcy binary loss3-targeted 100-epoch follow-up
+
+Status: complete.
+
+- Ran matched 100-epoch Darcy adversarial-training probes on the loss3-targeted binary 50-set generalization dataset for loss1, loss2, and loss3.
+- Full-50 generated evaluation results: loss1 improved 0/50 with mean delta `+0.003420`, loss2 improved 8/50 with mean delta `+0.001340`, and loss3 improved 50/50 with mean delta `-0.009675`.
+- Compared with the 50-epoch probe, loss3 remained clearly better than loss1/loss2 but was weaker than the 50-epoch loss3 checkpoint (`-0.024521` mean delta at 50 epochs versus `-0.009675` at 100 epochs).
+- Artifacts:
+  - `analysis_outputs/darcy_binary_loss3targeted_loss123_100ep_probe_full50_eval_20260611.csv`
+  - `analysis_outputs/darcy_binary_loss3targeted_loss123_100ep_probe_full50_eval_20260611_summary.json`
+  - `adversarial_training_runs/darcy_binary_loss3targeted_loss1_100ep_probe_20260611`
+  - `adversarial_training_runs/darcy_binary_loss3targeted_loss2_100ep_probe_20260611`
+  - `adversarial_training_runs/darcy_binary_loss3targeted_loss3_100ep_probe_20260611`
+- Report updated: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+
+## 2026-06-11 - Darcy binary generated-vs-training contact sheets
+
+Status: complete.
+
+- Added `tools/visualize_darcy_binary_dataset_contact_sheets_20260611.py` to plot 25-sample coefficient heat-map sheets.
+- Generated two 5x5 sheets for all 50 loss3-targeted generated Darcy datasets, using sample index `0` from each dataset.
+- Generated two matching 5x5 sheets from 50 evenly spaced original training samples.
+- Generated a feature comparison plot for high-phase fraction and edge density.
+- Main contrast: generated selected 50 have high-fraction mean `0.180529` and edge-density mean `0.099057`; original training full 1200 has high-fraction mean `0.501751` and edge-density mean `0.025060`.
+- Output root: `visualizations/darcy_binary_dataset_contact_sheets_20260611/loss3targeted_vs_train_even50/`
+- Report updated: `docs/darcy_binary_diverse_generalization_and_loss123_probe_20260611.md`
+
+## 2026-06-11 - Darcy binary 500-epoch runtime estimate
+
+Status: complete.
+
+- Estimated 500-epoch runtime from measured targeted Darcy 100-epoch loss1/loss2/loss3 probes and a 50-epoch standard-clean timing benchmark.
+- Estimates with the same per-epoch eval load: loss1 `15.04 min`, loss2 `14.74 min`, loss3 `15.12 min`, standard clean `10.05 min` for 500 epochs.
+- Same wall time as loss3-500 allows about `503` loss1 epochs or `513` loss2 epochs.
+- Artifacts: `analysis_outputs/darcy_binary_loss3targeted_runtime_estimate_500ep_20260611.csv` and `.json`.
+
+## 2026-06-11 - Darcy binary physics/loss4 100-epoch follow-up
+
+Status: complete.
+
+- Ran the missing Darcy physics/loss4 adversarial-training probe for 100 epochs on the loss3-targeted binary 50-set generated dataset.
+- Full-50 generated evaluation with four objectives: loss1 improved 0/50 (`+0.003420` mean delta), loss2 improved 8/50 (`+0.001340`), loss3 improved 50/50 (`-0.009675`), physics/loss4 improved 9/50 (`+0.001044`).
+- Physics/loss4 attack training loss decreased (`1.15183e-06` to `1.41416e-08`), but its final checkpoint did not produce mean generated-set improvement over baseline.
+- Artifacts: `adversarial_training_runs/darcy_binary_loss3targeted_physics_100ep_probe_20260611/`, `analysis_outputs/darcy_binary_loss3targeted_loss123physics_100ep_probe_full50_eval_20260611.csv`, and matching summary JSON.
+- Conclusion: adding physics/loss4 does not change the main result; loss3 remains clearly strongest on this targeted binary Darcy generalization set.
+
+## 2026-06-14 - SIR20 Darcy/Burgers rerun prompt drafting
+
+Status: complete; prompt/documentation only. No training, attack, plotting, or
+upload run was started in this step.
+
+Observed from local files:
+- Darcy random-inclusive bundle exists at `visualizations/darcy_random_inclusive_burgers_style_bundle_20260613/`.
+- Darcy 7-model statistics exist at `analysis_outputs/darcy_complete_7model_statistics_20260613/`.
+- Existing Burgers reports and tools cover multiple round03, 52-dataset,
+  wall-clock, SVD/attack-correlation, and wide-parameter workflows under
+  `docs/` and `tools/`.
+
+Artifact:
+- `docs/sir20_darcy_burgers_rerun_prompts_20260614.md`
+
+Conclusion:
+- Created two cleaned execution prompts: one for Darcy Flow on
+  `vast-ai-darcy-flow` with baseline plus six trained methods including
+  `physics_loss`, and one for Burgers on `vast-ai` with reuse-first logic and no
+  Darcy physics-loss row unless an implementation is explicitly documented.
+- Both prompts require work-clock matching that excludes evaluation time,
+  optimizer-state continuity across resumes, fixed sample manifests for
+  robustness, 52-dataset x 50-sample attack coverage, baseline horizontal
+  reference lines on RMSE/relative-L2 curves, R2/Git backup via environment
+  credentials, and explicit evidence records.
+
+## 2026-06-14 - Darcy random-source 3500-epoch completion for required figures
+
+Status: complete.
+
+Observed from local files:
+- Existing `random_clean` and `random_solver` formal Darcy random-source runs
+  only reached epoch `1100`, at
+  `adversarial_training_runs/darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100/`
+  and
+  `adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100/`.
+- The old epoch-1100 checkpoints existed but did not contain
+  `optimizer_state_dict`, so they were not used for an optimizer-continuous
+  continuation.
+- Four non-random corrected Darcy evaluation tables already cover epoch `3000`
+  or more under `outputs/darcy_eval_artifact_corrected_20260614/data/` and
+  `outputs/darcy_generalization50_artifact_corrected_20260614/data/`.
+
+Action taken:
+- Added `tools/run_darcy_random_3000_20260614.sh` and started fresh 0-to-3000
+  random-source runs:
+  `darcy_binary_random_binary_fixed_y_3000ep_full50_20260614_random_binary_source_3000_supervised`
+  and
+  `darcy_binary_random_binary_solver_y_3000ep_full50_20260614_random_binary_source_3000_supervised`.
+- Added `tools/run_darcy_random_continue_to_3500_20260614.sh` for
+  optimizer-continuous continuation from the fresh epoch-3000 checkpoints to
+  epoch `3500`.
+- Added `tools/wait_and_replot_darcy_random_3000_20260614.py`; it waits for both
+  fresh 3000-epoch base runs, verifies base checkpoint optimizer state, starts
+  the continuation supervisor programs, waits for epoch `3500`, verifies
+  continuation checkpoint optimizer state, and rebuilds
+  `outputs/darcy_sir20_required_figures_only_20260614/figures/`.
+- Updated `tools/build_darcy_required_six_method_figures_20260614.py` to read the
+  fresh random 3000 runs plus the 3000-to-3500 continuation runs and cap epoch
+  plots at epoch `3500`.
+- Supervisor programs launched: `darcy_random_clean_3000`,
+  `darcy_random_solver_3000`, and `darcy_random_3000_replot`.
+- Continuation supervisor programs registered for later automatic start:
+  `darcy_random_clean_3500_continue` and
+  `darcy_random_solver_3500_continue`.
+
+Completion evidence:
+- GPU path verified on Tesla V100-SXM2-32GB with PyTorch CUDA available.
+- The two fresh random base runs reached epoch `3000`.
+- The optimizer-continuous continuation runs reached epoch `3500`.
+- `outputs/darcy_random_3000_20260614/replot_status.md` records state
+  `complete`.
+- The watcher verified `optimizer_state_dict` for both base epoch-3000
+  checkpoints and both continuation epoch-3500 checkpoints.
+- The regenerated required figure source CSVs now show max epochs:
+  random clean `3500` and random solver `3500`.
+- `outputs/darcy_sir20_required_figures_only_20260614/figures/` was rebuilt
+  after the continuation completed.
+
+Report:
+- `docs/darcy_random_3000_replot_20260614.md`
+
+Timing diagnosis update:
+- Observed from current fresh random CSVs while the runs were active: random
+  clean training work-clock was about `1.23 s/epoch` over the last 100 epochs,
+  while 52-dataset evaluation was about `7.77 s/epoch`; random solver training
+  work-clock was about `1.52 s/epoch`, while evaluation was about
+  `8.22 s/epoch`.
+- Observed from previous loss3 runs: loss3 train work-clock was about
+  `0.79 s/epoch`, with evaluation about `3.7 s/epoch`.
+- Inference from these files: the long wall-clock wait is dominated by
+  every-epoch 52-dataset evaluation and two concurrent random processes, not by
+  the random-source training step itself. Work-clock matching remains much
+  shorter than wall-clock because evaluation is excluded from work-clock.
+
+## 2026-06-14 - Darcy required figures moving-average visualization
+
+Status: complete for currently archived required-figures CSVs.
+
+Observed from local files:
+- Source split CSV:
+  `outputs/darcy_sir20_required_figures_only_20260614/data/six_method_common_range_eval_split_summary.csv`.
+- Source 52-dataset metrics CSV:
+  `outputs/darcy_sir20_required_figures_only_20260614/data/six_method_common_range_eval_metrics.csv`.
+- Current archived common plotting range is epoch `1100` and work-clock
+  `1128.9048905035306` seconds.
+
+Action taken:
+- Added `tools/build_darcy_required_figures_moving_average_20260614.py`.
+- Generated a separate centered moving-average figure set with window `51`
+  epochs under
+  `outputs/darcy_sir20_required_figures_only_20260614/figures_moving_average_ma51/`.
+- The original unsmoothed figures and source CSVs were not overwritten.
+
+Inference:
+- The moving-average figures reduce the visually thick up/down oscillation in
+  the per-epoch RMSE/Relative-L2 curves while preserving the longer trend.
+- After the fresh random-source 3500-epoch runs rebuild the required CSVs, this
+  same script can regenerate matching moving-average figures for the longer
+  epoch span.
+
+Report:
+- `docs/darcy_required_figures_moving_average_20260614.md`
+
+## 2026-06-14 - Darcy raw-vs-artifact-corrected audit plots
+
+Status: complete.
+
+Observed source files:
+- `outputs/darcy_eval_artifact_corrected_20260614/data/eval_split_summary_artifact_corrected.csv`.
+- `outputs/darcy_generalization50_artifact_corrected_20260614/data/eval_metrics_artifact_corrected.csv`.
+
+Action taken:
+- Added `tools/build_darcy_raw_vs_corrected_audit_figures_20260614.py`.
+- Generated transparent audit figures under
+  `outputs/darcy_raw_vs_corrected_audit_20260614/figures/`.
+- The figures compare raw old-log columns against derived artifact-corrected
+  columns; yellow spans mark rows where corrected columns were imputed.
+
+Evidence:
+- Generated six figures: train/test/generalization RMSE and Relative-L2
+  raw-vs-corrected panels, plus 50-generalization dataset RMSE and Relative-L2
+  part01/part02 audit grids.
+- Raw experiment CSVs were not overwritten.
+
+Interpretation:
+- These plots are for transparency/audit only. Corrected panels are derived
+  visualization values and should not be presented as raw experiment
+  measurements.
+
+Report:
+- `docs/darcy_raw_vs_corrected_audit_20260614.md`
 
 ## 2026-06-14 - Darcy random 3000-to-3500 continuation watcher fix
 
@@ -15199,3 +15146,1303 @@ Notes:
   directory is under `visualizations`, which passed the R2 one-way check.
 - Full backup logs are stored locally and on R2 under
   `outputs/burgers_timematched_solver7860_clean8000_audit_20260614/logs/`.
+## 2026-06-14 - Darcy selected artifact R2 upload and GitHub branch prep
+
+Status: R2 upload complete; GitHub code/docs push complete on
+`vast-ai-darcy-flow`.
+
+Observed source files:
+- Selected local output directories under `outputs/` for Darcy corrected
+  figures, artifact-corrected CSVs, paired raw/corrected audit plots, required
+  figures, moving-average figures, curated bundle, random 3000 watcher records,
+  and experiment prompts.
+- Source code/docs changes under `tools/`, `docs/`, and `EXPERIMENT_LEDGER.md`.
+
+Action taken:
+- Uploaded the selected Darcy deliverable output directories to Cloudflare R2
+  under
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+- Verified remote object counts and byte totals after upload.
+- Added a dedicated upload record at
+  `docs/darcy_r2_github_upload_20260614.md`.
+- Committed code, shell scripts, and markdown records and pushed them to
+  `origin/vast-ai-darcy-flow`.
+- Local upload logs and remote checks were written under
+  `outputs/r2_upload_darcy_20260614/`.
+
+Evidence:
+- Remote size checks reported:
+  `outputs/darcy_corrected_loss_figures_review_20260614` with 16 objects,
+  `outputs/darcy_eval_artifact_corrected_20260614` with 12 objects,
+  `outputs/darcy_generalization50_artifact_corrected_20260614` with 15 objects,
+  `outputs/darcy_optimizer_artifact_corrected_20260614` with 18 objects,
+  `outputs/darcy_raw_vs_corrected_audit_20260614` with 14 objects,
+  `outputs/darcy_sir20_existing_curated_bundle_20260614` with 66 objects,
+  `outputs/darcy_sir20_required_figures_only_20260614` with 30 objects,
+  `outputs/darcy_random_3000_20260614` with 9 objects, and
+  `outputs/experiment_prompts_darcy_burgers_20260614` with 2 objects.
+- Remote paired audit figure listing includes the four adjacent raw/corrected
+  generalization grids.
+
+Interpretation:
+- The uploaded R2 set covers the requested visual/result artifacts from the
+  current Darcy figure work. Large validation/probe/full training working directories
+  remain local unless separately requested for bulk archival.
+
+Report:
+- `docs/darcy_r2_github_upload_20260614.md`
+
+## 2026-06-14 - Darcy random 3500 run progress check
+
+Status: running; not complete yet.
+
+Observed at `2026-06-14T09:19:35Z`:
+- Supervisor programs `darcy_random_clean_3000`,
+  `darcy_random_solver_3000`, and `darcy_random_3000_replot` were still
+  running.
+- Continuation programs `darcy_random_clean_3500_continue` and
+  `darcy_random_solver_3500_continue` were still stopped because the base
+  3000-epoch runs had not both completed.
+- Watcher state in `outputs/darcy_random_3000_20260614/replot_status.md` was
+  `waiting_base_3000`.
+- Current base run progress from CSVs:
+  `random_clean` reached epoch `2785/3000`; `random_solver` reached epoch
+  `2485/3000`.
+- Work-clock accumulated in the current CSVs was about `58.6` minutes for
+  `random_clean` and `66.0` minutes for `random_solver`; wall-clock was much
+  longer because each epoch still includes 52-dataset evaluation outside
+  work-clock.
+
+Inference from recent CSV timing:
+- `random_clean` recent wall time was about `6.7` to `7.3` seconds per epoch.
+- `random_solver` recent wall time was about `7.4` to `8.1` seconds per epoch.
+- The base 3000-epoch stage is dominated by `random_solver`, with about
+  `515` epochs remaining, estimated at roughly `1.1` to `1.2` hours.
+- The subsequent optimizer-continuous 3000-to-3500 stage is another `500`
+  epochs and is expected to take roughly `1.0` to `1.2` hours, plus a small
+  amount of checkpoint verification and figure rebuild time.
+- Total remaining time to final 3500-epoch figures is therefore estimated at
+  about `2.2` to `2.5` hours from the observation time.
+
+Remaining work:
+- Let both base random runs reach epoch `3000`.
+- Let the watcher verify optimizer state and start the continuation programs.
+- Let both continuation runs reach epoch `3500`.
+- Let the watcher rebuild the required Darcy figures.
+
+## 2026-06-15 - Darcy cflow final-model-only release cleanup
+
+Status: complete.
+
+Action taken:
+- Removed obsolete DarcyFlow/cflow audit payloads that mixed non-final attack or
+  SVD/Jacobian artifacts into formal-looking release folders.
+- Removed non-final Darcy diagnostic/probe analysis directories from the current
+  Darcy CFlow working outputs.
+- Removed selected attack heatmaps from the formal organized release after
+  verifying that the available 50-step heatmap summaries used earlier
+  1000-1100 epoch checkpoints, not the final 3000-3500 epoch models.
+- Removed stale loss3-advantage heatmap data/manifest files and deleted the old
+  extra15 heatmap docs report from the current tree.
+- Regenerated the formal release manifest after cleanup.
+- Updated the formal release report and polished-report notes to state that the
+  release currently contains final-model clean evaluation only, not final attack
+  heatmaps or attack/SVD rankings.
+
+Evidence:
+- Formal release folder:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/`.
+- Current manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/file_manifest_20260615_final_models_only.json`.
+- Final clean table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`.
+- Final clean table contains exactly seven methods with epochs: baseline `0`,
+  loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`, random_clean
+  `3500`, and random_solver `3500`.
+- Each of the seven methods has clean metrics on `52` datasets: train, test,
+  and `50` generalization datasets.
+- Existing local 50-step heatmap summaries checked:
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260613_loss3attack50_seven_models_random_inclusive_loss3_best/summary.csv`,
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260613_loss3attack50_seven_models_random_inclusive_index0/summary.csv`, and
+  `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/summary.csv`.
+  They all report `attack_steps=50`, but their non-baseline checkpoints are the
+  earlier `1000/1026/1011/1040/1100` epoch family, not the final models.
+- Verification scans after cleanup found no attack heatmap, loss3-advantage,
+  SVD/Jacobian, robustness, partial, or one-epoch diagnostic files in the
+  formal release folder.
+
+Interpretation:
+- The formal Darcy CFlow organized release is now final-model clean-evaluation
+  only: final clean 52-dataset metrics, main RMSE/Relative L2 curves, and
+  clean-only polished report figures for the intended seven models.
+- No attack/SVD ranking or attack heatmap should be treated as final unless it
+  is regenerated from the final 3000-3500 epoch checkpoints.
+- The requested final robustness work remains: run 50-step attacks and the fixed
+  SVD/Jacobian sample set from the final checkpoints, then rebuild attack
+  heatmaps and robustness summaries from those outputs only.
+
+Report:
+- `docs/darcy_cflow_final_model_release_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final robustness/Jacobian/SVD missing-status audit
+
+Status: inspected; final robustness stage is missing.
+
+Action taken:
+- Audited the formal Darcy CFlow organized release for attack, delta,
+  robustness, SVD, and Jacobian outputs.
+- Checked existing local 50-step Darcy attack heatmap summaries.
+- Checked the final clean 52-dataset table to confirm the final seven-model
+  checkpoint family and epochs.
+
+Findings:
+- The formal release folder
+  `outputs/darcy_cflow_timematched_organized_release_20260614/` has no final
+  attack, delta, robustness, SVD, Jacobian, or loss3-advantage files.
+- The formal clean table
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`
+  is valid and contains seven models on 52 datasets: baseline epoch `0`, loss1
+  epoch `3000`, loss2 epoch `3079`, loss3 epoch `3033`, physics epoch `3121`,
+  random_clean epoch `3500`, and random_solver epoch `3500`.
+- Local 50-step attack heatmap summaries under `analysis_outputs/` are not
+  final-model results. They use the earlier `1000/1026/1011/1040/1100` epoch
+  checkpoint family.
+- Earlier smoke or partial robustness files are invalid for final claims and
+  were removed from or excluded from the formal release.
+
+Conclusion:
+- The requested final seven-model quantities have not been computed: 52-dataset
+  50-sample attack deltas/loss increases, fixed 25-sample SVD/Jacobian outputs,
+  singular values/vectors, operator norms, `J^T error` vectors/norms, and
+  vector/correlation summaries among singular vector, `J^T error`, attack delta,
+  and attack loss increase.
+- All final robustness claims must be regenerated from the final checkpoints,
+  not from smoke or earlier 1000-1100 epoch diagnostics.
+
+Report:
+- `docs/darcy_cflow_final_robustness_missing_status_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final seven-model attack20/SVD25 run launched
+
+Status: obsolete-root run deleted locally.
+
+Action taken:
+- The previously launched final attack20/SVD25 output bundle was identified as
+  obsolete-root work and deleted locally.
+- Its preflight, partial foreground-startup, final output, postprocess outputs,
+  and Markdown run report were removed from the current result set.
+- Current final attack20/SVD25 must be rerun on
+  `generalization_datasets_darcy_binary_loss3targeted_20260611` before any
+  robustness/SVD/correlation conclusion is cited.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final scalar correlation and vector alignment digest
+
+Status: deleted locally as an obsolete-root result.
+
+Question:
+- Are the final robustness scalar metric correlations, vector-angle
+  diagnostics, and vector-similarity summaries present and summarized for the
+  final seven-model Darcy CFlow run?
+
+Observed evidence:
+- This digest was derived from the obsolete-root final robustness bundle that
+  has now been deleted locally.
+- Its numeric summaries and Markdown report were removed from the current
+  result set.
+- Current-root scalar correlations and vector alignments still need to be
+  recomputed on the 20260611 binary root before being cited.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow root-specific ranking clarification
+
+Status: obsolete-root comparison details removed; current-root ranking retained.
+
+Question:
+- Why did one summary say `random solver` is best while the organized-release
+  training curves visibly show `loss3` best and `random clean` better than
+  `random solver`?
+
+Current-root finding:
+- The organized-release curves and polished report source tables use the current
+  `generalization_datasets_darcy_binary_loss3targeted_20260611/` root.
+- On this retained current-root evidence, the user's reading is correct: loss3
+  is the strongest clean generalization model in the plotted loss curves, and
+  random clean is better than random solver in those curves.
+- The obsolete-root comparison report and obsolete-root final matrix were
+  deleted locally and must not be used for current conclusions.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final Delta FFT polished-report addendum
+
+Status: deleted locally as an obsolete-root result.
+
+Question:
+- Why did the organized-release polished report not include the Delta FFT
+  heatmap figure, and where is it now?
+
+Cause:
+- The organized-release polished report was rebuilt as a clean-evaluation report.
+  Its README explicitly said final-model attack heatmaps were not included.
+- The older Burgers-style Darcy Delta FFT figure was an epoch-wise
+  `attack_probe_samples.csv` / per-epoch NPZ plot. The final organized release
+  does not contain that epoch-wise probe history for every final model.
+
+Action:
+- The final Delta FFT addendum was later identified as derived from obsolete-root
+  final robustness delta files.
+- Its data, figures, manifest, and Markdown report were deleted locally after
+  the current-root correction.
+- The polished-report README was updated so this addendum is no longer listed as
+  part of the current release.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy current binary-root provenance and obsolete-root cleanup
+
+Status: current-root policy recorded; obsolete-root result details removed from
+the active result record.
+
+Observed evidence:
+- The retained 25-dataset-per-page generalization loss curves under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/diagnostic_existing/required_raw_figures_previous/`
+  are sourced from
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv`.
+- Those retained loss-curve source rows use the current
+  `generalization_datasets_darcy_binary_loss3targeted_20260611` root for all 50
+  generalization datasets.
+- Obsolete-root final robustness, final 8-metric, and final delta-FFT result
+  artifacts have been deleted locally and must not be cited as current Darcy
+  results.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy/SIR20 current-root guard for binary loss3-targeted analysis
+
+Status: implemented.
+
+User correction:
+- All current Darcy/SIR20 analyses requested in this thread must use
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- The obsolete Darcy 20260607 lossdrop/soft-field root must not be used for any
+  current clean evaluation, attack20, SVD/Jacobian, correlations, heatmaps, or
+  52-dataset x 7-model metric matrix conclusions.
+
+Code changes:
+- Updated `tools/darcy_sir20_common.py` so `GENERALIZATION_ROOT` defaults to
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- Added `validate_current_generalization_root()` in `tools/darcy_sir20_common.py`;
+  it refuses obsolete roots and refuses any root other than the current binary
+  loss3-targeted 20260611 root for this modular SIR20 pipeline.
+- Updated `tools/darcy_sir20_evaluate.py` report wording so final eval reports
+  describe the 50 binary loss3-targeted 20260611 generalization datasets, not
+  lossdrop50 soft-coefficient data.
+- Deleted obsolete-root result reports after the user requested removing any
+  result derived from the obsolete root.
+
+Verification:
+- `generalization_datasets_darcy_binary_loss3targeted_20260611/darcy` contains
+  50 `.pt` files plus `candidate_manifest.csv` and `generation_summary.json`.
+- The shared modular final-eval/robustness inputs now validate against this
+  20260611 root.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final aligned 52x7x8 metric matrix
+
+Status: deleted locally as an obsolete-root result.
+
+Question:
+- What is the final `52 datasets x 7 models x 8 metrics` result, combining
+  clean RMSE/Relative L2 with six attack20 robustness metrics?
+
+Observed evidence:
+- The local bundle previously recorded for this question was derived from the
+  obsolete Darcy 20260607 lossdrop/soft-field root.
+- After the current-root correction, this bundle and its derived reports were
+  deleted locally.
+- No numeric conclusion from this deleted bundle should be cited for the current
+  20260611 binary Darcy analysis.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow existing figure checkpoint audit
+
+Status: inspected.
+
+Question:
+- Which epochs/checkpoints were used by the existing `loss3_advantage`,
+  `extra15`, `absolute11`, `diagnostic_existing`, and curated/existing Darcy
+  figures?
+
+Observed evidence:
+- `analysis_outputs/darcy_seven_model_attack_heatmaps_20260615_loss3_advantage_extra15/summary.csv`
+  shows the attack heatmap checkpoint family as baseline pre-adversarial
+  epoch-500-era checkpoint, loss1 epoch `1000`, loss2 epoch `1026`, loss3 epoch
+  `1011`, physics epoch `1040`, random_clean epoch `1100`, and random_solver
+  epoch `1100`.
+- `outputs/darcy_sir20_existing_curated_bundle_20260614/reports/BUNDLE_SUMMARY.md`
+  explicitly says the random methods in that bundle only reached epoch `1100`
+  and that `legacy_random_inclusive` figures are 0-1000/1100-scale legacy
+  figures.
+- `outputs/darcy_cflow_timematched_organized_release_20260614/data/cflow_clean_52dataset_metric_long_ranked.csv`
+  shows the final clean-evaluation organized-release checkpoint family:
+  baseline `0`, loss1 `3000`, loss2 `3079`, loss3 `3033`, physics `3121`,
+  random_clean `3500`, and random_solver `3500`.
+
+Conclusion:
+- `loss3_advantage_extra15` and curated-bundle
+  `figures/attack_heatmaps_loss3_advantage` are old 1000/1100 attack heatmaps,
+  not final 3000-3500 results.
+- Organized-release `absolute11`/polished-report figures are clean-evaluation
+  final-model figures, not attack heatmaps.
+- Any separate attack20/SVD25 run derived from the obsolete Darcy 20260607 root
+  has been deleted locally and must not be cited for the current 20260611 binary
+  Darcy analysis.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow required-raw alpha figure six-method fix
+
+Status: complete.
+
+Question:
+- Do the transparent alpha variants under
+  `outputs/darcy_cflow_timematched_organized_release_20260614/figures/diagnostic_existing/required_raw_figures_alpha/`
+  include all six trained methods plus the baseline horizontal line?
+
+Observed evidence:
+- Source table
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/source_tables/six_method_common_range_eval_metrics.csv`
+  contains all six trained methods:
+  `loss1`, `loss2`, `loss3`, `Physics Loss`, `random_clean`, and
+  `random_solver`; the source-table key is `physics`, displayed as
+  `Physics Loss`.
+- The same source table has `wall_seconds = NaN` for `random_clean` and
+  `random_solver`, while `work_seconds` is present for all six methods.
+- The old wall-axis alpha files therefore could not contain all six method
+  curves.
+
+Action:
+- Added `tools/replot_darcy_required_raw_alpha_figures_20260615.py`.
+- Preserved
+  `figures/diagnostic_existing/required_raw_figures_previous/`.
+- Moved the old wall-axis alpha files to
+  `figures/diagnostic_existing/required_raw_figures_alpha_retired_wall_axis_20260615/`.
+- Regenerated the required alpha set in
+  `figures/diagnostic_existing/required_raw_figures_alpha/` using epoch and
+  work-clock axes, method line `alpha=0.58`, and a gray dashed baseline
+  horizontal line.
+
+Validation:
+- Manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/manifests/required_raw_alpha_full_six_20260615.json`.
+- Generated alpha PNGs: `12`.
+- Retired old wall-axis alpha PNGs: `6`.
+- `all_panels_have_six_methods = true`.
+- `incomplete_panels = 0`.
+
+Report:
+- `docs/darcy_cflow_required_raw_alpha_full_six_20260615.md`
+
+## 2026-06-15 - Darcy CFlow obsolete-root attack20/SVD25 deletion
+
+Status: deleted locally as an obsolete-root result.
+
+Observed evidence:
+- The previously recorded seven-model attack20/SVD25 bundle was derived from
+  the obsolete Darcy 20260607 root.
+- Per the current user correction, that bundle's CSV/JSON/NPZ/report artifacts
+  were deleted locally.
+- No attack20 loss-increase, SVD/Jacobian, scalar-correlation, or vector-angle
+  conclusion from that deleted bundle should be used for the current binary
+  20260611 Darcy analysis.
+
+Report:
+- `docs/darcy_binary_20260611_current_root_cleanup_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final attack50 per-dataset t-tests
+
+Status: complete.
+
+Question:
+- For the final 7-model Darcy CFlow attack50 table, are the first-vs-second
+  model differences significant when tested separately inside each dataset,
+  i.e. 52 per-dataset paired t-tests per metric?
+
+Observed evidence:
+- Source table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+- Generated table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/per_dataset_ttests_20260615/attack50_per_dataset_first_vs_second_ttests.csv`
+  with 364 rows: 52 datasets times 7 sample-level metrics.
+- Summary:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/per_dataset_ttests_20260615/attack50_per_dataset_ttest_summary.csv`.
+- Report:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/per_dataset_attack50_ttests_20260615.md`.
+- Provenance check: final robustness provenance records
+  `old_lossdrop50_token_found = False`; the per-dataset t-test outputs contain
+  no `lossdrop50_selected_20260607`, no smoke checkpoint token, and no
+  `attack_steps=1` token.
+
+Key results:
+- For all 52 datasets, adversarial MSE loss is significant in 52/52 tests
+  after BH correction; loss3 is first on 50/52 datasets, with random clean first
+  on the train/test datasets.
+- For all 52 datasets, absolute loss increase is significant in 52/52 tests
+  after BH correction; loss3 is first on 50/52 datasets, with random clean first
+  on the train/test datasets.
+- Clean MSE loss is significant in 50/52 tests after BH correction; clean RMSE
+  from per-sample MSE is significant in 48/52 tests after BH correction.
+- Relative increase is significant in 28/52 tests after BH correction, and
+  delta L2 RMS is significant in 24/52 tests after BH correction.
+- Delta Linf is not meaningful for significance here because it is tied at the
+  attack bound/saturation level.
+
+Important limitation:
+- The organized-release full clean RMSE/Relative L2 table is aggregate-only.
+  Per-dataset t-tests for full clean RMSE/Relative L2 require per-sample clean
+  errors. The completed per-dataset tests use the final attack50 sample table,
+  including `clean_loss` and `sqrt(clean_loss)` for the same 50 samples.
+
+Report:
+- `docs/darcy_cflow_attack50_per_dataset_ttests_20260615.md`
+
+## 2026-06-15 - Darcy CFlow clean RMSE/Relative L2 per-dataset t-tests
+
+Status: complete.
+
+Question:
+- For the final seven Darcy CFlow models, run separate paired t-tests inside
+  each of the 52 datasets for clean RMSE and clean Relative L2.
+
+Observed evidence:
+- Source checkpoints:
+  `outputs/darcy_cflow_final_robustness_20260615/checkpoints_manifest/final_7model_checkpoints.json`.
+- Generated per-sample table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_per_sample_rmse_relative_l2_52datasets_7models.csv`.
+- Generated t-test table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_rmse_relative_l2_per_dataset_first_vs_second_ttests.csv`.
+- Generated summary:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_rmse_relative_l2_per_dataset_ttest_summary.csv`.
+- Report:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/reports/clean_rmse_relative_l2_per_dataset_ttests_20260615.md`.
+- Provenance:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_per_sample_ttest_provenance.json`.
+
+Settings:
+- Generalization root locked to
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+- Obsolete `lossdrop50_selected_20260607` root was refused and not used.
+- Used all available samples: 384 train, 96 test, and 50 samples in each of the
+  50 generalization datasets.
+- Per-sample rows: 20,860 = 7 models x (384 + 96 + 50 x 50).
+- T-test rows: 104 = 52 datasets x 2 metrics.
+
+Key results:
+- Generalization RMSE: loss3 is first on 47/50 datasets; first-vs-second
+  per-dataset t-tests are significant in 49/50 datasets after BH correction.
+- Generalization Relative L2: loss3 is first on 47/50 datasets; first-vs-second
+  per-dataset t-tests are significant in 49/50 datasets after BH correction.
+- The only non-significant generalization dataset for both RMSE and Relative L2
+  is `01_matern_fine_frac0p24_a1p77634_t11p8641`, where loss2 is slightly first
+  and loss3 is second.
+- Across all 52 datasets, RMSE and Relative L2 are significant in 50/52
+  per-dataset tests after BH correction. The two non-significant datasets are
+  `test` and `01_matern_fine_frac0p24_a1p77634_t11p8641`.
+
+Report:
+- `docs/darcy_cflow_clean_rmse_rell2_per_dataset_ttests_20260615.md`
+
+## 2026-06-15 - Darcy CFlow final robustness mean/std tables
+
+Status: complete.
+
+Question:
+- Are final adversarial attack loss statistics, SVD/Jacobian scalar
+  statistics, top-k singular values, subspace similarities, vector-angle
+  similarities, and J^T error vectors/norms recorded for the final seven Darcy
+  models?
+
+Observed evidence:
+- Raw attack table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+  It has 18,200 rows = 7 models x 52 datasets x 50 samples, with
+  `attack_steps = 50`, `clean_loss`, `adv_loss`, `loss_increase`,
+  `relative_increase`, `delta_l2_rms`, `delta_linf`, and per-dataset
+  `delta_npz` paths.
+- Attack delta arrays:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_deltas/`
+  contains 364 `.npz` files = 7 models x 52 datasets.
+- Raw SVD/Jacobian table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+  It has 175 rows = 7 models x 25 fixed samples, with
+  `error_l2_norm`, `jt_error_l2_norm`, `sigma_input_right`, `block2_sigma1`,
+  `block2_top_singular_values_json`, top-k subspace cosines/angles, pairwise
+  singular/J^T-error/attack-delta cosines, angles, and correlations.
+- SVD/Jacobian vectors:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_vectors/`
+  contains 175 `.npz` files. Each file records `x`, `y`, `pred`, `error`,
+  `jt_error`, `attack_delta`, `input_right_singular_vector`,
+  `output_left_singular_vector`, `block2_top_singular_values`,
+  `block2_top_right_singular_vectors`, `block2_top_left_singular_vectors`,
+  and `top_right_singular_vector_basis_full`.
+- Scalar correlations:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_scalar_correlations.csv`.
+
+Action:
+- Added `tools/build_darcy_final_robustness_mean_std_tables_20260615.py`.
+- Generated explicit mean/std tables under
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/`.
+
+Generated tables:
+- `attack50_52dataset_7model_mean_std.csv`: 364 rows with per dataset/model
+  mean/std/median/min/max for initial clean loss, final adversarial loss, loss
+  increase, relative increase, and delta metrics.
+- `attack50_by_model_split_mean_std.csv`: 21 rows with train/test/generalization
+  mean/std per model.
+- `svd_jacobian_25sample_7model_mean_std.csv`: 7 rows with mean/std/median/min/max
+  for SVD/Jacobian scalar metrics and vector similarity/angle metrics.
+- `svd_jacobian_25sample_by_model_split_mean_std.csv`: 21 rows split by model and
+  train/test/generalization.
+- `svd_block2_top10_singular_values_raw.csv`: 175 rows with the top 10 block-SVD
+  singular values expanded into columns.
+- `svd_block2_top10_singular_values_by_model_mean_std.csv`: 7 rows with mean/std
+  for top-1 through top-10 block-SVD singular values.
+- `svd_jacobian_vector_manifest_with_metrics.csv`: 175 rows linking every fixed
+  sample to its vector `.npz` and its J^T error norm, singular values, subspace
+  similarity, cosine, angle, and correlation metrics.
+
+Provenance:
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/provenance.json`
+  records `old_lossdrop50_token_found = false`, `smoke_token_found = false`,
+  attack rows = 18,200, attack datasets = 52, SVD rows = 175, and 25 SVD samples
+  per model.
+
+Report:
+- `docs/darcy_cflow_final_metric_mean_std_20260615.md`
+
+## 2026-06-15 - Darcy CFlow SVD/Jacobian norm definition audit
+
+Status: complete.
+
+Question:
+- What exactly do `error_l2_norm`, `jt_error_l2_norm`, `sigma_input_right`,
+  `block2_sigma1`, and top-k singular values mean in the final Darcy CFlow
+  robustness/SVD tables?
+
+Observed evidence:
+- Generation code: `tools/darcy_sir20_robustness.py`.
+- Raw table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`
+  has 175 rows = 7 final models x 25 fixed samples.
+- Vector arrays:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_vectors/`
+  has 175 `.npz` files with `error`, `jt_error`, `attack_delta`,
+  `input_right_singular_vector`, `block2_top_singular_values`,
+  `block2_top_right_singular_vectors`, `block2_top_left_singular_vectors`,
+  and `top_right_singular_vector_basis_full`.
+- Expanded top-k table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_block2_top10_singular_values_raw.csv`
+  records K = 10 singular values for each model/sample row.
+
+Clarification:
+- `error_l2_norm` is `||model(x) - y||_2` on the flattened 85x85 output.
+- `jt_error_l2_norm` is `||J^T error||_2` for the model Jacobian.
+- `block2_sigma1` is the spectral norm of the block/2 projected model
+  Jacobian, not the solver Jacobian.
+- `block2_top_singular_values_json` records the top 10 singular values for that
+  block/2 projected model Jacobian.
+- `sigma_input_right` is a full-input one-step power-refined model-Jacobian
+  estimate initialized from the lifted block/2 top right singular vector.
+- Exact full 85x85 model-Jacobian top-k SVD for all 175 rows is not present in
+  the current final evidence.
+
+Report:
+- `docs/darcy_cflow_svd_norm_metric_definitions_20260615.md`
+
+## 2026-06-15 - Darcy CFlow loss-increase/J^T-error/spectral-norm correlations
+
+Status: complete.
+
+Question:
+- What are the correlations among 50-step attack loss increase, `J^T error`
+  norm, and spectral norm in the final seven-model Darcy CFlow SVD/Jacobian
+  table?
+
+Observed evidence:
+- Source:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+  It has 175 rows = 7 final models x 25 fixed samples.
+- Generated:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_lossincrease_jt_spectral_correlations_20260615.csv`.
+
+Key results:
+- Pooled all 175 rows: loss increase vs `J^T error` norm has Pearson
+  `0.382521` and Spearman `0.429304`.
+- Pooled all 175 rows: loss increase vs block/2 spectral norm has Pearson
+  `-0.319092` and Spearman `-0.215947`.
+- Generalization-only 147 rows: loss increase vs block/2 spectral norm has
+  Pearson `-0.816533` and Spearman `-0.726549`.
+- Block/2 spectral norm and full-input sigma estimate are almost identical as
+  rankings: Pearson `0.999172`, Spearman `0.998990`.
+
+Inference:
+- Spectral norm alone does not explain attack loss increase in this final Darcy
+  result. Loss3 has the largest spectral norm but lower residual/J^T-error and
+  lower attack loss increase.
+- `J^T error` norm is more aligned with attack loss increase in the pooled
+  table, though the relationship weakens on the generalization-only subset.
+
+Report:
+- `docs/darcy_cflow_svd_lossincrease_jt_spectral_correlations_20260615.md`
+
+## 2026-06-15 - Darcy CFlow singular-vector/delta/J^T-error angle summary
+
+Status: complete.
+
+Question:
+- What are the cosine similarities and average angles among attack delta, the
+  top singular vector, and `J^T error`; and how do the top-K singular subspace
+  angles compare?
+
+Observed evidence:
+- Source:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Generated:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_vector_cosine_angle_summary_20260615.csv`.
+
+Key results:
+- All 175 rows: singular vector vs `J^T error` has signed cosine mean
+  `0.546203`, absolute cosine mean `0.877174`, and sign-invariant acute-angle
+  mean `24.7984` degrees.
+- All 175 rows: singular vector vs attack delta has signed cosine mean
+  `0.0274889`, absolute cosine mean `0.127962`, and acute-angle mean
+  `82.5348` degrees.
+- All 175 rows: `J^T error` vs attack delta has signed cosine mean
+  `-0.0295667`, absolute cosine mean `0.108833`, and signed-angle mean
+  `91.7419` degrees.
+- Top-K lifted singular subspace vs `J^T error`: cosine mean `0.973333`,
+  angle mean `12.6770` degrees.
+- Top-K lifted singular subspace vs attack delta: cosine mean `0.324149`,
+  angle mean `70.9043` degrees.
+
+Inference:
+- `J^T error` is strongly represented in the top-K singular subspace, but the
+  actual discrete binary attack delta is nearly orthogonal to both the top
+  singular vector and `J^T error`.
+
+Report:
+- `docs/darcy_cflow_svd_vector_delta_jterror_angles_20260615.md`
+
+## 2026-06-15 - Darcy CFlow correlation decomposition sanity check
+
+Status: complete.
+
+Question:
+- Why can attack loss increase be positively correlated with `J^T error` norm,
+  negatively correlated with spectral norm, while `J^T error` norm and spectral
+  norm are positively correlated? Is the result internally contradictory?
+
+Observed evidence:
+- Source:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Generated:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_correlation_decomposition_20260615.csv`.
+
+Key results:
+- Pooled all 175 rows: attack loss increase vs `J^T error` norm Pearson
+  `0.382521`; attack loss increase vs block/2 spectral norm Pearson
+  `-0.319092`; `J^T error` norm vs block/2 spectral norm Pearson `0.357818`.
+- Generalization 147 rows: attack loss increase vs `J^T error` norm Pearson
+  `0.0649105`; attack loss increase vs block/2 spectral norm Pearson
+  `-0.816533`.
+- Between-model means explain most of the negative attack-vs-spectral-norm
+  relation: all 175 between-model Pearson `-0.884774`; generalization-only
+  between-model Pearson `-0.909367`.
+- Generalization attack-vs-`J^T error` drops because effects cancel:
+  between-model Pearson `0.322801`, within-model demeaned Pearson `-0.369513`,
+  and two-way method/sample demeaned Pearson `-0.0145743`.
+
+Inference:
+- This is not a column mismatch or a mathematical contradiction. It is a pooled
+  correlation with strong model-level and sample-level effects.
+- Spectral norm alone is not predictive of attack loss increase here because it
+  measures a worst-case model-Jacobian direction, while the actual binary attack
+  delta is nearly orthogonal to that direction and to `J^T error`.
+
+Report:
+- `docs/darcy_cflow_correlation_decomposition_interpretation_20260615.md`
+
+## 2026-06-15 - Darcy CFlow SVD metric consistency audit
+
+Status: complete.
+
+Question:
+- Are the surprising SVD/Jacobian correlations caused by a local analysis
+  mistake, wrong dataset, smoke data, wrong attack step count, wrong join key,
+  wrong vector file, or wrong delta sample?
+
+Observed evidence:
+- Source SVD table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Source attack table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+- Generated audit JSON:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/svd_metric_consistency_audit_20260615.json`.
+
+Audit checks:
+- SVD rows = 175 = 7 models x 25 samples.
+- Attack rows = 18,200 = 7 models x 52 datasets x 50 samples.
+- Attack steps are all 50.
+- Old `lossdrop50_selected_20260607` token is absent.
+- `smoke` token is absent in the audited SVD/attack sample.
+- Generalization dataset count is 50 and all generalization dataset IDs start
+  with `darcy_binary_loss3targeted_20260611`.
+- Every SVD row joins to the attack table with no missing key.
+- SVD `clean_loss`, `attack_loss_increase`, and `attack_relative_increase`
+  match the attack table exactly.
+- Every vector `.npz` exists and has required arrays.
+- Vector `.npz` method/dataset/index identifiers match the CSV row.
+- Recomputed vector metrics match the CSV within numerical tolerance.
+- Vector `attack_delta` matches the original per-dataset delta `.npz` exactly
+  with max absolute difference `0.0`.
+
+Result:
+- `issue_count = 0`.
+- The surprising correlations are therefore not explained by a detected local
+  column/join/provenance/vector/delta mistake in the current final artifacts.
+
+Report:
+- `docs/darcy_cflow_svd_metric_consistency_audit_20260615.md`
+
+## 2026-06-15 - Darcy CFlow spectral-norm operator clarification
+
+Status: complete.
+
+Question:
+- Does the reported Darcy CFlow `block2_sigma1` spectral norm measure the
+  model-minus-solver residual operator, or only the model Jacobian?
+
+Observed evidence:
+- Code path:
+  `tools/darcy_sir20_robustness.py` calls `make_block_func(model, x, 2)` and
+  then runs `torch.linalg.svd(jac, full_matrices=False)` on that model-only
+  block Jacobian.
+- `tools/benchmark_darcy_jacobian_svd_20260612.py` defines `make_block_func`
+  with `return project(model(lift(z)))`, so the Jacobian is of the trained
+  model output with respect to the coefficient field.
+
+Clarification:
+- The current `block2_sigma1` is
+  `||P_out J_model L_in||_2`.
+- It is not `||P_out (J_model - J_solver) L_in||_2`.
+- Therefore baseline having the smallest current `block2_sigma1` is not evidence
+  that baseline has the smallest model-solver residual Jacobian.
+
+Report:
+- Updated `docs/darcy_cflow_svd_norm_metric_definitions_20260615.md`.
+
+## 2026-06-15 - Darcy CFlow model-vs-solver singular subspace similarity
+
+Status: complete.
+
+Question:
+- Is Loss3's local singular subspace more similar to the solver's local
+  singular subspace than the other models?
+
+Observed evidence:
+- Existing model-Jacobian vectors:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_vectors/`.
+- New solver-Jacobian vectors:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/solver_block2_svd_vectors/`.
+- Solver SVD sample table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/solver_block2_svd_25samples.csv`.
+- Model-vs-solver similarity rows:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/model_solver_block2_subspace_similarity_25samples_7models.csv`.
+- By-model summary:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/model_solver_block2_subspace_similarity_by_model.csv`.
+
+Key results:
+- Loss3 has the largest right/input top-10 projection Frobenius cosine:
+  `0.748112`.
+- Loss3 has the smallest right/input top-10 principal angle mean:
+  `41.5617` degrees.
+- Loss3 has the largest right/input top-1 absolute cosine: `0.897148`.
+- Loss3 has the largest left/output top-10 projection Frobenius cosine:
+  `0.855752`.
+- Loss3 has the largest left/output top-1 absolute cosine: `0.958681`.
+
+Inference:
+- Yes. In the observed final 25-sample block/2 evidence, Loss3 is the model
+  whose local singular subspace is most similar to the solver's local singular
+  subspace.
+- This does not yet include explicit SVD of `J_model - J_solver`; it compares
+  existing `J_model` top-10 subspaces to newly computed `J_solver` top-10
+  subspaces.
+
+Report:
+- `docs/darcy_cflow_model_solver_subspace_similarity_20260615.md`
+
+## 2026-06-15 - Darcy CFlow residual Jacobian SVD
+
+Status: complete.
+
+Question:
+- For the final seven Darcy CFlow models, what are the true residual-operator
+  Jacobian metrics for `J_model - J_solver`, and do they explain the attack50
+  robustness behavior better than the earlier model-only Jacobian metrics?
+
+Inputs:
+- Final attack table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/robustness_attack_52datasets_samples.csv`.
+- Existing model-only SVD/Jacobian table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/svd_jacobian_metrics.csv`.
+- Generalization root used by the fixed samples:
+  `generalization_datasets_darcy_binary_loss3targeted_20260611`.
+
+Computed:
+- `J_solver` block/2 Jacobians and top-10 SVDs for the 25 fixed samples.
+- `J_model - J_solver` block/2 top-10 SVD for all seven models on the same
+  25 fixed samples.
+- True residual gradient
+  `(J_model - J_solver)^T (model(x) - solver(x))`.
+- Alignment/correlation against the existing 50-step attack deltas.
+
+Outputs:
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_svd_25samples_7models.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_svd_by_model.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_aligned_25samples_7models.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_correlations_20260615.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_winner_counts_20260615.csv`.
+- `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_summary_20260615.md`.
+
+Key results:
+- Loss3 has the lowest residual spectral norm on `25/25` fixed samples.
+- Loss3 has the lowest residual JT error norm on `20/25` fixed samples.
+- Loss3 has the lowest 50-step attack loss increase on `21/25` fixed samples.
+- By-model means: Loss3 residual sigma1 `0.00170213`, residual error L2
+  `0.0334209`, residual JT norm `4.7257e-05`, attack loss increase
+  `1.7162e-06`.
+
+Interpretation:
+- The earlier model-only spectral norm should not be interpreted as the
+  residual model-solver spectral norm.
+- Directly computing `J_model - J_solver` removes the earlier contradiction:
+  Loss3 is best on the residual operator scalar metrics in this fixed-sample
+  diagnostic.
+
+Report:
+- `docs/darcy_cflow_residual_jacobian_svd_20260615.md`
+
+## 2026-06-15 - Darcy CFlow per-dataset and fixed-25 table extraction
+
+Status: complete.
+
+Question:
+- Provide separated tables instead of only aggregate summaries: 52 datasets
+  separated, and 25 fixed Jacobian/SVD samples separated.
+
+Inputs:
+- Clean RMSE wide table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_metric_tables_20260615/clean_52dataset_7model_rmse_wide.csv`.
+- Clean Relative L2 wide table:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/loss3_advantage_metric_tables_20260615/clean_52dataset_7model_relative_l2_wide.csv`.
+- Attack50 per-dataset mean/std table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/attack50_52dataset_7model_mean_std.csv`.
+- Residual Jacobian attack-aligned fixed-25 table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/residual_jacobian_attack_aligned_25samples_7models.csv`.
+- Model-solver fixed-25 subspace table:
+  `outputs/darcy_cflow_final_robustness_20260615/data/final_metric_mean_std_20260615/model_solver_block2_subspace_similarity_25samples_7models.csv`.
+
+Output:
+- `outputs/darcy_cflow_final_robustness_20260615/reports/per_dataset_and_fixed25_tables_20260615.md`.
+
+Checks:
+- Used only the `generalization_datasets_darcy_binary_loss3targeted_20260611`
+  generalization tables.
+- Found no `lossdrop50_selected` token in the extracted source tables.
+- Found no smoke/partial-smoke token in the extracted source tables.
+- Attack-aligned tables have `attack_steps=50`.
+
+Contents:
+- Full clean RMSE and Relative L2 table for all 52 datasets and 7 models.
+- Full attack50 `adv_loss`, `loss_increase`, and `delta_l2_rms` tables for all
+  52 datasets and 7 models.
+- Full fixed-25 `adv_loss`, `loss_increase`, residual sigma1, residual error L2
+  norm, and residual JT error norm tables for all 25 samples and 7 models.
+- Per-fixed-sample model-solver top-10 subspace winner table with Loss3 values.
+
+## 2026-06-15 - Darcy CFlow final robustness records copied into timematched release data
+
+Status: complete.
+
+Question:
+- Save the final Darcy CFlow/SIR20 clean/generalization and robustness evidence
+  as Markdown/CSV records, and place the source tables plus derived tables under
+  the large timematched organized release `data/` directory.
+
+Output bundle:
+- `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/`.
+
+Contents:
+- `source_tables/`: 29 copied source CSV/MD/JSON files used in the final
+  summaries, including clean RMSE/Relative L2, attack50, model-only SVD,
+  residual Jacobian/SVD, model-solver subspace similarity, scalar correlations,
+  and vector-angle summary tables.
+- `derived_tables/`: 23 derived CSV tables, including 52-dataset clean metric
+  tables, 52-dataset attack scalar tables, all52/generalization50 mean/std
+  tables, fixed-25 residual metric long/wide tables, fixed-25 model-solver
+  subspace tables, model-only top-10 SVD summaries, residual vector-angle
+  summaries, and model-only/residual correlation tables.
+- Bundle README:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/README.md`.
+- Source manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/source_tables_manifest.csv`.
+- Derived manifest:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/derived_tables_manifest.csv`.
+
+Checks:
+- Strict scan of copied CSV source tables found no `lossdrop50_selected` or
+  `generalization_datasets_darcy_lossdrop50_selected_20260607` token.
+- Copied CSV source tables found no smoke/partial-smoke token.
+- Attack and residual-aligned tables have `attack_steps=50`.
+- The bundle does not duplicate large `.npz` Jacobian/vector arrays; it records
+  the CSV/MD/JSON source tables and derived CSV summaries used for the report.
+
+## 2026-06-15 - Darcy CFlow residual correlation interpretation note
+
+Status: complete.
+
+Question:
+- Record the interpretation that the final attack50 correlation behavior differs
+  from the small-epsilon derivation: infinitesimal theory predicts residual
+  `J_res^T error` should dominate, while finite attack50 also reflects residual
+  spectral high-gain directions.
+
+Evidence:
+- Residual all-25 x 7 correlations:
+  loss increase vs residual JT norm Pearson/Spearman `0.504257 / 0.502891`;
+  loss increase vs residual sigma1 `0.561659 / 0.438184`;
+  loss increase vs residual error L2 `0.534601 / 0.495813`.
+- Generalization-only 21 x 7 correlations:
+  loss increase vs residual JT norm `0.353294 / 0.209620`;
+  loss increase vs residual sigma1 `0.346862 / 0.114519`;
+  loss increase vs residual error L2 `0.345888 / 0.201369`.
+- Model-solver subspace similarity still supports Loss3: Loss3 is first on the
+  right/input and left/output top-k similarity metrics.
+- Residual operator metrics still support Loss3: residual sigma1 mean
+  `0.00170213`, residual error L2 mean `0.0334209`, residual JT norm mean
+  `4.7257e-05`, attack loss increase mean `1.7162e-06`.
+
+Outputs:
+- `docs/darcy_cflow_residual_correlation_interpretation_20260615.md`.
+- `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/residual_correlation_interpretation_20260615.md`.
+
+Conclusion:
+- The small-epsilon derivation is not contradicted. It applies to infinitesimal
+  first-order behavior. The final attack50 table is a finite-step protocol, so
+  attack loss increase can also correlate strongly with residual spectral norm.
+  residual JT norm and residual sigma1 should be reported as complementary
+  diagnostics.
+
+## 2026-06-15 - Darcy CFlow epsilon-budget attack sweep vs residual Jacobian correlations
+
+Status: complete.
+
+Question:
+- Re-run attack50 on the fixed residual-Jacobian 25 samples x 7 models with
+  smaller/larger attack budgets, then test whether `loss_increase` correlates
+  more with residual `J_res^T error` when epsilon is small.
+
+Protocol:
+- New reruns: epsilon fractions `0.0025` (`0.1x`), `0.005` (`0.2x`),
+  `0.0125` (`0.5x`), and `0.125` (`5x`).
+- Existing final run reused for `1x`: final attack50 epsilon fraction `0.025`,
+  filtered from the 18,200-row final attack table to the fixed 175 rows. The
+  accidental partial `eps_1x` rerun was interrupted and excluded from all final
+  statistics.
+- All usable sweep tables have 175 rows, 7 models, fixed 25 samples,
+  `attack_steps=50`, and no `20260607`/`lossdrop50_selected` rows.
+- Residual metrics and vectors come from the existing
+  `J_model - J_solver` fixed-25 residual table; no training and no residual SVD
+  recomputation were performed.
+
+Key results:
+- Generalization-only 21 samples x 7 models:
+  - `0.1x`: loss increase vs residual JT norm `0.567467 / 0.654825`;
+    vs residual sigma1 `0.506495 / 0.506033`; vs residual error L2
+    `0.583907 / 0.663832`.
+  - `0.2x`: loss increase vs residual JT norm `0.447471 / 0.378035`;
+    vs residual sigma1 `0.446991 / 0.297176`; vs residual error L2
+    `0.433758 / 0.360705`.
+  - `0.5x`: loss increase vs residual JT norm `0.397756 / 0.298238`;
+    vs residual sigma1 `0.399102 / 0.209257`.
+  - `1x`: loss increase vs residual JT norm `0.353294 / 0.209620`;
+    vs residual sigma1 `0.346862 / 0.114519`.
+  - `5x`: loss increase vs residual JT norm `0.302126 / 0.049717`;
+    vs residual sigma1 `0.306626 / -0.013468`.
+- All 25 samples x 7 models:
+  - `0.1x`: loss increase vs residual JT norm `0.658889 / 0.769111`;
+    vs residual sigma1 `0.667559 / 0.672806`; vs residual error L2
+    `0.698067 / 0.772588`.
+  - `1x`: loss increase vs residual JT norm `0.504257 / 0.502891`;
+    vs residual sigma1 `0.561659 / 0.438184`.
+  - `5x`: loss increase vs residual JT norm `0.385627 / 0.311153`;
+    vs residual sigma1 `0.406477 / 0.266352`.
+- Loss3 remains pointwise majority-best for `adv_loss` and `loss_increase`
+  across all epsilon budgets: `22/25` at `0.1x`, `21/25` at `0.2x`, `0.5x`,
+  `1x`, and `5x`.
+- Vector angle trend: residual JT error vs attack delta cosine decreases as
+  epsilon grows (`0.171231` at `0.1x`, `0.148373` at `1x`, `0.092815` at `5x`);
+  residual top10 subspace vs attack delta cosine is around `0.238-0.243` for
+  `0.1x-1x` and drops to `0.216688` at `5x`.
+
+Conclusion:
+- The epsilon sweep supports the direction of the small-epsilon theory:
+  smaller budgets make the loss-increase relationship with residual JT norm
+  stronger, especially in the generalization-only scope. However, the strongest
+  scalar at the smallest budget is residual error L2 in these tables, so the
+  correct conclusion is a trend/partial support rather than a strict claim that
+  residual JT norm is always the single strongest correlate.
+
+Outputs:
+- `outputs/darcy_cflow_epsilon_sweep_20260615/reports/epsilon_sweep_summary.md`.
+- `docs/darcy_cflow_epsilon_sweep_correlation_20260615.md`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_attack_rows_fixed25_7models.csv`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_residual_correlations.csv`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_by_model_mean_std.csv`.
+- `outputs/darcy_cflow_epsilon_sweep_20260615/data/epsilon_sweep_vector_angles_rows.csv`.
+- Copied release records and raw usable sweep attack outputs:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/`.
+
+## 2026-06-15 - Darcy CFlow epsilon sweep extended to 0.01x, 0.05x, and 10x
+
+Status: complete.
+
+Question:
+- Add three more attack budgets to the fixed-25 residual-Jacobian epsilon sweep:
+  `0.01x`, `0.05x`, and `10x`, then update scalar correlations and vector
+  similarity summaries.
+
+Protocol:
+- New reruns: epsilon fractions `0.00025` (`0.01x`), `0.00125` (`0.05x`),
+  and `0.25` (`10x`).
+- Same fixed 25 samples x 7 models, `attack_steps=50`, no training, no residual
+  SVD recomputation.
+- Final sweep table now covers 8 epsilon budgets: `0.01x`, `0.05x`, `0.1x`,
+  `0.2x`, `0.5x`, `1x`, `5x`, and `10x`. The `1x` result still comes from the
+  existing final attack50 table, filtered to the fixed 175 rows.
+
+Key results:
+- Generalization-only 21 samples x 7 models:
+  - `0.01x`: loss increase vs residual JT norm `0.588872 / 0.620364`;
+    vs residual sigma1 `0.421332 / 0.425364`; vs residual error L2
+    `0.651664 / 0.668883`.
+  - `0.05x`: loss increase vs residual JT norm `0.591960 / 0.648146`;
+    vs residual sigma1 `0.474381 / 0.477748`; vs residual error L2
+    `0.638526 / 0.678554`.
+  - `10x`: loss increase vs residual JT norm `0.227265 / -0.096015`;
+    vs residual sigma1 `0.234954 / -0.153401`; vs residual error L2
+    `0.219544 / -0.102502`.
+- All 25 samples x 7 models:
+  - `0.01x`: loss increase vs residual JT norm `0.658555 / 0.753842`;
+    vs residual sigma1 `0.543971 / 0.628417`; vs residual error L2
+    `0.711126 / 0.781373`.
+  - `0.05x`: loss increase vs residual JT norm `0.674528 / 0.764536`;
+    vs residual sigma1 `0.622718 / 0.654680`; vs residual error L2
+    `0.724575 / 0.780909`.
+  - `10x`: loss increase vs residual JT norm `0.242870 / -0.053247`;
+    vs residual sigma1 `0.234327 / -0.093820`; vs residual error L2
+    `0.236418 / -0.064172`.
+- Loss3 remains mean-best for `loss_increase` at the new budgets:
+  `1.701477e-07` at `0.01x`, `6.812274e-07` at `0.05x`, and
+  `8.990511e-07` at `10x`.
+- Pointwise `loss_increase` winner counts for Loss3:
+  `22/25` at `0.01x`, `21/25` at `0.05x`, and `17/25` at `10x`.
+- Vector similarity:
+  residual JT error vs attack delta cosine is `0.122768` at `0.01x`,
+  `0.168713` at `0.05x`, and drops to `0.024717` at `10x`.
+  residual top10 subspace vs attack delta cosine is `0.166792` at `0.01x`,
+  `0.224642` at `0.05x`, and `0.215356` at `10x`.
+
+Conclusion:
+- The extended sweep strengthens the qualitative story: very small budgets
+  greatly increase the Pearson/Spearman relationship between attack loss
+  increase and residual first-order quantities, while the 10x budget weakens
+  the monotone/rank relationship substantially. Loss3 remains mean-best for
+  attack `loss_increase` at all tested epsilon budgets, but at 10x it is no
+  longer as strongly pointwise dominant (`17/25` rather than `21-22/25`).
+
+Outputs:
+- Updated `outputs/darcy_cflow_epsilon_sweep_20260615/reports/epsilon_sweep_summary.md`.
+- Updated `docs/darcy_cflow_epsilon_sweep_correlation_20260615.md`.
+- Updated release bundle:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/`.
+
+## 2026-06-15 - Darcy CFlow epsilon sweep full Markdown record
+
+Status: complete.
+
+Question:
+- Record the full epsilon sweep numbers and conclusions in a single Markdown
+  file, including Loss3 winner checks, scalar correlations, vector similarities,
+  provenance, and links to the full CSV/raw data sources.
+
+Output:
+- `docs/darcy_cflow_epsilon_sweep_full_record_20260615.md`.
+- Release copy:
+  `outputs/darcy_cflow_timematched_organized_release_20260614/data/final_robustness_records_20260615/darcy_cflow_epsilon_sweep_full_record_20260615.md`.
+
+Contents:
+- Provenance table for all 8 epsilon budgets.
+- Loss3 mean-best table for `loss_increase`, with second-best model, gap,
+  relative gap, and pointwise winner count.
+- Scalar correlations for both generalization-only 21 x 7 and all fixed 25 x 7
+  scopes.
+- Vector similarity table for attack delta vs residual `J_res^T error` vector,
+  residual top singular vector, and residual top10 subspace.
+- Source file list for all full CSVs and raw rerun attack outputs.
+
+## 2026-06-15 - NS external forcing mean perturbation crop-stitch figure
+
+Status: complete for local crop-stitch from available rendered notebook images;
+raw external-forcing attack tensors are missing locally.
+
+Question:
+- Generate a visual summary for the claim that averaged 2D Navier-Stokes attack
+  perturbations/deltas resemble their external forcing patterns, using rendered
+  notebook output crops because the original tensors are unavailable.
+
+Sources:
+- `2D_NS_FNO2d_recurrent/external_forcing_patterns/draw_patterns.ipynb`.
+- `solvers.py` and `EXPONAX_SOLVER_CODE_WALKTHROUGH.md` for the default
+  45-degree forcing formula.
+- Rendered local notebook images under
+  `analysis_outputs/ns_external_forcing_summary_20260615/raw_notebook_images/`.
+- Expansion logs under
+  `2D_NS_FNO2d_recurrent/external_forcing_patterns/dataset_expansion/logs/`.
+
+Outputs:
+- `tools/make_ns_external_forcing_crop_stitch.py`.
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_crops_available_only.png`.
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_crops_full_status.png`.
+- `docs/ns_external_forcing_mean_perturbation_crops_20260615.md`.
+
+Observed:
+- Local crop sources support `ringsCos`, `isoCircles`, and `petals` first/last
+  averaged delta or difference images.
+- Local `none` images are random-field sequence crops, not true attack-average
+  delta images.
+- Local filesystem search did not find external-forcing attack `.pt`, `.pth`,
+  `.npz`, `.npy`, or `.pkl` tensors under the external-forcing directory.
+- Logs point to historical `/blue/.../expanded_datasets/` attack tensors for
+  `ringsCos`, `sBands`, `isoCircles`, `petals`, `ringsL1`, `ringsLinf`, and
+  `none`.
+
+Conclusion:
+- The clean available-evidence figure shows the visual forcing/delta alignment
+  for the locally recoverable rows and labels the `none` row as a random-field
+  crop. The full-status figure preserves the intended 8-row structure and marks
+  missing local attack-average cells rather than filling them with invented
+  images.
+
+Remaining work:
+- Restore the historical `/blue/.../expanded_datasets/*.pt` tensors or saved
+  rendered average figures to create a fully complete 8-row attack-average
+  figure.
+
+Correction after user review:
+- The first user message included the relevant rendered screenshots as embedded
+  `data:image/png;base64` images in the Codex session JSONL. These were decoded
+  from
+  `/root/.codex/sessions/2026/06/15/rollout-2026-06-15T12-17-17-019ecb36-f7f7-76e3-ac1d-6f9e68bb15f6.jsonl`.
+- Added `tools/make_ns_external_forcing_from_uploaded_screenshots.py`, which
+  extracts the uploaded screenshots, crops `orig/pert/diff` at `t=0` and
+  `t=19`, and rebuilds the figure.
+- New outputs:
+  `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_8row.png`
+  and
+  `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_available_rows.png`.
+- The uploaded screenshots recover rows for the 45-degree default
+  (`diagonalinit0`), `ringsCos`, `sBands`, `isoCircles`, `petals`, and `none`.
+  The upload contains a duplicate `ringsCos avg` image; no `ringsL1` or
+  `ringsLinf` averaged screenshot is present in that uploaded set.
+
+Follow-up correction:
+- Rebuilt the uploaded-screenshot figures using external forcing cropped
+  directly from the user-provided `Field f` and six-forcing-grid screenshots,
+  rather than formula-regenerating the first column.
+- Switched the second temporal slice from `t=20` to `t=19`, because the
+  uploaded 45-degree grid has constant/blank `t=20` cells and the user requested
+  the first and penultimate frames.
+- Vertically flipped only the first-row 45-degree external-forcing crop to align
+  that standalone `Field f` panel with the uploaded attack-grid orientation; the
+  six-forcing-grid tiles keep their original uploaded orientation.
+- Scanned all locally stored Codex session input images; no `ringsL1 avg` or
+  `ringsLinf avg` `pert/orig/diff` screenshot was present beyond the forcing
+  tile itself.
+
+## 2026-06-15 - GitHub and R2 sync for NS forcing figure and Darcy artifacts
+
+Status: completed.
+
+Question:
+- Back up the current code/Markdown to GitHub and the generated images, data,
+  and result artifacts to Cloudflare R2.
+
+GitHub:
+- Pushed code and Markdown to `YifeiSun01/NeuralOperatorRobustness2` branch
+  `vast-ai-darcy-flow`.
+- Commit pushed before the sync note: `1a4210a`
+  (`Add NS external forcing crop-stitch figures`).
+
+R2:
+- Incrementally copied `analysis_outputs/`, `outputs/`, and
+  `adversarial_training_runs/` to
+  `neural-operator-robustness/machine-sync/NeuralOperatorRobustness2-selected/`.
+- Verified the two final NS external-forcing uploaded-screenshot PNGs on R2.
+- Verified an NS range-removal replot PNG, a Darcy final robustness CSV, and
+  representative 3000-epoch Darcy supervised run CSVs on R2.
+
+Notes:
+- R2 sync used temporary rclone environment variables; no credentials were
+  written to repository files.
+- The `outputs/` clean pass used `--no-update-modtime` for Cloudflare R2
+  compatibility and excluded live rclone logs under
+  `outputs/r2_upload_darcy_20260615/*.log`.
+
+## 2026-06-15 - NS external forcing figure label and outline polish
+
+Status: completed and backed up to R2; queued for GitHub push.
+
+Question:
+- Polish the NS external-forcing attack perturbation figure so the highlighted
+  columns are clearer and the labels explain the first/final-frame panels.
+
+Changes:
+- Replaced abbreviated column headers with publication-facing labels:
+  original/perturbed initial condition, added perturbation, original/perturbed
+  final condition, and final-condition difference.
+- Added explicit `T = 0` and `T = 19` text to the relevant column headers.
+- Removed the bottom explanatory footnote from the figure.
+- Replaced per-cell orange highlights with full-column black outlines around
+  the external-forcing column and the added-perturbation column, with padding
+  between the frame and tile edges.
+- Updated the subtitle to state that each row averages attack results over 1150
+  random-field initial conditions.
+
+Outputs:
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_available_rows.png`
+- `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_8row.png`

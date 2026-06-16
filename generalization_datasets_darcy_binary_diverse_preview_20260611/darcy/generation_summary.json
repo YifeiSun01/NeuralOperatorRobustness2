@@ -1,0 +1,12 @@
+{
+  "num_datasets": 8,
+  "samples_per_dataset": 4,
+  "low": 3.0,
+  "high": 12.0,
+  "all_binary_verified": true,
+  "high_fraction_min": 0.16,
+  "high_fraction_max": 0.84,
+  "edge_density_min": 0.006477591036414566,
+  "edge_density_max": 0.22981442577030814,
+  "manifest": "generalization_datasets_darcy_binary_diverse_preview_20260611/darcy/candidate_manifest.csv"
+}

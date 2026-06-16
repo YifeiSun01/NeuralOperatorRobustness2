@@ -921,6 +921,26 @@ def tensor_stats(prefix: str, x: torch.Tensor) -> dict[str, float]:
     }
 
 
+def parse_csv_floats(value: Any, default: list[float]) -> list[float]:
+    if value is None:
+        return list(default)
+    if isinstance(value, (list, tuple)):
+        out = [float(x) for x in value]
+    else:
+        out = [float(x.strip()) for x in str(value).split(",") if x.strip()]
+    return out or list(default)
+
+
+def parse_csv_strings(value: Any, default: list[str]) -> list[str]:
+    if value is None:
+        return list(default)
+    if isinstance(value, (list, tuple)):
+        out = [str(x).strip().lower() for x in value if str(x).strip()]
+    else:
+        out = [x.strip().lower() for x in str(value).split(",") if x.strip()]
+    return out or list(default)
+
+
 def burgers_solver_target(x_model: torch.Tensor, cfg: dict[str, Any], allow_target_grad: bool) -> torch.Tensor:
     if x_model.ndim != 3 or x_model.shape[-1] != 1:
         raise ValueError(f"Burgers model input must be (B,N,1), got {tuple(x_model.shape)}")
@@ -1353,6 +1373,13 @@ def attack_objective_losses_for_probe(
         return clean_losses, adv_losses
 
     if task == "darcy":
+        if is_darcy_random_source_mode(cfg):
+            clean_pred = model(xb_selected)
+            adv_pred = model(x_adv_selected)
+            clean_losses = per_sample_finite_mse(clean_pred, yb_selected)
+            adv_target = yb_selected if str(cfg.get("training_data_mode")) == "random-binary-fixed-y" else y_adv_training
+            adv_losses = per_sample_finite_mse(adv_pred, adv_target)
+            return clean_losses, adv_losses
         _, clean_losses, _, _ = darcy_attack_objective_loss(
             model,
             xb_selected,
@@ -1824,6 +1851,273 @@ def continuous_attack(
     return AttackBatchResult(x_adv.detach(), y_train.detach(), info, sample_info=sample_info)
 
 
+DARCY_RANDOM_SOURCE_TRAINING_MODES = {"random-binary-fixed-y", "random-binary-solver-y"}
+
+
+def is_darcy_random_source_mode(cfg: dict[str, Any]) -> bool:
+    return str(cfg.get("training_data_mode", "adv-only")) in DARCY_RANDOM_SOURCE_TRAINING_MODES
+
+
+def _darcy_random_source_filter(
+    freq: torch.Tensor,
+    *,
+    kernel: str,
+    alpha: float,
+    lengthscale: float,
+) -> torch.Tensor:
+    cutoff = 1.0 / max(float(lengthscale), 1e-6)
+    scaled = freq / max(cutoff, 1e-6)
+    kernel = str(kernel).lower().strip()
+    if kernel in {"gaussian", "rbf", "sqexp", "squared_exponential"}:
+        filt = torch.exp(-0.5 * scaled.pow(2))
+    elif kernel in {"matern", "matérn"}:
+        filt = torch.pow(1.0 + scaled.pow(2), -0.5 * (float(alpha) + 1.0))
+    elif kernel in {"highpass", "high_pass"}:
+        low = torch.exp(-0.5 * scaled.pow(2))
+        filt = torch.pow((1.0 - low).clamp_min(0.0), max(float(alpha) / 2.0, 0.25))
+    elif kernel in {"bandpass", "band_pass"}:
+        width = max(cutoff * 0.55, 1e-6)
+        filt = torch.exp(-0.5 * ((freq - cutoff).abs() / width).pow(2))
+    elif kernel in {"mixed", "hybrid"}:
+        low = torch.exp(-0.5 * scaled.pow(2))
+        high = torch.pow((1.0 - low).clamp_min(0.0), max(float(alpha) / 2.0, 0.25))
+        filt = 0.5 * low + 0.5 * high
+    else:
+        raise ValueError(
+            f"unknown Darcy random source kernel={kernel!r}; "
+            "expected gaussian,matern,highpass,bandpass,or mixed"
+        )
+    return torch.nan_to_num(filt, nan=0.0, posinf=0.0, neginf=0.0)
+
+
+def _darcy_random_source_field(
+    h: int,
+    w: int,
+    *,
+    device: torch.device,
+    dtype: torch.dtype,
+    kernel: str,
+    alpha: float,
+    lengthscale: float,
+) -> torch.Tensor:
+    white = torch.randn((h, w), device=device, dtype=dtype)
+    fy = torch.fft.fftfreq(h, d=1.0 / max(1, h), device=device).to(dtype=dtype)
+    fx = torch.fft.rfftfreq(w, d=1.0 / max(1, w), device=device).to(dtype=dtype)
+    freq = torch.sqrt(fy[:, None].pow(2) + fx[None, :].pow(2))
+    filt = _darcy_random_source_filter(freq, kernel=kernel, alpha=alpha, lengthscale=lengthscale)
+    field = torch.fft.irfft2(torch.fft.rfft2(white) * filt, s=(h, w))
+    field = field - field.mean()
+    std = field.std(unbiased=False)
+    if not torch.isfinite(std) or float(std.detach().cpu()) <= 1e-12:
+        field = torch.randn((h, w), device=device, dtype=dtype)
+        field = field - field.mean()
+        std = field.std(unbiased=False).clamp_min(1e-12)
+    return field / std.clamp_min(1e-12)
+
+
+def darcy_random_binary_source_batch(
+    model,
+    xb: torch.Tensor,
+    yb: torch.Tensor,
+    cfg: dict[str, Any],
+) -> AttackBatchResult:
+    mode = str(cfg.get("training_data_mode", "adv-only"))
+    if mode not in DARCY_RANDOM_SOURCE_TRAINING_MODES:
+        raise ValueError(f"Darcy random source batch got unsupported mode={mode!r}")
+    if xb.ndim != 4 or xb.shape[-1] != 1:
+        raise ValueError(f"Darcy random binary source expects input (B,H,W,1), got {tuple(xb.shape)}")
+
+    was_training = model.training
+    model.eval()
+    x0 = xb.detach()
+    b, h, w, _ = x0.shape
+    n_pix = int(h * w)
+    max_fraction = float(cfg.get("darcy_random_source_max_flip_fraction", 0.05))
+    min_fraction = float(cfg.get("darcy_random_source_min_flip_fraction", 0.005))
+    if max_fraction < 0:
+        raise ValueError(f"darcy_random_source_max_flip_fraction must be non-negative, got {max_fraction}")
+    if min_fraction < 0:
+        raise ValueError(f"darcy_random_source_min_flip_fraction must be non-negative, got {min_fraction}")
+    if max_fraction < min_fraction:
+        raise ValueError(
+            "darcy_random_source_max_flip_fraction must be >= "
+            f"min, got min={min_fraction} max={max_fraction}"
+        )
+    max_fraction = min(max_fraction, 1.0)
+    min_fraction = min(min_fraction, max_fraction)
+    alpha_values_cfg = parse_csv_floats(cfg.get("darcy_random_source_alpha_values"), [1.2, 2.2, 3.2, 4.2, 5.2])
+    kernels = parse_csv_strings(
+        cfg.get("darcy_random_source_kernels"),
+        ["gaussian", "matern", "highpass", "bandpass", "mixed"],
+    )
+    lengthscale_min = float(cfg.get("darcy_random_source_lengthscale_min", 0.035))
+    lengthscale_max = float(cfg.get("darcy_random_source_lengthscale_max", 0.30))
+    if lengthscale_max < lengthscale_min:
+        raise ValueError(
+            "darcy_random_source_lengthscale_max must be >= min, "
+            f"got min={lengthscale_min} max={lengthscale_max}"
+        )
+
+    flat_x0 = x0.reshape(b, -1)
+    lo = flat_x0.min(dim=1).values.reshape(b, 1)
+    hi = flat_x0.max(dim=1).values.reshape(b, 1)
+    midpoint = 0.5 * (lo + hi)
+    flat_binary = torch.where(flat_x0 > midpoint, hi.expand_as(flat_x0), lo.expand_as(flat_x0))
+    other = torch.where(flat_binary > midpoint, lo.expand_as(flat_binary), hi.expand_as(flat_binary))
+    flat_rand = flat_binary.clone()
+
+    flip_fractions: list[float] = []
+    alpha_draws: list[float] = []
+    lengthscale_draws: list[float] = []
+    kernel_draws: list[str] = []
+    budgets: list[int] = []
+    field_abs_means: list[float] = []
+    field_stds: list[float] = []
+
+    with torch.no_grad():
+        for i in range(b):
+            kernel = random.choice(kernels)
+            alpha = float(random.choice(alpha_values_cfg))
+            if lengthscale_max == lengthscale_min:
+                lengthscale = lengthscale_min
+            else:
+                lengthscale = random.uniform(lengthscale_min, lengthscale_max)
+            if max_fraction == min_fraction:
+                fraction = max_fraction
+            else:
+                fraction = random.uniform(min_fraction, max_fraction)
+            k = int(round(fraction * n_pix))
+            k = max(0, min(k, n_pix))
+            if max_fraction > 0.0 and k == 0:
+                k = 1
+            field = _darcy_random_source_field(
+                h,
+                w,
+                device=x0.device,
+                dtype=x0.dtype,
+                kernel=kernel,
+                alpha=alpha,
+                lengthscale=lengthscale,
+            )
+            score = field.abs().reshape(-1)
+            if k > 0:
+                chosen = torch.topk(score, k=k, largest=True).indices
+                flat_rand[i, chosen] = other[i, chosen]
+            flip_fractions.append(k / max(1, n_pix))
+            alpha_draws.append(alpha)
+            lengthscale_draws.append(lengthscale)
+            kernel_draws.append(kernel)
+            budgets.append(k)
+            field_abs_means.append(float(field.abs().mean().detach().cpu()))
+            field_stds.append(float(field.std(unbiased=False).detach().cpu()))
+
+        x_rand = flat_rand.reshape_as(x0).detach()
+        if mode == "random-binary-fixed-y":
+            y_train = yb.detach()
+            target_source = "clean_dataset_y_unchanged"
+            training_target_source = "clean dataset y; solver is not rerun after random binary flips"
+            attack_uses_solver_forward = 0
+        else:
+            y_train = darcy_solver_target(x_rand, allow_target_grad=False).detach()
+            target_source = "solver(a_random).detach()"
+            training_target_source = "solver(a_random).detach() after random binary flips"
+            attack_uses_solver_forward = 1
+
+        clean_target = yb.detach()
+        clean_pred = model(x0)
+        adv_pred = model(x_rand)
+        clean_loss_samples = per_sample_finite_mse(clean_pred, clean_target)
+        adv_loss_samples = per_sample_finite_mse(adv_pred, y_train)
+        clean_loss = finite_mse(clean_pred, clean_target)
+        adv_loss = finite_mse(adv_pred, y_train)
+        clean_solver_loss_samples = clean_loss_samples
+        adv_solver_loss_samples = adv_loss_samples
+        clean_solver_loss = clean_loss
+        adv_solver_loss = adv_loss
+        delta = x_rand - x0
+        changed = delta.reshape(b, -1).abs() > 1e-12
+        observed_flip_fraction = float(changed.float().mean().detach().cpu())
+        delta_l2 = float(torch.sqrt(delta.pow(2).reshape(b, -1).mean(dim=1)).mean().detach().cpu())
+        delta_linf = float(delta.abs().reshape(b, -1).max(dim=1).values.mean().detach().cpu())
+        binary_error = torch.minimum((x_rand.reshape(b, -1) - lo).abs(), (x_rand.reshape(b, -1) - hi).abs())
+        binary_error_max = float(binary_error.max().detach().cpu())
+
+    if was_training:
+        model.train()
+
+    flip_tensor = torch.as_tensor(flip_fractions, device=x0.device, dtype=x0.dtype)
+    alpha_tensor = torch.as_tensor(alpha_draws, device=x0.device, dtype=x0.dtype)
+    lengthscale_tensor = torch.as_tensor(lengthscale_draws, device=x0.device, dtype=x0.dtype)
+    budget_tensor = torch.as_tensor(budgets, device=x0.device, dtype=x0.dtype)
+    kernel_counts = {name: kernel_draws.count(name) for name in sorted(set(kernel_draws))}
+    info = {
+        "label_mode": str(cfg.get("label_mode", "solver")),
+        "target_source": target_source,
+        "training_target_source": training_target_source,
+        "attack_loss_objective": mode,
+        "attack_objective_definition": "random binary source perturbation; no adversarial gradient is used",
+        "attack_uses_solver_forward": attack_uses_solver_forward,
+        "attack_uses_solver_backward": 0,
+        "full_solver_gradient": False,
+        "attack_target_source": target_source,
+        "attack_type": "random_binary_source",
+        "attack_method": mode,
+        "attack_steps": 0,
+        "epsilon_mean": float(flip_tensor.mean().detach().cpu()),
+        "epsilon_min": float(flip_tensor.min().detach().cpu()),
+        "epsilon_max": float(flip_tensor.max().detach().cpu()),
+        "alpha_mean": float(alpha_tensor.mean().detach().cpu()),
+        "alpha_min": float(alpha_tensor.min().detach().cpu()),
+        "alpha_max": float(alpha_tensor.max().detach().cpu()),
+        "alpha_ratio_nominal": float("nan"),
+        "clean_loss_before_attack": float(clean_loss.detach().cpu()),
+        "adv_loss_after_random_start": float(adv_loss.detach().cpu()),
+        "adv_loss_after_attack": float(adv_loss.detach().cpu()),
+        "attack_loss_gain": float((adv_loss - clean_loss).detach().cpu()),
+        "clean_solver_mse_before_attack": float(clean_solver_loss.detach().cpu()),
+        "adv_solver_mse_after_attack": float(adv_solver_loss.detach().cpu()),
+        "solver_mse_attack_gain": float((adv_solver_loss - clean_solver_loss).detach().cpu()),
+        "grad_abs_mean_last": float("nan"),
+        "boundary_ratio_mean": observed_flip_fraction / max(max_fraction, 1e-12),
+        "delta_linf_mean": delta_linf,
+        "delta_l2_rms_mean": delta_l2,
+        "darcy_budget_pixels_mean": float(budget_tensor.mean().detach().cpu()),
+        "darcy_flip_fraction": observed_flip_fraction,
+        "darcy_random_source_mode": mode,
+        "darcy_random_source_kernel_set": ",".join(kernels),
+        "darcy_random_source_alpha_values": ",".join(str(x) for x in alpha_values_cfg),
+        "darcy_random_source_alpha_draw_mean": float(alpha_tensor.mean().detach().cpu()),
+        "darcy_random_source_alpha_draw_min": float(alpha_tensor.min().detach().cpu()),
+        "darcy_random_source_alpha_draw_max": float(alpha_tensor.max().detach().cpu()),
+        "darcy_random_source_lengthscale_min_cfg": lengthscale_min,
+        "darcy_random_source_lengthscale_max_cfg": lengthscale_max,
+        "darcy_random_source_lengthscale_draw_mean": float(lengthscale_tensor.mean().detach().cpu()),
+        "darcy_random_source_lengthscale_draw_min": float(lengthscale_tensor.min().detach().cpu()),
+        "darcy_random_source_lengthscale_draw_max": float(lengthscale_tensor.max().detach().cpu()),
+        "darcy_random_source_min_flip_fraction_cfg": min_fraction,
+        "darcy_random_source_max_flip_fraction_cfg": max_fraction,
+        "darcy_random_source_observed_flip_fraction_mean": observed_flip_fraction,
+        "darcy_random_source_normalized_l1_energy_mean": observed_flip_fraction,
+        "darcy_random_source_normalized_squared_l2_energy_mean": observed_flip_fraction,
+        "darcy_random_source_field_abs_mean": float(np.mean(field_abs_means)) if field_abs_means else float("nan"),
+        "darcy_random_source_field_std_mean": float(np.mean(field_stds)) if field_stds else float("nan"),
+        "darcy_random_source_binary_error_max": binary_error_max,
+        "darcy_random_source_distinct_kernel_count": len(kernel_counts),
+    }
+    for kernel_name, count in kernel_counts.items():
+        safe_name = "".join(ch if ch.isalnum() else "_" for ch in kernel_name)
+        info[f"darcy_random_source_kernel_{safe_name}_count"] = int(count)
+    info.update(tensor_stats("target", y_train))
+    sample_info = make_attack_sample_info(
+        epsilon=flip_tensor,
+        epsilon_jitter_factor=flip_tensor / max(max_fraction, 1e-12),
+        alpha=alpha_tensor,
+        clean_loss=clean_loss_samples,
+        adv_loss=adv_loss_samples,
+    )
+    return AttackBatchResult(x_rand.detach(), y_train.detach(), info, sample_info=sample_info)
+
+
 def binary_darcy_replace_attack(
     model,
     xb: torch.Tensor,
@@ -2154,7 +2448,8 @@ def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict
         if task != "burgers":
             raise ValueError("--training-perturbation-mode random-field is currently implemented for Burgers only")
         return burgers_random_field_training_batch(model, xb, yb, cfg)
-
+    if task == "darcy" and is_darcy_random_source_mode(cfg):
+        return darcy_random_binary_source_batch(model, xb, yb, cfg)
     method = str(cfg["attack_method"])
     label_mode = str(cfg.get("label_mode", "solver"))
     if label_mode == "solver" and task == "ns2d":
@@ -2238,7 +2533,7 @@ def combine_training_pairs(
     mode = str(cfg.get("training_data_mode", "adv-only"))
     x_adv = attack_result.x_train.detach()
     y_adv = attack_result.y_train.detach()
-    if mode == "adv-only":
+    if mode == "adv-only" or mode in DARCY_RANDOM_SOURCE_TRAINING_MODES:
         info = {
             "training_data_mode": mode,
             "clean_train_samples": 0,
@@ -2259,7 +2554,10 @@ def combine_training_pairs(
             "clean_plus_adv_multiplier": float(x_train.shape[0]) / max(1, int(x_adv.shape[0])),
         }
         return x_train.detach(), y_train.detach(), info
-    raise ValueError(f"unknown training_data_mode={mode!r}; expected adv-only or clean-plus-adv")
+    raise ValueError(
+        f"unknown training_data_mode={mode!r}; expected adv-only, clean-plus-adv, "
+        "random-binary-fixed-y, or random-binary-solver-y"
+    )
 
 
 def task_train_spec(specs: list[DatasetSpec], task: str) -> DatasetSpec:
@@ -2348,6 +2646,12 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
         cfg["darcy_physics_forcing_value"] = float(getattr(args, "darcy_physics_forcing_value", 1.0))
         cfg["darcy_loss1_random_start"] = bool(getattr(args, "darcy_loss1_random_start", True))
         cfg["darcy_loss1_random_start_fraction"] = float(getattr(args, "darcy_loss1_random_start_fraction", 1.0))
+        cfg["darcy_random_source_kernels"] = str(getattr(args, "darcy_random_source_kernels", "gaussian,matern,highpass,bandpass,mixed"))
+        cfg["darcy_random_source_alpha_values"] = str(getattr(args, "darcy_random_source_alpha_values", "1.2,2.2,3.2,4.2,5.2"))
+        cfg["darcy_random_source_lengthscale_min"] = float(getattr(args, "darcy_random_source_lengthscale_min", 0.035))
+        cfg["darcy_random_source_lengthscale_max"] = float(getattr(args, "darcy_random_source_lengthscale_max", 0.30))
+        cfg["darcy_random_source_min_flip_fraction"] = float(getattr(args, "darcy_random_source_min_flip_fraction", 0.005))
+        cfg["darcy_random_source_max_flip_fraction"] = float(getattr(args, "darcy_random_source_max_flip_fraction", 0.05))
     override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
     if override_random_start_fraction is not None:
         cfg["random_start_fraction"] = float(override_random_start_fraction)
@@ -2373,6 +2677,7 @@ def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
     if override_eps_jitter_high is not None:
         cfg["eps_jitter_high"] = float(override_eps_jitter_high)
     cfg["max_batches_per_epoch"] = args.max_batches_per_epoch
+    cfg["max_work_seconds"] = args.max_work_seconds
     return cfg
 
 
@@ -2793,9 +3098,10 @@ def checkpoint_model(
     global_step: int,
     cfg: dict[str, Any],
     *,
-    optimizer=None,
+    optimizer: torch.optim.Optimizer | None = None,
     optimizer_global_step: int | None = None,
     work_clock_seconds: float | None = None,
+    elapsed_wall_seconds: float | None = None,
     suffix: str | None = None,
 ) -> Path:
     ckpt_dir = out_dir / "checkpoints"
@@ -2811,13 +3117,17 @@ def checkpoint_model(
         "global_step": global_step,
         "model_state_dict": model.state_dict(),
         "config": cfg,
+        "checkpoint_format": "model_optimizer_v1" if optimizer is not None else "model_only_legacy",
     }
-    if optimizer is not None:
-        payload["optimizer_state_dict"] = optimizer.state_dict()
     if optimizer_global_step is not None:
         payload["optimizer_global_step"] = int(optimizer_global_step)
     if work_clock_seconds is not None:
         payload["work_clock_seconds"] = float(work_clock_seconds)
+    if elapsed_wall_seconds is not None:
+        payload["elapsed_wall_seconds"] = float(elapsed_wall_seconds)
+    if optimizer is not None:
+        payload["optimizer_class"] = optimizer.__class__.__name__
+        payload["optimizer_state_dict"] = optimizer.state_dict()
     torch.save(payload, path)
     return path
 
@@ -2825,9 +3135,15 @@ def checkpoint_model(
 def load_model_checkpoint_state(model, checkpoint_path: Path, device: torch.device, optimizer=None) -> dict[str, Any]:
     checkpoint_path = checkpoint_path.expanduser().resolve()
     ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+    optimizer_state = None
     if isinstance(ckpt, dict) and "model_state_dict" in ckpt:
         state = ckpt["model_state_dict"]
-        metadata = {k: v for k, v in ckpt.items() if k != "model_state_dict"}
+        optimizer_state = ckpt.get("optimizer_state_dict")
+        metadata = {
+            k: v
+            for k, v in ckpt.items()
+            if k not in {"model_state_dict", "optimizer_state_dict", "scheduler_state_dict"}
+        }
     elif isinstance(ckpt, dict):
         state = ckpt
         metadata = {}
@@ -2844,6 +3160,8 @@ def load_model_checkpoint_state(model, checkpoint_path: Path, device: torch.devi
         "optimizer_restored": optimizer_restored,
         "optimizer_global_step": int(ckpt.get("optimizer_global_step", 0)) if isinstance(ckpt, dict) else 0,
         "work_clock_seconds": float(ckpt.get("work_clock_seconds", 0.0)) if isinstance(ckpt, dict) else 0.0,
+        "optimizer_state_dict": optimizer_state,
+        "optimizer_state_present": optimizer_state is not None,
     }
 
 
@@ -2983,6 +3301,12 @@ def train_one_task(
         task_cfg["darcy_physics_forcing_value"] = float(getattr(args, "darcy_physics_forcing_value", 1.0))
         task_cfg["darcy_loss1_random_start"] = bool(getattr(args, "darcy_loss1_random_start", True))
         task_cfg["darcy_loss1_random_start_fraction"] = float(getattr(args, "darcy_loss1_random_start_fraction", 1.0))
+        task_cfg["darcy_random_source_kernels"] = str(getattr(args, "darcy_random_source_kernels", "gaussian,matern,highpass,bandpass,mixed"))
+        task_cfg["darcy_random_source_alpha_values"] = str(getattr(args, "darcy_random_source_alpha_values", "1.2,2.2,3.2,4.2,5.2"))
+        task_cfg["darcy_random_source_lengthscale_min"] = float(getattr(args, "darcy_random_source_lengthscale_min", 0.035))
+        task_cfg["darcy_random_source_lengthscale_max"] = float(getattr(args, "darcy_random_source_lengthscale_max", 0.30))
+        task_cfg["darcy_random_source_min_flip_fraction"] = float(getattr(args, "darcy_random_source_min_flip_fraction", 0.005))
+        task_cfg["darcy_random_source_max_flip_fraction"] = float(getattr(args, "darcy_random_source_max_flip_fraction", 0.05))
     override_random_start_fraction = getattr(args, f"{task}_random_start_fraction", None)
     if override_random_start_fraction is not None:
         task_cfg["random_start_fraction"] = float(override_random_start_fraction)
@@ -3036,23 +3360,51 @@ def train_one_task(
     task_cfg["model_checkpoint_override"] = None if model_checkpoint_override is None else str(model_checkpoint_override.resolve())
     model = load_model(task, device, model_checkpoint_override)
     initial_checkpoint_info: dict[str, Any] | None = None
-    (out_dir / "config.json").write_text(json.dumps(to_jsonable({**run_cfg, **task_cfg}), indent=2), encoding="utf-8")
+    if initial_checkpoint is not None:
+        initial_checkpoint_info = load_model_checkpoint_state(model, Path(initial_checkpoint), device)
+        task_cfg["initial_checkpoint"] = initial_checkpoint_info["path"]
+        task_cfg["initial_checkpoint_metadata"] = initial_checkpoint_info["metadata"]
+        metadata = initial_checkpoint_info.get("metadata") or {}
+        inferred_epoch = int(metadata.get("epoch") or 0)
+        inferred_global_step = int(metadata.get("global_step") or 0)
+        inferred_optimizer_global_step = int(initial_checkpoint_info.get("optimizer_global_step") or 0)
+        if resume_epoch_offset == 0 and inferred_epoch > 0:
+            resume_epoch_offset = inferred_epoch
+        if resume_global_step_offset == 0:
+            resume_global_step_offset = inferred_optimizer_global_step or inferred_global_step
+        task_cfg["resume_epoch_offset"] = resume_epoch_offset
+        task_cfg["resume_global_step_offset"] = resume_global_step_offset
+        task_cfg["initial_checkpoint_optimizer_state_present"] = bool(initial_checkpoint_info.get("optimizer_state_present"))
+        task_cfg["initial_checkpoint_inferred_epoch"] = inferred_epoch
+        task_cfg["initial_checkpoint_inferred_global_step"] = inferred_global_step
+        task_cfg["initial_checkpoint_inferred_optimizer_global_step"] = inferred_optimizer_global_step
     model.train()
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=float(task_cfg["learning_rate"]),
         weight_decay=float(task_cfg["weight_decay"]),
     )
-    resumed_work_clock_seconds = 0.0
-    if initial_checkpoint is not None:
-        initial_checkpoint_info = load_model_checkpoint_state(model, Path(initial_checkpoint), device, optimizer=optimizer)
-        task_cfg["initial_checkpoint"] = initial_checkpoint_info["path"]
-        task_cfg["initial_checkpoint_metadata"] = initial_checkpoint_info["metadata"]
-        task_cfg["initial_checkpoint_optimizer_restored"] = bool(initial_checkpoint_info["optimizer_restored"])
-        resumed_work_clock_seconds = float(initial_checkpoint_info.get("work_clock_seconds", 0.0) or 0.0)
-        if int(initial_checkpoint_info.get("optimizer_global_step", 0) or 0) and resume_global_step_offset == 0:
-            resume_global_step_offset = int(initial_checkpoint_info["optimizer_global_step"])
-            task_cfg["resume_global_step_offset"] = resume_global_step_offset
+    resumed_work_clock_seconds = (
+        float(initial_checkpoint_info.get("work_clock_seconds", 0.0) or 0.0)
+        if initial_checkpoint_info is not None
+        else 0.0
+    )
+    optimizer_state_loaded = False
+    optimizer_load_error = ""
+    if initial_checkpoint_info is not None and initial_checkpoint_info.get("optimizer_state_dict") is not None:
+        try:
+            optimizer.load_state_dict(initial_checkpoint_info["optimizer_state_dict"])
+            for state in optimizer.state.values():
+                for key, value in list(state.items()):
+                    if isinstance(value, torch.Tensor):
+                        state[key] = value.to(device)
+            optimizer_state_loaded = True
+        except Exception as exc:  # pragma: no cover - kept explicit for run metadata
+            optimizer_load_error = repr(exc)
+            raise RuntimeError(f"failed to load optimizer state from {initial_checkpoint_info['path']}: {exc}") from exc
+    task_cfg["initial_checkpoint_optimizer_restored"] = optimizer_state_loaded
+    task_cfg["optimizer_state_loaded_from_initial_checkpoint"] = optimizer_state_loaded
+    task_cfg["optimizer_state_load_error"] = optimizer_load_error
     (out_dir / "config.json").write_text(json.dumps(to_jsonable({**run_cfg, **task_cfg}), indent=2), encoding="utf-8")
 
     train_spec = task_train_spec(all_specs, task)
@@ -3107,6 +3459,7 @@ def train_one_task(
     eval_pass_csv = out_dir / "evaluation_passes.csv"
     attack_epoch_csv = out_dir / "attack_epoch_summary.csv"
     attack_epsilon_bucket_csv = out_dir / "attack_epsilon_bucket_summary.csv"
+    work_epoch_csv = out_dir / "work_clock_epoch_summary.csv"
     memory_csv = out_dir / "memory.csv"
 
     (out_dir / "attack_probe_config.json").write_text(
@@ -3172,8 +3525,20 @@ def train_one_task(
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
 
+    metadata_for_resume = (initial_checkpoint_info or {}).get("metadata") or {}
     global_step = resume_global_step_offset
-    optimizer_global_step = 0
+    optimizer_global_step = int(
+        (initial_checkpoint_info or {}).get("optimizer_global_step")
+        or metadata_for_resume.get("optimizer_global_step")
+        or 0
+    )
+    optimizer_global_step_start = optimizer_global_step
+    work_clock_resume_offset = float(
+        (initial_checkpoint_info or {}).get("work_clock_seconds")
+        or metadata_for_resume.get("work_clock_seconds")
+        or 0.0
+    )
+    work_clock_seconds = work_clock_resume_offset
     train_rows: list[dict[str, Any]] = []
     seed_base = int(args.seed)
     train_start_wall = time.perf_counter()
@@ -3187,7 +3552,6 @@ def train_one_task(
     cumulative_attack_seconds = 0.0
     cumulative_train_seconds = 0.0
     cumulative_optimizer_seconds = 0.0
-    cumulative_work_seconds = resumed_work_clock_seconds
 
     for local_epoch in range(1, local_epochs + 1):
         epoch = resume_epoch_offset + local_epoch
@@ -3195,6 +3559,9 @@ def train_one_task(
         epoch_probe_records: list[dict[str, Any]] = []
         epoch_attack_rows: list[dict[str, Any]] = []
         epoch_attack_sample_infos: list[dict[str, torch.Tensor]] = []
+        epoch_work_clock_seconds = 0.0
+        epoch_attack_work_seconds = 0.0
+        epoch_optimizer_work_seconds = 0.0
         generator = torch.Generator().manual_seed(seed_base + epoch * 1009 + TASK_SEED_OFFSETS.get(task, 0))
         batches = make_indices(n_train, batch_size, generator)
         if max_batches is not None:
@@ -3277,8 +3644,12 @@ def train_one_task(
             optimizer_sec_total = float(sum(optimizer_secs))
             cumulative_train_seconds += float(train_sec)
             cumulative_optimizer_seconds += optimizer_sec_total
-            cumulative_work_seconds += float(attack_sec) + float(train_sec)
             step_sec = time.perf_counter() - step_start
+            step_work_sec = attack_sec + train_sec
+            work_clock_seconds += step_work_sec
+            epoch_work_clock_seconds += step_work_sec
+            epoch_attack_work_seconds += attack_sec
+            epoch_optimizer_work_seconds += train_sec
             train_loss_mean = loss_weighted_sum / max(1, loss_weight)
             grad_norm_mean = float(np.mean(grad_norms)) if grad_norms else float("nan")
             grad_norm_last = float(grad_norms[-1]) if grad_norms else float("nan")
@@ -3305,6 +3676,10 @@ def train_one_task(
                 "grad_norm_mean": grad_norm_mean,
                 "grad_norm_last": grad_norm_last,
                 "attack_wall_sec": attack_sec,
+                "work_clock_step_seconds": step_work_sec,
+                "work_clock_seconds": work_clock_seconds,
+                "work_clock_attack_seconds": attack_sec,
+                "work_clock_optimizer_seconds": train_sec,
                 "attack_sec_per_sample": attack_sec / max(1, int(xb.shape[0])),
                 "attack_samples_per_sec": int(xb.shape[0]) / max(attack_sec, 1e-12),
                 "train_wall_sec": train_sec,
@@ -3318,7 +3693,7 @@ def train_one_task(
                 "cumulative_attack_wall_sec": cumulative_attack_seconds,
                 "cumulative_train_wall_sec": cumulative_train_seconds,
                 "cumulative_optimizer_wall_sec": cumulative_optimizer_seconds,
-                "cumulative_work_clock_sec": cumulative_work_seconds,
+                "cumulative_work_clock_sec": work_clock_seconds,
                 **memory_stats(device),
             }
             row.update(attack_info)
@@ -3339,6 +3714,25 @@ def train_one_task(
             epoch_attack_sample_infos,
             task_cfg,
             epsilon_bucket_count,
+        )
+        write_csv_row(
+            work_epoch_csv,
+            {
+                "task": task,
+                "epoch": epoch,
+                "local_epoch": local_epoch,
+                "global_step": global_step,
+                "optimizer_global_step": optimizer_global_step,
+                "work_clock_epoch_seconds": epoch_work_clock_seconds,
+                "work_clock_attack_seconds": epoch_attack_work_seconds,
+                "work_clock_optimizer_seconds": epoch_optimizer_work_seconds,
+                "work_clock_cumulative_seconds": work_clock_seconds,
+                "work_clock_cumulative_minutes": work_clock_seconds / 60.0,
+                "work_clock_resume_offset_seconds": work_clock_resume_offset,
+                "attack_batches": len(epoch_attack_rows),
+                "optimizer_steps_this_epoch": sum(int(row.get("optimizer_microbatches", 0) or 0) for row in epoch_attack_rows),
+                "max_work_seconds": "" if max_work_seconds is None else max_work_seconds,
+            },
         )
         if probe_this_epoch:
             save_attack_probe_epoch(
@@ -3365,7 +3759,8 @@ def train_one_task(
                 task_cfg,
                 optimizer=optimizer,
                 optimizer_global_step=optimizer_global_step,
-                work_clock_seconds=cumulative_work_seconds,
+                work_clock_seconds=work_clock_seconds,
+                elapsed_wall_seconds=time.perf_counter() - train_start_wall,
             )
             last_checkpoint_path = ckpt
             last_checkpoint_epoch = epoch
@@ -3406,6 +3801,8 @@ def train_one_task(
                 "eval_wall_sec": seconds,
                 "checkpoint_saved": int(should_checkpoint),
                 "checkpoint_path": checkpoint_path,
+                "work_clock_seconds": work_clock_seconds,
+                "work_clock_minutes": work_clock_seconds / 60.0,
             },
         )
         wall_elapsed_after_eval = time.perf_counter() - train_start_wall
@@ -3422,6 +3819,7 @@ def train_one_task(
                     "checkpoint_reason": "final" if is_final_step else "periodic",
                     "checkpoint_wall_target_seconds": "",
                     "wall_elapsed_seconds": wall_elapsed_after_eval,
+                    "work_clock_seconds": work_clock_seconds,
                 },
             )
         while pending_wall_checkpoints and wall_elapsed_after_eval >= pending_wall_checkpoints[0]:
@@ -3435,7 +3833,8 @@ def train_one_task(
                 task_cfg,
                 optimizer=optimizer,
                 optimizer_global_step=optimizer_global_step,
-                work_clock_seconds=cumulative_work_seconds,
+                work_clock_seconds=work_clock_seconds,
+                elapsed_wall_seconds=wall_elapsed_after_eval,
                 suffix=wall_checkpoint_suffix(target_seconds),
             )
             wall_checkpoint_path = project_path(wall_ckpt)
@@ -3449,10 +3848,29 @@ def train_one_task(
                 "checkpoint_reason": "wall_clock",
                 "checkpoint_wall_target_seconds": target_seconds,
                 "wall_elapsed_seconds": wall_elapsed_after_eval,
+                "work_clock_seconds": work_clock_seconds,
             }
             write_csv_row(out_dir / "checkpoints.csv", wall_row)
             saved_wall_checkpoints.append(wall_row)
         completed_local_epochs = local_epoch
+        if max_work_seconds is not None and work_clock_seconds >= max_work_seconds:
+            stop_reason = "max_work_seconds_reached"
+            wall_stop_seconds = wall_elapsed_after_eval
+            write_csv_row(
+                out_dir / "work_stop.csv",
+                {
+                    "task": task,
+                    "epoch": epoch,
+                    "global_step": global_step,
+                    "progress_fraction": epoch_progress,
+                    "max_work_seconds": max_work_seconds,
+                    "work_clock_seconds": work_clock_seconds,
+                    "wall_elapsed_seconds": wall_elapsed_after_eval,
+                    "eval_wall_sec": seconds,
+                    "stop_reason": stop_reason,
+                },
+            )
+            break
         if max_wall_seconds is not None and wall_elapsed_after_eval >= max_wall_seconds:
             stop_reason = "max_wall_seconds_reached"
             wall_stop_seconds = wall_elapsed_after_eval
@@ -3464,24 +3882,6 @@ def train_one_task(
                     "global_step": global_step,
                     "progress_fraction": epoch_progress,
                     "max_wall_seconds": max_wall_seconds,
-                    "wall_elapsed_seconds": wall_elapsed_after_eval,
-                    "eval_wall_sec": seconds,
-                    "stop_reason": stop_reason,
-                },
-            )
-            break
-        if max_work_seconds is not None and cumulative_work_seconds >= max_work_seconds:
-            stop_reason = "max_work_seconds_reached"
-            wall_stop_seconds = wall_elapsed_after_eval
-            write_csv_row(
-                out_dir / "wall_stop.csv",
-                {
-                    "task": task,
-                    "epoch": epoch,
-                    "global_step": global_step,
-                    "progress_fraction": epoch_progress,
-                    "max_work_seconds": max_work_seconds,
-                    "work_clock_seconds": cumulative_work_seconds,
                     "wall_elapsed_seconds": wall_elapsed_after_eval,
                     "eval_wall_sec": seconds,
                     "stop_reason": stop_reason,
@@ -3502,7 +3902,8 @@ def train_one_task(
             task_cfg,
             optimizer=optimizer,
             optimizer_global_step=optimizer_global_step,
-            work_clock_seconds=cumulative_work_seconds,
+            work_clock_seconds=work_clock_seconds,
+            elapsed_wall_seconds=time.perf_counter() - train_start_wall,
         )
     elapsed = time.perf_counter() - train_start_wall
     estimate = estimate_from_smoke(
@@ -3527,6 +3928,7 @@ def train_one_task(
         "optimizer_batch_size": optimizer_batch_size,
         "optimizer_steps_per_epoch": optimizer_steps_per_epoch,
         "total_optimizer_steps": optimizer_global_step,
+        "local_optimizer_steps": optimizer_global_step - optimizer_global_step_start,
         "total_optimizer_steps_planned": total_optimizer_steps,
         "epochs": completed_local_epochs,
         "epochs_configured": local_epochs,
@@ -3534,8 +3936,15 @@ def train_one_task(
         "max_wall_seconds": max_wall_seconds,
         "max_work_seconds": max_work_seconds,
         "wall_stop_seconds": wall_stop_seconds,
+        "work_clock_seconds": work_clock_seconds,
+        "work_clock_minutes": work_clock_seconds / 60.0,
+        "work_clock_resume_offset_seconds": work_clock_resume_offset,
+        "local_work_clock_seconds": work_clock_seconds - work_clock_resume_offset,
+        "local_work_clock_minutes": (work_clock_seconds - work_clock_resume_offset) / 60.0,
         "resume_epoch_offset": resume_epoch_offset,
         "resume_global_step_offset": resume_global_step_offset,
+        "optimizer_global_step_start": optimizer_global_step_start,
+        "optimizer_state_loaded_from_initial_checkpoint": optimizer_state_loaded,
         "total_epochs_for_progress": total_epochs_for_progress,
         "total_steps": global_step,
         "evaluation_schedule": "every_epoch",
@@ -3550,10 +3959,9 @@ def train_one_task(
         "attack_probe_count": int(len(probe_indices)),
         "attack_probe_every_n_epochs": probe_every_n_epochs,
         "attack_probe_save_targets": probe_save_targets,
+        "work_clock_epoch_summary_csv": project_path(work_epoch_csv),
         "elapsed_seconds": elapsed,
         "elapsed_minutes": elapsed / 60.0,
-        "work_clock_seconds": cumulative_work_seconds,
-        "work_clock_minutes": cumulative_work_seconds / 60.0,
         "cumulative_attack_wall_sec": cumulative_attack_seconds,
         "cumulative_train_wall_sec": cumulative_train_seconds,
         "cumulative_optimizer_wall_sec": cumulative_optimizer_seconds,
@@ -3594,14 +4002,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-wall-seconds", default=None, help="Comma-separated elapsed wall-clock seconds. After an epoch/eval crosses each target, save an extra checkpoint with checkpoint_reason=wall_clock.")
     parser.add_argument("--checkpoint-wall-hours", default=None, help="Comma-separated elapsed wall-clock hours; converted to --checkpoint-wall-seconds targets.")
     parser.add_argument("--max-wall-seconds", type=float, default=None, help="Stop gracefully after the completed epoch/evaluation that first reaches this training wall-clock budget.")
-    parser.add_argument("--max-work-seconds", type=float, default=None, help="Stop gracefully after the completed epoch/evaluation whose attack+optimizer training time reaches this budget. Evaluation time is excluded.")
+    parser.add_argument("--max-work-seconds", type=float, default=None, help="Stop gracefully after the completed epoch whose attack/random/solver-target plus optimizer work reaches this budget. Evaluation, checkpointing, plotting, and upload are excluded.")
     parser.add_argument("--resume-epoch-offset", type=int, default=0, help="Epoch number represented by the loaded initial checkpoint; resumed epochs are logged after this offset.")
     parser.add_argument("--resume-global-step-offset", type=int, default=0, help="Global train-step number represented by the loaded initial checkpoint.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
-    parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs.")
+    parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv", "random-binary-fixed-y", "random-binary-solver-y"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs; Darcy random-binary-fixed-y/random-binary-solver-y use random binary source flips instead of adversarial attacks.")
     parser.add_argument("--training-perturbation-mode", choices=["attack", "random-field"], default="attack", help="attack uses adversarially optimized delta; random-field samples a fresh Gaussian/Matern random-field delta without attack optimization.")
     parser.add_argument("--random-field-target-mode", choices=["clean-y", "solver-y"], default="solver-y", help="For --training-perturbation-mode random-field: clean-y keeps the original clean target fixed; solver-y recomputes the solver target at x+delta.")
     parser.add_argument("--random-field-families", default="gaussian,matern", help="Comma-separated random delta kernel families. Supported: gaussian,matern.")
@@ -3653,6 +4061,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--darcy-physics-forcing-value", type=float, default=1.0, help="Right-hand-side forcing value for Darcy physics residual.")
     parser.add_argument("--darcy-loss1-random-start", action=argparse.BooleanOptionalAction, default=True, help="For Darcy loss1, start from a random binary flip mask so the zero-distance loss1 gradient does not stall.")
     parser.add_argument("--darcy-loss1-random-start-fraction", type=float, default=1.0, help="Fraction of the per-sample flip budget used for the Darcy loss1 random initial mask.")
+    parser.add_argument("--darcy-random-source-kernels", default="gaussian,matern,highpass,bandpass,mixed", help="Comma-separated kernels for Darcy random binary source training. Used by random-binary-fixed-y and random-binary-solver-y.")
+    parser.add_argument("--darcy-random-source-alpha-values", default="1.2,2.2,3.2,4.2,5.2", help="Comma-separated alpha/smoothness values sampled per Darcy random-source sample.")
+    parser.add_argument("--darcy-random-source-lengthscale-min", type=float, default=0.035, help="Minimum spectral lengthscale sampled per Darcy random-source sample.")
+    parser.add_argument("--darcy-random-source-lengthscale-max", type=float, default=0.30, help="Maximum spectral lengthscale sampled per Darcy random-source sample.")
+    parser.add_argument("--darcy-random-source-min-flip-fraction", type=float, default=0.005, help="Minimum fraction of binary coefficient pixels flipped per random-source sample.")
+    parser.add_argument("--darcy-random-source-max-flip-fraction", type=float, default=0.05, help="Maximum fraction of binary coefficient pixels flipped per random-source sample; default enforces the requested 5 percent normalized energy budget.")
     parser.add_argument("--ns2d-attack-method", choices=["fast_replace_linf", "fast_add_linf"], default=None)
     parser.add_argument("--burgers-epsilon-fraction", type=float, default=None)
     parser.add_argument("--darcy-epsilon-fraction", type=float, default=None)
@@ -3692,6 +4106,8 @@ def main() -> None:
             raise ValueError("--burgers-require-p2q2 requires --burgers-attack-method fast_replace_l2 or fast_add_l2; got " + str(burgers_method))
     set_seed(int(args.seed))
     tasks = parse_tasks(args.tasks)
+    if args.training_data_mode in DARCY_RANDOM_SOURCE_TRAINING_MODES and tasks != ["darcy"]:
+        raise ValueError("Darcy random source training modes require --tasks darcy")
     device = torch.device(args.device)
     run_name = args.run_name or ("smoke_" if args.smoke else "full_") + now_stamp()
     out_root = (args.output_root / run_name).resolve()
@@ -3758,6 +4174,15 @@ def main() -> None:
             "enabled": args.darcy_loss1_random_start,
             "fraction": args.darcy_loss1_random_start_fraction,
         },
+        "darcy_random_source": {
+            "kernels": args.darcy_random_source_kernels,
+            "alpha_values": args.darcy_random_source_alpha_values,
+            "lengthscale_min": args.darcy_random_source_lengthscale_min,
+            "lengthscale_max": args.darcy_random_source_lengthscale_max,
+            "min_flip_fraction": args.darcy_random_source_min_flip_fraction,
+            "max_flip_fraction": args.darcy_random_source_max_flip_fraction,
+            "binary_constraint": "inputs are projected back to the per-sample two Darcy coefficient values before training",
+        },
         "attack_probe": {
             "samples": int(args.attack_probe_samples),
             "indices": args.attack_probe_indices,
@@ -3819,14 +4244,14 @@ def main() -> None:
         f"- Max wall seconds: `{args.max_wall_seconds}`",
         f"- Max work seconds: `{args.max_work_seconds}`",
         "",
-        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
-        "Training data modes: `adv-only` uses only perturbed solver/target pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly perturbed pairs, doubling the training examples per perturbation batch.",
-        "Perturbation modes: `attack` optimizes delta adversarially; `random-field` samples fresh Gaussian/Matern random-field deltas without attack optimization and uses `--random-field-target-mode clean-y` or `solver-y` for the target.",
+        "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `work_clock_epoch_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
+        "Training data modes: `adv-only` uses only perturbed solver/target pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly perturbed pairs, doubling the training examples per perturbation batch. Darcy-only `random-binary-fixed-y` and `random-binary-solver-y` replace adversarial attacks with random binary coefficient flips; fixed-y keeps the clean target, solver-y recomputes solver(a_random).",
+        "Perturbation modes: `attack` optimizes delta adversarially; Burgers-only `random-field` samples fresh Gaussian/Matern random-field deltas without attack optimization and uses `--random-field-target-mode clean-y` or `solver-y` for the target.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",
         "Default attack policy:",
         "- Burgers: p=2/q=2 RMS-L2 fast-replace attack in the corrected pipeline. The attack objective can be loss1, loss2, or loss3: loss1 uses no solver; loss2 uses fixed clean solver output without solver backward; loss3 uses attacked solver output with solver backward. Optimizer training remains on attacked solver pairs unless training-data-mode is changed.",
-        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default. The attack objective can be loss1, loss2, loss3, or physics/loss4; optimizer training still uses attacked solver pairs unless training-data-mode is changed.",
+        "- Darcy: binary steepest-replace flips coefficient pixels; default attack batch is 256, optimizer microbatch is 32, flip budget is fixed by epsilon, score noise is off, and top-k replacement is deterministic by default. The attack objective can be loss1, loss2, loss3, or physics/loss4; optimizer training still uses attacked solver pairs unless training-data-mode is changed. Random-source Darcy modes sample Gaussian/Matern/high-pass/band-pass/mixed fields, flip only between the two binary coefficient values, and cap the normalized mean flip energy at `--darcy-random-source-max-flip-fraction`.",
         "- NS2D: L-infinity add attack on the initial vorticity frame; attack batch and optimizer batch stay 1:1 by default, epsilon/alpha are fixed, and random start is off for comparable same-index probes.",
         "",
         "Evaluation is clean evaluation on train/test/generated datasets at baseline and after every epoch, giving 52 dataset-level curves per task when all 50 generated sets are present; checkpoints default to every 200 epochs plus final.",

@@ -1,0 +1,58 @@
+{
+  "attack_steps": 20,
+  "batch_size": 25,
+  "created_at": "2026-06-13T21:29:37+00:00",
+  "dataset_count": 52,
+  "epsilon_fraction": 0.025,
+  "generalization_root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+  "models": [
+    {
+      "checkpoint": "2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt",
+      "name": "baseline",
+      "trained_epochs": 500,
+      "training_objective": "baseline"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss1_1000ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1000_step001000.pt",
+      "name": "loss1",
+      "trained_epochs": 1000,
+      "training_objective": "loss1"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1026_step001026.pt",
+      "name": "loss2",
+      "trained_epochs": 1026,
+      "training_objective": "loss2"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1011_step001011.pt",
+      "name": "loss3",
+      "trained_epochs": 1011,
+      "training_objective": "loss3"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_loss3targeted_physics_1040ep_full50_timematched_20260612_full50_timematched_1000c/darcy/checkpoints/darcy_epoch1040_step001040.pt",
+      "name": "physics_loss",
+      "trained_epochs": 1040,
+      "training_objective": "physics"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100/darcy/checkpoints/darcy_epoch1100_step001100.pt",
+      "name": "random_clean_y",
+      "trained_epochs": 1100,
+      "training_objective": "random-binary-fixed-y"
+    },
+    {
+      "checkpoint": "adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100/darcy/checkpoints/darcy_epoch1100_step001100.pt",
+      "name": "random_solver_y",
+      "trained_epochs": 1100,
+      "training_objective": "random-binary-solver-y"
+    }
+  ],
+  "notes": "All models are attacked with the same solver-consistent loss3 objective so loss growth is directly comparable.",
+  "sample_policy": "random",
+  "samples_per_dataset": 50,
+  "seed": 20260612,
+  "shared_attack_objective": "loss3",
+  "tag": "20260613_7model_complete_missing_metrics"
+}

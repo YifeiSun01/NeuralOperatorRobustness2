@@ -1,0 +1,17 @@
+metric_system,scope,metric,best_model,best_value,ranking,model_count,lower_is_better
+generalization_clean_52datasets,generalization,clean_mean_rmse,loss3,0.0006498387718554,"loss3,loss2,random_clean_y,physics_loss,loss1,baseline,random_solver_y",7,True
+generalization_clean_52datasets,generalization,clean_mean_relative_l2,loss3,0.0614064013481728,"loss3,loss2,random_clean_y,physics_loss,loss1,baseline,random_solver_y",7,True
+attack20_52datasets_50samples,generalization,mean_attack_loss_gain,loss3,2.730733228736426e-06,"loss3,random_clean_y,loss2,physics_loss,baseline,random_solver_y,loss1",7,True
+attack20_52datasets_50samples,generalization,mean_delta_l2_rms,loss3,3.6426607478141775,"loss3,random_clean_y,physics_loss,loss2,random_solver_y,loss1,baseline",7,True
+attack20_52datasets_50samples,generalization,mean_delta_flip_fraction,loss3,0.1658793588146567,"loss3,random_clean_y,physics_loss,loss2,random_solver_y,loss1,baseline",7,True
+metric25_jacobian_attack_proxy,25_generalization_samples,mean_attack_loss_gain,loss3,2.75650873959421e-06,"loss3,random_clean_y,loss2,physics_loss,baseline,random_solver_y,loss1",7,True
+metric25_jacobian_attack_proxy,25_generalization_samples,mean_jt_error_l2_norm,random_clean_y,9.853028885115649e-05,"random_clean_y,loss3,baseline,loss2,physics_loss,random_solver_y,loss1",7,True
+metric25_jacobian_attack_proxy,25_generalization_samples,mean_jt_error_l2_norm_sq,random_clean_y,1.2156335359943247e-08,"random_clean_y,loss3,baseline,loss2,physics_loss,random_solver_y,loss1",7,True
+metric25_jacobian_attack_proxy,25_generalization_samples,mean_binary_first_order_gain,random_clean_y,1.2568845104258572e-06,"random_clean_y,loss3,loss2,baseline,physics_loss,loss1,random_solver_y",7,True
+metric25_jacobian_attack_proxy,25_generalization_samples,mean_sigma_max,baseline,0.001698893187567532,"baseline,loss2,loss1,random_clean_y,random_solver_y,physics_loss,loss3",7,True
+metric25_jacobian_attack_proxy,25_generalization_samples,mean_top_left_error_alignment_abs,loss3,0.6745471262931824,"loss3,random_clean_y,baseline,loss2,loss1,physics_loss,random_solver_y",7,True
+jacobian5_probe,5_generalization_samples,mean_relative_l2,loss3,0.07858559103353532,"loss3,random_clean_y,loss2,baseline,physics_loss,random_solver_y,loss1",7,True
+jacobian5_probe,5_generalization_samples,mean_jt_error_l2_norm,random_clean_y,0.00011767943651644084,"random_clean_y,loss3,baseline,loss2,physics_loss,random_solver_y,loss1",7,True
+jacobian5_probe,5_generalization_samples,mean_jt_error_l2_norm_sq,random_clean_y,1.7556611073367643e-08,"random_clean_y,loss3,baseline,loss2,physics_loss,random_solver_y,loss1",7,True
+jacobian5_probe,5_generalization_samples,mean_j_error_l2_norm,random_clean_y,4.294109403417679e-05,"random_clean_y,loss3,baseline,loss2,random_solver_y,physics_loss,loss1",7,True
+jacobian5_probe,5_generalization_samples,mean_spectral_norm_top_sigma,baseline,0.00173231279477474,"baseline,loss2,loss1,random_clean_y,random_solver_y,physics_loss,loss3",7,True

@@ -1,0 +1,25 @@
+{
+  "checkpoint_manifest": "outputs/darcy_cflow_final_robustness_20260615/checkpoints_manifest/final_7model_checkpoints.json",
+  "datasets": 52,
+  "generalization_datasets": 50,
+  "generalization_root": "generalization_datasets_darcy_binary_loss3targeted_20260611",
+  "methods": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics_loss",
+    "random_clean",
+    "random_solver"
+  ],
+  "metrics": [
+    "rmse",
+    "relative_l2"
+  ],
+  "old_lossdrop50_token_found": false,
+  "sample_rows": 20860,
+  "samples_per_dataset_requested": 0,
+  "samples_per_dataset_semantics": "all_available_when_zero",
+  "source": "outputs/darcy_cflow_timematched_organized_release_20260614/data/clean_per_sample_ttests_20260615/clean_per_sample_rmse_relative_l2_52datasets_7models.csv",
+  "test_rows": 104
+}

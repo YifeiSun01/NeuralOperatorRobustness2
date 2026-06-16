@@ -1,0 +1,8 @@
+model,clean_dataset_rows,attack20_dataset_rows,attack20_sample_rows,metric25_sample_rows,jacobian5_sample_rows,expected_clean_dataset_rows,expected_attack20_dataset_rows,expected_attack20_sample_rows,expected_metric25_sample_rows,expected_jacobian5_sample_rows
+baseline,52,52,2600,25,5,52,52,2600,25,5
+loss1,52,52,2600,25,5,52,52,2600,25,5
+loss2,52,52,2600,25,5,52,52,2600,25,5
+loss3,52,52,2600,25,5,52,52,2600,25,5
+physics_loss,52,52,2600,25,5,52,52,2600,25,5
+random_clean_y,52,52,2600,25,5,52,52,2600,25,5
+random_solver_y,52,52,2600,25,5,52,52,2600,25,5

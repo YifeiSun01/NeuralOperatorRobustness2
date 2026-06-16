@@ -1,0 +1,5 @@
+{
+  "attack_csv": "outputs/darcy_cflow_epsilon_sweep_20260615/eps_10x/data/robustness_attack_52datasets_samples.csv",
+  "sample_manifest": "outputs/darcy_cflow_epsilon_sweep_20260615/eps_10x/data/attack_50sample_manifest.csv",
+  "svd_csv": "outputs/darcy_cflow_epsilon_sweep_20260615/eps_10x/data/svd_jacobian_metrics.csv"
+}

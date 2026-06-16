@@ -1,0 +1,19 @@
+{
+  "old_lossdrop50_token_found": false,
+  "generalization_dataset_count": 50,
+  "generalization_dataset_prefix_all_current_20260611": true,
+  "attack_rows": 18200,
+  "svd_rows": 175,
+  "attack_steps": [
+    50
+  ],
+  "methods": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics_loss",
+    "random_clean",
+    "random_solver"
+  ]
+}

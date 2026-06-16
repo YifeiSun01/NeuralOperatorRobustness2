@@ -1,0 +1,84 @@
+{
+  "tag": "20260612_loss3attack50_five_models_ranked5_batch_polished",
+  "attack_steps": 50,
+  "epsilon_fraction": 0.025,
+  "dataset_count": 5,
+  "samples_per_dataset": 50,
+  "attack_batch_size": 25,
+  "plot_batch_size": 10,
+  "run_dir": "analysis_outputs/darcy_five_model_batch_ranked_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished",
+  "outputs": [
+    {
+      "variant": "index0",
+      "out_dir": "analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0",
+      "viz_dir": "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0",
+      "figures": [
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0/index0_01_maternfine_idx0_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0/index0_02_highpass_idx0_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0/index0_03_rectangles_idx0_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0/index0_04_highpass_idx0_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_index0/index0_05_bandpass_idx0_five_model_attack_heatmap_with_loss_curve.png"
+      ]
+    },
+    {
+      "variant": "loss3_best",
+      "out_dir": "analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best",
+      "viz_dir": "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best",
+      "figures": [
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best/loss3_best_01_maternfine_idx30_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best/loss3_best_02_highpass_idx33_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best/loss3_best_03_rectangles_idx23_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best/loss3_best_04_highpass_idx44_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_best/loss3_best_05_bandpass_idx12_five_model_attack_heatmap_with_loss_curve.png"
+      ]
+    },
+    {
+      "variant": "loss3_upper_quartile",
+      "out_dir": "analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile",
+      "viz_dir": "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile",
+      "figures": [
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile/loss3_upper_quartile_01_maternfine_idx25_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile/loss3_upper_quartile_02_highpass_idx25_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile/loss3_upper_quartile_03_rectangles_idx3_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile/loss3_upper_quartile_04_highpass_idx7_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_upper_quartile/loss3_upper_quartile_05_bandpass_idx20_five_model_attack_heatmap_with_loss_curve.png"
+      ]
+    },
+    {
+      "variant": "loss3_median",
+      "out_dir": "analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median",
+      "viz_dir": "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median",
+      "figures": [
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median/loss3_median_01_maternfine_idx15_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median/loss3_median_02_highpass_idx1_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median/loss3_median_03_rectangles_idx28_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median/loss3_median_04_highpass_idx10_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_median/loss3_median_05_bandpass_idx42_five_model_attack_heatmap_with_loss_curve.png"
+      ]
+    },
+    {
+      "variant": "loss3_lower_quartile",
+      "out_dir": "analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile",
+      "viz_dir": "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile",
+      "figures": [
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile/loss3_lower_quartile_01_maternfine_idx23_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile/loss3_lower_quartile_02_highpass_idx39_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile/loss3_lower_quartile_03_rectangles_idx8_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile/loss3_lower_quartile_04_highpass_idx34_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_lower_quartile/loss3_lower_quartile_05_bandpass_idx43_five_model_attack_heatmap_with_loss_curve.png"
+      ]
+    },
+    {
+      "variant": "loss3_worst",
+      "out_dir": "analysis_outputs/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst",
+      "viz_dir": "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst",
+      "figures": [
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst/loss3_worst_01_maternfine_idx14_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst/loss3_worst_02_highpass_idx21_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst/loss3_worst_03_rectangles_idx41_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst/loss3_worst_04_highpass_idx9_five_model_attack_heatmap_with_loss_curve.png",
+        "visualizations/darcy_five_model_attack_heatmaps_20260612_loss3attack50_five_models_ranked5_batch_polished_loss3_worst/loss3_worst_05_bandpass_idx4_five_model_attack_heatmap_with_loss_curve.png"
+      ]
+    }
+  ]
+}

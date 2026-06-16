@@ -1,0 +1,51 @@
+{
+  "out_dir": "analysis_outputs/darcy_random_inclusive_training_figures_20260613",
+  "viz_dir": "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense",
+  "figures": [
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_epoch_relative_l2_train_test_generalization.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_epoch_rmse_train_test_generalization.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_wall_clock_relative_l2_train_test_generalization.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_wall_clock_rmse_train_test_generalization.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_optimizer_train_loss.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_grad_norm.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_attack_loss_gain_mean.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_delta_l2_rms_mean.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_final_clean_and_attack_summary.png",
+    "visualizations/darcy_random_inclusive_training_figures_20260613/comparison_dense/darcy_six_method_metric_jacobian_summary.png"
+  ],
+  "wall_clock_components_csv": "analysis_outputs/darcy_random_inclusive_training_figures_20260613/six_method_wall_clock_components.csv",
+  "runs": [
+    {
+      "name": "loss1",
+      "label": "loss1",
+      "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss1_1000ep_full50_timematched_20260612_full50_timematched_1000c"
+    },
+    {
+      "name": "loss2",
+      "label": "loss2",
+      "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss2_1026ep_full50_timematched_20260612_full50_timematched_1000c"
+    },
+    {
+      "name": "loss3",
+      "label": "loss3",
+      "path": "adversarial_training_runs/darcy_binary_loss3targeted_loss3_1011ep_full50_timematched_20260612_full50_timematched_1000c"
+    },
+    {
+      "name": "physics",
+      "label": "physics loss",
+      "path": "adversarial_training_runs/darcy_binary_loss3targeted_physics_1040ep_full50_timematched_20260612_full50_timematched_1000c"
+    },
+    {
+      "name": "random_clean_y",
+      "label": "random clean y",
+      "path": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_1100ep_full50_20260613_random_binary_source_1100"
+    },
+    {
+      "name": "random_solver_y",
+      "label": "random solver y",
+      "path": "adversarial_training_runs/darcy_binary_random_binary_solver_y_1100ep_full50_20260613_random_binary_source_1100"
+    }
+  ],
+  "curve_max_epoch": 1000,
+  "note": "Random-inclusive training plots use epochs 0..1000 only. Wall-clock minutes are training-only: train_steps.step_wall_sec, excluding baseline and per-epoch evaluation. Old adversarial methods are first-stage 1000-ish runs; random-source methods were trained to 1100, but curve plots are capped at 1000."
+}

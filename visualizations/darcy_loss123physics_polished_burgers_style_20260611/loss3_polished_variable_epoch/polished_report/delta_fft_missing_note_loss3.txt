@@ -1,0 +1,4 @@
+Darcy delta FFT plot was not generated for this run.
+Reason: attack_probe_samples.csv is missing or empty
+
+The Burgers-style delta FFT figure requires attack_probe_samples.csv plus per-epoch NPZ files under darcy/attack_probe_samples/. Re-run with --attack-probe-samples > 0 and --attack-probe-every-n-epochs 1; tools/run_darcy_loss123physics_full_logging_20260611.sh already sets this.

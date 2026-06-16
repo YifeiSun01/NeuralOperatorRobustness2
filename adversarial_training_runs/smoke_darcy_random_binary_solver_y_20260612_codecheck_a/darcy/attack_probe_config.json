@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "probe_indices": [
+    0,
+    3
+  ],
+  "probe_count": 2,
+  "save_every_n_epochs": 1,
+  "save_targets": true,
+  "epsilon_bucket_count": 5,
+  "epsilon_bucket_summary_csv": "adversarial_training_runs/smoke_darcy_random_binary_solver_y_20260612_codecheck_a/darcy/attack_epsilon_bucket_summary.csv",
+  "note": "For each epoch, these fixed training source indices are captured from the actual attacked training batch. NPZ files contain x_clean, x_adv, delta=x_adv-x_clean, optional y_clean/y_adv targets, and task-specific tensors such as NS2D x0_clean/x0_adv/delta_initial. Epsilon bucket summaries aggregate per-sample clean loss, attacked loss, and loss increase by epsilon jitter bucket."
+}

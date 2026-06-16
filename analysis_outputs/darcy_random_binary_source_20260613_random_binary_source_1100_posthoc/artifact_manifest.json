@@ -1,0 +1,12 @@
+{
+  "attack20_out_dir": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/attack20_52datasets_50samples",
+  "attack20_viz_dir": "visualizations/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/attack20_52datasets_50samples",
+  "clean_dataset_csv": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/clean_eval_by_model_dataset.csv",
+  "clean_split_csv": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/clean_eval_by_model_split.csv",
+  "elapsed_seconds": "874.433",
+  "jacobian5_out_dir": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/jacobian_probe_5gen",
+  "jacobian5_viz_dir": "visualizations/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/jacobian_probe_5gen",
+  "metric25_out_dir": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/metric_correlation_25samples",
+  "metric25_viz_dir": "visualizations/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/metric_correlation_25samples",
+  "summary_markdown": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/README.md"
+}

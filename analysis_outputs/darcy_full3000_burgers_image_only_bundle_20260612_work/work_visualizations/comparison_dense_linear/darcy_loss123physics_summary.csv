@@ -1,0 +1,5 @@
+method,run_dir,exists,epochs_completed,elapsed_minutes,logged_gen_dataset_count,logged_final_gen_relative_l2,full50_improved_count,full50_mean_delta,peak_allocated_gib
+loss1,analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/loss1,True,3000,243.97373849858317,50,0.0879285249890534,42,-0.003408375890198608,7.97359561920166
+loss2,analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/loss2,True,3000,265.8617398766165,50,0.0721530330257346,50,-0.01918386785351743,7.451113700866699
+loss3,analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/loss3,True,3000,231.59036421570005,50,0.0614064013481728,49,-0.02993049953107917,7.452836513519287
+physics,analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/stitched_runs/physics,True,3000,230.76368188954996,50,0.0878200611109463,41,-0.003516839768305746,7.452836513519287

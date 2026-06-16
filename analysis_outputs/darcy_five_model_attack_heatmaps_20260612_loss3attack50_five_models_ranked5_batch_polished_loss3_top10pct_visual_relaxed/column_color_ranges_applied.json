@@ -1,0 +1,33 @@
+{
+  "delta": {
+    "cmap": "coolwarm",
+    "vmax": 9.0,
+    "vmin": -9.0
+  },
+  "initial + delta": {
+    "cmap": "viridis",
+    "vmax": 12.0,
+    "vmin": 3.0
+  },
+  "initial condition": {
+    "cmap": "viridis",
+    "vmax": 12.0,
+    "vmin": 3.0
+  },
+  "model - solver": {
+    "cmap": "coolwarm",
+    "vmax": 0.005246233195066452,
+    "vmin": -0.005246233195066452
+  },
+  "model output": {
+    "cmap": "viridis",
+    "vmax": 0.02398761175572872,
+    "vmin": -0.0003033950924873352
+  },
+  "note": "Shared by column; model output and solver output share range.",
+  "solver output": {
+    "cmap": "viridis",
+    "vmax": 0.02398761175572872,
+    "vmin": -0.0003033950924873352
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "created_utc": "2026-06-13T20:54:27.072769+00:00",
+  "models_expected": [
+    "baseline",
+    "loss1",
+    "loss2",
+    "loss3",
+    "physics_loss",
+    "random_clean_y",
+    "random_solver_y"
+  ],
+  "dataset_count_expected": 52,
+  "outputs": {
+    "dataset52_model7_clean_attack20": "analysis_outputs/darcy_all_model_full_statistics_20260613/dataset52_model7_clean_attack20.csv",
+    "split_model7_clean_attack20_summary": "analysis_outputs/darcy_all_model_full_statistics_20260613/split_model7_clean_attack20_summary.csv",
+    "metric25_model7_summary": "analysis_outputs/darcy_all_model_full_statistics_20260613/robustness_metric25_model7_summary.csv",
+    "metric25_model6_sample_rows": "analysis_outputs/darcy_all_model_full_statistics_20260613/robustness_metric25_model6_sample_rows.csv",
+    "metric25_correlations": "analysis_outputs/darcy_all_model_full_statistics_20260613/robustness_metric25_correlations.csv",
+    "jacobian5_model7_summary": "analysis_outputs/darcy_all_model_full_statistics_20260613/robustness_jacobian5_model7_summary.csv",
+    "winner_summary": "analysis_outputs/darcy_all_model_full_statistics_20260613/winner_summary_by_metric.csv",
+    "coverage": "analysis_outputs/darcy_all_model_full_statistics_20260613/metric_coverage_by_model.csv"
+  },
+  "source_tables": {
+    "clean_dataset": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_clean_by_dataset.csv",
+    "clean_split": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_clean_by_split.csv",
+    "attack_dataset": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_attack20_by_dataset_model.csv",
+    "attack_split": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_attack20_by_split.csv",
+    "metric25_means": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_model_means.csv",
+    "metric25_samples": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_samples.csv",
+    "metric25_correlations": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_correlations.csv",
+    "jacobian5_means": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_jacobian5_model_means.csv"
+  },
+  "important_note": "Clean metrics cover 52 datasets x 7 models. Existing robustness artifacts cover 6 models; baseline robustness is marked not_computed_in_existing_artifacts."
+}

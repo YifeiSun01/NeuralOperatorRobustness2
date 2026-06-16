@@ -1,0 +1,13 @@
+# Darcy 50-Generalization Corrected Curves
+
+Derived from stage1 + stage2 eval_metrics.csv files. Raw logs were not overwritten.
+Each page has 25 generalization datasets; rows bridged near the optimizer restart boundary are flagged in the CSV.
+
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/rmse_generalization_part01_vs_epoch.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/rmse_generalization_part02_vs_epoch.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/rmse_generalization_part01_vs_work.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/rmse_generalization_part02_vs_work.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/relative_l2_generalization_part01_vs_epoch.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/relative_l2_generalization_part02_vs_epoch.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/relative_l2_generalization_part01_vs_work.png`
+- `outputs/darcy_generalization50_artifact_corrected_20260614/figures/previous_style_corrected/relative_l2_generalization_part02_vs_work.png`

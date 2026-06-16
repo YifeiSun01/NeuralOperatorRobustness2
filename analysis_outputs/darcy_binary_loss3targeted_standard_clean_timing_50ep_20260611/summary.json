@@ -1,0 +1,10 @@
+{
+  "epochs": 50,
+  "total_wall_seconds": 60.29912019299809,
+  "mean_epoch_total_seconds": 1.2059592296805932,
+  "mean_train_seconds": 0.21181458144157658,
+  "mean_eval_seconds": 0.9941446482390165,
+  "estimated_500_epoch_seconds": 602.9796148402966,
+  "estimated_500_epoch_minutes": 10.049660247338275,
+  "setup": "baseline initialized, original train first 64, microbatch 32, MSE clean y labels, eval train/test + first 8 generated each epoch, no attack, no solver relabel, no checkpoint saves"
+}

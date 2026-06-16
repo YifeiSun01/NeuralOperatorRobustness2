@@ -1,0 +1,59 @@
+{
+  "updated_at": "2026-06-14T11:34:04.457374+00:00",
+  "state": "complete",
+  "runs": [
+    {
+      "method": "random_clean",
+      "stage": "base_3000",
+      "run_dir": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_3000ep_full50_20260614_random_binary_source_3000_supervised",
+      "target_epoch": 3000,
+      "train_rows": 3000,
+      "train_max_epoch": 3000,
+      "summary_exists": true,
+      "summary_final_epoch": 3000,
+      "final_checkpoint": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_3000ep_full50_20260614_random_binary_source_3000_supervised/darcy/checkpoints/darcy_epoch3000_step003000.pt",
+      "done": true,
+      "optimizer_state_present": true
+    },
+    {
+      "method": "random_solver",
+      "stage": "base_3000",
+      "run_dir": "adversarial_training_runs/darcy_binary_random_binary_solver_y_3000ep_full50_20260614_random_binary_source_3000_supervised",
+      "target_epoch": 3000,
+      "train_rows": 3000,
+      "train_max_epoch": 3000,
+      "summary_exists": true,
+      "summary_final_epoch": 3000,
+      "final_checkpoint": "adversarial_training_runs/darcy_binary_random_binary_solver_y_3000ep_full50_20260614_random_binary_source_3000_supervised/darcy/checkpoints/darcy_epoch3000_step003000.pt",
+      "done": true,
+      "optimizer_state_present": true
+    },
+    {
+      "method": "random_clean",
+      "stage": "continue_to3500",
+      "run_dir": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_continue_to3500_from_3000_20260614_supervised",
+      "target_epoch": 3500,
+      "train_rows": 500,
+      "train_max_epoch": 3500,
+      "summary_exists": true,
+      "summary_final_epoch": 3500,
+      "final_checkpoint": "adversarial_training_runs/darcy_binary_random_binary_fixed_y_continue_to3500_from_3000_20260614_supervised/darcy/checkpoints/darcy_epoch3500_step003500.pt",
+      "done": true,
+      "optimizer_state_present": true
+    },
+    {
+      "method": "random_solver",
+      "stage": "continue_to3500",
+      "run_dir": "adversarial_training_runs/darcy_binary_random_binary_solver_y_continue_to3500_from_3000_20260614_supervised",
+      "target_epoch": 3500,
+      "train_rows": 500,
+      "train_max_epoch": 3500,
+      "summary_exists": true,
+      "summary_final_epoch": 3500,
+      "final_checkpoint": "adversarial_training_runs/darcy_binary_random_binary_solver_y_continue_to3500_from_3000_20260614_supervised/darcy/checkpoints/darcy_epoch3500_step003500.pt",
+      "done": true,
+      "optimizer_state_present": true
+    }
+  ],
+  "figures_dir": "outputs/darcy_sir20_required_figures_only_20260614/figures"
+}

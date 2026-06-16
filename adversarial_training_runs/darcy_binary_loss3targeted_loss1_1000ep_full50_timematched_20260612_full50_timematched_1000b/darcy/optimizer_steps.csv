@@ -1,0 +1,3 @@
+task,epoch,attack_global_step,optimizer_global_step,local_batch_idx,microbatch_idx,attack_batch_size,optimizer_batch_size,configured_optimizer_batch_size,train_loss_on_adv_microbatch,grad_norm,optimizer_wall_sec,cuda_allocated_mb,cuda_reserved_mb,cuda_peak_allocated_mb
+darcy,1,1,1,1,1,64,32,32,2.8443308153214275e-08,3.366250390822821e-05,0.25315186398802325,3624.24658203125,7404.0,5452.64404296875
+darcy,1,1,2,1,2,64,32,32,1.8405261243970017e-06,0.003084126380075946,0.12335546399117447,3624.24658203125,7406.0,5452.64404296875

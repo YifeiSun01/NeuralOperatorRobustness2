@@ -1,0 +1,56 @@
+{
+  "created_utc": "20260612_090517_UTC",
+  "expected_generalization_datasets_per_task": 50,
+  "expected_eval_datasets_per_pass": 52,
+  "smoke_reference_summary": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/smoke_darcy_random_binary_fixed_y_fullbatch_20260612_codecheck_a/summary.json",
+  "tasks": [
+    {
+      "task": "darcy",
+      "baseline_checkpoint": {
+        "path": "/workspace/NeuralOperatorRobustness2/2D_Darcy_FNO2d/saved_models/2D/darcy_N1500_nx85_m64_w60_e500_20260528/best.pt",
+        "checkpoint_role": "best",
+        "note": "Darcy best checkpoint."
+      },
+      "full_train_dataset_samples": 1200,
+      "train_max_samples": 64,
+      "effective_train_samples": 64,
+      "batch_size": 64,
+      "attack_batch_size": 64,
+      "optimizer_batch_size": 32,
+      "optimizer_microbatches_per_full_attack_batch": 2,
+      "optimizer_steps_per_epoch": 2,
+      "total_optimizer_steps": 2,
+      "epochs": 1,
+      "attack_method": "binary_steepest_replace",
+      "attack_steps": 1,
+      "epsilon_fraction": 0.025,
+      "epsilon_abs": 0.0,
+      "alpha_ratio": 1.0,
+      "alpha_jitter_low": 1.0,
+      "alpha_jitter_high": 1.0,
+      "full_solver_gradient": true,
+      "batches_per_epoch": 1,
+      "total_train_steps": 1,
+      "evaluation_schedule": "every_epoch",
+      "eval_every_steps": 1,
+      "eval_steps_after_baseline": [
+        1
+      ],
+      "eval_pass_count_including_baseline": 2,
+      "checkpoint_every_epochs": 1,
+      "checkpoint_every_fraction": null,
+      "checkpoint_every_steps": 1,
+      "checkpoint_steps": [
+        1
+      ],
+      "eval_dataset_count_per_pass": 52,
+      "estimated_train_seconds_from_smoke": 2.092212199990172,
+      "estimated_eval_seconds_from_smoke_scaled_to_52_datasets": 17.740894002228742,
+      "estimated_total_seconds_from_smoke": 19.833106202218914,
+      "estimated_total_minutes_from_smoke": 0.3305517700369819,
+      "smoke_peak_cuda_allocated_mb": 5243.01953125
+    }
+  ],
+  "estimated_total_seconds_from_smoke": 19.833106202218914,
+  "estimated_total_minutes_from_smoke": 0.3305517700369819
+}

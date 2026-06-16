@@ -92,9 +92,7 @@ Observed latest Burgers batch: loss1 epoch8000 `2500:3000`, `54.2218s`, final lo
 
 Inference: Burgers p2q2 pilot has not blown GPU memory and is progressing normally. At the current batch rate, expected completion is roughly `55-65` minutes after this check, plus small final FFT/write overhead.
 
-Observed Darcy Flow status: `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/summary.json` exists and reports finished UTC `20260607_200325_UTC`, `epochs=500`, final checkpoint `adversarial_training_runs/darcy_lossdrop50_loss3_500ep_fromscreen_20260607/darcy/checkpoints/darcy_epoch500_step002000.pt`, total wall `4975.1246s` (`82.9187 min`). Darcy peak allocated CUDA memory was `9335.814 MB`, current allocated at finish `3626.451 MB`, reserved `11288 MB`.
-
-Inference: Darcy Flow completed normally before this Burgers status check and did not remain active while the current Burgers p2q2 pilot was using ~30 GiB.
+Old-root Darcy status text was removed from this Burgers report; it is not part of the current binary 20260611 Darcy/SIR20 analysis.
 
 ## Status Check And Resume Preparation - 2026-06-07T22:28:42Z
 

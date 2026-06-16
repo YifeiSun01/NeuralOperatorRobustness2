@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-06-13T21:53:45+00:00",
+  "tag": "20260613_7model_complete_missing_metrics",
+  "attack_steps": 20,
+  "epsilon_fraction": 0.025,
+  "max_samples": 25,
+  "models": [
+    "baseline"
+  ],
+  "block_row_chunk": 64,
+  "device": "cuda"
+}

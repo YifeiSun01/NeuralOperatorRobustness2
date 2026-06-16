@@ -1,0 +1,62 @@
+{
+  "basis": "actual targeted Darcy 100-epoch runs for loss1/loss2/loss3; 50-epoch benchmark for standard clean 64-sample training with same per-epoch eval",
+  "loss3_500_wall_seconds": 907.3932847899414,
+  "loss3_500_wall_minutes": 15.12322141316569,
+  "loss3_500_wall_hours": 0.25205369021942814,
+  "standard_clean_500_wall_seconds": 602.9796148402966,
+  "standard_clean_500_wall_minutes": 10.049660247338275,
+  "loss3_500_plus_standard_clean_500_seconds": 1510.372899630238,
+  "loss3_500_plus_standard_clean_500_minutes": 25.172881660503965,
+  "rows": [
+    {
+      "method": "loss1",
+      "measured_epochs": 100,
+      "measured_total_wall_seconds": 180.4986250489892,
+      "seconds_per_epoch_total_wall": 1.804986250489892,
+      "estimated_500_epoch_seconds": 902.493125244946,
+      "estimated_500_epoch_minutes": 15.041552087415766,
+      "epochs_in_loss3_500_wall_time": 502.7147905108227
+    },
+    {
+      "method": "loss2",
+      "measured_epochs": 100,
+      "measured_total_wall_seconds": 176.88566888700007,
+      "seconds_per_epoch_total_wall": 1.7688566888700006,
+      "estimated_500_epoch_seconds": 884.4283444350003,
+      "estimated_500_epoch_minutes": 14.740472407250005,
+      "epochs_in_loss3_500_wall_time": 512.9829287468234
+    },
+    {
+      "method": "loss3",
+      "measured_epochs": 100,
+      "measured_total_wall_seconds": 181.47865695798828,
+      "seconds_per_epoch_total_wall": 1.8147865695798828,
+      "estimated_500_epoch_seconds": 907.3932847899414,
+      "estimated_500_epoch_minutes": 15.12322141316569,
+      "epochs_in_loss3_500_wall_time": 500.0
+    },
+    {
+      "method": "standard_clean_64_with_same_eval",
+      "measured_epochs": 50,
+      "measured_total_wall_seconds": 60.29912019299809,
+      "seconds_per_epoch_total_wall": 1.2059592296805932,
+      "estimated_500_epoch_seconds": 602.9796148402966,
+      "estimated_500_epoch_minutes": 10.049660247338275,
+      "epochs_in_loss3_500_wall_time": 752.4245119217429
+    },
+    {
+      "method": "standard_clean_64_train_only_no_eval",
+      "measured_epochs": 50,
+      "measured_total_wall_seconds": "train component only",
+      "seconds_per_epoch_total_wall": 0.21181458144157658,
+      "estimated_500_epoch_seconds": 105.9072907207883,
+      "estimated_500_epoch_minutes": 1.7651215120131383,
+      "epochs_in_loss3_500_wall_time": 4283.903773830706
+    }
+  ],
+  "notes": [
+    "Loss1/loss2/loss3 estimates include the same adversarial_training.py per-epoch eval load used in the 100-epoch probes.",
+    "Standard clean estimate includes the same train/test+8 generated per-epoch eval load but no attack, no solver relabeling, and no checkpoint writes.",
+    "If standard clean is train-only with no eval, use the train-only row; it is much faster."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "created_utc": "2026-06-13T10:51:00.557538+00:00",
+  "purpose": "Merge old Darcy adversarial artifacts with the two new random-source models without rerunning old jobs.",
+  "old_artifacts_reused": {
+    "clean": "analysis_outputs/darcy_full3000_burgers_image_only_bundle_20260612_work/work_visualizations/comparison_dense/darcy_full50_eval_merged.csv",
+    "attack20_split": "analysis_outputs/darcy_attack20_52datasets_50samples_20260612_attack20_1000c_52datasets_50samples/summary_by_model_split.csv",
+    "attack20_dataset": "analysis_outputs/darcy_attack20_52datasets_50samples_20260612_attack20_1000c_52datasets_50samples/summary_by_dataset_model.csv",
+    "metric25_means": "analysis_outputs/darcy_metric_correlation_25samples_20260612_25samples_loss3attack20_corr_chunk64/model_metric_means.csv",
+    "metric25_samples": "analysis_outputs/darcy_metric_correlation_25samples_20260612_25samples_loss3attack20_corr_chunk64/metrics_by_model_sample.csv",
+    "metric25_correlations": "analysis_outputs/darcy_metric_correlation_25samples_20260612_25samples_loss3attack20_corr_chunk64/correlations.csv",
+    "jacobian5": "analysis_outputs/darcy_jacobian_probe_5gen_20260612_jacobian_5gen_1000c/summary_by_model.csv"
+  },
+  "random_artifacts_new": {
+    "posthoc_root": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc",
+    "clean_dataset": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/clean_eval_by_model_dataset.csv",
+    "attack20_split": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/attack20_52datasets_50samples/summary_by_model_split.csv",
+    "attack20_dataset": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/attack20_52datasets_50samples/summary_by_dataset_model.csv",
+    "metric25_samples": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/metric_correlation_25samples/metrics_by_model_sample.csv",
+    "metric25_correlations": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/metric_correlation_25samples/correlations.csv",
+    "jacobian5": "analysis_outputs/darcy_random_binary_source_20260613_random_binary_source_1100_posthoc/jacobian_probe_5gen/summary_by_model.csv"
+  },
+  "outputs": {
+    "clean_by_dataset": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_clean_by_dataset.csv",
+    "clean_by_split": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_clean_by_split.csv",
+    "attack20_by_split": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_attack20_by_split.csv",
+    "attack20_by_dataset_model": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_attack20_by_dataset_model.csv",
+    "metric25_model_means": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_model_means.csv",
+    "metric25_samples": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_samples.csv",
+    "metric25_correlations": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_metric25_correlations.csv",
+    "jacobian5_model_means": "analysis_outputs/darcy_six_model_random_source_report_20260613/six_model_jacobian5_model_means.csv"
+  },
+  "notes": [
+    "Old robustness/Jacobian artifacts include loss1/loss2/loss3/physics, not baseline.",
+    "Old clean evaluation includes baseline/loss1/loss2/loss3/physics.",
+    "Random fixed-y is reported as random_clean_y.",
+    "Random solver-y is reported as random_solver_y."
+  ]
+}

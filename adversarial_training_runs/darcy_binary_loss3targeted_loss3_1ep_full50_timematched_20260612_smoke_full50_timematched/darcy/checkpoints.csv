@@ -1,0 +1,2 @@
+task,epoch,global_step,progress_fraction,checkpoint_path,eval_wall_sec,checkpoint_reason,checkpoint_wall_target_seconds,wall_elapsed_seconds
+darcy,1,1,1.0,adversarial_training_runs/darcy_binary_loss3targeted_loss3_1ep_full50_timematched_20260612_smoke_full50_timematched/darcy/checkpoints/darcy_epoch001_step000001.pt,3.3484252500056755,final,,7.308253625000361
