@@ -1,0 +1,235 @@
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage{aaai2027}  % DO NOT CHANGE THIS
+
+\nocopyright
+
+% AAAI-compatible packages.
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\urlstyle{rm}
+\def\UrlFont{\rm}
+
+\title{Solver-Integrated Adversarial Attacking and Training of Neural Operators}
+
+\author{
+  Yifei Sun\textsuperscript{\dag}
+}
+\affiliations{}
+
+\begin{document}
+
+\maketitle
+\begingroup
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\footnotetext[2]{\textsuperscript{\dag} Corresponding author. Email: \texttt{yifeisun@umich.edu}.}
+\endgroup
+
+\begin{abstract}
+Neural operators are commonly evaluated as fast surrogates for numerical
+solvers, yet their generalization and robustness are often measured without
+fully using the solver that defines the underlying PDE solution map. This paper
+studies the solver-integrated setting in which a neural operator and a
+classical solver act as two operators on the same function space. We distinguish
+static generalization, measured by the discrepancy between the model and solver
+at a fixed input, from local robustness, measured by how this discrepancy
+changes under norm-bounded perturbations of the input function. From this view,
+we define an error operator and compare three robustness notions: adversarial
+maximization of the final solver-model error, local operator sensitivity through
+a Jacobian-like linearization, and a first-order Jacobian-error proxy that
+predicts the loss-increasing perturbation direction. The resulting analysis
+shows why attacks that only enlarge the neural operator output, or that keep
+the solver target fixed, can be inefficient for regression PDE problems: the
+model and solver may move together, leaving the true error nearly unchanged. We
+therefore propose solver-integrated adversarial attacks and training objectives
+that optimize the true perturbed discrepancy. Experiments on Burgers' equation,
+Darcy flow, and Navier--Stokes settings show that stronger solver integration
+finds more informative failure modes and improves both generalization and
+robustness, while exposing the computational cost of differentiating through
+time-dependent solvers.
+\end{abstract}
+
+\section{Introduction}
+
+Neural operators, including Fourier Neural Operators and DeepONets, have
+become a prominent approach for learning PDE solution maps from data
+\citep{li2021fourier,lu2021deeponet}. Their reliability under perturbations is
+now an active question. Classical adversarial learning studies motivate
+worst-case perturbation training and evaluation
+\citep{goodfellow2015explaining,madry2018towards,zhang2019trades,croce2020autoattack}.
+Adesoji and Chen evaluated adversarial robustness for
+Fourier Neural Operators by comparing perturbed predictions with PDE solver
+outputs \citep{adesoji2022evaluating}. StablePDENet formulates operator
+learning as a stability-aware min-max problem and uses adversarial training to
+improve fidelity under worst-case input perturbations
+\citep{huang2026stablepdenet}. Related work also includes adversarial-gradient
+sample movement for scientific machine learning and operator learning
+\citep{ouyang2025rams}, white-box residual-region refinement for PINNs
+\citep{shi2025wbar}, sparse gradient-free attacks on neural-operator
+digital twins \citep{roy2026vulnerabilities}, and active-learning plus
+denoising defenses for robust neural operators \citep{roy2026beyond}.
+Uncertainty-driven active operator learning is another adjacent line:
+Winovich et al. use predictive uncertainty to select PDE instances for
+additional solver labeling, while MRA-FNO chooses both input functions and
+simulation resolutions through a utility/cost acquisition rule
+\citep{winovich2025active,li2024mrafno}. These methods reduce the cost of
+solver-generated datasets and improve clean generalization, but their
+acquisition objectives are not worst-case perturbation attacks and do not
+maximize a solver-model discrepancy.
+Another adversarial line is generative rather than worst-case-perturbation
+based: Generative Adversarial Neural Operators learn function distributions
+\citep{rahman2022gano}, and adversarially trained neural operators have been
+used to recover sharper turbulent-flow structures and energy spectra
+\citep{oommen2025turbulent}.
+
+This paper is also connected to the DeepONet and physics-informed neural
+operator line of work associated with Karniadakis and collaborators
+\citep{raissi2019physics,li2021pino,lu2021faircomparison,goswami2022physicsinformed}.
+That literature highlights operator learning, PDE residual information, and
+noise sensitivity, but the role of a numerical solver as a differentiable
+participant in both the forward and backward attack loop remains
+underexplored. Our focus is the solver-integrated regression setting: the
+adversary should enlarge the true perturbed discrepancy between the learned
+operator and the solver, rather than only moving the learned model output or
+using a fixed target.
+
+\section{Problem Setting}
+
+Let $\mathcal{X}$ and $\mathcal{Y}$ be Banach or Hilbert spaces of functions,
+for example spaces of initial conditions, coefficient fields, source terms,
+or solution fields on a spatial or space-time domain. An input is a function
+$a\in\mathcal{X}$ and an output is a function in $\mathcal{Y}$. We consider a
+learned neural operator
+\begin{equation}
+  F_\theta:\mathcal{X}\to\mathcal{Y}
+\end{equation}
+and a numerical solver or oracle
+\begin{equation}
+  G:\mathcal{X}\to\mathcal{Y}
+\end{equation}
+for the same PDE solution map. All perturbation budgets, energies, and
+errors are therefore norms of functions unless explicitly stated otherwise.
+For a norm $\|\cdot\|_{\mathcal{X},p}$ on the input space, the local
+perturbation set around $a$ is the function-space ball
+\begin{equation}
+  \mathcal{B}_{p,\varepsilon}(a)
+  =
+  \{a+\eta:\eta\in\mathcal{X},\ \|\eta\|_{\mathcal{X},p}\le\varepsilon\}.
+\end{equation}
+
+The finite-dimensional viewpoint is only the discretized realization of this
+operator-level formulation. After choosing a mesh or basis, $a$ and
+$F_\theta(a)$ are represented by vectors, and the operators become nonlinear
+maps between high-dimensional Euclidean spaces. In that representation,
+function norms are approximated by weighted vector norms, Frechet derivatives
+become Jacobian matrices, adjoint derivatives become transposed Jacobians, and
+induced operator norms become matrix norms such as spectral norms when
+$p=q=2$.
+
+\section{Solver-Integrated Metrics}
+
+The model-solver error operator is the map
+\begin{equation}
+  E_\theta := F_\theta - G,\qquad E_\theta:\mathcal{X}\to\mathcal{Y}.
+\end{equation}
+For a particular input function $u\in\mathcal{X}$, the corresponding error
+field is the value of this operator,
+\begin{equation}
+  e_\theta[u] := E_\theta(u)=F_\theta(u)-G(u)\in\mathcal{Y}.
+\end{equation}
+Thus $E_\theta$ is the operator, $e_\theta[u]$ is an output function, and the
+vector of sampled error values appears only after discretization. Static
+generalization at an input function $u$ is
+\begin{equation}
+  \mathcal{L}_{\mathrm{gen}}(u)
+  =
+  \|e_\theta[u]\|_{\mathcal{Y},q}
+  =
+  \|F_\theta(u)-G(u)\|_{\mathcal{Y},q}.
+\end{equation}
+It measures the model-solver discrepancy at a fixed function. Local
+robustness instead asks how large the same discrepancy can become in a
+neighborhood of that function:
+\begin{equation}
+  R_{\varepsilon,p,q}(u)
+  =
+  \sup_{\|\eta\|_{\mathcal{X},p}\le\varepsilon}
+  \|e_\theta[u+\eta]\|_{\mathcal{Y},q}.
+\end{equation}
+
+If $E_\theta$ is Frechet differentiable at $u$, then for small perturbations
+\begin{equation}
+  e_\theta[u+\eta]
+  =
+  e_\theta[u]+D E_\theta[u](\eta)+o(\|\eta\|_{\mathcal{X}}),
+\end{equation}
+where $D E_\theta[u]:\mathcal{X}\to\mathcal{Y}$ is a bounded linear operator.
+This gives the local operator-sensitivity metric
+\begin{equation}
+  \|D E_\theta[u]\|_{p\to q}
+  =
+  \sup_{\|\eta\|_{\mathcal{X},p}\le 1}
+  \|D E_\theta[u](\eta)\|_{\mathcal{Y},q}.
+\end{equation}
+In a discretized Hilbert-space setting with $p=q=2$, this is the spectral
+norm of the error Jacobian. It measures the largest local change of the
+error, not necessarily the largest final error.
+
+For the squared Hilbert norm
+$\Phi(u)=\frac{1}{2}\|e_\theta[u]\|_{\mathcal{Y}}^2$, the first variation is
+\begin{align}
+  D\Phi[u](\eta)
+  &=
+  \langle e_\theta[u],D E_\theta[u](\eta)\rangle_{\mathcal{Y}}
+  \nonumber\\
+  &=
+  \langle D E_\theta[u]^*e_\theta[u],\eta\rangle_{\mathcal{X}},
+\end{align}
+where $D E_\theta[u]^*:\mathcal{Y}\to\mathcal{X}$ is the adjoint derivative.
+Thus the operator-level analogue of the finite-dimensional
+Jacobian-error vector is
+\begin{equation}
+  D E_\theta[u]^*e_\theta[u],
+\end{equation}
+which discretizes to $J_E(x)^\top e_\theta(x)$. This quantity incorporates both the
+local linearization and the current error direction, so it is a first-order
+proxy for the perturbation that increases the final solver-model discrepancy.
+
+This notation also separates three attack targets:
+\begin{align}
+  L_1(\eta) &= \|F_\theta(u+\eta)-F_\theta(u)\|_{\mathcal{Y},q},\\
+  L_2(\eta) &= \|F_\theta(u+\eta)-G(u)\|_{\mathcal{Y},q},\\
+  L_3(\eta) &= \|F_\theta(u+\eta)-G(u+\eta)\|_{\mathcal{Y},q}
+             =\|e_\theta[u+\eta]\|_{\mathcal{Y},q}.
+\end{align}
+Classical fixed-label attacks are closest to $L_2$-type objectives because
+the reference target is held fixed. In PDE regression, however, the solver
+output is itself a function of the perturbed input, so the solver-consistent
+objective is $L_3$.
+
+\section{Solver-Integrated Adversarial Attack}
+
+Write the attack objective and optimization procedure here.
+
+\section{Solver-Integrated Adversarial Training}
+
+Write the training objective and data-generation procedure here.
+
+\section{Experiments}
+
+Write the Burgers, Darcy flow, and Navier--Stokes experiments here.
+
+\section{Conclusion}
+
+Write the conclusion here.
+
+\bibliography{references}
+
+\end{document}

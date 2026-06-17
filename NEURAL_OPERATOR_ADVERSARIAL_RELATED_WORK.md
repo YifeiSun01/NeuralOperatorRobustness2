@@ -10,6 +10,7 @@ This file records the papers and discussion points we identified around neural o
 | Adversarial robustness evaluation | Yes | Attack trained model inputs | Solver may be used for data/eval | Close for attack/eval |
 | Physics-loss adversarial training | Yes | PGD maximizes PDE residual | No solver-in-the-loop | Very close baseline |
 | Solver-consistent adversarial training | Yes | PGD maximizes error vs numerical solution operator | Could use solver or cached solver labels | Our target direction |
+| Attack-only neural-operator digital twins | Yes | Sparse or gradient-free attacks on deployed surrogates | Solver may provide labels/evaluation references | Close for motivation, not training |
 | Active learning neural operator | Yes | Not adversarial; chooses new samples | Solver used to label selected samples | Related for data selection |
 
 The key distinction for our project is:
@@ -333,6 +334,31 @@ Relevant keywords:
 - multifidelity neural operator;
 - adaptive data acquisition for PDE surrogate models.
 
+### Key Papers Now Synced
+
+**Active operator learning with predictive uncertainty quantification for PDEs**
+by Winovich, Daneker, Lu, and Lin (arXiv:2503.03178) uses predictive
+uncertainty to select new PDE examples for labeling. The operator predicts a
+mean and uncertainty, typically through a Gaussian negative-log-likelihood
+training objective. Evaluation is based on clean prediction error,
+uncertainty calibration, and active-learning data efficiency, not adversarial
+robustness.
+
+The solver is relevant as the expensive label generator after a sample is
+selected. However, the acquisition rule is not solver-integrated: it selects
+high-uncertainty inputs rather than maximizing
+
+```math
+\|G_\theta(a+\delta)-S(a+\delta)\|.
+```
+
+**Multi-Resolution Active Learning of Fourier Neural Operators** by Li, Yu,
+Xing, Kirby, Narayan, and Zhe (arXiv:2309.16971) selects both input functions
+and simulation resolutions. Its acquisition rule is a utility/cost score based
+on probabilistic multi-resolution FNO uncertainty. It is a multi-fidelity,
+solver-cost-aware active-learning method, but it is not PGD-style adversarial
+attack or robustness training.
+
 ### Conceptual Relation
 
 Active learning is not adversarial training, but it is very relevant to our generated generalization datasets.
@@ -355,6 +381,35 @@ Possible loop:
 6. Retrain or fine-tune the neural operator.
 
 This gives a bridge between generalization evaluation and active learning.
+
+The distinction to preserve in the paper is:
+
+> Active-learning methods query where the model is uncertain or where the
+> expected information gain per solver cost is high. Solver-integrated
+> adversarial training queries or trains where the learned operator provably
+> deviates from the numerical solution operator under a controlled
+> perturbation budget.
+
+---
+
+## 5.1 Neural Operator Digital Twin Sparse Attacks
+
+**Paper**: Adversarial Vulnerabilities in Neural Operator Digital Twins:
+Gradient-Free Attacks on Nuclear Thermal-Hydraulic Surrogates  
+**Authors**: Samrendra Roy, Kazuma Kobayashi, Souvik Chakraborty,
+Rizwan-uddin, Syed Bahauddin Alam  
+**arXiv**: https://arxiv.org/abs/2603.22525
+
+This paper studies sparse, physically plausible, gradient-free attacks on
+neural-operator digital twins. Its main role for our paper is motivation:
+clean validation error can be small while sparse perturbations cause large
+field-level failures. It is primarily attack and vulnerability evaluation, not
+an adversarial-training method and not a solver-integrated training framework.
+
+It also analyzes sensitivity concentration through Jacobian column norms and
+an effective perturbation dimension. That diagnostic helps explain why sparse
+attacks can succeed, but the attack optimizer itself is gradient-free rather
+than a PGD/Jacobian attack.
 
 ---
 
@@ -382,6 +437,14 @@ StablePDENet introduces an adversarial training framework for physics-informed n
 
 Generative Adversarial Neural Operators generalize GANs to infinite-dimensional function spaces by pairing a generator neural operator with a discriminator neural functional. This line of work uses adversarial objectives to learn distributions over functions, rather than to perform PGD-style robustness training for PDE solution operators. Similarly, recent adversarially trained neural operators for turbulent-flow super-resolution and forecasting use adversarial losses to improve realism and high-frequency recovery. These GAN-style objectives are related but distinct from worst-case input perturbation robustness.
 
+Uncertainty-driven active operator learning is another adjacent direction.
+Winovich et al. select high-uncertainty PDE instances for additional solver
+evaluation, while MRA-FNO selects both input functions and solver resolutions
+using a utility/cost acquisition rule. These works reduce the cost of
+solver-generated datasets and improve clean generalization, but they do not
+construct norm-bounded worst-case perturbations or use model-solver
+discrepancy as the attack/training objective.
+
 In contrast, our work directly studies structured out-of-distribution generalization, worst-case operator sensitivity, and solver-consistent discrepancies for trained Fourier neural operators on Burgers, Darcy flow, and Navier-Stokes benchmarks. This setup allows us to compare physics-residual stability, output sensitivity, and solver-consistent error under controlled changes in initial-condition or coefficient distributions.
 
 ---
@@ -392,4 +455,7 @@ In contrast, our work directly studies structured out-of-distribution generaliza
 2. Chutian Huang, Chang Ma, Kaibo Wang, Yang Xiang. **StablePDENet: Enhancing Stability of Operator Learning for Solving Differential Equations**. arXiv:2601.06472, 2026. https://arxiv.org/abs/2601.06472
 3. **Evaluating Adversarial Robustness in Fourier Neural Operators**. arXiv:2204.04259. https://arxiv.org/abs/2204.04259
 4. Vivek Oommen, Siavash Khodakarami, Aniruddha Bora, Zhicheng Wang, George Em Karniadakis. **Learning Turbulent Flows with Generative Models: Super-resolution, Forecasting, and Sparse Flow Reconstruction**. arXiv:2509.08752, 2025. https://arxiv.org/abs/2509.08752
+5. Samrendra Roy, Kazuma Kobayashi, Souvik Chakraborty, Rizwan-uddin, Syed Bahauddin Alam. **Adversarial Vulnerabilities in Neural Operator Digital Twins: Gradient-Free Attacks on Nuclear Thermal-Hydraulic Surrogates**. arXiv:2603.22525, 2026. https://arxiv.org/abs/2603.22525
+6. Nick Winovich, Mitchell Daneker, Lu Lu, Guang Lin. **Active Operator Learning with Predictive Uncertainty Quantification for Partial Differential Equations**. arXiv:2503.03178, 2025. https://arxiv.org/abs/2503.03178
+7. Shibo Li, Xin Yu, Wei Xing, Mike Kirby, Akil Narayan, Shandian Zhe. **Multi-Resolution Active Learning of Fourier Neural Operators**. arXiv:2309.16971, 2024. https://arxiv.org/abs/2309.16971
 

@@ -418,6 +418,76 @@ arXiv 摘要中提到：
 
 ---
 
+## 7.1 Synchronized Active-Learning Notes: Winovich et al. and MRA-FNO
+
+This section synchronizes the newer active-learning papers with the rest of
+the literature review.
+
+### Active Operator Learning with Predictive UQ
+
+**Paper**: Active Operator Learning with Predictive Uncertainty Quantification
+for Partial Differential Equations  
+**Authors**: Nick Winovich, Mitchell Daneker, Lu Lu, Guang Lin  
+**arXiv**: https://arxiv.org/abs/2503.03178
+
+This paper is best cited as an uncertainty-driven active operator learning
+baseline. It equips DeepONet/FNO-style operator models with predictive
+uncertainty and uses that uncertainty to choose which PDE instances should be
+queried next.
+
+The key point for our paper is the solver distinction:
+
+```math
+\text{solver use in Winovich et al.} = \text{label generation after acquisition}.
+```
+
+It does not use a solver-discrepancy acquisition objective such as:
+
+```math
+\|G_\theta(a+\delta)-S(a+\delta)\|.
+```
+
+Evaluation focuses on clean prediction/generalization error, uncertainty
+calibration, and data efficiency. Typical metrics include MSE, MAE, relative
+\(L^1/L^2\) error, uncertainty coverage, predicted-vs-observed standard
+deviation, and active-learning error versus training-set size. It is not an
+adversarial robustness paper.
+
+### Multi-Resolution Active Learning of Fourier Neural Operators
+
+**Paper**: Multi-Resolution Active Learning of Fourier Neural Operators  
+**Authors**: Shibo Li, Xin Yu, Wei Xing, Mike Kirby, Akil Narayan,
+Shandian Zhe  
+**arXiv**: https://arxiv.org/abs/2309.16971
+
+MRA-FNO is a multi-fidelity active learning paper. It chooses both the input
+function and the simulation resolution, using a utility/cost acquisition rule
+derived from a probabilistic multi-resolution FNO. This makes it highly
+relevant for solver-cost-aware data acquisition.
+
+However, it is still not solver-integrated adversarial robustness. The solver
+is queried to produce selected labels at chosen resolutions, but the
+acquisition is not a PGD attack and does not optimize a worst-case
+model-solver discrepancy under an input perturbation budget.
+
+### Distinction From Our Paper
+
+Active-learning papers answer:
+
+```math
+\text{Which clean PDE instance should be labeled next?}
+```
+
+Our solver-integrated adversarial framework answers:
+
+```math
+\text{Which perturbation makes the neural operator deviate most from the solver?}
+```
+
+This distinction should be preserved whenever these papers are cited.
+
+---
+
 ## 8. 我们工作的空位
 
 从目前查到的文章来看，比较清楚的空位是：
@@ -450,4 +520,7 @@ StablePDENet is closer to our setting, as it formulates operator learning as a m
 2. Md Ashiqur Rahman, Manuel A. Florez, Anima Anandkumar, Zachary E. Ross, Kamyar Azizzadenesheli. **Generative Adversarial Neural Operators**. Transactions on Machine Learning Research, 2022. https://arxiv.org/abs/2205.03017
 3. Chutian Huang, Chang Ma, Kaibo Wang, Yang Xiang. **StablePDENet: Enhancing Stability of Operator Learning for Solving Differential Equations**. arXiv:2601.06472, 2026. https://arxiv.org/abs/2601.06472
 4. Vivek Oommen, Siavash Khodakarami, Aniruddha Bora, Zhicheng Wang, George Em Karniadakis. **Learning Turbulent Flows with Generative Models: Super-resolution, Forecasting, and Sparse Flow Reconstruction**. arXiv:2509.08752, 2025. https://arxiv.org/abs/2509.08752
+5. Samrendra Roy, Kazuma Kobayashi, Souvik Chakraborty, Rizwan-uddin, Syed Bahauddin Alam. **Adversarial Vulnerabilities in Neural Operator Digital Twins: Gradient-Free Attacks on Nuclear Thermal-Hydraulic Surrogates**. arXiv:2603.22525, 2026. https://arxiv.org/abs/2603.22525
+6. Nick Winovich, Mitchell Daneker, Lu Lu, Guang Lin. **Active Operator Learning with Predictive Uncertainty Quantification for Partial Differential Equations**. arXiv:2503.03178, 2025. https://arxiv.org/abs/2503.03178
+7. Shibo Li, Xin Yu, Wei Xing, Mike Kirby, Akil Narayan, Shandian Zhe. **Multi-Resolution Active Learning of Fourier Neural Operators**. arXiv:2309.16971, 2024. https://arxiv.org/abs/2309.16971
 

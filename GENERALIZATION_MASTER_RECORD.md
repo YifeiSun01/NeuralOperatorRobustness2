@@ -5,8 +5,8 @@ This Markdown file is the single record for the selected trained models, the gen
 ## Related Work Notes
 
 - Neural operator adversarial robustness has been studied, for example in `Evaluating Adversarial Robustness in Fourier Neural Operators` (`https://arxiv.org/abs/2204.04259`). This is close to adversarial attack/robustness evaluation for FNOs.
-- Adversarial objectives also appear in GAN-style neural-operator work, for example `Physics-informed Generative Adversarial Networks with Neural Operators` (`https://arxiv.org/abs/2205.03017`). This is adversarial learning in the GAN sense, not exactly PGD adversarial training.
-- Active-learning neural-operator work exists under keywords such as active learning for neural operators, adaptive sampling, uncertainty-guided operator learning, and multifidelity operator learning. The generated datasets here can support that direction by identifying which distribution shifts deserve new training samples.
+- Adversarial objectives also appear in GAN-style neural-operator work, for example `Generative Adversarial Neural Operators` (`https://arxiv.org/abs/2205.03017`) and Karniadakis/Oommen-style turbulent-flow `adv-NO` work (`https://arxiv.org/abs/2509.08752`). These are adversarial in the generator/discriminator or perceptual-loss sense, not PGD adversarial robustness.
+- Active-learning neural-operator work includes predictive-uncertainty acquisition (`https://arxiv.org/abs/2503.03178`) and multi-resolution FNO acquisition (`https://arxiv.org/abs/2309.16971`). These methods use solvers or simulations to label selected samples, but their acquisition objectives are uncertainty or utility/cost scores rather than solver-model adversarial discrepancy. The generated datasets here can support that direction by identifying which distribution shifts deserve new training samples.
 
 ## Selected Checkpoints
 

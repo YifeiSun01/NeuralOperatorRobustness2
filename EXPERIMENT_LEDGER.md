@@ -16446,3 +16446,461 @@ Changes:
 Outputs:
 - `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_available_rows.png`
 - `analysis_outputs/ns_external_forcing_summary_20260615/ns_external_forcing_attack_perturbation_uploaded_8row.png`
+
+## 2026-06-16 - Repository-wide article-structure synthesis
+
+Status: completed as a read-only experiment interpretation plus Markdown record;
+no numerical experiment, training, attack, SVD/Jacobian computation, plotting,
+GPU run, or artifact upload was performed.
+
+Question:
+- Read the repository at paper-planning level and recommend how to structure an
+  article: main stages, logical progression, innovation points, interesting
+  findings, main-vs-secondary content, and appendix placement.
+
+Observed from:
+- Repository scan found top-level source, docs, forensics, outputs,
+  visualizations, benchmark results, adversarial-training records, and generated
+  dataset records.
+- Key synthesis sources included
+  `docs/20260608_generalization_and_robustness_definitions.md`,
+  `NEURAL_OPERATOR_ADVERSARIAL_RELATED_WORK.md`,
+  `three_loss_objective_experiment_plan.md`,
+  `docs/burgers_final_resolution_audit_20260614.md`,
+  `docs/burgers_jte_spectral_attack_mechanism_summary_20260614.md`,
+  `docs/burgers_error_operator_svd_attack_paper_record_20260608.md`,
+  `docs/darcy_cflow_final_robustness_binary20260611_20260615.md`,
+  `docs/darcy_cflow_residual_correlation_interpretation_20260615.md`,
+  `docs/darcy_cflow_epsilon_sweep_full_record_20260615.md`,
+  `docs/darcy_cflow_model_solver_subspace_similarity_20260615.md`,
+  `docs/ns2d_loss3_adversarial_training_batch_probe_20260608.md`, and
+  `docs/ns_external_forcing_mean_perturbation_crops_20260615.md`.
+- Local `git status --short` could not be verified because the current
+  directory has no visible `.git` directory and `git status` returns
+  `not a git repository`.
+- A recursive PowerShell extension count encountered long/path-missing errors
+  under `2D_NS_FNO2d_recurrent/saved_models_expanded/...`; the earlier `rg
+  --files` scan and directory summaries were still usable for paper-level
+  source discovery.
+
+Inference from observed records:
+- The strongest paper framing is solver-consistent adversarial robustness for
+  neural operators, centered on the residual objective
+  `loss3 = ||F(x + delta) - S(x + delta)||`.
+- The article should first distinguish clean generalization, finite-budget
+  adversarial robustness, and infinitesimal/local residual-Jacobian robustness,
+  then show Burgers and Darcy/SIR20 evidence, and only then discuss optimizer
+  geometry and NS2D extensions.
+- Burgers and Darcy/SIR20 should be the main experimental evidence. NS2D is best
+  treated as scalability/extension and qualitative forcing-alignment evidence
+  unless missing raw tensors are restored.
+- GPI/replacement optimizer geometry is interesting but should be secondary to
+  the solver-consistency contribution.
+
+Output:
+- Created `docs/article_structure_recommendation_20260616.md`.
+
+Remaining work:
+- Choose the official main Burgers result family for the paper tables.
+- Regenerate final-checkpoint Darcy attack heatmaps before using them in a
+  polished main-figure release.
+- Restore missing NS external-forcing raw tensors if a complete NS visual claim
+  is needed.
+- Build a submission-ready claim-to-source table mapping every paper claim to
+  one exact CSV/Markdown artifact.
+
+## 2026-06-16 - Detailed conclusion audit and paper outline
+
+Status: completed as an experiment-record audit and paper-planning document; no
+numerical experiment, training run, adversarial attack, SVD/Jacobian
+computation, plotting job, GPU run, or artifact upload was performed.
+
+Question:
+- The user requested a much more detailed repository conclusion audit: read the
+  available conclusions carefully, judge which conclusions are important or
+  secondary, summarize experiment data, and write a detailed paper outline with
+  main-text versus appendix placement.
+
+Observed from:
+- Burgers final/audited records:
+  `docs/burgers_strict_latest_attack52_20260614.md`,
+  `docs/burgers_final_resolution_audit_20260614.md`,
+  `docs/burgers_protocol_confusion_audit_20260614.md`,
+  `docs/burgers_rerun_explanation_gap_status_20260614.md`,
+  `docs/burgers_metric_role_interpretation_20260614.md`,
+  `docs/burgers_all_metric_ranked_tables_20260614.md`,
+  `docs/burgers_three_dataset_generalization_robustness_unified_status_20260608.md`,
+  `docs/burgers_jte_spectral_attack_mechanism_summary_20260614.md`, and
+  `docs/burgers_robustness_numeric_snapshot_20260614.md`.
+- Darcy final/audited records:
+  `docs/darcy_cflow_final_robustness_binary20260611_20260615.md`,
+  `docs/darcy_cflow_final_metric_mean_std_20260615.md`,
+  `docs/darcy_cflow_attack50_per_dataset_ttests_20260615.md`,
+  `docs/darcy_cflow_clean_rmse_rell2_per_dataset_ttests_20260615.md`,
+  `docs/darcy_cflow_residual_jacobian_svd_20260615.md`,
+  `docs/darcy_cflow_epsilon_sweep_full_record_20260615.md`,
+  `docs/darcy_cflow_residual_correlation_interpretation_20260615.md`,
+  `docs/darcy_cflow_model_solver_subspace_similarity_20260615.md`, and
+  `docs/darcy_random_clean_vs_solver_y_interpretation_20260613.md`.
+- Loss/objective/optimizer records:
+  `three_loss_objective_experiment_plan.md`,
+  `docs/unified_eval_metric_three_panel_loss_curve_plots_20260516.md`,
+  `docs/loss3_gpi_overall_conclusion_20260520.md`,
+  `docs/loss3_surprising_findings_validation_20260520.md`, and
+  `docs/three_loss_burgers_optimizer_findings_summary_20260521.md`.
+- NS2D extension records:
+  `docs/ns2d_loss3_adversarial_training_batch_probe_20260608.md`,
+  `NS2D_GENERALIZATION_AND_REMAT_RECORD_20260530.md`,
+  `docs/ns2d_recurrent_eps32_alpha10_visual_fft_conclusions_20260522.md`,
+  `docs/ns_burgers_optimizer_winner_and_equivalence_summary_20260524.md`, and
+  `docs/ns_external_forcing_mean_perturbation_crops_20260615.md`.
+
+Observed evidence highlights:
+- Burgers strict current full-52 attack table is same-manifest/same-protocol
+  across six models. Loss3 has mean attack increase `0.00382075` versus
+  `0.00816719` for `random_solver_y`, and loss3 wins 52/52 dataset rows in the
+  strict attack comparison.
+- Burgers second-root evidence separates clean generalization and robustness:
+  loss1 wins 50/50 clean datasets, while loss3 wins 8916/10000 final attack MSE
+  rows and 8992/10000 attack-increase rows.
+- Darcy final attack50 seven-model table shows loss3 best on clean loss
+  `2.88169e-07`, adversarial loss `1.98716e-06`, and loss increase
+  `1.699e-06`. Generalization50 per-dataset t-tests show loss3 first 50/50 for
+  adversarial MSE and absolute loss increase, with BH significance 50/50.
+- Darcy residual-Jacobian SVD shows loss3 wins residual spectral norm 25/25,
+  residual JT error norm 20/25, attack adversarial loss 21/25, and attack loss
+  increase 21/25 on the fixed samples.
+- NS2D evidence supports the solver-consistent path and harder recurrent
+  optimizer geometry, but is less complete than Burgers/Darcy for main
+  quantitative claims.
+
+Inference from observed records:
+- The paper should be framed as a solver-consistent adversarial robustness and
+  residual-Jacobian mechanism paper, not as a raw optimizer paper.
+- Primary content should be: loss definitions, clean-vs-robustness distinction,
+  Burgers strict full-52 evidence, Darcy final attack50/epsilon-sweep evidence,
+  and residual-Jacobian/error-aligned sensitivity mechanism.
+- Secondary content should be: GPI/replacement optimizer geometry, random clean
+  versus random solver interpretation, and NS2D extension.
+- Appendix content should include full metric-role tables, protocol repair
+  details, per-dataset t-tests, full epsilon sweeps, optimizer PQ sweeps, NS2D
+  rematerialization/FFT details, and caveated screenshot-only forcing visuals.
+
+Output:
+- Created `docs/paper_conclusion_audit_and_outline_20260616.md`.
+
+Remaining work:
+- Build final paper figures directly from the audited CSV/JSON sources named in
+  the result records.
+- Decide whether NS2D remains an extension section or becomes a third full PDE
+  experiment after additional complete quantitative runs.
+- If claiming first-root Burgers robustness, run or locate the missing matched
+  full robustness/tag table.
+- Restore missing NS external-forcing raw tensors before using those visuals as
+  quantitative evidence.
+
+## 2026-06-16 - Paper framing correction: solver-integrated attack and training
+
+Status: completed as a paper-outline correction and source-backed framing
+update; no numerical experiment, training run, adversarial attack, SVD/Jacobian
+computation, plotting job, GPU run, or artifact upload was performed.
+
+Question:
+- The user pointed out that the previous article synthesis was still too narrow:
+  the paper should combine adversarial attack and adversarial training, loss
+  selection, model-solver evaluation metrics, clean/generalization versus
+  robustness definitions, local Jacobian/Frechet/operator diagnostics, optimizer
+  choices, and path/walk behavior under one framework.
+
+Observed from:
+- Existing final evidence already used in the prior audit:
+  Burgers strict full-52 records, Darcy final attack50/residual-Jacobian records,
+  loss1/loss2/loss3 objective records, and NS2D extension records.
+- Additional adversarial-training and framework records:
+  `docs/adversarial_training_discussion_record_20260531.md`,
+  `docs/loss_objective_direction_experiments_error_operator_framework_20260608.md`,
+  `docs/burgers_p2q2_loss123_offmanifold_gradient_input_similarity_report_20260604.md`,
+  `docs/analytic_solution_hierarchy_for_delta_objectives_20260516.md`,
+  `docs/loss3_direction_rotation_path_fno_nu0p001_result_20260516.md`,
+  `docs/loss3_jacobian_subspace_rotation_path_fno_nu0p001_result_20260516.md`,
+  and `docs/loss3_path_geometry_theory_and_angle_evidence_20260517.md`.
+
+Observed evidence highlights:
+- The Burgers adversarial-training diagnostics separate the attack-generation
+  objective from the training update target. After attack generation, training
+  can still use recomputed solver labels at the attacked/transformed input.
+- Raw loss3 can be a strong attack objective but a bad raw training sample
+  generator when it creates off-manifold, peak-like `x_adv` values.
+- In the quick gradient-alignment probe, generalization cosine was loss1
+  `0.354882`, loss2 `0.339495`, raw loss3 `-0.139242`, loss3 clip `0.599662`,
+  and loss3 lowpass+clip `0.599222`.
+- In the one-epoch replay, generated/generalization RMSE moved from `0.017073`
+  to loss1 `0.009742`, loss2 `0.014452`, raw loss3 `0.022311`, and loss3 clip
+  `0.010765`.
+- In the 50-step replay, generalization RMSE was loss1_raw `0.009523`,
+  loss2_raw `0.017677`, loss3_raw `0.030958`, and loss3_lowpass_clip01
+  `0.008096`.
+- Walk/path diagnostics along `x_t = x_0 + t delta*` show that clean-point
+  residual-Jacobian geometry can rotate and steepen along a finite attack path:
+  endpoint clean-reference top direction angle about `57` degrees, and
+  residual `sigma1` growing from about `0.868` at `t=0` to about `8.495` at
+  `t=1` in the audited Burgers/FNO path diagnostic.
+
+Inference from observed records:
+- The corrected paper title/framing should be
+  `Solver-Integrated Adversarial Attack and Training of Neural Operators`.
+- Loss3/residual-Jacobian remains a central mechanism, but the larger paper is
+  a framework paper: what to measure, what attack loss to use, how to optimize
+  the attack, how adversarial examples should be transformed/targeted for
+  training, and how to judge clean/generalization versus robustness.
+- The paper should explicitly distinguish attack strength from training utility.
+  A strong attack can produce harmful training updates if it leaves the
+  physically/data-relevant input manifold.
+- Walk/path diagnostics should be used to bridge local Jacobian/Frechet
+  robustness and finite-budget attack behavior.
+
+Output:
+- Updated `docs/paper_conclusion_audit_and_outline_20260616.md` to use the
+  corrected solver-integrated attack-and-training framework, including
+  attack/training loss separation, raw-loss3 failure modes, clipping/lowpass
+  training variants, and path/walk residual-Jacobian geometry.
+
+Remaining work:
+- Decide which adversarial-training variants deserve main-text figures.
+- Decide whether walk/path geometry is a main mechanism figure or appendix.
+- Build the final framework diagram showing solver-integrated attack,
+  adversarial training, and evaluation metrics in one loop.
+
+## 2026-06-16 - Read `main.tex` for paper-framework lessons
+
+Status: completed as a read-only paper-draft inspection plus Markdown outline
+update; no numerical experiment, training run, adversarial attack, SVD/Jacobian
+computation, plotting job, GPU run, or artifact upload was performed.
+
+Question:
+- The user asked to read the main text file and judge whether it contains ideas
+  worth learning from for the paper structure.
+
+Observed from:
+- Root LaTeX file: `main.tex`.
+- The file has 21078 lines and is a large research-note/manuscript draft rather
+  than a compact submission paper. It includes experiment plans, attack-loss
+  definitions, PGD/GPI derivations, local Lipschitz/operator-norm material,
+  related-work notes, and evaluation criteria for regression/continuous-output
+  attacks.
+
+Observed evidence highlights:
+- `main.tex` repeatedly separates loss/objective, gradient, update direction,
+  and projection. This is useful for explaining why PGD, LP-steepest PGD, and
+  GPI/replacement can share a gradient but still be different attack optimizers.
+- The local forms distinguish homogeneous and affine residual losses:
+  `L1(delta) ~= ||J_f delta||`,
+  `L2(delta) ~= ||b2 + J_f delta||`,
+  and `L3(delta) ~= ||b3 + (J_f - J_g) delta||`.
+- The fixed-target versus dynamic-target derivation shows that even if
+  `y = g(a0)` at the clean point, the gradients differ because the dynamic
+  solver target contributes `J_g`.
+- The local SVD section emphasizes that the difference operator must be formed
+  first as `J_f - J_g`; its singular values are not obtained by subtracting the
+  singular values of `J_f` and `J_g`.
+- The local Lipschitz section defines a clean metric hierarchy:
+  model sensitivity `||J_f||`, solver sensitivity `||J_g||`, and error-field
+  sensitivity `||J_f - J_g||`.
+- The evaluation-criteria section distinguishes input constraints from input
+  penalties and notes that continuous-output/PDE attacks need explicit
+  continuous metrics or numerical success thresholds, unlike classification
+  label-change attacks.
+
+Inference from observed records:
+- `main.tex` should be treated as a concept bank rather than copied as the final
+  paper order.
+- Its most useful ideas should be compressed into the framework and methods
+  sections of the proposed paper: loss/objective/gradient/update taxonomy,
+  homogeneous versus affine residual losses, fixed versus dynamic target
+  gradients, residual difference-operator SVD, local Lipschitz hierarchy, and
+  continuous-output evaluation criteria.
+
+Output:
+- Updated `docs/paper_conclusion_audit_and_outline_20260616.md` with a new
+  `Lessons From main.tex` section.
+
+Remaining work:
+- Convert the useful `main.tex` concept-bank material into a compact, coherent
+  manuscript methods section.
+- Rename/reframe the current `main.tex` title and structure before using it as a
+  submission draft.
+
+## 2026-06-17 - Adversarial training epsilon jitter audit
+
+Status: completed as a code/config inspection. No new experiment, adversarial
+attack run, training run, plotting job, GPU computation, or artifact upload was
+performed.
+
+Question:
+- The user asked whether adversarial training for loss1/loss2/loss3/physics
+  samples epsilon from a random range, and whether random methods have no
+  delta/epsilon.
+
+Observed from:
+- Source: `tools/adversarial_training.py`.
+- Configs:
+  `adversarial_training_runs/*/darcy/config.json` for Darcy loss1/loss2/loss3,
+  Darcy physics, and Darcy random-binary runs.
+- Configs:
+  `adversarial_training_runs/*/burgers/config.json` for the local Burgers
+  jitter runs.
+
+Observed evidence:
+- `compute_batch_eps(...)` supports per-sample uniform epsilon jitter when
+  `eps_jitter_low != eps_jitter_high`; otherwise it uses a fixed jitter factor.
+- `binary_darcy_replace_attack(...)` converts
+  `epsilon_fraction * jitter * n_pix` into a per-sample binary flip budget.
+- Darcy loss1/loss2/loss3/physics task configs inspected locally all use
+  `epsilon_fraction = 0.025`, `eps_jitter_low = 1.0`, and
+  `eps_jitter_high = 1.0`; therefore the local Darcy loss-objective comparison
+  used fixed epsilon/flip budgets.
+- The local Burgers runs
+  `burgers_p2q2_smoke_20260601` and
+  `burgers_zero_advonly_random_jitter_1000ep_bs480_steps5_eps5bucket_20260601`
+  use `eps_jitter_low = 0.75` and `eps_jitter_high = 1.25`; therefore those
+  runs used per-sample random epsilon jitter.
+- Darcy random-binary source runs use random flip fractions
+  `0.005..0.05` plus random kernel/alpha/lengthscale choices. They do not use
+  an adversarial gradient optimizer, but they still create a perturbation
+  `delta = x_random - x_clean`.
+- No local CSV files were found under `adversarial_training_runs`, so this
+  audit is based on source code and JSON records rather than per-epoch attack
+  batch CSV tables.
+
+Inference from observed records:
+- Loss objective and epsilon sampling are separate axes. Loss1/loss2/loss3/
+  physics do not automatically imply random epsilon.
+- The paper should describe epsilon randomization as an optional budget-sampling
+  mechanism. For the local Darcy loss1/loss2/loss3/physics comparison, the
+  correct description is fixed-budget adversarial training; for Darcy random
+  baselines, the correct description is random binary perturbation with sampled
+  flip fraction.
+
+Output:
+- Created `docs/adversarial_training_epsilon_jitter_audit_20260617.md`.
+
+Remaining work:
+- If per-epoch attack CSVs are restored from R2 or another machine, verify the
+  recorded `epsilon_min/mean/max` and epsilon-bucket summaries against these
+  config-based conclusions.
+
+## 2026-06-17 - Neural-operator adversarial related-work update
+
+Status: completed as a literature and local-file inspection. No numerical
+experiment, adversarial attack run, training run, plotting job, GPU computation,
+or artifact upload was performed.
+
+Question:
+- The user asked for adversarial training / adversarial attack papers related
+  to neural operators, especially the Brown / George Karniadakis group paper,
+  and asked whether that paper already appears in the local manuscript files.
+
+Observed from:
+- Local files:
+  `NEURAL_OPERATOR_ADVERSARIAL_RELATED_WORK.md`,
+  `NEURAL_OPERATOR_ADVERSARIAL_LITERATURE_REVIEW.md`, `main.tex`, and `docs/`.
+- Web sources:
+  arXiv records for `2204.04259`, `2205.03017`, `2509.08752`,
+  `2601.06472`, `2603.22525`, `2010.08895`, `1910.03193`,
+  `2111.03794`, `2111.05512`, `1412.6572`, `1706.06083`,
+  `1901.08573`, and `2003.01690`.
+
+Observed evidence:
+- The likely Brown/Karniadakis paper is Oommen, Khodakarami, Bora, Wang, and
+  Karniadakis, *Learning Turbulent Flows with Generative Models:
+  Super-resolution, Forecasting, and Sparse Flow Reconstruction*, arXiv
+  2509.08752. It reports `adv-NO`, an adversarially trained neural operator for
+  turbulent-flow super-resolution/forecasting.
+- That Karniadakis paper is already mentioned in
+  `NEURAL_OPERATOR_ADVERSARIAL_RELATED_WORK.md` and
+  `NEURAL_OPERATOR_ADVERSARIAL_LITERATURE_REVIEW.md`.
+- Exact local searches did not find `Oommen`, `Karniadakis`, `adv-NO`, or
+  `Learning Turbulent Flows` in `main.tex`.
+- `main.tex` does mention Roy et al., *Adversarial Vulnerabilities in Neural
+  Operator Digital Twins: Gradient-Free Attacks on Nuclear Thermal-Hydraulic
+  Surrogates*.
+- Directly relevant related-work categories are: FNO attack/evaluation
+  (Adesoji--Chen 2022), physics-residual adversarial training
+  (StablePDENet 2026), gradient-free neural-operator digital-twin attacks
+  (Roy et al. 2026), GAN-style neural operators (GANO 2022), and
+  Karniadakis `adv-NO` turbulent-flow generative modeling (Oommen et al. 2025).
+
+Inference from observed records:
+- The paper should cite Karniadakis `adv-NO`, but should explicitly distinguish
+  it from PGD-style worst-case input perturbation training.
+- The main manuscript `main.tex` likely needs a related-work update if it is to
+  be the submission draft, because several direct neural-operator adversarial
+  citations currently appear in local literature notes but not in the LaTeX
+  manuscript.
+
+Output:
+- Created `docs/neural_operator_adversarial_related_work_update_20260617.md`
+  with a citation map, paper-positioning notes, and a draft related-work
+  paragraph.
+
+Remaining work:
+- Integrate the citation map into `main.tex` and the BibTeX file once the final
+  manuscript structure and bibliography mechanism are chosen.
+
+## 2026-06-17 - Literature review full sync across manuscript notes
+
+Status: completed as a literature-document synchronization. No numerical
+experiment, adversarial attack run, adversarial training run, GPU computation,
+new table generation, or new empirical result was performed.
+
+Question:
+- The user asked to synchronize all literature-review related content across
+  the manuscript notes, Markdown files, and the paper notes bundle.
+
+Observed from:
+- Local files:
+  `NEURAL_OPERATOR_ADVERSARIAL_RELATED_WORK.md`,
+  `NEURAL_OPERATOR_ADVERSARIAL_LITERATURE_REVIEW.md`,
+  `GENERALIZATION_MASTER_RECORD.md`, root `main.tex`,
+  `docs/neural_operator_adversarial_related_work_update_20260617.md`,
+  and the files under `paper_literature_notes_bundle_20260617/`.
+
+Observed evidence:
+- The related-work files now consistently include Winovich et al. active
+  operator learning, MRA-FNO, GANO, Karniadakis/Oommen `adv-NO`, and Roy et al.
+  neural-operator digital-twin attacks.
+- The older note saying no Karniadakis-authored adversarial neural-operator
+  paper had been found was replaced with the verified citation to
+  Oommen/Karniadakis `adv-NO`, while preserving the distinction that it is
+  GAN/perceptual/generative-loss work rather than PGD-style robustness
+  training.
+- The root `main.tex` and the bundled `main.tex` now both contain the
+  active-learning and GAN/adversarial-loss distinctions.
+
+Inference from observed records:
+- The literature story is now synchronized around the central paper framing:
+  solver-integrated adversarial attack and training of neural operators, with
+  \(L_1/L_2/L_3\) as the loss taxonomy and \(L_3\) as the solver-consistent
+  perturbed model-solver discrepancy.
+- Active learning and GAN-style neural-operator papers should be cited as
+  adjacent/motivating work, not as prior solutions to solver-integrated
+  adversarial robustness.
+
+Output:
+- Created `docs/literature_review_full_sync_20260617.md`.
+- Updated:
+  `NEURAL_OPERATOR_ADVERSARIAL_RELATED_WORK.md`,
+  `NEURAL_OPERATOR_ADVERSARIAL_LITERATURE_REVIEW.md`,
+  `GENERALIZATION_MASTER_RECORD.md`, root `main.tex`,
+  `docs/neural_operator_adversarial_related_work_update_20260617.md`,
+  `paper_literature_notes_bundle_20260617/main.tex`,
+  `paper_literature_notes_bundle_20260617/structured_research_notes.md`, and
+  `paper_literature_notes_bundle_20260617/research_notes.md`.
+
+Remaining work:
+- Editorial compression remains: choose the final submission source, keep the
+  paper-by-paper taxonomy tables in appendices, and run a LaTeX compile/check
+  pass once the final manuscript file is selected.
+- A `git status --short` check from this workspace returned `fatal: not a git
+  repository (or any of the parent directories): .git`, so no git status
+  summary is available from the current directory state.
