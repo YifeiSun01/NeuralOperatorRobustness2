@@ -128,6 +128,26 @@ def load_step_tables(manifest_rows: list[dict[str, Any]]) -> tuple[dict[str, pd.
     return step_tables, attack_epoch_tables
 
 
+def load_probe_tables(manifest_rows: list[dict[str, Any]]) -> dict[str, pd.DataFrame]:
+    probe_tables: dict[str, pd.DataFrame] = {}
+    for row in manifest_rows:
+        method = row.get("method")
+        if method == "baseline" or not row.get("run_dir"):
+            continue
+        run_dir = resolve(str(row["run_dir"])) / "darcy"
+        probe_path = run_dir / "attack_probe_samples.csv"
+        work_path = run_dir / "work_clock_epoch_summary.csv"
+        if not probe_path.exists():
+            continue
+        df = pd.read_csv(probe_path)
+        if work_path.exists() and "epoch" in df:
+            work = pd.read_csv(work_path)[["epoch", "work_clock_cumulative_seconds"]].drop_duplicates("epoch", keep="last")
+            df = df.merge(work, on="epoch", how="left")
+        df["method"] = str(method)
+        probe_tables[str(method)] = df
+    return probe_tables
+
+
 def add_mse_columns(
     final_eval: pd.DataFrame,
     split_tables: dict[str, pd.DataFrame],
@@ -314,6 +334,200 @@ def plot_attack_loss_gain(x_axis: str, attack_tables: dict[str, pd.DataFrame], o
     return True
 
 
+def probe_npz_delta(row: pd.Series) -> np.ndarray:
+    path = resolve(str(row["npz_path"]))
+    z = np.load(path)
+    probe_ranks = z["probe_rank"].astype(int)
+    rank = int(row["probe_rank"])
+    matches = np.where(probe_ranks == rank)[0]
+    ordinal = int(matches[0]) if matches.size else 0
+    return np.squeeze(z["delta"][ordinal]).astype(np.float64, copy=False)
+
+
+def fft_log_power(delta: np.ndarray) -> np.ndarray:
+    arr = np.nan_to_num(np.squeeze(delta).astype(np.float64), copy=False)
+    if arr.ndim != 2:
+        arr = arr.reshape(arr.shape[0], -1)
+    centered = arr - float(np.mean(arr))
+    power = np.abs(np.fft.fftshift(np.fft.fft2(centered))) ** 2
+    return np.log1p(power)
+
+
+def radial_spectrum(delta: np.ndarray, bins: int = 40) -> tuple[np.ndarray, np.ndarray]:
+    power = fft_log_power(delta)
+    h, w = power.shape
+    yy, xx = np.indices((h, w), dtype=np.float64)
+    yy -= (h - 1) / 2.0
+    xx -= (w - 1) / 2.0
+    radius = np.sqrt(xx * xx + yy * yy)
+    radius /= max(float(radius.max()), 1e-12)
+    edges = np.linspace(0.0, 1.0, bins + 1)
+    values = np.zeros(bins, dtype=np.float64)
+    centers = 0.5 * (edges[:-1] + edges[1:])
+    for i in range(bins):
+        mask = (radius >= edges[i]) & (radius < edges[i + 1])
+        values[i] = float(np.mean(power[mask])) if np.any(mask) else float("nan")
+    return centers, values
+
+
+def latest_probe_rows(probe_tables: dict[str, pd.DataFrame]) -> dict[str, pd.Series]:
+    rows: dict[str, pd.Series] = {}
+    for method in TRAINING_METHODS:
+        df = probe_tables.get(method)
+        if df is None or df.empty or "npz_path" not in df:
+            continue
+        sub = df[df["npz_path"].astype(str).str.len() > 0].copy()
+        if sub.empty:
+            continue
+        sub["epoch_num"] = pd.to_numeric(sub["epoch"], errors="coerce")
+        latest_epoch = sub["epoch_num"].max()
+        sub = sub[sub["epoch_num"] == latest_epoch].copy()
+        gain_col = "attack_loss_gain_sample" if "attack_loss_gain_sample" in sub else "delta_l2_rms"
+        sub[gain_col] = pd.to_numeric(sub[gain_col], errors="coerce")
+        sub = sub.sort_values(gain_col, ascending=False)
+        rows[method] = sub.iloc[0]
+    return rows
+
+
+def plot_probe_spectral_stats(x_axis: str, probe_tables: dict[str, pd.DataFrame], out: Path) -> bool:
+    metrics = [
+        ("delta_l2_rms", "delta L2 RMS"),
+        ("delta_fft_high_freq_ratio", "FFT high-frequency ratio"),
+        ("delta_fft_spectral_centroid", "FFT spectral centroid"),
+        ("delta_total_variation", "total variation"),
+    ]
+    fig, axes = plt.subplots(2, 2, figsize=(12.5, 8.0), sharex=False)
+    axes = axes.reshape(-1)
+    plotted_any = False
+    for ax, (metric, label) in zip(axes, metrics):
+        plotted = False
+        for method in TRAINING_METHODS:
+            df = probe_tables.get(method)
+            if df is None or df.empty or metric not in df:
+                continue
+            x_col = x_column(df, x_axis)
+            if x_col is None:
+                continue
+            sub = df[[x_col, metric]].copy()
+            sub[x_col] = pd.to_numeric(sub[x_col], errors="coerce")
+            sub[metric] = pd.to_numeric(sub[metric], errors="coerce")
+            sub = sub.replace([np.inf, -np.inf], np.nan).dropna()
+            if sub.empty:
+                continue
+            grouped = sub.groupby(x_col, as_index=False)[metric].mean().sort_values(x_col)
+            ax.plot(grouped[x_col], grouped[metric], color=COLORS[method], linewidth=1.05, alpha=0.9, label=LABELS[method])
+            plotted = True
+            plotted_any = True
+        ax.set_title(label)
+        ax.grid(alpha=0.25)
+        if plotted:
+            ax.legend(fontsize=7, frameon=False)
+    if not plotted_any:
+        plt.close(fig)
+        return False
+    fig.suptitle(f"Darcy/SIR20 training attack-probe delta spectral statistics vs {'epoch' if x_axis == 'epoch' else 'work-clock seconds'}", y=0.995)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    fig.savefig(out, dpi=220)
+    plt.close(fig)
+    return True
+
+
+def plot_probe_delta_heatmaps(probe_tables: dict[str, pd.DataFrame], out: Path) -> bool:
+    rows = latest_probe_rows(probe_tables)
+    if not rows:
+        return False
+    cols = 3
+    panel_rows = int(math.ceil(len(rows) / cols))
+    fig, axes = plt.subplots(panel_rows, cols, figsize=(4.0 * cols, 3.4 * panel_rows))
+    axes = np.asarray(axes).reshape(-1)
+    deltas: dict[str, np.ndarray] = {}
+    for method, row in rows.items():
+        try:
+            deltas[method] = probe_npz_delta(row)
+        except Exception:
+            continue
+    if not deltas:
+        plt.close(fig)
+        return False
+    vmax = max(float(np.max(np.abs(delta))) for delta in deltas.values())
+    vmax = max(vmax, 1e-12)
+    for ax, (method, delta) in zip(axes, deltas.items()):
+        im = ax.imshow(delta, cmap="coolwarm", vmin=-vmax, vmax=vmax)
+        row = rows[method]
+        gain = float(row.get("attack_loss_gain_sample", float("nan")))
+        ax.set_title(f"{LABELS.get(method, method)} epoch {int(row['epoch'])}\ngain={gain:.3g}", fontsize=8)
+        ax.axis("off")
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    for ax in axes[len(deltas) :]:
+        ax.axis("off")
+    fig.suptitle("Darcy/SIR20 training attack-probe delta heatmaps", y=0.995)
+    fig.tight_layout(rect=(0, 0, 1, 0.965))
+    fig.savefig(out, dpi=230)
+    plt.close(fig)
+    return True
+
+
+def plot_probe_fft_heatmaps(probe_tables: dict[str, pd.DataFrame], out: Path) -> bool:
+    rows = latest_probe_rows(probe_tables)
+    if not rows:
+        return False
+    cols = 3
+    panel_rows = int(math.ceil(len(rows) / cols))
+    fig, axes = plt.subplots(panel_rows, cols, figsize=(4.0 * cols, 3.4 * panel_rows))
+    axes = np.asarray(axes).reshape(-1)
+    powers: dict[str, np.ndarray] = {}
+    for method, row in rows.items():
+        try:
+            powers[method] = fft_log_power(probe_npz_delta(row))
+        except Exception:
+            continue
+    if not powers:
+        plt.close(fig)
+        return False
+    vmax = max(float(np.nanmax(power)) for power in powers.values())
+    for ax, (method, power) in zip(axes, powers.items()):
+        im = ax.imshow(power, cmap="magma", vmin=0.0, vmax=vmax)
+        row = rows[method]
+        ax.set_title(f"{LABELS.get(method, method)} epoch {int(row['epoch'])}\nlog FFT power", fontsize=8)
+        ax.axis("off")
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    for ax in axes[len(powers) :]:
+        ax.axis("off")
+    fig.suptitle("Darcy/SIR20 training attack-probe delta FFT spectra", y=0.995)
+    fig.tight_layout(rect=(0, 0, 1, 0.965))
+    fig.savefig(out, dpi=230)
+    plt.close(fig)
+    return True
+
+
+def plot_probe_radial_spectrum(probe_tables: dict[str, pd.DataFrame], out: Path) -> bool:
+    rows = latest_probe_rows(probe_tables)
+    fig, ax = plt.subplots(figsize=(9.5, 5.6))
+    plotted = False
+    for method in TRAINING_METHODS:
+        row = rows.get(method)
+        if row is None:
+            continue
+        try:
+            x, y = radial_spectrum(probe_npz_delta(row))
+        except Exception:
+            continue
+        ax.plot(x, y, color=COLORS[method], linewidth=1.35, label=LABELS[method])
+        plotted = True
+    if not plotted:
+        plt.close(fig)
+        return False
+    ax.set_xlabel("normalized radial frequency")
+    ax.set_ylabel("mean log FFT power")
+    ax.set_title("Darcy/SIR20 training attack-probe delta radial spectra")
+    ax.grid(alpha=0.25)
+    ax.legend(ncol=3, fontsize=8, frameon=False)
+    fig.tight_layout()
+    fig.savefig(out, dpi=220)
+    plt.close(fig)
+    return True
+
+
 def load_delta(row: pd.Series) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     path = resolve(str(row["delta_npz"]))
     z = np.load(path)
@@ -321,20 +535,20 @@ def load_delta(row: pd.Series) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     return z["x_clean"][ordinal, ..., 0], z["delta"][ordinal, ..., 0], z["x_adv"][ordinal, ..., 0]
 
 
-def plot_attack_heatmap(bundle: Path, out: Path) -> None:
+def selected_attack_rows(bundle: Path) -> tuple[pd.DataFrame, list[str], str, int] | None:
     attack_csv = bundle / "data" / "robustness_attack_52datasets_samples.csv"
     if not attack_csv.exists():
-        return
+        return None
     df = pd.read_csv(attack_csv)
     method_order = list(dict.fromkeys(df["method"].astype(str).tolist()))
     if not method_order:
-        return
+        return None
     key_cols = ["dataset_id", "source_sample_index"]
     pivot = df.pivot_table(index=key_cols, columns="method", values="loss_increase", aggfunc="mean")
     needed = [m for m in method_order if m in pivot.columns]
     loss3_candidates = [m for m in needed if m == "loss3" or m.startswith("loss3_")]
     if not loss3_candidates:
-        return
+        return None
     reference = loss3_candidates[-1]
     other_cols = [m for m in needed if m != reference]
     pivot = pivot.dropna(subset=[reference])
@@ -344,10 +558,17 @@ def plot_attack_heatmap(bundle: Path, out: Path) -> None:
     else:
         chosen = pivot.sort_values(reference, ascending=True).head(1)
     if chosen.empty:
-        return
+        return None
     dataset_id, source_idx = chosen.index[0]
     rows = df[(df["dataset_id"] == dataset_id) & (df["source_sample_index"].astype(int) == int(source_idx))]
-    rows = rows.set_index("method")
+    return rows.set_index("method"), method_order, str(dataset_id), int(source_idx)
+
+
+def plot_attack_heatmap(bundle: Path, out: Path) -> None:
+    selected = selected_attack_rows(bundle)
+    if selected is None:
+        return
+    rows, method_order, dataset_id, source_idx = selected
     available_methods = [m for m in method_order if m in rows.index]
     panel_count = 1 + len(available_methods)
     cols = 4
@@ -385,6 +606,41 @@ def plot_attack_heatmap(bundle: Path, out: Path) -> None:
     plt.close(fig)
 
 
+def plot_attack_fft_spectra(bundle: Path, out: Path) -> None:
+    selected = selected_attack_rows(bundle)
+    if selected is None:
+        return
+    rows, method_order, dataset_id, source_idx = selected
+    available_methods = [m for m in method_order if m in rows.index]
+    powers: dict[str, np.ndarray] = {}
+    for method in available_methods:
+        try:
+            _x0, delta, _x_adv = load_delta(rows.loc[method])
+            powers[method] = fft_log_power(delta)
+        except Exception:
+            continue
+    if not powers:
+        return
+    cols = 4
+    panel_rows = int(math.ceil(len(powers) / cols))
+    fig, axes = plt.subplots(panel_rows, cols, figsize=(3.6 * cols, 3.2 * panel_rows))
+    axes = np.asarray(axes).reshape(-1)
+    vmax = max(float(np.nanmax(power)) for power in powers.values())
+    display_by_method = rows["method_display"].to_dict() if "method_display" in rows.columns else {}
+    for ax, (method, power) in zip(axes, powers.items()):
+        im = ax.imshow(power, cmap="magma", vmin=0.0, vmax=vmax)
+        label = display_by_method.get(method, LABELS.get(method, method))
+        ax.set_title(f"{label}\nlog FFT power", fontsize=8)
+        ax.axis("off")
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    for ax in axes[len(powers) :]:
+        ax.axis("off")
+    fig.suptitle(f"Darcy advanced attack delta FFT spectra: {dataset_id}, idx {source_idx}", y=0.99)
+    fig.tight_layout()
+    fig.savefig(out, dpi=230)
+    plt.close(fig)
+
+
 def write_report(path: Path, figure_paths: list[Path]) -> None:
     lines = ["# Darcy/SIR20 Figures", "", "Generated figures:", ""]
     for fig in figure_paths:
@@ -408,6 +664,7 @@ def main() -> None:
     manifest = read_manifest(args.checkpoint_manifest.resolve())
     split_tables, metric_tables = load_training_tables(manifest)
     step_tables, attack_tables = load_step_tables(manifest)
+    probe_tables = load_probe_tables(manifest)
     add_mse_columns(final_eval, split_tables, metric_tables)
     common_max = common_work_max(split_tables)
     figures: list[Path] = []
@@ -418,6 +675,18 @@ def main() -> None:
             figures.append(out)
         out = dirs["figures"] / f"attack_loss_gain_vs_{x_axis}.png"
         if plot_attack_loss_gain(x_axis, attack_tables, out):
+            figures.append(out)
+        out = dirs["figures"] / f"delta_probe_spectral_stats_vs_{x_axis}.png"
+        if plot_probe_spectral_stats(x_axis, probe_tables, out):
+            figures.append(out)
+
+    for name, func in (
+        ("training_delta_probe_heatmaps_final.png", plot_probe_delta_heatmaps),
+        ("training_delta_probe_fft_spectra_final.png", plot_probe_fft_heatmaps),
+        ("training_delta_probe_radial_spectrum_final.png", plot_probe_radial_spectrum),
+    ):
+        out = dirs["figures"] / name
+        if func(probe_tables, out):
             figures.append(out)
 
     for metric in ("mse", "rmse", "relative_l2"):
@@ -437,6 +706,10 @@ def main() -> None:
     plot_attack_heatmap(bundle, heatmap)
     if heatmap.exists():
         figures.append(heatmap)
+    fft_heatmap = dirs["figures"] / "darcy_2d_attack_delta_fft_spectra_loss3_robust_sample.png"
+    plot_attack_fft_spectra(bundle, fft_heatmap)
+    if fft_heatmap.exists():
+        figures.append(fft_heatmap)
     write_report(dirs["reports"] / "figures.md", figures)
     print(dirs["figures"])
 

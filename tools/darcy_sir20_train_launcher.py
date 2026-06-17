@@ -133,6 +133,8 @@ def main() -> None:
     parser.add_argument("--epoch-multiplier", type=float, default=2.0)
     parser.add_argument("--eps-jitter-low", type=float, default=0.25)
     parser.add_argument("--eps-jitter-high", type=float, default=1.75)
+    parser.add_argument("--attack-probe-samples", type=int, default=8)
+    parser.add_argument("--attack-probe-every-n-epochs", type=int, default=1)
     parser.add_argument("--checkpoint-at-original-and-final", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--use-max-work-seconds", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--max-work-epoch-headroom", type=float, default=1.08)
@@ -205,8 +207,8 @@ def main() -> None:
                 batch_size=args.batch_size,
                 optimizer_batch_size=args.optimizer_batch_size,
                 checkpoint_every_epochs=per_method_checkpoint_every,
-                attack_probe_samples=0,
-                attack_probe_every=1,
+                attack_probe_samples=args.attack_probe_samples,
+                attack_probe_every=args.attack_probe_every_n_epochs,
                 max_work_seconds=max_work_seconds,
                 epsilon_bucket_count=5,
                 eps_jitter_low=args.eps_jitter_low,
@@ -236,6 +238,8 @@ def main() -> None:
                 "epsilon_jitter_low": float(args.eps_jitter_low),
                 "epsilon_jitter_high": float(args.eps_jitter_high),
                 "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
+                "attack_probe_samples": int(args.attack_probe_samples),
+                "attack_probe_every_n_epochs": int(args.attack_probe_every_n_epochs),
                 "stop_reason": stop_reason,
                 "work_clock_seconds": work_clock_seconds,
                 "local_work_clock_seconds": float(summary.get("local_work_clock_seconds", float("nan"))),
@@ -296,6 +300,8 @@ def main() -> None:
             "epsilon_jitter_low": float(args.eps_jitter_low),
             "epsilon_jitter_high": float(args.eps_jitter_high),
             "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
+            "attack_probe_samples": int(args.attack_probe_samples),
+            "attack_probe_every_n_epochs": int(args.attack_probe_every_n_epochs),
         },
     )
     write_json(
@@ -311,6 +317,8 @@ def main() -> None:
             "epsilon_jitter_low": float(args.eps_jitter_low),
             "epsilon_jitter_high": float(args.eps_jitter_high),
             "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
+            "attack_probe_samples": int(args.attack_probe_samples),
+            "attack_probe_every_n_epochs": int(args.attack_probe_every_n_epochs),
         },
     )
     print(json_path)

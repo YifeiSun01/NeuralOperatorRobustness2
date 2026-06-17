@@ -53,6 +53,7 @@ By default, the script:
 - runs the advanced serial loss3 attack
 - computes Jacobian/SVD diagnostics
 - generates figures, including training loss, attack loss gain, split-mean MSE/RMSE/Relative-L2 curves, and all 50 generalization-dataset MSE/RMSE/Relative-L2 curves split into `part01` and `part02`
+- records fixed training attack probes every epoch by default, including `x_clean`, `x_adv`, `delta`, targets, per-sample attack losses, and delta spectral statistics, then generates delta heatmaps, FFT spectrum heatmaps, radial spectra, and spectral-stat curves
 - uploads the output bundle to R2
 - commits source and Markdown changes and pushes to `vast-ai-darcy-flow`
 

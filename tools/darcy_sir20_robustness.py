@@ -59,8 +59,13 @@ ATTACK_FIELDS = [
     "relative_increase",
     "delta_l2_rms",
     "delta_linf",
+    "delta_abs_mean",
     "delta_mean",
     "delta_std",
+    "delta_total_variation",
+    "delta_sign_change_fraction",
+    "delta_fft_high_freq_ratio",
+    "delta_fft_spectral_centroid",
     "delta_npz",
 ]
 
@@ -472,6 +477,7 @@ def main() -> None:
                 if r["dataset_id"] == spec.dataset_id
             )
             for ordinal, source_idx in enumerate(indices):
+                delta_stats = adv.attack_probe_delta_stats(delta[ordinal])
                 attack_rows.append(
                     {
                         "method": method,
@@ -491,10 +497,15 @@ def main() -> None:
                         "adv_loss": float(adv_loss[ordinal]),
                         "loss_increase": float(gain[ordinal]),
                         "relative_increase": float(rel_gain[ordinal]),
-                        "delta_l2_rms": float(delta_l2[ordinal]),
-                        "delta_linf": float(delta_linf[ordinal]),
-                        "delta_mean": float(np.mean(delta_flat[ordinal])),
-                        "delta_std": float(np.std(delta_flat[ordinal])),
+                        "delta_l2_rms": float(delta_stats["delta_l2_rms"]),
+                        "delta_linf": float(delta_stats["delta_linf"]),
+                        "delta_abs_mean": float(delta_stats["delta_abs_mean"]),
+                        "delta_mean": float(delta_stats["delta_mean"]),
+                        "delta_std": float(delta_stats["delta_std"]),
+                        "delta_total_variation": float(delta_stats["delta_total_variation"]),
+                        "delta_sign_change_fraction": float(delta_stats["delta_sign_change_fraction"]),
+                        "delta_fft_high_freq_ratio": float(delta_stats["delta_fft_high_freq_ratio"]),
+                        "delta_fft_spectral_centroid": float(delta_stats["delta_fft_spectral_centroid"]),
                         "delta_npz": rel(delta_npz),
                     }
                 )

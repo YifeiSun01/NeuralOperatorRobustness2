@@ -19,6 +19,8 @@ CHECKPOINT_EVERY_EPOCHS="${CHECKPOINT_EVERY_EPOCHS:-100}"
 EPOCH_MULTIPLIER="${EPOCH_MULTIPLIER:-2.0}"
 DARCY_EPS_JITTER_LOW="${DARCY_EPS_JITTER_LOW:-0.25}"
 DARCY_EPS_JITTER_HIGH="${DARCY_EPS_JITTER_HIGH:-1.75}"
+DARCY_ATTACK_PROBE_SAMPLES="${DARCY_ATTACK_PROBE_SAMPLES:-8}"
+DARCY_ATTACK_PROBE_EVERY_N_EPOCHS="${DARCY_ATTACK_PROBE_EVERY_N_EPOCHS:-1}"
 CHECKPOINT_ORIGINAL_AND_FINAL="${CHECKPOINT_ORIGINAL_AND_FINAL:-1}"
 UPLOAD_TO_R2="${UPLOAD_TO_R2:-1}"
 AUTO_GIT_PUSH="${AUTO_GIT_PUSH:-1}"
@@ -91,6 +93,7 @@ log "Darcy/SIR20 ${MODE} pipeline start bundle=$BUNDLE"
 log "Serial-training epsilon jitter factor per batch: uniform[$DARCY_EPS_JITTER_LOW,$DARCY_EPS_JITTER_HIGH]"
 log "Epoch multiplier: $EPOCH_MULTIPLIER; checkpoint original/final=$CHECKPOINT_ORIGINAL_AND_FINAL"
 log "Darcy training samples per epoch: $DARCY_TRAIN_MAX; batch=$DARCY_BATCH; opt_batch=$OPT_BATCH"
+log "Darcy attack probes: samples=$DARCY_ATTACK_PROBE_SAMPLES; every_n_epochs=$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS"
 
 PREFLIGHT_PY="$BUNDLE/data/preflight_check.py"
 cat > "$PREFLIGHT_PY" <<'PY'
@@ -135,7 +138,9 @@ if [[ "$MODE" == "smoke" ]]; then
     --optimizer-batch-size "$OPT_BATCH" \
     --darcy-train-max "$DARCY_TRAIN_MAX" \
     --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
-    --eps-jitter-high "$DARCY_EPS_JITTER_HIGH"
+    --eps-jitter-high "$DARCY_EPS_JITTER_HIGH" \
+    --attack-probe-samples "$DARCY_ATTACK_PROBE_SAMPLES" \
+    --attack-probe-every-n-epochs "$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS"
   MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_smoke.json"
   run_logged smoke_eval "$PYTHON" tools/darcy_sir20_evaluate.py \
     --bundle "$BUNDLE" \
@@ -176,6 +181,8 @@ else
     --epoch-multiplier "$EPOCH_MULTIPLIER" \
     --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
     --eps-jitter-high "$DARCY_EPS_JITTER_HIGH" \
+    --attack-probe-samples "$DARCY_ATTACK_PROBE_SAMPLES" \
+    --attack-probe-every-n-epochs "$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS" \
     $(if [[ "$CHECKPOINT_ORIGINAL_AND_FINAL" == "1" ]]; then printf '%s' '--checkpoint-at-original-and-final'; else printf '%s' '--no-checkpoint-at-original-and-final'; fi) \
     --reuse
   FINAL_MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_full.json"
