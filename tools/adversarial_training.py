@@ -34,9 +34,12 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from tools.evaluate_generalization_models import (  # noqa: E402
     DatasetSpec,
+    build_combined_eval_cache,
     build_specs,
     checkpoint_state,
     evaluate_dataset,
+    evaluate_combined_eval_cache,
+    evaluate_datasets_combined,
     load_module,
     load_burgers_model,
     load_darcy_model,
@@ -96,7 +99,7 @@ DEFAULTS: dict[str, TaskDefaults] = {
         # Exact solver-gradient attack is memory bound; batch 256 is tested safe on the 31.7GB GPU.
         batch_size=256,
         optimizer_batch_size=32,
-        eval_batch_size=256,
+        eval_batch_size=512,
         epochs=1000,
         train_max_samples=None,
         attack_method="binary_steepest_replace",
@@ -3094,6 +3097,8 @@ def write_eval_split_summary(path: Path, rows: list[dict[str, Any]], *, phase: s
             values = [_finite_float(row.get(key)) for row in split_rows]
             values = [value for value in values if math.isfinite(value)]
             out[f"{key}_dataset_mean"] = float(np.mean(values)) if values else float("nan")
+            out[f"{key}_dataset_var"] = float(np.var(values)) if values else float("nan")
+            out[f"{key}_dataset_std"] = float(np.std(values)) if values else float("nan")
             out[f"{key}_dataset_min"] = float(np.min(values)) if values else float("nan")
             out[f"{key}_dataset_max"] = float(np.max(values)) if values else float("nan")
         write_csv_row(path, out)
@@ -3113,14 +3118,29 @@ def evaluate_task(
     progress_fraction: float,
     phase: str,
     max_generalization_eval: int | None,
+    combined_eval: bool = False,
+    combined_index_map_csv: Path | None = None,
+    combined_eval_cache: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], float]:
     rows: list[dict[str, Any]] = []
     start = time.perf_counter()
     was_training = model.training
     model.eval()
-    for spec in task_eval_specs(specs, task, max_generalization_eval):
-        max_samples = normalize_max_samples(eval_max_samples)
-        result = evaluate_dataset(model, spec, device, eval_batch_size, max_samples)
+    eval_specs = task_eval_specs(specs, task, max_generalization_eval)
+    max_samples = normalize_max_samples(eval_max_samples)
+    if combined_eval_cache is not None:
+        results, map_rows = evaluate_combined_eval_cache(model, combined_eval_cache, device, eval_batch_size)
+        if combined_index_map_csv is not None and not combined_index_map_csv.exists():
+            for map_row in map_rows:
+                write_csv_row(combined_index_map_csv, map_row)
+    elif combined_eval and task == "darcy":
+        results, map_rows = evaluate_datasets_combined(model, eval_specs, device, eval_batch_size, max_samples)
+        if combined_index_map_csv is not None and not combined_index_map_csv.exists():
+            for map_row in map_rows:
+                write_csv_row(combined_index_map_csv, map_row)
+    else:
+        results = [evaluate_dataset(model, spec, device, eval_batch_size, max_samples) for spec in eval_specs]
+    for result in results:
         row = {
             "phase": phase,
             "global_step": global_step,
@@ -3306,6 +3326,7 @@ def train_one_task(
             "checkpoint_wall_hours": args.checkpoint_wall_hours,
             "eval_max_samples": args.eval_max_samples,
             "max_generalization_eval": args.max_generalization_eval,
+            "combined_eval": bool(args.combined_eval),
             "attack_probe_samples": args.attack_probe_samples,
             "attack_probe_indices": args.attack_probe_indices,
             "attack_probe_every_n_epochs": args.attack_probe_every_n_epochs,
@@ -3530,10 +3551,33 @@ def train_one_task(
     eval_csv = out_dir / "eval_metrics.csv"
     eval_split_csv = out_dir / "eval_split_summary.csv"
     eval_pass_csv = out_dir / "evaluation_passes.csv"
+    combined_eval_map_csv = out_dir / "combined_eval_dataset_index_map.csv"
     attack_epoch_csv = out_dir / "attack_epoch_summary.csv"
     attack_epsilon_bucket_csv = out_dir / "attack_epsilon_bucket_summary.csv"
     work_epoch_csv = out_dir / "work_clock_epoch_summary.csv"
     memory_csv = out_dir / "memory.csv"
+    combined_eval_cache = None
+    if bool(task_cfg.get("combined_eval", False)) and task == "darcy":
+        combined_eval_specs = task_eval_specs(all_specs, task, task_cfg["max_generalization_eval"])
+        combined_eval_cache = build_combined_eval_cache(
+            combined_eval_specs,
+            normalize_max_samples(task_cfg["eval_max_samples"]),
+        )
+        (out_dir / "combined_eval_cache_summary.json").write_text(
+            json.dumps(
+                to_jsonable(
+                    {
+                        "enabled": True,
+                        "dataset_count": len(combined_eval_specs),
+                        "total_samples": int(combined_eval_cache.get("total_samples", 0)),
+                        "batch_size": int(task_cfg["eval_batch_size"]),
+                        "index_map_csv": project_path(combined_eval_map_csv),
+                    }
+                ),
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
 
     (out_dir / "attack_probe_config.json").write_text(
         json.dumps(
@@ -3570,6 +3614,9 @@ def train_one_task(
         progress_fraction=initial_progress,
         phase=initial_phase,
         max_generalization_eval=task_cfg["max_generalization_eval"],
+        combined_eval=bool(task_cfg.get("combined_eval", False)),
+        combined_index_map_csv=combined_eval_map_csv,
+        combined_eval_cache=combined_eval_cache,
     )
     eval_seconds.append(seconds)
     write_eval_split_summary(
@@ -3852,6 +3899,9 @@ def train_one_task(
             progress_fraction=epoch_progress,
             phase="during_adversarial_training",
             max_generalization_eval=task_cfg["max_generalization_eval"],
+            combined_eval=bool(task_cfg.get("combined_eval", False)),
+            combined_index_map_csv=combined_eval_map_csv,
+            combined_eval_cache=combined_eval_cache,
         )
         eval_seconds.append(seconds)
         write_eval_split_summary(
@@ -4080,6 +4130,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume-global-step-offset", type=int, default=0, help="Global train-step number represented by the loaded initial checkpoint.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
     parser.add_argument("--max-generalization-eval", type=int, default=None)
+    parser.add_argument("--combined-eval", action=argparse.BooleanOptionalAction, default=True, help="Evaluate same-shaped datasets as one combined tensor, then split metrics back by dataset index ranges. Currently used for Darcy.")
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
     parser.add_argument("--training-data-mode", choices=["adv-only", "clean-only", "clean-plus-adv", "random-binary-fixed-y", "random-binary-solver-y"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-only trains on clean solver pairs without perturbation; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs; Darcy random-binary-fixed-y/random-binary-solver-y use random binary source flips instead of adversarial attacks.")
@@ -4231,6 +4282,7 @@ def main() -> None:
             "clip_x_max": args.random_field_clip_x_max,
         },
         "evaluation_schedule": "every_epoch",
+        "combined_eval": bool(args.combined_eval),
         "eval_every_fraction_deprecated": args.eval_every_fraction,
         "checkpoint_every_epochs": int(args.checkpoint_every_epochs),
         "checkpoint_every_fraction": args.checkpoint_every_fraction,

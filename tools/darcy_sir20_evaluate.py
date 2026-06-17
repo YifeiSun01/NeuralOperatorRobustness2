@@ -31,7 +31,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from tools.evaluate_generalization_models import DatasetSpec, build_specs, evaluate_dataset  # noqa: E402
+from tools.evaluate_generalization_models import (
+    DatasetSpec,
+    build_combined_eval_cache,
+    build_specs,
+    evaluate_combined_eval_cache,
+    evaluate_dataset,
+)  # noqa: E402
 import tools.adversarial_training as adv  # noqa: E402
 
 
@@ -85,9 +91,17 @@ def summarize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "dataset_count": int(sub["dataset_id"].nunique()),
                 "sample_count": int(sub["num_samples_evaluated"].sum()),
                 "rmse_mean": float(sub["rmse"].astype(float).mean()),
+                "rmse_var": float(sub["rmse"].astype(float).var(ddof=0)),
+                "rmse_std": float(sub["rmse"].astype(float).std(ddof=0)),
                 "relative_l2_mean": float(sub["relative_l2"].astype(float).mean()),
+                "relative_l2_var": float(sub["relative_l2"].astype(float).var(ddof=0)),
+                "relative_l2_std": float(sub["relative_l2"].astype(float).std(ddof=0)),
                 "mae_mean": float(sub["mae"].astype(float).mean()),
+                "mae_var": float(sub["mae"].astype(float).var(ddof=0)),
+                "mae_std": float(sub["mae"].astype(float).std(ddof=0)),
                 "accuracy_score_mean": float(sub["accuracy_score"].astype(float).mean()),
+                "accuracy_score_var": float(sub["accuracy_score"].astype(float).var(ddof=0)),
+                "accuracy_score_std": float(sub["accuracy_score"].astype(float).std(ddof=0)),
             }
         )
     for method, sub in df.groupby("method", sort=False):
@@ -98,15 +112,23 @@ def summarize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "dataset_count": int(sub["dataset_id"].nunique()),
                 "sample_count": int(sub["num_samples_evaluated"].sum()),
                 "rmse_mean": float(sub["rmse"].astype(float).mean()),
+                "rmse_var": float(sub["rmse"].astype(float).var(ddof=0)),
+                "rmse_std": float(sub["rmse"].astype(float).std(ddof=0)),
                 "relative_l2_mean": float(sub["relative_l2"].astype(float).mean()),
+                "relative_l2_var": float(sub["relative_l2"].astype(float).var(ddof=0)),
+                "relative_l2_std": float(sub["relative_l2"].astype(float).std(ddof=0)),
                 "mae_mean": float(sub["mae"].astype(float).mean()),
+                "mae_var": float(sub["mae"].astype(float).var(ddof=0)),
+                "mae_std": float(sub["mae"].astype(float).std(ddof=0)),
                 "accuracy_score_mean": float(sub["accuracy_score"].astype(float).mean()),
+                "accuracy_score_var": float(sub["accuracy_score"].astype(float).var(ddof=0)),
+                "accuracy_score_std": float(sub["accuracy_score"].astype(float).std(ddof=0)),
             }
         )
     return out
 
 
-def write_report(path: Path, summary_rows: list[dict[str, Any]], metrics_csv: Path) -> None:
+def write_report(path: Path, summary_rows: list[dict[str, Any]], metrics_csv: Path, map_csv: Path | None = None) -> None:
     lines = [
         "# Darcy/SIR20 Final 52-Dataset Evaluation",
         "",
@@ -123,6 +145,8 @@ def write_report(path: Path, summary_rows: list[dict[str, Any]], metrics_csv: Pa
             f"{row['rmse_mean']:.8g} | {row['relative_l2_mean']:.8g} | {row['accuracy_score_mean']:.6g} |"
         )
     lines.extend(["", "## Files", "", f"- Metrics CSV: `{rel(metrics_csv)}`"])
+    if map_csv is not None:
+        lines.append(f"- Combined dataset index map: `{rel(map_csv)}`")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -134,6 +158,7 @@ def main() -> None:
     parser.add_argument("--eval-max-samples", type=int, default=0)
     parser.add_argument("--batch-size", type=int, default=256)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--combined-eval", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
 
     validate_inputs()
@@ -145,13 +170,20 @@ def main() -> None:
     device = torch.device(args.device)
 
     metric_rows: list[dict[str, Any]] = []
+    combined_map_rows: list[dict[str, Any]] = []
+    combined_eval_cache = build_combined_eval_cache(specs, max_samples) if bool(args.combined_eval) else None
+    if combined_eval_cache is not None:
+        combined_map_rows = list(combined_eval_cache.get("map_rows", []))
     t0 = time.perf_counter()
     for manifest_row in rows:
         method = str(manifest_row["method"])
         checkpoint = resolve(str(manifest_row["checkpoint"]))
         model = load_model(checkpoint, device)
-        for spec in specs:
-            result = evaluate_dataset(model, spec, device, int(args.batch_size), max_samples)
+        if combined_eval_cache is not None:
+            eval_results, _ = evaluate_combined_eval_cache(model, combined_eval_cache, device, int(args.batch_size))
+        else:
+            eval_results = [evaluate_dataset(model, spec, device, int(args.batch_size), max_samples) for spec in specs]
+        for result in eval_results:
             result.update(
                 {
                     "method": method,
@@ -161,17 +193,20 @@ def main() -> None:
                 }
             )
             metric_rows.append(result)
-            print(f"[eval] {method:13s} {spec.split:14s} {spec.dataset_id} rel_l2={result['relative_l2']:.6g}", flush=True)
+            print(f"[eval] {method:13s} {result['split']:14s} {result['dataset_id']} rel_l2={result['relative_l2']:.6g}", flush=True)
         del model
         torch.cuda.empty_cache()
 
     summary_rows = summarize(metric_rows)
     metrics_csv = dirs["data"] / "final_eval_metrics.csv"
     summary_csv = dirs["data"] / "final_eval_summary_by_model_split.csv"
+    map_csv = dirs["data"] / "final_eval_combined_dataset_index_map.csv"
     write_csv(metrics_csv, metric_rows)
     write_csv(summary_csv, summary_rows)
+    if combined_map_rows:
+        write_csv(map_csv, combined_map_rows)
     write_json(dirs["data"] / "final_eval_metrics.json", metric_rows)
-    write_report(dirs["reports"] / "final_evaluation.md", summary_rows, metrics_csv)
+    write_report(dirs["reports"] / "final_evaluation.md", summary_rows, metrics_csv, map_csv if combined_map_rows else None)
     print(metrics_csv)
 
 

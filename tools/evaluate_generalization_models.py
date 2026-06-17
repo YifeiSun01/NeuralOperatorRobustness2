@@ -196,6 +196,337 @@ def evaluate_dataset(model, spec: DatasetSpec, device: torch.device, batch_size:
     }
 
 
+def _dataset_metrics_from_sums(
+    spec: DatasetSpec,
+    *,
+    n: int,
+    sse: float,
+    sae: float,
+    target_sse: float,
+    count: int,
+    invalid_count: int,
+    total_count: int,
+) -> dict[str, Any]:
+    rmse = math.sqrt(sse / max(1, count)) if count else float("nan")
+    mae = sae / max(1, count) if count else float("nan")
+    rel_l2 = math.sqrt(sse / max(target_sse, 1e-20)) if count else float("nan")
+    accuracy_score = 100.0 / (1.0 + rel_l2) if math.isfinite(rel_l2) else float("nan")
+    return {
+        "task": spec.task,
+        "dataset_id": spec.dataset_id,
+        "split": spec.split,
+        "source": spec.source,
+        "manual_tier": spec.manual_tier,
+        "manual_rank": spec.manual_rank,
+        "path": str(spec.path.relative_to(PROJECT_ROOT)),
+        "num_samples_evaluated": int(n),
+        "rmse": rmse,
+        "mae": mae,
+        "relative_l2": rel_l2,
+        "accuracy_score": accuracy_score,
+        "finite_value_count": int(count),
+        "invalid_value_count": int(invalid_count),
+        "invalid_value_fraction": int(invalid_count) / max(1, int(total_count)),
+    }
+
+
+def _finite_sample_stats(values: torch.Tensor) -> dict[str, float]:
+    finite = torch.isfinite(values)
+    if not bool(finite.any()):
+        return {"mean": float("nan"), "var": float("nan"), "std": float("nan")}
+    vals = values[finite].double()
+    var = torch.var(vals, unbiased=False) if vals.numel() > 0 else torch.tensor(float("nan"))
+    return {
+        "mean": float(vals.mean()),
+        "var": float(var),
+        "std": float(torch.sqrt(var)),
+    }
+
+
+def evaluate_datasets_combined(
+    model,
+    specs: list[DatasetSpec],
+    device: torch.device,
+    batch_size: int,
+    max_samples: int | None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Evaluate same-shaped datasets as one tensor and split metrics by index ranges.
+
+    The returned metric rows intentionally match ``evaluate_dataset`` for the
+    aggregate fields, then add stable combined-index columns and per-sample
+    mean/variance/std summaries. ``map_rows`` records the immutable dataset to
+    combined-sample index mapping and can be written once per run.
+    """
+    if not specs:
+        return [], []
+    task = specs[0].task
+    if any(spec.task != task for spec in specs):
+        raise ValueError("evaluate_datasets_combined requires all specs to share the same task")
+
+    items: list[tuple[DatasetSpec, torch.Tensor, torch.Tensor, int, int]] = []
+    map_rows: list[dict[str, Any]] = []
+    offset = 0
+    sample_shape: tuple[int, ...] | None = None
+    for dataset_index, spec in enumerate(specs):
+        data = torch_load(spec.path)
+        x, y = tensor_xy(data, spec.task)
+        if max_samples is not None:
+            x = x[:max_samples]
+            y = y[:max_samples]
+        x = x.contiguous()
+        y = y.contiguous()
+        if sample_shape is None:
+            sample_shape = tuple(x.shape[1:])
+        elif tuple(x.shape[1:]) != sample_shape:
+            raise ValueError(
+                f"combined eval shape mismatch for {spec.dataset_id}: "
+                f"{tuple(x.shape[1:])} != {sample_shape}"
+            )
+        n = int(x.shape[0])
+        start = offset
+        end = offset + n
+        items.append((spec, x, y, start, end))
+        map_rows.append(
+            {
+                "combined_dataset_index": int(dataset_index),
+                "task": spec.task,
+                "dataset_id": spec.dataset_id,
+                "split": spec.split,
+                "source": spec.source,
+                "manual_tier": spec.manual_tier,
+                "manual_rank": spec.manual_rank,
+                "path": str(spec.path.relative_to(PROJECT_ROOT)),
+                "combined_sample_start": int(start),
+                "combined_sample_end_exclusive": int(end),
+                "combined_sample_count": int(n),
+                "combined_sample_shape": "x".join(str(dim) for dim in sample_shape),
+            }
+        )
+        offset = end
+
+    x_all = torch.cat([x for _, x, _, _, _ in items], dim=0).contiguous()
+    y_all = torch.cat([y for _, _, y, _, _ in items], dim=0).contiguous()
+    n_all = int(x_all.shape[0])
+    sample_sse: list[torch.Tensor] = []
+    sample_sae: list[torch.Tensor] = []
+    sample_target_sse: list[torch.Tensor] = []
+    sample_count: list[torch.Tensor] = []
+    sample_invalid_count: list[torch.Tensor] = []
+    sample_total_count: list[torch.Tensor] = []
+
+    with torch.no_grad():
+        for start in range(0, n_all, batch_size):
+            xb = x_all[start : start + batch_size].to(device, non_blocking=True)
+            yb = y_all[start : start + batch_size].to(device, non_blocking=True)
+            pred = model(xb)
+            finite = (torch.isfinite(pred) & torch.isfinite(yb)).reshape(pred.shape[0], -1)
+            finite_f = finite.float()
+            diff = torch.nan_to_num(pred - yb).reshape(pred.shape[0], -1)
+            y_flat = torch.nan_to_num(yb).reshape(yb.shape[0], -1)
+            sample_sse.append((diff.pow(2) * finite_f).sum(dim=1).detach().cpu())
+            sample_sae.append((diff.abs() * finite_f).sum(dim=1).detach().cpu())
+            sample_target_sse.append((y_flat.pow(2) * finite_f).sum(dim=1).detach().cpu())
+            count = finite.sum(dim=1).detach().cpu()
+            sample_count.append(count)
+            sample_invalid_count.append((pred[0].numel() - count).detach().cpu())
+            sample_total_count.append(torch.full((pred.shape[0],), pred[0].numel(), dtype=torch.long))
+
+    sse_by_sample = torch.cat(sample_sse)
+    sae_by_sample = torch.cat(sample_sae)
+    target_by_sample = torch.cat(sample_target_sse)
+    count_by_sample = torch.cat(sample_count)
+    invalid_by_sample = torch.cat(sample_invalid_count)
+    total_by_sample = torch.cat(sample_total_count)
+    sample_mse = sse_by_sample / count_by_sample.clamp_min(1).double()
+    sample_rmse = torch.sqrt(sample_mse)
+    sample_mae = sae_by_sample / count_by_sample.clamp_min(1).double()
+    sample_relative_l2 = torch.sqrt(sse_by_sample / target_by_sample.clamp_min(1e-20).double())
+
+    rows: list[dict[str, Any]] = []
+    for dataset_index, (spec, _, _, start, end) in enumerate(items):
+        sl = slice(start, end)
+        row = _dataset_metrics_from_sums(
+            spec,
+            n=end - start,
+            sse=float(sse_by_sample[sl].sum()),
+            sae=float(sae_by_sample[sl].sum()),
+            target_sse=float(target_by_sample[sl].sum()),
+            count=int(count_by_sample[sl].sum()),
+            invalid_count=int(invalid_by_sample[sl].sum()),
+            total_count=int(total_by_sample[sl].sum()),
+        )
+        row.update(
+            {
+                "combined_eval": 1,
+                "combined_dataset_index": int(dataset_index),
+                "combined_sample_start": int(start),
+                "combined_sample_end_exclusive": int(end),
+                "combined_sample_count": int(end - start),
+                "combined_total_samples": int(n_all),
+                "combined_eval_batch_size": int(batch_size),
+            }
+        )
+        for prefix, values in (
+            ("sample_mse", sample_mse[sl]),
+            ("sample_rmse", sample_rmse[sl]),
+            ("sample_mae", sample_mae[sl]),
+            ("sample_relative_l2", sample_relative_l2[sl]),
+        ):
+            stats = _finite_sample_stats(values)
+            row[f"{prefix}_mean"] = stats["mean"]
+            row[f"{prefix}_var"] = stats["var"]
+            row[f"{prefix}_std"] = stats["std"]
+        rows.append(row)
+    return rows, map_rows
+
+
+def build_combined_eval_cache(specs: list[DatasetSpec], max_samples: int | None) -> dict[str, Any]:
+    if not specs:
+        return {"items": [], "x_all": torch.empty(0), "y_all": torch.empty(0), "map_rows": [], "total_samples": 0}
+    task = specs[0].task
+    if any(spec.task != task for spec in specs):
+        raise ValueError("build_combined_eval_cache requires all specs to share the same task")
+    items: list[dict[str, Any]] = []
+    map_rows: list[dict[str, Any]] = []
+    xs: list[torch.Tensor] = []
+    ys: list[torch.Tensor] = []
+    offset = 0
+    sample_shape: tuple[int, ...] | None = None
+    for dataset_index, spec in enumerate(specs):
+        data = torch_load(spec.path)
+        x, y = tensor_xy(data, spec.task)
+        if max_samples is not None:
+            x = x[:max_samples]
+            y = y[:max_samples]
+        x = x.contiguous()
+        y = y.contiguous()
+        if sample_shape is None:
+            sample_shape = tuple(x.shape[1:])
+        elif tuple(x.shape[1:]) != sample_shape:
+            raise ValueError(
+                f"combined eval shape mismatch for {spec.dataset_id}: "
+                f"{tuple(x.shape[1:])} != {sample_shape}"
+            )
+        start = offset
+        end = start + int(x.shape[0])
+        items.append({"spec": spec, "start": start, "end": end, "dataset_index": dataset_index})
+        map_rows.append(
+            {
+                "combined_dataset_index": int(dataset_index),
+                "task": spec.task,
+                "dataset_id": spec.dataset_id,
+                "split": spec.split,
+                "source": spec.source,
+                "manual_tier": spec.manual_tier,
+                "manual_rank": spec.manual_rank,
+                "path": str(spec.path.relative_to(PROJECT_ROOT)),
+                "combined_sample_start": int(start),
+                "combined_sample_end_exclusive": int(end),
+                "combined_sample_count": int(end - start),
+                "combined_sample_shape": "" if sample_shape is None else "x".join(str(dim) for dim in sample_shape),
+            }
+        )
+        xs.append(x)
+        ys.append(y)
+        offset = end
+    return {
+        "task": task,
+        "items": items,
+        "x_all": torch.cat(xs, dim=0).contiguous(),
+        "y_all": torch.cat(ys, dim=0).contiguous(),
+        "map_rows": map_rows,
+        "total_samples": int(offset),
+    }
+
+
+def evaluate_combined_eval_cache(
+    model,
+    cache: dict[str, Any],
+    device: torch.device,
+    batch_size: int,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    items = list(cache.get("items", []))
+    if not items:
+        return [], list(cache.get("map_rows", []))
+    x_all: torch.Tensor = cache["x_all"]
+    y_all: torch.Tensor = cache["y_all"]
+    n_all = int(x_all.shape[0])
+    sample_sse: list[torch.Tensor] = []
+    sample_sae: list[torch.Tensor] = []
+    sample_target_sse: list[torch.Tensor] = []
+    sample_count: list[torch.Tensor] = []
+    sample_invalid_count: list[torch.Tensor] = []
+    sample_total_count: list[torch.Tensor] = []
+    with torch.no_grad():
+        for start in range(0, n_all, batch_size):
+            xb = x_all[start : start + batch_size].to(device, non_blocking=True)
+            yb = y_all[start : start + batch_size].to(device, non_blocking=True)
+            pred = model(xb)
+            finite = (torch.isfinite(pred) & torch.isfinite(yb)).reshape(pred.shape[0], -1)
+            finite_f = finite.float()
+            diff = torch.nan_to_num(pred - yb).reshape(pred.shape[0], -1)
+            y_flat = torch.nan_to_num(yb).reshape(yb.shape[0], -1)
+            sample_sse.append((diff.pow(2) * finite_f).sum(dim=1).detach().cpu())
+            sample_sae.append((diff.abs() * finite_f).sum(dim=1).detach().cpu())
+            sample_target_sse.append((y_flat.pow(2) * finite_f).sum(dim=1).detach().cpu())
+            count = finite.sum(dim=1).detach().cpu()
+            sample_count.append(count)
+            sample_invalid_count.append((pred[0].numel() - count).detach().cpu())
+            sample_total_count.append(torch.full((pred.shape[0],), pred[0].numel(), dtype=torch.long))
+
+    sse_by_sample = torch.cat(sample_sse)
+    sae_by_sample = torch.cat(sample_sae)
+    target_by_sample = torch.cat(sample_target_sse)
+    count_by_sample = torch.cat(sample_count)
+    invalid_by_sample = torch.cat(sample_invalid_count)
+    total_by_sample = torch.cat(sample_total_count)
+    sample_mse = sse_by_sample / count_by_sample.clamp_min(1).double()
+    sample_rmse = torch.sqrt(sample_mse)
+    sample_mae = sae_by_sample / count_by_sample.clamp_min(1).double()
+    sample_relative_l2 = torch.sqrt(sse_by_sample / target_by_sample.clamp_min(1e-20).double())
+
+    rows: list[dict[str, Any]] = []
+    for item in items:
+        spec: DatasetSpec = item["spec"]
+        start = int(item["start"])
+        end = int(item["end"])
+        dataset_index = int(item["dataset_index"])
+        sl = slice(start, end)
+        row = _dataset_metrics_from_sums(
+            spec,
+            n=end - start,
+            sse=float(sse_by_sample[sl].sum()),
+            sae=float(sae_by_sample[sl].sum()),
+            target_sse=float(target_by_sample[sl].sum()),
+            count=int(count_by_sample[sl].sum()),
+            invalid_count=int(invalid_by_sample[sl].sum()),
+            total_count=int(total_by_sample[sl].sum()),
+        )
+        row.update(
+            {
+                "combined_eval": 1,
+                "combined_dataset_index": int(dataset_index),
+                "combined_sample_start": int(start),
+                "combined_sample_end_exclusive": int(end),
+                "combined_sample_count": int(end - start),
+                "combined_total_samples": int(n_all),
+                "combined_eval_batch_size": int(batch_size),
+            }
+        )
+        for prefix, values in (
+            ("sample_mse", sample_mse[sl]),
+            ("sample_rmse", sample_rmse[sl]),
+            ("sample_mae", sample_mae[sl]),
+            ("sample_relative_l2", sample_relative_l2[sl]),
+        ):
+            stats = _finite_sample_stats(values)
+            row[f"{prefix}_mean"] = stats["mean"]
+            row[f"{prefix}_var"] = stats["var"]
+            row[f"{prefix}_std"] = stats["std"]
+        rows.append(row)
+    return rows, list(cache.get("map_rows", []))
+
+
 def spectral_features(x: torch.Tensor, task: str) -> dict[str, float]:
     x = x.float()
     if x.ndim == 4 and x.shape[-1] == 1:
