@@ -21,6 +21,7 @@ DARCY_EPS_JITTER_LOW="${DARCY_EPS_JITTER_LOW:-0.25}"
 DARCY_EPS_JITTER_HIGH="${DARCY_EPS_JITTER_HIGH:-1.75}"
 DARCY_ATTACK_PROBE_SAMPLES="${DARCY_ATTACK_PROBE_SAMPLES:-8}"
 DARCY_ATTACK_PROBE_EVERY_N_EPOCHS="${DARCY_ATTACK_PROBE_EVERY_N_EPOCHS:-1}"
+DARCY_EVAL_EVERY_EPOCHS="${DARCY_EVAL_EVERY_EPOCHS:-10}"
 BUDGET_SWEEP_BUDGETS="${BUDGET_SWEEP_BUDGETS:-0.00625,0.0125,0.025,0.0375,0.04375,0.05,0.075}"
 BUDGET_SWEEP_SAMPLES_PER_DATASET="${BUDGET_SWEEP_SAMPLES_PER_DATASET:-20}"
 BUDGET_SWEEP_ATTACK_STEPS="${BUDGET_SWEEP_ATTACK_STEPS:-${ROBUSTNESS_ATTACK_STEPS:-20}}"
@@ -98,6 +99,7 @@ log "Serial-training epsilon jitter factor per batch: uniform[$DARCY_EPS_JITTER_
 log "Epoch multiplier: $EPOCH_MULTIPLIER; checkpoint original/final=$CHECKPOINT_ORIGINAL_AND_FINAL"
 log "Darcy training samples per epoch: $DARCY_TRAIN_MAX; batch=$DARCY_BATCH; opt_batch=$OPT_BATCH"
 log "Darcy attack probes: samples=$DARCY_ATTACK_PROBE_SAMPLES; every_n_epochs=$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS"
+log "Darcy full evaluation cadence: every $DARCY_EVAL_EVERY_EPOCHS epoch(s), plus checkpoints/final"
 log "Budget sweep: budgets=$BUDGET_SWEEP_BUDGETS; samples_per_dataset=$BUDGET_SWEEP_SAMPLES_PER_DATASET; attack_steps=$BUDGET_SWEEP_ATTACK_STEPS"
 
 PREFLIGHT_PY="$BUNDLE/data/preflight_check.py"
@@ -144,6 +146,7 @@ if [[ "$MODE" == "smoke" ]]; then
     --darcy-train-max "$DARCY_TRAIN_MAX" \
     --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
     --eps-jitter-high "$DARCY_EPS_JITTER_HIGH" \
+    --eval-every-epochs "$DARCY_EVAL_EVERY_EPOCHS" \
     --attack-probe-samples "$DARCY_ATTACK_PROBE_SAMPLES" \
     --attack-probe-every-n-epochs "$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS"
   MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_smoke.json"
@@ -192,6 +195,7 @@ else
     --epoch-multiplier "$EPOCH_MULTIPLIER" \
     --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
     --eps-jitter-high "$DARCY_EPS_JITTER_HIGH" \
+    --eval-every-epochs "$DARCY_EVAL_EVERY_EPOCHS" \
     --attack-probe-samples "$DARCY_ATTACK_PROBE_SAMPLES" \
     --attack-probe-every-n-epochs "$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS" \
     $(if [[ "$CHECKPOINT_ORIGINAL_AND_FINAL" == "1" ]]; then printf '%s' '--checkpoint-at-original-and-final'; else printf '%s' '--no-checkpoint-at-original-and-final'; fi) \

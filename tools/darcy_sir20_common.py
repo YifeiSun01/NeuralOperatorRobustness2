@@ -257,6 +257,7 @@ def base_training_command(
     checkpoint_every_epochs: int,
     attack_probe_samples: int,
     attack_probe_every: int,
+    eval_every_epochs: int = 10,
     max_work_seconds: float | None = None,
     max_batches_per_epoch: int | None = None,
     epsilon_bucket_count: int = 5,
@@ -333,6 +334,8 @@ def base_training_command(
         str(int(eval_max_samples)),
         "--max-generalization-eval",
         str(int(max_generalization_eval)),
+        "--eval-every-epochs",
+        str(int(eval_every_epochs)),
     ]
     if max_work_seconds is not None:
         cmd.extend(["--max-work-seconds", f"{float(max_work_seconds):.6f}"])

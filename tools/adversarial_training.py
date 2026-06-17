@@ -2696,6 +2696,7 @@ def load_latest_smoke_summary(output_root: Path) -> dict[str, Any] | None:
 
 def effective_task_cfg_for_preflight(task: str, args) -> dict[str, Any]:
     cfg = dict(asdict(DEFAULTS[task]))
+    cfg["eval_every_epochs"] = max(1, int(getattr(args, "eval_every_epochs", 1)))
     if args.epochs is not None:
         cfg["epochs"] = int(args.epochs)
     override_train_max = getattr(args, f"{task}_train_max", None)
@@ -2786,20 +2787,30 @@ def build_planned_workload_estimate(
         total_steps = int(cfg["epochs"]) * max(1, batches_per_epoch)
         optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(n_train, batch_size, optimizer_batch_size, max_batches)
         total_optimizer_steps = int(cfg["epochs"]) * max(1, optimizer_steps_per_epoch)
-        eval_every_steps = max(1, batches_per_epoch)
-        eval_steps = [epoch * max(1, batches_per_epoch) for epoch in range(1, int(cfg["epochs"]) + 1)]
-        eval_passes = 1 + len(eval_steps)
+        eval_every_epochs = max(1, int(cfg.get("eval_every_epochs", 1)))
         checkpoint_every_epochs = int(args.checkpoint_every_epochs or 0)
         checkpoint_fraction = args.checkpoint_every_fraction
         if checkpoint_every_epochs > 0:
             checkpoint_every_steps = max(1, checkpoint_every_epochs * max(1, batches_per_epoch))
-            checkpoint_steps = sorted(set([epoch * max(1, batches_per_epoch) for epoch in range(checkpoint_every_epochs, int(cfg["epochs"]) + 1, checkpoint_every_epochs)] + [total_steps]))
+            checkpoint_epochs = sorted(set(list(range(checkpoint_every_epochs, int(cfg["epochs"]) + 1, checkpoint_every_epochs)) + [int(cfg["epochs"])]))
+            checkpoint_steps = [epoch * max(1, batches_per_epoch) for epoch in checkpoint_epochs]
         elif checkpoint_fraction is not None and float(checkpoint_fraction) > 0:
             checkpoint_every_steps = max(1, int(math.ceil(total_steps * float(checkpoint_fraction))))
             checkpoint_steps = sorted(set(list(range(checkpoint_every_steps, total_steps + 1, checkpoint_every_steps)) + [total_steps]))
+            checkpoint_epochs = sorted({int(math.ceil(step / max(1, batches_per_epoch))) for step in checkpoint_steps})
         else:
             checkpoint_every_steps = None
             checkpoint_steps = [total_steps]
+            checkpoint_epochs = [int(cfg["epochs"])]
+        eval_epochs = sorted(
+            set(
+                [epoch for epoch in range(1, int(cfg["epochs"]) + 1) if epoch % eval_every_epochs == 0]
+                + [int(cfg["epochs"])]
+                + checkpoint_epochs
+            )
+        )
+        eval_steps = [epoch * max(1, batches_per_epoch) for epoch in eval_epochs]
+        eval_passes = 1 + len(eval_steps)
         eval_dataset_count = expected_generalization + 2
 
         smoke = smoke_by_task.get(task, {})
@@ -2842,8 +2853,10 @@ def build_planned_workload_estimate(
             "full_solver_gradient": True,
             "batches_per_epoch": batches_per_epoch,
             "total_train_steps": total_steps,
-            "evaluation_schedule": "every_epoch",
-            "eval_every_steps": eval_every_steps,
+            "evaluation_schedule": f"every_{eval_every_epochs}_epochs_plus_checkpoints_final",
+            "eval_every_epochs": eval_every_epochs,
+            "eval_every_steps": eval_every_epochs * max(1, batches_per_epoch),
+            "eval_epochs_after_baseline": eval_epochs,
             "eval_steps_after_baseline": eval_steps,
             "eval_pass_count_including_baseline": eval_passes,
             "checkpoint_every_epochs": checkpoint_every_epochs,
@@ -3267,6 +3280,8 @@ def estimate_from_smoke(
     batch_size: int,
     optimizer_batch_size: int,
     eval_every_fraction: float,
+    eval_every_epochs: int = 1,
+    checkpoint_every_epochs: int = 0,
 ) -> dict[str, Any]:
     if not train_rows:
         return {"task": task, "estimate_available": False}
@@ -3278,7 +3293,13 @@ def estimate_from_smoke(
     optimizer_steps_per_epoch = count_optimizer_steps_for_epoch(full_train_samples, batch_size, optimizer_batch_size)
     train_batches = full_epochs * batches_per_epoch
     optimizer_steps = full_epochs * max(1, optimizer_steps_per_epoch)
-    evals = int(full_epochs) + 1
+    eval_every_epochs = max(1, int(eval_every_epochs))
+    checkpoint_every_epochs = max(0, int(checkpoint_every_epochs))
+    eval_epochs = {epoch for epoch in range(1, int(full_epochs) + 1) if epoch % eval_every_epochs == 0}
+    eval_epochs.add(int(full_epochs))
+    if checkpoint_every_epochs > 0:
+        eval_epochs.update(range(checkpoint_every_epochs, int(full_epochs) + 1, checkpoint_every_epochs))
+    evals = 1 + len(eval_epochs)
     eval_mean = float(np.mean(eval_seconds)) if eval_seconds else 0.0
     total_seconds = per_batch * train_batches + eval_mean * evals
     return {
@@ -3299,6 +3320,8 @@ def estimate_from_smoke(
         "estimated_train_batches": train_batches,
         "estimated_optimizer_steps": optimizer_steps,
         "estimated_eval_count": evals,
+        "eval_every_epochs": eval_every_epochs,
+        "checkpoint_every_epochs_for_eval": checkpoint_every_epochs,
         "estimated_total_seconds": total_seconds,
         "estimated_total_minutes": total_seconds / 60.0,
     }
@@ -3318,8 +3341,9 @@ def train_one_task(
         {
             "task": task,
             "device": str(device),
-            "evaluation_schedule": "every_epoch",
+            "evaluation_schedule": f"every_{max(1, int(args.eval_every_epochs))}_epochs_plus_checkpoints_final",
             "eval_every_fraction": args.eval_every_fraction,
+            "eval_every_epochs": max(1, int(args.eval_every_epochs)),
             "checkpoint_every_epochs": args.checkpoint_every_epochs,
             "checkpoint_every_fraction": args.checkpoint_every_fraction,
             "checkpoint_wall_seconds": args.checkpoint_wall_seconds,
@@ -3518,6 +3542,7 @@ def train_one_task(
     else:
         batches_per_epoch = batches_per_epoch_nominal
     local_epochs = int(task_cfg["epochs"])
+    eval_every_epochs = max(1, int(task_cfg.get("eval_every_epochs", 1)))
     max_wall_seconds = task_cfg.get("max_wall_seconds")
     max_wall_seconds = None if max_wall_seconds is None else float(max_wall_seconds)
     max_work_seconds = task_cfg.get("max_work_seconds")
@@ -3867,6 +3892,7 @@ def train_one_task(
 
         is_final_step = local_epoch == local_epochs
         should_checkpoint = is_final_step or (checkpoint_every_steps is not None and global_step % checkpoint_every_steps == 0)
+        should_eval = is_final_step or should_checkpoint or (local_epoch % eval_every_epochs == 0)
         ckpt: Path | None = None
         checkpoint_path = ""
         if should_checkpoint:
@@ -3886,48 +3912,51 @@ def train_one_task(
             last_checkpoint_epoch = epoch
             checkpoint_path = project_path(ckpt)
 
-        eval_rows, seconds = evaluate_task(
-            model,
-            task,
-            all_specs,
-            device,
-            int(task_cfg["eval_batch_size"]),
-            task_cfg["eval_max_samples"],
-            eval_csv,
-            global_step=global_step,
-            epoch=epoch,
-            progress_fraction=epoch_progress,
-            phase="during_adversarial_training",
-            max_generalization_eval=task_cfg["max_generalization_eval"],
-            combined_eval=bool(task_cfg.get("combined_eval", False)),
-            combined_index_map_csv=combined_eval_map_csv,
-            combined_eval_cache=combined_eval_cache,
-        )
-        eval_seconds.append(seconds)
-        write_eval_split_summary(
-            eval_split_csv,
-            eval_rows,
-            phase="during_adversarial_training",
-            epoch=epoch,
-            global_step=global_step,
-            progress_fraction=epoch_progress,
-            eval_wall_sec=seconds,
-        )
-        write_csv_row(
-            eval_pass_csv,
-            {
-                "task": task,
-                "phase": "during_adversarial_training",
-                "epoch": epoch,
-                "global_step": global_step,
-                "progress_fraction": epoch_progress,
-                "eval_wall_sec": seconds,
-                "checkpoint_saved": int(should_checkpoint),
-                "checkpoint_path": checkpoint_path,
-                "work_clock_seconds": work_clock_seconds,
-                "work_clock_minutes": work_clock_seconds / 60.0,
-            },
-        )
+        seconds = float("nan")
+        if should_eval:
+            eval_rows, seconds = evaluate_task(
+                model,
+                task,
+                all_specs,
+                device,
+                int(task_cfg["eval_batch_size"]),
+                task_cfg["eval_max_samples"],
+                eval_csv,
+                global_step=global_step,
+                epoch=epoch,
+                progress_fraction=epoch_progress,
+                phase="during_adversarial_training",
+                max_generalization_eval=task_cfg["max_generalization_eval"],
+                combined_eval=bool(task_cfg.get("combined_eval", False)),
+                combined_index_map_csv=combined_eval_map_csv,
+                combined_eval_cache=combined_eval_cache,
+            )
+            eval_seconds.append(seconds)
+            write_eval_split_summary(
+                eval_split_csv,
+                eval_rows,
+                phase="during_adversarial_training",
+                epoch=epoch,
+                global_step=global_step,
+                progress_fraction=epoch_progress,
+                eval_wall_sec=seconds,
+            )
+            write_csv_row(
+                eval_pass_csv,
+                {
+                    "task": task,
+                    "phase": "during_adversarial_training",
+                    "epoch": epoch,
+                    "global_step": global_step,
+                    "progress_fraction": epoch_progress,
+                    "eval_wall_sec": seconds,
+                    "checkpoint_saved": int(should_checkpoint),
+                    "checkpoint_path": checkpoint_path,
+                    "work_clock_seconds": work_clock_seconds,
+                    "work_clock_minutes": work_clock_seconds / 60.0,
+                    "eval_reason": "final" if is_final_step else "checkpoint" if should_checkpoint else f"every_{eval_every_epochs}_epochs",
+                },
+            )
         wall_elapsed_after_eval = time.perf_counter() - train_start_wall
         if ckpt is not None:
             write_csv_row(
@@ -3938,7 +3967,7 @@ def train_one_task(
                     "global_step": global_step,
                     "progress_fraction": epoch_progress,
                     "checkpoint_path": checkpoint_path,
-                    "eval_wall_sec": seconds,
+                    "eval_wall_sec": "" if not math.isfinite(seconds) else seconds,
                     "checkpoint_reason": "final" if is_final_step else "periodic",
                     "checkpoint_wall_target_seconds": "",
                     "wall_elapsed_seconds": wall_elapsed_after_eval,
@@ -3967,7 +3996,7 @@ def train_one_task(
                 "global_step": global_step,
                 "progress_fraction": epoch_progress,
                 "checkpoint_path": wall_checkpoint_path,
-                "eval_wall_sec": seconds,
+                "eval_wall_sec": "" if not math.isfinite(seconds) else seconds,
                 "checkpoint_reason": "wall_clock",
                 "checkpoint_wall_target_seconds": target_seconds,
                 "wall_elapsed_seconds": wall_elapsed_after_eval,
@@ -3989,7 +4018,7 @@ def train_one_task(
                     "max_work_seconds": max_work_seconds,
                     "work_clock_seconds": work_clock_seconds,
                     "wall_elapsed_seconds": wall_elapsed_after_eval,
-                    "eval_wall_sec": seconds,
+                    "eval_wall_sec": "" if not math.isfinite(seconds) else seconds,
                     "stop_reason": stop_reason,
                 },
             )
@@ -4006,7 +4035,7 @@ def train_one_task(
                     "progress_fraction": epoch_progress,
                     "max_wall_seconds": max_wall_seconds,
                     "wall_elapsed_seconds": wall_elapsed_after_eval,
-                    "eval_wall_sec": seconds,
+                    "eval_wall_sec": "" if not math.isfinite(seconds) else seconds,
                     "stop_reason": stop_reason,
                 },
             )
@@ -4038,6 +4067,8 @@ def train_one_task(
         batch_size=batch_size,
         optimizer_batch_size=optimizer_batch_size,
         eval_every_fraction=float(args.eval_every_fraction),
+        eval_every_epochs=eval_every_epochs,
+        checkpoint_every_epochs=checkpoint_every_epochs,
     )
     summary = {
         "task": task,
@@ -4070,7 +4101,8 @@ def train_one_task(
         "optimizer_state_loaded_from_initial_checkpoint": optimizer_state_loaded,
         "total_epochs_for_progress": total_epochs_for_progress,
         "total_steps": global_step,
-        "evaluation_schedule": "every_epoch",
+        "evaluation_schedule": f"every_{eval_every_epochs}_epochs_plus_checkpoints_final",
+        "eval_every_epochs": eval_every_epochs,
         "eval_pass_count_including_baseline": int(len(eval_seconds)),
         "checkpoint_every_epochs": checkpoint_every_epochs,
         "checkpoint_every_fraction": None if checkpoint_fraction is None else float(checkpoint_fraction),
@@ -4119,7 +4151,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=20260530)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--epochs", type=int, default=None)
-    parser.add_argument("--eval-every-fraction", type=float, default=0.2, help="Deprecated scheduling knob kept for old scripts; evaluation now runs every epoch.")
+    parser.add_argument("--eval-every-fraction", type=float, default=0.2, help="Deprecated scheduling knob kept for old scripts; use --eval-every-epochs for scheduling.")
+    parser.add_argument("--eval-every-epochs", type=int, default=10, help="Run full evaluation every N epochs, plus initial, checkpoint, and final epochs.")
     parser.add_argument("--checkpoint-every-epochs", type=int, default=200, help="Save a model checkpoint every N epochs; default 200, plus final checkpoint.")
     parser.add_argument("--checkpoint-every-fraction", type=float, default=None, help="Legacy fallback: save checkpoints every this fraction of total training progress. Used only when --checkpoint-every-epochs <= 0.")
     parser.add_argument("--checkpoint-wall-seconds", default=None, help="Comma-separated elapsed wall-clock seconds. After an epoch/eval crosses each target, save an extra checkpoint with checkpoint_reason=wall_clock.")
@@ -4281,7 +4314,8 @@ def main() -> None:
             "clip_x_min": args.random_field_clip_x_min,
             "clip_x_max": args.random_field_clip_x_max,
         },
-        "evaluation_schedule": "every_epoch",
+        "evaluation_schedule": f"every_{max(1, int(args.eval_every_epochs))}_epochs_plus_checkpoints_final",
+        "eval_every_epochs": max(1, int(args.eval_every_epochs)),
         "combined_eval": bool(args.combined_eval),
         "eval_every_fraction_deprecated": args.eval_every_fraction,
         "checkpoint_every_epochs": int(args.checkpoint_every_epochs),

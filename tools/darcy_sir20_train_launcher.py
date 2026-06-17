@@ -129,6 +129,7 @@ def main() -> None:
     parser.add_argument("--smoke-eval-max-samples", type=int, default=1)
     parser.add_argument("--full-eval-max-samples", type=int, default=0)
     parser.add_argument("--max-generalization-eval", type=int, default=50)
+    parser.add_argument("--eval-every-epochs", type=int, default=10)
     parser.add_argument("--checkpoint-every-epochs", type=int, default=100)
     parser.add_argument("--epoch-multiplier", type=float, default=2.0)
     parser.add_argument("--eps-jitter-low", type=float, default=0.25)
@@ -207,6 +208,7 @@ def main() -> None:
                 batch_size=args.batch_size,
                 optimizer_batch_size=args.optimizer_batch_size,
                 checkpoint_every_epochs=per_method_checkpoint_every,
+                eval_every_epochs=args.eval_every_epochs,
                 attack_probe_samples=args.attack_probe_samples,
                 attack_probe_every=args.attack_probe_every_n_epochs,
                 max_work_seconds=max_work_seconds,
@@ -302,6 +304,7 @@ def main() -> None:
             "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
             "attack_probe_samples": int(args.attack_probe_samples),
             "attack_probe_every_n_epochs": int(args.attack_probe_every_n_epochs),
+            "eval_every_epochs": int(args.eval_every_epochs),
         },
     )
     write_json(
@@ -319,6 +322,7 @@ def main() -> None:
             "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
             "attack_probe_samples": int(args.attack_probe_samples),
             "attack_probe_every_n_epochs": int(args.attack_probe_every_n_epochs),
+            "eval_every_epochs": int(args.eval_every_epochs),
         },
     )
     print(json_path)
