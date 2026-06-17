@@ -52,7 +52,7 @@ By default, the script:
 - evaluates all saved checkpoints on the 52 Darcy datasets
 - runs the advanced serial loss3 attack
 - computes Jacobian/SVD diagnostics
-- generates figures
+- generates figures, including training loss, attack loss gain, split-mean MSE/RMSE/Relative-L2 curves, and all 50 generalization-dataset MSE/RMSE/Relative-L2 curves split into `part01` and `part02`
 - uploads the output bundle to R2
 - commits source and Markdown changes and pushes to `vast-ai-darcy-flow`
 

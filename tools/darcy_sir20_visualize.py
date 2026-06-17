@@ -46,6 +46,24 @@ LABELS = {
 }
 
 
+def metric_label(metric: str) -> str:
+    if metric == "rmse":
+        return "RMSE"
+    if metric == "relative_l2":
+        return "Relative L2"
+    if metric == "mse":
+        return "MSE loss"
+    return metric.replace("_", " ")
+
+
+def dataset_title(dataset_id: str) -> str:
+    return (
+        dataset_id.replace("darcy_binary_loss3targeted_20260611_", "")
+        .replace("darcy_lossdrop_pool_", "")
+        .replace("_", " ")
+    )
+
+
 def read_manifest(path: Path) -> list[dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     return payload.get("checkpoints", [])
@@ -83,6 +101,48 @@ def load_training_tables(manifest_rows: list[dict[str, Any]]) -> tuple[dict[str,
     return split_tables, metric_tables
 
 
+def load_step_tables(manifest_rows: list[dict[str, Any]]) -> tuple[dict[str, pd.DataFrame], dict[str, pd.DataFrame]]:
+    step_tables: dict[str, pd.DataFrame] = {}
+    attack_epoch_tables: dict[str, pd.DataFrame] = {}
+    for row in manifest_rows:
+        method = row.get("method")
+        if method == "baseline" or not row.get("run_dir"):
+            continue
+        run_dir = resolve(str(row["run_dir"])) / "darcy"
+        steps_path = run_dir / "train_steps.csv"
+        attack_epoch_path = run_dir / "attack_epoch_summary.csv"
+        work_path = run_dir / "work_clock_epoch_summary.csv"
+        work: pd.DataFrame | None = None
+        if work_path.exists():
+            work = pd.read_csv(work_path)[["epoch", "work_clock_cumulative_seconds"]].drop_duplicates("epoch", keep="last")
+        if steps_path.exists():
+            df = pd.read_csv(steps_path)
+            df["method"] = str(method)
+            step_tables[str(method)] = df
+        if attack_epoch_path.exists():
+            df = pd.read_csv(attack_epoch_path)
+            if work is not None and "epoch" in df:
+                df = df.merge(work, on="epoch", how="left")
+            df["method"] = str(method)
+            attack_epoch_tables[str(method)] = df
+    return step_tables, attack_epoch_tables
+
+
+def add_mse_columns(
+    final_eval: pd.DataFrame,
+    split_tables: dict[str, pd.DataFrame],
+    metric_tables: dict[str, pd.DataFrame],
+) -> None:
+    if "rmse" in final_eval:
+        final_eval["mse"] = pd.to_numeric(final_eval["rmse"], errors="coerce") ** 2
+    for df in split_tables.values():
+        if "rmse_dataset_mean" in df:
+            df["mse_dataset_mean"] = pd.to_numeric(df["rmse_dataset_mean"], errors="coerce") ** 2
+    for df in metric_tables.values():
+        if "rmse" in df:
+            df["mse"] = pd.to_numeric(df["rmse"], errors="coerce") ** 2
+
+
 def baseline_split_values(final_eval: pd.DataFrame, metric: str) -> dict[str, float]:
     base = final_eval[final_eval["method"] == "baseline"]
     values: dict[str, float] = {}
@@ -109,6 +169,15 @@ def metric_col(metric: str) -> str:
     return f"{metric}_dataset_mean"
 
 
+def x_column(df: pd.DataFrame, x_axis: str) -> str | None:
+    if x_axis == "epoch":
+        return "epoch" if "epoch" in df else None
+    for candidate in ("work_clock_cumulative_seconds", "cumulative_work_clock_sec", "work_clock_seconds"):
+        if candidate in df:
+            return candidate
+    return None
+
+
 def plot_split_mean(metric: str, x_axis: str, split_tables: dict[str, pd.DataFrame], baseline_values: dict[str, float], common_max: float, out: Path) -> None:
     fig, ax = plt.subplots(figsize=(10.5, 5.8))
     splits = [("train", "-"), ("test", "--"), ("generalization", ":")]
@@ -130,8 +199,8 @@ def plot_split_mean(metric: str, x_axis: str, split_tables: dict[str, pd.DataFra
             ax.axhline(value, color="#666666", linewidth=0.9, alpha=0.55)
             ax.text(0.995, value, f"baseline {split}", transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=7, color="#555555")
     ax.set_xlabel("epoch" if x_axis == "epoch" else "work-clock seconds")
-    ax.set_ylabel("RMSE" if metric == "rmse" else "Relative L2")
-    ax.set_title(f"Darcy/SIR20 {metric.replace('_', ' ')} split means vs {ax.get_xlabel()}")
+    ax.set_ylabel(metric_label(metric))
+    ax.set_title(f"Darcy/SIR20 {metric_label(metric)} split means vs {ax.get_xlabel()}")
     ax.grid(alpha=0.25)
     ax.legend(ncol=3, fontsize=7, frameon=False)
     fig.tight_layout()
@@ -163,17 +232,86 @@ def plot_generalization_grid(metric: str, x_axis: str, metric_tables: dict[str, 
         base = baseline_by_dataset.get(dataset_id, float("nan"))
         if math.isfinite(base):
             ax.axhline(base, color="#444444", linewidth=0.8, alpha=0.65)
-        ax.set_title(dataset_id.replace("darcy_lossdrop_pool_", ""), fontsize=7)
+        ax.set_title(dataset_title(dataset_id), fontsize=7)
         ax.grid(alpha=0.2)
         ax.tick_params(labelsize=7)
     for ax in axes[len(dataset_ids) :]:
         ax.axis("off")
     handles = [plt.Line2D([0], [0], color=COLORS[m], lw=1.6, label=LABELS[m]) for m in TRAINING_METHODS]
     fig.legend(handles=handles, loc="upper center", ncol=6, frameon=False, fontsize=8)
-    fig.suptitle(f"Darcy/SIR20 generalization {metric.replace('_', ' ')} vs {'epoch' if x_axis == 'epoch' else 'work-clock seconds'}", y=0.995)
+    fig.suptitle(f"Darcy/SIR20 generalization {metric_label(metric)} vs {'epoch' if x_axis == 'epoch' else 'work-clock seconds'}", y=0.995)
     fig.tight_layout(rect=(0, 0, 1, 0.975))
     fig.savefig(out, dpi=220)
     plt.close(fig)
+
+
+def plot_training_loss(x_axis: str, step_tables: dict[str, pd.DataFrame], out: Path) -> bool:
+    fig, ax = plt.subplots(figsize=(10.5, 5.8))
+    plotted = False
+    for method in TRAINING_METHODS:
+        df = step_tables.get(method)
+        if df is None or df.empty:
+            continue
+        y_col = "train_loss_on_adv_mean" if "train_loss_on_adv_mean" in df else "train_loss_on_adv"
+        if y_col not in df:
+            continue
+        x_col = x_column(df, x_axis)
+        if x_col is None:
+            continue
+        sub = df[[x_col, y_col]].copy()
+        sub[x_col] = pd.to_numeric(sub[x_col], errors="coerce")
+        sub[y_col] = pd.to_numeric(sub[y_col], errors="coerce")
+        sub = sub.replace([np.inf, -np.inf], np.nan).dropna().sort_values(x_col)
+        sub = sub[sub[y_col] > 0]
+        if sub.empty:
+            continue
+        ax.plot(sub[x_col], sub[y_col], color=COLORS[method], linewidth=1.05, alpha=0.9, label=LABELS[method])
+        plotted = True
+    if not plotted:
+        plt.close(fig)
+        return False
+    ax.set_xlabel("epoch" if x_axis == "epoch" else "work-clock seconds")
+    ax.set_ylabel("optimizer MSE loss on attacked batch")
+    ax.set_yscale("log")
+    ax.set_title(f"Darcy/SIR20 training loss vs {ax.get_xlabel()}")
+    ax.grid(alpha=0.25)
+    ax.legend(ncol=3, fontsize=8, frameon=False)
+    fig.tight_layout()
+    fig.savefig(out, dpi=220)
+    plt.close(fig)
+    return True
+
+
+def plot_attack_loss_gain(x_axis: str, attack_tables: dict[str, pd.DataFrame], out: Path) -> bool:
+    fig, ax = plt.subplots(figsize=(10.5, 5.8))
+    plotted = False
+    for method in TRAINING_METHODS:
+        df = attack_tables.get(method)
+        if df is None or df.empty or "attack_loss_gain_mean" not in df:
+            continue
+        x_col = x_column(df, x_axis)
+        if x_col is None:
+            continue
+        sub = df[[x_col, "attack_loss_gain_mean"]].copy()
+        sub[x_col] = pd.to_numeric(sub[x_col], errors="coerce")
+        sub["attack_loss_gain_mean"] = pd.to_numeric(sub["attack_loss_gain_mean"], errors="coerce")
+        sub = sub.replace([np.inf, -np.inf], np.nan).dropna().sort_values(x_col)
+        if sub.empty:
+            continue
+        ax.plot(sub[x_col], sub["attack_loss_gain_mean"], color=COLORS[method], linewidth=1.05, alpha=0.9, label=LABELS[method])
+        plotted = True
+    if not plotted:
+        plt.close(fig)
+        return False
+    ax.set_xlabel("epoch" if x_axis == "epoch" else "work-clock seconds")
+    ax.set_ylabel("attack objective loss gain")
+    ax.set_title(f"Darcy/SIR20 attack objective loss gain vs {ax.get_xlabel()}")
+    ax.grid(alpha=0.25)
+    ax.legend(ncol=3, fontsize=8, frameon=False)
+    fig.tight_layout()
+    fig.savefig(out, dpi=220)
+    plt.close(fig)
+    return True
 
 
 def load_delta(row: pd.Series) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -269,10 +407,20 @@ def main() -> None:
     final_eval = pd.read_csv(final_eval_csv)
     manifest = read_manifest(args.checkpoint_manifest.resolve())
     split_tables, metric_tables = load_training_tables(manifest)
+    step_tables, attack_tables = load_step_tables(manifest)
+    add_mse_columns(final_eval, split_tables, metric_tables)
     common_max = common_work_max(split_tables)
     figures: list[Path] = []
 
-    for metric in ("rmse", "relative_l2"):
+    for x_axis in ("epoch", "work"):
+        out = dirs["figures"] / f"train_loss_on_adv_vs_{x_axis}.png"
+        if plot_training_loss(x_axis, step_tables, out):
+            figures.append(out)
+        out = dirs["figures"] / f"attack_loss_gain_vs_{x_axis}.png"
+        if plot_attack_loss_gain(x_axis, attack_tables, out):
+            figures.append(out)
+
+    for metric in ("mse", "rmse", "relative_l2"):
         base_split = baseline_split_values(final_eval, metric)
         base_dataset = baseline_dataset_values(final_eval, metric)
         order = gen_dataset_order(final_eval)
