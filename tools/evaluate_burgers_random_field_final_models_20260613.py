@@ -178,6 +178,132 @@ def evaluate_clean(args: argparse.Namespace, model_paths: dict[str, Path], out_d
     dataset_rows: list[dict[str, Any]] = []
     sample_rows: list[dict[str, Any]] = []
     t0 = time.time()
+    if bool(getattr(args, "clean_combined", True)):
+        items: list[tuple[DatasetInfo, torch.Tensor, torch.Tensor, int, int]] = []
+        map_rows: list[dict[str, Any]] = []
+        xs: list[torch.Tensor] = []
+        ys: list[torch.Tensor] = []
+        offset = 0
+        sample_shape: tuple[int, ...] | None = None
+        for dsi, info in enumerate(infos):
+            data = torch_load(info.path)
+            x = data["x"].float().unsqueeze(-1).contiguous()
+            y = data["y"].float().unsqueeze(-1).contiguous()
+            if args.clean_max_samples > 0:
+                x = x[: args.clean_max_samples]
+                y = y[: args.clean_max_samples]
+            if sample_shape is None:
+                sample_shape = tuple(x.shape[1:])
+            elif tuple(x.shape[1:]) != sample_shape:
+                raise ValueError(f"clean combined shape mismatch for {info.dataset_id}: {tuple(x.shape[1:])} != {sample_shape}")
+            start = offset
+            end = start + int(x.shape[0])
+            items.append((info, x, y, start, end))
+            xs.append(x)
+            ys.append(y)
+            map_rows.append(
+                {
+                    "combined_dataset_index": int(dsi),
+                    "split": info.split,
+                    "dataset_id": info.dataset_id,
+                    "path": str(info.path.relative_to(REPO)),
+                    "combined_sample_start": int(start),
+                    "combined_sample_end_exclusive": int(end),
+                    "combined_sample_count": int(end - start),
+                    "combined_sample_shape": "" if sample_shape is None else "x".join(str(dim) for dim in sample_shape),
+                }
+            )
+            offset = end
+        write_csv(clean_dir / "combined_clean_dataset_index_map.csv", map_rows)
+        x_all = torch.cat(xs, dim=0).contiguous()
+        y_all = torch.cat(ys, dim=0).contiguous()
+        n_all = int(x_all.shape[0])
+        arrays = {
+            name: {metric: np.empty((n_all,), dtype=np.float64) for metric in ["mse", "rmse", "relative_l2", "mae"]}
+            for name in model_paths
+        }
+        with torch.no_grad():
+            for start in range(0, n_all, int(args.clean_batch_size)):
+                end = min(start + int(args.clean_batch_size), n_all)
+                xb = x_all[start:end].to(device, non_blocking=True)
+                yb = y_all[start:end].to(device, non_blocking=True)
+                for name, model in models.items():
+                    metrics = sample_metrics(model(xb), yb)
+                    for key, arr in metrics.items():
+                        arrays[name][key][start:end] = arr
+        for dsi, (info, _x, _y, start, end) in enumerate(items):
+            row: dict[str, Any] = {
+                "split": info.split,
+                "dataset_id": info.dataset_id,
+                "path": str(info.path.relative_to(REPO)),
+                "num_samples": int(end - start),
+                "combined_clean": 1,
+                "combined_dataset_index": int(dsi),
+                "combined_sample_start": int(start),
+                "combined_sample_end_exclusive": int(end),
+                "combined_total_samples": int(n_all),
+            }
+            for name in model_paths:
+                for key in ["mse", "rmse", "relative_l2", "mae"]:
+                    arr = arrays[name][key][start:end]
+                    row[f"{name}_{key}_mean"] = float(arr.mean())
+                    row[f"{name}_{key}_std"] = float(arr.std(ddof=1)) if arr.size > 1 else 0.0
+            for i in range(int(end - start)):
+                sample_rows.append(
+                    {
+                        "split": info.split,
+                        "dataset_id": info.dataset_id,
+                        "sample_index": i,
+                        "combined_sample_index": int(start + i),
+                        **{
+                            f"{name}_{metric}": float(arrays[name][metric][start + i])
+                            for name in model_paths
+                            for metric in ["mse", "rmse", "relative_l2", "mae"]
+                        },
+                    }
+                )
+            dataset_rows.append(row)
+            event = {
+                "event": "clean_dataset_done",
+                "index": dsi + 1,
+                "total": len(infos),
+                "dataset_id": info.dataset_id,
+                "seconds": time.time() - t0,
+                "combined_clean": 1,
+            }
+            print(json.dumps(event), flush=True)
+            append_jsonl(progress_path, event)
+        index_map_path = clean_dir / "combined_clean_dataset_index_map.csv"
+        try:
+            index_map_csv = str(index_map_path.relative_to(REPO))
+        except ValueError:
+            index_map_csv = str(index_map_path)
+        write_json(
+            clean_dir / "combined_clean_summary.json",
+            {
+                "enabled": True,
+                "dataset_count": len(infos),
+                "total_samples": int(n_all),
+                "batch_size": int(args.clean_batch_size),
+                "model_count": len(model_paths),
+                "index_map_csv": index_map_csv,
+            },
+        )
+        write_csv(clean_dir / "per_dataset_clean_metrics.csv", dataset_rows)
+        write_csv(clean_dir / "per_sample_clean_metrics.csv", sample_rows)
+        summary: dict[str, Any] = {"elapsed_seconds": time.time() - t0, "datasets": len(dataset_rows), "models": list(model_paths), "combined_clean": True}
+        for split in ["train", "test", "generalization"]:
+            subset = [r for r in dataset_rows if r["split"] == split]
+            if not subset:
+                continue
+            summary[split] = {}
+            for name in model_paths:
+                summary[split][name] = {metric: float(np.mean([r[f"{name}_{metric}_mean"] for r in subset])) for metric in ["mse", "rmse", "relative_l2", "mae"]}
+        write_json(clean_dir / "summary.json", summary)
+        del models
+        torch.cuda.empty_cache()
+        return
+
     for dsi, info in enumerate(infos):
         data = torch_load(info.path)
         x = data["x"].float().unsqueeze(-1)
@@ -219,7 +345,7 @@ def evaluate_clean(args: argparse.Namespace, model_paths: dict[str, Path], out_d
         append_jsonl(progress_path, event)
     write_csv(clean_dir / "per_dataset_clean_metrics.csv", dataset_rows)
     write_csv(clean_dir / "per_sample_clean_metrics.csv", sample_rows)
-    summary: dict[str, Any] = {"elapsed_seconds": time.time() - t0, "datasets": len(dataset_rows), "models": list(model_paths)}
+    summary: dict[str, Any] = {"elapsed_seconds": time.time() - t0, "datasets": len(dataset_rows), "models": list(model_paths), "combined_clean": False}
     for split in ["train", "test", "generalization"]:
         subset = [r for r in dataset_rows if r["split"] == split]
         if not subset:
@@ -466,6 +592,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--svd-manifest", type=Path, default=DEFAULT_SVD_MANIFEST)
     ap.add_argument("--stage", action="append", choices=["clean", "attack", "svd"], help="May be passed multiple times. Default: all stages.")
     ap.add_argument("--clean-batch-size", type=int, default=256)
+    ap.add_argument("--clean-combined", action=argparse.BooleanOptionalAction, default=True, help="Evaluate all same-shaped clean datasets as one combined tensor, then split metrics back by dataset.")
     ap.add_argument("--clean-max-samples", type=int, default=0)
     ap.add_argument("--attack-steps", type=int, default=20)
     ap.add_argument("--attack-batch-size", type=int, default=500)

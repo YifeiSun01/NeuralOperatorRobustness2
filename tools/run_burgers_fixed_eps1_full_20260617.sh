@@ -34,9 +34,13 @@ MAX_WORK_SECONDS="${MAX_WORK_SECONDS:-28800}"
 CHECKPOINT_EVERY_EPOCHS="${CHECKPOINT_EVERY_EPOCHS:-100}"
 CHECKPOINT_WALL_HOURS="${CHECKPOINT_WALL_HOURS:-0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,9,10,12,16,20,24}"
 ATTACK_PROBE_SAMPLES="${ATTACK_PROBE_SAMPLES:-5}"
+ATTACK_PROBE_EVERY_N_EPOCHS="${ATTACK_PROBE_EVERY_N_EPOCHS:-1}"
 EPSILON_BUCKET_COUNT="${EPSILON_BUCKET_COUNT:-1}"
 BURGERS_BATCH="${BURGERS_BATCH:-1350}"
+BURGERS_EVAL_BATCH="${BURGERS_EVAL_BATCH:-4096}"
 BURGERS_OPT_BATCH="${BURGERS_OPT_BATCH:-32}"
+EVAL_EVERY_EPOCHS="${EVAL_EVERY_EPOCHS:-10}"
+COMBINED_EVAL="${COMBINED_EVAL:-1}"
 BURGERS_SOLVER_REMAT="${BURGERS_SOLVER_REMAT:-chunk}"
 BURGERS_SOLVER_REMAT_CHUNK_STEPS="${BURGERS_SOLVER_REMAT_CHUNK_STEPS:-50}"
 ADV_ATTACK_STEPS="${ADV_ATTACK_STEPS:-5}"
@@ -78,6 +82,7 @@ This reruns Burgers 1024 adversarial/noise/clean training on the latest 52-datas
 - Baseline: \`1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt\`
 - Methods: \`loss1\`, \`loss2\`, \`loss3\`, \`clean\`, \`random_clean_y\`, \`random_solver_y\`
 - Epsilon jitter: fixed \`low=1.0\`, \`high=1.0\` for every Burgers run
+- Evaluation optimization: combined 52-dataset eval enabled=${COMBINED_EVAL}, eval every ${EVAL_EVERY_EPOCHS} epochs, eval batch ${BURGERS_EVAL_BATCH}
 - Work-clock target: about ${MAX_WORK_SECONDS} seconds per training method
 - Training curves: \`${TRAIN_VIZ_DIR#$ROOT/}\`
 - Full clean/attack/SVD suite: \`${FULL_SUITE_ROOT#$ROOT/}\`
@@ -199,6 +204,10 @@ PYGPU
 }
 
 common_train_args() {
+  local combined_flag="--combined-eval"
+  if [[ "$COMBINED_EVAL" != "1" ]]; then
+    combined_flag="--no-combined-eval"
+  fi
   printf '%s\n' \
     "$PY" "$ROOT/tools/adversarial_training.py" \
     --tasks burgers \
@@ -207,15 +216,18 @@ common_train_args() {
     --device cuda \
     --seed 20260617 \
     --checkpoint-every-epochs "$CHECKPOINT_EVERY_EPOCHS" \
+    --eval-every-epochs "$EVAL_EVERY_EPOCHS" \
+    "$combined_flag" \
     --checkpoint-wall-hours "$CHECKPOINT_WALL_HOURS" \
     --label-mode solver \
     --epsilon-bucket-count "$EPSILON_BUCKET_COUNT" \
     --attack-probe-samples "$ATTACK_PROBE_SAMPLES" \
-    --attack-probe-every-n-epochs 1 \
+    --attack-probe-every-n-epochs "$ATTACK_PROBE_EVERY_N_EPOCHS" \
     --attack-probe-save-targets \
     --burgers-attack-method fast_replace_l2 \
     --burgers-require-p2q2 \
     --burgers-batch-size "$BURGERS_BATCH" \
+    --burgers-eval-batch-size "$BURGERS_EVAL_BATCH" \
     --burgers-optimizer-batch-size "$BURGERS_OPT_BATCH" \
     --burgers-solver-remat "$BURGERS_SOLVER_REMAT" \
     --burgers-solver-remat-chunk-steps "$BURGERS_SOLVER_REMAT_CHUNK_STEPS" \
@@ -358,7 +370,8 @@ run_full_suite() {
     --stage attack \
     --stage svd \
     --stage postprocess \
-    --clean-batch-size "${CLEAN_BATCH_SIZE:-256}" \
+    --clean-batch-size "${CLEAN_BATCH_SIZE:-4096}" \
+    --clean-combined \
     --attack-steps "${FULL_SUITE_ATTACK_STEPS:-20}" \
     --attack-batch-size "${FULL_SUITE_ATTACK_BATCH_SIZE:-500}" \
     --attack-train-count "${FULL_SUITE_ATTACK_TRAIN_COUNT:-50}" \
@@ -408,6 +421,8 @@ git_commit_push() {
   fi
   local candidates=(
     "$ROOT/tools/adversarial_training.py"
+    "$ROOT/tools/evaluate_burgers_random_field_final_models_20260613.py"
+    "$ROOT/tools/evaluate_burgers_random_field_checkpoint_series_20260613.py"
     "$ROOT/tools/plot_burgers_wideparam_loss123_retrain_20260611.py"
     "$ROOT/tools/run_burgers_fixed_eps1_full_${DATE_TAG}.sh"
     "$REPORT_MD"

@@ -3146,7 +3146,7 @@ def evaluate_task(
         if combined_index_map_csv is not None and not combined_index_map_csv.exists():
             for map_row in map_rows:
                 write_csv_row(combined_index_map_csv, map_row)
-    elif combined_eval and task == "darcy":
+    elif combined_eval:
         results, map_rows = evaluate_datasets_combined(model, eval_specs, device, eval_batch_size, max_samples)
         if combined_index_map_csv is not None and not combined_index_map_csv.exists():
             for map_row in map_rows:
@@ -3404,6 +3404,9 @@ def train_one_task(
         if override_optimizer_batch is not None:
             task_cfg["optimizer_batch_size"] = int(override_optimizer_batch)
 
+    override_eval_batch = getattr(args, f"{task}_eval_batch_size", None)
+    if override_eval_batch is not None:
+        task_cfg["eval_batch_size"] = int(override_eval_batch)
     override_attack_steps = getattr(args, f"{task}_attack_steps", None)
     if override_attack_steps is not None:
         task_cfg["attack_steps"] = int(override_attack_steps)
@@ -3582,7 +3585,7 @@ def train_one_task(
     work_epoch_csv = out_dir / "work_clock_epoch_summary.csv"
     memory_csv = out_dir / "memory.csv"
     combined_eval_cache = None
-    if bool(task_cfg.get("combined_eval", False)) and task == "darcy":
+    if bool(task_cfg.get("combined_eval", False)):
         combined_eval_specs = task_eval_specs(all_specs, task, task_cfg["max_generalization_eval"])
         combined_eval_cache = build_combined_eval_cache(
             combined_eval_specs,
@@ -4163,7 +4166,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume-global-step-offset", type=int, default=0, help="Global train-step number represented by the loaded initial checkpoint.")
     parser.add_argument("--eval-max-samples", type=int, default=0, help="Max samples per dataset during evaluation; default 0 evaluates the full dataset.")
     parser.add_argument("--max-generalization-eval", type=int, default=None)
-    parser.add_argument("--combined-eval", action=argparse.BooleanOptionalAction, default=True, help="Evaluate same-shaped datasets as one combined tensor, then split metrics back by dataset index ranges. Currently used for Darcy.")
+    parser.add_argument("--combined-eval", action=argparse.BooleanOptionalAction, default=True, help="Evaluate same-shaped datasets as one combined tensor, then split metrics back by dataset index ranges.")
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
     parser.add_argument("--training-data-mode", choices=["adv-only", "clean-only", "clean-plus-adv", "random-binary-fixed-y", "random-binary-solver-y"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-only trains on clean solver pairs without perturbation; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs; Darcy random-binary-fixed-y/random-binary-solver-y use random binary source flips instead of adversarial attacks.")
@@ -4201,6 +4204,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--burgers-batch-size", type=int, default=None)
     parser.add_argument("--darcy-batch-size", type=int, default=None)
     parser.add_argument("--ns2d-batch-size", type=int, default=None)
+    parser.add_argument("--burgers-eval-batch-size", type=int, default=None)
+    parser.add_argument("--darcy-eval-batch-size", type=int, default=None)
+    parser.add_argument("--ns2d-eval-batch-size", type=int, default=None)
     parser.add_argument("--burgers-optimizer-batch-size", type=int, default=None)
     parser.add_argument("--darcy-optimizer-batch-size", type=int, default=None)
     parser.add_argument("--ns2d-optimizer-batch-size", type=int, default=None)

@@ -542,6 +542,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--svd-manifest", type=Path, default=DEFAULT_SVD_MANIFEST)
     ap.add_argument("--stage", action="append", choices=["clean", "attack", "svd", "postprocess"], help="May be passed multiple times. Default: all stages.")
     ap.add_argument("--clean-batch-size", type=int, default=256)
+    ap.add_argument("--clean-combined", action=argparse.BooleanOptionalAction, default=True, help="Evaluate all same-shaped clean datasets as one combined tensor, then split metrics back by dataset.")
     ap.add_argument("--clean-max-samples", type=int, default=0)
     ap.add_argument("--attack-steps", type=int, default=20)
     ap.add_argument("--attack-batch-size", type=int, default=500)
