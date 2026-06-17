@@ -21,6 +21,9 @@ DARCY_EPS_JITTER_LOW="${DARCY_EPS_JITTER_LOW:-0.25}"
 DARCY_EPS_JITTER_HIGH="${DARCY_EPS_JITTER_HIGH:-1.75}"
 DARCY_ATTACK_PROBE_SAMPLES="${DARCY_ATTACK_PROBE_SAMPLES:-8}"
 DARCY_ATTACK_PROBE_EVERY_N_EPOCHS="${DARCY_ATTACK_PROBE_EVERY_N_EPOCHS:-1}"
+BUDGET_SWEEP_BUDGETS="${BUDGET_SWEEP_BUDGETS:-0.00625,0.0125,0.025,0.0375,0.04375,0.05,0.075}"
+BUDGET_SWEEP_SAMPLES_PER_DATASET="${BUDGET_SWEEP_SAMPLES_PER_DATASET:-20}"
+BUDGET_SWEEP_ATTACK_STEPS="${BUDGET_SWEEP_ATTACK_STEPS:-${ROBUSTNESS_ATTACK_STEPS:-20}}"
 CHECKPOINT_ORIGINAL_AND_FINAL="${CHECKPOINT_ORIGINAL_AND_FINAL:-1}"
 UPLOAD_TO_R2="${UPLOAD_TO_R2:-1}"
 AUTO_GIT_PUSH="${AUTO_GIT_PUSH:-1}"
@@ -80,6 +83,7 @@ git_push_code() {
     tools/darcy_sir20_train_launcher.py \
     tools/darcy_sir20_evaluate.py \
     tools/darcy_sir20_robustness.py \
+    tools/darcy_sir20_budget_sweep.py \
     tools/darcy_sir20_visualize.py \
     tools/run_darcy_sir20_timematched_full_20260614.sh \
     docs/darcy_sir20_serial_double_budget_20260617.md \
@@ -94,6 +98,7 @@ log "Serial-training epsilon jitter factor per batch: uniform[$DARCY_EPS_JITTER_
 log "Epoch multiplier: $EPOCH_MULTIPLIER; checkpoint original/final=$CHECKPOINT_ORIGINAL_AND_FINAL"
 log "Darcy training samples per epoch: $DARCY_TRAIN_MAX; batch=$DARCY_BATCH; opt_batch=$OPT_BATCH"
 log "Darcy attack probes: samples=$DARCY_ATTACK_PROBE_SAMPLES; every_n_epochs=$DARCY_ATTACK_PROBE_EVERY_N_EPOCHS"
+log "Budget sweep: budgets=$BUDGET_SWEEP_BUDGETS; samples_per_dataset=$BUDGET_SWEEP_SAMPLES_PER_DATASET; attack_steps=$BUDGET_SWEEP_ATTACK_STEPS"
 
 PREFLIGHT_PY="$BUNDLE/data/preflight_check.py"
 cat > "$PREFLIGHT_PY" <<'PY'
@@ -154,6 +159,12 @@ if [[ "$MODE" == "smoke" ]]; then
     --attack-steps "${SMOKE_ATTACK_STEPS:-1}" \
     --svd-max-samples "${SMOKE_SVD_MAX_SAMPLES:-3}" \
     --block-row-chunk "${SMOKE_BLOCK_ROW_CHUNK:-128}"
+  run_logged smoke_budget_sweep "$PYTHON" tools/darcy_sir20_budget_sweep.py \
+    --bundle "$BUNDLE" \
+    --checkpoint-manifest "$MANIFEST" \
+    --budgets "${SMOKE_BUDGET_SWEEP_BUDGETS:-0.0125,0.025}" \
+    --samples-per-dataset "${SMOKE_BUDGET_SWEEP_SAMPLES_PER_DATASET:-1}" \
+    --attack-steps "${SMOKE_BUDGET_SWEEP_ATTACK_STEPS:-${SMOKE_ATTACK_STEPS:-1}}"
   run_logged smoke_visualize "$PYTHON" tools/darcy_sir20_visualize.py \
     --bundle "$BUNDLE" \
     --checkpoint-manifest "$MANIFEST"
@@ -202,6 +213,12 @@ else
     --attack-steps "${ROBUSTNESS_ATTACK_STEPS:-20}" \
     --svd-max-samples 25 \
     --block-row-chunk "${BLOCK_ROW_CHUNK:-128}"
+  run_logged budget_sweep "$PYTHON" tools/darcy_sir20_budget_sweep.py \
+    --bundle "$BUNDLE" \
+    --checkpoint-manifest "$FINAL_MANIFEST" \
+    --budgets "$BUDGET_SWEEP_BUDGETS" \
+    --samples-per-dataset "$BUDGET_SWEEP_SAMPLES_PER_DATASET" \
+    --attack-steps "$BUDGET_SWEEP_ATTACK_STEPS"
   run_logged visualize "$PYTHON" tools/darcy_sir20_visualize.py \
     --bundle "$BUNDLE" \
     --checkpoint-manifest "$FINAL_MANIFEST" \
