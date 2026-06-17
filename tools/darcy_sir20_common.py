@@ -262,6 +262,7 @@ def base_training_command(
     epsilon_bucket_count: int = 5,
     eps_jitter_low: float | str | None = None,
     eps_jitter_high: float | str | None = None,
+    train_max_samples: int | None = None,
 ) -> list[str | Path]:
     spec = METHODS[method]
     eps_low = os.environ.get("DARCY_SIR20_EPS_JITTER_LOW", "0.25") if eps_jitter_low is None else str(eps_jitter_low)
@@ -337,6 +338,8 @@ def base_training_command(
         cmd.extend(["--max-work-seconds", f"{float(max_work_seconds):.6f}"])
     if max_batches_per_epoch is not None:
         cmd.extend(["--max-batches-per-epoch", str(int(max_batches_per_epoch))])
+    if train_max_samples is not None:
+        cmd.extend(["--darcy-train-max", str(int(train_max_samples))])
     return cmd
 
 

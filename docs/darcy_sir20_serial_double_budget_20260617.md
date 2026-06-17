@@ -17,7 +17,9 @@ For Darcy binary adversarial training, the per-batch epsilon budget factor is no
 uniform(0.25, 1.75)
 ```
 
-The base Darcy epsilon fraction remains `0.025`, so each batch uses a fresh budget multiplier against that base fraction. This is intentionally batch-level randomization, which is finer than epoch-level randomization.
+The base Darcy epsilon fraction remains `0.025`, so every training attack batch refreshes the budget multiplier against that base fraction. In the current binary Darcy attack implementation the multiplier is sampled per sample inside the batch, so it is at least batch-level randomization and finer than epoch-level randomization.
+
+The driver defaults to `DARCY_TRAIN_MAX=64`, `DARCY_BATCH=64`, and `OPT_BATCH=32`, matching the older long Darcy scripts where one epoch corresponds to one optimizer-update step.
 
 ## Checkpoints
 

@@ -89,6 +89,7 @@ def main() -> None:
     parser.add_argument("--methods", default=",".join(TRAINING_METHODS))
     parser.add_argument("--batch-size", type=int, default=96)
     parser.add_argument("--optimizer-batch-size", type=int, default=24)
+    parser.add_argument("--darcy-train-max", type=int, default=64)
     parser.add_argument("--eval-max-samples", type=int, default=1)
     parser.add_argument("--max-generalization-eval", type=int, default=3)
     parser.add_argument("--checkpoint-every-epochs", type=int, default=0)
@@ -127,6 +128,7 @@ def main() -> None:
                 attack_probe_samples=0,
                 attack_probe_every=1,
                 epsilon_bucket_count=0,
+                train_max_samples=args.darcy_train_max,
             )
             run_command(cmd, log_root / f"{run_name}.log")
         df = read_work_clock_epochs(run_dir)
@@ -141,6 +143,7 @@ def main() -> None:
                 "calibration_epochs_requested": int(args.epochs),
                 "calibration_epochs_completed": int(summary.get("epochs", len(df))),
                 "warmup_epochs_ignored": int(args.warmup_epochs),
+                "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
                 **stats,
             }
         )
@@ -173,6 +176,7 @@ def main() -> None:
         "loss3_reference_work_seconds": reference_work,
         "loss3_reference_work_hours": reference_work / 3600.0,
         "warmup_epochs_ignored": int(args.warmup_epochs),
+        "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
     }
 
     csv_path = dirs["data"] / "timing_calibration.csv"

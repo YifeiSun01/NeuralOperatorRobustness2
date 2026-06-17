@@ -12,8 +12,9 @@ PYTHON="${PYTHON:-$ROOT/adv_robust/bin/python}"
 CALIBRATION_EPOCHS="${CALIBRATION_EPOCHS:-20}"
 CALIBRATION_WARMUP_EPOCHS="${CALIBRATION_WARMUP_EPOCHS:-2}"
 LOSS3_REFERENCE_EPOCHS="${LOSS3_REFERENCE_EPOCHS:-3000}"
-DARCY_BATCH="${DARCY_BATCH:-96}"
-OPT_BATCH="${OPT_BATCH:-24}"
+DARCY_TRAIN_MAX="${DARCY_TRAIN_MAX:-64}"
+DARCY_BATCH="${DARCY_BATCH:-64}"
+OPT_BATCH="${OPT_BATCH:-32}"
 CHECKPOINT_EVERY_EPOCHS="${CHECKPOINT_EVERY_EPOCHS:-100}"
 EPOCH_MULTIPLIER="${EPOCH_MULTIPLIER:-2.0}"
 DARCY_EPS_JITTER_LOW="${DARCY_EPS_JITTER_LOW:-0.25}"
@@ -89,6 +90,7 @@ git_push_code() {
 log "Darcy/SIR20 ${MODE} pipeline start bundle=$BUNDLE"
 log "Serial-training epsilon jitter factor per batch: uniform[$DARCY_EPS_JITTER_LOW,$DARCY_EPS_JITTER_HIGH]"
 log "Epoch multiplier: $EPOCH_MULTIPLIER; checkpoint original/final=$CHECKPOINT_ORIGINAL_AND_FINAL"
+log "Darcy training samples per epoch: $DARCY_TRAIN_MAX; batch=$DARCY_BATCH; opt_batch=$OPT_BATCH"
 
 PREFLIGHT_PY="$BUNDLE/data/preflight_check.py"
 cat > "$PREFLIGHT_PY" <<'PY'
@@ -131,6 +133,7 @@ if [[ "$MODE" == "smoke" ]]; then
     --smoke-eval-max-samples "${SMOKE_EVAL_MAX_SAMPLES:-1}" \
     --batch-size "$DARCY_BATCH" \
     --optimizer-batch-size "$OPT_BATCH" \
+    --darcy-train-max "$DARCY_TRAIN_MAX" \
     --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
     --eps-jitter-high "$DARCY_EPS_JITTER_HIGH"
   MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_smoke.json"
@@ -158,6 +161,7 @@ else
     --loss3-reference-epochs "$LOSS3_REFERENCE_EPOCHS" \
     --batch-size "$DARCY_BATCH" \
     --optimizer-batch-size "$OPT_BATCH" \
+    --darcy-train-max "$DARCY_TRAIN_MAX" \
     --reuse
   PLAN="$BUNDLE/data/timing_calibration.json"
   run_logged full_train "$PYTHON" tools/darcy_sir20_train_launcher.py \
@@ -167,6 +171,7 @@ else
     --loss3-reference-epochs "$LOSS3_REFERENCE_EPOCHS" \
     --batch-size "$DARCY_BATCH" \
     --optimizer-batch-size "$OPT_BATCH" \
+    --darcy-train-max "$DARCY_TRAIN_MAX" \
     --checkpoint-every-epochs "$CHECKPOINT_EVERY_EPOCHS" \
     --epoch-multiplier "$EPOCH_MULTIPLIER" \
     --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \

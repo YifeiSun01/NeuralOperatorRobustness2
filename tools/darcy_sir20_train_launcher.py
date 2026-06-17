@@ -124,6 +124,7 @@ def main() -> None:
     parser.add_argument("--loss3-reference-epochs", type=int, default=3000)
     parser.add_argument("--batch-size", type=int, default=96)
     parser.add_argument("--optimizer-batch-size", type=int, default=24)
+    parser.add_argument("--darcy-train-max", type=int, default=64)
     parser.add_argument("--smoke-epochs", type=int, default=1)
     parser.add_argument("--smoke-eval-max-samples", type=int, default=1)
     parser.add_argument("--full-eval-max-samples", type=int, default=0)
@@ -210,6 +211,7 @@ def main() -> None:
                 epsilon_bucket_count=5,
                 eps_jitter_low=args.eps_jitter_low,
                 eps_jitter_high=args.eps_jitter_high,
+                train_max_samples=args.darcy_train_max,
             )
             run_command(cmd, log_root / f"{run_name}.log")
         summary = read_summary(run_dir)
@@ -233,6 +235,7 @@ def main() -> None:
                 "epoch_multiplier": float(args.epoch_multiplier),
                 "epsilon_jitter_low": float(args.eps_jitter_low),
                 "epsilon_jitter_high": float(args.eps_jitter_high),
+                "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
                 "stop_reason": stop_reason,
                 "work_clock_seconds": work_clock_seconds,
                 "local_work_clock_seconds": float(summary.get("local_work_clock_seconds", float("nan"))),
@@ -292,6 +295,7 @@ def main() -> None:
             "epoch_multiplier": float(args.epoch_multiplier),
             "epsilon_jitter_low": float(args.eps_jitter_low),
             "epsilon_jitter_high": float(args.eps_jitter_high),
+            "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
         },
     )
     write_json(
@@ -306,6 +310,7 @@ def main() -> None:
             "epoch_multiplier": float(args.epoch_multiplier),
             "epsilon_jitter_low": float(args.eps_jitter_low),
             "epsilon_jitter_high": float(args.eps_jitter_high),
+            "darcy_train_max": "" if args.darcy_train_max is None else int(args.darcy_train_max),
         },
     )
     print(json_path)
