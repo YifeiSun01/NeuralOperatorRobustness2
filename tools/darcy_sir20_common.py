@@ -260,8 +260,12 @@ def base_training_command(
     max_work_seconds: float | None = None,
     max_batches_per_epoch: int | None = None,
     epsilon_bucket_count: int = 5,
+    eps_jitter_low: float | str | None = None,
+    eps_jitter_high: float | str | None = None,
 ) -> list[str | Path]:
     spec = METHODS[method]
+    eps_low = os.environ.get("DARCY_SIR20_EPS_JITTER_LOW", "0.25") if eps_jitter_low is None else str(eps_jitter_low)
+    eps_high = os.environ.get("DARCY_SIR20_EPS_JITTER_HIGH", "1.75") if eps_jitter_high is None else str(eps_jitter_high)
     cmd: list[str | Path] = [
         PYTHON,
         PROJECT_ROOT / "tools" / "adversarial_training.py",
@@ -311,9 +315,9 @@ def base_training_command(
         "--darcy-epsilon-fraction",
         os.environ.get("DARCY_SIR20_EPSILON_FRACTION", "0.025"),
         "--darcy-eps-jitter-low",
-        "1.0",
+        eps_low,
         "--darcy-eps-jitter-high",
-        "1.0",
+        eps_high,
         "--darcy-alpha-ratio",
         "1.0",
         "--darcy-physics-metric",

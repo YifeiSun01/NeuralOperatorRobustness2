@@ -188,24 +188,33 @@ def plot_attack_heatmap(bundle: Path, out: Path) -> None:
     if not attack_csv.exists():
         return
     df = pd.read_csv(attack_csv)
+    method_order = list(dict.fromkeys(df["method"].astype(str).tolist()))
+    if not method_order:
+        return
     key_cols = ["dataset_id", "source_sample_index"]
     pivot = df.pivot_table(index=key_cols, columns="method", values="loss_increase", aggfunc="mean")
-    needed = [m for m in METHOD_ORDER if m in pivot.columns]
-    if "loss3" not in needed:
+    needed = [m for m in method_order if m in pivot.columns]
+    loss3_candidates = [m for m in needed if m == "loss3" or m.startswith("loss3_")]
+    if not loss3_candidates:
         return
-    other_cols = [m for m in needed if m != "loss3"]
-    pivot = pivot.dropna(subset=["loss3"])
+    reference = loss3_candidates[-1]
+    other_cols = [m for m in needed if m != reference]
+    pivot = pivot.dropna(subset=[reference])
     if other_cols:
-        pivot["loss3_advantage"] = pivot[other_cols].median(axis=1) - pivot["loss3"]
+        pivot["loss3_advantage"] = pivot[other_cols].median(axis=1) - pivot[reference]
         chosen = pivot.sort_values("loss3_advantage", ascending=False).head(1)
     else:
-        chosen = pivot.sort_values("loss3", ascending=True).head(1)
+        chosen = pivot.sort_values(reference, ascending=True).head(1)
     if chosen.empty:
         return
     dataset_id, source_idx = chosen.index[0]
     rows = df[(df["dataset_id"] == dataset_id) & (df["source_sample_index"].astype(int) == int(source_idx))]
     rows = rows.set_index("method")
-    fig, axes = plt.subplots(2, 4, figsize=(14, 7))
+    available_methods = [m for m in method_order if m in rows.index]
+    panel_count = 1 + len(available_methods)
+    cols = 4
+    panel_rows = int(math.ceil(panel_count / cols))
+    fig, axes = plt.subplots(panel_rows, cols, figsize=(3.6 * cols, 3.2 * panel_rows))
     axes = axes.reshape(-1)
     first = rows.iloc[0]
     x_clean, _delta0, _x_adv0 = load_delta(first)
@@ -215,18 +224,20 @@ def plot_attack_heatmap(bundle: Path, out: Path) -> None:
     fig.colorbar(im, ax=axes[0], fraction=0.046, pad=0.04)
     deltas = []
     loaded = {}
-    for method in METHOD_ORDER:
+    for method in available_methods:
         if method not in rows.index:
             continue
         x0, delta, x_adv = load_delta(rows.loc[method])
         deltas.append(delta)
         loaded[method] = (x0, delta, x_adv)
     vmax = max(float(np.max(np.abs(d))) for d in deltas) if deltas else 1.0
-    for ax, method in zip(axes[1:], [m for m in METHOD_ORDER if m in loaded]):
+    display_by_method = rows["method_display"].to_dict() if "method_display" in rows.columns else {}
+    for ax, method in zip(axes[1:], [m for m in available_methods if m in loaded]):
         delta = loaded[method][1]
         im = ax.imshow(delta, cmap="coolwarm", vmin=-vmax, vmax=vmax)
         gain = float(rows.loc[method]["loss_increase"])
-        ax.set_title(f"{LABELS.get(method, method)} delta\ngain={gain:.3g}", fontsize=8)
+        label = display_by_method.get(method, LABELS.get(method, method))
+        ax.set_title(f"{label} delta\ngain={gain:.3g}", fontsize=8)
         ax.axis("off")
     for ax in axes[1 + len(loaded) :]:
         ax.axis("off")

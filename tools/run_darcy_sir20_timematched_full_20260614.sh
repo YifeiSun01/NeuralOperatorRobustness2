@@ -15,8 +15,12 @@ LOSS3_REFERENCE_EPOCHS="${LOSS3_REFERENCE_EPOCHS:-3000}"
 DARCY_BATCH="${DARCY_BATCH:-96}"
 OPT_BATCH="${OPT_BATCH:-24}"
 CHECKPOINT_EVERY_EPOCHS="${CHECKPOINT_EVERY_EPOCHS:-100}"
-UPLOAD_TO_R2="${UPLOAD_TO_R2:-0}"
-AUTO_GIT_PUSH="${AUTO_GIT_PUSH:-0}"
+EPOCH_MULTIPLIER="${EPOCH_MULTIPLIER:-2.0}"
+DARCY_EPS_JITTER_LOW="${DARCY_EPS_JITTER_LOW:-0.25}"
+DARCY_EPS_JITTER_HIGH="${DARCY_EPS_JITTER_HIGH:-1.75}"
+CHECKPOINT_ORIGINAL_AND_FINAL="${CHECKPOINT_ORIGINAL_AND_FINAL:-1}"
+UPLOAD_TO_R2="${UPLOAD_TO_R2:-1}"
+AUTO_GIT_PUSH="${AUTO_GIT_PUSH:-1}"
 R2_PREFIX="${R2_PREFIX:-machine-sync/NeuralOperatorRobustness2-selected}"
 GIT_BRANCH="${GIT_BRANCH:-vast-ai-darcy-flow}"
 
@@ -63,6 +67,8 @@ upload_path() {
 git_push_code() {
   [[ "$AUTO_GIT_PUSH" == "1" ]] || return 0
   log "git commit/push source and Markdown to ${GIT_BRANCH}"
+  git config user.name "${GIT_COMMITTER_NAME:-vast-ai-runner}"
+  git config user.email "${GIT_COMMITTER_EMAIL:-vast-ai-runner@users.noreply.github.com}"
   git add \
     tools/adversarial_training.py \
     tools/evaluate_generalization_models.py \
@@ -73,13 +79,16 @@ git_push_code() {
     tools/darcy_sir20_robustness.py \
     tools/darcy_sir20_visualize.py \
     tools/run_darcy_sir20_timematched_full_20260614.sh \
+    docs/darcy_sir20_serial_double_budget_20260617.md \
     docs/darcy_sir20_timematched_full_20260614.md \
     EXPERIMENT_LEDGER.md
-  git commit -m "Add Darcy SIR20 time-matched rerun pipeline" || true
-  git push origin "$GIT_BRANCH"
+  git commit -m "Update Darcy SIR20 serial double-budget pipeline" || true
+  git push origin "HEAD:${GIT_BRANCH}"
 }
 
 log "Darcy/SIR20 ${MODE} pipeline start bundle=$BUNDLE"
+log "Serial-training epsilon jitter factor per batch: uniform[$DARCY_EPS_JITTER_LOW,$DARCY_EPS_JITTER_HIGH]"
+log "Epoch multiplier: $EPOCH_MULTIPLIER; checkpoint original/final=$CHECKPOINT_ORIGINAL_AND_FINAL"
 
 PREFLIGHT_PY="$BUNDLE/data/preflight_check.py"
 cat > "$PREFLIGHT_PY" <<'PY'
@@ -121,7 +130,9 @@ if [[ "$MODE" == "smoke" ]]; then
     --smoke-epochs "${SMOKE_EPOCHS:-1}" \
     --smoke-eval-max-samples "${SMOKE_EVAL_MAX_SAMPLES:-1}" \
     --batch-size "$DARCY_BATCH" \
-    --optimizer-batch-size "$OPT_BATCH"
+    --optimizer-batch-size "$OPT_BATCH" \
+    --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
+    --eps-jitter-high "$DARCY_EPS_JITTER_HIGH"
   MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_smoke.json"
   run_logged smoke_eval "$PYTHON" tools/darcy_sir20_evaluate.py \
     --bundle "$BUNDLE" \
@@ -157,23 +168,32 @@ else
     --batch-size "$DARCY_BATCH" \
     --optimizer-batch-size "$OPT_BATCH" \
     --checkpoint-every-epochs "$CHECKPOINT_EVERY_EPOCHS" \
+    --epoch-multiplier "$EPOCH_MULTIPLIER" \
+    --eps-jitter-low "$DARCY_EPS_JITTER_LOW" \
+    --eps-jitter-high "$DARCY_EPS_JITTER_HIGH" \
+    $(if [[ "$CHECKPOINT_ORIGINAL_AND_FINAL" == "1" ]]; then printf '%s' '--checkpoint-at-original-and-final'; else printf '%s' '--no-checkpoint-at-original-and-final'; fi) \
     --reuse
-  MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_full.json"
+  FINAL_MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_full.json"
+  ANALYSIS_MANIFEST="$BUNDLE/checkpoints_manifest/training_checkpoints_full_all_saved.json"
+  if [[ ! -f "$ANALYSIS_MANIFEST" ]]; then
+    ANALYSIS_MANIFEST="$FINAL_MANIFEST"
+  fi
   run_logged final_eval "$PYTHON" tools/darcy_sir20_evaluate.py \
     --bundle "$BUNDLE" \
-    --checkpoint-manifest "$MANIFEST" \
+    --checkpoint-manifest "$ANALYSIS_MANIFEST" \
     --eval-max-samples 0 \
     --batch-size 256
-  run_logged robustness "$PYTHON" tools/darcy_sir20_robustness.py \
+  run_logged advanced_serial_attack_jacobian_svd "$PYTHON" tools/darcy_sir20_robustness.py \
     --bundle "$BUNDLE" \
-    --checkpoint-manifest "$MANIFEST" \
+    --checkpoint-manifest "$ANALYSIS_MANIFEST" \
     --samples-per-dataset 50 \
     --attack-steps "${ROBUSTNESS_ATTACK_STEPS:-20}" \
     --svd-max-samples 25 \
     --block-row-chunk "${BLOCK_ROW_CHUNK:-128}"
   run_logged visualize "$PYTHON" tools/darcy_sir20_visualize.py \
     --bundle "$BUNDLE" \
-    --checkpoint-manifest "$MANIFEST"
+    --checkpoint-manifest "$FINAL_MANIFEST" \
+    --final-eval-csv "$BUNDLE/data/final_eval_metrics.csv"
 fi
 
 upload_path "$BUNDLE"

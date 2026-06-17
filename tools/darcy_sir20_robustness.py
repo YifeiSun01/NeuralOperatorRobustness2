@@ -101,7 +101,7 @@ SVD_FIELDS = [
 def checkpoint_rows(path: Path) -> list[dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload.get("checkpoints", [])
-    return [r for r in rows if r.get("method") in METHOD_ORDER]
+    return [r for r in rows if r.get("method") and r.get("checkpoint")]
 
 
 def display_name(method: str, manifest_row: dict[str, Any] | None = None) -> str:
@@ -374,7 +374,7 @@ def write_report(path: Path, attack_rows: list[dict[str, Any]], svd_rows: list[d
     lines = [
         "# Darcy/SIR20 Robustness And SVD/Jacobian Diagnostics",
         "",
-        "Observed from fixed-sample loss3 attacks and same-sample SVD/Jacobian diagnostics.",
+        "Observed from fixed-sample advanced serial loss3 attacks and same-sample SVD/Jacobian diagnostics.",
         "",
         f"- Attack rows: `{len(attack_rows)}`",
         f"- SVD/Jacobian rows: `{len(svd_rows)}`",

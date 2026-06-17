@@ -40,7 +40,7 @@ def load_checkpoint_manifest(path: Path) -> list[dict[str, Any]]:
     rows = payload.get("checkpoints", payload if isinstance(payload, list) else [])
     out = []
     for row in rows:
-        if row.get("method") in METHOD_ORDER:
+        if row.get("method") and row.get("checkpoint"):
             out.append(row)
     return out
 
