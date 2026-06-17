@@ -1,0 +1,900 @@
+{
+  "checked_at_utc": "2026-06-17T16:35:27Z",
+  "dataset_count": 52,
+  "generalization_count": 50,
+  "all_nx1024": true,
+  "baseline_checkpoint_exists": true,
+  "sample_count_summary": {
+    "train": 1350,
+    "test": 150,
+    "generalization_unique": [
+      200
+    ]
+  },
+  "rows": [
+    {
+      "dataset_id": "train_original_gaussian_corr0p03",
+      "path": "1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+      "samples": 1350,
+      "x_shape": [
+        1350,
+        1024
+      ],
+      "y_shape": [
+        1350,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.0,
+      "y_min": 0.01771804690361023,
+      "y_max": 0.9821581244468689
+    },
+    {
+      "dataset_id": "test_original_gaussian_corr0p03",
+      "path": "1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+      "samples": 150,
+      "x_shape": [
+        150,
+        1024
+      ],
+      "y_shape": [
+        150,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.0,
+      "y_min": 0.028927266597747803,
+      "y_max": 0.9768266677856445
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d00",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d00.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": -0.04136623442173004,
+      "y_max": 0.9853254556655884
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d01",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d01.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": -0.08270905911922455,
+      "y_max": 1.0527327060699463
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d02",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d02.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.15000000596046448,
+      "x_max": 1.25,
+      "y_min": 0.26494282484054565,
+      "y_max": 1.1313210725784302
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d03",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d03.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.2000000476837158,
+      "y_min": 0.12810051441192627,
+      "y_max": 1.0755646228790283
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d04",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d04.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": -0.041383594274520874,
+      "y_max": 1.0694129467010498
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d05",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d05.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.15000000596046448,
+      "x_max": 1.25,
+      "y_min": 0.3297826051712036,
+      "y_max": 1.1557703018188477
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d06",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d06.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.10000000149011612,
+      "x_max": 1.100000023841858,
+      "y_min": 0.028128743171691895,
+      "y_max": 0.9324251413345337
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d07",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d07.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.2000000476837158,
+      "y_min": 0.19999685883522034,
+      "y_max": 1.0913176536560059
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d08",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d08.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.20339319109916687,
+      "y_max": 1.2018529176712036
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d09",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d09.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.13293825089931488,
+      "y_max": 1.1604506969451904
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d10",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d10.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": 0.02654719352722168,
+      "y_max": 1.006341814994812
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d11",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d11.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.05000000074505806,
+      "x_max": 1.0499999523162842,
+      "y_min": 0.1608419567346573,
+      "y_max": 0.9644722938537598
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d12",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d12.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": -0.20006407797336578,
+      "y_max": 1.121030569076538
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d13",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d13.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": -0.019652247428894043,
+      "y_max": 1.062122106552124
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d14",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d14.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.1011747419834137,
+      "y_max": 1.1835612058639526
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d15",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d15.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.15000000596046448,
+      "x_max": 1.25,
+      "y_min": 0.3184826374053955,
+      "y_max": 1.1050227880477905
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d16",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d16.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": -0.1447153389453888,
+      "y_max": 1.1463367938995361
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d17",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d17.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.6499999761581421,
+      "x_max": 1.350000023841858,
+      "y_min": -0.2664527893066406,
+      "y_max": 0.980533242225647
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d18",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d18.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.5,
+      "y_min": 0.27613401412963867,
+      "y_max": 1.2807581424713135
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d19",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d19.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.2928420603275299,
+      "y_max": 1.2766573429107666
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d20",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d20.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.3618510961532593,
+      "y_max": 1.2331624031066895
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d21",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d21.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.5,
+      "y_min": 0.33019301295280457,
+      "y_max": 1.1745102405548096
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d22",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d22.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": 0.008045583963394165,
+      "y_max": 0.9955621957778931
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d23",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d23.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.23604272305965424,
+      "y_max": 1.141151785850525
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d24",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d24.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": 0.055934399366378784,
+      "y_max": 1.002934217453003
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d25",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d25.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.1597677320241928,
+      "y_max": 1.1159095764160156
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d26",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d26.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.10000000149011612,
+      "x_max": 1.100000023841858,
+      "y_min": 0.06693962216377258,
+      "y_max": 0.9307065606117249
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d27",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d27.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.16211959719657898,
+      "y_max": 1.121164083480835
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d28",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d28.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": -0.03318929672241211,
+      "y_max": 0.9997016787528992
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d29",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d29.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.15000000596046448,
+      "x_max": 1.25,
+      "y_min": 0.3488662540912628,
+      "y_max": 1.0765914916992188
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d30",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d30.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.13769209384918213,
+      "y_max": 1.0838953256607056
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d31",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d31.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.04364326596260071,
+      "y_max": 1.284666895866394
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d32",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d32.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.15000000596046448,
+      "x_max": 1.25,
+      "y_min": 0.37101662158966064,
+      "y_max": 1.1360703706741333
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d33",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d33.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.10000000149011612,
+      "x_max": 1.100000023841858,
+      "y_min": 0.11250960826873779,
+      "y_max": 0.9434869289398193
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d34",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d34.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.19322429597377777,
+      "y_max": 1.187463402748108
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d35",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d35.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": -0.09476536512374878,
+      "y_max": 1.1248621940612793
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d36",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d36.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.5,
+      "y_min": 0.534711480140686,
+      "y_max": 0.9570655226707458
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d37",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d37.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.5,
+      "y_min": 0.6203649044036865,
+      "y_max": 0.8812618255615234
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d38",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d38.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": 0.28010380268096924,
+      "y_max": 0.7125473618507385
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d39",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d39.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": 0.3585391342639923,
+      "y_max": 0.6348539590835571
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d40",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d40.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": 0.3687942624092102,
+      "y_max": 0.6271704435348511
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d41",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d41.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.6499999761581421,
+      "x_max": 1.350000023841858,
+      "y_min": 0.12224487960338593,
+      "y_max": 0.579052209854126
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d42",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d42.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": 0.265090674161911,
+      "y_max": 0.7290516495704651
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d43",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d43.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.20000000298023224,
+      "x_max": 1.1999999284744263,
+      "y_min": 0.29023805260658264,
+      "y_max": 0.7015883922576904
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d44",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d44.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.5,
+      "x_max": 1.5,
+      "y_min": 0.3408273160457611,
+      "y_max": 0.648167073726654
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d45",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d45.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.10000000149011612,
+      "x_max": 1.100000023841858,
+      "y_min": 0.2051062136888504,
+      "y_max": 0.8149021863937378
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d46",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d46.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.30000001192092896,
+      "x_max": 1.2999999523162842,
+      "y_min": 0.005002051591873169,
+      "y_max": 0.9835742712020874
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d47",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d47.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": -0.6499999761581421,
+      "x_max": 1.350000023841858,
+      "y_min": 0.19085611402988434,
+      "y_max": 0.5060135126113892
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d48",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d48.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.15000000596046448,
+      "x_max": 1.25,
+      "y_min": 0.4510175585746765,
+      "y_max": 0.949005663394928
+    },
+    {
+      "dataset_id": "burgers_widevis_l3target_d49",
+      "path": "generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers/burgers_widevis_l3target_d49.pt",
+      "samples": 200,
+      "x_shape": [
+        200,
+        1024
+      ],
+      "y_shape": [
+        200,
+        1024
+      ],
+      "x_min": 0.0,
+      "x_max": 1.2000000476837158,
+      "y_min": 0.32100817561149597,
+      "y_max": 0.6059255599975586
+    }
+  ]
+}

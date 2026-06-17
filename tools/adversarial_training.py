@@ -2444,6 +2444,8 @@ def ns2d_solver_consistent_attack(
 
 
 def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict[str, Any]) -> AttackBatchResult:
+    if str(cfg.get("training_data_mode", "adv-only")) == "clean-only":
+        return clean_only_training_batch(model, xb, yb, task, cfg)
     if str(cfg.get("training_perturbation_mode", "attack")) == "random-field":
         if task != "burgers":
             raise ValueError("--training-perturbation-mode random-field is currently implemented for Burgers only")
@@ -2502,6 +2504,77 @@ def attack_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict
     )
 
 
+def clean_only_training_batch(model, xb: torch.Tensor, yb: torch.Tensor, task: str, cfg: dict[str, Any]) -> AttackBatchResult:
+    x_clean, y_clean = clean_solver_training_pair(task, xb, yb, cfg)
+    was_training = model.training
+    model.eval()
+    with torch.no_grad():
+        pred = model(x_clean)
+        per_sample_loss = per_sample_finite_mse(pred, y_clean)
+        loss_value = float(finite_mse(pred, y_clean).detach().cpu())
+    if was_training:
+        model.train()
+
+    batch = int(x_clean.shape[0])
+    zeros = torch.zeros((batch,), device=x_clean.device, dtype=x_clean.dtype)
+    ones = torch.ones((batch,), device=x_clean.device, dtype=x_clean.dtype)
+    delta = torch.zeros_like(x_clean)
+    info = {
+        "label_mode": str(cfg.get("label_mode", "solver")),
+        "target_source": "solver_x_clean_training_target",
+        "training_target_source": "solver(x_clean).detach() for clean-only optimizer update",
+        "attack_loss_objective": "clean",
+        "attack_objective_definition": "No perturbation; optimizer trains MSE(model(x_clean), solver(x_clean))",
+        "attack_uses_solver_forward": 1,
+        "attack_uses_solver_backward": 0,
+        "attack_target_source": "clean solver output",
+        "full_solver_gradient": False,
+        "attack_type": "clean_only",
+        "attack_method": "clean_only",
+        "attack_steps": 0,
+        "epsilon_mean": 0.0,
+        "epsilon_min": 0.0,
+        "epsilon_max": 0.0,
+        "alpha_mean": 0.0,
+        "alpha_min": 0.0,
+        "alpha_max": 0.0,
+        "alpha_ratio_nominal": float(cfg.get("alpha_ratio", 0.0)),
+        "alpha_jitter_low": float(cfg.get("alpha_jitter_low", 1.0)),
+        "alpha_jitter_high": float(cfg.get("alpha_jitter_high", 1.0)),
+        "alpha_is_epsilon_times_ratio": 1.0,
+        "clean_loss_before_attack": loss_value,
+        "adv_loss_after_random_start": loss_value,
+        "adv_loss_after_attack": loss_value,
+        "attack_loss_gain": 0.0,
+        "clean_solver_mse_before_attack": loss_value,
+        "adv_solver_mse_after_attack": loss_value,
+        "grad_abs_mean_last": 0.0,
+        "boundary_ratio_mean": 0.0,
+        "delta_linf_mean": 0.0,
+        "delta_l2_rms_mean": 0.0,
+    }
+    info.update(tensor_stats("target", y_clean))
+    info.update(tensor_stats("x_train", x_clean))
+    sample_info = make_attack_sample_info(
+        epsilon=zeros,
+        epsilon_jitter_factor=ones,
+        alpha=zeros,
+        clean_loss=per_sample_loss,
+        adv_loss=per_sample_loss,
+    )
+    return AttackBatchResult(
+        x_clean.detach(),
+        y_clean.detach(),
+        info,
+        sample_info=sample_info,
+        probe_tensors={
+            "x0_clean": x_clean.detach(),
+            "x0_adv": x_clean.detach(),
+            "delta_initial": delta.detach(),
+        },
+    )
+
+
 def clean_solver_training_pair(
     task: str,
     xb: torch.Tensor,
@@ -2533,11 +2606,11 @@ def combine_training_pairs(
     mode = str(cfg.get("training_data_mode", "adv-only"))
     x_adv = attack_result.x_train.detach()
     y_adv = attack_result.y_train.detach()
-    if mode == "adv-only" or mode in DARCY_RANDOM_SOURCE_TRAINING_MODES:
+    if mode == "adv-only" or mode == "clean-only" or mode in DARCY_RANDOM_SOURCE_TRAINING_MODES:
         info = {
             "training_data_mode": mode,
-            "clean_train_samples": 0,
-            "adv_train_samples": int(x_adv.shape[0]),
+            "clean_train_samples": int(x_adv.shape[0]) if mode == "clean-only" else 0,
+            "adv_train_samples": 0 if mode == "clean-only" else int(x_adv.shape[0]),
             "effective_train_samples": int(x_adv.shape[0]),
             "clean_plus_adv_multiplier": 1.0,
         }
@@ -2555,7 +2628,7 @@ def combine_training_pairs(
         }
         return x_train.detach(), y_train.detach(), info
     raise ValueError(
-        f"unknown training_data_mode={mode!r}; expected adv-only, clean-plus-adv, "
+        f"unknown training_data_mode={mode!r}; expected adv-only, clean-only, clean-plus-adv, "
         "random-binary-fixed-y, or random-binary-solver-y"
     )
 
@@ -4009,7 +4082,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-generalization-eval", type=int, default=None)
     parser.add_argument("--max-batches-per-epoch", type=int, default=None)
     parser.add_argument("--label-mode", choices=["solver", "clean"], default="solver")
-    parser.add_argument("--training-data-mode", choices=["adv-only", "clean-plus-adv", "random-binary-fixed-y", "random-binary-solver-y"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs; Darcy random-binary-fixed-y/random-binary-solver-y use random binary source flips instead of adversarial attacks.")
+    parser.add_argument("--training-data-mode", choices=["adv-only", "clean-only", "clean-plus-adv", "random-binary-fixed-y", "random-binary-solver-y"], default="adv-only", help="adv-only trains only on attacked solver pairs; clean-only trains on clean solver pairs without perturbation; clean-plus-adv doubles each attack batch with clean solver pairs plus attacked solver pairs; Darcy random-binary-fixed-y/random-binary-solver-y use random binary source flips instead of adversarial attacks.")
     parser.add_argument("--training-perturbation-mode", choices=["attack", "random-field"], default="attack", help="attack uses adversarially optimized delta; random-field samples a fresh Gaussian/Matern random-field delta without attack optimization.")
     parser.add_argument("--random-field-target-mode", choices=["clean-y", "solver-y"], default="solver-y", help="For --training-perturbation-mode random-field: clean-y keeps the original clean target fixed; solver-y recomputes the solver target at x+delta.")
     parser.add_argument("--random-field-families", default="gaussian,matern", help="Comma-separated random delta kernel families. Supported: gaussian,matern.")
@@ -4203,6 +4276,7 @@ def main() -> None:
             "Loss1 uses no solver in the attack; loss2 uses solver(x_clean).detach() forward only; "
             "loss3 uses solver(x_adv) with solver forward/backward. Training still uses either "
             "model(x_adv) -> solver(x_adv) for --training-data-mode adv-only, "
+            "model(x_clean) -> solver(x_clean) for --training-data-mode clean-only, "
             "or both model(x_clean) -> solver(x_clean) and model(x_adv) -> solver(x_adv) "
             "for --training-data-mode clean-plus-adv. For NS2D the attack variable is the "
             "initial vorticity frame and both model input frames and target frames "
@@ -4245,7 +4319,7 @@ def main() -> None:
         f"- Max work seconds: `{args.max_work_seconds}`",
         "",
         "Each task subdirectory contains `train_steps.csv`, `attack_batches.csv`, `attack_epoch_summary.csv`, `attack_epsilon_bucket_summary.csv`, `work_clock_epoch_summary.csv`, `optimizer_steps.csv`, `eval_metrics.csv`, `eval_split_summary.csv`, `evaluation_passes.csv`, `memory.csv`, checkpoints, `attack_probe_samples.csv`, `attack_probe_epochs.csv`, `attack_probe_samples/*.npz`, `data_range_summary.json`, and `summary.json`.",
-        "Training data modes: `adv-only` uses only perturbed solver/target pairs; `clean-plus-adv` trains each batch on clean solver pairs plus newly perturbed pairs, doubling the training examples per perturbation batch. Darcy-only `random-binary-fixed-y` and `random-binary-solver-y` replace adversarial attacks with random binary coefficient flips; fixed-y keeps the clean target, solver-y recomputes solver(a_random).",
+        "Training data modes: `adv-only` uses only perturbed solver/target pairs; `clean-only` uses clean solver pairs with zero perturbation; `clean-plus-adv` trains each batch on clean solver pairs plus newly perturbed pairs, doubling the training examples per perturbation batch. Darcy-only `random-binary-fixed-y` and `random-binary-solver-y` replace adversarial attacks with random binary coefficient flips; fixed-y keeps the clean target, solver-y recomputes solver(a_random).",
         "Perturbation modes: `attack` optimizes delta adversarially; Burgers-only `random-field` samples fresh Gaussian/Matern random-field deltas without attack optimization and uses `--random-field-target-mode clean-y` or `solver-y` for the target.",
         "Default training now uses the full original train split for every epoch; pass `--<task>-train-max N` only for debugging caps, or `0` for full.",
         "",

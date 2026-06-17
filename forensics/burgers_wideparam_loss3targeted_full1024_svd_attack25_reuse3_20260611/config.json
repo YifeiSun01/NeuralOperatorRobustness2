@@ -1,0 +1,92 @@
+{
+  "out_root": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611",
+  "report_md": "/workspace/NeuralOperatorRobustness2/docs/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611.md",
+  "train_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_train.pt",
+  "test_path": "/workspace/NeuralOperatorRobustness2/1D_Burgers/datasets/1D/Burgers/batched_exponax_splits/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45/dim1d_nx1024_N1500_solver=exponax_batched_kernel=gaussian_correlation_length0.03_bcperiodic_nu0.001_t1.0_seed45_test.pt",
+  "generalization_root": "/workspace/NeuralOperatorRobustness2/generalization_datasets_burgers_semantic_wideparam_visible_loss3targeted_20260611/round_00/burgers",
+  "sample_manifest": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611/sample_manifest.csv",
+  "sample_counts": {
+    "prior_reused": 3,
+    "new_train": 2,
+    "new_test": 2,
+    "new_generalization": 18,
+    "train": 2,
+    "test": 2,
+    "generalization": 21,
+    "total": 25
+  },
+  "prior_three_root": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611",
+  "prior_three_manifest": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/sample_manifest.csv",
+  "reused_prior_samples": [
+    {
+      "sample_id": 0,
+      "source": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/sample_000",
+      "destination": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611/sample_000",
+      "copied": true
+    },
+    {
+      "sample_id": 1,
+      "source": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/sample_001",
+      "destination": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611/sample_001",
+      "copied": true
+    },
+    {
+      "sample_id": 2,
+      "source": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack3_20260611/sample_002",
+      "destination": "/workspace/NeuralOperatorRobustness2/forensics/burgers_wideparam_loss3targeted_full1024_svd_attack25_reuse3_20260611/sample_002",
+      "copied": true
+    }
+  ],
+  "seed": 20260611,
+  "attack_steps": 15,
+  "epsilon_rms": 0.12,
+  "alpha_rms": 0.012,
+  "top_k_values": [
+    5,
+    10,
+    20,
+    50,
+    100
+  ],
+  "reuse_existing": true,
+  "full_jacobian_shape": [
+    1024,
+    1024
+  ],
+  "svd_method": "full_np_linalg_svd",
+  "uses_block_projection": false,
+  "uses_randomized_svd": false,
+  "model_specs": [
+    {
+      "key": "baseline",
+      "label": "baseline",
+      "epoch": 0,
+      "checkpoint": "/workspace/NeuralOperatorRobustness2/1D_Burgers/trained_models/attack_ready/burgers_nu0.001_fno1d_500/checkpoints/pytorch_fno1d_500.pt"
+    },
+    {
+      "key": "loss1",
+      "label": "loss1_epoch8000",
+      "epoch": 8000,
+      "checkpoint": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_loss3_selective_round03_loss1_continue5000to8000_20260607/burgers/checkpoints/burgers_epoch8000_step024000.pt"
+    },
+    {
+      "key": "loss2",
+      "label": "loss2_epoch2000",
+      "epoch": 2000,
+      "checkpoint": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_loss3_selective_round03_loss2_continue1000to2000_20260606/burgers/checkpoints/burgers_epoch2000_step006000.pt"
+    },
+    {
+      "key": "loss3",
+      "label": "loss3_epoch1500",
+      "epoch": 1500,
+      "checkpoint": "/workspace/NeuralOperatorRobustness2/adversarial_training_runs/burgers_loss3_selective_round03_loss3_continue1000to1500_20260606/burgers/checkpoints/burgers_epoch1500_step004500.pt"
+    }
+  ],
+  "solver": {
+    "burgers_nu": 0.001,
+    "burgers_t_final": 1.0,
+    "burgers_dt": 0.001,
+    "burgers_domain": 2.0,
+    "burgers_jax_solver_dtype": "float64"
+  }
+}

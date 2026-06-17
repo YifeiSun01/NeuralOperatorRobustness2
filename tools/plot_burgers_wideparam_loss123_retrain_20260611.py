@@ -31,11 +31,12 @@ COLORS = {
     "loss1": "#1b6ca8",
     "loss2": "#d95f02",
     "loss3": "#2ca25f",
+    "clean": "#4d4d4d",
     "random_clean_y": "#8e44ad",
     "random_solver_y": "#c0392b",
 }
-MARKERS = {"loss1": "o", "loss2": "s", "loss3": "^", "random_clean_y": "D", "random_solver_y": "P"}
-DEFAULT_LABEL_ORDER = ["loss1", "loss2", "loss3", "random_clean_y", "random_solver_y"]
+MARKERS = {"loss1": "o", "loss2": "s", "loss3": "^", "clean": "X", "random_clean_y": "D", "random_solver_y": "P"}
+DEFAULT_LABEL_ORDER = ["loss1", "loss2", "loss3", "clean", "random_clean_y", "random_solver_y"]
 BG = "#fbfaf7"
 GRID = "#d8d4c8"
 TEXT = "#202124"
