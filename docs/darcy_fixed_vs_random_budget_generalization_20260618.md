@@ -99,6 +99,15 @@ Generated local artifacts:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss1_loss2_fixed_vs_random_relative_l2_generalization_part01.png`
   and
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss1_loss2_fixed_vs_random_relative_l2_generalization_part02.png`
+- Train/test/generalization split-mean fixed-vs-random curves:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_split_curves/`.
+  This directory contains RMSE and Relative L2 split curves by epoch for
+  `loss1`, `loss2`, and `loss3`, plus 3x3 overview grids.
+- Image-only download folder:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/darcy_fixed_random_generalization_figures_download_only_20260618/`.
+  This folder contains only PNG files. It includes the 50-dataset generalization
+  panels, the clearer fixed-vs-random generalization panels, and the split-mean
+  train/test/generalization curves.
 - Summary figure:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_50dataset_panels/darcy_fixed_vs_random_generalization_improvement_summary.png`
 - Mean curves and delta curves:
