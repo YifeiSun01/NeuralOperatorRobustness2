@@ -258,9 +258,18 @@ def plot_generalization_grid(metric: str, x_axis: str, metric_tables: dict[str, 
     for ax in axes[len(dataset_ids) :]:
         ax.axis("off")
     handles = [plt.Line2D([0], [0], color=COLORS[m], lw=1.6, label=LABELS[m]) for m in TRAINING_METHODS]
-    fig.legend(handles=handles, loc="upper center", ncol=6, frameon=False, fontsize=8)
-    fig.suptitle(f"Darcy/SIR20 generalization {metric_label(metric)} vs {'epoch' if x_axis == 'epoch' else 'work-clock seconds'}", y=0.995)
-    fig.tight_layout(rect=(0, 0, 1, 0.975))
+    title_x = "epoch" if x_axis == "epoch" else "work-clock seconds"
+    fig.suptitle(f"Darcy/SIR20 generalization {metric_label(metric)} vs {title_x}", y=0.992, fontsize=13)
+    fig.legend(
+        handles=handles,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.958),
+        ncol=6,
+        frameon=False,
+        fontsize=8,
+    )
+    fig.text(0.5, 0.932, "gray horizontal line = baseline for that dataset", ha="center", fontsize=8, color="#555555")
+    fig.tight_layout(rect=(0.02, 0.035, 0.995, 0.905), h_pad=1.25, w_pad=0.9)
     fig.savefig(out, dpi=220)
     plt.close(fig)
 
