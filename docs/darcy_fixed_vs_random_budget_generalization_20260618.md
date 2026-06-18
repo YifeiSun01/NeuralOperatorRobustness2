@@ -85,6 +85,20 @@ Because of those differences, the safest reading is:
 
 Generated local artifacts:
 
+- Clear per-dataset fixed-vs-random generalization panels:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/`
+- Loss3 absolute Relative L2 panels:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss3_fixed_vs_random_relative_l2_generalization_part01.png`
+  and
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss3_fixed_vs_random_relative_l2_generalization_part02.png`
+- Loss3 delta-vs-own-epoch0 panels:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss3_fixed_vs_random_delta_vs_epoch0_generalization_part01.png`
+  and
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss3_fixed_vs_random_delta_vs_epoch0_generalization_part02.png`
+- Loss1/Loss2 direct fixed-vs-random panels:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss1_loss2_fixed_vs_random_relative_l2_generalization_part01.png`
+  and
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_clear/darcy_loss1_loss2_fixed_vs_random_relative_l2_generalization_part02.png`
 - Summary figure:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_50dataset_panels/darcy_fixed_vs_random_generalization_improvement_summary.png`
 - Mean curves and delta curves:
@@ -93,4 +107,3 @@ Generated local artifacts:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/generalization_improvement_fixed_vs_random_summary.csv`
 - Full per-epoch curve means:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/generalization_curve_means.csv`
-
