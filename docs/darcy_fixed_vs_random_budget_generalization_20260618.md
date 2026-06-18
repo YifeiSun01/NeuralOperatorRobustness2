@@ -108,6 +108,13 @@ Generated local artifacts:
   This folder contains only PNG files. It includes the 50-dataset generalization
   panels, the clearer fixed-vs-random generalization panels, and the split-mean
   train/test/generalization curves.
+- Epoch-6000 fixed-vs-random generalization panels:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_generalization_panels_6000/`.
+  Fixed-budget curves stop at the last available fixed checkpoint near epoch
+  3000, while random-budget curves continue to their available epochs up to 6000.
+- Epoch-6000 train/test/generalization split-mean curves:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_split_curves_6000/`.
+  These are also copied into the image-only download folder.
 - Summary figure:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_50dataset_panels/darcy_fixed_vs_random_generalization_improvement_summary.png`
 - Mean curves and delta curves:
