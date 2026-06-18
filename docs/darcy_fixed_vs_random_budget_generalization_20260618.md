@@ -115,6 +115,19 @@ Generated local artifacts:
 - Epoch-6000 train/test/generalization split-mean curves:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_split_curves_6000/`.
   These are also copied into the image-only download folder.
+- Fixed/random overlay, fixed-only, and random-only baseline-line versions:
+  `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_fixed_random_with_baselines_versions/`.
+  These plots cover the comparable fixed-vs-random methods `loss1`, `loss2`,
+  `loss3`, and `physics`, with both RMSE and Relative L2. Each generalization
+  panel has dotted horizontal baseline lines for that run's epoch-0 value. The
+  same figures are copied into the image-only download folder under
+  `fixed_random_with_baselines_versions/`.
+- Methods note:
+  `random_clean` and `random_solver` exist in the current random-budget run, but
+  a directly comparable old fixed-budget long run under the same protocol was not
+  found locally. They are therefore not included in the fixed-vs-random A/B
+  panels above; the full Darcy pipeline figures still include them where the
+  current six-method run is plotted.
 - Summary figure:
   `analysis_outputs/darcy_fixed_vs_random_eps_loss123_20260618/figures_50dataset_panels/darcy_fixed_vs_random_generalization_improvement_summary.png`
 - Mean curves and delta curves:
