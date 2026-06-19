@@ -437,6 +437,11 @@ def main() -> None:
     parser.add_argument("--samples-per-dataset", type=int, default=20)
     parser.add_argument("--attack-steps", type=int, default=20)
     parser.add_argument("--max-datasets", type=int, default=0)
+    parser.add_argument(
+        "--splits",
+        default="",
+        help="Optional comma-separated split filter, e.g. generalization or train,test. Default uses all splits.",
+    )
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
 
@@ -446,6 +451,11 @@ def main() -> None:
     rows = select_budget_models(load_checkpoint_manifest(args.checkpoint_manifest.resolve()))
     budgets = parse_budgets(args.budgets)
     specs = darcy_specs()
+    if args.splits.strip():
+        requested_splits = {part.strip() for part in args.splits.split(",") if part.strip()}
+        specs = [spec for spec in specs if spec.split in requested_splits]
+        if not specs:
+            raise RuntimeError(f"split filter {sorted(requested_splits)} selected no datasets")
     if args.max_datasets and args.max_datasets > 0:
         specs = specs[: int(args.max_datasets)]
     device = torch.device(args.device)

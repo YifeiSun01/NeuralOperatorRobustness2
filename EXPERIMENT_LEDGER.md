@@ -1,3 +1,234 @@
+## 2026-06-19 - Burgers/Darcy non-percent loss-increase log-log plots
+
+Status: completed the user's requested redraw of the Burgers and Darcy Flow
+log-log robustness plots without percent loss increase on the y-axis. This pass
+initially read the existing Burgers compact sweep and Darcy/SIR20 budget-sweep
+summaries, then ran a real dense Darcy generalization extra-budget attack pass
+to fill the sparse Darcy x-axis.
+
+Artifacts:
+- Plotter:
+  `tools/plot_non_percent_loss_increase_loglog_20260619.py`.
+- Dense Darcy generalization extra-budget runner:
+  `tools/run_darcy_generalization_extra_budgets_batched_20260619.py`.
+- Top-level bundle:
+  `outputs/non_percent_loss_increase_loglog_20260619/`.
+- Dense Darcy generalization extra-budget output:
+  `outputs/darcy_sir20_dense_extra_budgets_generalization_batched_20260619/`.
+- Dedicated note:
+  `docs/non_percent_loss_increase_loglog_20260619.md`.
+- Burgers folder:
+  `outputs/non_percent_loss_increase_loglog_20260619/burgers/`.
+- Darcy Flow folder:
+  `outputs/non_percent_loss_increase_loglog_20260619/darcy_flow/`.
+
+PNG figures generated in each problem folder:
+- `figures/epsilon_vs_loss_increase_generalization_loglog.png`
+- `figures/epsilon_vs_loss_increase_generalization_cumulative_worst_loglog.png`
+- `figures/epsilon_vs_loss_increase_best_envelope_loglog.png`
+- `figures/epsilon_vs_loss_increase_best_envelope_cumulative_worst_loglog.png`
+- `figures/epsilon_vs_final_adversarial_loss_generalization_loglog.png`
+- `figures/epsilon_vs_clean_loss_generalization_loglog.png`
+
+Observed max-epsilon generalization ranking by absolute loss increase:
+- Burgers at epsilon `0.12`: `loss3` is best with absolute increase
+  `0.00258837`, versus baseline `0.00640733`.
+- Darcy Flow at budget `0.075`: `loss3` is best with absolute increase
+  `6.7534e-07`, versus baseline `9.71213e-06`.
+
+Dense Darcy generalization pass:
+- Ran budgets `0.005,0.0075,0.01,0.0175,0.02,0.03,0.0625` on the
+  50-dataset Darcy generalization split, `20` samples per dataset, `20` attack
+  steps, and `7` models.
+- Wrote `49,000` per-sample attack rows
+  (`7` models x `7` extra budgets x `1000` generalization samples).
+- The merged Darcy Flow generalization grid is now
+  `0.005,0.00625,0.0075,0.01,0.0125,0.0175,0.02,0.025,0.03,0.0375,0.04375,0.05,0.0625,0.075`.
+- Dense points make the x-axis much less sparse, but the high-budget Darcy
+  raw loss-increase curves still flatten/saturate for several methods. This is
+  observed in the actual loss-increase data, not a percent-axis artifact.
+
+Interpretation:
+- The non-percent loss-increase and final-adversarial-loss curves give the
+  expected robustness story more directly than the percent plots. Percent loss
+  increase is retained only as a diagnostic in source/rank CSVs because its
+  clean-loss denominator can invert cross-model rankings, especially for
+  Burgers.
+- The cumulative-worst PNGs apply a per-method cumulative max over epsilon and
+  should be used when the intended visual semantics are monotone
+  worst-case-over-budget curves.
+
+Verification:
+- `adv_robust/bin/python -m py_compile tools/plot_non_percent_loss_increase_loglog_20260619.py`
+- `adv_robust/bin/python -m py_compile tools/run_darcy_generalization_extra_budgets_batched_20260619.py`
+- `adv_robust/bin/python tools/plot_non_percent_loss_increase_loglog_20260619.py`
+- `adv_robust/bin/python tools/run_darcy_generalization_extra_budgets_batched_20260619.py --out outputs/darcy_sir20_dense_extra_budgets_generalization_batched_20260619 --budgets 0.005,0.0075,0.01,0.0175,0.02,0.03,0.0625 --samples-per-dataset 20 --attack-steps 20 --attack-batch-size 128`
+- Checked all generated PNG files are nonempty `3712 x 2036` images and
+  confirmed no PDF files exist under
+  `outputs/non_percent_loss_increase_loglog_20260619/`.
+
+## 2026-06-19 - Burgers/Darcy robustness metric consistency audit
+
+Status: completed a table-level audit of the three finite-budget robustness
+metrics behind the Burgers and Darcy/SIR20 log-log plots. This pass did not run
+new adversarial attacks or training; it read the existing Burgers compact sweep
+and Darcy budget-sweep CSVs.
+
+Artifacts:
+- Audit script:
+  `tools/audit_burgers_darcy_robustness_metric_consistency_20260619.py`.
+- Report:
+  `analysis_outputs/robustness_metric_consistency_20260619/README.md`.
+- Dedicated note:
+  `docs/robustness_metric_consistency_audit_20260619.md`.
+- CSV outputs:
+  `analysis_outputs/robustness_metric_consistency_20260619/generalization_max_epsilon_metrics.csv`,
+  `analysis_outputs/robustness_metric_consistency_20260619/generalization_mean_ranks_by_metric.csv`,
+  `analysis_outputs/robustness_metric_consistency_20260619/generalization_baseline_comparison_at_max_epsilon.csv`,
+  `analysis_outputs/robustness_metric_consistency_20260619/darcy_generalization_delta_vs_loss_monotonicity.csv`,
+  and
+  `analysis_outputs/robustness_metric_consistency_20260619/generalization_nonmonotone_segments.csv`.
+
+Metrics audited:
+- `adv_loss_mean`: final attacked loss.
+- `absolute_loss_increase`: attacked loss minus clean loss for Burgers, recorded
+  `loss_increase_mean` for Darcy.
+- `relative_increase_mean` and batch-ratio percent:
+  `100 * (adv_loss_mean / clean_loss_mean - 1)`.
+
+Key conclusion:
+- Burgers generalization is monotone in the compact sweep, but relative/percent
+  metrics invert the cross-model ranking because clean-loss denominators differ
+  strongly. On final attacked loss and absolute loss increase, `loss3` is best
+  at every epsilon in the compact generalization sweep. At epsilon `0.12`,
+  `loss3` has absolute increase `0.00258837` versus baseline `0.00640733`; it
+  only looks worse on percent because its clean loss denominator is much smaller.
+- Darcy/SIR20 generalization has real non-monotone segments in the source budget
+  sweep for final attacked loss, absolute increase, relative increase, and
+  percent. The implementation uses `binary_darcy_replace_attack`, which
+  recomputes an exact `k = round(epsilon_fraction * n_pix)` replacement set per
+  budget rather than carrying forward a nested best lower-budget solution. Thus
+  larger budget means more flipped pixels and larger delta, but not guaranteed
+  larger achieved loss under this heuristic.
+- Darcy `delta_l2_rms_mean` is monotone increasing for every method in the
+  generalization sweep, while final attacked loss and loss increase are not
+  monotone for most methods. This confirms that the budget/delta grows, but the
+  exact-k replacement heuristic does not produce a nested best-loss envelope.
+- At Darcy max budget `0.075`, `loss3` is best on all audited metrics:
+  final attacked loss `1.03144e-06`, absolute increase `6.7534e-07`,
+  relative increase `2.40522`, and batch-ratio percent `189.651`.
+- Some non-`loss3` methods are genuinely worse than baseline depending on the
+  metric: Burgers `random_clean_y` is worse on final/absolute metrics at
+  epsilon `0.12`; Darcy `loss1` is worse on final/absolute metrics at budget
+  `0.075`, while `loss2` and `random_clean` are worse on relative/percent
+  metrics. This should be treated as a method/checkpoint result, not as evidence
+  against the `loss3` advantage.
+
+Verification:
+- `adv_robust/bin/python -m py_compile tools/audit_burgers_darcy_robustness_metric_consistency_20260619.py`
+- `adv_robust/bin/python tools/audit_burgers_darcy_robustness_metric_consistency_20260619.py`
+
+## 2026-06-19 - Burgers Elisa R2 models restored and percent-loss log-log plot generated
+
+Status: after the user provided R2/S3 access, configured a local `R2` rclone
+remote, restored the requested Burgers final checkpoints, and ran a fresh GPU
+P2Q2 RMS-L2 attack sweep to generate the requested
+epsilon-vs-percent-loss-increase log-log plots.
+
+Restored final checkpoints:
+- `adversarial_training_runs/burgers_wideparam_loss1_8000ep_retrain_20260611/burgers/checkpoints/burgers_epoch8000_step008000.pt`
+- `adversarial_training_runs/burgers_wideparam_loss2_2000ep_retrain_20260611/burgers/checkpoints/burgers_epoch2000_step002000.pt`
+- `adversarial_training_runs/burgers_wideparam_loss3_1000ep_retrain_20260611/burgers/checkpoints/burgers_epoch1000_step001000.pt`
+- `adversarial_training_runs/burgers_wideparam_random_field_clean_y_8000ep_continue_20260613/burgers/checkpoints/burgers_epoch8000_step008000.pt`
+- `adversarial_training_runs/burgers_wideparam_random_field_solver_y_7860ep_continue_20260613/burgers/checkpoints/burgers_epoch7860_step007860.pt`
+
+Artifacts:
+- Restore helper: `tools/restore_burgers_elisa_models_from_r2_20260619.sh`.
+- Sweep/plot runner: `tools/run_burgers_elisa_percent_loss_increase_loglog_20260619.py`.
+- Output bundle: `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/`.
+- Best-envelope PNG:
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/figures/percent_loss_increase_loglog/epsilon_vs_percent_loss_increase_best_envelope_loglog.png`.
+- Generalization-only PNG:
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/figures/percent_loss_increase_loglog/epsilon_vs_percent_loss_increase_generalization_loglog.png`.
+- Summary/sample CSVs and derived curve CSVs:
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/data/percent_loss_increase_loglog/`.
+- Bundle report:
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/reports/percent_loss_increase_loglog.md`.
+- Dedicated notes:
+  `docs/burgers_r2_restore_percent_loss_plot_status_20260619.md` and
+  `docs/burgers_elisa_percent_loss_increase_loglog_20260619.md`.
+- Loss-scale sanity plots:
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/figures/loss_scale_sanity/epsilon_vs_absolute_loss_increase_generalization_loglog.png`
+  and
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/figures/loss_scale_sanity/epsilon_vs_final_adversarial_loss_generalization_loglog.png`.
+- Loss-scale sanity note:
+  `docs/burgers_elisa_loss_scale_sanity_20260619.md`.
+
+Key settings:
+- Models: baseline, `loss1`, `loss2`, `loss3`, `random_clean_y`,
+  `random_solver_y`.
+- Budgets: `0.005,0.0075,0.01,0.0125,0.0175,0.02,0.025,0.03,0.0375,0.04375,0.05,0.0625,0.075,0.1,0.12`.
+- Attack steps: `10`; plotted y-axis:
+  `100 * (adv_loss_mean / clean_loss_mean - 1)`.
+- Compact real sweep sample set: `12` samples total (`4` train, `4` test,
+  `4` generalization), not the full 52-dataset x 50-sample suite.
+- GPU evidence from run docs: `Tesla V100-SXM2-32GB`.
+
+Observed result:
+- Best-envelope max percent loss increase at epsilon `0.12`: baseline
+  `7093.35`, loss1 `158282`, loss2 `55060.5`, loss3 `5982.77`,
+  random clean `282202`, random solver `333524`.
+- Generalization-only max percent loss increase at epsilon `0.12`: baseline
+  `1180.28`, loss1 `997.717`, loss2 `994.637`, loss3 `2177.09`,
+  random clean `217.257`, random solver `1440.72`.
+- Follow-up sanity check from the same CSV: on the generalization split,
+  absolute loss increase and final adversarial loss both rank `loss3` best
+  across all epsilon values. At epsilon `0.12`, absolute loss increase is
+  loss3 `0.00258837`, loss2 `0.00523056`, loss1 `0.0053208`,
+  random_solver_y `0.0057807`, baseline `0.00640733`, and random_clean_y
+  `0.0259922`.
+- Interpretation caveat: percent-loss curves are arithmetically consistent but
+  not a reliable standalone cross-model robustness ranking for Burgers, because
+  they are strongly affected by the clean-loss denominator. Use absolute loss
+  increase and final adversarial loss alongside any percent plot.
+
+## 2026-06-19 - Darcy/SIR20 percent loss increase log-log plot generated
+
+Status: generated the requested epsilon-vs-percent-loss-increase log-log plots from the completed Darcy/SIR20 budget sweep. No adversarial attack was rerun for this plotting pass; the source data are the existing 20-step budget-sweep summaries in `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/data/budget_sweep_loss_increase_summary.csv`.
+
+Artifacts:
+- Plotter: `tools/plot_darcy_sir20_percent_loss_increase_loglog.py`.
+- Best-envelope PNG/PDF: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/figures/percent_loss_increase_loglog/epsilon_vs_percent_loss_increase_best_envelope_loglog.{png,pdf}`.
+- Generalization-only PNG/PDF: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/figures/percent_loss_increase_loglog/epsilon_vs_percent_loss_increase_generalization_loglog.{png,pdf}`.
+- Derived CSVs and manifest: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/data/percent_loss_increase_loglog/`.
+- Bundle report: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/reports/percent_loss_increase_loglog.md`.
+- Dedicated note: `docs/darcy_sir20_percent_loss_increase_loglog_20260619.md`.
+
+Key settings:
+- Plotted y-axis uses the batch-mean formula from the requested figure style: `100 * (adv_loss_mean / clean_loss_mean - 1)`.
+- X-axis is the recorded Darcy binary attack budget fraction, labeled as epsilon / attack budget fraction.
+- Best envelope is computed as the maximum available split-level percent increase for each model and epsilon; a separate generalization-only plot is also written to avoid mixing train/test/generalization splits.
+
+Observed result:
+- Best-envelope max percent loss increase by method: baseline `14391.9`, loss1 `59915.7`, loss2 `23025.7`, loss3 `2610.25`, Physics Loss `88936`, random clean `4260.24`, random solver `32007.9`.
+- Generalization-only max percent loss increase by method: baseline `654.975`, loss1 `626.798`, loss2 `706.353`, loss3 `254.74`, Physics Loss `627.77`, random clean `787.55`, random solver `640.428`.
+
+Remaining work:
+- If a strict before-vs-after adversarial-training epsilon sweep is needed, rerun `darcy_sir20_budget_sweep.py` against `training_checkpoints_full_all_saved.json`, because the completed budget sweep used only `training_checkpoints_full.json` final checkpoints.
+
+Dense update: after user requested more points, ran a real extra-budget train/test sweep with budgets `0.005,0.0075,0.01,0.0175,0.02,0.03,0.0625`, `20` attack steps, and `20` samples per train/test split. A full 50-generalization-dataset extra sweep was started but intentionally stopped because it was hours-scale; it produced no final summary CSV. The completed dense train/test extra sweep is `outputs/darcy_sir20_dense_extra_budgets_train_test_20260619/`.
+
+Dense artifacts:
+- Extra sweep summary: `outputs/darcy_sir20_dense_extra_budgets_train_test_20260619/data/budget_sweep_loss_increase_summary.csv`.
+- Dense best-envelope PNG/PDF: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/figures/percent_loss_increase_loglog/dense_epsilon_vs_percent_loss_increase_best_envelope_loglog.{png,pdf}`.
+- Dense derived CSVs and manifest: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/data/percent_loss_increase_loglog/dense_*`.
+- Dense report: `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/reports/dense_percent_loss_increase_loglog.md`.
+- Dense dedicated note: `docs/darcy_sir20_percent_loss_increase_loglog_dense_20260619.md`.
+
+Dense observed result:
+- Dense best-envelope epsilon grid is now `0.005, 0.00625, 0.0075, 0.01, 0.0125, 0.0175, 0.02, 0.025, 0.03, 0.0375, 0.04375, 0.05, 0.0625, 0.075`.
+- Loss3 remains clearly lowest on the dense best-envelope plot; random clean remains the next-lowest curve over most of the displayed budget range.
+
 ## 2026-06-14 - Burgers actual old4 outlier attack100 diagnostics added
 
 Status: selected the actual high-damage initial conditions from the old `burgers_first_master_full_p2q2_52datasets_4models_finalonly_20step_20260608` manifest, restored the six needed old `generalization_datasets/burgers/*.pt` files from R2, and re-attacked those exact initial conditions with the latest `loss1`, `loss2`, `loss3`, and `random_solver_y` checkpoints for 100 P2Q2 steps.
@@ -16904,3 +17135,131 @@ Remaining work:
 - A `git status --short` check from this workspace returned `fatal: not a git
   repository (or any of the parent directories): .git`, so no git status
   summary is available from the current directory state.
+
+## 2026-06-19 - Non-percent Burgers/Darcy PNG plots with matching std-band variants
+
+Status: completed as a plotting/post-processing update. No new adversarial
+attack sweep, adversarial training run, full Jacobian run, SVD run, singular
+vector run, or `J_error^T error` run was performed in this step.
+
+Question:
+- The user asked why the Burgers `loss1` curve was not visible, and requested
+  standard-deviation versions of every final PNG plot while keeping the same
+  y-axis range as the no-std plots.
+
+Observed from:
+- Burgers per-sample attack CSV:
+  `outputs/burgers_elisa_percent_loss_increase_loglog_20260619/data/percent_loss_increase_loglog/budget_sweep_loss_increase_samples.csv`.
+- Darcy per-sample attack CSVs:
+  `outputs/darcy_sir20_timematched_full_serial_double_budget_full_delta_budget_records_20260617/data/budget_sweep_loss_increase_samples.csv`
+  and
+  `outputs/darcy_sir20_dense_extra_budgets_generalization_batched_20260619/data/budget_sweep_loss_increase_samples.csv`.
+
+Observed evidence:
+- Burgers `loss1` is present in the data and plots. At the largest inspected
+  generalization epsilon (`0.12`), absolute loss increase is approximately:
+  `loss3=0.00258837`, `loss2=0.00523056`, `loss1=0.00532080`,
+  `random_solver_y=0.00578070`, `baseline=0.00640733`,
+  `random_clean_y=0.02599218`.
+- Therefore `loss1` is visually hard to separate mainly because it is nearly on
+  top of `loss2` in the absolute-loss-increase plot, not because it is missing.
+- Added
+  `tools/create_final_png_with_std_versions_20260619.py`.
+- The script computes per-method/per-split/per-epsilon mean and standard
+  deviation from per-sample records for clean loss, final adversarial loss, and
+  absolute loss increase.
+- The `_with_std.png` variants use the same y-axis range formula as the
+  no-std mean plots and do not expand the axis to fit the std band; std bands
+  may clip at the existing y-limits by design.
+
+Output:
+- Final PNG-only folder:
+  `outputs/final_png_only_non_percent_loss_increase_loglog_20260619/`.
+- Subfolders:
+  `outputs/final_png_only_non_percent_loss_increase_loglog_20260619/burgers/`
+  and
+  `outputs/final_png_only_non_percent_loss_increase_loglog_20260619/darcy_flow/`.
+- Each subfolder contains six original no-std PNGs plus six matching
+  `_with_std.png` variants.
+- Verification: `find ... -type f ! -iname '*.png'` returned no files, and
+  `find ... -type f -iname '*.png' | wc -l` returned `24`.
+
+Remaining work:
+- If the `loss1` curve needs to be visually separated for presentation, use
+  marker/linestyle emphasis or a zoomed inset; the numerical records already
+  include it.
+
+## 2026-06-19 - Four y-axis metric final PNG bundle
+
+Status: completed as a plotting/post-processing update. No new adversarial
+attack sweep, adversarial training run, full Jacobian run, SVD run, singular
+vector run, or `J_error^T error` run was performed in this step.
+
+Question:
+- The user clarified that the final plots should separately show four possible
+  y-axis quantities: initial loss, final attack loss, absolute loss increase,
+  and percent loss increase, and asked what the percentage is divided by.
+
+Definition used:
+- `initial_loss` is the clean loss before attack.
+- `final_attack_loss` is the final loss after attack.
+- `loss_increase = final_attack_loss - initial_loss`.
+- `percent_loss_increase = 100 * (final_attack_loss - initial_loss) /
+  initial_loss`, computed per sample before aggregation.
+
+Output:
+- Created `tools/create_final_yaxis_metric_pngs_20260619.py`.
+- Source bundle with CSV stats and manifest:
+  `outputs/yaxis_metric_loglog_20260619/`.
+- Final PNG-only root:
+  `outputs/final_png_only_yaxis_metric_loglog_20260619/`.
+- Final problem folders:
+  `outputs/final_png_only_yaxis_metric_loglog_20260619/burgers/`
+  and
+  `outputs/final_png_only_yaxis_metric_loglog_20260619/darcy_flow/`.
+- Each problem folder contains 20 PNGs:
+  initial loss and final attack loss on the generalization split, plus loss
+  increase and percent loss increase for generalization, generalization
+  cumulative worst, best envelope, and best-envelope cumulative worst. Each plot
+  has a no-std version and a matching `_with_std.png` version.
+
+Verification:
+- `find outputs/final_png_only_yaxis_metric_loglog_20260619 -type f !
+  -iname '*.png'` returned no files.
+- `find outputs/final_png_only_yaxis_metric_loglog_20260619 -type f -iname
+  '*.png' | wc -l` returned `40`.
+- PIL opened all 40 PNGs successfully.
+- Manifest y-limit check returned `ylim_pair_errors 0`, confirming every
+  `_with_std.png` uses the same y-axis range as its corresponding no-std plot.
+
+## 2026-06-19 - Burgers four-metric PNGs without random clean
+
+Status: completed as a plotting/post-processing update. No new adversarial
+attack sweep, adversarial training run, full Jacobian run, SVD run, singular
+vector run, or `J_error^T error` run was performed in this step.
+
+Question:
+- The user asked for an additional Burgers plot bundle excluding
+  `random_clean_y`, because that curve is much larger than the others and makes
+  the remaining method differences hard to see.
+
+Output:
+- Updated `tools/create_final_yaxis_metric_pngs_20260619.py` with a
+  `burgers_without_random_clean` plotting spec.
+- New final PNG-only folder:
+  `outputs/final_png_only_yaxis_metric_loglog_20260619/burgers_without_random_clean/`.
+- Included methods are: `baseline`, `loss1`, `loss2`, `loss3`, and
+  `random_solver_y`.
+- The folder contains the same 20 PNG structure as the main Burgers folder:
+  initial loss, final attack loss, loss increase, and percent loss increase,
+  with no-std and `_with_std.png` variants.
+
+Verification:
+- `find outputs/final_png_only_yaxis_metric_loglog_20260619/burgers_without_random_clean
+  -type f ! -iname '*.png'` returned no files.
+- The new folder contains `20` PNG files.
+- PIL opened all 20 PNGs successfully.
+- Full final root now contains `60` PNG files and no non-PNG files.
+- Manifest y-limit check returned `ylim_pair_errors 0`, confirming every
+  `_with_std.png` still uses the same y-axis range as its corresponding no-std
+  plot.
