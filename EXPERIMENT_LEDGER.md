@@ -17263,3 +17263,53 @@ Verification:
 - Manifest y-limit check returned `ylim_pair_errors 0`, confirming every
   `_with_std.png` still uses the same y-axis range as its corresponding no-std
   plot.
+
+## 2026-06-22 - Attack objective summary with Darcy/CFlow loss4 physics
+
+Status: completed as a reporting and table-consolidation update. The reported
+attack runs had already completed; this entry records the corrected Markdown
+summary that treats Darcy/CFlow physics loss as a fourth Darcy attack objective
+alongside `loss1`, `loss2`, and `loss3`.
+
+Question:
+- The user clarified that Darcy/CFlow should be shown with four objectives,
+  where `loss4_physics` is placed alongside `loss1`, `loss2`, and `loss3`,
+  while Burgers and NS2D have only the three loss objectives.
+
+Observed source files:
+- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/objective_summary.csv`
+- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/winner_summary.csv`
+- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/paired_tests.csv`
+- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/auxiliary_physics_summary.csv`
+- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/with_darcy_physics_as_loss4/paper_ready_main_table_with_darcy_loss4_physics.csv`
+- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/with_darcy_physics_as_loss4/winner_summary_darcy_four_objectives.csv`
+
+Output:
+- Created
+  `docs/attack_objective_loss123_loss4_summary_20260622.md`.
+- The Markdown table reports final true Loss3 as `mean +/- std` and does not
+  show variance in the main report.
+- Darcy/CFlow rows include `loss4_physics` as the fourth objective. The
+  four-objective winner table shows `loss4_physics` has 0/20 true-Loss3 wins at
+  K=100, K=250, K=437, and K=875, while `loss3` remains the strongest objective
+  by final true Loss3.
+
+Key metrics:
+- Burgers: `loss3` wins 50/50 samples for all five L2 budgets.
+- Darcy/CFlow: `loss3` wins 14/20, 17/20, 17/20, and 20/20 samples for
+  K=100, K=250, K=437, and K=875 respectively when `loss4_physics` is included.
+- NS2D: `loss3` wins 20/20 samples for eps=8, eps=16, eps=32 steps=50, and
+  eps=32 steps=100; it wins 18/20 samples for eps=64 steps=50.
+
+Conclusion:
+- Observed from the generated summary tables, `loss3` is the strongest attack
+  objective by final true Loss3 across the current Burgers, Darcy/CFlow, and
+  NS2D comparisons.
+- Inference from the Darcy/CFlow physics diagnostics: `loss4_physics` strongly
+  increases the PDE physics residual, but it does not maximize the final true
+  Loss3 metric in these runs.
+
+Remaining work:
+- The separate four-optimizer ablation is still running under
+  `analysis_outputs/optimizer_ablation_20260622/` and is not included in this
+  report.
