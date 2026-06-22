@@ -1,0 +1,10 @@
+system,protocol_id,n_complete_samples,loss1_wins,loss2_wins,loss3_wins,ties,loss1_win_rate,loss2_win_rate,loss3_win_rate
+burgers1d,burgers_nu0p001_l2_eps0p125_alpha0p0125_steps100_N50,50,0,0,50,0,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps0p25_alpha0p025_steps100_N50,50,0,0,50,0,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps0p5_alpha0p05_steps100_N50,50,0,0,50,0,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps0p75_alpha0p075_steps100_N50,50,0,0,50,0,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps1p0_alpha0p1_steps100_N50,50,0,0,50,0,0.0,0.0,1.0
+darcy_cflow,darcy_binary_epsfrac0p01_K100_alphaflips5_steps100_methodsteepest_replace_N20,20,2,4,14,0,0.1,0.2,0.7
+darcy_cflow,darcy_binary_epsfrac0p01_K250_alphaflips5_steps100_methodsteepest_replace_N20,20,2,1,17,0,0.1,0.05,0.85
+darcy_cflow,darcy_binary_epsfrac0p01_K437_alphaflips5_steps100_methodsteepest_replace_N20,20,2,1,17,0,0.1,0.05,0.85
+darcy_cflow,darcy_binary_epsfrac0p01_K875_alphaflips5_steps100_methodsteepest_replace_N20,20,0,0,20,0,0.0,0.0,1.0

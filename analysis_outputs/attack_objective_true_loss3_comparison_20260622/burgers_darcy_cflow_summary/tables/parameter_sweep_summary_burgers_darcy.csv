@@ -1,0 +1,10 @@
+system,protocol_id,epsilon,alpha,steps,n,best_mean_objective,best_winrate_objective,loss1_mean,loss2_mean,loss3_mean,loss1_win_rate,loss2_win_rate,loss3_win_rate
+burgers1d,burgers_nu0p001_l2_eps0p125_alpha0p0125_steps100_N50,0.125,0.0125,100,50,loss3,loss3,0.1027444042415637,0.1020818204466523,0.1306041999245169,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps0p25_alpha0p025_steps100_N50,0.25,0.025,100,50,loss3,loss3,0.1007810405660667,0.0999363243114499,0.16644617511914,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps0p5_alpha0p05_steps100_N50,0.5,0.05,100,50,loss3,loss3,0.0981705357307862,0.0963211651590675,0.2792718619314424,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps0p75_alpha0p075_steps100_N50,0.75,0.075,100,50,loss3,loss3,0.0976024583457997,0.0933518012037446,0.4612173608528935,0.0,0.0,1.0
+burgers1d,burgers_nu0p001_l2_eps1p0_alpha0p1_steps100_N50,1.0,0.1,100,50,loss3,loss3,0.0987534904222932,0.0912658951697445,0.7262264231118236,0.0,0.0,1.0
+darcy_cflow,darcy_binary_epsfrac0p01_K100_alphaflips5_steps100_methodsteepest_replace_N20,100.0,5.0,100,20,loss3,loss3,0.0253706858493387,0.0255629798863082,0.0307469679042696,0.1,0.2,0.7
+darcy_cflow,darcy_binary_epsfrac0p01_K250_alphaflips5_steps100_methodsteepest_replace_N20,250.0,5.0,100,20,loss3,loss3,0.0265527208335697,0.0270145404152571,0.0403002739883958,0.1,0.05,0.85
+darcy_cflow,darcy_binary_epsfrac0p01_K437_alphaflips5_steps100_methodsteepest_replace_N20,437.0,5.0,100,20,loss3,loss3,0.0275632907636463,0.0284486041404306,0.0499609963037073,0.1,0.05,0.85
+darcy_cflow,darcy_binary_epsfrac0p01_K875_alphaflips5_steps100_methodsteepest_replace_N20,875.0,5.0,100,20,loss3,loss3,0.0287664903327822,0.030885091330856,0.0770936161279678,0.0,0.0,1.0

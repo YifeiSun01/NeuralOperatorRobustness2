@@ -1,0 +1,10 @@
+system,setting,n,steps,loss1 final true-loss3,loss2 final true-loss3,loss3 final true-loss3,loss3 ratio vs clean,loss3 wins,loss3 win rate,best by mean,protocol_id
+burgers1d,eps=0.125,50,100,0.1027 +/- 0.062,0.1021 +/- 0.0624,0.1306 +/- 0.0862,1.233,50,1,loss3,burgers_nu0p001_l2_eps0p125_alpha0p0125_steps100_N50
+burgers1d,eps=0.25,50,100,0.1008 +/- 0.0568,0.09994 +/- 0.0578,0.1664 +/- 0.114,1.563,50,1,loss3,burgers_nu0p001_l2_eps0p25_alpha0p025_steps100_N50
+burgers1d,eps=0.5,50,100,0.09817 +/- 0.0486,0.09632 +/- 0.0494,0.2793 +/- 0.212,2.626,50,1,loss3,burgers_nu0p001_l2_eps0p5_alpha0p05_steps100_N50
+burgers1d,eps=0.75,50,100,0.0976 +/- 0.0448,0.09335 +/- 0.0428,0.4612 +/- 0.382,4.415,50,1,loss3,burgers_nu0p001_l2_eps0p75_alpha0p075_steps100_N50
+burgers1d,eps=1.0,50,100,0.09875 +/- 0.05,0.09127 +/- 0.0398,0.7262 +/- 0.624,7.144,50,1,loss3,burgers_nu0p001_l2_eps1p0_alpha0p1_steps100_N50
+darcy_cflow,K=100,20,100,0.02537 +/- 0.00741,0.02556 +/- 0.00712,0.03075 +/- 0.0104,1.243,14,0.7,loss3,darcy_binary_epsfrac0p01_K100_alphaflips5_steps100_methodsteepest_replace_N20
+darcy_cflow,K=250,20,100,0.02655 +/- 0.00807,0.02701 +/- 0.00693,0.0403 +/- 0.0142,1.64,17,0.85,loss3,darcy_binary_epsfrac0p01_K250_alphaflips5_steps100_methodsteepest_replace_N20
+darcy_cflow,K=437,20,100,0.02756 +/- 0.00838,0.02845 +/- 0.00681,0.04996 +/- 0.0179,2.055,17,0.85,loss3,darcy_binary_epsfrac0p01_K437_alphaflips5_steps100_methodsteepest_replace_N20
+darcy_cflow,K=875,20,100,0.02877 +/- 0.00859,0.03089 +/- 0.00839,0.07709 +/- 0.0173,3.231,20,1,loss3,darcy_binary_epsfrac0p01_K875_alphaflips5_steps100_methodsteepest_replace_N20
