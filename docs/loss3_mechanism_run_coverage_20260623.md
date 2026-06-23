@@ -40,6 +40,12 @@ rotating, or narrow.}
   - PID file: `analysis_outputs/mechanism_20260622/full_mechanism_validation/run_logs/ns2d_jvp_vjp_mechanism_queue_20260623.pid`
   - Current state: waiting for extended mechanism queue PID `217887`, then runs the new NS2D JVP/VJP/top-singular probes.
   - Integration plan: `docs/loss3_jvp_vjp_integration_experiment_plan_20260623.md`
+- Final automated analysis/visualization/backup queue:
+  - PID: `238099`
+  - Script: `tools/run_loss3_final_auto_pipeline_20260623.sh`
+  - Current state: queued behind the NS2D JVP/VJP mechanism queue.
+  - Output: `analysis_outputs/loss3_final_auto_pipeline_20260623`
+  - Log pattern: `analysis_outputs/mechanism_20260622/full_mechanism_validation/run_logs/loss3_final_auto_pipeline_20260623_*.log`
 
 ## Completed New Runs
 
@@ -82,6 +88,7 @@ queued so they run after the current NS2D exact probe without interrupting it.
 | NS2D N=3 explicit JVP/VJP, top singular path, local surrogate probe | queued after extended queue: `analysis_outputs/mechanism_20260622/full_mechanism_validation/ns2d_jvp_vjp_spectrum_N3` |
 | NS2D N=2 top-up explicit JVP/VJP, top singular path, local surrogate probe | queued after extended queue: `analysis_outputs/mechanism_20260622/full_mechanism_validation/ns2d_jvp_vjp_spectrum_N2_topup` |
 | NS2D JVP/VJP integration summary | queued after JVP/VJP probes: `docs/loss3_ns2d_jvp_vjp_integration_summary_20260623.md`; compact CSV `analysis_outputs/mechanism_20260622/full_mechanism_validation/cross_system_summary/ns2d_jvp_vjp_key_metrics.csv` |
+| Final automated analysis, visualization, archive, upload/backup | queued after JVP/VJP queue: `analysis_outputs/loss3_final_auto_pipeline_20260623`; local archive in `analysis_outputs/backup_archives/loss3_final_auto_pipeline_*.tar.gz` |
 
 ## Newly Implemented Matrix-Free NS2D Jacobian Probes
 
@@ -95,6 +102,9 @@ implementation and are queued behind the current extended mechanism queue.
 | Explicit JVP/VJP add-vs-replace candidate variants on NS2D | Same script; outputs `candidate_comparison_rows.csv` and aggregate tables. |
 | Integration plan | `docs/loss3_jvp_vjp_integration_experiment_plan_20260623.md`. |
 | Post-run summary | `tools/build_ns2d_jvp_vjp_integration_summary_20260623.py`; writes `docs/loss3_ns2d_jvp_vjp_integration_summary_20260623.md` and `ns2d_jvp_vjp_key_metrics.csv`. |
+| Post-run figures | `tools/plot_ns2d_jvp_vjp_mechanism_20260623.py`; writes NS2D JVP/VJP mechanism figures. |
+| Final automated report bundle | `tools/build_loss3_final_auto_report_20260623.py`; writes `analysis_outputs/loss3_final_auto_pipeline_20260623/FINAL_REPORT.md`. |
+| Final automated queue | `tools/run_loss3_final_auto_pipeline_20260623.sh`; waits for JVP/VJP completion, rebuilds analysis, plots, summaries, archive, and upload/backup if R2 config is available. |
 | Queue wrapper | `tools/run_ns2d_jvp_vjp_mechanism_queue_20260623.sh`, currently waiting for PID `217887`. |
 
 ## Rule Going Forward

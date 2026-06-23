@@ -215,6 +215,16 @@ forward-mode autograd result.
    - NS exact first-order/linearity/boundary evidence,
    - NS JVP/VJP top singular evidence.
 
+6. Run the final automation queue:
+
+   `tools/run_loss3_final_auto_pipeline_20260623.sh`
+
+   This waits for the JVP/VJP queue, then automatically rebuilds the main
+   optimizer analysis, regenerates the three-system mean curve figure,
+   regenerates mechanism summaries, plots the NS2D JVP/VJP mechanism figures,
+   creates a final report bundle, creates a local archive, and uploads/backs up
+   the bundle if R2 configuration is available in the environment.
+
 ## Acceptance Criteria
 
 The new JVP/VJP block is considered successfully integrated only when:
@@ -227,4 +237,6 @@ The new JVP/VJP block is considered successfully integrated only when:
 - `ns2d_jvp_vjp_key_metrics.csv` is generated.
 - The final mechanism summary states whether the JVP/VJP results support,
   weaken, or change the current replace/add explanation.
-
+- `analysis_outputs/loss3_final_auto_pipeline_20260623/FINAL_REPORT.md`
+  exists and references the main curve, mechanism summary, JVP/VJP summary,
+  figures, local archive, and upload status.
