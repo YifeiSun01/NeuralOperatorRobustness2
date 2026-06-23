@@ -47,6 +47,7 @@ DEFAULT_METHODS = (
     "loss3_stopgrad",
     "loss3",
 )
+METHOD_CHOICES = (*DEFAULT_METHODS, "loss2_dict")
 BASE_FORMULAS = {
     "loss1": "L1 = ||f(x+delta)-f(x)||",
     "loss2_fixed": "L2 fixed = ||f(x+delta)-g(x)||",
@@ -109,6 +110,10 @@ def is_dict_method(method: str) -> bool:
 
 def dict_method(size: int) -> str:
     return f"loss2_dict_N{size}"
+
+
+def selected_methods(args: argparse.Namespace) -> tuple[str, ...]:
+    return tuple(args.methods) if args.methods else DEFAULT_METHODS
 
 
 def formula_for_method(method: str) -> str:
@@ -579,7 +584,7 @@ def auto_dictionary_paths(args: argparse.Namespace, size: int) -> tuple[Path, Pa
     return first_match(directory, "inputs_*.pt"), first_match(directory, "outputs_*.pt")
 
 
-def build_dictionary_specs(args: argparse.Namespace) -> dict[str, tuple[Path, Path]]:
+def build_dictionary_specs(args: argparse.Namespace, methods: tuple[str, ...]) -> dict[str, tuple[Path, Path]]:
     specs: dict[str, tuple[Path, Path]] = {}
     explicit = {
         200: (args.dict200_input_path, args.dict200_output_path),
@@ -587,16 +592,22 @@ def build_dictionary_specs(args: argparse.Namespace) -> dict[str, tuple[Path, Pa
         20000: (args.dict20000_input_path, args.dict20000_output_path),
     }
     for size in DICT_SIZES:
+        method = dict_method(size)
+        if method not in methods:
+            continue
         inp, out = explicit[size]
         if inp is None and out is None:
             inp, out = auto_dictionary_paths(args, size)
         elif inp is None or out is None:
             raise ValueError(f"Dictionary N={size} needs both input and output paths.")
-        specs[dict_method(size)] = (inp, out)
-    if args.dict_input_path is not None or args.dict_output_path is not None:
+        specs[method] = (inp, out)
+    if "loss2_dict" in methods:
+        if args.dict_input_path is None or args.dict_output_path is None:
+            raise ValueError("Selected legacy loss2_dict needs --dict_input_path and --dict_output_path.")
+        specs["loss2_dict"] = (args.dict_input_path, args.dict_output_path)
+    elif args.dict_input_path is not None or args.dict_output_path is not None:
         if args.dict_input_path is None or args.dict_output_path is None:
             raise ValueError("Legacy --dict_input_path needs matching --dict_output_path.")
-        specs["loss2_dict"] = (args.dict_input_path, args.dict_output_path)
     return specs
 
 
@@ -777,6 +788,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--loss1_random_start", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--loss1_random_start_seed", type=int, default=12345)
     parser.add_argument("--loss1_random_start_scale", type=float, default=1.0)
+    parser.add_argument(
+        "--methods",
+        nargs="+",
+        choices=METHOD_CHOICES,
+        default=None,
+        help="Subset of objectives to run. Defaults to the original full corrected 5-loss family.",
+    )
     parser.add_argument("--tag", default=None, help="Output tag. In batch mode, use {index} to format one tag per sample.")
     parser.add_argument("--batch_tag", default=None, help="Optional directory tag for aggregate batch logs/outputs.")
     parser.add_argument("--output_root", type=Path, default=PROJECT_ROOT / "results" / "burgers_corrected_oldstyle_5loss")
@@ -829,7 +847,8 @@ def main() -> None:
 
     model_path = args.model_path or default_model_path(args.nu)
     test_path = args.test_path or default_test_path(args.nu)
-    dictionary_specs = build_dictionary_specs(args)
+    methods = selected_methods(args)
+    dictionary_specs = build_dictionary_specs(args, methods)
     consistency_checks = validate_core_paths(model_path, test_path, args)
     dictionary_metadata = {}
     for method, (input_path, output_path) in dictionary_specs.items():
@@ -838,9 +857,6 @@ def main() -> None:
     solver = make_solver(args)
     model = load_model(model_path, device)
     x0 = load_sample_tensors(test_path, indices, device)
-    methods = tuple([*BASE_METHODS[:2], *[dict_method(size) for size in DICT_SIZES], *BASE_METHODS[2:]])
-    if "loss2_dict" in dictionary_specs:
-        methods = tuple([*BASE_METHODS[:2], "loss2_dict", *[dict_method(size) for size in DICT_SIZES], *BASE_METHODS[2:]])
     formulas = formulas_for_methods(methods)
     dictionaries = {}
     dictionary_shapes = {}

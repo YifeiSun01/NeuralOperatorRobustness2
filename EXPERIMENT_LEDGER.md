@@ -17279,7 +17279,6 @@ Question:
 Observed source files:
 - `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/objective_summary.csv`
 - `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/winner_summary.csv`
-- `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/paired_tests.csv`
 - `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/auxiliary_physics_summary.csv`
 - `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/with_darcy_physics_as_loss4/paper_ready_main_table_with_darcy_loss4_physics.csv`
 - `analysis_outputs/attack_objective_true_loss3_comparison_20260622/tables/with_darcy_physics_as_loss4/winner_summary_darcy_four_objectives.csv`
@@ -17289,6 +17288,11 @@ Output:
   `docs/attack_objective_loss123_loss4_summary_20260622.md`.
 - The Markdown table reports final true Loss3 as `mean +/- std` and does not
   show variance in the main report.
+- The Markdown table was simplified to omit the `Best` column and paired
+  p-value columns, and it now keeps only the `loss3` win count in the wins
+  column.
+- The visible main table is filtered to `steps=100`; earlier NS2D `steps=50`
+  sweep rows are not shown in the report table.
 - Darcy/CFlow rows include `loss4_physics` as the fourth objective. The
   four-objective winner table shows `loss4_physics` has 0/20 true-Loss3 wins at
   K=100, K=250, K=437, and K=875, while `loss3` remains the strongest objective
@@ -17298,8 +17302,8 @@ Key metrics:
 - Burgers: `loss3` wins 50/50 samples for all five L2 budgets.
 - Darcy/CFlow: `loss3` wins 14/20, 17/20, 17/20, and 20/20 samples for
   K=100, K=250, K=437, and K=875 respectively when `loss4_physics` is included.
-- NS2D: `loss3` wins 20/20 samples for eps=8, eps=16, eps=32 steps=50, and
-  eps=32 steps=100; it wins 18/20 samples for eps=64 steps=50.
+- NS2D: after filtering the report to `steps=100`, the retained row is
+  eps=32, alpha=1, N=20, and `loss3` wins 20/20 samples.
 
 Conclusion:
 - Observed from the generated summary tables, `loss3` is the strongest attack
