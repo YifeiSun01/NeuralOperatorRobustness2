@@ -34,11 +34,12 @@ rotating, or narrow.}
   - PID file: `analysis_outputs/mechanism_20260622/full_mechanism_validation/run_logs/extended_mechanism_queue_20260623.pid`
   - Current child process: NS2D N=2 top-up trace for dataset indices 3,4.
 - NS2D JVP/VJP mechanism queue:
-  - PID: `236246`
+  - PID: `237136`
   - Script: `tools/run_ns2d_jvp_vjp_mechanism_queue_20260623.sh`
   - Log: `analysis_outputs/mechanism_20260622/full_mechanism_validation/run_logs/ns2d_jvp_vjp_mechanism_queue_20260623.log`
   - PID file: `analysis_outputs/mechanism_20260622/full_mechanism_validation/run_logs/ns2d_jvp_vjp_mechanism_queue_20260623.pid`
   - Current state: waiting for extended mechanism queue PID `217887`, then runs the new NS2D JVP/VJP/top-singular probes.
+  - Integration plan: `docs/loss3_jvp_vjp_integration_experiment_plan_20260623.md`
 
 ## Completed New Runs
 
@@ -80,6 +81,7 @@ queued so they run after the current NS2D exact probe without interrupting it.
 | Final cross-system mechanism summary rebuild | `docs/loss3_full_mechanism_validation_summary_20260623.md` |
 | NS2D N=3 explicit JVP/VJP, top singular path, local surrogate probe | queued after extended queue: `analysis_outputs/mechanism_20260622/full_mechanism_validation/ns2d_jvp_vjp_spectrum_N3` |
 | NS2D N=2 top-up explicit JVP/VJP, top singular path, local surrogate probe | queued after extended queue: `analysis_outputs/mechanism_20260622/full_mechanism_validation/ns2d_jvp_vjp_spectrum_N2_topup` |
+| NS2D JVP/VJP integration summary | queued after JVP/VJP probes: `docs/loss3_ns2d_jvp_vjp_integration_summary_20260623.md`; compact CSV `analysis_outputs/mechanism_20260622/full_mechanism_validation/cross_system_summary/ns2d_jvp_vjp_key_metrics.csv` |
 
 ## Newly Implemented Matrix-Free NS2D Jacobian Probes
 
@@ -91,6 +93,8 @@ implementation and are queued behind the current extended mechanism queue.
 | Explicit JVP/Jacobian local surrogate accuracy on NS2D | `tools/probe_ns2d_jvp_vjp_spectrum_20260623.py`; outputs `quadratic_surrogate_rows.csv` and aggregate tables. |
 | NS2D Jacobian spectrum / top singular-vector path study | Same script; outputs `spectrum_path.csv`, `power_iteration_rows.csv`, and `jvp_direction_rows.csv`. |
 | Explicit JVP/VJP add-vs-replace candidate variants on NS2D | Same script; outputs `candidate_comparison_rows.csv` and aggregate tables. |
+| Integration plan | `docs/loss3_jvp_vjp_integration_experiment_plan_20260623.md`. |
+| Post-run summary | `tools/build_ns2d_jvp_vjp_integration_summary_20260623.py`; writes `docs/loss3_ns2d_jvp_vjp_integration_summary_20260623.md` and `ns2d_jvp_vjp_key_metrics.csv`. |
 | Queue wrapper | `tools/run_ns2d_jvp_vjp_mechanism_queue_20260623.sh`, currently waiting for PID `217887`. |
 
 ## Rule Going Forward

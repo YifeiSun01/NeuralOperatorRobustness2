@@ -68,4 +68,10 @@ run_probe \
   "${OUT}/ns2d_jvp_vjp_spectrum_N2_topup" \
   "NS2D N=2 top-up JVP/VJP spectrum"
 
+echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] build NS2D JVP/VJP integration summary"
+"${PY}" -u tools/build_ns2d_jvp_vjp_integration_summary_20260623.py \
+  --full-root "${OUT}" \
+  --out-csv "${OUT}/cross_system_summary/ns2d_jvp_vjp_key_metrics.csv" \
+  --doc "${ROOT}/docs/loss3_ns2d_jvp_vjp_integration_summary_20260623.md"
+
 echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] NS2D JVP/VJP mechanism queue completed"
