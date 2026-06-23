@@ -213,8 +213,11 @@ def run_burgers(args: argparse.Namespace, rng: np.random.Generator) -> dict[str,
                             candidates.append(("top_tangent", boundary_candidate(endpoint, top_v, theta, ev.epsilon)))
                         orth_v = sample_orth_tangent(flat(endpoint).size, u, top_tangent, rng)
                         candidates.append(("orth_tangent", boundary_candidate(endpoint, orth_v, theta, ev.epsilon)))
-                        batch = np.stack([c for _label, c in candidates], axis=0)
-                        losses = ev.eval(batch)
+                        # This loop is sample-local. Use the sample-local
+                        # matrix evaluator instead of the all-sample Burgers
+                        # evaluator, otherwise candidate count can differ from
+                        # the saved N samples in ev.x0_sel.
+                        losses = [matrix.eval_loss(c) for _label, c in candidates]
                         for idx, (family, cand) in enumerate(candidates):
                             ratio = float(losses[idx] / (float(ev.lmax[j]) + EPS))
                             add_threshold_rows(
