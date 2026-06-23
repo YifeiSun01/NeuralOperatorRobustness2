@@ -183,7 +183,14 @@ def cap_width_auc(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             theta_probs.append((theta, float(np.mean(arr)) if arr.size else float("nan")))
         good = [(t, p) for t, p in theta_probs if math.isfinite(p)]
         theta50 = max([t for t, p in good if p >= 0.5], default=float("nan"))
-        auc = float(np.trapz([p for _t, p in good], [t for t, _p in good])) if len(good) >= 2 else float("nan")
+        
+        if len(good) >= 2:
+            trapezoid = getattr(np, "trapezoid", None)
+            if trapezoid is None:
+                trapezoid = getattr(np, "trapz")
+            auc = float(trapezoid([p for _t, p in good], [t for t, _p in good]))
+        else:
+            auc = float("nan")
         out.append(
             {
                 "system": system,
