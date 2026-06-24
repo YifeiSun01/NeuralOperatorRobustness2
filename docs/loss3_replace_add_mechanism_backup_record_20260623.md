@@ -19,6 +19,10 @@ Latest pushed commit after recording the backup status:
 
 - `3dd7d24 Record Loss3 mechanism backup completion`
 
+Latest pushed commit after adding the consolidated master log:
+
+- `f48d678 Add Loss3 replace add mechanism master log`
+
 Mechanism-related commits included:
 
 - `794c8d1 Add Lmax-normalized boundary cap analysis`
@@ -40,6 +44,7 @@ Uploaded/updated paths:
 - `analysis_outputs/backup_archives/loss3_replace_add_mechanism_final_20260623.tar.gz.sha256`
 - `analysis_outputs/backup_manifests/loss3_replace_add_mechanism_backup_manifest_20260623.json`
 - `docs/loss3_*.md`
+- `docs/loss3_replace_add_mechanism_master_log_20260624.md`
 - `tools/*loss3*20260623.py`
 - `tools/run_loss3*20260623.sh`
 - `tools/plot_loss3*20260623.py`
