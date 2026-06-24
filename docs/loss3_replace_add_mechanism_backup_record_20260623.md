@@ -23,6 +23,10 @@ Latest pushed commit after adding the consolidated master log:
 
 - `f48d678 Add Loss3 replace add mechanism master log`
 
+Latest commit after adding the figure-only download bundle:
+
+- `8a548b0 Add Loss3 mechanism figure bundle`
+
 Mechanism-related commits included:
 
 - `794c8d1 Add Lmax-normalized boundary cap analysis`
@@ -52,6 +56,8 @@ Uploaded/updated paths:
 - `analysis_outputs/mechanism_20260622/full_mechanism_validation/dominant_subspace_iso_projection_20260623`
 - `analysis_outputs/mechanism_20260622/full_mechanism_validation/jacobian_mode_causal_ablation_20260623`
 - `analysis_outputs/mechanism_20260622/full_mechanism_validation/jacobian_tangent_width_20260623`
+- `analysis_outputs/loss3_mechanism_figures_download_20260624/`
+- `analysis_outputs/loss3_mechanism_figures_download_20260624.zip`
 
 Additional full-archive backup pass completed on 2026-06-24 UTC:
 
