@@ -1,0 +1,130 @@
+# Loss3 Core-Four Alpha/Epsilon Sweep Visualizations
+
+Generated: 2026-05-20T22:15:41.114429+00:00
+
+## Scope
+
+Observed from existing completed artifacts under `forensics/loss3_alpha_epsilon_core4_sweep_20260519/`; no experiment was rerun for these plots.
+
+Geometry note: these alpha/epsilon plots are scoped to the completed roots listed below. At generation time the completed roots are `p=2,q=2`; all-PQ alpha/epsilon comparison requires additional P/Q runs and should be plotted per P/Q pair.
+
+Boundary markers on loss curves use the first step where mean `boundary_ratio` reaches `0.25`, `0.50`, `0.75`, and `0.99`. The `0.99` marker is the near-boundary marker for `||delta||_p ~= epsilon`, chosen to avoid floating-point exact-equality issues.
+
+## Main Figures
+
+- Loss curves with 25/50/75/99% boundary-hit markers, mean +/- std: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/loss3_q_mean_curves_with_boundary_markers.png`
+- Loss curves with 25/50/75/99% boundary-hit markers, mean only/no std band: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/loss3_q_mean_curves_with_boundary_markers_no_std.png`
+- Boundary ratio curves, mean +/- std: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/boundary_ratio_mean_curves.png`
+- Boundary ratio curves, mean only/no std band: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/boundary_ratio_mean_curves_no_std.png`
+- Boundary ratio sample-standard-deviation curves: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/boundary_ratio_std_curves.png`
+- Delta angular-speed curves, mean +/- std over batch: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/delta_prev_angle_degrees_mean_curves.png`
+- Delta angular-speed curves, mean only/no std band: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/delta_prev_angle_degrees_mean_curves_no_std.png`
+- Final loss heatmap: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/heatmap_final_loss3_q_mean.png`
+- Mean 99% boundary-arrival step heatmap: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/heatmap_step_to_boundary_ratio_mean_0p99.png`
+- Final high-frequency energy heatmap: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/heatmap_final_high_frequency_energy_ratio_mean_log10.png`
+- Final first-derivative smoothness heatmap: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/heatmap_final_first_derivative_l2_mean.png`
+- Final delta peakiness heatmap: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/heatmap_final_delta_peakiness.png`
+- Final delta peakiness source table: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/tables/final_delta_peakiness_summary.csv`
+- Boundary-threshold loss-gain source table: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/tables/boundary_threshold_loss_gain_summary.csv`
+- 99% boundary-hit loss-gain compatibility table: `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/tables/boundary_hit_loss_gain_summary.csv`
+
+Note: every mean curve family is now emitted twice: one mean +/- sample-std version for variability, and one mean-only/no-std-band version so the central trajectories and boundary markers remain readable when the std band expands the y-axis.
+
+## Representative Sample Panels
+
+Each representative panel shows clean initial condition, final delta, clean+delta, delta spectrum, and a sample-level loss curve with a boundary-hit marker.
+
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/representative_samples/sample40_eps4_alpha0p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/representative_samples/sample40_eps8_alpha0p3.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/representative_samples/sample40_eps8_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/representative_samples/sample40_eps16_alpha1p6.png`
+
+## Delta Shape Grids
+
+These grids show final delta traces for the stored trajectory samples. No cross markers are used on delta plots; cross markers are reserved for boundary hits on loss curves.
+
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/delta_shape_grids/delta_grid_eps4_alpha0p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/delta_shape_grids/delta_grid_eps8_alpha0p3.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/delta_shape_grids/delta_grid_eps8_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/delta_shape_grids/delta_grid_eps16_alpha1p6.png`
+
+## Dynamics Triptychs
+
+Triptychs are also emitted in paired versions: mean +/- std and mean-only/no-std-band. The angular panel uses `angle(delta_k, delta_{k-1})` in degrees and a data-driven y-axis instead of a fixed 0..180 degree range.
+
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs/dynamics_triptych_eps4_alpha0p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs/dynamics_triptych_eps8_alpha0p3.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs/dynamics_triptych_eps8_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs/dynamics_triptych_eps16_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_no_std/dynamics_triptych_eps4_alpha0p4_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_no_std/dynamics_triptych_eps8_alpha0p3_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_no_std/dynamics_triptych_eps8_alpha1p6_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_no_std/dynamics_triptych_eps16_alpha1p6_no_std.png`
+
+## Angle-Available Dynamics Triptychs
+
+These additional triptychs are generated only for settings whose `per_step_metrics.csv` actually contains `delta_prev_angle_degrees_mean`. This avoids hiding usable angular-motion data when older completed settings did not record that metric.
+
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps1_alpha0p1.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps1_alpha0p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps2_alpha0p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps2_alpha0p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps2_alpha0p8.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps4_alpha0p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps4_alpha0p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps4_alpha0p8.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps4_alpha1p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps4_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps8_alpha0p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps8_alpha0p3.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps8_alpha0p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps8_alpha0p8.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps8_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps8_alpha2p4.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps12_alpha0p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps12_alpha1p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps16_alpha1p6.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available/dynamics_triptych_eps16_alpha3p2.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps1_alpha0p1_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps1_alpha0p2_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps2_alpha0p2_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps2_alpha0p4_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps2_alpha0p8_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps4_alpha0p2_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps4_alpha0p4_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps4_alpha0p8_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps4_alpha1p2_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps4_alpha1p6_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps8_alpha0p2_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps8_alpha0p3_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps8_alpha0p4_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps8_alpha0p8_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps8_alpha1p6_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps8_alpha2p4_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps12_alpha0p6_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps12_alpha1p2_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps16_alpha1p6_no_std.png`
+- `forensics/loss3_alpha_epsilon_core4_visuals_p2_q1_stopped_100steps_20260520/figures/dynamics_triptychs_angle_available_no_std/dynamics_triptych_eps16_alpha3p2_no_std.png`
+
+## Inputs
+
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps1_alpha0p1_batch100_steps100_p2_q1` (eps=1, alpha=0.1, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps1_alpha0p2_batch100_steps100_p2_q1` (eps=1, alpha=0.2, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps2_alpha0p2_batch100_steps100_p2_q1` (eps=2, alpha=0.2, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps2_alpha0p4_batch100_steps100_p2_q1` (eps=2, alpha=0.4, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps2_alpha0p8_batch100_steps100_p2_q1` (eps=2, alpha=0.8, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps4_alpha0p2_batch100_steps100_p2_q1` (eps=4, alpha=0.2, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps4_alpha0p4_batch100_steps100_p2_q1` (eps=4, alpha=0.4, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps4_alpha0p8_batch100_steps100_p2_q1` (eps=4, alpha=0.8, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps4_alpha1p2_batch100_steps100_p2_q1` (eps=4, alpha=1.2, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps4_alpha1p6_batch100_steps100_p2_q1` (eps=4, alpha=1.6, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha0p2_batch100_steps100_p2_q1` (eps=8, alpha=0.2, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha0p3_batch100_steps100_p2_q1` (eps=8, alpha=0.3, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha0p4_batch100_steps100_p2_q1` (eps=8, alpha=0.4, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha0p8_batch100_steps100_p2_q1` (eps=8, alpha=0.8, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha1p6_batch100_steps100_p2_q1` (eps=8, alpha=1.6, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps8_alpha2p4_batch100_steps100_p2_q1` (eps=8, alpha=2.4, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps12_alpha0p6_batch100_steps100_p2_q1` (eps=12, alpha=0.6, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps12_alpha1p2_batch100_steps100_p2_q1` (eps=12, alpha=1.2, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps16_alpha1p6_batch100_steps100_p2_q1` (eps=16, alpha=1.6, p=2, q=1)
+- `forensics/loss3_alpha_epsilon_core4_sweep_pneq_q_100steps_20260520/fno_nu0p001_eps16_alpha3p2_batch100_steps100_p2_q1` (eps=16, alpha=3.2, p=2, q=1)
