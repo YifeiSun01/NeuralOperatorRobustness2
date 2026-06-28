@@ -1,0 +1,35 @@
+% Source note for the non-compact loss landscape figure.
+%
+% The final PDF is generated directly from simulation data, not by importing a
+% separate "loss_landscape_generated.pdf" intermediate.
+%
+% Regenerate figures/loss_landscape/non-compact/loss_landscape.pdf with:
+%
+%   python figures/loss_landscape/make_best_moving_static.py \
+%     --out-dir figures/loss_landscape/simulation_outputs/alpha_0p05_eps_0p50_bw_0p65_drop_0p60/round_05 \
+%     --round-index 0 \
+%     --scale-rounds 5 \
+%     --output figures/loss_landscape/non-compact/loss_landscape.pdf \
+%     --dpi 220
+%
+% Regenerate the 3D-only tight version with:
+%
+%   python figures/loss_landscape/make_best_moving_static.py \
+%     --out-dir figures/loss_landscape/simulation_outputs/alpha_0p05_eps_0p50_bw_0p65_drop_0p60/round_05 \
+%     --round-index 0 \
+%     --scale-rounds 5 \
+%     --layout 3d-only \
+%     --output figures/loss_landscape/non-compact/loss_landscape_3d_only.pdf \
+%     --dpi 220
+%
+% Rendering contract:
+%   - max_paths defaults to 200, matching the 200 sampled points, so every
+%     plotted point has its corresponding trajectory when it appears in a
+%     trajectory panel.
+%   - trajectory_stride defaults to 1, so each 101-point trajectory is drawn as
+%     100 line segments.
+%   - 3D trajectory z values are bilinear_sample(loss_grid, x, y).
+%   - trajectory_z_offset = 0.0.
+%   - surface_alpha defaults to 0.88 and density_alpha defaults to 0.94.
+%   - Floor-plane initial dots are the only lifted visual marks.
+\endinput

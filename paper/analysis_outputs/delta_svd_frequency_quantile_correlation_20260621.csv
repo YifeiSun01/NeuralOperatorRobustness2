@@ -1,0 +1,8 @@
+delta_metric,svd_metric,n_pairs,pearson_r,spearman_r
+q25_freq_frac_mean,q25_freq_frac,48,-0.29457189149461266,-0.230039523368797
+q50_freq_frac_mean,q50_freq_frac,48,-0.29367532947848035,-0.2098321393502405
+q75_freq_frac_mean,q75_freq_frac,48,-0.2918743345097962,-0.19773180522348605
+q90_freq_frac_mean,q90_freq_frac,48,-0.2855630927883577,-0.2098321393502405
+spectral_centroid_freq_frac_mean,spectral_centroid_freq_frac,48,-0.27507968107778463,-0.2057969059011974
+upper_half_energy_frac_mean,upper_half_energy_frac,48,-0.3149864264286781,-0.282466341433016
+top_quarter_energy_frac_mean,top_quarter_energy_frac,48,-0.31832373257381197,-0.2945720417801453

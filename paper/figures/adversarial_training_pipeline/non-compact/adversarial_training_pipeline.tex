@@ -1,0 +1,215 @@
+\documentclass{article}
+\usepackage[paperwidth=14.25in,paperheight=9.7in,margin=0.14in]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\pagestyle{empty}
+\pgfdeclarelayer{panelbg}
+\pgfdeclarelayer{backline}
+\pgfsetlayers{panelbg,backline,main}
+
+\begin{document}
+\noindent
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  >=Latex,
+  font=\sffamily,
+  panel/.style={draw=black!55, rounded corners=3mm, line width=0.9pt, fill=white},
+  state/.style={draw=black!50, rounded corners=2mm, line width=0.8pt, fill=black!2, minimum width=46mm, minimum height=14mm, align=center, font=\Large},
+  input/.style={draw=blue!70!black, rounded corners=1.8mm, fill=blue!5, minimum width=37mm, minimum height=13mm, align=center, font=\Large},
+  solver/.style={draw=teal!65!black, rounded corners=2mm, fill=teal!7, minimum width=42mm, minimum height=14mm, align=center, font=\Large\bfseries},
+  model/.style={draw=green!55!black, rounded corners=2mm, fill=green!7, minimum width=46mm, minimum height=16mm, align=center, font=\Large\bfseries},
+  outbox/.style={draw=blue!70!black, rounded corners=1.8mm, fill=blue!4, minimum width=48mm, minimum height=13mm, align=center, font=\Large},
+  loss/.style={draw=orange!70!black, rounded corners=2mm, fill=orange!9, minimum width=24mm, minimum height=14mm, align=center, font=\LARGE\bfseries},
+  epsbox/.style={draw=orange!75!black, rounded corners=1.5mm, fill=orange!7, minimum width=73mm, minimum height=15mm, align=center, font=\Large},
+  label/.style={font=\LARGE\bfseries, anchor=west, fill=white, inner sep=1pt},
+  formula/.style={font=\Large, anchor=south west, align=left, fill=white, inner sep=1pt},
+  note/.style={font=\large, text=black!65, align=left},
+  smallnote/.style={font=\large\bfseries, text=black!65, align=center, anchor=south},
+  action/.style={font=\large\bfseries, align=center, anchor=south},
+  fwd/.style={->, draw=blue!70!black, line width=1.45pt},
+  bmodel/.style={->, draw=orange!90!black, line width=1.4pt},
+  solverline/.style={->, draw=green!45!black, line width=1.4pt},
+  bsolver/.style={->, draw=red!75!black, line width=1.4pt},
+  copyarr/.style={->, draw=black!55, line width=1.35pt},
+  copyone/.style={->, draw=violet!72!black, line width=2.15pt},
+  copytwo/.style={->, draw=cyan!60!black, line width=2.15pt},
+  copythree/.style={->, draw=magenta!65!black, line width=2.15pt},
+  macrocycle/.style={->, draw=teal!65!black, line width=3.0pt, line cap=round},
+  cyclearr/.style={->, draw=violet!70!black, line width=1.25pt, dashed},
+  advbatch/.style={->, draw=olive!75!black, line width=2.8pt, line cap=round},
+  thickdata/.style={->, draw=black!62, line width=2.1pt},
+  numone/.style={circle, draw=violet!72!black, fill=violet!72!black, text=white, inner sep=1.1pt, minimum size=5.8mm, font=\large\bfseries},
+  numorange/.style={circle, draw=orange!90!black, fill=orange!90!black, text=white, inner sep=1.1pt, minimum size=5.8mm, font=\large\bfseries},
+  numred/.style={circle, draw=olive!75!black, fill=olive!75!black, text=white, inner sep=1.1pt, minimum size=5.8mm, font=\large\bfseries},
+  numblue/.style={circle, draw=blue!70!black, fill=blue!70!black, text=white, inner sep=1.1pt, minimum size=5.8mm, font=\large\bfseries},
+  numtwo/.style={circle, draw=cyan!60!black, fill=cyan!60!black, text=white, inner sep=1.1pt, minimum size=5.8mm, font=\large\bfseries},
+  numthree/.style={circle, draw=magenta!65!black, fill=magenta!65!black, text=white, inner sep=1.1pt, minimum size=5.8mm, font=\large\bfseries},
+  macronum/.style={draw=teal!65!black, fill=teal!65!black, text=white, inner sep=0pt, minimum width=5.9mm, minimum height=5.9mm, font=\large\bfseries}
+]
+
+% Title and compact legend
+\node[font=\LARGE\bfseries, anchor=west] at (5,226)
+  {online adversarial training from a trained FNO checkpoint};
+\node[note, anchor=west] at (5,217)
+  {for each batch: freeze a copy for attack, generate a jittered adversarial input, then update the online model};
+
+\draw[fwd] (8,211) -- ++(14,0) node[right, black, font=\large] {model forward};
+\draw[solverline] (66,211) -- ++(14,0) node[right, black, font=\large] {solver forward};
+\draw[bmodel] (128,211) -- ++(14,0) node[right, black, font=\large] {model backward};
+\draw[bsolver] (194,211) -- ++(14,0) node[right, black, font=\large] {solver backward};
+\draw[copyarr] (258,211) -- ++(13,0) node[right, black, font=\large] {copy / commit weights};
+
+% Left online-state column.
+\begin{pgfonlayer}{panelbg}
+  \draw[panel, fill=black!1] (11,10) rectangle (74,190);
+\end{pgfonlayer}
+\node[label, text=black!72] at (15,179) {Online state};
+\node[state, minimum width=48mm] (baseline) at (41.5,150)
+  {trained baseline\\checkpoint\\$\mathcal F_{\theta_0}$};
+\node[state, minimum width=48mm, draw=green!55!black, fill=green!6] (current) at (41.5,100)
+  {current online\\model\\$\mathcal F_{\theta_t}$};
+\node[font=\large, text=black!62, align=center] at (41.5,48)
+  {baseline initializes\\the online model;\\training commits\\$\theta_{t+1}$ back here};
+\draw[copyarr] (baseline) -- node[right, font=\large, text=black!60] {initialize} (current);
+
+% ================= Attack panel =================
+\begin{scope}[shift={(84,100)}]
+  \begin{pgfonlayer}{panelbg}
+    \draw[panel] (0,0) rectangle (270,90);
+  \end{pgfonlayer}
+  \node[label, text=orange!85!black] at (7,76) {1. Attack: freeze $\theta_t$, maximize $\delta$};
+
+  \node[input, minimum width=34mm] (clean) at (30,58)
+    {clean batch\\$\{x_i\}$};
+  \node[input, minimum width=38mm] (xin) at (82,58)
+    {perturbed input\\$x_k=x+\delta_k$};
+  \node[solver] (solver) at (142,70)
+    {PDE solver\\$\mathcal G$};
+  \node[model] (amodel) at (142,44)
+    {deep learning\\model\\$\mathcal F_{\theta_t}$};
+  \node[outbox] (ygt) at (198,70)
+    {solver output\\$y_k=\mathcal G(x_k)$};
+  \node[outbox] (ypred) at (198,44)
+    {model output\\$\widehat y_k=\mathcal F_{\theta_t}(x_k)$};
+  \node[loss] (aloss) at (255,57) {Loss};
+
+  \node[smallnote, text=orange!85!black] at (82,66.0)
+    {$\delta$ updated, $k=1,\ldots,N$};
+  \node[smallnote] at (142,53.0) {frozen};
+  \node[action, text=orange!85!black] at (255,65.0) {maximized};
+  \node[epsbox] (epsnote) at (82,25)
+    {per-sample random attack radius\\$\epsilon_i=\epsilon_0 r_i,\quad r_i\sim U[r_{\min},r_{\max}]$};
+
+  \draw[thickdata] (clean) -- (xin);
+  \draw[copyarr, dashed, draw=orange!75!black, line width=1.25pt] (epsnote.north) -- (xin.south);
+
+  \draw[solverline] ([yshift=0.9mm]xin.east) to[out=18,in=180] ([yshift=0.9mm]solver.west);
+  \draw[solverline] ([yshift=0.9mm]solver.east) -- ([yshift=0.9mm]ygt.west);
+  \draw[solverline] ([yshift=0.9mm]ygt.east) to[out=0,in=168] ([yshift=2.1mm]aloss.west);
+  \draw[bsolver] ([yshift=3.4mm]aloss.west) to[out=168,in=0] ([yshift=2.0mm]ygt.east);
+  \draw[bsolver] ([yshift=-1.1mm]ygt.west) -- ([yshift=-1.1mm]solver.east);
+  \draw[bsolver] ([yshift=-1.1mm]solver.west) to[out=180,in=18] ([yshift=-1.1mm]xin.east);
+
+  \draw[fwd] ([yshift=2.5mm]xin.east) to[out=-16,in=176] ([yshift=2.3mm]amodel.west);
+  \draw[fwd] ([yshift=0.9mm]amodel.east) -- ([yshift=0.9mm]ypred.west);
+  \draw[fwd] ([yshift=0.9mm]ypred.east) to[out=8,in=190] ([yshift=-2.0mm]aloss.west);
+  \draw[bmodel] ([yshift=-3.8mm]aloss.west)
+    to[out=190,in=8] ([yshift=-0.9mm]ypred.east);
+  \draw[bmodel] ([yshift=-0.9mm]ypred.west) -- ([yshift=-0.9mm]amodel.east);
+  \draw[bmodel] ([yshift=-2.8mm]amodel.west)
+    to[out=184,in=-18]
+    node[pos=0.50, numorange] {2}
+    ([yshift=-2.7mm]xin.east);
+
+  \node[formula] at (7,3.2)
+    {$\displaystyle x_k=x+\delta_k,\ \delta_k\in\Delta(\epsilon_i),\ \theta_t\ {\rm fixed};\quad
+      \mathcal L_{\rm adv}=\tfrac12\|\mathcal F_{\theta_t}(x_k)-\mathcal G(x_k)\|_2^2;\quad
+      \delta_{k+1}=\Pi_{\Delta(\epsilon_i)}\!\left(\delta_k+\eta\nabla_\delta\mathcal L_{\rm adv}\right).$};
+\end{scope}
+
+% ================= Training panel =================
+\begin{scope}[shift={(84,10)}]
+  \begin{pgfonlayer}{panelbg}
+    \draw[panel] (0,0) rectangle (270,84);
+  \end{pgfonlayer}
+  \node[label, text=green!45!black] at (7,74) {2. Train online on the attacked solver pair};
+  \node[input, minimum width=42mm] (xadv) at (58,49)
+    {attacked input\\$x^{\rm adv}=x+\delta_N$};
+  \node[solver] (tsolver) at (122,62)
+    {PDE solver\\$\mathcal G$};
+  \node[model] (tmodel) at (122,36)
+    {trainable\\model\\$\mathcal F_\theta$};
+  \node[outbox] (tygt) at (196,62)
+    {ground truth\\$y^{\rm adv}=\mathcal G(x^{\rm adv})$};
+  \node[outbox] (typred) at (196,36)
+    {prediction\\$\widehat y^{\rm adv}=\mathcal F_\theta(x^{\rm adv})$};
+  \node[loss] (tloss) at (255,49) {Loss};
+
+  \node[smallnote] at (47,57.2) {frozen};
+  \node[smallnote] at (196,70.2) {frozen};
+  \node[smallnote, text=green!45!black] at (134,45.0) {$\theta$ updated};
+  \node[action, text=orange!85!black] at (255,57.0) {minimized};
+
+  \draw[solverline] ([yshift=0.9mm]xadv.east) to[out=18,in=180] ([yshift=0.9mm]tsolver.west);
+  \draw[solverline] ([yshift=0.9mm]tsolver.east) -- ([yshift=0.9mm]tygt.west);
+  \draw[solverline] ([yshift=0.9mm]tygt.east) to[out=0,in=168] ([yshift=2.1mm]tloss.west);
+  \draw[fwd] ([yshift=2.5mm]xadv.east)
+    to[out=-16,in=176]
+    node[pos=0.50, numblue] {4}
+    ([yshift=2.3mm]tmodel.west);
+  \draw[fwd] ([yshift=0.9mm]tmodel.east) -- ([yshift=0.9mm]typred.west);
+  \draw[fwd] ([yshift=0.9mm]typred.east) to[out=8,in=190] ([yshift=-2.0mm]tloss.west);
+
+  \draw[bmodel] ([yshift=-3.8mm]tloss.west)
+    to[out=190,in=8] ([yshift=-0.9mm]typred.east);
+  \draw[bmodel] ([yshift=-0.9mm]typred.west) -- ([yshift=-0.9mm]tmodel.east);
+
+  \node[formula] at (7,3.2)
+    {$\displaystyle y^{\rm adv}=\mathcal G(x^{\rm adv})\ {\rm detached};\quad
+      \mathcal L_{\rm train}=\tfrac12\|\mathcal F_\theta(x^{\rm adv})-\mathcal G(x^{\rm adv})\|_2^2;\quad
+      \theta_{t+1}=\theta_t-\alpha\nabla_\theta\mathcal L_{\rm train}(\theta_t;x^{\rm adv}).$};
+\end{scope}
+
+% Small panel-level cycle: Online state -> Attack -> Train -> Online state.
+\draw[macrocycle] (72.5,96.0) -- (88.8,105.4);
+\node[macronum] at (78.9,103.0) {1};
+\draw[macrocycle] (88.8,105.4) -- (88.8,86.6);
+\node[macronum] at (91.3,96.0) {2};
+\draw[macrocycle] (88.8,86.6) -- (72.5,96.0);
+\node[macronum] at (78.9,89.0) {3};
+
+% Model-copy triangle and attack-to-training handoff.
+\draw[copyone] (current.north east)
+  .. controls (82,132) and (108,142) ..
+  node[pos=0.26, numone] {1}
+  (139,143)
+  .. controls (168,143) and (190,143) ..
+  (amodel.west);
+\node[font=\large, text=violet!72!black, fill=white, inner sep=1.5pt]
+  at (126,147) {copy weights, freeze};
+
+\draw[copytwo] (current.south east)
+  .. controls (84,64) and (130,31) ..
+  (tmodel.south west);
+
+\draw[copythree] ([yshift=-4mm]tmodel.south west)
+  .. controls (130,23) and (82,58) ..
+  node[pos=0.52, numthree] {5}
+  ([yshift=-4mm]current.south east);
+\node[font=\large, text=cyan!60!black, fill=white, inner sep=1.5pt]
+  at (150,27) {copy for optimizer};
+\node[font=\large, text=magenta!65!black, fill=white, inner sep=1.5pt]
+  at (105,34) {commit updated weights};
+
+\begin{pgfonlayer}{backline}
+  \draw[advbatch] ([xshift=-2mm,yshift=-1mm]xin.south)
+    .. controls (161,134) and (150,92) ..
+    node[pos=0.65, numred] {3}
+    ([xshift=0mm,yshift=1mm]xadv.north);
+\end{pgfonlayer}
+\node[font=\large, text=olive!75!black, fill=white, inner sep=1.5pt, align=center, anchor=south]
+  at ([xshift=8mm,yshift=5mm]xadv.north) {after $N$ attack steps\\use $x^{\rm adv}$};
+
+\end{tikzpicture}
+\end{document}

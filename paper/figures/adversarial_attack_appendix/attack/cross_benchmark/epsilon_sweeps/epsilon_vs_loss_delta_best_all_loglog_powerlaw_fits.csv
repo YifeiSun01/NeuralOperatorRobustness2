@@ -1,0 +1,9 @@
+series,a_slope_power_exponent,b_intercept_log10,coefficient_10_to_b,r2_log10_fit,n_digitized_points,source
+Burgers FNO nu=0.001 L2,1.8352715596181481,-0.1275814453846116,0.7454500609945763,0.9875384704242578,6,approximate digitization from PNG; original CSV not found locally
+Burgers DeepONet nu=0.01 L2,1.2446656460453196,1.592330624508727,39.113855276169275,0.9850499653853118,7,approximate digitization from PNG; original CSV not found locally
+Burgers DeepONet nu=0.01 Linf,1.1474735186780758,3.2807915001643817,1908.9365798246813,0.990361396933184,9,approximate digitization from PNG; original CSV not found locally
+Burgers FNO nu=0.001 Linf,2.3273358272746703,2.433506480609887,271.335414094162,0.9918584138531342,8,approximate digitization from PNG; original CSV not found locally
+Burgers FNO nu=0.01 L2,3.5475526230819923,-2.0801533251958184,0.0083147017346533,0.9962307728792129,9,approximate digitization from PNG; original CSV not found locally
+Burgers FNO nu=0.01 Linf,3.9279774747801843,2.4945081134756513,312.2540740884838,0.9974371151598961,9,approximate digitization from PNG; original CSV not found locally
+Darcy Flow FNO binary Hamming 211,0.794407729816486,-0.0817260365851181,0.8284646143319107,0.9725321684042934,8,approximate digitization from PNG; original CSV not found locally
+NS2D recurrent FNO L2,0.740350352119841,1.110383370864961,12.89387248378916,0.9420374939562445,6,approximate digitization from PNG; original CSV not found locally

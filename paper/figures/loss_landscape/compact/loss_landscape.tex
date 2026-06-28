@@ -1,0 +1,292 @@
+\documentclass{article}
+\usepackage[paperwidth=7.35in,paperheight=5.00in,margin=0in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\definecolor{densityred}{RGB}{220,82,108}
+\definecolor{losslow}{RGB}{45,78,176}
+\definecolor{losshigh}{RGB}{202,116,70}
+\pagestyle{empty}
+
+% Editable loss landscape parameters.
+% Change these values to move or reshape the surface:
+%   Ridges and valleys are line-shaped, so most of the surface has slope.
+\newcommand{\lossBase}{1.75}
+\newcommand{\lossTiltU}{0.20}
+\newcommand{\lossTiltV}{-0.14}
+\newcommand{\lossBowl}{0.055}
+\newcommand{\waveOneAmp}{0.42}
+\newcommand{\waveTwoAmp}{0.32}
+\newcommand{\waveThreeAmp}{0.24}
+\newcommand{\ridgeOneAmp}{1.10}
+\newcommand{\ridgeOneWidth}{0.18}
+\newcommand{\ridgeTwoAmp}{0.92}
+\newcommand{\ridgeTwoWidth}{0.20}
+\newcommand{\ridgeThreeAmp}{0.72}
+\newcommand{\ridgeThreeWidth}{0.16}
+\newcommand{\valleyOneAmp}{1.08}
+\newcommand{\valleyOneWidth}{0.17}
+\newcommand{\valleyTwoAmp}{0.92}
+\newcommand{\valleyTwoWidth}{0.15}
+\newcommand{\valleyThreeAmp}{0.72}
+\newcommand{\valleyThreeWidth}{0.19}
+\newcommand{\MoneU}{-1.35}
+\newcommand{\MoneV}{1.10}
+\newcommand{\MoneAmp}{0.62}
+\newcommand{\MoneWidthU}{0.48}
+\newcommand{\MoneWidthV}{0.34}
+\newcommand{\MtwoU}{1.20}
+\newcommand{\MtwoV}{-1.05}
+\newcommand{\MtwoAmp}{0.58}
+\newcommand{\MtwoWidthU}{0.52}
+\newcommand{\MtwoWidthV}{0.34}
+\newcommand{\moneU}{-1.55}
+\newcommand{\moneV}{-0.55}
+\newcommand{\moneAmp}{0.56}
+\newcommand{\moneWidthU}{0.46}
+\newcommand{\moneWidthV}{0.30}
+\newcommand{\mtwoU}{0.15}
+\newcommand{\mtwoV}{0.35}
+\newcommand{\mtwoAmp}{0.50}
+\newcommand{\mtwoWidthU}{0.42}
+\newcommand{\mtwoWidthV}{0.30}
+\newcommand{\mthreeU}{1.45}
+\newcommand{\mthreeV}{1.00}
+\newcommand{\mthreeAmp}{0.54}
+\newcommand{\mthreeWidthU}{0.48}
+\newcommand{\mthreeWidthV}{0.32}
+
+\newcommand{\lossheight}[2]{%
+  1.82
+  + 0.075*((#1)^2 + 0.88*(#2)^2)
+  - 0.120*(#1)*(#2)
+  + 0.135*(#1)
+  - 0.055*(#2)
+  + 1.95*exp(-(((#1)+2.10)^2)/0.28 - (((#2)-1.70)^2)/0.42)
+  + 0.78*exp(-(((#1)-1.76)^2)/0.62 - (((#2)+1.62)^2)/0.52)
+  + 1.05*exp(-(((#1)+0.35)^2)/0.36 - (((#2)+2.05)^2)/0.30)
+  + 1.34*exp(-(((#1)-0.22)^2)/0.30 - (((#2)-1.18)^2)/0.34)
+  + 0.42*exp(-(((#1)-0.90)^2)/1.30 - (((#2)-0.40)^2)/0.90)
+  - 1.12*exp(-(((#1)-1.24)^2)/0.52 - (((#2)-1.34)^2)/0.48)
+  - 1.04*exp(-(((#1)+0.34)^2)/0.48 - (((#2)+0.20)^2)/0.70)
+  - 0.70*exp(-(((#1)-1.90)^2)/0.34 - (((#2)+0.18)^2)/0.34)
+  + 0.22*exp(-(((#1)-2.15)^2)/0.55 - (((#2)-2.05)^2)/0.48)%
+}
+
+% Probability-density centers for a heat map projected onto the XY plane.
+% These match the separate probability_density figure and intentionally differ
+% from the loss extrema.
+\newcommand{\COneU}{-1.75}
+\newcommand{\COneV}{0.15}
+\newcommand{\COneSu}{0.50}
+\newcommand{\COneSv}{0.46}
+\newcommand{\CTwoU}{-0.70}
+\newcommand{\CTwoV}{-1.55}
+\newcommand{\CTwoSu}{0.58}
+\newcommand{\CTwoSv}{0.44}
+\newcommand{\CThreeU}{0.75}
+\newcommand{\CThreeV}{1.45}
+\newcommand{\CThreeSu}{0.56}
+\newcommand{\CThreeSv}{0.52}
+\newcommand{\CFourU}{1.70}
+\newcommand{\CFourV}{-0.55}
+\newcommand{\CFourSu}{0.48}
+\newcommand{\CFourSv}{0.60}
+\newcommand{\CFiveU}{-0.10}
+\newcommand{\CFiveV}{0.65}
+\newcommand{\CFiveSu}{0.72}
+\newcommand{\CFiveSv}{0.50}
+
+\newcommand{\zscale}{13.6}
+\newcommand{\projectpoint}[3]{%
+  ({94 + 16*(#1) - 16*(#2)},
+   {54 - 6*(#1) - 6*(#2) + \zscale*(#3)})%
+}
+\newcommand{\floorlevel}{-1.05}
+\newcommand{\densityvalue}[2]{%
+  0.22*exp(-0.5*(((#1)-(\COneU))^2/(\COneSu^2) + ((#2)-(\COneV))^2/(\COneSv^2)))
+  + 0.19*exp(-0.5*(((#1)-(\CTwoU))^2/(\CTwoSu^2) + ((#2)-(\CTwoV))^2/(\CTwoSv^2)))
+  + 0.21*exp(-0.5*(((#1)-(\CThreeU))^2/(\CThreeSu^2) + ((#2)-(\CThreeV))^2/(\CThreeSv^2)))
+  + 0.18*exp(-0.5*(((#1)-(\CFourU))^2/(\CFourSu^2) + ((#2)-(\CFourV))^2/(\CFourSv^2)))
+  + 0.20*exp(-0.5*(((#1)-(\CFiveU))^2/(\CFiveSu^2) + ((#2)-(\CFiveV))^2/(\CFiveSv^2)))%
+}
+\newcommand{\drawdensitytile}[4]{%
+  \pgfmathsetmacro{\tileu}{0.5*((#1)+(#2))}%
+  \pgfmathsetmacro{\tilev}{0.5*((#3)+(#4))}%
+  \pgfmathsetmacro{\densitysample}{\densityvalue{\tileu}{\tilev}}%
+  \pgfmathtruncatemacro{\densityshade}{min(88,max(4,round(7 + 265*\densitysample)))}%
+  \pgfmathsetmacro{\tilegrow}{0.004}%
+  \pgfmathsetmacro{\ua}{(#1)-\tilegrow}%
+  \pgfmathsetmacro{\ub}{(#2)+\tilegrow}%
+  \pgfmathsetmacro{\va}{(#3)-\tilegrow}%
+  \pgfmathsetmacro{\vb}{(#4)+\tilegrow}%
+  \path[
+    fill=densityred!\densityshade!white,
+    draw=densityred!\densityshade!white,
+    line width=0.04pt
+  ]
+    \projectpoint{\ua}{\va}{\floorlevel} --
+    \projectpoint{\ub}{\va}{\floorlevel} --
+    \projectpoint{\ub}{\vb}{\floorlevel} --
+    \projectpoint{\ua}{\vb}{\floorlevel} -- cycle;
+}
+\newcommand{\drawdensityellipse}[5]{%
+  \path[fill=densityred, draw=none, opacity=#5]
+    plot[domain=0:360, samples=96, variable=\t, smooth]
+      ({94 + 16*((#1) + (#3)*cos(\t)) - 16*((#2) + (#4)*sin(\t))},
+       {54 - 6*((#1) + (#3)*cos(\t)) - 6*((#2) + (#4)*sin(\t)) + \zscale*(\floorlevel)})
+    -- cycle;
+}
+\newcommand{\drawdensityblob}[4]{%
+  \drawdensityellipse{#1}{#2}{3.00*(#3)}{3.00*(#4)}{0.030}
+  \drawdensityellipse{#1}{#2}{2.78*(#3)}{2.78*(#4)}{0.034}
+  \drawdensityellipse{#1}{#2}{2.56*(#3)}{2.56*(#4)}{0.037}
+  \drawdensityellipse{#1}{#2}{2.34*(#3)}{2.34*(#4)}{0.040}
+  \drawdensityellipse{#1}{#2}{2.12*(#3)}{2.12*(#4)}{0.043}
+  \drawdensityellipse{#1}{#2}{1.90*(#3)}{1.90*(#4)}{0.046}
+  \drawdensityellipse{#1}{#2}{1.68*(#3)}{1.68*(#4)}{0.049}
+  \drawdensityellipse{#1}{#2}{1.48*(#3)}{1.48*(#4)}{0.052}
+  \drawdensityellipse{#1}{#2}{1.28*(#3)}{1.28*(#4)}{0.055}
+  \drawdensityellipse{#1}{#2}{1.10*(#3)}{1.10*(#4)}{0.058}
+  \drawdensityellipse{#1}{#2}{0.93*(#3)}{0.93*(#4)}{0.061}
+  \drawdensityellipse{#1}{#2}{0.78*(#3)}{0.78*(#4)}{0.064}
+  \drawdensityellipse{#1}{#2}{0.64*(#3)}{0.64*(#4)}{0.066}
+  \drawdensityellipse{#1}{#2}{0.51*(#3)}{0.51*(#4)}{0.068}
+  \drawdensityellipse{#1}{#2}{0.39*(#3)}{0.39*(#4)}{0.070}
+  \drawdensityellipse{#1}{#2}{0.29*(#3)}{0.29*(#4)}{0.072}
+}
+\newcommand{\drawlosstile}[4]{%
+  \pgfmathsetmacro{\lossu}{0.5*((#1)+(#2))}%
+  \pgfmathsetmacro{\lossv}{0.5*((#3)+(#4))}%
+  \pgfmathsetmacro{\losssample}{\lossheight{\lossu}{\lossv}}%
+  \pgfmathtruncatemacro{\lossshade}{min(100,max(0,round(100*(\losssample-0.25)/4.05)))}%
+  \pgfmathsetmacro{\surfgrow}{0.002}%
+  \pgfmathsetmacro{\ua}{(#1)-\surfgrow}%
+  \pgfmathsetmacro{\ub}{(#2)+\surfgrow}%
+  \pgfmathsetmacro{\va}{(#3)-\surfgrow}%
+  \pgfmathsetmacro{\vb}{(#4)+\surfgrow}%
+  \path[
+    fill=losslow!\lossshade!losshigh,
+    draw=none,
+    fill opacity=1
+  ]
+    \projectpoint{\ua}{\va}{\lossheight{\ua}{\va}} --
+    \projectpoint{\ub}{\va}{\lossheight{\ub}{\va}} --
+    \projectpoint{\ub}{\vb}{\lossheight{\ub}{\vb}} --
+    \projectpoint{\ua}{\vb}{\lossheight{\ua}{\vb}} -- cycle;
+}
+
+\begin{document}
+\noindent
+\begin{tikzpicture}[
+  x=1mm,y=0.82mm,
+  transform shape,
+  >=Latex,
+  font=\sffamily,
+  panel/.style={draw=black!45, rounded corners=2.2mm, line width=0.8pt, fill=white},
+  axis/.style={->, draw=black!58, line width=0.9pt},
+  floorgrid/.style={draw=black!16, line width=0.24pt, opacity=0.45},
+  heatmapoutline/.style={draw=black!18, line width=0.36pt},
+  surfaceedge/.style={draw=black!36, line width=0.34pt, opacity=0.34},
+  surfacegrid/.style={draw=white, line width=0.16pt, opacity=0.30},
+  formula/.style={font=\large, align=left, anchor=west},
+  note/.style={font=\normalsize, align=left, anchor=west},
+  axislabel/.style={font=\Large, text=black!72},
+  landscapelabel/.style={font=\large\bfseries, text=losslow!70!black},
+  datalabel/.style={font=\large\bfseries, text=densityred!72!black, align=left}
+]
+\path[use as bounding box] (0,0) rectangle (186,146);
+\fill[white] (0,0) rectangle (186,146);
+\draw[panel] (6,5) rectangle (180,142);
+
+% Header
+\node[font=\Large\bfseries, align=center, text width=166mm, anchor=north] at (93,138.5)
+  {Sampled data move toward high-loss regions using gradient};
+
+% Abstract loss mapping
+\node[formula] at (10,127)
+  {$x\in\mathcal X,\qquad x\longmapsto \mathcal L(x),\qquad x\longmapsto P(x)$};
+
+\begin{scope}
+  \clip (8,6.8) rectangle (180,120);
+
+  % Probability-density heat map on a lowered XY plane.
+  \fill[black!3]
+    \projectpoint{-2.35}{-2.35}{\floorlevel} --
+    \projectpoint{ 2.35}{-2.35}{\floorlevel} --
+    \projectpoint{ 2.35}{ 2.35}{\floorlevel} --
+    \projectpoint{-2.35}{ 2.35}{\floorlevel} -- cycle;
+  \foreach \i in {0,...,53} {
+    \foreach \j in {0,...,53} {
+      \pgfmathsetmacro{\xa}{-2.35 + 4.70*\i/54}
+      \pgfmathsetmacro{\xb}{-2.35 + 4.70*(\i+1)/54}
+      \pgfmathsetmacro{\ya}{-2.35 + 4.70*\j/54}
+      \pgfmathsetmacro{\yb}{-2.35 + 4.70*(\j+1)/54}
+      \drawdensitytile{\xa}{\xb}{\ya}{\yb}
+    }
+  }
+  \draw[heatmapoutline]
+    \projectpoint{-2.35}{-2.35}{\floorlevel} --
+    \projectpoint{ 2.35}{-2.35}{\floorlevel} --
+    \projectpoint{ 2.35}{ 2.35}{\floorlevel} --
+    \projectpoint{-2.35}{ 2.35}{\floorlevel} -- cycle;
+
+  % Broad shaded loss surface, inspired by smooth loss-landscape renderings.
+  \begin{scope}[transparency group, opacity=0.76]
+    \foreach \i in {0,...,53} {
+      \foreach \j in {0,...,53} {
+        \pgfmathsetmacro{\xa}{-2.35 + 4.70*\i/54}
+        \pgfmathsetmacro{\xb}{-2.35 + 4.70*(\i+1)/54}
+        \pgfmathsetmacro{\ya}{-2.35 + 4.70*\j/54}
+        \pgfmathsetmacro{\yb}{-2.35 + 4.70*(\j+1)/54}
+        \drawlosstile{\xa}{\xb}{\ya}{\yb}
+      }
+    }
+  \end{scope}
+  \foreach \yy in {-1.18,0,1.18} {
+    \draw[surfacegrid]
+      plot[domain=-2.35:2.35, samples=64, variable=\x, smooth]
+      ({94 + 16*\x - 16*(\yy)},
+       {54 - 6*\x - 6*(\yy) + \zscale*(\lossheight{\x}{\yy})});
+  }
+  \foreach \xx in {-1.18,0,1.18} {
+    \draw[surfacegrid]
+      plot[domain=-2.35:2.35, samples=64, variable=\y, smooth]
+      ({94 + 16*(\xx) - 16*\y},
+       {54 - 6*(\xx) - 6*\y + \zscale*(\lossheight{\xx}{\y})});
+  }
+  \draw[surfaceedge]
+    plot[domain=-2.35:2.35, samples=60, variable=\x, smooth]
+      ({94 + 16*\x - 16*(-2.35)}, {54 - 6*\x - 6*(-2.35) + \zscale*(\lossheight{\x}{-2.35})});
+  \draw[surfaceedge]
+    plot[domain=-2.35:2.35, samples=60, variable=\x, smooth]
+      ({94 + 16*\x - 16*(2.35)}, {54 - 6*\x - 6*(2.35) + \zscale*(\lossheight{\x}{2.35})});
+  \draw[surfaceedge]
+    plot[domain=-2.35:2.35, samples=60, variable=\y, smooth]
+      ({94 + 16*(-2.35) - 16*\y}, {54 - 6*(-2.35) - 6*\y + \zscale*(\lossheight{-2.35}{\y})});
+  \draw[surfaceedge]
+    plot[domain=-2.35:2.35, samples=60, variable=\y, smooth]
+      ({94 + 16*(2.35) - 16*\y}, {54 - 6*(2.35) - 6*\y + \zscale*(\lossheight{2.35}{\y})});
+\end{scope}
+
+% Coordinate axes facing the viewer: X and Y split forward, Z points up.
+\coordinate (O) at (94,{54 + \zscale*(\floorlevel)});
+\draw[axis] (O) -- \projectpoint{2.70}{0}{\floorlevel}
+  node[axislabel, below right=0.3mm] {$X$};
+\draw[axis] (O) -- \projectpoint{0}{2.70}{\floorlevel}
+  node[axislabel, below left=0.3mm] {$Y$};
+\draw[axis] (O) -- \projectpoint{0}{0}{4.85};
+\node[axislabel, fill=white, fill opacity=0.82, text opacity=1, inner sep=1.2pt, anchor=west]
+  at (72,116) {$Z$};
+\fill[black] (O) circle[radius=1.1pt] node[below=1mm, font=\normalsize] {$0$};
+
+\node[landscapelabel, anchor=west] at (108,119) {loss landscape $\mathcal L(x)$};
+\draw[->, draw=losslow!70!black, line width=0.8pt]
+  (132,116) .. controls (129,114.5) and (126,113.3) .. (123,112);
+\node[datalabel, anchor=west] at (10,10) {data distribution $P(x)$};
+\draw[->, draw=densityred!72!black, line width=0.8pt]
+  (59,13) .. controls (64,15) and (68,18) .. (72,20);
+
+\end{tikzpicture}
+\end{document}
