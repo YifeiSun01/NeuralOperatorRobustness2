@@ -1,0 +1,906 @@
+﻿\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage[submission]{aaai2027}  % DO NOT CHANGE THIS
+
+% AAAI-compatible packages.
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multicol}
+\usepackage{xr}
+\setcounter{topnumber}{5}
+\setcounter{dbltopnumber}{5}
+\setcounter{totalnumber}{10}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\setlength{\textfloatsep}{6pt plus 1pt minus 2pt}
+\setlength{\floatsep}{6pt plus 1pt minus 2pt}
+\setlength{\intextsep}{6pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{6pt plus 1pt minus 2pt}
+\setlength{\dblfloatsep}{6pt plus 1pt minus 2pt}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\figrefs}[2]{Figures~\ref{#1} and~\ref{#2}}
+\newcommand{\figrangeref}[2]{Figures~\ref{#1}--\ref{#2}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcounter{appendixsection}
+\newcounter{appendixsubsection}[appendixsection]
+\newcounter{appendixdomain}[appendixsubsection]
+\renewcommand{\theappendixsection}{\Alph{appendixsection}}
+\renewcommand{\theappendixsubsection}{\theappendixsection.\arabic{appendixsubsection}}
+\renewcommand{\theappendixdomain}{\theappendixsubsection.\arabic{appendixdomain}}
+\newcommand{\appendixsection}[2]{%
+  \refstepcounter{appendixsection}%
+  \section*{\theappendixsection. #1}%
+  \label{#2}%
+}
+\newcommand{\appendixsubsection}[1]{%
+  \refstepcounter{appendixsubsection}%
+  \subsection*{\theappendixsubsection\ #1}%
+}
+
+\urlstyle{rm}
+\def\UrlFont{\rm}
+
+\title{Solver-Integrated Adversarial Attacking and Training of Neural Operators}
+
+\author{Anonymous Authors}
+\affiliations{Anonymous Affiliations}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+Neural operators are widely used as fast surrogates for numerical PDE
+solvers, mapping input functions to solution functions. However, their
+generalizability and robustness are not yet clearly defined in the
+operator-learning setting, which differs from traditional adversarial robustness
+definitions. This paper studies the generalizability and robustness of a
+learned neural operator from a solver-integrated perspective, addressing the
+challenge that the output of a learned operator and a numerical solver tends to
+change in tandem under input perturbation. First, we formalize the definition
+of generalization and robustness through a model-solver error operator,
+identifying fixed-input model-solver loss as generalization metric, and
+norm-bounded adversarial attack loss increase and Jacobian-error function norm as
+robustness metric. Second, we
+identify the solver-integrated adversarial attack as appropriate
+for PDE operator learning and show why model-only or fixed-ground-truth attacks
+can be insufficient when the solver output also changes with the input. Third, we
+develop solver-integrated adversarial training methods for neural operators.
+Experiments on representative PDE benchmarks show that this solver-integrated
+adversarial training clearly improves both generalizability and robustness.
+Deeper solver integration yields more effective attacks, more informative
+samples, and more efficient training than less integrated alternatives. More
+broadly, this paper is a carefully chosen instance of a wider
+adversarial-regression setting: the PDE solver provides a ground-truth oracle
+that reveals how true outputs change under input perturbations and supplies
+their input gradients, information unavailable in many prior problem settings.
+\end{abstract}
+
+\section{Introduction}
+
+Neural operators, including Fourier Neural Operators and DeepONets, learn maps
+between function spaces and are widely used as fast data-driven
+surrogates for numerical PDE solvers \citep{li2021fourier,lu2021deeponet}.
+They map input functions to solution functions in one forward pass, making them
+attractive when many related PDE solution queries are needed. Practical use, however,
+requires the learned operator to generalize beyond the training dataset and
+remain close to the solver when the input function is perturbed. Recent neural
+operator studies have therefore begun to examine adversarial robustness and
+robustness-aware training
+\citep{adesoji2022evaluating,huang2026stablepdenet,roy2026beyond}.
+
+Prior work has often not clearly separated the notions of generalization and
+robustness.
+Classical theory defines generalization through expected-versus-empirical loss
+\citep{bousquet2002stability,xu2012robustness}. Several modern robustness
+notions are defined by worst-case loss increase under norm-bounded
+perturbations \citep{madry2018towards}, and global Lipschitz constants and
+local spectral norms are also used to measure robustness
+\citep{cisse2017parseval,huang2026stablepdenet}. We inherit these ideas and
+specialize them to the operator learning setting. Generalization is a static
+definition: the norm of the output of our error operator. Robustness is defined
+in a dynamic way: how the output of our error operator amplifies under an input
+perturbation. We further develop Jacobian-error, which is cheaper to
+compute and closely aligned with adversarial loss increase in the local
+robustness setting.
+
+Most classical adversarial attacks were developed for classification models, where it
+is reasonable to assume that a small input perturbation should not change the
+ground-truth label \citep{goodfellow2015explaining,madry2018towards}. However,
+the PDE operator learning problem is not only a regression problem, but a
+regression problem with an existing numerical solver as a trusted oracle. When
+the input function is perturbed, the correct solution should change accordingly
+but stay close to the solver's output. Therefore, the model is not expected to
+be robust by itself; rather, the model-solver discrepancy is expected to be
+robust. We therefore define the error operator as the discrepancy between the
+learned operator and the solver.
+
+Building on this view, we develop solver-integrated adversarial training. The
+method is a teacher-student solver distillation procedure: the numerical solver
+is the oracle teacher, and the neural operator is retrained on informative
+inputs where the local model-solver discrepancy is large. This is the special
+opportunity that makes the framework operational here: in ordinary regression or
+vision problems, perturbing an input can also change the true output, yet the
+true input-output map and its gradient are usually unavailable; in PDE operator
+learning, the solver can relabel each perturbed input and can be differentiated
+through. Experiments show that exploiting this oracle improves generalization
+and robustness. More broadly, the paper should be read as a carefully chosen
+instance of a broader adversarial-regression problem with access to a
+ground-truth oracle, rather than as a claim limited to neural operators alone.
+
+Our main contributions can be summarized as follows:
+\begin{itemize}
+  \item In the setting of operator learning, we propose a new robustness
+  definition and metric.
+  \item We identify the most accurate and appropriate target loss for
+  neural-operator adversarial attack, which involves deep solver integration.
+  \item We propose solver-integrated adversarial training for neural operators
+  to improve both generalization and robustness.
+\end{itemize}
+
+\section{Related Work}
+
+\noindent\textbf{Traditional adversarial attacks.}
+Most classical adversarial attacks were designed for classification, where the
+objective is usually to maximize a label loss such as
+$\ell(f_\theta(x+\delta),y)$ under a perturbation constraint
+\citep{goodfellow2015explaining,madry2018towards}. These attacks mainly differ
+in the optimization procedure, perturbation constraint, sparsity or
+structure, or available information, while retaining the assumption that the
+ground-truth label remains fixed
+\citep{carlini2017towards,papernot2016limitations,moosavi2016deepfool,brendel2017decision,chen2019hopskipjump,andriushchenko2019square,su2017onepixel,brown2017adversarialpatch,croce2020autoattack}.
+Regression attacks and time-series forecasting attacks have also been studied
+\citep{nguyen2018regression,tong2018adversarialregression,ribeiro2023linearregression,mode2020mtsregression,liu2022forecastingattacks}.
+Their target losses use a fixed observed label or the model's own output. They
+do not recompute the true loss with the true output for the perturbed input
+inside the attack loop. They acknowledge that the true output should change
+accordingly with input perturbations, but lack
+the generating function in that setting. Therefore, they assume that small
+perturbations do not meaningfully change the observed label. However, in our operator-learning
+setting, the numerical solver is exactly this generating function, so the true
+output and the corresponding true loss can be recomputed for each perturbed
+input inside the loop.
+Under the framework below, previous attack losses contain relatively little solver
+integration and fall into the first two target-loss categories,
+$\mathcal{L}_1$ and $\mathcal{L}_2$.
+
+\noindent\textbf{Neural-operator adversarial attacks.}
+A closer study evaluates adversarial robustness for operator learning and finds
+that neural-operator error can grow significantly as the perturbation norm
+increases \citep{adesoji2022evaluating}. Although solver outputs are used as
+references, the solver is not truly integrated into the attack loop. In the
+forward pass, the solver output for an updated perturbed input is approximated
+by a nearest-neighbor ground-truth output from a precomputed dictionary; in the
+backward pass, the solver gradient is ignored and only the neural-operator
+gradient is used. Besides, this study focuses on adversarial robustness
+evaluation for neural operators, but does not propose a method for improving the
+model's adversarial robustness.
+
+\noindent\textbf{PDE-problem adversarial training.}
+WbAR combines adversarial training with PINNs by moving collocation points toward
+larger PDE residuals \citep{shi2025wbar}; StablePDENet applies adversarial
+training to neural operators with a physics loss
+\citep{huang2026stablepdenet}; and RAMS systematizes this residual-gradient
+sample movement for PINNs and operator learning \citep{ouyang2025rams}. These
+methods do not use true solver outputs as supervised targets inside the
+adversarial loop. Instead, they use physics loss as a surrogate loss. The
+drawbacks are that this physics loss is less informative than direct solver
+supervision and that, in many time-dependent neural operator settings, the model
+outputs only one single frame of the final state, so the temporal derivatives
+required by a physics loss are unavailable. Other
+operator-learning works use heuristic, active, or generative sampling:
+neural-operator digital-twin studies use gradient-free sparse attacks and
+attack-driven active learning with input denoising
+\citep{roy2026vulnerabilities,roy2026beyond}, while adversarial autoencoders,
+GANO, and turbulent-flow generative models use distributional or generative
+objectives \citep{enyeart2024adversarial,rahman2022gano,oommen2025turbulent}.
+These sampling strategies can be useful, but they are heuristic or
+distributional rather than chosen according to the current solver-model discrepancy, and
+they do not use solver gradients to choose perturbation directions.
+
+\section{Preliminaries}
+\subsection{Problem Formulation}
+
+Let $\mathcal{X}$ and $\mathcal{Y}$ be Hilbert function spaces equipped with
+norms $\|\cdot\|_{\mathcal{X},p}$ and $\|\cdot\|_{\mathcal{Y},q}$, respectively,
+where $p=q=2$ by default. An input is a function $x\in\mathcal{X}$, such as an
+initial condition or coefficient field, and the output is a function
+$y\in\mathcal{Y}$, such as a final condition or solution function. Throughout
+the paper, the model is the surrogate neural
+operator $\mathcal{F}_\theta$, while the solver is the oracle ground-truth
+input-to-output mapping $\mathcal{G}$. We assume these operators are Frechet
+differentiable at $x$. Their difference defines the
+model-solver error operator $\mathcal{E}_\theta$:
+\begin{equation*}
+\begin{aligned}
+  \mathcal{F}_\theta,\mathcal{G},\mathcal{E}_\theta
+  &:\mathcal{X}\to\mathcal{Y},\
+  \mathcal{E}_\theta:=\mathcal{F}_\theta-\mathcal{G},\\
+  e_\theta[x]
+  &:=
+  \mathcal{E}_\theta(x)
+  =
+  \mathcal{F}_\theta(x)-\mathcal{G}(x),\\
+  D\mathcal{F}_\theta[x],D\mathcal{G}[x]
+  &:\mathcal{X}\to\mathcal{Y},\
+  D\mathcal{E}_\theta[x]:=D\mathcal{F}_\theta[x]-D\mathcal{G}[x].
+\end{aligned}
+\end{equation*}
+For a perturbation increment $\eta=t h\in\mathcal{X}$, let $h\in\mathcal{X}$ be an
+input-space direction with $\|h\|_{\mathcal{X},p}=1$. We take $t\to0$, and hence
+$\|\eta\|_{\mathcal{X},p}\to0$:
+\begin{align*}
+  \mathcal{F}_\theta(x+\eta)
+  &=
+  \mathcal{F}_\theta(x)+D\mathcal{F}_\theta[x](\eta)
+  +o(\|\eta\|_{\mathcal{X},p}),
+  \\
+  \mathcal{G}(x+\eta)
+  &=
+  \mathcal{G}(x)+D\mathcal{G}[x](\eta)
+  +o(\|\eta\|_{\mathcal{X},p}),
+  \\
+  e_\theta[x+\eta]
+  &=
+  e_\theta[x]+D\mathcal{E}_\theta[x](\eta)
+  +o(\|\eta\|_{\mathcal{X},p}).
+\end{align*}
+Here $D\mathcal{F}_\theta[x](\eta)$, $D\mathcal{G}[x](\eta)$, and
+$D\mathcal{E}_\theta[x](\eta)$ are the corresponding first-order output
+variation functions.
+We define the radius-$\varepsilon$ perturbation ball as the admissible
+constraint set for the perturbed input in the function space $\mathcal{X}$:
+\begin{equation*}
+  \mathcal{B}_{p,\varepsilon}(x)
+  =
+  \{x+\delta:\delta\in\mathcal{X},
+  \|\delta\|_{\mathcal{X},p}\le\varepsilon\}.
+\end{equation*}
+
+\subsection{Generalization and Robustness Metrics}
+
+\paragraph{1. Generalization.}
+Generalization is the static model-solver discrepancy at a fixed input
+function:
+\begin{equation*}
+  \mathcal{L}_{\mathrm{err}}(x)
+  =
+  \frac{1}{2}\|e_\theta[x]\|_{\mathcal{Y},2}^{2}
+  =
+  \frac{1}{2}
+  \|\mathcal{F}_\theta(x)-\mathcal{G}(x)\|_{\mathcal{Y},2}^{2}.
+\end{equation*}
+
+\paragraph{2. Robustness.}
+Robustness asks how the model's error changes instead of how the model changes
+when the input function is perturbed. We organize it into three local metrics.
+
+We use $h$ for an infinitesimal direction. Along $h$,
+\begin{equation*}
+  e_\theta[x+t h]
+  =
+  e_\theta[x]+tD\mathcal{E}_\theta[x](h)+o(t),
+  \qquad t\to 0.
+\end{equation*}
+The first variation of $\mathcal{L}_{\mathrm{err}}$ is
+\par\smallskip
+\noindent
+\begin{tabular*}{\columnwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+$\displaystyle D\mathcal{L}_{\mathrm{err}}[x](h):=\left.\frac{d}{dt}\frac{1}{2}\langle e_\theta[x+t h],e_\theta[x+t h]\rangle_{\mathcal{Y}}\right|_{t=0}$ & \\
+$\displaystyle =\langle e_\theta[x],D\mathcal{E}_\theta[x](h)\rangle_{\mathcal{Y}}\!=\!\langle D\mathcal{E}_\theta[x]^*e_\theta[x],h\rangle_{\mathcal{X}}\!=\!\langle g_\theta(x),h\rangle_{\mathcal{X}}$ &
+\end{tabular*}
+\par\smallskip
+where $g_\theta(x):=D\mathcal{E}_\theta[x]^*e_\theta[x]\in\mathcal{X}$, and
+$D\mathcal{E}_\theta[x]^*:\mathcal{Y}\to\mathcal{X}$ is the adjoint derivative.
+After discretization this becomes the vector
+$J_{\mathcal{E}}(x)^\top e_\theta(x)$.
+This derivative is the first-order growth rate of the squared model-solver error
+loss when $x$ is perturbed along $h$. It is the function-space inner product
+between the Jacobian-error function $g_\theta(x)$ and the perturbation direction
+$h$.
+
+\smallskip
+\noindent\textbf{Jacobian norm.}
+The first robustness metric is the induced norm of the derivative of the
+error operator. In a Lipschitz view, a regional robustness bound uses the
+largest derivative norm over an input region; at a fixed input $x$, this reduces
+to the pointwise induced norm of the Frechet derivative. The Frechet derivative
+is defined from perturbations $x+t h$ as $t\to0$; after this infinitesimal scale
+is factored out, the Jacobian norm maximizes over normalized input-space
+directions $h$:
+\begin{equation*}
+  \|D\mathcal{E}_\theta[x]\|_{p\to q}
+  =
+  \sup_{\|h\|_{\mathcal{X},p}=1}
+  \|D\mathcal{E}_\theta[x](h)\|_{\mathcal{Y},q}.
+\end{equation*}
+For a small perturbation $t h$, the linearized change is
+$tD\mathcal{E}_\theta[x](h)$. Thus the Jacobian norm gives the first-order
+growth rate of the nonlinear error operator at $x$; the maximizing direction
+$h$ is the Jacobian norm growth direction. After
+discretization, with
+$J=J_{\mathcal{E}}(x)$, one common case is
+$2\to2:\sigma_{\max}(J)$ with the leading right singular vector as direction.
+
+This Jacobian norm differs from a model-only local stability diagnostic
+such as the spectral norm \(\|D\mathcal{F}_\theta[x]\|\), which StablePDENet
+reports for neural operators \citep{huang2026stablepdenet}. A large
+\(\|D\mathcal{F}_\theta[x]\|\) does not by itself imply poor solver-consistent
+robustness, because the true solver \(\mathcal{G}\) can also have
+non-negligible input-output sensitivity; both outputs are expected to change
+when the input changes. The desired local property is that the model and solver
+change similarly, \(D\mathcal{F}_\theta[x]\approx D\mathcal{G}[x]\), so the
+error derivative \(D\mathcal{E}_\theta[x]\) is small.
+
+\smallskip
+\noindent\textbf{Adversarial attack loss increase.}
+For a fixed input function $x$, the attack optimizes over the perturbation
+$\delta$; the model, solver, and clean input are fixed. This metric directly
+measures the worst loss (error's norm) increase over a norm-bounded perturbation
+ball, rather than a local error change's norm. For one perturbation, define
+\begin{align*}
+  \Delta\mathcal{L}_{\mathrm{err}}(\delta)
+  &:=
+  \mathcal{L}_{\mathrm{err}}(x+\delta)
+  -
+  \mathcal{L}_{\mathrm{err}}(x).
+\end{align*}
+Since the clean error $\|e_\theta[x]\|_{\mathcal{Y}}^2$ is constant in
+$\delta$, maximizing $\|e_\theta[x+\delta]\|_{\mathcal{Y}}^2$ and maximizing
+$\Delta\mathcal{L}_{\mathrm{err}}(\delta)$ give the same perturbation. We
+choose a budget-feasible $\delta$ that maximizes this loss increase; the chosen
+$\delta$ is the finite-budget adversarial perturbation direction.
+
+\smallskip
+\noindent\textbf{Jacobian-error.}
+The third robustness quantity is Jacobian-error, defined by the
+input-space function
+$g_\theta(x)=D\mathcal{E}_\theta[x]^*e_\theta[x]$. It combines the derivative
+of the error operator with the current error field. Its scalar growth value is
+$\|g_\theta(x)\|_{\mathcal{X}}$, and its growth direction is
+$g_\theta(x)/\|g_\theta(x)\|_{\mathcal{X}}$ when $g_\theta(x)\neq0$.
+
+\smallskip
+\noindent\textbf{Comparison of Jacobian-error and finite-budget attack.}
+In the small-budget limit, the finite-budget attack reduces to
+Jacobian-error. Write
+$\delta=\varepsilon h$ with $\|h\|_{\mathcal{X}}\le 1$. As
+$\varepsilon\to0$, the first-order expansion is uniform over
+$\|h\|_{\mathcal{X}}\le1$, so
+\begin{align*}
+  \Delta\mathcal{L}_{\mathrm{err}}^*(\varepsilon)
+  &=
+  \max_{\|h\|_{\mathcal{X}}\le1}
+  \Delta\mathcal{L}_{\mathrm{err}}(\varepsilon h)
+  \approx
+  \varepsilon\max_{\|h\|_{\mathcal{X}}\le 1}
+  \langle g_\theta(x),h\rangle_{\mathcal{X}}
+  \\
+  &=
+  \varepsilon\|g_\theta(x)\|_{\mathcal{X}}
+  \quad
+  \left(
+  h^*=g_\theta(x)/\|g_\theta(x)\|_{\mathcal{X}}
+  \right).
+\end{align*}
+Thus, in the small-budget limit, the finite-budget adversarial attack has the
+same first-order growth value and growth direction as Jacobian-error.
+
+\smallskip
+\noindent\textbf{Comparison of Jacobian-error and Jacobian norm.}
+Jacobian-error differs from the Jacobian norm because the two quantities
+optimize different local objectives. Jacobian-error measures the
+error-aligned first-order growth of the
+final squared error:
+\begin{align*}
+  \frac{1}{2}\|e_\theta[x+h]\|_{\mathcal{Y}}^2
+  -
+  \frac{1}{2}\|e_\theta[x]\|_{\mathcal{Y}}^2
+  &\approx
+  \bigl\langle e_\theta[x],
+  D\mathcal{E}_\theta[x](h)\bigr\rangle_{\mathcal{Y}}
+\end{align*}
+This first-order term depends on both the current error $e_\theta[x]$ and the
+local Jacobian through $D\mathcal{E}_\theta[x](h)$. The Jacobian norm measures
+the largest local displacement of the error field:
+\begin{equation*}
+  \|e_\theta[x+h]-e_\theta[x]\|_{\mathcal{Y}}
+  \approx
+  \|D\mathcal{E}_\theta[x](h)\|_{\mathcal{Y}}
+\end{equation*}
+Thus, the Jacobian norm maximizes the local error displacement norm, not the
+error norm (loss) increase. Consequently, in this setting the Jacobian norm is
+not the most suitable robustness proxy; the Jacobian-error norm is more
+directly aligned with finite adversarial attack loss increase. For the $2\to2$
+norm case ($p=q=2$),
+the Jacobian-norm direction is the leading right singular direction of
+$D\mathcal{E}_\theta[x]$, governed by
+$D\mathcal{E}_\theta[x]^*D\mathcal{E}_\theta[x]$. Empirically, Jacobian-error
+tracks finite adversarial attack loss increase more closely than Jacobian norm
+for small $\varepsilon$. It is also less
+computationally intensive: for a discretized
+$J_{\mathcal{E}}\in\mathbb{R}^{m\times n}$ and error vector
+$e_\theta\in\mathbb{R}^{m}$, computing
+$J_{\mathcal{E}}^\top e_\theta$ and its norm costs $O(mn)$, whereas computing
+the Jacobian norm through the leading singular value/vector costs
+$O(mn\min\{m,n\})$ for an exact dense SVD or $O(kmn)$ for $k$ iterative
+matrix-vector passes.
+
+\section{Proposed Framework}
+
+\subsection{Solver-Integrated Adversarial Attack}
+
+The attack optimizes the chosen loss over the finite perturbation $\delta$,
+with $x$ fixed. For iterative variants, $x_k=x+\delta_k$ is the perturbed input
+at step $k$, and $\operatorname{sg}(\cdot)$ denotes stop-gradient. We use
+three primary losses and several implementation variants:
+\begin{equation*}
+\begin{aligned}
+\mathcal{L}_1(\delta)
+&=\|\mathcal{F}_\theta(x+\delta)-\mathcal{F}_\theta(x)\|_{\mathcal{Y},q},\\
+\mathcal{L}_2(\delta)
+&=\|\mathcal{F}_\theta(x+\delta)-\mathcal{G}(x)\|_{\mathcal{Y},q},\\
+\mathcal{L}_3(\delta)
+&=\|\mathcal{F}_\theta(x+\delta)-\mathcal{G}(x+\delta)\|_{\mathcal{Y},q}=\|e_\theta[x+\delta]\|_{\mathcal{Y},q},\\
+\mathcal{L}_2^{\mathrm{fixed}}(\delta_k)
+&=\|\mathcal{F}_\theta(x_k)-\mathcal{G}(x)\|_{\mathcal{Y},q},\\
+\mathcal{L}_3^{\mathrm{full}}(\delta_k)
+&=\|\mathcal{F}_\theta(x_k)-\mathcal{G}(x_k)\|_{\mathcal{Y},q},\\
+\mathcal{L}_{2,N}^{\mathrm{dict}}(\delta_k)
+&=\|\mathcal{F}_\theta(x_k)-y_{\mathrm{dict},N}(x_k)\|_{\mathcal{Y},q},\\
+\mathcal{L}_3^{\mathrm{sg}}(\delta_k)
+&=\|\mathcal{F}_\theta(x_k)-\operatorname{sg}(\mathcal{G}(x_k))\|_{\mathcal{Y},q},\\
+\mathcal{L}_{\mathrm{phys}}(\delta_k)
+&=\lambda_{\mathrm{PDE}}\|R_{\mathrm{PDE}}(\mathcal{F}_\theta(x_k))\|^2\\
+&\quad+\lambda_{\mathrm{BC}}\|R_{\mathrm{BC}}(\mathcal{F}_\theta(x_k))\|^2+\lambda_{\mathrm{IC}}\|R_{\mathrm{IC}}(x_k)\|^2.
+\end{aligned}
+\end{equation*}
+For the squared-loss version, the stop-gradient and full $\mathcal{L}_3$
+variants have different backpropagated first-order directions:
+\begin{align*}
+  \nabla_{\delta_k}\tfrac{1}{2}\mathcal{L}_3^{\mathrm{sg}}(\delta_k)^2
+  &=
+  D\mathcal{F}_\theta[x_k]^*
+  (\mathcal{F}_\theta(x_k)-\mathcal{G}(x_k)),
+  \nonumber\\
+  \nabla_{\delta_k}\tfrac{1}{2}\mathcal{L}_3^{\mathrm{full}}(\delta_k)^2
+  &=
+  (D\mathcal{F}_\theta[x_k]-D\mathcal{G}[x_k])^*
+  (\mathcal{F}_\theta(x_k)-\mathcal{G}(x_k)).
+\end{align*}
+
+Model-output-change objectives, including some regression attacks and
+regularizers that compare perturbed and clean predictions, follow
+$\mathcal{L}_1$
+\citep{nguyen2018regression,mode2020mtsregression,liu2022forecastingattacks}.
+Fixed-label classification, fixed-response regression, specified-target
+regression/forecasting, and neural-operator tests with held or precomputed
+solver targets follow $\mathcal{L}_2$
+\citep{goodfellow2015explaining,madry2018towards,tong2018adversarialregression,ribeiro2023linearregression,liu2022forecastingattacks,adesoji2022evaluating}.
+We are not aware of prior attack losses that optimize the full
+$\mathcal{L}_3$.
+
+$\mathcal{L}_{2,N}^{\mathrm{dict}}$ is an $\mathcal{L}_2$-like variant: it
+replaces the online solver output by the precomputed solver output attached to
+the nearest dictionary input, rather than calling the solver during the attack.
+This is the structure used by dictionary-based FNO robustness evaluation
+\citep{adesoji2022evaluating}. The stop-gradient variant uses the solver output
+in the forward target but blocks the solver branch in backpropagation, whereas
+$\mathcal{L}_3^{\mathrm{full}}$ differentiates through the model--solver
+difference as shown above. Physics-residual attacks such as WbAR, StablePDENet,
+and RAMS instead use $\mathcal{L}_{\mathrm{phys}}$: they do not compare with
+solver outputs, but replace solver supervision by PDE, boundary, and
+initial-condition residuals
+\citep{shi2025wbar,huang2026stablepdenet,ouyang2025rams}.
+Overall, these attack variants increase solver integration in the order
+$\mathcal{L}_{\mathrm{phys}}$, $\mathcal{L}_1$, $\mathcal{L}_2$,
+$\mathcal{L}_{2,N}^{\mathrm{dict}}$, $\mathcal{L}_3^{\mathrm{sg}}$, and
+$\mathcal{L}_3^{\mathrm{full}}$.
+Our experiments below show that deeper solver integration generally yields
+stronger attacks and more effective adversarial training.
+
+\subsection{Optimization Methods for Solver-Integrated Attacks}
+
+We propose four optimizer variants, and many existing first-order attack
+optimizers can be viewed within this framework. For a selected attack loss
+$\mathcal{L}(\delta)$, let
+$g_k=\nabla_\delta\mathcal{L}(\delta_k)$ denote the input-space gradient at
+attack step $k$. Raw updates use $g_k$ directly. The steepest direction is
+\begin{equation*}
+  s_k \in \operatorname*{arg\,max}_{\|v\|_{\mathcal{X},p}\le 1}
+  \langle g_k,v\rangle .
+\end{equation*}
+
+\[
+\begin{array}{@{}lcc@{}}
+\hline
+& \textbf{Add} & \textbf{Replace} \\
+\hline
+\textbf{Raw}
+&
+\delta_{k+1}
+=
+\Pi_{\mathcal{B}_\varepsilon}
+\left(\delta_k+\alpha g_k\right)
+&
+\delta_{k+1}
+=
+\varepsilon
+\frac{g_k}{\|g_k\|_{\mathcal{X},p}}
+\\[0.5em]
+\textbf{Steepest}
+&
+\delta_{k+1}
+=
+\Pi_{\mathcal{B}_\varepsilon}
+\left(\delta_k+\alpha s_k\right)
+&
+\delta_{k+1}
+=
+\varepsilon s_k
+\\
+\hline
+\end{array}
+\]
+
+Raw add is standard PGD, and steepest add is $\ell_p$-steepest PGD.
+Add-style methods accumulate directions and project back
+to the perturbation ball, so early steps may move toward the boundary.
+Replace-style methods discard the previous perturbation and directly place the
+new perturbation on the boundary. Raw replace is similar to generalized power
+iteration for solving Rayleigh quotient problems.
+In our experiments, replace-style updates are fast and often strong on Burgers
+and Darcy Flow, whereas add-style updates are more stable for recurrent
+Navier--Stokes.
+
+\subsection{Solver-Integrated Adversarial Training}
+
+The training stage wraps the attack objectives above in an online
+attack-then-train loop. We start from a trained baseline neural operator. At
+step $t$, the current model is frozen during attack generation, and an attacked
+batch $x^{\mathrm{adv}}=x+\delta_N$ is obtained by maximizing one of
+$\mathcal{L}_1$, $\mathcal{L}_2$, $\mathcal{L}_3$, or
+$\mathcal{L}_{\mathrm{phys}}$ for $N$ projected steps. This attack step searches
+for locally high-loss input functions where the current model has large
+model-solver discrepancy or large physics residual. The trainable model is
+then updated on the attacked batch, and the updated weights become the next
+current model.
+
+This process can be summarized as a function-space min-max risk.  Let
+$\mu_{\mathcal X}$ be the data distribution over the input function space
+$\mathcal X$, so that $x\sim\mu_{\mathcal X}$.  The usual expected risk is
+\(\mathcal R(\theta)=
+\mathbb E_{x\sim\mu_{\mathcal X}}[\mathcal L_\theta(x)]\). The adversarial
+attack moves the sample \(x\) toward a higher-loss
+region using a perturbation \(\delta\) within the \(\varepsilon\)-ball. The
+adversarial training objectives are therefore
+\[
+  \min_\theta \mathcal R_{\mathrm{robust}}(\theta)
+  =
+  \min_\theta
+  \mathbb E_{x\sim\mu_{\mathcal X}}
+  \left[
+    \max_{\|\delta\|_{\mathcal X,p}\le \varepsilon}
+    \mathcal L_\theta(x;\delta)
+  \right].
+\]
+
+In our experiments, we also include two hand-designed random perturbation
+training methods. These variants draw perturbations from a fixed random sampler
+with $\varepsilon$ jitter that is independent of the model at the current
+training step. They differ only in target: \emph{random solver} uses
+$y=\mathcal{G}(x+\delta)$, while \emph{random clean} keeps
+$y=\mathcal{G}(x)$.
+
+\section{Experiments}
+
+\subsection{Benchmark PDEs}
+
+We evaluate on the three canonical PDE operator-learning benchmarks used in the
+Fourier Neural Operator (FNO) paper \citep{li2021fourier}: 1D Burgers, 2D
+Darcy Flow, and 2D Navier--Stokes. Due to page limits, many experimental
+results have been moved to the supplement.
+
+\subsection{Solver-Integrated Adversarial Attacks}
+\label{subsec:exp-solver-integrated-attacks}
+
+Except for Burgers at \(\nu=10^{-2}\), where we also include DeepONet, all
+other experiments use FNO. For Burgers and recurrent Navier--Stokes, we compare
+\(\mathcal L_1\), \(\mathcal L_2\), and \(\mathcal L_3\); for Darcy Flow, we
+additionally compare \(\mathcal L_{\mathrm{phys}}\). In visualizations and
+auxiliary sweeps, we also compare \(\mathcal L^{\mathrm{sg}}_3\),
+\(\mathcal L^{\mathrm{dict}}_{2,N}\) with \(N\in\{200,2000,20000\}\), and
+\(\mathcal L^{\mathrm{fixed}}_2\). Across these settings, the
+attack-loss increase grows approximately as a power law in the attack budget,
+$\Delta\mathcal{L}\approx C\varepsilon^a$, as summarized in
+\figref{fig:main-cross-benchmark-epsilon-loss}.
+
+\setcounter{figure}{0}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{../figures/adversarial_attack_appendix/attack/cross_benchmark/epsilon_sweeps/epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png}
+  \caption{Power-law relationship between attack budget and loss increase}
+  \label{fig:main-cross-benchmark-epsilon-loss}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth,keepaspectratio]{../selected_figure_exports/fig10_crop_first2rows_first2cols.png}\\
+  \includegraphics[width=\columnwidth,keepaspectratio]{../selected_figure_exports/fig10_crop_first2rows_last2cols.png}\\
+  \includegraphics[width=\columnwidth,keepaspectratio]{../selected_figure_exports/fig10_crop_thirdrow_first2cols.png}
+  \caption{Burgers FNO \(L_2\) PGD attack variants.}
+  \label{fig:main-burgers-attack-variant-groups}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\normalsize
+\setlength{\tabcolsep}{1.1pt}
+\textbf{Burgers} (\(100\) attack steps, \(N=50\) samples)\\[0.15em]
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Budget & Step size & \(\mathcal L_1 \uparrow\) & \(\mathcal L_2 \uparrow\) &
+\(\boldsymbol{\mathcal L}_3 \uparrow\) & \(\mathcal L_3\) win \(\uparrow\) \\
+\midrule
+\(\varepsilon=0.125\) & 0.0125 & 0.1027 & 0.1021 & \textbf{0.1306}\(^{*}\) & 50/50 \\
+\(\varepsilon=0.25\) & 0.025 & 0.1008 & 0.0999 & \textbf{0.1664}\(^{*}\) & 50/50 \\
+\(\varepsilon=0.5\) & 0.05 & 0.0982 & 0.0963 & \textbf{0.2793}\(^{*}\) & 50/50 \\
+\(\varepsilon=0.75\) & 0.075 & 0.0976 & 0.0934 & \textbf{0.4612}\(^{*}\) & 50/50 \\
+\(\varepsilon=1.0\) & 0.1 & 0.0988 & 0.0913 & \textbf{0.7262}\(^{*}\) & 50/50 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.1em}
+\setlength{\tabcolsep}{0.6pt}
+\textbf{Darcy Flow} (\(100\) attack steps, \(N=20\) samples)\\[0.15em]
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Budget & Step size & \(\mathcal L_1 \uparrow\) & \(\mathcal L_2 \uparrow\) &
+\(\boldsymbol{\mathcal L}_3 \uparrow\) & \(\mathcal L_{\mathrm{phys}} \uparrow\) &
+\(\mathcal L_3\) win \(\uparrow\) \\
+\midrule
+$K=100$ & 5 & 0.0254 & 0.0256 & \textbf{0.0307}\(^{*}\) & 0.0245 & 14/20 \\
+$K=250$ & 5 & 0.0266 & 0.0270 & \textbf{0.0403}\(^{*}\) & 0.0245 & 17/20 \\
+$K=437$ & 5 & 0.0276 & 0.0284 & \textbf{0.0500}\(^{*}\) & 0.0244 & 17/20 \\
+$K=875$ & 5 & 0.0288 & 0.0309 & \textbf{0.0771}\(^{*}\) & 0.0245 & 20/20 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.1em}
+\setlength{\tabcolsep}{1.1pt}
+\textbf{Navier--Stokes} (\(50\) attack steps, \(N=20\) samples)\\[0.15em]
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Budget & Step size & \(\mathcal L_1 \uparrow\) & \(\mathcal L_2 \uparrow\) &
+\(\boldsymbol{\mathcal L}_3 \uparrow\) & \(\mathcal L_3\) win \(\uparrow\) \\
+\midrule
+\(\varepsilon=8\) & 0.25 & 64.979 & 59.567 & \textbf{126.832}\(^{*}\) & 20/20 \\
+\(\varepsilon=16\) & 0.5 & 68.913 & 61.469 & \textbf{186.683}\(^{*}\) & 20/20 \\
+\(\varepsilon=32\) & 1 & 118.588 & 69.505 & \textbf{276.760}\(^{*}\) & 20/20 \\
+\(\varepsilon=64\) & 2 & 190.810 & 88.554 & \textbf{324.618}\(^{*}\) & 18/20 \\
+\bottomrule
+\end{tabular}
+\caption{Attack Objective Comparison. \(\mathcal L_3\) is used as the
+true loss here, reported as the sample mean. Superscript \(^{*}\) marks a
+one-sided test against the second-highest objective (\(q\le 0.05\)).}
+\label{tab:attack_objective_true_l3_summary}
+\end{table}
+
+The main result is simple: to make the model output differ strongly from the
+solver output, the attack should optimize $\mathcal{L}^{\mathrm{full}}_3$
+directly. As shown in \tabref{tab:attack_objective_true_l3_summary}, attacks based on
+$\mathcal{L}_1$, $\mathcal{L}_2$, $\mathcal{L}_{\mathrm{phys}}$,
+$\mathcal{L}^{\mathrm{fixed}}_2$, $\mathcal{L}^{\mathrm{dict}}_{2,N}$, or
+$\mathcal{L}^{\mathrm{sg}}_3$ increase the true $\mathcal{L}_3$ more
+slowly and reach a smaller final $\mathcal{L}_3$. Therefore, we need to use the
+solver both in the forward pass and in the backward pass through
+$D\mathcal{G}$. See Figures~\ref{fig:main-burgers-attack-variant-groups}
+and~\ref{fig:main-ns-steepest-add-final} for attack visualizations.
+
+Our second finding concerns frequency content. In Burgers and Navier--Stokes,
+perturbations generated by full $\mathcal{L}_3$ concentrate on higher-frequency
+modes than those from other objectives. The local SVD diagnostic quantifies the
+mechanism: for Burgers FNO at \(\nu=10^{-2}\), after removing the DC mode, the
+\(q_{50}\) frequency of the rank-1 right singular vector is \(0.20\%\) of the
+Fourier grid for both \(D\mathcal{F}_\theta[x]\) and \(D\mathcal{G}[x]\), but
+\(15.7\%\) for \(D\mathcal{E}_\theta[x]\). For ranks 2--4, the corresponding
+\(q_{50}\) values remain at most \(0.39\%\) for \(D\mathcal{F}_\theta[x]\) and
+\(D\mathcal{G}[x]\), while \(D\mathcal{E}_\theta[x]\) ranges from \(45.4\%\) to
+\(69.3\%\).
+Thus, to maximize the model--solver difference, the perturbation must move
+along this sharper high-frequency direction.
+
+\setcounter{figure}{2}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth,keepaspectratio]{../selected_figure_exports/fig26_composite_ns_loss3_with_loss_curve_spectrum.png}
+  \caption{Loss 3 creates the largest model-solver discrepancy for 2D
+  Navier--Stokes. Bottom: all-sample mean true-loss curve and perturbation
+  spectrum.}
+  \label{fig:main-ns-steepest-add-final}
+\end{figure*}
+
+\subsection{Projected Attack Optimization Methods}
+\label{subsec:exp-projected-optimization}
+
+The optimizer ablations give a surprising pattern: for Burgers and Darcy Flow,
+replace-style updates move to the perturbation boundary on the first
+replacement update and then attain high final true \(\mathcal L_3\). In the
+saved Burgers diagnostic, steepest replace ends at \(\mathcal L_3=7.069\),
+while steepest add ends at \(6.339\), a \(10.3\%\) gap relative to replace. In
+Darcy Flow, binary replace ends at \(0.05285\), while binary add ends at
+\(0.04809\), a \(9.0\%\) gap relative to replace. Mechanism diagnostics suggest
+two reasons: replace reaches the constraint boundary immediately instead of
+slowly moving outward, and the Burgers/Darcy loss landscapes contain broad
+connected high-loss regions, so a coarse boundary move can already enter such a
+region.
+Recurrent Navier--Stokes is different: add-style optimization reaches a much
+larger \(\mathcal L_3\) than replace, indicating a narrower and sharper
+high-loss region that is hard to hit without more refined iterative
+optimization.
+
+\subsection{Adversarial Training}
+\label{subsec:exp-adversarial-training}
+
+Because different training methods have different per-epoch time costs, we
+compare all models at a similar total wall-clock training time. We measure both
+generalization to shifted datasets and robustness under adversarial attack.
+These broad generalization datasets are generated by shifting the input
+distribution: we vary GRF kernel families, correlation lengths, and
+spectral-decay parameters, include non-GRF function families, and change
+amplitude ranges or thresholding transforms.
+For Burgers and Darcy Flow, we conduct detailed and complete experimental
+comparisons across various training methods.
+
+\paragraph{Generalization.}
+On Burgers (Figure~\ref{fig:main-burgers-generalization-top-row}), Loss 3 gives
+the lowest generalization relative \(L_2\) on \(48\) of the \(50\) shifted datasets.
+Random solver is the second-best method and performs very well early in
+wall-clock time, but after about four hours it shows clear overfitting: its
+generalization loss starts to increase. We infer that the main reason is that
+its \(\delta\) is manually prescribed in advance from a fixed statistical
+distribution, so it cannot use adversarial attack against the current model to
+generate perturbations along the model's current weak directions. As shown in
+Figure~\ref{fig:main-burgers-delta-frequency-line-plot}, \(\mathcal L_3\)
+adversarial training generates perturbations that clearly become
+higher-frequency as training time increases, while \(\mathcal L_1\) and
+\(\mathcal L_2\) training do not show this obvious high-frequency shift. Darcy
+Flow (Figure~\ref{fig:main-darcy-generalization-top-row}) shows the same
+pattern, with Loss 3 giving the lowest
+generalization relative \(L_2\) on \(47\) of the \(50\) shifted datasets. For
+both Burgers and Darcy Flow, the
+\(\mathcal L_3\)-trained model is not the best model on the original train/test
+datasets. This suggests a possible trade-off between in-distribution and
+out-of-distribution performance: a model that performs better on shifted
+datasets can perform worse on the original train/test distribution.
+
+\setcounter{figure}{3}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth,keepaspectratio]{../selected_figure_exports/fig38_crop_top1row.png}
+  \caption{Burgers selected shifted-dataset generalization loss curves of all
+  training methods. (Random clean is omitted here because it performs poorly
+  and appears outside the plotted loss scale.)}
+  \label{fig:main-burgers-generalization-top-row}
+  \includegraphics[width=\textwidth,keepaspectratio]{../selected_figure_exports/fig47_crop_top1row.png}
+  \caption{Darcy Flow selected shifted-dataset generalization loss curves of all training methods.}
+  \label{fig:main-darcy-generalization-top-row}
+\end{figure*}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth,keepaspectratio]{../selected_figure_exports/fig41_crop_line_plot.png}
+  \caption{Increasingly higher-frequency perturbation in Burgers Loss-3
+  adversarial training.}
+  \label{fig:main-burgers-delta-frequency-line-plot}
+\end{figure}
+
+For 2D Navier--Stokes, we do not compare different training methods; we only
+run \(\mathcal L_3\) adversarial training, with six rounds in total. The main
+reason is that Navier--Stokes adversarial training requires very long
+wall-clock time and very large GPU memory, and we do not have sufficient
+computational resources. After training, 364 out of 402 datasets show lower
+MSE.
+
+\paragraph{Robustness.}
+\begin{table}[t]
+\centering
+\normalsize
+\setlength{\tabcolsep}{5pt}
+\textbf{Burgers}\\[0.2em]
+\setlength{\tabcolsep}{1.4pt}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Metric & Base & \(\mathcal L_1\) & \(\mathcal L_2\) &
+\(\mathcal L_3\) & \shortstack{Rand.\\clean} & \shortstack{Rand.\\solver} \\
+\midrule
+Attack \(\Delta L\downarrow\) &
+0.0092 & 0.0058 & 0.0056 & \textbf{0.0031}\(^{*}\) & 0.0428 & 0.0080 \\
+\(J\)-error \(\downarrow\) &
+0.4630 & 0.3159 & 0.3433 & \textbf{0.1119}\(^{*}\) & 4.7850 & 0.3712 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.05em}
+\textbf{Darcy Flow}\\[0.2em]
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Metric & Base & \(\mathcal L_1\) & \(\mathcal L_2\) &
+\(\mathcal L_3\) \\
+\midrule
+Attack \(\Delta L\downarrow\) &
+9.681e-6 & 3.927e-6 & 3.565e-6 & \textbf{1.699e-6}\(^{*}\) \\
+\(J\)-error \(\downarrow\) &
+9.293e-5 & 9.922e-5 & 9.225e-5 & \textbf{6.157e-5}\(^{*}\) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.05em}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Metric & \(\mathcal L_{\mathrm{phys}}\) &
+\shortstack{Rand.\\clean} & \shortstack{Rand.\\solver} \\
+\midrule
+Attack \(\Delta L\downarrow\) & 3.974e-6 & 3.691e-6 & 4.824e-6 \\
+\(J\)-error \(\downarrow\) & 1.034e-4 & 9.112e-5 & 1.236e-4 \\
+\bottomrule
+\end{tabular}
+\caption{Adversarial trained models robustness. Values are sample means.
+Attack loss uses \(50\) shifted datasets with \(50\)
+samples in each dataset.  The Jacobian-error metric uses \(25\) selected
+data points.  Superscript \(^{*}\) marks a one-sided test against the
+second-lowest value (\(q\le 0.05\)).}
+\label{tab:adversarial_training_robustness_summary}
+\end{table}
+
+\tabref{tab:adversarial_training_robustness_summary} reports finite-budget
+attack-loss increase and the Jacobian-error norm
+\(\|J_{\mathcal E}^{\top}e_\theta\|_2\). Loss 3 is strongest on both Burgers
+and Darcy Flow for attack loss and Jacobian-error robustness. We do not report
+the Jacobian spectral norm because it correlates less with finite-budget
+attack-loss increase and perturbation directions, especially at small
+\(\varepsilon\).
+
+\section{Conclusion}
+
+This paper studies the generalizability and robustness of neural operators from
+a solver-integrated perspective. We define both quantities through
+model--solver discrepancy under distribution shift and adversarial
+perturbation, show why model-only robustness indicators are insufficient for PDE
+operator learning. We then propose a solver-integrated adversarial attack whose
+forward loss and backward gradient both use the PDE solver, so the attack
+directly maximizes the relevant model--solver error. From this attack, we derive
+an adversarial-training procedure that generates solver-relabelled adversarial
+batches online. Experiments on Burgers, Darcy Flow, and Navier--Stokes
+settings show that this solver-integrated adversarial training clearly improves
+both generalizability and robustness over non-solver-integrated objectives,
+without manually selecting special shifted training datasets.
+More broadly, the framework is not limited to operator learning: any
+neural-network system with access to a ground-truth oracle can adopt this
+formulation for adversarial attacks and adversarial training.
+
+The main limitation is computational cost. Solver-integrated attacks and
+training require expensive solver forward passes and gradients through the
+solver. For time-dependent PDEs, the solver backward pass must keep the
+intermediate states and stage variables from many time steps in GPU memory so
+that gradients can be propagated back through the entire rollout.
+This creates a large memory footprint and a long wall-clock time cost, especially for
+NS.
+\bibliography{references}
+
+\end{document}
+
