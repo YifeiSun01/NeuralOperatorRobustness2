@@ -1,0 +1,710 @@
+PWD D:\research\UIUC research\paper\main_iclr_submission_version
+INPUT C:\Users\Yifei Sun\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT main_iclr_submission.tex
+OUTPUT main_iclr_submission.log
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
+INPUT .\iclr2027_conference.sty
+INPUT iclr2027_conference.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\eso-pic\eso-pic.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\eso-pic\eso-pic.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\keyval.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\keyval.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\xcolor\xcolor.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\xcolor\xcolor.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\xcolor\xcolor.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\mathcolor.ltx
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\mathcolor.ltx
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\mathcolor.ltx
+INPUT .\fancyhdr.sty
+INPUT fancyhdr.sty
+INPUT .\natbib.sty
+INPUT natbib.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\helvetic\phvb.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\times.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\times.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphics.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphics.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\trig.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics\trig.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\booktabs\booktabs.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\booktabs\booktabs.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\longtable.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\longtable.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\array.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\array.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\tabularx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\tabularx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsmath.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsmath.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsopn.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amstext.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amstext.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsgen.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsgen.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsbsy.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsbsy.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsopn.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\amssymb.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\amssymb.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\amsfonts.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\amsfonts.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\algorithms\algorithm.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\algorithms\algorithm.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\float\float.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\float\float.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\ifthen.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\ifthen.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\algorithms\algorithmic.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\algorithms\algorithmic.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\multicol.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\tools\multicol.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\placeins\placeins.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\placeins\placeins.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\capt-of\capt-of.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\capt-of\capt-of.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\url\url.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\url\url.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\iftex\iftex.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\iftex\iftex.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\kvsetkeys\kvsetkeys.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\kvsetkeys\kvsetkeys.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\kvdefinekeys\kvdefinekeys.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\kvdefinekeys\kvdefinekeys.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\pdfescape\pdfescape.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\pdfescape\pdfescape.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hycolor\hycolor.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hycolor\hycolor.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\letltxmacro\letltxmacro.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\letltxmacro\letltxmacro.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\auxhook\auxhook.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\auxhook\auxhook.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\refcount\refcount.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\refcount\refcount.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\gettitlestring\gettitlestring.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\gettitlestring\gettitlestring.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\kvoptions\kvoptions.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\kvoptions\kvoptions.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\intcalc\intcalc.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\intcalc\intcalc.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\puenc.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\puenc.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\puenc.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\bitset\bitset.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\bitset\bitset.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\bigintcalc\bigintcalc.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\bigintcalc\bigintcalc.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\atbegshi\atbegshi.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\atbegshi-ltx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\atbegshi-ltx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hpdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hpdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hpdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\atveryend\atveryend.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\atveryend-ltx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\base\atveryend-ltx.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\rerunfilecheck\rerunfilecheck.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\rerunfilecheck\rerunfilecheck.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\uniquecounter\uniquecounter.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\generic\uniquecounter\uniquecounter.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
+INPUT .\main_iclr_submission.aux
+INPUT .\main_iclr_submission.aux
+INPUT main_iclr_submission.aux
+OUTPUT main_iclr_submission.aux
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
+INPUT .\main_iclr_submission.out
+INPUT .\main_iclr_submission.out
+INPUT main_iclr_submission.out
+INPUT main_iclr_submission.out
+OUTPUT main_iclr_submission.pdf
+INPUT .\main_iclr_submission.out
+INPUT .\main_iclr_submission.out
+OUTPUT main_iclr_submission.out
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmrc7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmrc7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\helvetic\phvb.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\helvetic\phvb8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\base\8r.enc
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmr7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmrc7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmb7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmrc7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ts1ptm.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ts1ptm.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ts1ptm.fd
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8c.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmr8c.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmrc7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmrc7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmri7t.tfm
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated_1p3x_mathtext.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig41_crop_line_plot.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT .\selected_figure_exports\fig10_crop_first2rows_last2cols.png
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx5.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmib10.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmmib7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmmib5.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbsy10.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy7.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy5.tfm
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT .\selected_figure_exports\fig10_crop_thirdrow_first2cols.png
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmri7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmri8r.tfm
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig26_composite_ns_loss3_with_loss_curve_spectrum.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig38_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\selected_figure_exports\fig47_crop_top1row.png
+INPUT .\main_iclr_submission.bbl
+INPUT .\main_iclr_submission.bbl
+INPUT main_iclr_submission.bbl
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr7t.tfm
+INPUT .\appendix_iclr.tex
+INPUT .\appendix_iclr.tex
+INPUT .\appendix_iclr.tex
+INPUT .\appendix_iclr.tex
+INPUT appendix_iclr.tex
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb7t.tfm
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmb7t.vf
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
+INPUT .\figures\backpropagation_targets\compact\training_vs_attack_gradients.pdf
+INPUT .\figures\backpropagation_targets\compact\training_vs_attack_gradients.pdf
+INPUT .\figures\backpropagation_targets\compact\training_vs_attack_gradients.pdf
+INPUT .\figures\backpropagation_targets\compact\training_vs_attack_gradients.pdf
+INPUT .\figures\backpropagation_targets\compact\training_vs_attack_gradients.pdf
+INPUT .\figures\backpropagation_targets\compact\training_vs_attack_gradients.pdf
+INPUT .\figures\pde_solver_supervision\compact\pde_solver_training_attack.pdf
+INPUT .\figures\pde_solver_supervision\compact\pde_solver_training_attack.pdf
+INPUT .\figures\pde_solver_supervision\compact\pde_solver_training_attack.pdf
+INPUT .\figures\pde_solver_supervision\compact\pde_solver_training_attack.pdf
+INPUT .\figures\pde_solver_supervision\compact\pde_solver_training_attack.pdf
+INPUT .\figures\pde_solver_supervision\compact\pde_solver_training_attack.pdf
+INPUT .\figures\attack_loss_variants\non-compact\attack_loss_variants_twocol.pdf
+INPUT .\figures\attack_loss_variants\non-compact\attack_loss_variants_twocol.pdf
+INPUT .\figures\attack_loss_variants\non-compact\attack_loss_variants_twocol.pdf
+INPUT .\figures\attack_loss_variants\non-compact\attack_loss_variants_twocol.pdf
+INPUT .\figures\attack_loss_variants\non-compact\attack_loss_variants_twocol.pdf
+INPUT .\figures\attack_loss_variants\non-compact\attack_loss_variants_twocol.pdf
+INPUT .\figures\navier_stokes_recurrent\non-compact\ns_recurrent_adversarial_attack.pdf
+INPUT .\figures\navier_stokes_recurrent\non-compact\ns_recurrent_adversarial_attack.pdf
+INPUT .\figures\navier_stokes_recurrent\non-compact\ns_recurrent_adversarial_attack.pdf
+INPUT .\figures\navier_stokes_recurrent\non-compact\ns_recurrent_adversarial_attack.pdf
+INPUT .\figures\navier_stokes_recurrent\non-compact\ns_recurrent_adversarial_attack.pdf
+INPUT .\figures\navier_stokes_recurrent\non-compact\ns_recurrent_adversarial_attack.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\adversarial_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\adversarial_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\adversarial_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\adversarial_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\adversarial_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\adversarial_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_clean_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_clean_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_clean_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_clean_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_clean_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_clean_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_solver_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_solver_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_solver_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_solver_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_solver_training_pipeline.pdf
+INPUT .\figures\adversarial_training_pipeline\compact\random_solver_training_pipeline.pdf
+INPUT .\figures\error_vector_geometry\compact\error_difference_vs_final_norm.pdf
+INPUT .\figures\error_vector_geometry\compact\error_difference_vs_final_norm.pdf
+INPUT .\figures\error_vector_geometry\compact\error_difference_vs_final_norm.pdf
+INPUT .\figures\error_vector_geometry\compact\error_difference_vs_final_norm.pdf
+INPUT .\figures\error_vector_geometry\compact\error_difference_vs_final_norm.pdf
+INPUT .\figures\error_vector_geometry\compact\error_difference_vs_final_norm.pdf
+INPUT .\figures\loss_landscape\non-compact\loss_landscape.pdf
+INPUT .\figures\loss_landscape\non-compact\loss_landscape.pdf
+INPUT .\figures\loss_landscape\non-compact\loss_landscape.pdf
+INPUT .\figures\loss_landscape\non-compact\loss_landscape.pdf
+INPUT .\figures\loss_landscape\non-compact\loss_landscape.pdf
+INPUT .\figures\loss_landscape\non-compact\loss_landscape.pdf
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide13_burgers_fno_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\final_prediction_delta\slide15_burgers_fno_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\slide18_burgers_fno_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\fno\loss_progression\burgers_fno_linf_eps0p3_alpha0p03_loss_progression_mean_std_linear.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide19_burgers_final_state_comparison_steepest_add.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide20_burgers_deeponet_l2_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\final_prediction_delta\slide22_burgers_deeponet_linf_pgd_loss_variants_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide17_burgers_deeponet_l2_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\deeponet\loss_progression\slide25_burgers_deeponet_linf_loss_progression_mean_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_loss3_q_mean_boundary_markers_no_std.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_boundary_ratio_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\optimizer_diagnostics\burgers_mean_delta_angle_alpha_epsilon_grid.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\burgers\svd_diagnostics\burgers_local_svd_top8_right_singular_vectors_sample47_fno_deeponet_solver.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\final_prediction_delta\slide27_darcy_flow_multi_key_loss_comparison_final_frame.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\darcy_flow\loss_progression\slide28_darcy_flow_optimizer_method_comparison_true_loss3.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide30_ns2d_recurrent_attack_heatmaps_loss_progression.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\figure24_ns2d_final_state_steepest_add_eps32_alpha10_loss_switching.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide35_ns2d_explicit_warp_diagnostic_loss_warp_before_after.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide36_ns2d_final_state_comparison_warp_methods_eps32_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\periodic_boundary_evidence\slide37_ns2d_attack_progress_gradient_hessian_diagnostics.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\ns2d_auto_field_comparison_alpha50_alpha2p5_right_columns.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide40_ns2d_attack_vs_original_grid_alpha50.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide41_ns2d_attack_vs_original_grid_alpha10.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\final_prediction_delta\slide43_ns2d_external_forcing_attack_perturbations.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\navier_stokes\loss_progression\slide42_ns2d_attack_loss_trace_comparison.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\epsilon_sweeps\epsilon_vs_loss_delta_best_all_loglog_powerlaw_annotated.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\attack\cross_benchmark\00_three_system_optimizer_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide48_burgers_adversarial_training_selected_time_relative_l2_no_random_clean.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide49_burgers_adversarial_training_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\generalization_curves\slide50_burgers_adversarial_training_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide51_burgers_adversarial_training_attack_loss_gain_1000epochs.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide52_burgers_adversarial_training_delta_frequency_content.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row1.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row2.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row3.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row4.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row5.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\training_diagnostics\slide53_burgers_training_delta_sample_grid_rearranged_row6.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\burgers\epsilon_attack_sweeps\burgers_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\training_diagnostics\slide57_darcy_flow_binary_loss3_attack_sample_grid.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide54_darcy_flow_six_method_relative_l2_mean_curves.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide55_darcy_flow_generalization_relative_l2_datasets_01_25.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\generalization_curves\slide56_darcy_flow_generalization_relative_l2_datasets_26_50.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\darcy_flow\epsilon_attack_sweeps\darcy_flow_epsilon_vs_loss_increase_best_envelope_loglog.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT .\figures\adversarial_attack_appendix\training\navier_stokes\generalization\slide59_ns2d_fno2d_generalizability_delta_rmse_bar_chart.png
+INPUT main_iclr_submission.aux
+INPUT .\main_iclr_submission.out
+INPUT .\main_iclr_submission.out
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbsy10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbsy10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi5.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi5.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr5.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr5.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy5.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy5.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt12.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm7.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\helvetic\uhvb8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\helvetic\uhvb8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmb8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmb8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmr8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmr8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmri8a.pfb
+INPUT C:\Users\Yifei Sun\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmri8a.pfb

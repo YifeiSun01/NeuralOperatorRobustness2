@@ -1,0 +1,234 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Adesoji \& Chen(2022)Adesoji and Chen]{adesoji2022evaluating}
+Abolaji~D. Adesoji and Pin-Yu Chen.
+\newblock Evaluating the adversarial robustness for fourier neural operators.
+\newblock In \emph{ICLR 2022 Workshop on Socially Responsible Machine
+  Learning}, 2022.
+
+\bibitem[Andriushchenko et~al.(2020)Andriushchenko, Croce, Flammarion, and
+  Hein]{andriushchenko2019square}
+Maksym Andriushchenko, Francesco Croce, Nicolas Flammarion, and Matthias Hein.
+\newblock Square attack: A query-efficient black-box adversarial attack via
+  random search.
+\newblock In \emph{Computer Vision -- ECCV 2020}, volume 12368 of \emph{Lecture
+  Notes in Computer Science}, pp.\  484--501. Springer, 2020.
+\newblock \doi{10.1007/978-3-030-58592-1_29}.
+
+\bibitem[Bousquet \& Elisseeff(2002)Bousquet and
+  Elisseeff]{bousquet2002stability}
+Olivier Bousquet and Andr{\'e} Elisseeff.
+\newblock Stability and generalization.
+\newblock \emph{Journal of Machine Learning Research}, 2:\penalty0 499--526,
+  2002.
+\newblock URL \url{https://www.jmlr.org/papers/v2/bousquet02a.html}.
+
+\bibitem[Brendel et~al.(2018)Brendel, Rauber, and Bethge]{brendel2017decision}
+Wieland Brendel, Jonas Rauber, and Matthias Bethge.
+\newblock Decision-based adversarial attacks: Reliable attacks against
+  black-box machine learning models.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+\newblock URL \url{https://arxiv.org/abs/1712.04248}.
+
+\bibitem[Brown et~al.(2017)Brown, Man{\'e}, Roy, Abadi, and
+  Gilmer]{brown2017adversarialpatch}
+Tom~B. Brown, Dandelion Man{\'e}, Aurko Roy, Martin Abadi, and Justin Gilmer.
+\newblock Adversarial patch.
+\newblock In \emph{NIPS 2017 Workshop on Machine Learning and Computer
+  Security}, 2017.
+
+\bibitem[Carlini \& Wagner(2017)Carlini and Wagner]{carlini2017towards}
+Nicholas Carlini and David Wagner.
+\newblock Towards evaluating the robustness of neural networks.
+\newblock In \emph{IEEE Symposium on Security and Privacy}, pp.\  39--57, 2017.
+\newblock \doi{10.1109/SP.2017.49}.
+
+\bibitem[Chen et~al.(2020)Chen, Jordan, and Wainwright]{chen2019hopskipjump}
+Jianbo Chen, Michael~I. Jordan, and Martin~J. Wainwright.
+\newblock {HopSkipJumpAttack}: A query-efficient decision-based attack.
+\newblock In \emph{IEEE Symposium on Security and Privacy}, pp.\  1277--1294,
+  2020.
+\newblock \doi{10.1109/SP40000.2020.00045}.
+
+\bibitem[Ciss{\'e} et~al.(2017)Ciss{\'e}, Bojanowski, Grave, Dauphin, and
+  Usunier]{cisse2017parseval}
+Moustapha Ciss{\'e}, Piotr Bojanowski, Edouard Grave, Yann Dauphin, and Nicolas
+  Usunier.
+\newblock Parseval networks: Improving robustness to adversarial examples.
+\newblock In \emph{Proceedings of the 34th International Conference on Machine
+  Learning}, volume~70 of \emph{Proceedings of Machine Learning Research}, pp.\
+   854--863. PMLR, 2017.
+\newblock URL \url{https://proceedings.mlr.press/v70/cisse17a.html}.
+
+\bibitem[Croce \& Hein(2020)Croce and Hein]{croce2020autoattack}
+Francesco Croce and Matthias Hein.
+\newblock Reliable evaluation of adversarial robustness with an ensemble of
+  diverse parameter-free attacks.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning}, volume 119 of \emph{Proceedings of Machine Learning Research},
+  pp.\  2206--2216. PMLR, 2020.
+\newblock URL \url{https://proceedings.mlr.press/v119/croce20b.html}.
+
+\bibitem[Enyeart \& Lin(2024)Enyeart and Lin]{enyeart2024adversarial}
+Dustin Enyeart and Guang Lin.
+\newblock Adversarial autoencoders in operator learning.
+\newblock \emph{arXiv preprint arXiv:2412.07811}, 2024.
+
+\bibitem[Goodfellow et~al.(2015)Goodfellow, Shlens, and
+  Szegedy]{goodfellow2015explaining}
+Ian~J. Goodfellow, Jonathon Shlens, and Christian Szegedy.
+\newblock Explaining and harnessing adversarial examples.
+\newblock In \emph{International Conference on Learning Representations}, 2015.
+
+\bibitem[Huang et~al.(2026)Huang, Ma, Wang, and Xiang]{huang2026stablepdenet}
+Chutian Huang, Chang Ma, Kaibo Wang, and Yang Xiang.
+\newblock {StablePDENet}: Enhancing stability of operator learning for solving
+  differential equations.
+\newblock \emph{arXiv preprint arXiv:2601.06472}, 2026.
+
+\bibitem[Li et~al.(2021)Li, Kovachki, Azizzadenesheli, Liu, Bhattacharya,
+  Stuart, and Anandkumar]{li2021fourier}
+Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Kaushik
+  Bhattacharya, Andrew Stuart, and Anima Anandkumar.
+\newblock Fourier neural operator for parametric partial differential
+  equations.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+\newblock URL \url{https://openreview.net/forum?id=c8P9NQVtmnO}.
+
+\bibitem[Liu et~al.(2023)Liu, Park, Hoang, Hasson, and
+  Huan]{liu2022forecastingattacks}
+Linbo Liu, Youngsuk Park, Trong~Nghia Hoang, Hilaf Hasson, and Jun Huan.
+\newblock Robust multivariate time-series forecasting: Adversarial attacks and
+  defense mechanisms.
+\newblock In \emph{International Conference on Learning Representations}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2207.09572}.
+
+\bibitem[Lu et~al.(2021)Lu, Jin, Pang, Zhang, and Karniadakis]{lu2021deeponet}
+Lu~Lu, Pengzhan Jin, Guofei Pang, Zhongqiang Zhang, and George~Em Karniadakis.
+\newblock Learning nonlinear operators via {DeepONet} based on the universal
+  approximation theorem of operators.
+\newblock \emph{Nature Machine Intelligence}, 3\penalty0 (3):\penalty0
+  218--229, 2021.
+\newblock \doi{10.1038/s42256-021-00302-5}.
+
+\bibitem[Madry et~al.(2018)Madry, Makelov, Schmidt, Tsipras, and
+  Vladu]{madry2018towards}
+Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and
+  Adrian Vladu.
+\newblock Towards deep learning models resistant to adversarial attacks.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+\newblock URL \url{https://arxiv.org/abs/1706.06083}.
+
+\bibitem[Mode \& Hoque(2020)Mode and Hoque]{mode2020mtsregression}
+Gautam~Raj Mode and Khaza~Anuarul Hoque.
+\newblock Adversarial examples in deep learning for multivariate time series
+  regression.
+\newblock In \emph{IEEE Applied Imagery Pattern Recognition Workshop}, pp.\
+  1--10, 2020.
+\newblock \doi{10.1109/AIPR50011.2020.9425190}.
+
+\bibitem[Moosavi-Dezfooli et~al.(2016)Moosavi-Dezfooli, Fawzi, and
+  Frossard]{moosavi2016deepfool}
+Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, and Pascal Frossard.
+\newblock {DeepFool}: A simple and accurate method to fool deep neural
+  networks.
+\newblock In \emph{IEEE Conference on Computer Vision and Pattern Recognition},
+  pp.\  2574--2582, 2016.
+\newblock \doi{10.1109/CVPR.2016.282}.
+
+\bibitem[Nguyen \& Raff(2019)Nguyen and Raff]{nguyen2018regression}
+Andre~T. Nguyen and Edward Raff.
+\newblock Adversarial attacks, regression, and numerical stability
+  regularization.
+\newblock In \emph{AAAI-19 Workshop on Engineering Dependable and Secure
+  Machine Learning Systems}, 2019.
+
+\bibitem[Oommen et~al.(2025)Oommen, Khodakarami, Bora, Wang, and
+  Karniadakis]{oommen2025turbulent}
+Vivek Oommen, Siavash Khodakarami, Aniruddha Bora, Zhicheng Wang, and George~Em
+  Karniadakis.
+\newblock Learning turbulent flows with generative models: Super-resolution,
+  forecasting, and sparse flow reconstruction.
+\newblock \emph{arXiv preprint arXiv:2509.08752}, 2025.
+
+\bibitem[Ouyang et~al.(2025)Ouyang, Zhu, Xiong, Liu, and Lu]{ouyang2025rams}
+Weihang Ouyang, Min Zhu, Wei Xiong, Si-Wei Liu, and Lu~Lu.
+\newblock {RAMS}: Residual-based adversarial-gradient moving sample method for
+  scientific machine learning in solving partial differential equations.
+\newblock \emph{arXiv preprint arXiv:2509.01234}, 2025.
+
+\bibitem[Papernot et~al.(2016)Papernot, McDaniel, Jha, Fredrikson, Celik, and
+  Swami]{papernot2016limitations}
+Nicolas Papernot, Patrick McDaniel, Somesh Jha, Matt Fredrikson, Z.~Berkay
+  Celik, and Ananthram Swami.
+\newblock The limitations of deep learning in adversarial settings.
+\newblock In \emph{IEEE European Symposium on Security and Privacy}, pp.\
+  372--387, 2016.
+\newblock \doi{10.1109/EuroSP.2016.36}.
+
+\bibitem[Rahman et~al.(2022)Rahman, Florez, Anandkumar, Ross, and
+  Azizzadenesheli]{rahman2022gano}
+Md~Ashiqur Rahman, Manuel~A. Florez, Anima Anandkumar, Zachary~E. Ross, and
+  Kamyar Azizzadenesheli.
+\newblock Generative adversarial neural operators.
+\newblock \emph{Transactions on Machine Learning Research}, 2022.
+\newblock URL \url{https://openreview.net/forum?id=fg2ZFmXFO3}.
+
+\bibitem[Ribeiro et~al.(2023)Ribeiro, Zachariah, Bach, and
+  Sch{\"o}n]{ribeiro2023linearregression}
+Antonio~H. Ribeiro, Dave Zachariah, Francis Bach, and Thomas~B. Sch{\"o}n.
+\newblock Regularization properties of adversarially-trained linear regression.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~36, pp.\  23658--23670, 2023.
+\newblock \doi{10.52202/075280-1027}.
+
+\bibitem[Roy et~al.(2026{\natexlab{a}})Roy, Chakraborty, and
+  Alam]{roy2026beyond}
+Samrendra Roy, Souvik Chakraborty, and Syed~Bahauddin Alam.
+\newblock Beyond uniform sampling: Synergistic active learning and input
+  denoising for robust neural operators.
+\newblock \emph{arXiv preprint arXiv:2604.13316}, 2026{\natexlab{a}}.
+
+\bibitem[Roy et~al.(2026{\natexlab{b}})Roy, Kobayashi, Chakraborty,
+  {Rizwan-uddin}, and Alam]{roy2026vulnerabilities}
+Samrendra Roy, Kazuma Kobayashi, Souvik Chakraborty, {Rizwan-uddin}, and
+  Syed~Bahauddin Alam.
+\newblock Adversarial vulnerabilities in neural operator digital twins:
+  Gradient-free attacks on nuclear thermal-hydraulic surrogates.
+\newblock \emph{arXiv preprint arXiv:2603.22525}, 2026{\natexlab{b}}.
+
+\bibitem[Shi et~al.(2026)Shi, Li, Guo, Wu, and Zhao]{shi2025wbar}
+Shengzhu Shi, Yao Li, Zhichang Guo, Boying Wu, and Yang Zhao.
+\newblock {PINNs} failure region localization and refinement through white-box
+  adversarial attack.
+\newblock \emph{Neurocomputing}, 664:\penalty0 132055, 2026.
+\newblock \doi{10.1016/j.neucom.2025.132055}.
+
+\bibitem[Su et~al.(2019)Su, Vargas, and Sakurai]{su2017onepixel}
+Jiawei Su, Danilo~Vasconcellos Vargas, and Kouichi Sakurai.
+\newblock One pixel attack for fooling deep neural networks.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 23\penalty0
+  (5):\penalty0 828--841, 2019.
+\newblock \doi{10.1109/TEVC.2019.2890858}.
+
+\bibitem[Tong et~al.(2018)Tong, Yu, Alfeld, and
+  Vorobeychik]{tong2018adversarialregression}
+Liang Tong, Sixie Yu, Scott Alfeld, and Yevgeniy Vorobeychik.
+\newblock Adversarial regression with multiple learners.
+\newblock In \emph{Proceedings of the 35th International Conference on Machine
+  Learning}, volume~80 of \emph{Proceedings of Machine Learning Research}, pp.\
+   4946--4954. PMLR, 2018.
+\newblock URL \url{https://proceedings.mlr.press/v80/tong18a.html}.
+
+\bibitem[Xu \& Mannor(2012)Xu and Mannor]{xu2012robustness}
+Huan Xu and Shie Mannor.
+\newblock Robustness and generalization.
+\newblock \emph{Machine Learning}, 86\penalty0 (3):\penalty0 391--423, 2012.
+\newblock \doi{10.1007/s10994-011-5268-1}.
+
+\end{thebibliography}
