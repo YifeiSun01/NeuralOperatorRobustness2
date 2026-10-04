@@ -37,9 +37,9 @@
 
 所以：
 
-[
-oxed{	ext{fidelity 是“大概念”，progress 只是其中一种可能的 fidelity。}}
-]
+\[
+\boxed{\text{fidelity 是“大概念”，progress 只是其中一种可能的 fidelity。}}
+\]
 
 ---
 
@@ -47,23 +47,23 @@
 
 在 hyperparameter optimization 里，真正想优化的是：
 
-[
-x^*=argmin_x L(x,T),
-]
+\[
+x^*=\arg\min_x L(x,T),
+\]
 
 其中：
 
-- (x)：hyperparameter configuration
-- (T)：完整训练预算
-- (L(x,T))：训练到最终预算后的 validation loss
+- \(x\)：hyperparameter configuration
+- \(T\)：完整训练预算
+- \(L(x,T)\)：训练到最终预算后的 validation loss
 
 但完整训练很贵。
 
 所以可以先看：
 
-[
-L(x,t),qquad t<T.
-]
+\[
+L(x,t),\qquad t<T.
+\]
 
 例如：
 
@@ -74,23 +74,23 @@ L(x,t),qquad t<T.
 
 如果低 progress 的性能和最终性能有一定相关性，就可以把训练 progress 当成一个 fidelity 变量：
 
-[
-sin[0,1].
-]
+\[
+s\in[0,1].
+\]
 
 例如：
 
-[
+\[
 g(x,0.1)
-]
+\]
 
-表示 configuration (x) 在 10% 训练预算下的评估，
+表示 configuration \(x\) 在 10% 训练预算下的评估，
 
 而：
 
-[
+\[
 g(x,1)
-]
+\]
 
 表示完整训练后的 target evaluation。
 
@@ -100,15 +100,15 @@ g(x,1)
 
 ---
 
-# 3. ((x,0.1)	o(x,0.4)) 到底是什么意思
+# 3. \((x,0.1)\to(x,0.4)\) 到底是什么意思
 
 这里当时有一个关键澄清。
 
 如果 fidelity 是训练 progress：
 
-[
-s=0.1	o0.4,
-]
+\[
+s=0.1\to0.4,
+\]
 
 它不是：
 
@@ -120,9 +120,9 @@ s=0.1	o0.4,
 
 所以新增计算量是：
 
-[
-40%-10%=30%.
-]
+\[
+40\%-10\%=30\%.
+\]
 
 如果模型 checkpoint 已经保存，那么：
 
@@ -161,9 +161,9 @@ s=0.1	o0.4,
 
 因此：
 
-[
-(x,0.1)	o(x,0.4)
-]
+\[
+(x,0.1)\to(x,0.4)
+\]
 
 在这个场景里几乎就是：
 
@@ -177,9 +177,9 @@ s=0.1	o0.4,
 
 如果 fidelity 变量本身就是：
 
-[
-s=	ext{training progress},
-]
+\[
+s=\text{training progress},
+\]
 
 而低 fidelity evaluation 可以 warm-start 到高 fidelity evaluation，
 
@@ -189,17 +189,17 @@ s=	ext{training progress},
 
 因为：
 
-[
-(x,s_1)	o(x,s_2)
-]
+\[
+(x,s_1)\to(x,s_2)
+\]
 
-不需要重新算 (s_2) 的全部成本，
+不需要重新算 \(s_2\) 的全部成本，
 
 只需要增加：
 
-[
+\[
 s_2-s_1
-]
+\]
 
 这一部分计算。
 
@@ -243,15 +243,15 @@ CFD 里：
 
 所以 coarse→fine：
 
-[
-	ext{不是同一条 computation trajectory 上的 resume}
-]
+\[
+\text{不是同一条 computation trajectory 上的 resume}
+\]
 
 而是：
 
-[
-	ext{不同 approximation level 之间的切换}.
-]
+\[
+\text{不同 approximation level 之间的切换}.
+\]
 
 因此我们最终明确区分：
 
@@ -285,9 +285,9 @@ CFD 里：
 
 所以：
 
-[
-oxed{	ext{progress 可以是 fidelity，但 fidelity 不等于 progress。}}
-]
+\[
+\boxed{\text{progress 可以是 fidelity，但 fidelity 不等于 progress。}}
+\]
 
 “progress-style fidelity”只是我们讨论时为了方便起的描述性名字，不是一个必须使用的正式术语。
 
@@ -299,16 +299,16 @@ CFD 里：
 
 这些方法在高层数学上只需要：
 
-[
+\[
 g(x,s),
-]
+\]
 
 其中：
 
-- (x)：设计变量 / hyperparameters
-- (s)：fidelity variable
+- \(x\)：设计变量 / hyperparameters
+- \(s\)：fidelity variable
 
-至于 (s) 具体是什么，可以变化。
+至于 \(s\) 具体是什么，可以变化。
 
 例如：
 
@@ -320,9 +320,9 @@ g(x,s),
 
 所以 multi-fidelity optimization 在理论上可以把非常不同的“便宜近似机制”统一成：
 
-[
-	ext{低 fidelity evaluation}.
-]
+\[
+\text{低 fidelity evaluation}.
+\]
 
 这也是为什么你会感觉：
 
@@ -381,9 +381,9 @@ g(x,s),
 
 更显式地建模：
 
-[
+\[
 (x,s)
-]
+\]
 
 并考虑：
 
@@ -401,17 +401,17 @@ g(x,s),
 
 假设最终 target 是：
 
-[
+\[
 u(T)
-]
+\]
 
-例如 (T=40) 秒。
+例如 \(T=40\) 秒。
 
 你先只算：
 
-[
+\[
 u(20)
-]
+\]
 
 能不能说：
 
@@ -423,15 +423,15 @@ u(20)
 
 因为：
 
-[
+\[
 u(20)
-]
+\]
 
 并不是：
 
-[
+\[
 u(40)
-]
+\]
 
 的粗糙版本。
 
@@ -459,9 +459,9 @@ u(40)
 
 对于同一个 physical horizon：
 
-[
-0	o T,
-]
+\[
+0\to T,
+\]
 
 更典型的 fidelity 控制包括：
 
@@ -473,7 +473,7 @@ u(40)
 
 例如：
 
-> 都算到 (T=40)，但一个用粗网格，一个用细网格。
+> 都算到 \(T=40\)，但一个用粗网格，一个用细网格。
 
 这才是更经典的 multi-fidelity PDE 设置。
 
@@ -489,35 +489,35 @@ u(40)
 
 通常最后要解：
 
-[
+\[
 G(u)=0.
-]
+\]
 
 目标是找到一个 stationary solution：
 
-[
+\[
 u^*.
-]
+\]
 
 ## Transient PDE
 
 有真实 physical time：
 
-[
-rac{partial u}{partial t}=F(u,t).
-]
+\[
+\frac{\partial u}{\partial t}=F(u,t).
+\]
 
 空间离散后，通常得到：
 
-[
-Mdot u=F(u,t),
-]
+\[
+M\dot u=F(u,t),
+\]
 
 然后按 physical time 一步一步推进：
 
-[
-u^0	o u^1	o u^2	ocdots.
-]
+\[
+u^0\to u^1\to u^2\to\cdots.
+\]
 
 ---
 
@@ -525,21 +525,21 @@ u^0	o u^1	o u^2	ocdots.
 
 对于 steady PDE：
 
-[
+\[
 G(u)=0.
-]
+\]
 
-这里的 (u) 是整个离散场。
+这里的 \(u\) 是整个离散场。
 
 所以本质上是一个高维 nonlinear algebraic root problem。
 
 当时我们纠正过一句不够准确的说法：
 
-不是“直接 attack (G(u)=0)”，
+不是“直接 attack \(G(u)=0\)”，
 
 而应该说：
 
-> **直接求解 nonlinear system (G(u)=0)。**
+> **直接求解 nonlinear system \(G(u)=0\)。**
 
 ---
 
@@ -547,23 +547,23 @@ G(u)=0.
 
 Newton iteration：
 
-[
-J_G(u_k)Delta u=-G(u_k),
-]
+\[
+J_G(u_k)\Delta u=-G(u_k),
+\]
 
 然后：
 
-[
-u_{k+1}=u_k+Delta u.
-]
+\[
+u_{k+1}=u_k+\Delta u.
+\]
 
 这里：
 
-[
+\[
 J_G(u_k)
-]
+\]
 
-是 (G) 的 Jacobian。
+是 \(G\) 的 Jacobian。
 
 当时我们还专门澄清：
 
@@ -571,19 +571,17 @@ J_G(u_k)
 
 只有当：
 
-[
-G=
-ablaPhi
-]
+\[
+G=\nabla\Phi
+\]
 
-也就是 (G) 本身是某个 scalar objective 的 gradient 时，
+也就是 \(G\) 本身是某个 scalar objective 的 gradient 时，
 
 Newton root finding 里的 Jacobian 才对应：
 
-[
-
-abla^2Phi
-]
+\[
+\nabla^2\Phi
+\]
 
 也就是 Hessian。
 
@@ -599,11 +597,11 @@ Newton-Krylov 不是简单地和 Newton 完全平行的另一类 root method。
 
 Newton step：
 
-[
-J_G(u_k)Delta u=-G(u_k).
-]
+\[
+J_G(u_k)\Delta u=-G(u_k).
+\]
 
-如果 (J_G) 很大，不直接 factorize，
+如果 \(J_G\) 很大，不直接 factorize，
 
 可以用：
 
@@ -614,9 +612,9 @@ J_G(u_k)Delta u=-G(u_k).
 
 求：
 
-[
-Delta u.
-]
+\[
+\Delta u.
+\]
 
 所以常见 nested structure：
 
@@ -629,21 +627,21 @@ Delta u.
 
 fixed point：
 
-[
+\[
 u_{k+1}=H(u_k).
-]
+\]
 
 Newton：
 
-[
-u_{k+1}=u_k+Delta u_k.
-]
+\[
+u_{k+1}=u_k+\Delta u_k.
+\]
 
 pseudo-time：
 
-[
-u^{n+1}=u^n+Delta	au,mathcal F(u^n).
-]
+\[
+u^{n+1}=u^n+\Delta\tau\,\mathcal F(u^n).
+\]
 
 虽然更新公式不同，但它们共享一个很高层的结构：
 
@@ -669,37 +667,37 @@ u^{n+1}=u^n+Delta	au,mathcal F(u^n).
 
 对于 steady equation：
 
-[
+\[
 G(u)=0,
-]
+\]
 
 可以人为引入一个 artificial time：
 
-[
-	au.
-]
+\[
+\tau.
+\]
 
 例如构造：
 
-[
-rac{partial u}{partial	au}=-G(u).
-]
+\[
+\frac{\partial u}{\partial\tau}=-G(u).
+\]
 
 当 artificial dynamics 达到 steady state：
 
-[
-rac{partial u}{partial	au}=0,
-]
+\[
+\frac{\partial u}{\partial\tau}=0,
+\]
 
 就得到：
 
-[
+\[
 G(u)=0.
-]
+\]
 
 重点：
 
-> **这个 (	au) 不是 physical time。**
+> **这个 \(\tau\) 不是 physical time。**
 
 它只是一个 numerical device。
 
@@ -711,9 +709,9 @@ G(u)=0.
 
 它形式上很像：
 
-[
-u_{k+1}=u_k-alpha G(u_k).
-]
+\[
+u_{k+1}=u_k-\alpha G(u_k).
+\]
 
 所以容易让人觉得：
 
@@ -721,10 +719,9 @@ u_{k+1}=u_k-alpha G(u_k).
 
 只有当：
 
-[
-G(u)=
-ablaPhi(u)
-]
+\[
+G(u)=\nabla\Phi(u)
+\]
 
 时，
 
@@ -732,9 +729,9 @@ ablaPhi(u)
 
 一般 PDE residual：
 
-[
+\[
 G(u)
-]
+\]
 
 不一定来自某个 scalar energy gradient。
 
@@ -748,15 +745,15 @@ G(u)
 
 pseudo-transient continuation 往往构造类似：
 
-[
-rac{u_{k+1}-u_k}{Delta	au}+G(u_{k+1})=0.
-]
+\[
+\frac{u_{k+1}-u_k}{\Delta\tau}+G(u_{k+1})=0.
+\]
 
 当：
 
-[
-Delta	au
-]
+\[
+\Delta\tau
+\]
 
 比较小时，
 
@@ -764,9 +761,9 @@ Delta	au
 
 当：
 
-[
-Delta	au
-]
+\[
+\Delta\tau
+\]
 
 变得很大，
 
@@ -774,9 +771,9 @@ Delta	au
 
 就越来越接近直接求：
 
-[
+\[
 G(u)=0.
-]
+\]
 
 所以它在某种意义上可以在：
 
@@ -800,15 +797,15 @@ G(u)=0.
 
 例如：
 
-[
+\[
 G(u)=u-u^3.
-]
+\]
 
 root 有：
 
-[
-u=-1,quad0,quad1.
-]
+\[
+u=-1,\quad0,\quad1.
+\]
 
 不同初值可能收敛到不同 root。
 
@@ -822,23 +819,23 @@ u=-1,quad0,quad1.
 
 一个 transient PDE：
 
-[
-u_t=mathcal F(u,t)
-]
+\[
+u_t=\mathcal F(u,t)
+\]
 
 空间离散后通常得到 ODE/DAE：
 
-[
-Mdot u=F(u,t).
-]
+\[
+M\dot u=F(u,t).
+\]
 
 然后用 time integrator：
 
-[
-u^n	o u^{n+1}.
-]
+\[
+u^n\to u^{n+1}.
+\]
 
-这里的 (n) 是 physical time step。
+这里的 \(n\) 是 physical time step。
 
 所以 transient solver 的外层结构是：
 
@@ -854,15 +851,15 @@ u^n	o u^{n+1}.
 
 例如 forward Euler：
 
-[
-u^{n+1}=u^n+Delta t,F(u^n).
-]
+\[
+u^{n+1}=u^n+\Delta t\,F(u^n).
+\]
 
 右边只依赖已知：
 
-[
+\[
 u^n.
-]
+\]
 
 所以一次 physical time step 可以直接更新。
 
@@ -872,7 +869,7 @@ u^n.
 
 - 每步便宜
 - 实现简单
-- 但 stability 往往限制 (Delta t)
+- 但 stability 往往限制 \(\Delta t\)
 
 例如 CFL constraint。
 
@@ -882,17 +879,17 @@ u^n.
 
 例如 backward Euler：
 
-[
-u^{n+1}=u^n+Delta t,F(u^{n+1}).
-]
+\[
+u^{n+1}=u^n+\Delta t\,F(u^{n+1}).
+\]
 
-这里未知 (u^{n+1}) 出现在右边。
+这里未知 \(u^{n+1}\) 出现在右边。
 
 所以每一个 physical step 都必须解：
 
-[
+\[
 G_n(u^{n+1})=0.
-]
+\]
 
 这就变成一个 nonlinear root solve。
 
@@ -916,35 +913,35 @@ G_n(u^{n+1})=0.
 
 形式上每一个 implicit step 确实要解一个 root：
 
-[
+\[
 G_n(u^{n+1})=0.
-]
+\]
 
 但是它不是完全独立的 steady-state problem。
 
 因为：
 
-[
+\[
 u^n
-]
+\]
 
 已经是一个非常好的 initial guess。
 
 如果：
 
-[
-Delta t
-]
+\[
+\Delta t
+\]
 
 不大，
 
 那么：
 
-[
+\[
 u^{n+1}
-]
+\]
 
-通常离 (u^n) 不远。
+通常离 \(u^n\) 不远。
 
 所以每个 physical step 的 Newton solve 往往只需要少数几次迭代。
 
@@ -962,15 +959,15 @@ u^{n+1}
 
 如果：
 
-[
-T=40,qquadDelta t=0.01,
-]
+\[
+T=40,\qquad\Delta t=0.01,
+\]
 
 那么：
 
-[
+\[
 N_t=4000.
-]
+\]
 
 如果是 explicit：
 
@@ -987,9 +984,9 @@ N_t=4000.
 
 而且这些 time steps 有依赖：
 
-[
-u^{n+1}	ext{ depends on }u^n.
-]
+\[
+u^{n+1}\text{ depends on }u^n.
+\]
 
 所以时间方向本身通常不能全部并行。
 
@@ -1000,8 +997,7 @@ u^{n+1}	ext{ depends on }u^n.
 ## Explicit
 
 - 单步便宜
-- 不需要 nonlinear solve
-- stability 限制大
+- 不需要 nonlinear solve- stability 限制大
 - 可能必须用很小 dt
 
 ## Implicit
@@ -1021,23 +1017,23 @@ u^{n+1}	ext{ depends on }u^n.
 
 如果只做 forward：
 
-[
-u^0	o u^1	o u^2	ocdots	o u^{N_t}.
-]
+\[
+u^0\to u^1\to u^2\to\cdots\to u^{N_t}.
+\]
 
 计算：
 
-[
+\[
 u^{n+1}
-]
+\]
 
 以后，
 
 如果：
 
-[
+\[
 u^n
-]
+\]
 
 以后不再需要，
 
@@ -1061,40 +1057,40 @@ u^n
 
 如果最终 loss：
 
-[
+\[
 L=L(u^{N_t}),
-]
+\]
 
 而我们需要对 initial condition、parameter 等求梯度，
 
 reverse-mode 会从：
 
-[
+\[
 u^{N_t}
-]
+\]
 
 往前传播 adjoint。
 
 抽象地：
 
-[
-u_{n+1}=F(u_n,	heta).
-]
+\[
+u_{n+1}=F(u_n,\theta).
+\]
 
 reverse：
 
-[
-lambda_n
+\[
+\lambda_n
 =
-left(
-rac{partial F(u_n,	heta)}{partial u_n}
-ight)^T
-lambda_{n+1}.
-]
+\left(
+\frac{\partial F(u_n,\theta)}{\partial u_n}
+\right)^T
+\lambda_{n+1}.
+\]
 
 这里的问题是：
 
-> 计算这个局部 VJP/Jacobian action 往往需要 forward 当时的 (u_n) 和该 step 内部的中间变量。
+> 计算这个局部 VJP/Jacobian action 往往需要 forward 当时的 \(u_n\) 和该 step 内部的中间变量。
 
 所以 forward-only 时本来可以丢掉的东西，
 
@@ -1106,15 +1102,15 @@ lambda_{n+1}.
 
 forward state：
 
-[
-u_0	o u_1	ocdots	o u_N.
-]
+\[
+u_0\to u_1\to\cdots\to u_N.
+\]
 
 gradient/adjoint：
 
-[
-lambda_N	olambda_{N-1}	ocdots	olambda_0.
-]
+\[
+\lambda_N\to\lambda_{N-1}\to\cdots\to\lambda_0.
+\]
 
 所以：
 
@@ -1126,9 +1122,9 @@ lambda_N	olambda_{N-1}	ocdots	olambda_0.
 
 因此：
 
-[
-oxed{	ext{forward-only memory 很低，reverse-mode tape memory 可以非常高。}}
-]
+\[
+\boxed{\text{forward-only memory 很低，reverse-mode tape memory 可以非常高。}}
+\]
 
 ---
 
@@ -1138,9 +1134,9 @@ lambda_N	olambda_{N-1}	ocdots	olambda_0.
 
 backward 不只可能需要：
 
-[
+\[
 u_n.
-]
+\]
 
 还可能需要：
 
@@ -1190,15 +1186,15 @@ u_n.
 
 4000 个 time steps：
 
-[
-4000	imes256	imes256	imes4	ext{ bytes}
-]
+\[
+4000\times256\times256\times4\text{ bytes}
+\]
 
 约：
 
-[
-1.05	ext{ GB}.
-]
+\[
+1.05\text{ GB}.
+\]
 
 这只是假设：
 
@@ -1230,15 +1226,15 @@ u_n.
 
 gradient backward：
 
-[
-lambda_{n+1}	olambda_n
-]
+\[
+\lambda_{n+1}\to\lambda_n
+\]
 
 不是在做：
 
-[
-u_{n+1}	o u_n
-]
+\[
+u_{n+1}\to u_n
+\]
 
 这个 physical state inverse。
 
@@ -1261,15 +1257,15 @@ u_{n+1}	o u_n
 
 假设：
 
-[
+\[
 u_{n+1}=F(u_n)
-]
+\]
 
 而且存在一个：
 
-[
+\[
 u_n=F^{-1}(u_{n+1}),
-]
+\]
 
 并且这个 inverse：
 
@@ -1404,9 +1400,9 @@ progress 可以是一种 fidelity，
 
 ## 结论 5：Steady PDE 的核心是 root solving
 
-[
+\[
 G(u)=0.
-]
+\]
 
 Newton、fixed-point、pseudo-time 都是在用不同 update rule 寻找 steady root。
 
