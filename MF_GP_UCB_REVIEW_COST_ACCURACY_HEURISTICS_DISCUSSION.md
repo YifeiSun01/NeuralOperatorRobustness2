@@ -30,23 +30,23 @@
 
 这篇论文的基本任务不是专门的 HPO，而是一般的昂贵黑箱优化：
 
-[
-x^star=argmax_{xinmathcal X} f^{(M)}(x).
-]
+\[
+x^\star=\arg\max_{x\in\mathcal X} f^{(M)}(x).
+\]
 
-其中 (x) 是 design / configuration / physical parameter，(f^{(M)}) 是最高 fidelity、最终真正关心的目标函数。
+其中 \(x\) 是 design / configuration / physical parameter，\(f^{(M)}\) 是最高 fidelity、最终真正关心的目标函数。
 
 它加入的特殊情境是：
 
-[
-f^{(1)}(x),f^{(2)}(x),ldots,f^{(M)}(x)
-]
+\[
+f^{(1)}(x),f^{(2)}(x),\ldots,f^{(M)}(x)
+\]
 
 这几个不同 fidelity 的函数同时存在，低 fidelity 更便宜，但与最高 fidelity 有偏差。
 
 所以这篇论文真正研究的是：
 
-> 在最高 fidelity 很贵、同时存在若干便宜近似评价的情况下，如何选择下一个 design (x)，以及选择哪个 fidelity (m)，从而以更少成本找到最高 fidelity 的最优点。
+> 在最高 fidelity 很贵、同时存在若干便宜近似评价的情况下，如何选择下一个 design \(x\)，以及选择哪个 fidelity \(m\)，从而以更少成本找到最高 fidelity 的最优点。
 
 ---
 
@@ -56,57 +56,57 @@ f^{(1)}(x),f^{(2)}(x),ldots,f^{(M)}(x)
 
 ## 2.1 Design variable
 
-[
-xinmathcal Xsubsetmathbb R^d.
-]
+\[
+x\in\mathcal X\subset\mathbb R^d.
+\]
 
-这里的 (d) 是 design space 的维度。
+这里的 \(d\) 是 design space 的维度。
 
 例如：
 
-- SVM：(d=2)，两个 hyperparameter。
-- SALSA：(d=6)，六个 hyperparameter。
-- Viola–Jones：(d=22)，22 个 classifier thresholds。
-- Supernova：(d=3)，三个宇宙学参数。
-- Borehole：(d=8)，八个物理输入。
-- Hartmann-6D：(d=6)。
+- SVM：\(d=2\)，两个 hyperparameter。
+- SALSA：\(d=6\)，六个 hyperparameter。
+- Viola–Jones：\(d=22\)，22 个 classifier thresholds。
+- Supernova：\(d=3\)，三个宇宙学参数。
+- Borehole：\(d=8\)，八个物理输入。
+- Hartmann-6D：\(d=6\)。
 
 所以：
 
-[
-d=	ext{design 的变量个数}.
-]
+\[
+d=\text{design 的变量个数}.
+\]
 
 ## 2.2 Fidelity variable
 
 论文写：
 
-[
-min{1,ldots,M}.
-]
+\[
+m\in\{1,\ldots,M\}.
+\]
 
-这里的 (M) 是 fidelity 的档位数。
+这里的 \(M\) 是 fidelity 的档位数。
 
 例如：
 
-- SVM：(M=2)。
-- SALSA：(M=3)。
-- Viola–Jones：(M=2)。
-- Supernova：(M=3)。
-- Hartmann-3D：(M=3)。
-- Hartmann-6D：(M=4)。
+- SVM：\(M=2\)。
+- SALSA：\(M=3\)。
+- Viola–Jones：\(M=2\)。
+- Supernova：\(M=3\)。
+- Hartmann-3D：\(M=3\)。
+- Hartmann-6D：\(M=4\)。
 
 所以：
 
-[
-M=	ext{fidelity 档位数}.
-]
+\[
+M=\text{fidelity 档位数}.
+\]
 
 这一篇 2016 论文里的 fidelity 全都是：
 
-[
-oxed{	ext{有限、离散、有序的 fidelity}}
-]
+\[
+\boxed{\text{有限、离散、有序的 fidelity}}
+\]
 
 而不是连续 fidelity。
 
@@ -124,35 +124,35 @@ M=	ext{fidelity 档位数}.
 
 Design：
 
-[
-x=(	ext{kernel bandwidth}, C).
-]
+\[
+x=(\text{kernel bandwidth}, C).
+\]
 
 所以：
 
-[
+\[
 d=2.
-]
+\]
 
 fidelity 不是 epoch，而是训练数据量：
 
-[
-m=1: 500	ext{ samples},
-]
+\[
+m=1:\ 500\text{ samples},
+\]
 
-[
-m=2: 2000	ext{ samples}.
-]
+\[
+m=2:\ 2000\text{ samples}.
+\]
 
 所以：
 
-[
-f^{(1)}(x)=	ext{500 个训练样本上的 5-fold CV performance},
-]
+\[
+f^{(1)}(x)=\text{500 个训练样本上的 5-fold CV performance},
+\]
 
-[
-f^{(2)}(x)=	ext{2000 个训练样本上的 5-fold CV performance}.
-]
+\[
+f^{(2)}(x)=\text{2000 个训练样本上的 5-fold CV performance}.
+\]
 
 最终目标是优化最高 fidelity 的 CV performance。
 
@@ -168,21 +168,21 @@ Design 一共有 6 个 hyperparameter：
 
 所以：
 
-[
+\[
 d=6.
-]
+\]
 
 fidelity 是训练数据量：
 
-[
-2000,quad 4000,quad 8000.
-]
+\[
+2000,\quad 4000,\quad 8000.
+\]
 
 因此：
 
-[
+\[
 M=3.
-]
+\]
 
 依旧是 dataset size 作为 fidelity，而不是 training epoch。
 
@@ -190,37 +190,37 @@ M=3.
 
 Design 是 22 个 weak classifiers 对应的 thresholds：
 
-[
-x=(t_1,ldots,t_{22}),
-]
+\[
+x=(t_1,\ldots,t_{22}),
+\]
 
 所以：
 
-[
+\[
 d=22.
-]
+\]
 
 fidelity 是训练图像数量：
 
-[
-m=1: 300	ext{ images},
-]
+\[
+m=1:\ 300\text{ images},
+\]
 
-[
-m=2: 3000	ext{ images}.
-]
+\[
+m=2:\ 3000\text{ images}.
+\]
 
 所以：
 
-[
+\[
 M=2.
-]
+\]
 
 这里很容易混淆：
 
-[
+\[
 d=22
-]
+\]
 
 表示 22 个 optimization variables，而不是 22 个 fidelity。
 
@@ -228,31 +228,31 @@ d=22
 
 Design：
 
-[
-x=(H_0,Omega_M,Omega_Lambda),
-]
+\[
+x=(H_0,\Omega_M,\Omega_\Lambda),
+\]
 
 所以：
 
-[
+\[
 d=3.
-]
+\]
 
 目标是最大化与 Type Ia Supernova 数据对应的 likelihood / log-likelihood。
 
 fidelity 是数值积分网格精度：
 
-[
-10^2,quad10^4,quad10^6
-]
+\[
+10^2,\quad10^4,\quad10^6
+\]
 
 个网格点。
 
 因此：
 
-[
+\[
 M=3.
-]
+\]
 
 这里三个宇宙学参数是连续 design variables，而 fidelity 仍然是预先规定的三个离散档位。
 
@@ -264,15 +264,15 @@ Synthetic benchmark 中没有真实的粗网格、小训练集、低精度实验
 
 作者先有一个最高 fidelity 函数：
 
-[
+\[
 f^{(M)}(x),
-]
+\]
 
 然后人为构造几个近似函数：
 
-[
-f^{(1)}(x),f^{(2)}(x),ldots,f^{(M-1)}(x).
-]
+\[
+f^{(1)}(x),f^{(2)}(x),\ldots,f^{(M-1)}(x).
+\]
 
 ## 4.1 Currin
 
@@ -282,11 +282,11 @@ f^{(1)}(x),f^{(2)}(x),ldots,f^{(M-1)}(x).
 
 作者公开代码中低 fidelity 大致是：
 
-[
+\[
 f^{(1)}(x)
 =
-rac14sum_{j=1}^4 f^{(2)}(x+delta_j).
-]
+\frac14\sum_{j=1}^4 f^{(2)}(x+\delta_j).
+\]
 
 所以这是人为构造的相关近似函数。
 
@@ -298,9 +298,9 @@ costs = (10.^(0:(numFidels-1)))';
 
 对于 Currin：
 
-[
+\[
 [1,10].
-]
+\]
 
 这里的 cost 是 synthetic benchmark 的人工设定，不是这两个简单解析函数真实测出来的 CPU time ratio。
 
@@ -312,51 +312,51 @@ costs = (10.^(0:(numFidels-1)))';
 
 例如公开代码里，高 fidelity 分子有：
 
-[
-2pi T_u(H_u-H_l),
-]
+\[
+2\pi T_u(H_u-H_l),
+\]
 
 低 fidelity 改成：
 
-[
+\[
 5T_u(H_u-H_l),
-]
+\]
 
 分母里的常数也有所改变。
 
 成本：
 
-[
+\[
 [1,10].
-]
+\]
 
 ## 4.3 Hartmann
 
-Hartmann-3D 与 Hartmann-6D 都通过修改函数内部的 (alpha) 权重来构造不同 fidelity。
+Hartmann-3D 与 Hartmann-6D 都通过修改函数内部的 \(\alpha\) 权重来构造不同 fidelity。
 
 Hartmann-3D：
 
-[
-d=3,qquad M=3,
-]
+\[
+d=3,\qquad M=3,
+\]
 
 成本：
 
-[
+\[
 [1,10,100].
-]
+\]
 
 Hartmann-6D：
 
-[
-d=6,qquad M=4,
-]
+\[
+d=6,\qquad M=4,
+\]
 
 成本：
 
-[
+\[
 [1,10,100,1000].
-]
+\]
 
 所以 synthetic experiment 实际上同时人工定义了：
 
@@ -373,68 +373,68 @@ d=6,qquad M=4,
 
 最高 fidelity：
 
-[
+\[
 f^{(M)}(x)
-]
+\]
 
 是真正想优化的目标。
 
-第 (m) 个 fidelity 的查询成本写成：
+第 \(m\) 个 fidelity 的查询成本写成：
 
-[
-lambda^{(m)}.
-]
+\[
+\lambda^{(m)}.
+\]
 
 作者假设：
 
-[
-lambda^{(1)}
+\[
+\lambda^{(1)}
 <
-lambda^{(2)}
+\lambda^{(2)}
 <
-cdots
+\cdots
 <
-lambda^{(M)}.
-]
+\lambda^{(M)}.
+\]
 
 对 fidelity accuracy，作者假设：
 
-[
-oxed{
-|f^{(M)}-f^{(m)}|_infty
-le
-zeta^{(m)}
+\[
+\boxed{
+\|f^{(M)}-f^{(m)}\|_\infty
+\le
+\zeta^{(m)}
 }
-]
+\]
 
 也就是：
 
-[
+\[
 |f^{(M)}(x)-f^{(m)}(x)|
-le
-zeta^{(m)}
-qquad
-orall x.
-]
+\le
+\zeta^{(m)}
+\qquad
+\forall x.
+\]
 
-这里的 (zeta^{(m)}) 不是 local prediction error，也不是一个从 (x) 变化的函数。
+这里的 \(\zeta^{(m)}\) 不是 local prediction error，也不是一个从 \(x\) 变化的函数。
 
 它是：
 
-[
-oxed{
-	ext{第 }m	ext{ 个 fidelity 相对于最高 fidelity 的全空间 worst-case error bound}
+\[
+\boxed{
+\text{第 }m\text{ 个 fidelity 相对于最高 fidelity 的全空间 worst-case error bound}
 }
-]
+\]
 
 通常还假设：
 
-[
-zeta^{(1)}>
-zeta^{(2)}>
-cdots>
-zeta^{(M)}=0.
-]
+\[
+\zeta^{(1)}>
+\zeta^{(2)}>
+\cdots>
+\zeta^{(M)}=0.
+\]
 
 ---
 
@@ -444,47 +444,47 @@ zeta^{(M)}=0.
 
 对于每一个 fidelity：
 
-[
+\[
 f^{(m)}(x)
-]
+\]
 
 作者分别建 Gaussian Process。
 
 所以：
 
-[
+\[
 x
-longrightarrow
+\longrightarrow
 f^{(m)}(x)
-]
+\]
 
 是从观测数据学习的。
 
 GP 给出：
 
-[
-mu_t^{(m)}(x),
-qquad
-sigma_t^{(m)}(x).
-]
+\[
+\mu_t^{(m)}(x),
+\qquad
+\sigma_t^{(m)}(x).
+\]
 
 ## 6.2 它没有真正学习 cost surface
 
 理论 cost 是：
 
-[
-oxed{
-c(x,m)=lambda^{(m)}
+\[
+\boxed{
+c(x,m)=\lambda^{(m)}
 }
-]
+\]
 
-也就是说，cost 只依赖 fidelity level，不依赖 design (x)。
+也就是说，cost 只依赖 fidelity level，不依赖 design \(x\)。
 
 它没有：
 
-[
-hat c(x,m)
-]
+\[
+\hat c(x,m)
+\]
 
 这样的 cost model。
 
@@ -492,9 +492,9 @@ hat c(x,m)
 
 理论模型不处理这种：
 
-[
+\[
 c=c(x,m)
-]
+\]
 
 的 design-dependent cost。
 
@@ -502,29 +502,29 @@ c=c(x,m)
 
 真正的 local error 可以定义为：
 
-[
+\[
 e(x,m)=|f^{(M)}(x)-f^{(m)}(x)|.
-]
+\]
 
 一个更完整的模型可能学习：
 
-[
-hat e(x,m)
-]
+\[
+\hat e(x,m)
+\]
 
 或者：
 
-[
-p(emid x,m).
-]
+\[
+p(e\mid x,m).
+\]
 
 MF-GP-UCB 没有这么做。
 
 它理论上只要求给定：
 
-[
-mlongrightarrowzeta^{(m)}.
-]
+\[
+m\longrightarrow\zeta^{(m)}.
+\]
 
 也就是每个 fidelity 一个全局最大误差上界。
 
@@ -532,62 +532,62 @@ mlongrightarrowzeta^{(m)}.
 
 | 关系 | MF-GP-UCB 怎么处理 |
 |---|---|
-| (x,m	o f^{(m)}(x)) | GP 学习 |
-| (m	o cost) | 给定 (lambda^{(m)}) |
-| (x,m	o cost) | 不建模 |
-| (m	o worst-case accuracy) | 理论给定 (zeta^{(m)}) |
-| (x,m	o local error) | 不建模 |
+| \(x,m\to f^{(m)}(x)\) | GP 学习 |
+| \(m\to cost\) | 给定 \(\lambda^{(m)}\) |
+| \(x,m\to cost\) | 不建模 |
+| \(m\to worst-case accuracy\) | 理论给定 \(\zeta^{(m)}\) |
+| \(x,m\to local error\) | 不建模 |
 | fidelity 间完整相关关系 | 不直接联合学习 |
 
 因此可以概括为：
 
-[
-oxed{
-	ext{performance surface 学；
+\[
+\boxed{
+\text{performance surface 学；
 cost surface 不学；
 accuracy/error surface 也不真正学。}
 }
-]
+\]
 
 ---
 
 # 7. MF-GP-UCB 怎么选 design
 
-对于第 (m) 个 fidelity，作者定义一个对最高 fidelity 的 upper bound：
+对于第 \(m\) 个 fidelity，作者定义一个对最高 fidelity 的 upper bound：
 
-[
-phi_t^{(m)}(x)
+\[
+\phi_t^{(m)}(x)
 =
-mu_{t-1}^{(m)}(x)
+\mu_{t-1}^{(m)}(x)
 +
-sqrt{eta_t}sigma_{t-1}^{(m)}(x)
+\sqrt{\beta_t}\sigma_{t-1}^{(m)}(x)
 +
-zeta^{(m)}.
-]
+\zeta^{(m)}.
+\]
 
 其中：
 
-[
-mu+sqrt{eta}sigma
-]
+\[
+\mu+\sqrt{\beta}\sigma
+\]
 
-是普通 GP-UCB，再加 (zeta^{(m)}) 是为了覆盖 low fidelity 和 highest fidelity 之间可能存在的最大偏差。
+是普通 GP-UCB，再加 \(\zeta^{(m)}\) 是为了覆盖 low fidelity 和 highest fidelity 之间可能存在的最大偏差。
 
 然后取：
 
-[
-phi_t(x)
+\[
+\phi_t(x)
 =
-min_m phi_t^{(m)}(x).
-]
+\min_m \phi_t^{(m)}(x).
+\]
 
 最后：
 
-[
+\[
 x_t
 =
-argmax_x phi_t(x).
-]
+\arg\max_x \phi_t(x).
+\]
 
 所以 design selection 的意义是：
 
@@ -597,44 +597,44 @@ argmax_x phi_t(x).
 
 # 8. MF-GP-UCB 怎么选 fidelity
 
-选出 (x_t) 后，算法再决定 fidelity。
+选出 \(x_t\) 后，算法再决定 fidelity。
 
 它从最低 fidelity 开始检查 posterior uncertainty。
 
 如果：
 
-[
-sqrt{eta_t}
-sigma_{t-1}^{(m)}(x_t)
-]
+\[
+\sqrt{\beta_t}
+\sigma_{t-1}^{(m)}(x_t)
+\]
 
 仍然大于 threshold：
 
-[
-gamma^{(m)},
-]
+\[
+\gamma^{(m)},
+\]
 
 说明这个 fidelity 自己都还没有搞清楚，就先在这个便宜 fidelity 上继续 query。
 
 如果：
 
-[
-sqrt{eta_t}
-sigma_{t-1}^{(m)}(x_t)
+\[
+\sqrt{\beta_t}
+\sigma_{t-1}^{(m)}(x_t)
 <
-gamma^{(m)},
-]
+\gamma^{(m)},
+\]
 
 说明继续把这个 fidelity 学得更精确的价值已经下降，于是升级到更高 fidelity。
 
 整体直觉：
 
-[
-oxed{
-	ext{低 fidelity 大范围排除；
+\[
+\boxed{
+\text{低 fidelity 大范围排除；
 高 fidelity 小范围确认。}
 }
-]
+\]
 
 ---
 
@@ -648,33 +648,33 @@ cost 不直接写成 information gain / cost 或 EI / cost。
 
 总预算：
 
-[
-Lambda.
-]
+\[
+\Lambda.
+\]
 
 如果依次查询：
 
-[
-m_1,m_2,ldots,m_T,
-]
+\[
+m_1,m_2,\ldots,m_T,
+\]
 
 则：
 
-[
-sum_{t=1}^Tlambda^{(m_t)}
-le
-Lambda.
-]
+\[
+\sum_{t=1}^T\lambda^{(m_t)}
+\le
+\Lambda.
+\]
 
 ## 9.2 Fidelity switching heuristic
 
 公开代码中，如果算法在当前 fidelity 停留的 query 数达到大约：
 
-[
-rac{lambda^{(m+1)}}{lambda^{(m)}},
-]
+\[
+\frac{\lambda^{(m+1)}}{\lambda^{(m)}},
+\]
 
-仍然没有升级，就增大 (gamma^{(m)})。
+仍然没有升级，就增大 \(\gamma^{(m)}\)。
 
 代码实际使用的放大系数是 5：
 
@@ -698,15 +698,15 @@ GAMMA_INC_COEFF = 5;
 
 ---
 
-# 10. 理论上的 (zeta) 和实际实现中的 (zeta)
+# 10. 理论上的 \(\zeta\) 和实际实现中的 \(\zeta\)
 
 ## 10.1 理论
 
 Algorithm 1 假设：
 
-[
-zeta^{(m)}
-]
+\[
+\zeta^{(m)}
+\]
 
 作为 problem description 的一部分已经知道。
 
@@ -716,51 +716,51 @@ zeta^{(m)}
 
 ## 10.2 实际实现
 
-作者在实践中只维护一个基础尺度 (zeta)，然后构造：
+作者在实践中只维护一个基础尺度 \(\zeta\)，然后构造：
 
-[
-zeta^{(1)}=(M-1)zeta,
-]
+\[
+\zeta^{(1)}=(M-1)\zeta,
+\]
 
-[
-zeta^{(2)}=(M-2)zeta,
-]
+\[
+\zeta^{(2)}=(M-2)\zeta,
+\]
 
 一直到：
 
-[
-zeta^{(M-1)}=zeta.
-]
+\[
+\zeta^{(M-1)}=\zeta.
+\]
 
 等价写成：
 
-[
-zeta^{(m)}=(M-m)zeta.
-]
+\[
+\zeta^{(m)}=(M-m)\zeta.
+\]
 
-这样做相当于默认相邻 fidelity 的允许差异由同一个 (zeta) 控制。
+这样做相当于默认相邻 fidelity 的允许差异由同一个 \(\zeta\) 控制。
 
 ---
 
-# 11. 真实实现里 (zeta) 到底怎么检查
+# 11. 真实实现里 \(\zeta\) 到底怎么检查
 
 假设算法这一步选择了较高 fidelity：
 
-[
+\[
 m>1.
-]
+\]
 
 首先算出：
 
-[
+\[
 f^{(m)}(x_t).
-]
+\]
 
 然后用低一级 fidelity 的 GP posterior mean：
 
-[
-mu^{(m-1)}(x_t)
-]
+\[
+\mu^{(m-1)}(x_t)
+\]
 
 进行廉价预检查。
 
@@ -772,19 +772,19 @@ diffEst = abs(nextPtVal - funcHs{nextFidel-1}(nextPt));
 
 也就是看：
 
-[
-left|
+\[
+\left|
 f^{(m)}(x_t)
 -
-mu^{(m-1)}(x_t)
-ight|.
-]
+\mu^{(m-1)}(x_t)
+\right|.
+\]
 
 如果这个差接近或超过当前允许的相邻 fidelity gap，就真正再做一次低一级 fidelity：
 
-[
+\[
 f^{(m-1)}(x_t).
-]
+\]
 
 公开代码：
 
@@ -809,21 +809,21 @@ ZETA_INC_COEFF = 2;
 
 所以思想是：
 
-[
-oxed{
-	ext{先用 GP mean 做 violation screening}
-ightarrow
-	ext{必要时补一个 lower-fidelity query}
-ightarrow
-	ext{观测到更大的 discrepancy 就把全局 bound 抬高}
+\[
+\boxed{
+\text{先用 GP mean 做 violation screening}
+\rightarrow
+\text{必要时补一个 lower-fidelity query}
+\rightarrow
+\text{观测到更大的 discrepancy 就把全局 bound 抬高}
 }
-]
+\]
 
 这并不是学习：
 
-[
+\[
 e(x,m)
-]
+\]
 
 这样的 local accuracy surface。
 
@@ -831,118 +831,118 @@ e(x,m)
 
 ---
 
-# 12. 一个 SVM 例子说明 (zeta) 更新
+# 12. 一个 SVM 例子说明 \(\zeta\) 更新
 
 假设：
 
-[
+\[
 f^{(1)}(x)
 =
-500	ext{ samples CV},
-]
+500\text{ samples CV},
+\]
 
-[
+\[
 f^{(2)}(x)
 =
-2000	ext{ samples CV}.
-]
+2000\text{ samples CV}.
+\]
 
 当前：
 
-[
-zeta=0.05.
-]
+\[
+\zeta=0.05.
+\]
 
-某个 (x_t) 上，高 fidelity 得到：
+某个 \(x_t\) 上，高 fidelity 得到：
 
-[
+\[
 f^{(2)}(x_t)=0.91.
-]
+\]
 
 低 fidelity GP 预测：
 
-[
-mu^{(1)}(x_t)=0.83.
-]
+\[
+\mu^{(1)}(x_t)=0.83.
+\]
 
 于是：
 
-[
+\[
 |0.91-0.83|=0.08>0.05.
-]
+\]
 
-算法觉得可能发生 fidelity-gap violation，于是在同一个 (x_t) 真正做低 fidelity：
+算法觉得可能发生 fidelity-gap violation，于是在同一个 \(x_t\) 真正做低 fidelity：
 
-[
+\[
 f^{(1)}(x_t)=0.84.
-]
+\]
 
 真实 observed gap：
 
-[
+\[
 |0.91-0.84|=0.07.
-]
+\]
 
 于是把允许 discrepancy 提高到大约：
 
-[
-2	imes0.07=0.14.
-]
+\[
+2\times0.07=0.14.
+\]
 
 之后整个 design space 都使用更宽的 fidelity-level bound。
 
 所以它没有回答：
 
-> 在 (x_A) 区域 low fidelity 很准，在 (x_B) 区域 low fidelity 很差时应该怎么办？
+> 在 \(x_A\) 区域 low fidelity 很准，在 \(x_B\) 区域 low fidelity 很差时应该怎么办？
 
 它只维护一个全局值。
 
 ---
 
-# 13. 三个 fidelity 时为什么最低级可以用 (2zeta)
+# 13. 三个 fidelity 时为什么最低级可以用 \(2\zeta\)
 
 以 SALSA 为例：
 
-[
-f^{(1)}=2000	ext{ samples},
-]
+\[
+f^{(1)}=2000\text{ samples},
+\]
 
-[
-f^{(2)}=4000	ext{ samples},
-]
+\[
+f^{(2)}=4000\text{ samples},
+\]
 
-[
-f^{(3)}=8000	ext{ samples}.
-]
+\[
+f^{(3)}=8000\text{ samples}.
+\]
 
 如果相邻层满足：
 
-[
-|f^{(2)}-f^{(1)}|lezeta,
-]
+\[
+|f^{(2)}-f^{(1)}|\le\zeta,
+\]
 
-[
-|f^{(3)}-f^{(2)}|lezeta,
-]
+\[
+|f^{(3)}-f^{(2)}|\le\zeta,
+\]
 
 则由三角不等式：
 
-[
+\[
 |f^{(3)}-f^{(1)}|
-le
+\le
 |f^{(3)}-f^{(2)}|
 +
 |f^{(2)}-f^{(1)}|
-le
-2zeta.
-]
+\le
+2\zeta.
+\]
 
 所以他们构造：
 
-[
-zeta^{(1)}=2zeta,qquad
-zeta^{(2)}=zeta.
-]
+\[
+\zeta^{(1)}=2\zeta,\qquad
+\zeta^{(2)}=\zeta.
+\]
 
 Supernova 的三级网格 fidelity 也是同样的逻辑。
 
@@ -952,9 +952,9 @@ Supernova 的三级网格 fidelity 也是同样的逻辑。
 
 论文描述 fidelity discrepancy 时是绝对值意义上的 error bound：
 
-[
+\[
 |f^{(m)}-f^{(m-1)}|.
-]
+\]
 
 公开代码预筛查确实用了：
 
@@ -986,17 +986,17 @@ synthetic benchmark 里 cost 是人为指定的。
 
 例如：
 
-[
+\[
 [1,10],
-]
+\]
 
-[
+\[
 [1,10,100],
-]
+\]
 
-[
+\[
 [1,10,100,1000].
-]
+\]
 
 这种 cost 主要是在模拟：
 
@@ -1012,33 +1012,33 @@ SVM、SALSA、Viola–Jones、Supernova 的最终实验图横轴使用实际 com
 
 但是：
 
-[
-oxed{
-	ext{实验评价时用真实 CPU time}
+\[
+\boxed{
+\text{实验评价时用真实 CPU time}
 }
-]
+\]
 
 和：
 
-[
-oxed{
-	ext{算法内部学了 }c(x,m)
+\[
+\boxed{
+\text{算法内部学了 }c(x,m)
 }
-]
+\]
 
 是两回事。
 
 MF-GP-UCB 并没有真正建立：
 
-[
-hat c(x,m).
-]
+\[
+\hat c(x,m).
+\]
 
 理论和主要决策框架仍然基于 fidelity-level cost：
 
-[
-lambda^{(m)}.
-]
+\[
+\lambda^{(m)}.
+\]
 
 ---
 
@@ -1056,17 +1056,17 @@ Reviewer 6 注意到 Currin 的所谓 low fidelity，是通过多次调用 high-
 
 如果把 synthetic benchmark 看成 abstract oracle，可以定义：
 
-[
+\[
 f_L(x)
-]
+\]
 
 为一个 oracle，并人为规定：
 
-[
+\[
 c_L=1.
-]
+\]
 
-即使作者在数学公式上用多个 (f_H) 值来定义 (f_L)，也不意味着现实算法必须真的运行四次昂贵 simulator。
+即使作者在数学公式上用多个 \(f_H\) 值来定义 \(f_L\)，也不意味着现实算法必须真的运行四次昂贵 simulator。
 
 在这种解读下，Reviewer 6 的批评不是算法逻辑上的硬伤。
 
@@ -1084,12 +1084,12 @@ c_L=1.
 
 公平结论：
 
-[
-oxed{
-	ext{作为 abstract benchmark 合法；
+\[
+\boxed{
+\text{作为 abstract benchmark 合法；
 作为真实 cheap approximation 的证据有限。}
 }
-]
+\]
 
 ---
 
@@ -1097,19 +1097,19 @@ c_L=1.
 
 Synthetic 中常用：
 
-[
+\[
 1:10,
-]
+\]
 
-[
+\[
 1:10:100,
-]
+\]
 
 甚至：
 
-[
+\[
 1:10:100:1000.
-]
+\]
 
 Reviewer 1 提出：
 
@@ -1117,40 +1117,40 @@ Reviewer 1 提出：
 
 例如：
 
-[
-c_L=1,qquad c_H=100
-]
+\[
+c_L=1,\qquad c_H=100
+\]
 
 时，low fidelity 即使只提供一点信息，也很容易显得划算。
 
 但如果：
 
-[
-c_L=8,qquad c_H=10,
-]
+\[
+c_L=8,\qquad c_H=10,
+\]
 
 那么 low fidelity 的经济价值可能很小，直接 high fidelity 反而更合理。
 
 所以真正的问题是：
 
-[
-oxed{
-	ext{算法优势到底来自方法本身，
+\[
+\boxed{
+\text{算法优势到底来自方法本身，
 还是来自实验人为给定的有利 cost ratio？}
 }
-]
+\]
 
-最终公开论文里仍然主要使用 (1:10:100) 这类 spacing，没有系统补充完整的 cost-ratio sensitivity study。
+最终公开论文里仍然主要使用 \(1:10:100\) 这类 spacing，没有系统补充完整的 cost-ratio sensitivity study。
 
 ---
 
-# 18. Reviewer 对 (zeta) 的质疑
+# 18. Reviewer 对 \(\zeta\) 的质疑
 
 理论里要求：
 
-[
-|f^{(M)}-f^{(m)}|_inftylezeta^{(m)}.
-]
+\[
+\|f^{(M)}-f^{(m)}\|_\infty\le\zeta^{(m)}.
+\]
 
 Reviewer 5 抓住的核心问题是：
 
@@ -1160,17 +1160,17 @@ Reviewer 5 抓住的核心问题是：
 
 真实系统里：
 
-[
+\[
 e(x,m)
 =
 |f^{(M)}(x)-f^{(m)}(x)|
-]
+\]
 
-通常会随 (x)、physical regime、convergence state、model configuration 改变。
+通常会随 \(x\)、physical regime、convergence state、model configuration 改变。
 
-一个单独的 (zeta^{(m)}) 很可能非常保守，也可能无法可靠事先获得。
+一个单独的 \(\zeta^{(m)}\) 很可能非常保守，也可能无法可靠事先获得。
 
-作者实践里用 violation-triggered heuristic 调整 (zeta)，但依然没有建立 local error model。
+作者实践里用 violation-triggered heuristic 调整 \(\zeta\)，但依然没有建立 local error model。
 
 ---
 
@@ -1178,29 +1178,29 @@ e(x,m)
 
 Reviewer 3 问了：
 
-- (lambda^{(m)}) 怎么设置？
+- \(\lambda^{(m)}\) 怎么设置？
 - 现实里如果 cost 并不知道得那么精确怎么办？
 - 算法结果会依赖这些 cost，如何保证 robustness？
 
 最终方法仍然基本把：
 
-[
-lambda^{(m)}
-]
+\[
+\lambda^{(m)}
+\]
 
 作为已知 fidelity-level cost。
 
 没有建立：
 
-[
+\[
 c(x,m)
-]
+\]
 
 或者：
 
-[
-p(cmid x,m).
-]
+\[
+p(c\mid x,m).
+\]
 
 所以这部分没有从根本上解决。
 
@@ -1212,17 +1212,17 @@ p(cmid x,m).
 
 每个 fidelity 单独建 GP：
 
-[
-GP_1,quad GP_2,quadldots,quad GP_M.
-]
+\[
+GP_1,\quad GP_2,\quad\ldots,\quad GP_M.
+\]
 
 低 fidelity 数据不会直接更新高 fidelity GP posterior。
 
 不同 fidelity 主要通过：
 
-[
-zeta^{(m)}
-]
+\[
+\zeta^{(m)}
+\]
 
 在 UCB upper bound 层面联系起来。
 
@@ -1240,9 +1240,9 @@ Reviewer 1、2、4 都提出：
 
 这篇论文是：
 
-[
-oxed{	ext{NIPS 2016}}
-]
+\[
+\boxed{\text{NIPS 2016}}
+\]
 
 当时 NeurIPS 还没有使用今天这种完整 OpenReview workflow。
 
@@ -1288,21 +1288,21 @@ Reviewer 4 在公开 review 页面明确写：
 
 于是实现里出现：
 
-- adaptive (zeta)；
-- adaptive (gamma)；
+- adaptive \(\zeta\)；
+- adaptive \(\gamma\)；
 - hyperparameter fitting；
 - numerical acquisition optimization；
 - various thresholds。
 
 这形成：
 
-[
-oxed{
-	ext{理论模型很干净}
-quad	ext{vs}quad
-	ext{实际实现大量 heuristic}
+\[
+\boxed{
+\text{理论模型很干净}
+\quad\text{vs}\quad
+\text{实际实现大量 heuristic}
 }
-]
+\]
 
 之间的明显断层。
 
@@ -1316,9 +1316,9 @@ Synthetic fidelity 是人工构造的。
 
 Synthetic cost：
 
-[
-1,10,100,ldots
-]
+\[
+1,10,100,\ldots
+\]
 
 是人为赋值。
 
@@ -1334,21 +1334,21 @@ Synthetic cost：
 
 理论需要：
 
-[
-zeta^{(m)}.
-]
+\[
+\zeta^{(m)}.
+\]
 
 现实往往不知道。
 
 最终实现只能：
 
-[
-	ext{initial guess}
-ightarrow
-	ext{observed violation}
-ightarrow
-	ext{increase bound}.
-]
+\[
+\text{initial guess}
+\rightarrow
+\text{observed violation}
+\rightarrow
+\text{increase bound}.
+\]
 
 这不是完整 accuracy modeling。
 
@@ -1358,72 +1358,72 @@ zeta^{(m)}.
 
 连续阅读 Active Search、Bayesian Optimization、Multi-fidelity BO 后，很容易出现一种强烈感觉：
 
-[
-oxed{
-	ext{很多方法的核心框架相似，
+\[
+\boxed{
+\text{很多方法的核心框架相似，
 真正的新东西经常只是局部模块。}
 }
-]
+\]
 
 常见结构：
 
-[
-	ext{probabilistic surrogate}
-ightarrow
-	ext{uncertainty}
-ightarrow
-	ext{acquisition}
-ightarrow
-	ext{query}
-ightarrow
-	ext{update}.
-]
+\[
+\text{probabilistic surrogate}
+\rightarrow
+\text{uncertainty}
+\rightarrow
+\text{acquisition}
+\rightarrow
+\text{query}
+\rightarrow
+\text{update}.
+\]
 
 然后不同论文在局部替换：
 
-[
-	ext{UCB}
-ightarrow
-	ext{EI}
-ightarrow
-	ext{MES}
-ightarrow
-	ext{KG},
-]
+\[
+\text{UCB}
+\rightarrow
+\text{EI}
+\rightarrow
+\text{MES}
+\rightarrow
+\text{KG},
+\]
 
 或者：
 
-[
-	ext{single fidelity}
-ightarrow
-	ext{multi-fidelity},
-]
+\[
+\text{single fidelity}
+\rightarrow
+\text{multi-fidelity},
+\]
 
 或者：
 
-[
-	ext{myopic}
-ightarrow
-	ext{multi-step},
-]
+\[
+\text{myopic}
+\rightarrow
+\text{multi-step},
+\]
 
 再加入 batch、parallel、continuous fidelity、cost-aware、active search 等条件。
 
 所以很多论文看起来像：
 
-[
-oxed{
-	ext{旧框架}
+\[
+\boxed{
+\text{旧框架}
 +
-	ext{一个新条件}
+\text{一个新条件}
 +
-	ext{一个新的 acquisition / switching rule}
+\text{一个新的 acquisition / switching rule}
 +
-	ext{一些 theorem}
+\text{一些 theorem}
 +
-	ext{一些 benchmark}
+\text{一些 benchmark}
 }
-]
+\]
 
 这就是很容易产生“创新点很小、东拼西凑”感觉的原因之一。
 
@@ -1435,17 +1435,17 @@ zeta^{(m)}.
 
 理想地写：
 
-[
+\[
 V(s)
 =
-max_a
-mathbb E
+\max_a
+\mathbb E
 [
 r(s,a)+V(s')
 ].
-]
+\]
 
-状态 (s) 应该包含：
+状态 \(s\) 应该包含：
 
 - 已经观测的数据；
 - 所有 posterior beliefs；
@@ -1460,43 +1460,43 @@ r(s,a)+V(s')
 
 于是不同论文用不同近似：
 
-[
+\[
 V
-ightarrow
-	ext{one-step acquisition},
-]
+\rightarrow
+\text{one-step acquisition},
+\]
 
 或者：
 
-[
+\[
 V
-ightarrow
-	ext{two-step rollout},
-]
+\rightarrow
+\text{two-step rollout},
+\]
 
 或者：
 
-[
+\[
 V
-ightarrow
-	ext{entropy reduction},
-]
+\rightarrow
+\text{entropy reduction},
+\]
 
 或者：
 
-[
+\[
 V
-ightarrow
-	ext{UCB}.
-]
+\rightarrow
+\text{UCB}.
+\]
 
 因此很多 acquisition functions 本质上可以理解成：
 
-[
-oxed{
-	ext{对同一个不可解 sequential decision problem 的不同近似}
+\[
+\boxed{
+\text{对同一个不可解 sequential decision problem 的不同近似}
 }
-]
+\]
 
 从这个高层看，领域不是完全没有体系。
 
@@ -1522,12 +1522,12 @@ Active Search 的 Bayesian optimal policy 原则上需要考虑：
 
 需要区分：
 
-[
-oxed{
-	ext{哪些 approximation 是计算复杂度逼出来的，
+\[
+\boxed{
+\text{哪些 approximation 是计算复杂度逼出来的，
 哪些只是因为关键现实量没有建模而用 heuristic 补洞。}
 }
-]
+\]
 
 ---
 
@@ -1544,49 +1544,49 @@ Active Search 的 Bayesian optimal policy 原则上需要考虑：
 
 ### 实际学习
 
-[
+\[
 f^{(m)}(x)
-]
+\]
 
 每个 fidelity 的 response surface。
 
 ### 理论给定
 
-[
-lambda^{(m)}
-]
+\[
+\lambda^{(m)}
+\]
 
 fidelity-level cost。
 
 ### 理论给定，实践 heuristic
 
-[
-zeta^{(m)}
-]
+\[
+\zeta^{(m)}
+\]
 
 最高 fidelity approximation bound。
 
 ### 实践 heuristic
 
-[
-gamma^{(m)}
-]
+\[
+\gamma^{(m)}
+\]
 
 fidelity switching thresholds。
 
 ### Synthetic 中人工构造
 
-[
+\[
 f^{(m)}
-]
+\]
 
 low-fidelity functions 本身。
 
 ### Synthetic 中人工指定
 
-[
+\[
 1:10:100
-]
+\]
 
 等 cost ratios。
 
@@ -1598,39 +1598,39 @@ low-fidelity functions 本身。
 
 一个可以接受的高层体系是：
 
-[
-oxed{
-	ext{belief model}
+\[
+\boxed{
+\text{belief model}
 +
-	ext{decision utility}
+\text{decision utility}
 +
-	ext{sequential update}
+\text{sequential update}
 }
-]
+\]
 
 Bayesian Optimization：
 
-[
-p(fmid D_t)
-ightarrow
-	ext{acquisition}
-ightarrow
+\[
+p(f\mid D_t)
+\rightarrow
+\text{acquisition}
+\rightarrow
 x_{t+1}
-ightarrow
+\rightarrow
 D_{t+1}.
-]
+\]
 
 Active Search：
 
-[
-P(y=1mid D_t)
-ightarrow
-	ext{future discoveries}
-ightarrow
+\[
+P(y=1\mid D_t)
+\rightarrow
+\text{future discoveries}
+\rightarrow
 x_{t+1}
-ightarrow
+\rightarrow
 D_{t+1}.
-]
+\]
 
 真正显得杂乱的是：
 
@@ -1646,12 +1646,12 @@ D_{t+1}.
 
 所以“没有体系”的感觉，很多时候来自：
 
-[
-oxed{
-	ext{统一的大框架存在，
+\[
+\boxed{
+\text{统一的大框架存在，
 但论文创新往往只是替换其中一个局部模块。}
 }
-]
+\]
 
 ---
 
@@ -1661,44 +1661,44 @@ D_{t+1}.
 
 ## 28.1 State
 
-对已经启动的每个 design (x_i)，保存：
+对已经启动的每个 design \(x_i\)，保存：
 
-[
-(x_i,z_i,y_i(z_i),	ext{solver state}_i).
-]
+\[
+(x_i,z_i,y_i(z_i),\text{solver state}_i).
+\]
 
 全局 state：
 
-[
+\[
 s_t=
-{
+\{
 x_i,
 z_i,
 y_i(z_i),
-	ext{solver state}_i,
-	ext{belief},
+\text{solver state}_i,
+\text{belief},
 B_t
-}_{i=1}^{N_t}.
-]
+\}_{i=1}^{N_t}.
+\]
 
 其中：
 
-- (z_i)：solver progress；
-- (B_t)：剩余总预算。
+- \(z_i\)：solver progress；
+- \(B_t\)：剩余总预算。
 
 ## 28.2 Action
 
 动作统一成：
 
-[
+\[
 a_t=
-egin{cases}
-	ext{start a new design }x,\
-	ext{continue an existing design},\
-	ext{inspect/check},\
-	ext{stop/drop a design}.
-end{cases}
-]
+\begin{cases}
+\text{start a new design }x,\\
+\text{continue an existing design},\\
+\text{inspect/check},\\
+\text{stop/drop a design}.
+\end{cases}
+\]
 
 这样 Active Search、Multi-fidelity BO、Freeze-Thaw、progressive solver、early stopping 都可以落在同一 sequential resource-allocation 框架中。
 
@@ -1706,23 +1706,23 @@ end{cases}
 
 比固定：
 
-[
-lambda_m
-]
+\[
+\lambda_m
+\]
 
 更真实的是：
 
-[
-Delta c
+\[
+\Delta c
 =
 c(
 x,
-z_{mathrm{current}}
-ightarrow
-z_{mathrm{next}},
-	ext{saved state}
+z_{\mathrm{current}}
+\rightarrow
+z_{\mathrm{next}},
+\text{saved state}
 ).
-]
+\]
 
 直接使用真实：
 
@@ -1738,32 +1738,32 @@ z_{mathrm{next}},
 
 也不要只用：
 
-[
-zeta_m.
-]
+\[
+\zeta_m.
+\]
 
 可以从 partial trajectory 学：
 
-[
+\[
 p(
 F(x)
-mid
+\mid
 x,
 z,
 y(x,z),
-	ext{trajectory history}
+\text{trajectory history}
 ).
-]
+\]
 
 这样 uncertainty 是：
 
-[
-oxed{
-	ext{design-dependent}
+\[
+\boxed{
+\text{design-dependent}
 +
-	ext{progress-dependent}
+\text{progress-dependent}
 }
-]
+\]
 
 而不是每个 fidelity 一个统一 worst-case error bound。
 
@@ -1773,49 +1773,49 @@ y(x,z),
 
 一个更完整的问题可以写成：
 
-[
-oxed{
-	ext{continuous-space,
+\[
+\boxed{
+\text{continuous-space,
 resumable,
 cost-aware,
 belief-based sequential search}
 }
-]
+\]
 
 其中同时决定：
 
-[
-oxed{
-	ext{where to evaluate}
+\[
+\boxed{
+\text{where to evaluate}
 +
-	ext{how far to evaluate}
+\text{how far to evaluate}
 +
-	ext{whether to continue}
+\text{whether to continue}
 +
-	ext{when to inspect/update}
+\text{when to inspect/update}
 }
-]
+\]
 
 并且真正计入：
 
-[
-oxed{
-	ext{solver cost}
+\[
+\boxed{
+\text{solver cost}
 +
-	ext{inspection cost}
+\text{inspection cost}
 +
-	ext{decision/model-update cost}
+\text{decision/model-update cost}
 }
-]
+\]
 
 最终目标可以是：
 
-[
-max
-mathbb E[
-	ext{confirmed positive discoveries}
+\[
+\max
+\mathbb E[
+\text{confirmed positive discoveries}
 ]
-]
+\]
 
 或者其他明确的 end utility。
 
@@ -1833,58 +1833,58 @@ Kandasamy et al. (2016) 的真正贡献可以精确描述为：
 
 它真正解决的是：
 
-[
-oxed{
-	ext{在给定 multi-fidelity structure 下怎么做 query allocation}
+\[
+\boxed{
+\text{在给定 multi-fidelity structure 下怎么做 query allocation}
 }
-]
+\]
 
 它没有解决：
 
-[
-oxed{
-	ext{fidelity 应该怎样从真实系统中产生}
+\[
+\boxed{
+\text{fidelity 应该怎样从真实系统中产生}
 }
-]
+\]
 
 没有真正解决：
 
-[
-oxed{
-(x,m)ightarrow cost
+\[
+\boxed{
+(x,m)\rightarrow cost
 }
-]
+\]
 
 也没有真正解决：
 
-[
-oxed{
-(x,m)ightarrow accuracy/error
+\[
+\boxed{
+(x,m)\rightarrow accuracy/error
 }
-]
+\]
 
 理论上这两部分主要通过：
 
-[
-lambda^{(m)},
-qquad
-zeta^{(m)}
-]
+\[
+\lambda^{(m)},
+\qquad
+\zeta^{(m)}
+\]
 
 作为 assumptions 输入。
 
-实际实现再通过 adaptive (zeta)、adaptive (gamma) 等 heuristic 来补现实中的缺口。
+实际实现再通过 adaptive \(\zeta\)、adaptive \(\gamma\) 等 heuristic 来补现实中的缺口。
 
 因此对这类论文最重要的阅读方式不是只看 theorem 或最终 benchmark，而是始终区分：
 
-[
-oxed{
-	ext{什么是学出来的，
+\[
+\boxed{
+\text{什么是学出来的，
 什么是测出来的，
 什么是人为给定的，
 什么是 heuristic。}
 }
-]
+\]
 
 这也是本次讨论最后最核心的方法论结论。
 
